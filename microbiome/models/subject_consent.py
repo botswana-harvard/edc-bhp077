@@ -1,8 +1,7 @@
-# from edc_consent.models import BaseConsent
-from django.db import models
+from edc_consent.models import BaseConsent
 
 
-class SubjectConsent(models.Model):
+class SubjectConsent(BaseConsent):
 
     class Meta:
         app_label = 'microbiome'
