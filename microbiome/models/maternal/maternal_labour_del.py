@@ -6,7 +6,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import YES_NO, YES_NO_NA_SPECIFY, YES_NO_UNKNOWN
 
 
-class MaternalLabourDel():
+class MaternalLabourDel(BaseUuidModel):
 
     """ Maternal Labor and Delivery which triggers registration of infants.
 
@@ -152,7 +152,7 @@ class MaternalLabourDel():
         verbose_name = "Maternal Labour & Delivery"
 
 
-class MaternalLabDelMed():
+class MaternalLabDelMed(BaseUuidModel):
 
     """ Medical history collected during labor and delivery. """
 
@@ -199,7 +199,7 @@ class MaternalLabDelMed():
         verbose_name = "Maternal Labour & Delivery: MedHistory"
 
 
-class MaternalLabDelClinic():
+class MaternalLabDelClinic(BaseUuidModel):
 
     """ Laboratory and other clinical information collected during labor and delivery"""
 
@@ -271,7 +271,7 @@ class MaternalLabDelClinic():
         verbose_name = "Maternal Labour & Delivery: ClinHist"
 
 
-class MaternalLabDelDx():
+class MaternalLabDelDx(BaseUuidModel):
 
     """ Diagnosis during pregnancy collected during labor and delivery. """
 

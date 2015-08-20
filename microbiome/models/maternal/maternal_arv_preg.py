@@ -1,9 +1,10 @@
 from django.db import models
 
+from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 
 
-class MaternalArvPreg():
+class MaternalArvPreg(BaseUuidModel):
 
     """ Maternal arv for current pregnancy. """
 
@@ -31,7 +32,7 @@ class MaternalArvPreg():
     )
 
 
-class MaternalArvPregHistory():
+class MaternalArvPregHistory(BaseUuidModel):
 
     """ Maternal arv for current pregnancy (transactions). """
 
@@ -70,7 +71,7 @@ class MaternalArvPregHistory():
         verbose_name = 'Maternal ARV In This Preg: Pregnancy'
 
 
-class MaternalArvPPHistory():
+class MaternalArvPPHistory(BaseUuidModel):
 
     """ Maternal arv for post-partum (transactions). """
 
