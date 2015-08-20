@@ -11,12 +11,11 @@ class EligibilityChecklistFactory(factory.DjangoModelFactory):
         model = EligibilityChecklist
 
     registered_subject = factory.SubFactory(RegisteredSubjectFactory)
-    dob = timezone.datetime().date(1997, 10, 10)
-    report_datetime = timezone.datetime().today()
+    dob = timezone.datetime(1997, 10, 10).date()
+    report_datetime = timezone.now().date()
     gender = 'M'
     initials = 'NN'
     has_identity = 'Yes'
-    guardian = 'N/A'
     citizen = 'Yes'
     disease = 'tuberculosis'
     pregnant_delivered = 'pregnant'
