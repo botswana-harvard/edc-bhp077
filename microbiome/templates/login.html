@@ -31,21 +31,25 @@
 
   <body>
 
-    <div class="container">
+    <div class="container" style="width:450px; padding:20px; margin-top:5%;">
       <form class="form-signin" action="{% url 'login_url' %}" method="post" enctype="multipart/form-data">
       	{% csrf_token %}
-        <h2 class="form-signin-heading">Login</h2>
-        <label for="username" class="sr-only">Username</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-        <input type="hidden" id="next" name="next" class="form-control" value="{{ next }}">
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
+      	<div class="form-group btn-primary" style="margin-bottom: 0; margin-top: 0; padding:5px; border-top-left-radius: 10px;  border-top-right-radius: 10px;">
+		    <h4>{{community}}:{{protocol}} | {{site_code}} | {{location}} </h4>
+  		</div>
+      	<div class="form-group table-bordered" style="padding: 20px; border-button-left-radius: 10px;  border-button-right-radius: 10px;;">
+	        <h4 class="form-signin-heading">Botswana-Harvard AIDS Institute Partnership</h4>
+	        <input type="text" id="username" name="username" class="form-control" style="margin-bottom: 10px;" placeholder="Username" required autofocus value="{%if wrong_login_details%}{{username}}{%endif%}">
+	        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+	        <input type="hidden" id="next" name="next" class="form-control" value="{{ next }}">
+	        {% if wrong_login_details %}<p id="login_message" name="login_message_name" style="color:red;">{{login_message}}</p> {% endif %}
+	        <div class="checkbox">
+	          <label>
+	            <input type="checkbox" value="remember-me"> Remember me
+	          </label>
+	        </div>
+	        <button class="btn btn-primary" type="submit" id="login" name="login" value="submit">Sign in</button>
         </div>
-        <button class="btn btn-primary btn-lg" type="submit" id="login" name="login" value="submit">Sign in</button>
       </form>
     </div> <!-- /container -->
 
