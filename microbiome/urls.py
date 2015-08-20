@@ -17,8 +17,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from microbiome.views import HomeView
+
+
 admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^home/', HomeView.as_view(), name='home'),
 ]
