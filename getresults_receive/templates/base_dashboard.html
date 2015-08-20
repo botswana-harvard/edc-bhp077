@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <div class="container-fluid">
+      <div class="row">
+      {% block sidebar %}
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+              {% for option in sidebar_options %}
+              	{% if option.data_toggle = "modal" %}
+		            <li><a name="{{ option.name }}" data-toggle="{{ option.data_toggle }}" href="{{ option.data_target }}">{{ option.link_text|upper }}</a></li>
+    			{% else %}
+    				{% if option.href = 'receive_user_batches' %}
+	            		<li><a name="{{ option.name }}" href="{% url 'receive_user_batches' %} " >{{ option.link_text|lower }}</a></li>
+	            	{% else %}
+	            		<li><a name="{{ option.name }}" href="{{option.href}}" >{{ option.link_text|lower }}</a></li>
+	            	{% endif %}
+	            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+     {% endblock sidebar%}
+   </div>
+   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+{% block section_headers %}
+
+{% endblock section_headers %}
+
+{% block content %}
+
+{% endblock content %}
+  </div>
+  </div>
+  </div>
+{% endblock main %}

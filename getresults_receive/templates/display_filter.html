@@ -1,0 +1,20 @@
+<div class="tableresponsive">
+  <table class="table tablestriped">
+  <tr>
+    {% for head in header %}
+        <th>{{head}}</th>
+    {% endfor %}
+  </tr>
+  {% for receive in received %}
+    <tr>
+      <td>{{receive.patient}}</td>
+      <td>{{receive.receive_identifier}}</td>
+      <td>{{receive.receive_datetime}}</td>
+      <td>{{receive.collection_datetime}}</td>
+      <td>{{receive.sample_type}}</td>
+      <td>{{receive.protocol_number}}</td>
+      <td><a href="{% url 'batch' batch_identifier=receive.batch_identifier %}">{{receive.batch_identifier}}</a></td>
+    </tr>
+  {% endfor %}
+  </table>
+</div>

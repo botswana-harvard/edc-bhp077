@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+<!-- Receive Sample Modal Form-->
+    <div class="modal-body">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="scan_code">Scan Code</label>
+        <input type="scan_code" class="form-control" id="scan_code">
+      </div>
+      <div class="form-group">
+        <label for="patient_id">Patient Identifier</label>
+        <input type="text" class="form-control" id="patient_id">
+      </div>
+      <div class="form-group">
+        <label for="collected_datetime">Collected Datetime</label>
+        <input type="datetime" class="form-control" id="collected_datetime">
+      </div>
+      <div class="form-group">
+        <label for="received_datetime">Received Datetime</label>
+        <input type="datetime" class="form-control" id="received_datetime">
+      </div>
+      <div class="form-group">
+        <label for="protocol_no">Protocol Number</label>
+        <input type="text" class="form-control" id="protocol_no">
+      </div>
+      <div class="form-group">
+        <label for="sample_type">Sample Type</label>
+        <input type="text" class="form-control" id="sample_type">
+      </div>
+      <div class="form-group">
+        <label for="clinician_initials">Clinician Initials</label>
+        <input type="text" class="form-control" id="clinician_initials">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Ok</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+  </form>
+  </div>

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="sub-header">{{section_head}}</h2>
+    <div class="table-responsive">
+      <table class="table table-striped">
+      <tr>
+        {% for head in header %}
+            <th>{{head}}</th>
+        {% endfor %}
+      </tr>
+      {% for receive in received %}
+        <tr>
+          <td>{{receive.patient}}</td>
+          <td>{{receive.receive_identifier}}</td>
+          <td>{{receive.receive_datetime}}</td>
+          <td>{{receive.collection_datetime}}</td>
+          <td>{{receive.sample_type}}</td>
+          <td>{{receive.protocol_number}}</td>
+          <td>
+            <div class="checkbox">
+              <input type="checkbox">
+            </div>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+      </table>
+    </div>
+    <div class="btn-group btn-default">
+      <button class="btn btn-default" id="receive_selected"> Receive
+      </button>
+      <button class="btn btn-default" id="receive_all"> Receive All
+      </button>
+    </div>
+{% endblock %}
