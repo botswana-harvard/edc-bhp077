@@ -36,6 +36,47 @@ FEEDING_CHOICES = (
     ('Medical complications: Infant did not feed', 'Medical complications: Infant did not feed'),
 )
 
+CARDIOVASCULAR_DISORDER = (
+    ('None', 'None'),
+    ('Truncus arteriosus', 'Truncus arteriosus'),
+    ('Atrial septal defect', 'Atrial septal defect'),
+    ('Ventricula septal defect', 'Ventricula septal defect'),
+    ('Atrioventricular canal', 'Atrioventricular canal'),
+    ('Complete transposition of the great vessels (without VSD)', 'Complete transposition of the great vessels (without VSD)'),
+    ('Complete transposition of the great vessels (with VSD)', 'Complete transposition of the great vessels (with VSD)'),
+    ('Tetralogy of Fallot', 'Tetralogy of Fallot'),
+    ('Pulmonary valve stenosis or atresia', 'Pulmonary valve stenosis or atresia'),
+    ('Tricuspid valve stenosis or atresia', 'Tricuspid valve stenosis or atresia'),
+    ('Mitral valve stenosis or atresia', 'Mitral valve stenosis or atresia'),
+    ('Hypoplastic left ventricle', 'Hypoplastic left ventricle'),
+    ('Hypoplastic right ventricle', 'Hypoplastic right ventricle'),
+    ('Congenital cardiomyopath (do not code if only isolated cardiomegaly)', 'Congenital cardiomyopath (do not code if only isolated cardiomegaly)'),
+    ('Coarclation of the aorta', 'Coarclation of the aorta'),
+    ('Total anomalous pulmonary venous return', 'Total anomalous pulmonary venous return'),
+    ('Arteriovenous malformation, specify site', 'Arteriovenous malformation, specify site'),
+    ('Patent ductous arteriosus (persisting >6 weeks of age)', 'Patent ductous arteriosus (persisting >6 weeks of age)'),
+    ('OTHER', 'Other cardiovascular malformation, specify'),
+)
+
+CLEFT_DISORDER = (
+    ('None', 'None'),
+    ('Cleft lip without cleft palate', 'Cleft lip without cleft palate'),
+    ('Cleft palate without cleft lip', 'Cleft palate without cleft lip'),
+    ('Cleft lip and palate', 'Cleft lip and palate'),
+    ('Cleft uvula', 'Cleft uvula'),
+)
+
+CNS_ABNORMALITIES = (
+    ('None', 'None'),
+    ('Anencephaly', 'Anencephaly'),
+    ('Encephaloceis', 'Encephaloceis'),
+    ('Spina bifida, open', 'Spina bifida, open'),
+    ('Spina bifida, closed', 'Spina bifida, closed'),
+    ('Holoprosencephaly', 'Holoprosencephaly'),
+    ('Isolated hydroencephaly (not associated with spina bifida)', 'Isolated hydroencephaly (not associated with spina bifida)'),
+    ('Other CNS defect, specify', 'Other CNS defect, specify'),
+)
+
 COWS_MILK = (
     ('boiled', '1. Boiled from cow'),
     ('unboiled', '2. Unboiled from cow'),
@@ -84,6 +125,47 @@ DX_INFANT = (
 
 )
 
+DRUG_RELATIONSHIP = (
+    ('Not related', 'Not related'),
+    ('Probably not related', 'Probably not related'),
+    ('Possibly related', 'Possibly related'),
+    ('Probably related', 'Probably related'),
+    ('Definitely related', 'Definitely related'),
+)
+
+FACIAL_DEFECT = (
+    ('None', 'None'),
+    ('Anophthalmia/micro-opthalmia', 'Anophthalmia/micro-opthalmia'),
+    ('Cataracts', 'Cataracts'),
+    ('Coloboma', 'Coloboma'),
+    ('OTHER eye abnormality', 'Other eye abnormality, specify'),
+    ('Absence of ear', 'Absence of ear'),
+    ('Absence of auditory canal', 'Absence of auditory canal'),
+    ('Congenital deafness', 'Congenital deafness'),
+    ('Microtia', 'Microtia'),
+    ('OTHER ear anomaly', 'Other ear anomaly, specify'),
+    ('Brachial cleft cyst, sinus or pit', 'Brachial cleft cyst, sinus or pit'),
+    ('OTHER facial malformation', 'Other facial malformation, specify'),
+)
+
+FEM_GENITAL_ANOMALY = (
+    ('None', 'None'),
+    ('Ambinguous genitalia, female', 'Ambinguous genitalia, female'),
+    ('Vaginal agenesis', 'Vaginal agenesis'),
+    ('Absent or streak ovary', 'Absent or streak ovary'),
+    ('Uterine anomaly', 'Uterine anomaly'),
+    ('OTHER', 'Other ovarian, fallopian, uterine, cervical, vaginal, or vulvar abnormality'),
+)
+
+INFO_PROVIDER = (
+    ('MOTHER', 'Mother'),
+    ('GRANDMOTHER', 'Grandmother'),
+    ('FATHER', 'Father'),
+    ('GRANDFATHER', 'Grandfather'),
+    ('SIBLING', 'Sibling'),
+    ('OTHER', 'Other'),
+)
+
 INFANT_OFF_DRUG_REASON = (
     ('completed protocol', '1. Completion of protocol-required period of study treatment'),
     ('off-study', '2. Participant going off-study for any reason, including death or lost to follow-up'),
@@ -94,12 +176,12 @@ INFANT_OFF_DRUG_REASON = (
 )
 
 INFANT_VISIT_STUDY_STATUS = (
-   ('onstudy rando ondrug', '1. On study/On drug (CTX/Placebo), study medication(s) continuing or temporarily held'),
-   ('onstudy rando offdrug', '2. On study/Off drug (CTX/Placebo), study medication(s) permanently discontinued- clinic follow-up continuing'),
-   ('onstudy rando notstarteddrug', '3. On study/has not yet started study medication(s)(CTX/Placebo)'),
-   ('onstudy rando today', '4. Being randomised today'),
-   ('onstudy notrando', '5. On Study / Not yet randomized'),
-   ('offstudy', '6. Off study-no further follow-up (including death); use only for last study contact'),
+    ('onstudy rando ondrug', '1. On study/On drug (CTX/Placebo), study medication(s) continuing or temporarily held'),
+    ('onstudy rando offdrug', '2. On study/Off drug (CTX/Placebo), study medication(s) permanently discontinued- clinic follow-up continuing'),
+    ('onstudy rando notstarteddrug', '3. On study/has not yet started study medication(s)(CTX/Placebo)'),
+    ('onstudy rando today', '4. Being randomised today'),
+    ('onstudy notrando', '5. On Study / Not yet randomized'),
+    ('offstudy', '6. Off study-no further follow-up (including death); use only for last study contact'),
 )
 
 
@@ -119,7 +201,7 @@ OFF_STUDY_REASON = [
     ('complete', '13. Completion of protocol required period of time for observation (see Study Protocol for definition of Completion.) [skip to end of form]'),
     ('death', '14. Participant death (complete the DEATH REPORT FORM AF005) (For EAE Reporting requirements see EAE Reporting Manual)'),
     ('OTHER', '99. Other'),
-    ]
+]
 
 RANDOMIZATION_MATERNAL_ART_STATUS = (
     ('ON', 'On Haart'),
@@ -172,7 +254,7 @@ REASON_MISSED_PROPHYLAXIS = (
 STUDY_STATUS = (
     ('followup', 'Lost can followup'),
     ('no followup', 'Lost no followup'),
-    )
+)
 
 TIMES_BREASTFED = (
     ('<1 per week', '1. Less than once per week'),
@@ -194,7 +276,7 @@ VACCINES = (
     ('MMR', 'MMR'),
     ('Varicella', 'Varicella'),
     ('Influenza', 'Influenza'),
-    )
+)
 
 VISIT_INFO_SOURCE = [
     ('participant', '1. Clinic visit with participant'),
@@ -231,7 +313,7 @@ ALIVE_DEAD_UNKNOWN = (
     ('ALIVE', 'Alive'),
     ('DEAD', 'Deceased'),
     ('UNKNOWN', 'Unknown'),
-    )
+)
 
 STOOL_TEXTURE_DESC = (
     ('formed_with_blood', 'Formed without blood'),
@@ -240,14 +322,14 @@ STOOL_TEXTURE_DESC = (
     ('loose_with_blood', 'Loose but not watery and with blood'),
     ('watery_without_blood', 'Watery without blood'),
     ('watery_with_blood', 'Watery with blood'),
-    )
+)
 
 ILLNESS_CLASSIFICATION = (
     ('N/A', 'Not applicable'),
     ('respi_illness', 'Respiratory Illness'),
     ('gastro_illness', 'Gastrointestinal illness (examples including vomiting, diarrhea or both)'),
     ('OTHER', 'Other'),
-    )
+)
 
 STOOLS_PAST_24HOURS = (
     ('1', '1'),
@@ -259,7 +341,7 @@ STOOLS_PAST_24HOURS = (
     ('7', '7'),
     ('>7', '>7'),
     ('UNKNOWN', 'Unknown')
-    )
+)
 
 CONTINUOUS_LOOSE_STOOLS = (
     ('1day', '1 day'),
@@ -271,4 +353,4 @@ CONTINUOUS_LOOSE_STOOLS = (
     ('7days', '7 days'),
     ('>7days', 'Greater than 7 days but not more than 13 days'),
     ('>14days', '14 days or greater')
-    )
+)
