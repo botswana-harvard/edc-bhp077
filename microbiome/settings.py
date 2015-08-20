@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_crypto_fields',
     'edc_registration',
-    'edc_bhp077',
+    'microbiome',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -56,7 +56,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'edc_bhp077.urls'
+ROOT_URLCONF = 'microbiome.urls'
 
 TEMPLATES = [
     {
@@ -74,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'edc_bhp077.wsgi.application'
+WSGI_APPLICATION = 'microbiome.wsgi.application'
 
 
 # Database
