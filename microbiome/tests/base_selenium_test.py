@@ -31,10 +31,10 @@ class BaseSeleniumTest(StaticLiveServerTestCase):
     def navigate_to_admin(self):
         self.browser.get(self.live_server_url + '/admin/')
 
-    def navigate_to_admin_getresults_patient(self):
+    def navigate_to_admin_microbiome(self):
         body = self.browser.find_element_by_tag_name('body')
-        self.assertIn('Getresults_Patient', body.text)
-        self.browser.find_element_by_link_text('Getresults_Patient').click()
+        self.assertIn('Microbiome', body.text)
+        self.browser.find_element_by_link_text('Microbiome').click()
 
     def switch_to_new_window(self, text_in_element, element_id):
         retries = 60
