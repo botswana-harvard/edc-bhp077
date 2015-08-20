@@ -6,3 +6,4 @@ factory-boy==2.5.2
 django_crypto_fields
 -e git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc_constants
 -e git+https://github.com/botswana-harvard/edc-base@develop#egg=edc_base
+-e git+https://github.com/botswana-harvard/edc-registration.git@develop#egg=edc_registration
