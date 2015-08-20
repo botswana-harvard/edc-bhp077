@@ -7,9 +7,9 @@ from edc_constants.choices import CONFIRMED_SUSPECTED
 
 
 from ..choices import (CNS_ABNORMALITIES, FACIAL_DEFECT, CLEFT_DISORDER, MOUTH_UP_GASTROINT_DISORDER,
-                                CARDIOVASCULAR_DISORDER, RESPIRATORY_DEFECT, LOWER_GASTROINTESTINAL_ABNORMALITY,
-                                FEM_GENITAL_ANOMALY, MALE_GENITAL_ANOMALY, RENAL_ANOMALY, MUSCULOSKELETAL_ABNORMALITY,
-                                SKIN_ABNORMALITY, TRISOME_CHROSOMESOME_ABNORMALITY, OTHER_DEFECT)
+                       CARDIOVASCULAR_DISORDER, RESPIRATORY_DEFECT, LOWER_GASTROINTESTINAL_ABNORMALITY,
+                       FEM_GENITAL_ANOMALY, MALE_GENITAL_ANOMALY, RENAL_ANOMALY, MUSCULOSKELETAL_ABNORMALITY,
+                       SKIN_ABNORMALITY, TRISOME_CHROSOMESOME_ABNORMALITY, OTHER_DEFECT)
 
 
 from .infant_visit import InfantVisit
@@ -18,7 +18,6 @@ from .infant_visit import InfantVisit
 class InfantCongenitalAnomalies(BaseUuidModel):
 
     infant_visit = models.OneToOneField(InfantVisit)
-
 
     class Meta:
         app_label = "infant"

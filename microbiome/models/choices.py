@@ -203,6 +203,71 @@ OFF_STUDY_REASON = [
     ('OTHER', '99. Other'),
 ]
 
+LOWER_GASTROINTESTINAL_ABNORMALITY = (
+    ('None', 'None'),
+    ('Duodenal atresia, stenosis, or absence', 'Duodenal atresia, stenosis, or absence'),
+    ('Jejunal atresis, stenosis, or absence', 'Jejunal atresis, stenosis, or absence'),
+    ('Ileal atresia, stenosis, or absence', 'Ileal atresia, stenosis, or absence'),
+    ('Atresia, stenosis, or absence of large intestine, rectum, or anus', 'Atresia, stenosis, or absence of large intestine, rectum, or anus'),
+    ('Hirschsprung disease', 'Hirschsprung disease'),
+    ('OTHER megacolon', 'Other megacolon'),
+    ('Liver, pancreas, or gall bladder defect, specify', 'Liver, pancreas, or gall bladder defect, specify'),
+    ('Diaphramtic hernia', 'Diaphramtic hernia'),
+    ('OTHER GI anomaly', 'Other GI anomaly, specify'),
+)
+
+MALE_GENITAL_ANOMALY = (
+    ('None', 'None'),
+    ('Hypospadias, specify degree', 'Hypospadias, specify degree'),
+    ('Chordee', 'Chordee'),
+    ('Ambiguous genitalia, male', 'Ambiguous genitalia, male'),
+    ('Undescended testis', 'Undescended testis'),
+    ('OTHER', 'Other male genital abnormality, specify'),
+)
+
+MOUTH_UP_GASTROINT_DISORDER = (
+    ('None', 'None'),
+    ('Aglossia', 'Aglossia'),
+    ('Macroglossia', 'Macroglossia'),
+    ('OTHER mouth, lip, or tongue', 'Other mouth, lip, or tongue anomaly, specify'),
+    ('Esophageal atresia', 'Esophageal atresia'),
+    ('Tracheoesphageal fistula', 'Tracheoesphageal fistula'),
+    ('Esophageal web', 'Esophageal web'),
+    ('Pyloric stenosis', 'Pyloric stenosis'),
+    ('OTHER esophageal or stomach', 'Other esophageal or stomach abnormality, specify'),
+)
+
+MUSCULOSKELETAL_ABNORMALITY = (
+    ('None', 'None'),
+    ('Craniosynostosis', 'Craniosynostosis'),
+    ('Torticollis', 'Torticollis'),
+    ('Congenital scoliosis, lordosis', 'Congenital scoliosis, lordosis'),
+    ('Congenital dislocation of hip', 'Congenital dislocation of hip'),
+    ('Talipes equinovarus (club feet excluding metatarsus varus)', 'Talipes equinovarus (club feet excluding metatarsus varus)'),
+    ('Funnel chest or pigeon chest (pectus excavatum or carinaturn)', 'Funnel chest or pigeon chest (pectus excavatum or carinaturn)'),
+    ('Polydactyly', 'Polydactyly'),
+    ('Syndactyly', 'Syndactyly'),
+    ('Other hand malformation, specify', 'Other hand malformation, specify'),
+    ('Webbed fingers or toes', 'Webbed fingers or toes'),
+    ('Upper limb reduction defect, specify', 'Upper limb reduction defect, specify'),
+    ('Lower limb reduction defect, specify', 'Lower limb reduction defect, specify'),
+    ('Other limb defect, specify', 'Other limb defect, specify'),
+    ('Other skull abnormality, specify', 'Other skull abnormality, specify'),
+    ('Anthrogryposis', 'Anthrogryposis'),
+    ('Vertebral or rib abnormalities, specify', 'Vertebral or rib abnormalities, specify'),
+    ('Osteogenesis imperfecta', 'Osteogenesis imperfecta'),
+    ('Dwarfing syndrome, specify', 'Dwarfing syndrome, specify'),
+    ('Congenital diaphramatic hernia', 'Congenital diaphramatic hernia'),
+    ('Omphalocele', 'Omphalocele'),
+    ('Gastroschisis', 'Gastroschisis'),
+    ('OTHER', 'Other muscular or skeletal abnormality or syndrome, specify'),
+)
+
+OTHER_DEFECT = (
+    ('None', 'None'),
+    ('OTHER', 'Other defect/syndrome not already reported, specify'),
+)
+
 RANDOMIZATION_MATERNAL_ART_STATUS = (
     ('ON', 'On Haart'),
     ('OFF', 'Off'),
@@ -251,9 +316,59 @@ REASON_MISSED_PROPHYLAXIS = (
     ('OTHER', 'Other'),
 )
 
+RENAL_ANOMALY = (
+    ('None', 'None'),
+    ('Bilateral renal agenesis', 'Bilateral renal agenesis'),
+    ('Unilateral renal agenesis or dysplasia', 'Unilateral renal agenesis or dysplasia'),
+    ('Polycystic kidneys', 'Polycystic kidneys'),
+    ('Congenital hydronephrosis', 'Congenital hydronephrosis'),
+    ('Unilateral stricture, stenosis, or hypoplasia', 'Unilateral stricture, stenosis, or hypoplasia'),
+    ('Duplicated kidney or collecting system', 'Duplicated kidney or collecting system'),
+    ('Horseshoe kidney', 'Horseshoe kidney'),
+    ('Exstrophy of bladder', 'Exstrophy of bladder'),
+    ('Posterior urethral valves', 'Posterior urethral valves'),
+    ('OTHER', 'Other renal, ureteral, bladder, urethral abnormality, specify'),
+)
+
+RENAL_ANOMALY = (
+    ('None', 'None'),
+    ('Bilateral renal agenesis', 'Bilateral renal agenesis'),
+    ('Unilateral renal agenesis or dysplasia', 'Unilateral renal agenesis or dysplasia'),
+    ('Polycystic kidneys', 'Polycystic kidneys'),
+    ('Congenital hydronephrosis', 'Congenital hydronephrosis'),
+    ('Unilateral stricture, stenosis, or hypoplasia', 'Unilateral stricture, stenosis, or hypoplasia'),
+    ('Duplicated kidney or collecting system', 'Duplicated kidney or collecting system'),
+    ('Horseshoe kidney', 'Horseshoe kidney'),
+    ('Exstrophy of bladder', 'Exstrophy of bladder'),
+    ('Posterior urethral valves', 'Posterior urethral valves'),
+    ('OTHER', 'Other renal, ureteral, bladder, urethral abnormality, specify'),
+)
+
+RESPIRATORY_DEFECT = (
+    ('None', 'None'),
+    ('Choanal atresia', 'Choanal atresia'),
+    ('Agenesis or underdevelopment of nose', 'Agenesis or underdevelopment of nose'),
+    ('Nasal cleft', 'Nasal cleft'),
+    ('Single nostril, proboscis', 'Single nostril, proboscis'),
+    ('OTHER nasal or sinus abnormality', 'Other nasal or sinus abnormality, specify'),
+    ('Lryngeal web. glottic or subglottic', 'Lryngeal web. glottic or subglottic'),
+    ('Congenital laryngeal stenosis', 'Congenital laryngeal stenosis'),
+    ('OTHER laryngeal, tracheal or bronchial anomalies', 'Other laryngeal, tracheal or bronchial anomalies'),
+    ('Single lung cyst', 'Single lung cyst'),
+    ('Polycystic lung', 'Polycystic lung'),
+    ('OTHER', 'Other respiratory anomaly, specify'),
+)
+
 STUDY_STATUS = (
     ('followup', 'Lost can followup'),
     ('no followup', 'Lost no followup'),
+)
+
+SKIN_ABNORMALITY = (
+    ('None', 'None'),
+    ('Icthyosis', 'Icthyosis'),
+    ('Ectodermal dysplasia', 'Ectodermal dysplasia'),
+    ('OTHER', 'Other skin abnormality, specify'),
 )
 
 TIMES_BREASTFED = (
@@ -263,6 +378,15 @@ TIMES_BREASTFED = (
     ('>1 per day, but not for all feedings', '4. More than once per day, but not for all feedings'),
     ('For all feedings', '5. For all feedings (i.e no formula or other foods or liquids)'),
     ('N/A', 'Not Applicable'),
+)
+
+TRISOME_CHROSOMESOME_ABNORMALITY = (
+    ('None', 'None'),
+    ('Trisomy 21', 'Trisomy 21'),
+    ('Trisomy 13', 'Trisomy 13'),
+    ('Trisomy 18', 'Trisomy 18'),
+    ('OTHER trisomy, specify', 'Other trisomy, specify'),
+    ('OTHER non-trisomic chromosome', 'Other non-trisomic chromosome abnormality, specify'),
 )
 
 VACCINES = (
