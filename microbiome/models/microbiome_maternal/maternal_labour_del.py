@@ -149,6 +149,7 @@ class MaternalLabourDel(BaseUuidModel):
 
     class Meta:
         app_label = 'microbiome'
+        table_name = "micro_maternallabourdel"
         verbose_name = "Maternal Labour & Delivery"
 
 
@@ -159,7 +160,8 @@ class MaternalLabDelMed(BaseUuidModel):
     has_health_cond = models.CharField(
         max_length=3,
         choices=YES_NO,
-        verbose_name="Has the mother been newly diagnosed (during this pregnancy) with any major chronic health condition(s) that remain ongoing?  ",
+        verbose_name="Has the mother been newly diagnosed (during this pregnancy) "
+        "with any major chronic health condition(s) that remain ongoing?",
         help_text="if yes answer Question 4, otherwise go to Question 6",
     )
 
@@ -172,7 +174,8 @@ class MaternalLabDelMed(BaseUuidModel):
     has_ob_comp = models.CharField(
         max_length=3,
         choices=YES_NO,
-        verbose_name="During this pregnancy, did the mother have any of the following obstetrical complications? (in 7)",
+        verbose_name="During this pregnancy, did the mother have any of the following "
+        "obstetrical complications? (in 7)",
         help_text="",
     )
 
@@ -196,6 +199,7 @@ class MaternalLabDelMed(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternallabdelmed"
         verbose_name = "Maternal Labour & Delivery: MedHistory"
 
 
@@ -268,6 +272,7 @@ class MaternalLabDelClinic(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternallabdelclinic"
         verbose_name = "Maternal Labour & Delivery: ClinHist"
 
 
@@ -285,7 +290,9 @@ class MaternalLabDelDx(BaseUuidModel):
     has_who_dx = models.CharField(
         max_length=3,
         choices=YES_NO,
-        verbose_name="During this pregnancy, did the mother have any new diagnoses listed in the WHO Adult/Adolescent HIV clinical staging document which is/are NOT reported below in Question 5 ",
+        verbose_name="During this pregnancy, did the mother have any new diagnoses "
+        "listed in the WHO Adult/Adolescent HIV clinical staging document which "
+        "is/are NOT reported below in Question 5 ",
         help_text="If yes, answer 4, otherwise go to Question 5",
     )
 
@@ -295,6 +302,7 @@ class MaternalLabDelDx(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternallabdeldx"
         verbose_name = "Maternal Labour & Delivery: Preg Dx"
 
 
@@ -329,4 +337,5 @@ class MaternalLabDelDxT (BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternallabdeldxt"
         verbose_name = "Maternal Labour & Delivery: Preg DxT"

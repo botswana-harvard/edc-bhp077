@@ -15,7 +15,8 @@
 
     <!-- Custom styles for this template -->
     <link href="../../static/css/dashboard.css" rel="stylesheet">
-    <link href="../../static/css/receive.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../../static/css/round-about.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -61,8 +62,8 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a title="home" href="/"><span class="glyphicon glyphicon-home"></span></a></li>
-            <li><a title="receive" name="topbar_martenal" href="/martenal/">MARTENAL</a></li>
-            <li><a title="order" name="topbar_infant" href="/infant/">INFANT</a></li>
+            <li><a title="martenal" name="topbar_martenal" href="/martenal/">MARTENAL</a></li>
+            <li><a title="infant" name="topbar_infant" href="/infant/">INFANT</a></li>
             <li><a title="settings" href="/admin/"><span class="glyphicon glyphicon-wrench"></span></a></li>
             <li><a title="user profile" href="/user_profile/">{{ user.username }}</a></li>
             <li><a title="logout" href="/logout/"><span class="glyphicon glyphicon-log-out"></span></a></li>
@@ -79,5 +80,23 @@
 {% block bottombar %}
 {% endblock bottombar %}
 
-{% endblock body %}    
+{% block footer %}
+
+	<hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Botswana Harvard Partnership. Microbiome Reaserch Study</p>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </footer>
+
+{% endblock footer %}
+
+{% endblock body %}
+    
 </html>

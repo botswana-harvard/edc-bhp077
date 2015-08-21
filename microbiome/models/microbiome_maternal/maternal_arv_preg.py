@@ -27,9 +27,14 @@ class MaternalArvPreg(BaseUuidModel):
     start_pp = models.CharField(
         max_length=3,
         choices=YES_NO,
-        verbose_name="Did the mother START any antiretroviral drugs during the immediate postpartum period (before discharge from maternity)?",
+        verbose_name="Did the mother START any antiretroviral drugs during the immediate "
+        "postpartum period (before discharge from maternity)?",
         help_text="",
     )
+
+    class Meta:
+        app_label = "microbiome"
+        table_name = "micro_maternalarvpreg"
 
 
 class MaternalArvPregHistory(BaseUuidModel):
@@ -68,6 +73,7 @@ class MaternalArvPregHistory(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternalarvpreghistory"
         verbose_name = 'Maternal ARV In This Preg: Pregnancy'
 
 
@@ -86,6 +92,7 @@ class MaternalArvPPHistory(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternalarvpphistory"
         verbose_name = 'Maternal ARV In This Preg: PostPart'
 
 
@@ -114,4 +121,5 @@ class MaternalArv():
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternalarv"
         verbose_name = 'Maternal ARV'

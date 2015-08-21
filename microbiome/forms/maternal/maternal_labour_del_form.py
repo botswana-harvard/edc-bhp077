@@ -1,6 +1,6 @@
 from django.forms import ModelForm
-from ...models.maternal import (MaternalLabourDel, MaternalLabDelClinic,
-                                MaternalLabDelDx, MaternalLabDelDxT)
+from ...models.microbiome_maternal import (
+    MaternalLabourDel, MaternalLabDelClinic, MaternalLabDelDx, MaternalLabDelDxT)
 
 
 class MaternalLabourDelForm(ModelForm):

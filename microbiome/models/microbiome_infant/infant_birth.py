@@ -5,7 +5,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import GENDER_UNDETERMINED
 
-from ..maternal import MaternalLabourDel
+from microbiome.models.microbiome_maternal import MaternalLabourDel
 
 
 class InfantBirth(BaseUuidModel):
@@ -46,4 +46,5 @@ class InfantBirth(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_infantbirth"
         verbose_name = "Infant Birth Record"

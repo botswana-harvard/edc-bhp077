@@ -4,8 +4,8 @@ from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import YES_NO_UNKNOWN, YES_NO_UNKNOWN_NA
 
-from .infant_birth import InfantBirth
-from .infant_visit import InfantVisit
+from microbiome.models.microbiome_infant import InfantBirth
+from microbiome.models.microbiome_infant import InfantVisit
 
 
 class InfantBirthArv(BaseUuidModel):
@@ -32,7 +32,8 @@ class InfantBirthArv(BaseUuidModel):
         max_length=15,
         choices=YES_NO_UNKNOWN_NA,
         verbose_name="Was the infant given additional doses of AZT before discharge from the hospital? ",
-        help_text="if insufficient timing from delivery to next required dose has elapsed, please enter 'Not applicable'",
+        help_text="if insufficient timing from delivery to next required dose has "
+        "elapsed, please enter 'Not applicable'",
     )
 
     sdnvp_after_birth = models.CharField(
@@ -79,4 +80,5 @@ class InfantBirthArv(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_infantbirtharv"
         verbose_name = "Infant Birth Record: ARV"

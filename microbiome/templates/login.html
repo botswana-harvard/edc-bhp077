@@ -35,10 +35,10 @@
       <form class="form-signin" action="{% url 'login_url' %}" method="post" enctype="multipart/form-data">
       	{% csrf_token %}
       	<div class="form-group btn-primary" style="margin-bottom: 0; margin-top: 0; padding:5px; border-top-left-radius: 10px;  border-top-right-radius: 10px;">
-		    <h4>{{community}}:{{protocol}} | {{site_code}} | {{location}} </h4>
+		    <h5>{{community}}:{{protocol}} | {{site_code}} | {{location}} </h5>
   		</div>
       	<div class="form-group table-bordered" style="padding: 20px; border-button-left-radius: 10px;  border-button-right-radius: 10px;;">
-	        <h4 class="form-signin-heading">Botswana-Harvard AIDS Institute Partnership</h4>
+	        <h5 class="form-signin-heading">Botswana-Harvard AIDS Institute Partnership</h5>
 	        <input type="text" id="username" name="username" class="form-control" style="margin-bottom: 10px;" placeholder="Username" required autofocus value="{%if wrong_login_details%}{{username}}{%endif%}">
 	        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
 	        <input type="hidden" id="next" name="next" class="form-control" value="{{ next }}">
