@@ -1,7 +1,6 @@
 from django.forms.models import ModelForm
-from microbiome.models.microbiome_maternal import (MaternalArvPreg, MaternalArvPregHistory, MaternalArvPPHistory,
-                                MaternalArv
-                                )
+from ...models.microbiome_maternal import (
+    MaternalArvPreg, MaternalArvPregHistory, MaternalArvPPHistory, MaternalArv)
 
 
 class MaternalArvPregForm(ModelForm):

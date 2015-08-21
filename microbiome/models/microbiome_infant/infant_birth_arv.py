@@ -32,7 +32,8 @@ class InfantBirthArv(BaseUuidModel):
         max_length=15,
         choices=YES_NO_UNKNOWN_NA,
         verbose_name="Was the infant given additional doses of AZT before discharge from the hospital? ",
-        help_text="if insufficient timing from delivery to next required dose has elapsed, please enter 'Not applicable'",
+        help_text="if insufficient timing from delivery to next required dose has "
+        "elapsed, please enter 'Not applicable'",
     )
 
     sdnvp_after_birth = models.CharField(

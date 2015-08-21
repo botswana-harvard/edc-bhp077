@@ -303,7 +303,7 @@ class InfantFemaleGenitalAnomalyItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name= "micro_infantfemalegenitalanomalyitems"
+        table_name = "micro_infantfemalegenitalanomalyitems"
         verbose_name = "Infant Congenital Anomalies:FemaleGen"
 
 

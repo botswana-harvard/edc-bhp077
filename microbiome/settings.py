@@ -43,8 +43,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_crypto_fields',
     'edc_registration',
-    'edc_appointment',
-    'edc_consent',
+#     'edc_appointment',
+#     'edc_consent',
     'edc_identifier',
     'microbiome',
 )
@@ -121,7 +121,7 @@ STATICFILES_FINDERS = (
 
 GIT_DIR = BASE_DIR.ancestor(1)
 
-STUDY_OPEN_DATETIME = timezone.datetime(2015, 8, 19).date()
+STUDY_OPEN_DATETIME = timezone.datetime(2015, 8, 19)
 
 RECEIVE_IDENTIFIER_SEED = ('AA', '00000')
 RECEIVE_IDENTIFIER_ALPHA_PATTERN = r'^[A-Z]{2}$'
