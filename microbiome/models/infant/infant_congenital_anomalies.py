@@ -401,7 +401,8 @@ class InfantSkinAbnormalItems(BaseCnsItem):
         max_length=250,
         choices=SKIN_ABNORMALITY,
         verbose_name="Skin abnormalities",
-        help_text="Excludes cafe au lait spots, Mongolian spots, port wine stains, nevus, hemangloma <4 cm in diameter. If hemangloma is >4 cm, specify",
+        help_text="Excludes cafe au lait spots, Mongolian spots, port wine stains, "
+        "nevus, hemangloma <4 cm in diameter. If hemangloma is >4 cm, specify",
         blank=True,
         null=True,
     )
