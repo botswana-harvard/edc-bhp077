@@ -4,8 +4,8 @@ from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import YES_NO_UNKNOWN, YES_NO_UNKNOWN_NA
 
-from .infant_birth import InfantBirth
-from .infant_visit import InfantVisit
+from microbiome.models.microbiome_infant import InfantBirth
+from microbiome.models.microbiome_infant import InfantVisit
 
 
 class InfantBirthArv(BaseUuidModel):
@@ -79,4 +79,5 @@ class InfantBirthArv(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_infantbirtharv"
         verbose_name = "Infant Birth Record: ARV"

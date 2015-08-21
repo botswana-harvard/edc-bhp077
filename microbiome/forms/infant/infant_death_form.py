@@ -1,6 +1,6 @@
 from django.forms.models import ModelForm
 
-from ...models.infant import InfantDeath
+from microbiome.models.microbiome_infant import InfantDeath
 
 
 class InfantDeathForm(ModelForm):
