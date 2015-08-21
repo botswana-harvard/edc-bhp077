@@ -17,7 +17,8 @@ class EligibilityChecklist (BaseUuidModel):
     """A model completed by the user that confirms and saves eligibility
     information for potential participant."""
 
-    registered_subject = models.OneToOneField(RegisteredSubject,
+    registered_subject = models.OneToOneField(
+        RegisteredSubject,
         null=True,
         blank=True,
         help_text=''
@@ -28,7 +29,7 @@ class EligibilityChecklist (BaseUuidModel):
         validators=[
             datetime_not_before_study_start,
             datetime_not_future,
-            ],
+        ],
         help_text='Date and time of assessing eligibility'
     )
 
@@ -141,7 +142,7 @@ class EligibilityChecklist (BaseUuidModel):
         max_length=30,
         choices=VERBALHIVRESULT_CHOICE,
         help_text=_('Evidence of HIV positive status either by showing a positive testing result or '
-                  'showing IDCC records that demonstrate that she is taking ARVs.')
+                    'showing IDCC records that demonstrate that she is taking ARVs.')
     )
 
     evidence_pos_hiv_status = models.BooleanField(
@@ -155,8 +156,8 @@ class EligibilityChecklist (BaseUuidModel):
         max_length=30,
         choices=VERBALHIVRESULT_CHOICE,
         help_text=_('If mother has no evidence of HIV status or has not tested on or after 32 weeks gestational age, '
-                  'she must undergo  rapid testing.  If positive, will not have been on treatment sufficiently long '
-                  'enough and is not eligible.  If negative, eligible to join the study.')
+                    'she must undergo  rapid testing.  If positive, will not have been on treatment sufficiently long '
+                    'enough and is not eligible.  If negative, eligible to join the study.')
     )
 
     objects = models.Manager()
