@@ -17,12 +17,16 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from microbiome.views import HomeView
+from microbiome.views import HomeView, login_view, logout_view
 
 
 admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/login/', login_view),
+    url(r'^login/', login_view, name='login_url'),
+    url(r'^logout/', logout_view, name='logout_url'),
     url(r'^home/', HomeView.as_view(), name='home'),
+    url(r'^$', HomeView.as_view(), name='default'),
 ]
