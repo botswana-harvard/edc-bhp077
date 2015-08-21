@@ -3,7 +3,7 @@ CHECKLIST_DISEASES = (
     ('diabetes ', 'Diabetes '),
 )
 
-VERBALHIVRESULT_CHOICE = (
+HIVRESULT_CHOICE = (
     ('POS', 'POS'),
     ('NEG ', 'NEG '),
 )
@@ -21,4 +21,9 @@ YES_NO = (
 GENDER = (
     ('F', 'Female'),
     ('M', 'Male'),
+)
+
+BIRTH_TYPE = (
+    ('vaginal ', 'vaginal'),
+    ('cesarean ', 'cesarean'),
 )
