@@ -6,7 +6,7 @@ from edc_base.model.validators import CellNumber, TelephoneNumber
 from edc_base.model.fields import OtherCharField
 from edc_locator.models import BaseLocator
 
-from .maternal_visit import MaternalVisit
+from microbiome.models.microbiome_maternal import MaternalVisit
 
 
 class MaternalLocator(BaseLocator):
@@ -23,8 +23,8 @@ class MaternalLocator(BaseLocator):
         max_length=25,
         choices=YES_NO,
         verbose_name="Has the participant identified someone who will be "
-            "responsible for the care of the baby in case of her death, to whom the "
-            "study team could share information about her baby's health?",
+        "responsible for the care of the baby in case of her death, to whom the "
+        "study team could share information about her baby's health?",
         help_text="",
     )
 
@@ -56,4 +56,5 @@ class MaternalLocator(BaseLocator):
 
     class Meta:
         verbose_name = 'Maternal Locator'
+        table_name = 'micro_maternallocator'
         app_label = 'microbiome'

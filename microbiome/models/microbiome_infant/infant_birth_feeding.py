@@ -4,7 +4,7 @@ from edc_base.model.models import BaseUuidModel
 
 from ..choices import FEEDING_CHOICES
 
-from .infant_birth import InfantBirth
+from microbiome.models.microbiome_infant import InfantBirth
 
 
 class InfantBirthFeedVaccine(BaseUuidModel):
@@ -34,4 +34,5 @@ class InfantBirthFeedVaccine(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_infantbirthfeedvaccine"
         verbose_name = "Infant Birth Feeding & Vaccination"

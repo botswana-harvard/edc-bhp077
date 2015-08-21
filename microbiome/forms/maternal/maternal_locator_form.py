@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from ...models.maternal import MaternalLocator
+from microbiome.models.microbiome_maternal import MaternalLocator
 
 
 class MaternalLocatorForm(ModelForm):

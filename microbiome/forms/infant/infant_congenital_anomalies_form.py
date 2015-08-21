@@ -1,11 +1,12 @@
 from django.forms.models import ModelForm
 
-from ...models.infant import (InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
-                              InfantCleftDisorderItems, InfantMouthUpGastrointestinalItems,
-                              InfantCardiovascularDisorderItems, InfantRespiratoryDefectItems, InfantLowerGastrointestinalItems,
-                              InfantFemaleGenitalAnomalyItems, InfantMaleGenitalAnomalyItems, InfantMusculoskeletalAbnormalItems,
-                              InfantTrisomiesChromosomeItems, InfantOtherAbnormalityItems, InfantSkinAbnormalItems,
-                              InfantRenalAnomalyItems)
+from microbiome.models.microbiome_infant import (
+    InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
+    InfantCleftDisorderItems, InfantMouthUpGastrointestinalItems,
+    InfantCardiovascularDisorderItems, InfantRespiratoryDefectItems, InfantLowerGastrointestinalItems,
+    InfantFemaleGenitalAnomalyItems, InfantMaleGenitalAnomalyItems, InfantMusculoskeletalAbnormalItems,
+    InfantTrisomiesChromosomeItems, InfantOtherAbnormalityItems, InfantSkinAbnormalItems,
+    InfantRenalAnomalyItems)
 
 
 class InfantCongenitalAnomaliesForm(ModelForm):

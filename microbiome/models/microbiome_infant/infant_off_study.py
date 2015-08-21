@@ -5,7 +5,7 @@ from edc_base.model.validators import (datetime_not_before_study_start, datetime
                                        datetime_not_future)
 from edc_constants.choices import YES_NO, YES
 
-from .infant_visit import InfantVisit
+from microbiome.models.microbiome_infant import InfantVisit
 
 
 class InfantOffStudy(BaseUuidModel):
@@ -46,4 +46,5 @@ class InfantOffStudy(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_infantoffstudy"
         verbose_name = "Infant Off-Study"

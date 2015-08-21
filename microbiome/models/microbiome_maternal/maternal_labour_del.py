@@ -149,6 +149,7 @@ class MaternalLabourDel(BaseUuidModel):
 
     class Meta:
         app_label = 'microbiome'
+        table_name = "micro_maternallabourdel"
         verbose_name = "Maternal Labour & Delivery"
 
 
@@ -198,6 +199,7 @@ class MaternalLabDelMed(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternallabdelmed"
         verbose_name = "Maternal Labour & Delivery: MedHistory"
 
 
@@ -270,6 +272,7 @@ class MaternalLabDelClinic(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternallabdelclinic"
         verbose_name = "Maternal Labour & Delivery: ClinHist"
 
 
@@ -299,6 +302,7 @@ class MaternalLabDelDx(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternallabdeldx"
         verbose_name = "Maternal Labour & Delivery: Preg Dx"
 
 
@@ -333,4 +337,5 @@ class MaternalLabDelDxT (BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_maternallabdeldxt"
         verbose_name = "Maternal Labour & Delivery: Preg DxT"

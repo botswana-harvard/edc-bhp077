@@ -45,4 +45,5 @@ class InfantVisit(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_infantvisit"
         verbose_name = "Infant Visit"

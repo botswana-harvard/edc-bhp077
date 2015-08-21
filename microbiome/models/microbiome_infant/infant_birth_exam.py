@@ -4,8 +4,8 @@ from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import (GENDER_UNDETERMINED, NORMAL_ABNORMAL, YES_NO_NOT_EVALUATED_NA,
                                    NORMAL_ABNORMAL_NOEXAM)
 
-from .infant_birth import InfantBirth
-from .infant_visit import InfantVisit
+from microbiome.models.microbiome_infant import InfantBirth
+from microbiome.models.microbiome_infant import InfantVisit
 
 
 class InfantBirthExam(BaseUuidModel):
@@ -143,4 +143,5 @@ class InfantBirthExam(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
+        table_name = "micro_infantbirthexam"
         verbose_name = "Infant Birth Record: Exam"
