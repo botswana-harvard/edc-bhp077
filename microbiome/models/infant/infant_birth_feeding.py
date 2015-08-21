@@ -33,5 +33,5 @@ class InfantBirthFeedVaccine(BaseUuidModel):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome"
         verbose_name = "Infant Birth Feeding & Vaccination"

@@ -45,5 +45,5 @@ class InfantBirth(BaseUuidModel):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome"
         verbose_name = "Infant Birth Record"
