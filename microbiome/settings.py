@@ -43,8 +43,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_crypto_fields',
     'edc_registration',
-#     'edc_appointment',
-#     'edc_consent',
+    'edc_appointment',
+    'edc_consent',
     'edc_identifier',
     'microbiome',
 )
