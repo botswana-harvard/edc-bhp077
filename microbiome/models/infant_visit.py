@@ -2,7 +2,7 @@ from django.db import models
 
 from edc_base.model.models import BaseUuidModel
 
-from microbiome.models.choices import (INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS, ALIVE_DEAD_UNKNOWN)
+from ..choices import (INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS, ALIVE_DEAD_UNKNOWN)
 
 
 class InfantVisit(BaseUuidModel):
@@ -45,5 +45,4 @@ class InfantVisit(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantvisit"
         verbose_name = "Infant Visit"

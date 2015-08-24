@@ -1,13 +1,13 @@
+from django_crypto_fields.fields import FirstnameField
 from django.core.validators import MinLengthValidator, MaxLengthValidator, RegexValidator
 from django.db import models
-from django_crypto_fields.fields import IdentityField, FirstnameField
 
 from edc_base.models import BaseUuidModel
-from edc_base.model.fields import IdentityTypeField
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future, dob_not_future)
+from edc_constants.choices import YES_NO, GENDER
 from edc_registration.models import RegisteredSubject
 
-from ..choices import (CHECKLIST_DISEASES, HIVRESULT_CHOICE, PREG_DELIVERED_CHOICE, YES_NO, GENDER)
+from ..choices import (CHECKLIST_DISEASES, HIVRESULT_CHOICE, PREG_DELIVERED_CHOICE)
 
 
 class MaternalEligibilityPre (BaseUuidModel):
@@ -29,18 +29,11 @@ class MaternalEligibilityPre (BaseUuidModel):
         help_text='Date and time of assessing eligibility'
     )
 
-#     first_name = FirstnameField(
-#         verbose_name='First name',
-#         validators=[RegexValidator("^[A-Z]{1,250}$", "Ensure first name is in CAPS and "
-#                                    "does not contain any spaces or numbers")],
-#         help_text="")
-    first_name = models.CharField(
+    first_name = FirstnameField(
         verbose_name='First name',
-        max_length=20,
         validators=[RegexValidator("^[A-Z]{1,250}$", "Ensure first name is in CAPS and "
                                    "does not contain any spaces or numbers")],
-        help_text=""
-    )
+        help_text="")
 
     initials = models.CharField(
         verbose_name='Initials',
@@ -149,13 +142,8 @@ class MaternalEligibilityPre (BaseUuidModel):
                   'enough and is not eligible.  If negative, eligible to join the study.'
     )
 
-    objects = models.Manager()
-
-    def save(self, *args, **kwargs):
-        super(MaternalEligibilityPre, self).save(*args, **kwargs)
-
-#     def __unicode__(self):
-#         return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
+    def __str__(self):
+        return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
 
     class Meta:
         app_label = "microbiome"

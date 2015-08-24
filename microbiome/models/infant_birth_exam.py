@@ -4,13 +4,13 @@ from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import (GENDER_UNDETERMINED, NORMAL_ABNORMAL, YES_NO_NOT_EVALUATED_NA,
                                    NORMAL_ABNORMAL_NOEXAM)
 
-from microbiome.models.microbiome_infant import InfantBirth
-from microbiome.models.microbiome_infant import InfantVisit
+from .infant_birth import InfantBirth
+from .infant_visit import InfantVisit
 
 
 class InfantBirthExam(BaseUuidModel):
 
-    """infant examiniation"""
+    """infant examination"""
 
     infant_visit = models.ForeignKey(InfantVisit)
 
@@ -37,6 +37,7 @@ class InfantBirthExam(BaseUuidModel):
 
     abnormal_activity = models.CharField(
         verbose_name="If abnormal (specify)",
+        max_length=100,
         blank=True,
         null=True,
     )
@@ -143,5 +144,4 @@ class InfantBirthExam(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantbirthexam"
         verbose_name = "Infant Birth Record: Exam"

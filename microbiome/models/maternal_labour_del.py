@@ -61,7 +61,7 @@ class MaternalLabourDel(BaseUuidModel):
 
     del_hosp_other = OtherCharField()
 
-    has_urine_tender = models.CharField(
+    has_uterine_tender = models.CharField(
         max_length=10,
         choices=YES_NO_UNKNOWN,
         verbose_name="Was uterine tenderness recorded? ",
@@ -89,11 +89,11 @@ class MaternalLabourDel(BaseUuidModel):
         help_text="( if 'YES' continue. Otherwise go to question 16 )",
     )
 
-    del_comp = models.ManyToManyField(
-        verbose_name="If so, select the complication ",
-        help_text="",
-
-    )
+#     del_comp = models.ManyToManyField(
+#         verbose_name="If so, select the complication ",
+#         help_text="",
+#
+#     )
 
     del_comp_other = models.TextField(
         max_length=250,
@@ -149,7 +149,6 @@ class MaternalLabourDel(BaseUuidModel):
 
     class Meta:
         app_label = 'microbiome'
-        table_name = "micro_maternallabourdel"
         verbose_name = "Maternal Labour & Delivery"
 
 
@@ -165,10 +164,10 @@ class MaternalLabDelMed(BaseUuidModel):
         help_text="if yes answer Question 4, otherwise go to Question 6",
     )
 
-    health_cond = models.ManyToManyField(
-        verbose_name="Select all that apply ",
-        help_text="",
-    )
+#     health_cond = models.ManyToManyField(
+#         verbose_name="Select all that apply ",
+#         help_text="",
+#     )
 
     health_cond_other = OtherCharField()
     has_ob_comp = models.CharField(
@@ -179,10 +178,10 @@ class MaternalLabDelMed(BaseUuidModel):
         help_text="",
     )
 
-    ob_comp = models.ManyToManyField(
-        verbose_name="Select all that apply",
-        help_text="",
-    )
+#     ob_comp = models.ManyToManyField(
+#         verbose_name="Select all that apply",
+#         help_text="",
+#     )
 
     ob_comp_other = models.TextField(
         max_length=250,
@@ -199,7 +198,6 @@ class MaternalLabDelMed(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_maternallabdelmed"
         verbose_name = "Maternal Labour & Delivery: MedHistory"
 
 
@@ -258,10 +256,10 @@ class MaternalLabDelClinic(BaseUuidModel):
         help_text="( if 'YES' continue. Otherwise go to question 11 )",
     )
 
-    suppliment = models.ManyToManyField(
-        verbose_name="Select all that apply ",
-        help_text="",
-    )
+#     suppliment = models.ManyToManyField(
+#         verbose_name="Select all that apply ",
+#         help_text="",
+#     )
 
     comment = models.TextField(
         max_length=250,
@@ -272,7 +270,6 @@ class MaternalLabDelClinic(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_maternallabdelclinic"
         verbose_name = "Maternal Labour & Delivery: ClinHist"
 
 
@@ -296,13 +293,12 @@ class MaternalLabDelDx(BaseUuidModel):
         help_text="If yes, answer 4, otherwise go to Question 5",
     )
 
-    wcs_dx_adult = models.ManyToManyField(
-        verbose_name="List any new WHO Stage III/IV diagnoses that are not reported in Question 3 below:  ",
-    )
+#     wcs_dx_adult = models.ManyToManyField(
+#         verbose_name="List any new WHO Stage III/IV diagnoses that are not reported in Question 3 below:  ",
+#     )
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_maternallabdeldx"
         verbose_name = "Maternal Labour & Delivery: Preg Dx"
 
 
@@ -337,5 +333,4 @@ class MaternalLabDelDxT (BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_maternallabdeldxt"
         verbose_name = "Maternal Labour & Delivery: Preg DxT"

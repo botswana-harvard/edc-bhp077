@@ -4,12 +4,15 @@ from edc_base.model.models import BaseUuidModel
 
 from ..choices import FEEDING_CHOICES
 
-from microbiome.models.microbiome_infant import InfantBirth
+from .infant_birth import InfantBirth
+from .infant_visit import InfantVisit
 
 
 class InfantBirthFeedVaccine(BaseUuidModel):
 
     """infant feeding"""
+
+    infant_visit = models.ForeignKey(InfantVisit)
 
     infant_birth = models.ForeignKey(InfantBirth)
 
@@ -22,6 +25,7 @@ class InfantBirthFeedVaccine(BaseUuidModel):
 
     vaccination = models.CharField(
         verbose_name="Since delivery, did the child receive any of the following vaccinations",
+        max_length=100,
         help_text="Select all that apply",
     )
 
@@ -34,5 +38,4 @@ class InfantBirthFeedVaccine(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantbirthfeedvaccine"
         verbose_name = "Infant Birth Feeding & Vaccination"

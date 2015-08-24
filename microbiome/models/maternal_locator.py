@@ -6,7 +6,7 @@ from edc_base.model.validators import CellNumber, TelephoneNumber
 from edc_base.model.fields import OtherCharField
 from edc_locator.models import BaseLocator
 
-from microbiome.models.microbiome_maternal import MaternalVisit
+from .maternal_visit import MaternalVisit
 
 
 class MaternalLocator(BaseLocator):
@@ -56,5 +56,4 @@ class MaternalLocator(BaseLocator):
 
     class Meta:
         verbose_name = 'Maternal Locator'
-        table_name = 'micro_maternallocator'
         app_label = 'microbiome'

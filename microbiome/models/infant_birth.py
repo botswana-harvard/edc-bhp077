@@ -5,12 +5,12 @@ from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import GENDER_UNDETERMINED
 
-from microbiome.models.microbiome_maternal import MaternalLabourDel
+from .maternal_labour_del import MaternalLabourDel
 
 
 class InfantBirth(BaseUuidModel):
 
-    maternal_lab_del = models.ForeignKey(
+    maternal_labour_del = models.ForeignKey(
         MaternalLabourDel,
         verbose_name="Mother's delivery record"
     )
@@ -46,5 +46,4 @@ class InfantBirth(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantbirth"
         verbose_name = "Infant Birth Record"
