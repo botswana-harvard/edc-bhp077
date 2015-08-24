@@ -20,9 +20,3 @@ class TestMicrobiomeHomePageSelenium(BaseSeleniumTest):
         self.login()
         martenal_link_text = self.browser.find_element_by_link_text('INFANT').text
         self.assertEqual('INFANT', martenal_link_text)
-
-    def test_martenal_dashboard_link(self):
-        "Assert martenal image link."
-        martenal_image_link = self.browser.find_element_by_xpath("//img[contains(@src, 'martenal.jpeg')]/parent::a")
-        martenal_image_link.click()
-        self.browser.save_screenshot('microbiome/screenshots/martenal_image_link.png')
