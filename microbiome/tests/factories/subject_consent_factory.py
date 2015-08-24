@@ -1,22 +1,22 @@
 import factory
-from datetime import datetime, date
-from edc.testing.tests.factories.test_consent_factory import BaseConsentFactory
-from edc.subject.registration.tests.factories import RegisteredSubjectFactory
+from django.utils import timezone
+from edc_registration.tests.factories import RegisteredSubjectFactory
+
 from ...models import SubjectConsent
-from apps.bcpp_household_member.tests.factories import HouseholdMemberFactory
+from .maternal_eligibility_pre_factory import MaternalEligibilityPreFactory
 
-
-class SubjectConsentFactory(BaseConsentFactory):
+class SubjectConsentFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = SubjectConsent
 
     registered_subject = factory.SubFactory(RegisteredSubjectFactory)
+    maternal_eligibility_pre = factory.SubFactory(MaternalEligibilityPreFactory)
     gender = 'M'
-    dob = date(1980, 01, 01)
+    dob = dob = timezone.datetime(1980, 1, 10).date()
     initials = 'XX'
     subject_identifier = None
-    consent_datetime = datetime.today()
+    consent_datetime = timezone.now()
     may_store_samples = 'Yes'
     is_literate = 'Yes'
     is_incarcerated = 'No'

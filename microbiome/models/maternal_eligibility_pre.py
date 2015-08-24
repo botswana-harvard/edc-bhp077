@@ -1,6 +1,11 @@
 from django_crypto_fields.fields import FirstnameField, IdentityField
 from django.core.validators import MinLengthValidator, MaxLengthValidator, RegexValidator
 from django.db import models
+from django.apps import apps
+try:
+    get_model = apps.get_model
+except ImportError:
+    from django.db.models.loading import get_model
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 
@@ -71,7 +76,7 @@ class MaternalEligibilityPre (BaseUuidModel):
         null=True,
         blank=True,
         help_text="Use Omang, Passport number, driver's license number or Omang receipt number"
-        )
+    )
 
 
 #     identity_type = IdentityTypeField(
@@ -131,7 +136,7 @@ class MaternalEligibilityPre (BaseUuidModel):
                   'she must undergo  rapid testing. If positive, will not have been on treatment sufficiently long '
                   'enough and is not eligible.  If negative, eligible to join the study.'
     )
-    
+
     internal_identifier = models.CharField(
         max_length=36,
         null=True,
@@ -139,7 +144,14 @@ class MaternalEligibilityPre (BaseUuidModel):
         editable=False,
         help_text='Identifier to track registered subject between eligibility pre/post and consent'
     )
-    
+
+    def save(self, *args, **kwargs):
+        SubjectConsent = get_model('microbiome', 'SubjectConsent')
+        consent = SubjectConsent.objects.filter(maternal_eligibility_pre=self)
+        if consent.exists() and consent[0].is_verified:
+            raise TypeError('You can only edit eligibility if the maternal consent has not been verified yet')
+        super(MaternalEligibilityPre, self).save(*args, **kwargs)
+
     @property
     def age_in_years(self):
         return relativedelta(timezone.now().date(), self.dob).years
@@ -161,8 +173,9 @@ class MaternalEligibilityPre (BaseUuidModel):
             return False
         else:
             return True
-    
-    def get_update_registered_subject(self):
+
+    def get_create_registered_subject_post_save(self):
+        # You need to call this in a post save because self.id is None when creating a new instance.
         if not self.internal_identifier:
             self.internal_identifier = self.id
             try:
@@ -178,13 +191,17 @@ class MaternalEligibilityPre (BaseUuidModel):
                     initials=self.initials,
                     gender=self.gender,
                     subject_type='subject',
-                    internal_identifier = self.internal_identifier,
+                    registration_identifier=self.internal_identifier,
                     registration_datetime=self.created,
                     user_created=self.user_created,
-                    registration_status='study_potential')
-            # set registered_subject for this 
+                    registration_status='study_potential'
+                )
+            # set registered_subject for this
             self.registered_subject = registered_subject
-            
+            # Because we are using self.internal_identifier, this method will only be exercuted once.
+            # You do not have to worry about calling save in a post save signal method.
+            self.save()
+
     def __str__(self):
         return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
 

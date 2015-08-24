@@ -1,4 +1,11 @@
 NOT_APPLICABLE = 'N/A'
+UNKNOWN = 'Unknown'
+
+YES_NO_UNKNOWN = (
+    ('Yes', 'Yes'),
+    ('No', 'No'),
+    (UNKNOWN, UNKNOWN),
+)
 
 CHECKLIST_DISEASES = (
     (NOT_APPLICABLE, 'Not Applicable'),

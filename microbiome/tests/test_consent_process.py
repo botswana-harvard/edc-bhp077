@@ -5,10 +5,17 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from .factories import MaternalEligibilityPreFactory
+from edc_registration.models import RegisteredSubject
+
+from .factories import MaternalEligibilityPreFactory, SubjectConsentFactory
 
 
 class TestConsentProcess(TestCase):
+    
+    def test_creates_registered_subject(self):
+        pre_eligibility = MaternalEligibilityPreFactory()
+        self.assertEqual(RegisteredSubject.objects.filter(
+            registration_identifier=pre_eligibility.internal_identifier).count(), 1)
         
     def test_passes_pre_eligibility_pregnant(self):
         pre_eligibility = MaternalEligibilityPreFactory(currently_pregnant='pregnant')
@@ -46,9 +53,9 @@ class TestConsentProcess(TestCase):
         pre_eligibility.rapid_test_result = 'NEG'
         self.assertTrue(pre_eligibility.is_eligible)
     
-#     def test_passes_pre_eligibility_and_consents(self):
-#         pre_eligibility = MaternalEligibilityPreFactory(currently_pregnant='pregnant')
-#         self.assertTrue(pre_eligibility.is_eligible)
-#         
-#         subject_consent = 
+    def test_passes_pre_eligibility_and_consents(self):
+        pre_eligibility = MaternalEligibilityPreFactory(currently_pregnant='pregnant')
+        self.assertTrue(pre_eligibility.is_eligible)
+         
+        subject_consent = SubjectConsentFactory(maternal_eligibility_pre=pre_eligibility)
     

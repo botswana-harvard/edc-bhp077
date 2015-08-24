@@ -1,6 +1,6 @@
-from .subject_consent import SubjectConsent
 from .maternal_eligibility_pre import MaternalEligibilityPre
 from .maternal_eligibility_post import MaternalEligibilityPost
+from .subject_consent import SubjectConsent
 from .maternal_arv_preg import (
     MaternalArvPreg, MaternalArvPregHistory, MaternalArvPPHistory, MaternalArv)
 from .maternal_labour_del import MaternalLabourDel, MaternalLabDelDx, MaternalLabDelDxT

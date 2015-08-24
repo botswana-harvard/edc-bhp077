@@ -4,7 +4,7 @@ from django.db import transaction
 from django.dispatch import receiver
 from ..exceptions import CreateInfantEligibilityError
 
-from ..models import MaternalEligibilityPost, InfantEligibility
+from ..models import MaternalEligibilityPost, MaternalEligibilityPre, InfantEligibility
 
 
 @receiver(post_save, weak=False, dispatch_uid='maternal_eligibility_post_save')
@@ -21,6 +21,11 @@ def maternal_eligibility_post_save(sender, instance, raw, created, using, update
                         InfantEligibility.objects.create(maternal_enrollment_post=instance)
             except:
                 raise CreateInfantEligibilityError(
-                          'An ERROR occurred while attempting to create infant eligibility for {}'.format(instance))
-                
-            
+                    'An ERROR occurred while attempting to create infant eligibility for {}'.format(instance)
+                )
+
+@receiver(post_save, weak=False, dispatch_uid='get_create_registered_subject_post_save')
+def get_create_registered_subject_post_save(sender, instance, raw, created, using, **kwargs):
+    if not raw:
+        if isinstance(instance, MaternalEligibilityPre):
+            instance.get_create_registered_subject_post_save()

@@ -61,5 +61,4 @@ class MaternalEnrollArv(BaseScheduledVisitModel):
         return reverse('admin:mpepu_maternal_maternalenrollarv_change', args=(self.id,))
 
     class Meta:
-        app_label = "mpepu_maternal"
-        verbose_name = "Maternal Enrollment: ARV History"
+        app_label = 'microbiome'
