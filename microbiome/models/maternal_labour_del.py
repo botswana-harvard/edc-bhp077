@@ -61,7 +61,7 @@ class MaternalLabourDel(BaseUuidModel):
 
     del_hosp_other = OtherCharField()
 
-    has_urine_tender = models.CharField(
+    has_uterine_tender = models.CharField(
         max_length=10,
         choices=YES_NO_UNKNOWN,
         verbose_name="Was uterine tenderness recorded? ",
@@ -92,7 +92,7 @@ class MaternalLabourDel(BaseUuidModel):
 #     del_comp = models.ManyToManyField(
 #         verbose_name="If so, select the complication ",
 #         help_text="",
-# 
+#
 #     )
 
     del_comp_other = models.TextField(
