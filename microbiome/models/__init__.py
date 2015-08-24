@@ -6,7 +6,7 @@ from .maternal_arv_preg import (
 from .maternal_labour_del import MaternalLabourDel, MaternalLabDelDx, MaternalLabDelDxT
 # from .maternal_locator import MaternalLocator
 
-
+from .infant_eligibility import InfantEligibility
 from .infant_birth import InfantBirth
 from .infant_death import InfantDeath
 from .infant_off_study import InfantOffStudy

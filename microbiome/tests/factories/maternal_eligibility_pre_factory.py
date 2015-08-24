@@ -17,7 +17,8 @@ class MaternalEligibilityPreFactory(factory.DjangoModelFactory):
     initials = 'NN'
     has_identity = 'Yes'
     citizen = 'Yes'
-    disease = 'tuberculosis'
-    pregnant_delivered = 'pregnant'
+    disease = 'N/A'
+    pregnancy_weeks = 37
+    currently_pregnant = 'pregnant'
     verbal_hiv_status = 'POS'
     rapid_test_result = 'POS'

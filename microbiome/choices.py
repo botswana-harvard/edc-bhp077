@@ -1,4 +1,7 @@
+NOT_APPLICABLE = 'N/A'
+
 CHECKLIST_DISEASES = (
+    (NOT_APPLICABLE, 'Not Applicable'),
     ('tuberculosis', 'Tuberculosis'),
     ('diabetes ', 'Diabetes '),
 )
