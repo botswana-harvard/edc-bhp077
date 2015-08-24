@@ -5,7 +5,7 @@ from edc_base.models import BaseUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
 from edc_registration.models import RegisteredSubject
 
-from ..choices import (BIRTH_TYPE)
+from ..choices import BIRTH_TYPE
 
 
 class MaternalEligibilityPost (BaseUuidModel):
@@ -29,7 +29,7 @@ class MaternalEligibilityPost (BaseUuidModel):
     )
 
     days_post_natal = models.IntegerField(
-        verbose_name="3.How many days postnatal? ",
+        verbose_name="How many days postnatal? ",
         help_text="if >34 days, ineligible",
         validators=[
             MaxValueValidator(34),
@@ -56,11 +56,8 @@ class MaternalEligibilityPost (BaseUuidModel):
 
     objects = models.Manager()
 
-    def save(self, *args, **kwargs):
-        super(MaternalEligibilityPost, self).save(*args, **kwargs)
-
-#     def __unicode__(self):
-#         return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
+    def __str__(self):
+        return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
 
     class Meta:
         app_label = "microbiome"

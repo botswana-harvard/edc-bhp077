@@ -10,12 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from unipath import Path
 from django.utils import timezone
 
-PROJECT_NAME = 'Getresults'
+PROJECT_NAME = 'Microbiome'
 
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
@@ -42,7 +41,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_crypto_fields',
+    'edc_content_type_map',  # to be removed
     'edc_registration',
+    'edc_entry',
+    'edc_visit_schedule',
     'edc_appointment',
     'edc_consent',
     'edc_identifier',
@@ -122,9 +124,3 @@ STATICFILES_FINDERS = (
 GIT_DIR = BASE_DIR.ancestor(1)
 
 STUDY_OPEN_DATETIME = timezone.datetime(2015, 8, 19)
-
-RECEIVE_IDENTIFIER_SEED = ('AA', '00000')
-RECEIVE_IDENTIFIER_ALPHA_PATTERN = r'^[A-Z]{2}$'
-RECEIVE_IDENTIFIER_NUMERIC_PATTERN = r'^[0-9]{5}$'
-
-ALIQUOT_IDENTIFIER_PREFIX_PATTERN = RECEIVE_IDENTIFIER_ALPHA_PATTERN[1:-1] + RECEIVE_IDENTIFIER_NUMERIC_PATTERN[1:-1]

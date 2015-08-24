@@ -12,7 +12,7 @@ from ..choices import (CNS_ABNORMALITIES, FACIAL_DEFECT, CLEFT_DISORDER, MOUTH_U
                        SKIN_ABNORMALITY, TRISOME_CHROSOMESOME_ABNORMALITY, OTHER_DEFECT)
 
 
-from microbiome.models.microbiome_infant import InfantVisit
+from .infant_visit import InfantVisit
 
 
 class InfantCongenitalAnomalies(BaseUuidModel):
@@ -21,13 +21,10 @@ class InfantCongenitalAnomalies(BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantcongenitalanomalies"
         verbose_name = "Infant Congenital Anomalies"
 
 
 class BaseCnsItem(BaseUuidModel):
-
-    """Adds in method to get mother's subject_identifier for confirming the consent (see bhp_consent)."""
 
     report_datetime = models.DateTimeField(
         verbose_name="Visit Date and Time",
@@ -40,7 +37,6 @@ class BaseCnsItem(BaseUuidModel):
 
     class Meta:
         abstract = True
-        table_name = "micro_basecnsitem"
 
 
 class InfantCnsAbnormalityItems(BaseCnsItem):
@@ -72,7 +68,6 @@ class InfantCnsAbnormalityItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantcnsabnormalityitems"
         verbose_name = "Infant Congenital Anomalies:Cns"
 
 
@@ -105,7 +100,6 @@ class InfantFacialDefectItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantfacialdefectitems"
         verbose_name = "Infant Congenital Anomalies:Facial"
 
 
@@ -138,7 +132,6 @@ class InfantCleftDisorderItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantcleftdisorderitems"
         verbose_name = "Infant Congenital Anomalies:Cleft"
 
 
@@ -171,7 +164,6 @@ class InfantMouthUpGastrointestinalItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantmouthupgastrointestinalitems"
         verbose_name = "Infant Congenital Anomalies:MouthUpp"
 
 
@@ -204,7 +196,6 @@ class InfantCardiovascularDisorderItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantcardiovasculardisorderitems"
         verbose_name = "Infant Congenital Anomalies:Cardio"
 
 
@@ -237,7 +228,6 @@ class InfantRespiratoryDefectItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantrespiratorydefectitems"
         verbose_name = "Infant Congenital Anomalies:Respitarory"
 
 
@@ -270,7 +260,6 @@ class InfantLowerGastrointestinalItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantlowergastrointestinalitems"
         verbose_name = "Infant Congenital Anomalies:LowerGast"
 
 
@@ -303,7 +292,6 @@ class InfantFemaleGenitalAnomalyItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantfemalegenitalanomalyitems"
         verbose_name = "Infant Congenital Anomalies:FemaleGen"
 
 
@@ -336,7 +324,6 @@ class InfantMaleGenitalAnomalyItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantmalegenitalanomalyitems"
         verbose_name = "Infant Congenital Anomalies:MaleGen"
 
 
@@ -369,7 +356,6 @@ class InfantRenalAnomalyItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantrenalanomalyitems"
         verbose_name = "Infant Congenital Anomalies:Renal"
 
 
@@ -402,7 +388,6 @@ class InfantMusculoskeletalAbnormalItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantmusculoskeletalabnormalitems"
         verbose_name = "Infant Congenital Anomalies:Musculosk"
 
 
@@ -437,7 +422,6 @@ class InfantSkinAbnormalItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantskinabnormalitems"
         verbose_name = "Infant Congenital Anomalies:Skin"
 
 
@@ -470,7 +454,6 @@ class InfantTrisomiesChromosomeItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infanttrisomieschromosomeitems"
         verbose_name = "Infant Congenital Anomalies:Trisomes"
 
 
@@ -503,5 +486,4 @@ class InfantOtherAbnormalityItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome"
-        table_name = "micro_infantotherabnormalityitems"
         verbose_name = "Infant Congenital Anomalies:Other"
