@@ -10,7 +10,7 @@ from .maternal_labour_del import MaternalLabourDel
 
 class InfantBirth(BaseUuidModel):
 
-    maternal_lab_del = models.ForeignKey(
+    maternal_labour_del = models.ForeignKey(
         MaternalLabourDel,
         verbose_name="Mother's delivery record"
     )
