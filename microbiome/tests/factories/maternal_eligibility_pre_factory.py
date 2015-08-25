@@ -13,7 +13,7 @@ class MaternalEligibilityPreFactory(factory.DjangoModelFactory):
     registered_subject = factory.SubFactory(RegisteredSubjectFactory)
     dob = timezone.datetime(1997, 10, 10).date()
     report_datetime = timezone.now()
-    gender = 'M'
+    gender = 'F'
     initials = 'NN'
     has_identity = 'Yes'
     citizen = 'Yes'
