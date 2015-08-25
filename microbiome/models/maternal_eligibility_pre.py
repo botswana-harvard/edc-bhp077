@@ -70,23 +70,6 @@ class MaternalEligibilityPre (BaseUuidModel):
                   'If \'NO\' participant will not be enrolled.'
     )
 
-    identity = IdentityField(
-        verbose_name="Identity number (OMANG, etc)",
-        unique=True,
-        null=True,
-        blank=True,
-        help_text="Use Omang, Passport number, driver's license number or Omang receipt number"
-    )
-
-
-#     identity_type = IdentityTypeField(
-#         null=True)
-    identity_type = models.CharField(
-        blank=True,
-        max_length=10,
-        null=True
-    )
-
     citizen = models.CharField(
         verbose_name="Are you a Botswana citizen? ",
         max_length=7,
