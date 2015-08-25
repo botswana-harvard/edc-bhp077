@@ -13,15 +13,15 @@ class InfantEligibility (BaseUuidModel):
     """A model completed by the user for an infant delivered to an
        HIV +ve mother to determine study eligibility."""
 
-    maternal_enrollment = models.ForeignKey(
+    maternal_enrollment_post = models.ForeignKey(
         MaternalEnrollmentPost,
-        null=True,
-        blank=True,
         help_text=''
     )
 
     report_datetime = models.DateTimeField(
         verbose_name="Report Date and Time",
+        null=True,
+        blank=True,
         validators=[
             datetime_not_before_study_start,
             datetime_not_future,
@@ -31,6 +31,8 @@ class InfantEligibility (BaseUuidModel):
 
     infant_hiv_result = models.CharField(
         verbose_name=_("(Interviewer) What is the infant's hiv result?"),
+        null=True,
+        blank=True,
         max_length=30,
         choices=HIVRESULT_CHOICE,
         help_text=_('If the infant is HIV +ve then mother-infant pair is not eligible.')

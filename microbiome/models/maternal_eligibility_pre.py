@@ -1,6 +1,13 @@
-from django_crypto_fields.fields import FirstnameField
+from django_crypto_fields.fields import FirstnameField, IdentityField
 from django.core.validators import MinLengthValidator, MaxLengthValidator, RegexValidator
 from django.db import models
+from django.apps import apps
+try:
+    get_model = apps.get_model
+except ImportError:
+    from django.db.models.loading import get_model
+from dateutil.relativedelta import relativedelta
+from django.utils import timezone
 
 from edc_base.models import BaseUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future, dob_not_future)
@@ -15,8 +22,6 @@ class MaternalEligibilityPre (BaseUuidModel):
 
     registered_subject = models.OneToOneField(
         RegisteredSubject,
-        null=True,
-        blank=True,
         help_text=''
     )
 
@@ -48,8 +53,6 @@ class MaternalEligibilityPre (BaseUuidModel):
     dob = models.DateField(
         verbose_name="Date of birth",
         validators=[dob_not_future, ],
-        null=True,
-        blank=True,
         help_text="Format is YYYY-MM-DD."
     )
 
@@ -67,26 +70,20 @@ class MaternalEligibilityPre (BaseUuidModel):
                   'If \'NO\' participant will not be enrolled.'
     )
 
-#     identity = IdentityField(
-#         verbose_name=_("Identity number (OMANG, etc)"),
-#         unique=True,
-#         null=True,
-#         blank=True,
-#         help_text=("Use Omang, Passport number, driver's license number or Omang receipt number")
-#         )
-    identity = models.CharField(
+    identity = IdentityField(
         verbose_name="Identity number (OMANG, etc)",
-        max_length=20,
         unique=True,
         null=True,
         blank=True,
         help_text="Use Omang, Passport number, driver's license number or Omang receipt number"
     )
 
+
 #     identity_type = IdentityTypeField(
 #         null=True)
     identity_type = models.CharField(
-        max_length=20,
+        blank=True,
+        max_length=10,
         null=True
     )
 
@@ -114,12 +111,10 @@ class MaternalEligibilityPre (BaseUuidModel):
 
     pregnancy_weeks = models.IntegerField(
         verbose_name='If pregnant, how many weeks in to the pregnancy?',
-        null=True,
-        blank=True,
         help_text='Must be at least 36 weeks pregnant.'
     )
 
-    hiv_status = models.CharField(
+    verbal_hiv_status = models.CharField(
         verbose_name="What is your current HIV status?",
         max_length=30,
         choices=HIVRESULT_CHOICE,
@@ -134,13 +129,78 @@ class MaternalEligibilityPre (BaseUuidModel):
     )
 
     rapid_test_result = models.CharField(
-        verbose_name="(Interviewer) What is the rapid test result?",
+        verbose_name="(Interviewer: Only for those without HIV+ documentation.) What is the rapid test result?",
         max_length=30,
         choices=HIVRESULT_CHOICE,
         help_text='If mother has no evidence of HIV status or has not tested on or after 32 weeks gestational age, '
                   'she must undergo  rapid testing. If positive, will not have been on treatment sufficiently long '
                   'enough and is not eligible.  If negative, eligible to join the study.'
     )
+
+    internal_identifier = models.CharField(
+        max_length=36,
+        null=True,
+        default=None,
+        editable=False,
+        help_text='Identifier to track registered subject between eligibility pre/post and consent'
+    )
+
+    def save(self, *args, **kwargs):
+        SubjectConsent = get_model('microbiome', 'SubjectConsent')
+        consent = SubjectConsent.objects.filter(maternal_eligibility_pre=self)
+        if consent.exists() and consent[0].is_verified:
+            raise TypeError('You can only edit eligibility if the maternal consent has not been verified yet')
+        super(MaternalEligibilityPre, self).save(*args, **kwargs)
+
+    @property
+    def age_in_years(self):
+        return relativedelta(timezone.now().date(), self.dob).years
+
+    @property
+    def is_eligible(self):
+        """Evaluates the initial maternal eligibility criteria"""
+        if not (self.age_in_years < 18):
+            return False
+        elif self.has_identity.lower() == 'no':
+            return False
+        elif self.citizen.lower() == 'no':
+            return False
+        elif self.disease.lower() != 'n/a':
+            return False
+        elif self.pregnancy_weeks < 36:
+            return False
+        elif self.verbal_hiv_status.lower() == 'neg' and self.rapid_test_result.lower() == 'pos':
+            return False
+        else:
+            return True
+
+    def get_create_registered_subject_post_save(self):
+        # You need to call this in a post save because self.id is None when creating a new instance.
+        if not self.internal_identifier:
+            self.internal_identifier = self.id
+            try:
+                # You want to use as few values as possible here that will guarantee
+                # uniqueness, so that data cleaning doesnt break the function.
+                registered_subject = RegisteredSubject.objects.get(
+                    registration_identifier=self.internal_identifier)
+            except RegisteredSubject.DoesNotExist:
+                # No consent yet, so cannot record dob, identity etc.
+                registered_subject = RegisteredSubject.objects.create(
+                    created=self.created,
+                    first_name=self.first_name,
+                    initials=self.initials,
+                    gender=self.gender,
+                    subject_type='subject',
+                    registration_identifier=self.internal_identifier,
+                    registration_datetime=self.created,
+                    user_created=self.user_created,
+                    registration_status='study_potential'
+                )
+            # set registered_subject for this
+            self.registered_subject = registered_subject
+            # Because we are using self.internal_identifier, this method will only be exercuted once.
+            # You do not have to worry about calling save in a post save signal method.
+            self.save()
 
     def __str__(self):
         return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
