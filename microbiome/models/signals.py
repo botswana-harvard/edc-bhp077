@@ -4,7 +4,7 @@ from django.db import transaction
 from django.dispatch import receiver
 from ..exceptions import CreateInfantEligibilityError
 
-from ..models import MaternalEligibilityPost, MaternalEligibilityPre, InfantEligibility
+from ..models import MaternalEligibilityPost, MaternalEligibilityPre, InfantEligibility, SubjectConsent
 
 
 @receiver(post_save, weak=False, dispatch_uid='maternal_eligibility_post_save')
@@ -29,3 +29,18 @@ def get_create_registered_subject_post_save(sender, instance, raw, created, usin
     if not raw:
         if isinstance(instance, MaternalEligibilityPre):
             instance.get_create_registered_subject_post_save()
+
+@receiver(post_save, weak=False, dispatch_uid='update_registered_subject_from_consent_post_save')
+def update_registered_subject_from_consent_post_save(sender, instance, raw, created, using, **kwargs):
+    if not raw:
+        if isinstance(instance, SubjectConsent):
+            registered_subject = instance.maternal_eligibility_pre.registered_subject
+            registered_subject.first_name = instance.first_name,
+            registered_subject.last_name = instance.last_name,
+            registered_subject.initials = instance.initials,
+            registered_subject.gender = instance.gender,
+            registered_subject.dob = instance.dob,
+            registered_subject.identity = instance.identity,
+            registered_subject.identity_type = instance.identity_type
+            registered_subject.save()
+            
