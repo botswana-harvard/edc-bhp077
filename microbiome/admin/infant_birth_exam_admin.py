@@ -4,7 +4,7 @@ from ..models import InfantBirthExam
 
 
 @admin.register(InfantBirthExam)
-class InfantBirthExamAdmin():
+class InfantBirthExamAdmin(admin.ModelAdmin):
 
     list_display = (
         'infant_birth',

@@ -4,3 +4,4 @@ from .maternal_eligibility_post_admin import MaternalEligibilityPost
 from .infant_birth_arv_admin import InfantBirthArvAdmin
 from .infant_birth_exam_admin import InfantBirthExamAdmin
 from .infant_birth_feeding_admin import InfantBirthFeedVaccineAdmin
+from .infant_birth_admin import InfantBirthAdmin
