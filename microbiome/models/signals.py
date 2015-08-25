@@ -43,4 +43,3 @@ def update_registered_subject_from_consent_post_save(sender, instance, raw, crea
             registered_subject.identity = instance.identity,
             registered_subject.identity_type = instance.identity_type
             registered_subject.save()
-            

@@ -20,7 +20,6 @@ class SubjectConsent(BaseConsent):
     maternal_eligibility_pre = models.OneToOneField(
         MaternalEligibilityPre,
     )
-    
     identity = IdentityField(
         verbose_name="Identity number (OMANG, etc)",
         unique=True,
@@ -28,7 +27,6 @@ class SubjectConsent(BaseConsent):
         blank=True,
         help_text="Use Omang, Passport number, driver's license number or Omang receipt number"
     )
-    
     confirm_identity = IdentityField(
         verbose_name="Confirm identity",
         unique=True,
@@ -49,7 +47,7 @@ class SubjectConsent(BaseConsent):
                     'Attribute \'identity\' must match attribute \'confirm_identity\'. '
                     'Catch this error on the form'
                 )
-        #super(SubjectConsent, self).save(*args, **kwargs)
+        # super(SubjectConsent, self).save(*args, **kwargs)
 
     def matches_maternal_eligibility_pre(self, subject_consent, maternal_eligibility_pre, exception_cls=None):
         """Matches values in this consent against the pre maternal eligibility."""
