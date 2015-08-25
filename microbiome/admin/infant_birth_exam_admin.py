@@ -10,12 +10,12 @@ class InfantBirthExamAdmin(admin.ModelAdmin):
         'infant_birth',
         'gender', 'general_activity',
         'physical_exam_result',
-        'resp_exam'
+        'resp_exam',
     )
 
     list_filter = (
         'gender',
         'general_activity',
         'abnormal_activity',
-        'physical_exam_result'
+        'physical_exam_result',
     )

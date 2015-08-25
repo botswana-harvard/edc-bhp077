@@ -18,7 +18,7 @@ class InfantCongenitalAnomalies(admin.ModelAdmin):
 @admin.register(InfantCnsAbnormalityItems)
 class InfantCnsAbnormalityItemsAdmin(admin.ModelAdmin):
 
-    list_display = ('congenital_anomalies', 'abnormality_status')
+    list_display = ('congenital_anomalies', 'abnormality_status',)
 
     list_filter = ('cns_abnormality',)
 
