@@ -1,6 +1,5 @@
 import factory
 from django.utils import timezone
-from edc_registration.tests.factories import RegisteredSubjectFactory
 
 from ...models import SubjectConsent
 from .maternal_eligibility_pre_factory import MaternalEligibilityPreFactory
@@ -10,12 +9,15 @@ class SubjectConsentFactory(factory.DjangoModelFactory):
     class Meta:
         model = SubjectConsent
 
-    registered_subject = factory.SubFactory(RegisteredSubjectFactory)
     maternal_eligibility_pre = factory.SubFactory(MaternalEligibilityPreFactory)
+    subject_identifier = '077-35170005-2'
     gender = 'M'
     dob = dob = timezone.datetime(1980, 1, 10).date()
     initials = 'XX'
     subject_identifier = None
+    first_name = factory.Sequence(lambda n: 'first_name{0}'.format(n))
+    last_name = factory.Sequence(lambda n: 'last_name{0}'.format(n))
+    subject_type = 'subject'
     consent_datetime = timezone.now()
     may_store_samples = 'Yes'
     is_literate = 'Yes'
@@ -27,4 +29,3 @@ class SubjectConsentFactory(factory.DjangoModelFactory):
     is_verified = False
     identity = factory.Sequence(lambda n: 'identity{0}'.format(n))
     identity_type = (('OMANG', 'Omang'), ('DRIVERS', "Driver's License"), ('PASSPORT', 'Passport'), ('OMANG_RCPT', 'Omang Receipt'), ('OTHER', 'Other'))[0][0]
-    is_signed = True
