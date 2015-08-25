@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block main %}
+	
+    <div class="container">
+    	<div class="col-lg-12" style="width:100%; height:400px; margin-top:-2%; padding:-10%;">
+    		<div class="col-lg-12" style="border-buttom: 1px solid #A8A8A1; margin-buttom:3px;">
+    		<form action="{% url 'maternal_search' %}" enctype="multipart/form-data" method="post"  class="form-inline">
+    			{% csrf_token %}
+    			<div style="width:300px;float:right;margin-top:10px; margin-right:-1%; margin-buttom:3px;">
+    			   <label for="identifier_search"></label>
+					<input type="text" class="form-control" id="identifier_search" name="identifier_search" placeholder="Identifier">
+					<button type="submit" class="btn btn-primary" value="submit" name="submit" >Search</button>
+				</div>
+			</form>
+    		</div>
+    		{% if search %}
+	    		<div class="col-lg-12">
+	    			<table class="table">
+	    				<tr>
+	    					{% for title in header %} 
+	    						<th>{{title}}</th>
+	    					{%endfor%}
+	    				</tr>
+	    				{% for consent in consents_search_result %}
+						<tr>
+						  <td class="active">{{consent.subject_identifier}}</td>
+						  <td class="active">{{consent.consent_datetime}}</td>
+						  <td class="active">{{consent.first_name}}</td>
+						  <td class="active">{{consent.initials}}</td>
+						  <td class="active">{{consent.dob}}</td>
+						</tr>
+						{% endfor %}
+	    			</table>
+	    		</div>
+    		{% endif %}
+    	</div>
+	</div>
+{% endblock main %}
