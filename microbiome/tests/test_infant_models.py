@@ -55,11 +55,3 @@ class InfantModelTests(TestCase):
         basecns_item.report_datetime = timezone.now() + timedelta(days=1)
         with self.assertRaises(ValidationError):
             basecns_item.full_clean()
-
-    def test_cns_abn_date_before_study_start(self):
-        infant = InfantCongenitalAnomalies.objects.create(infant_visit=InfantVisitFactory())
-        basecns_item = InfantBirthCnsAbnItemFactory(congenital_anomalies=infant)
-        settings.STUDY_OPEN_DATETIME = timezone.now()
-        basecns_item.report_datetime = timezone.now() - timedelta(days=1)
-        with self.assertRaises(ValidationError):
-            basecns_item.full_clean()

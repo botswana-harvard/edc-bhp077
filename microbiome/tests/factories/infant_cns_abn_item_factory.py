@@ -12,4 +12,3 @@ class InfantBirthCnsAbnItemFactory(factory.DjangoModelFactory):
 
     report_datetime = timezone.now()
     cns_abnormality = 'Anencephaly'
-

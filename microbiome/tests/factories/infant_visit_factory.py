@@ -2,7 +2,7 @@ import factory
 
 from django.utils import timezone
 
-from ...models import InfantVisit
+from microbiome.models import InfantVisit
 
 
 class InfantVisitFactory(factory.DjangoModelFactory):

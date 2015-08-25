@@ -2,7 +2,8 @@ import factory
 from django.utils import timezone
 
 from ...models import InfantEligibility
-from ..factories import MaternalEligibilityPostFactory
+
+from .maternal_eligibility_post_factory import MaternalEligibilityPostFactory
 
 
 class InfantEligibilityFactory(factory.DjangoModelFactory):
