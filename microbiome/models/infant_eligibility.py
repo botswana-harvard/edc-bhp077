@@ -41,7 +41,7 @@ class InfantEligibility (BaseUuidModel):
     def save(self, *args, **kwargs):
         super(MaternalEnrollmentPost, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
 
     @property
