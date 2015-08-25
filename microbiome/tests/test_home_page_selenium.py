@@ -9,11 +9,11 @@ class TestMicrobiomeHomePageSelenium(BaseSeleniumTest):
         self.assertTrue('Microbiome', self.browser.title)
         self.browser.save_screenshot('microbiome/screenshots/home_page.png')
 
-    def test_martenal_toolbar_links(self):
-        '''Assert martenal link.'''
+    def test_maternal_toolbar_links(self):
+        '''Assert maternal link.'''
         self.login()
-        martenal_link_text = self.browser.find_element_by_link_text('MARTENAL').text
-        self.assertEqual('MARTENAL', martenal_link_text)
+        maternal_link_text = self.browser.find_element_by_link_text('MATERNAL').text
+        self.assertEqual('MATERNAL', maternal_link_text)
 
     def test_infant_toolbar_links(self):
         '''Assert infant link test.'''
