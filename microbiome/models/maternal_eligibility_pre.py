@@ -6,6 +6,7 @@ from edc_base.models import BaseUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
 from edc_constants.choices import GENDER
 
+
 class MaternalEligibilityPre (BaseUuidModel):
     """A model completed by the user that confirms basic eligibility. Before or after delivery."""
 

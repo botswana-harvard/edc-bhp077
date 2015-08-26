@@ -13,5 +13,5 @@ class MaternalLocatorAdmin(BaseModelAdmin):
                     'caretaker_tel')
     list_filter = ('care_clinic', )
     search_fields = ('care_clinic', )
-    radio_fields = {'has_caretaker_alt':admin.VERTICAL, }
+    radio_fields = {'has_caretaker_alt': admin.VERTICAL, }
 admin_site.register(MaternalLocator, MaternalLocatorAdmin)

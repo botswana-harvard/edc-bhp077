@@ -9,10 +9,10 @@ from .site import admin_site
 class MaternalEligibilityPostAdmin(BaseModelAdmin):
     form = MaternalEligibilityPostForm
     fields = ('registered_subject',
-              'report_datetime', 
+              'report_datetime',
               'days_post_natal',
               'weeks_of_gestation',
               'type_of_birth',
               'live_infants', )
-    radio_fields = {'type_of_birth':admin.VERTICAL, }
+    radio_fields = {'type_of_birth': admin.VERTICAL, }
 admin_site.register(MaternalEligibilityPost, MaternalEligibilityPostAdmin)

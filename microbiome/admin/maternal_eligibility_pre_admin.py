@@ -12,7 +12,7 @@ class MaternalEligibilityPreAdmin(BaseModelAdmin):
 
     fields = ('report_datetime',
               'gender',
-              'age_in_years'
-              'screening_identifier' )
+              'age_in_years',
+              'screening_identifier', )
     readonly_fields = ('screening_identifier',)
 admin_site.register(MaternalEligibilityPre, MaternalEligibilityPreAdmin)

@@ -11,16 +11,16 @@ class MaternalArvPregAdmin(BaseModelAdmin):
     form = MaternalArvPregForm
     list_display = ('took_arv', 'sd_nvp', 'start_pp')
     list_filter = ('took_arv', 'start_pp')
-    radio_fields = {'took_arv':admin.VERTICAL,
-                    'sd_nvp':admin.VERTICAL,
-                    'start_pp':admin.VERTICAL, }
+    radio_fields = {'took_arv': admin.VERTICAL,
+                    'sd_nvp': admin.VERTICAL,
+                    'start_pp': admin.VERTICAL, }
 admin_site.register(MaternalArvPreg, MaternalArvPregAdmin)
 
 
 class MaternalArvPregHistoryAdmin(BaseModelAdmin):
     form = MaternalArvPregHistoryForm
     list_display = ('is_interrupt', )
-    radio_fields = {'is_interrupt':admin.VERTICAL, }
+    radio_fields = {'is_interrupt': admin.VERTICAL, }
 admin_site.register(MaternalArvPregHistory, MaternalArvPregHistoryAdmin)
 
 
