@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from .site import admin_site
+
 from ..models import MaternalEligibilityPre
 
 
@@ -21,3 +23,5 @@ class MaternalEligibilityPreAdmin(admin.ModelAdmin):
         'evidence_pos_hiv_status',
         'rapid_test_result',
     )
+
+admin_site.register(MaternalEligibilityPre, MaternalEligibilityPreAdmin)

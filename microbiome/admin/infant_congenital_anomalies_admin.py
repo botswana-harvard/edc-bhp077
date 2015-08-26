@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from .site import admin_site
+
 from ..models import (
     InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
     InfantCleftDisorderItems, InfantMouthUpGastrointestinalItems, InfantCardiovascularDisorderItems,
@@ -9,87 +11,101 @@ from ..models import (
 )
 
 
-@admin.register(InfantCongenitalAnomalies)
-class InfantCongenitalAnomalies(admin.ModelAdmin):
+class InfantCongenitalAnomaliesAdmin(admin.ModelAdmin):
 
     list_display = ('infant_visit',)
 
+admin_site.register(InfantCongenitalAnomalies, InfantCongenitalAnomaliesAdmin)
 
-@admin.register(InfantCnsAbnormalityItems)
+
 class InfantCnsAbnormalityItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies', 'abnormality_status',)
 
     list_filter = ('cns_abnormality',)
 
+admin_site.register(InfantCnsAbnormalityItems, InfantCnsAbnormalityItemsAdmin)
 
-@admin.register(InfantFacialDefectItems)
+
 class InfantFacialDefectItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantFacialDefectItems, InfantFacialDefectItemsAdmin)
 
-@admin.register(InfantCleftDisorderItems)
+
 class InfantCleftDisorderItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantCleftDisorderItems, InfantCleftDisorderItemsAdmin)
 
-@admin.register(InfantMouthUpGastrointestinalItems)
+
 class InfantMouthUpGastrointestinalItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantMouthUpGastrointestinalItems, InfantMouthUpGastrointestinalItemsAdmin)
 
-@admin.register(InfantCardiovascularDisorderItems)
+
 class InfantCardiovascularDisorderItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantCardiovascularDisorderItems, InfantCardiovascularDisorderItemsAdmin)
 
-@admin.register(InfantRespiratoryDefectItems)
+
 class InfantRespiratoryDefectItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantRespiratoryDefectItems, InfantRespiratoryDefectItemsAdmin)
 
-@admin.register(InfantLowerGastrointestinalItems)
+
 class InfantLowerGastrointestinalItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantLowerGastrointestinalItems, InfantLowerGastrointestinalItemsAdmin)
 
-@admin.register(InfantFemaleGenitalAnomalyItems)
+
 class InfantFemaleGenitalAnomalyItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantFemaleGenitalAnomalyItems, InfantFemaleGenitalAnomalyItemsAdmin)
 
-@admin.register(InfantMaleGenitalAnomalyItems)
+
 class InfantMaleGenitalAnomalyItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantMaleGenitalAnomalyItems, InfantMaleGenitalAnomalyItemsAdmin)
 
-@admin.register(InfantRenalAnomalyItems)
+
 class InfantRenalAnomalyItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantRenalAnomalyItems, InfantRenalAnomalyItemsAdmin)
 
-@admin.register(InfantMusculoskeletalAbnormalItems)
+
 class InfantMusculoskeletalAbnormalItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantMusculoskeletalAbnormalItems, InfantMusculoskeletalAbnormalItemsAdmin)
 
-@admin.register(InfantSkinAbnormalItems)
+
 class InfantSkinAbnormalItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
+admin_site.register(InfantSkinAbnormalItems, InfantSkinAbnormalItemsAdmin)
 
-@admin.register(InfantTrisomiesChromosomeItems)
+
 class InfantTrisomiesChromosomeItemsAdmin(admin.ModelAdmin):
 
     list_display = ('congenital_anomalies',)
+
+admin_site.register(InfantTrisomiesChromosomeItems, InfantTrisomiesChromosomeItemsAdmin)

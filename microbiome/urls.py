@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from django.contrib import admin
-
+from microbiome.admin.site import admin_site
 from microbiome.views import (
     HomeView, SubjectDashboardView, login_view, logout_view, MaternalSearchView
 )
@@ -25,7 +25,7 @@ from microbiome.views import (
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin_site.urls)),
     url(r'^accounts/login/', login_view),
     url(r'^login/', login_view, name='login_url'),
     url(r'^logout/', logout_view, name='logout_url'),
