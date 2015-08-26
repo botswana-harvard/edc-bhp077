@@ -9,7 +9,7 @@
         <div class="row" style="margin-top:5%;">
 			<div class="col-lg-12">
 	            <div class="col-lg-6 text-center">
-	            	<a href="{% url 'admin:microbiome_maternalscreening_add' %}?next={% url 'dashboard' %}">
+	            	<a href="{% url 'admin:microbiome_maternalscreening_add' %}?next='dashboard'">
 	                <img class="img-circle img-responsive img-center" id='enrollment' src="../../static/img/home_page_button.png"  alt="">
 	                </a>
 	                <h3>Enroll Mother</h3>
@@ -23,8 +23,8 @@
 			</div>
 			<div class="col-lg-12" style="margin-top:2%;">
 	            <div class="col-lg-6 col-sm-6 text-center">
-	            	<a href="#">
-	                <img class="img-circle img-responsive img-center" src="../../static/img/home_page_button.png" alt="">
+	            	<a href="{% url 'admin:microbiome_infanteligibility_add' %}?next='dashboard'">
+	                <img class="img-circle img-responsive img-center" id='infant_eligibility' src="../../static/img/home_page_button.png" alt="">
 	                </a>
 	                <h3>Infant</h3>
             	</div> 
