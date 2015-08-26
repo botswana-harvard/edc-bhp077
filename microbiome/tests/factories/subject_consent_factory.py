@@ -10,7 +10,7 @@ class SubjectConsentFactory(factory.DjangoModelFactory):
     class Meta:
         model = SubjectConsent
 
-    maternal_eligibility_pre = factory.SubFactory(MaternalScreeningFactory)
+    maternal_screening = factory.SubFactory(MaternalScreeningFactory)
     subject_identifier = '077-35170005-2'
     gender = 'F'
     dob = dob = timezone.datetime(1980, 1, 10).date()
