@@ -134,15 +134,15 @@ class MaternalEligibilityPre (BaseUuidModel):
         consent = SubjectConsent.objects.filter(maternal_eligibility_pre=self)
         if consent.exists() and consent[0].is_verified:
             raise TypeError('You can only edit eligibility if the maternal consent has not been verified yet')
-        self.report_datetime = timezone.datetime(
-            self.report_datetime.year,
-            self.report_datetime.month,
-            self.report_datetime.day,
-            self.report_datetime.hour,
-            self.report_datetime.minute,
-            self.report_datetime.microsecond
-        )
-        self.dob = timezone.datetime(self.dob.year, self.dob.month, self.dob.day).date()
+#         self.report_datetime = timezone.datetime(
+#             self.report_datetime.year,
+#             self.report_datetime.month,
+#             self.report_datetime.day,
+#             self.report_datetime.hour,
+#             self.report_datetime.minute,
+#             self.report_datetime.microsecond
+#         )
+#         self.dob = timezone.datetime(self.dob.year, self.dob.month, self.dob.day).date()
         super(MaternalEligibilityPre, self).save(*args, **kwargs)
 
     @property
