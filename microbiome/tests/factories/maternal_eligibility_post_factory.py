@@ -12,7 +12,9 @@ class MaternalEligibilityPostFactory(factory.DjangoModelFactory):
 
     registered_subject = factory.SubFactory(RegisteredSubjectFactory)
     report_datetime = timezone.now()
-    days_post_natal = 2
-    weeks_of_gestation = 37
-    type_of_birth = 'vaginal'
-    live_infants = 2
+    disease = 'n/a'
+    currently_pregnant = 'Yes'
+#     pregnancy_weeks = 37
+    verbal_hiv_status = 'NEG'
+    rapid_test_result = 'NEG'
+    rapid_test_result_datetime = timezone.now()

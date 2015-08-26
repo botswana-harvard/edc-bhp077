@@ -11,4 +11,6 @@ class InfantEligibilityAdmin(admin.ModelAdmin):
 
     list_filter = ('report_datetime',)
 
+    radio_fields = {'infant_hiv_result': admin.VERTICAL}
+
 admin_site.register(InfantEligibility, InfantEligibilityAdmin)

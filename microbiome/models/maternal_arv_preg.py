@@ -93,7 +93,7 @@ class MaternalArvPPHistory(BaseUuidModel):
         verbose_name = 'Maternal ARV In This Preg: PostPart'
 
 
-class MaternalArv():
+class MaternalArv(BaseUuidModel):
 
     """ Maternal arv history (current and post-partum). """
 
@@ -119,3 +119,4 @@ class MaternalArv():
     class Meta:
         app_label = "microbiome"
         verbose_name = 'Maternal ARV'
+        verbose_name_plural = 'Maternal ARV'

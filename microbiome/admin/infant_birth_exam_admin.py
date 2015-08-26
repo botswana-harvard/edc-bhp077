@@ -20,4 +20,15 @@ class InfantBirthExamAdmin(admin.ModelAdmin):
         'abnormal_activity',
         'physical_exam_result',
     )
+
+    radio_fields = {
+        'gender': admin.VERTICAL,
+        'general_activity': admin.VERTICAL,
+        'physical_exam_result': admin.VERTICAL,
+        'heent_exam': admin.VERTICAL,
+        'resp_exam': admin.VERTICAL,
+        'cardiac_exam': admin.VERTICAL,
+        'abdominal_exam': admin.VERTICAL,
+        'neurologic_exam': admin.VERTICAL
+    }
 admin_site.register(InfantBirthExam, InfantBirthExamAdmin)
