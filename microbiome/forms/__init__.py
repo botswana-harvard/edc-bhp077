@@ -3,7 +3,7 @@ from .maternal_arv_preg_form import (MaternalArvPregForm, MaternalArvPregHistory
 from .maternal_labour_del_form import (MaternalLabourDelForm, MaternalLabDelMedForm,
                                        MaternalLabDelClinicForm, MaternalLabDelDxForm,
                                        MaternalLabDelDxTForm)
-from .maternal_eligibility_pre_form import MaternalEligibilityPreForm
+from .maternal_screening_form import MaternalScreeningForm
 from .maternal_eligibility_post_form import MaternalEligibilityPostForm
 from .maternal_locator_form import MaternalLocatorForm
 from .maternal_infected_form import MaternalInfectedForm
