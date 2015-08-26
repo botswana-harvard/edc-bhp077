@@ -1,13 +1,20 @@
 from django.forms import ModelForm
-
-from ..models import (
-    MaternalLabourDel, MaternalLabDelClinic, MaternalLabDelDx, MaternalLabDelDxT)
+from ..models.maternal_labour_del import (MaternalLabourDel, MaternalLabDelMed, 
+                                          MaternalLabDelClinic, MaternalLabDelDx,
+                                          MaternalLabDelDxT)
 
 
 class MaternalLabourDelForm(ModelForm):
 
     class Meta:
         model = MaternalLabourDel
+        fields = '__all__'
+
+
+class MaternalLabDelMedForm(ModelForm):
+
+    class Meta:
+        model = MaternalLabDelMed
         fields = '__all__'
 
 
