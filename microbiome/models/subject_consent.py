@@ -47,7 +47,6 @@ class SubjectConsent(BaseConsent):
         if not self.id:
             self.subject_identifier = MaternalIdentifier().identifier
         self.matches_maternal_eligibility_pre(self, self.maternal_eligibility_pre)
-        # Registered subject values that might have changed are updated in post save signal.
         self.identity_match()
         # super(SubjectConsent, self).save(*args, **kwargs)
 
