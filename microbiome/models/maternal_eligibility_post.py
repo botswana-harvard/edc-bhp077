@@ -1,3 +1,6 @@
+from dateutil import rrule
+from datetime import datetime, date, timedelta
+from django.utils import timezone
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.apps import apps
@@ -158,7 +161,9 @@ class MaternalEligibilityPost (BaseUuidModel):
     @property
     def evaluate_enrollment_status(self):
         """Evaluates the post enrollment status"""
-        if self.disease.lower() != NOT_APPLICABLE.lower():
+        # TODO: These If conditions can probably be reduced by bundling them .as fewer IF's that catch more
+        # conditions, instead of one each.
+        if self.disease != NOT_APPLICABLE:
             return NOT_ENROLLED
         if self.currently_pregnant == YES:
             return PENDING_BIRTH
@@ -171,39 +176,49 @@ class MaternalEligibilityPost (BaseUuidModel):
                 return NOT_ENROLLED
             elif self.type_of_birth and self.type_of_birth != VAGINAL:
                 return NOT_ENROLLED
-            elif self.live_infants and self.live_infants == 0:
+            elif not self.live_infants:
+                # Recall that zero evaluates to False
                 return NOT_ENROLLED
-            elif self.mother_hiv_result == POS:
-                # This is an HIV infected mother, need to check Infant eligibility to make sure atleast one
-                # infant is HIV -ve.
-                if not self.atleast_one_infant_eligible:
-                    # This means all infants are HIV infected from test results.
-                    return NOT_ENROLLED
-            elif self.mother_hiv_result == POS and not self.atleast_one_infant_resulted:
+            elif (self.mother_hiv_result == POS and
+                  (self.haart_during_preg != YES or self.drug_during_preg == NOT_APPLICABLE)):
+                # HIV +ve mother not on HAART during pregnancy or on HAART but taking the wrong drug.
+                return NOT_ENROLLED
+            elif (self.mother_hiv_result == POS and self.haart_during_preg == YES and
+                  self.haart_start_date and self.haart_weeks < 6):
+                # HIV +ve mother not on HAART long enough before delivery.
+                return NOT_ENROLLED
+            elif (self.mother_hiv_result == POS and self.haart_during_preg == YES and
+                  self.haart_start_date and self.haart_weeks >= 6 and not self.atleast_one_infant_resulted):
                 # None of the infants for an HIV +ve mother have an HIV result available,
                 # so we wait for the first result before allocating mother to study arm.
-                self.enrollment_status = PENDING_INFANT_RESULT
-            # elif self.is_eligible:
-                # Mother is HIV -ve or Mother is HIV +ve and one of the infants have a result,
-                # so we go ahead allocate to study arm.
-            #    self.enrollment_status = self.evaluate_study_arm()
-            else:
+                return PENDING_INFANT_RESULT
+            elif (self.mother_hiv_result == POS and self.haart_during_preg == YES and
+                  self.haart_start_date and self.haart_weeks >= 6 and not self.atleast_one_infant_eligible):
+                # This is an HIV infected mother, need to check Infant eligibility to make sure atleast one
+                # infant is HIV -ve
+                return NOT_ENROLLED
+            elif (self.mother_hiv_result == POS and self.haart_during_preg == YES and
+                  self.haart_start_date and self.haart_weeks >= 6 and self.atleast_one_infant_resulted):
                 return HIV_INFECTED_COHOT
-
-#     @property
-#     def evaluate_study_arm(self):
-#         if self.mother_hiv_result == POS:
-#             return HIV_INFECTED_COHOT
-#         elif self.mother_hiv_result == NEG:
-#             return HIV_UNIFECTED_COHOT
-#         else:
-#             raise ValidationError('Unable to determine enrollment cohot for the mother based on maternal screening.')
+            elif (self.mother_hiv_result == NEG and self.live_infants and self.live_infants > 0):
+                return HIV_UNIFECTED_COHOT
+            else:
+                raise ValidationError('Failed to allocate an enrollment status to mother-child pair.')
 
     @property
     def maternal_screening(self):
         sc = SubjectConsent.objects.get(registered_subject=self.registered_subject)
         screen_identifier = sc.screening_identifier
         return MaternalScreening.objects.get(screening_identifier=screen_identifier)
+
+    @property
+    def haart_weeks(self):
+        weeks = rrule.rrule(
+            rrule.WEEKLY,
+            dtstart=self.haart_start_date,
+            until=date.today() - timedelta(days=self.days_post_natal) if self.days_post_natal else date.today()
+        )
+        return weeks.count()
 
     @property
     def mother_hiv_result(self):
@@ -214,7 +229,7 @@ class MaternalEligibilityPost (BaseUuidModel):
     @property
     def atleast_one_infant_eligible(self):
         InfantEligibility = get_model('microbiome', 'InfantEligibility')
-        infant_eligibilities = InfantEligibility.objects.filter(maternal_enrollment_post=self)
+        infant_eligibilities = InfantEligibility.objects.filter(maternal_eligibility_post=self)
         for infant in infant_eligibilities:
             if infant.is_eligible:
                 # break out returning True for the 1st eligible infant you encounter.
@@ -225,7 +240,7 @@ class MaternalEligibilityPost (BaseUuidModel):
     @property
     def atleast_one_infant_resulted(self):
         InfantEligibility = get_model('microbiome', 'InfantEligibility')
-        infant_eligibilities = InfantEligibility.objects.filter(maternal_enrollment_post=self)
+        infant_eligibilities = InfantEligibility.objects.filter(maternal_eligibility_post=self)
         for infant in infant_eligibilities:
             if infant.is_resulted:
                 # break out returning True for the 1st resulted infant you encounter.

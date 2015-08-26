@@ -6,15 +6,15 @@ from edc_base.models import BaseUuidModel
 
 from ..choices import HIVRESULT_CHOICE, NEG, POS
 
-from .maternal_enrollment_post import MaternalEnrollmentPost
+from .maternal_eligibility_post import MaternalEligibilityPost
 
 
 class InfantEligibility (BaseUuidModel):
     """A model completed by the user for an infant delivered to an
        HIV +ve mother to determine study eligibility."""
 
-    maternal_enrollment_post = models.ForeignKey(
-        MaternalEnrollmentPost,
+    maternal_eligibility_post = models.ForeignKey(
+        MaternalEligibilityPost,
         help_text=''
     )
 
@@ -41,7 +41,7 @@ class InfantEligibility (BaseUuidModel):
     objects = models.Manager()
 
     def save(self, *args, **kwargs):
-        super(MaternalEnrollmentPost, self).save(*args, **kwargs)
+        super(InfantEligibility, self).save(*args, **kwargs)
 
 #     def __str__(self):
 #         return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
