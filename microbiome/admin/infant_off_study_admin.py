@@ -17,4 +17,6 @@ class InfantOffStudyAdmin(admin.ModelAdmin):
 
     list_filter = ('report_datetime', 'offstudy_date')
 
+    radio_fields = {'has_scheduled_data': admin.VERTICAL}
+
 admin_site.register(InfantOffStudy, InfantOffStudyAdmin)
