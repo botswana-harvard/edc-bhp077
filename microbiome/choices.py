@@ -1,10 +1,33 @@
 NOT_APPLICABLE = 'N/A'
 UNKNOWN = 'Unknown'
+VAGINAL =  'vaginal'
+CESAREAN = 'cesarean'
+NOT_ENROLLED = 'NOT_ENROLLED'
+HIV_INFECTED_COHOT = 'HIV_INFECTED_COHOT'
+HIV_UNIFECTED_COHOT = 'HIV_UNIFECTED_COHOT'
+POS = 'POS'
+NEG = 'NEG'
+YES = 'Yes'
+PENDING_INFANT_RESULT = 'PENDING_INFANT_RESULT'
+PENDING_BIRTH = 'PENDING_BIRTH'
 
 YES_NO_UNKNOWN = (
     ('Yes', 'Yes'),
     ('No', 'No'),
     (UNKNOWN, UNKNOWN),
+)
+
+HAART_DURING_PREG = (
+    ('Atripla', 'Atripla'),
+    ('Truvada-Efavirenz ', 'Truvada-Efavirenz '),
+    ('Tenofovir-Emtricitibine-Efavirenz', 'Tenofovir-Emtricitibine-Efavirenz'),
+    ('Truvad-Lamivudine-Efavirenz', 'Truvad-Lamivudine-Efavirenz'),
+    (NOT_APPLICABLE, 'Not Applicable'),
+)
+
+YES_NO = (
+    ('Yes', 'Yes'),
+    ('No', 'No'),
 )
 
 CHECKLIST_DISEASES = (

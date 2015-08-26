@@ -1,4 +1,5 @@
 from .maternal_eligibility_pre import MaternalEligibilityPre
+from .subject_consent import SubjectConsent 
 from .maternal_eligibility_post import MaternalEligibilityPost
 from .maternal_enrollment_post import MaternalEnrollmentPost
 from .subject_consent import SubjectConsent
@@ -12,6 +13,7 @@ from .maternal_arv_preg import (MaternalArvPreg, MaternalArvPregHistory, Materna
 from .maternal_labour_del import (MaternalLabourDel, MaternalLabDelMed, MaternalLabDelMed,
                                   MaternalLabDelClinic, MaternalLabDelDx, MaternalLabDelDxT)
 from .infant_eligibility import InfantEligibility
+from .infant_visit import InfantVisit
 from .infant_birth import InfantBirth
 from .infant_death import InfantDeath
 from .infant_off_study import InfantOffStudy
