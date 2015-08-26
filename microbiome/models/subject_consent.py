@@ -46,7 +46,6 @@ class SubjectConsent(BaseConsent):
     def save(self, *args, **kwargs):
         if not self.id:
             self.subject_identifier = MaternalIdentifier().identifier
-        self.matches_maternal_eligibility_pre(self, self.maternal_eligibility_pre)
         self.identity_match()
         # super(SubjectConsent, self).save(*args, **kwargs)
 

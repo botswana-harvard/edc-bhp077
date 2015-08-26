@@ -20,8 +20,9 @@ class TestMicrobiomeHomePageSelenium(BaseSeleniumTest):
     def test_infant_toolbar_links(self):
         '''Assert infant link test.'''
         self.login()
-        martenal_link_text = self.browser.find_element_by_link_text('INFANT').text
-        self.assertEqual('INFANT', martenal_link_text)
+        infant_link_text = self.browser.find_element_by_id('infant_eligibility')
+        if infant_link_text.text == 'Infant':
+            infant_link_text.click()
 
     def test_enrollment_link(self):
         self.login()
