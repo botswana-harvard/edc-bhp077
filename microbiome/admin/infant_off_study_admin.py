@@ -1,9 +1,10 @@
 from django.contrib import admin
 
+from .site import admin_site
+
 from ..models import InfantOffStudy
 
 
-@admin.register(InfantOffStudy)
 class InfantOffStudyAdmin(admin.ModelAdmin):
 
     list_display = (
@@ -15,3 +16,5 @@ class InfantOffStudyAdmin(admin.ModelAdmin):
     )
 
     list_filter = ('report_datetime', 'offstudy_date')
+
+admin_site.register(InfantOffStudy, InfantOffStudyAdmin)

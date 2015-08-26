@@ -52,11 +52,19 @@ class SubjectConsent(BaseConsent):
     def matches_maternal_eligibility_pre(self, subject_consent, maternal_eligibility_pre, exception_cls=None):
         """Matches values in this consent against the pre maternal eligibility."""
         exception_cls = exception_cls or ValidationError
+        flag = True
+        error_field = ''
         if not maternal_eligibility_pre.is_eligible:
             raise exception_cls('Cannot save a consent when the Maternal Eligibility has not passed.')
-        if False:
-            raise exception_cls('Subject consent does not match Maternal Pre Elgibility')
-        return True
+        if maternal_eligibility_pre.gender != self.gender:
+            flag = False
+            error_field = 'gender'
+        if maternal_eligibility_pre.citizen != self.citizen:
+            flag = False
+            error_field = 'citizen'
+        if not flag:
+            raise exception_cls('Subject consent does not match Maternal Pre Elgibility: {}'.format(error_field))
+        return flag
 
     class Meta:
         app_label = 'microbiome'

@@ -4,6 +4,7 @@ from django.utils import timezone
 from ...models import SubjectConsent
 from .maternal_eligibility_pre_factory import MaternalEligibilityPreFactory
 
+
 class SubjectConsentFactory(factory.DjangoModelFactory):
 
     class Meta:
@@ -11,7 +12,7 @@ class SubjectConsentFactory(factory.DjangoModelFactory):
 
     maternal_eligibility_pre = factory.SubFactory(MaternalEligibilityPreFactory)
     subject_identifier = '077-35170005-2'
-    gender = 'M'
+    gender = 'F'
     dob = dob = timezone.datetime(1980, 1, 10).date()
     initials = 'XX'
     subject_identifier = None

@@ -1,9 +1,10 @@
 from django.contrib import admin
 
+from .site import admin_site
+
 from ..models import InfantBirthExam
 
 
-@admin.register(InfantBirthExam)
 class InfantBirthExamAdmin(admin.ModelAdmin):
 
     list_display = (
@@ -19,3 +20,4 @@ class InfantBirthExamAdmin(admin.ModelAdmin):
         'abnormal_activity',
         'physical_exam_result',
     )
+admin_site.register(InfantBirthExam, InfantBirthExamAdmin)
