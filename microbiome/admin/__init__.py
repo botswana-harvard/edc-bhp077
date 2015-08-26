@@ -13,7 +13,7 @@ from .infant_eligibility_admin import InfantEligibilityAdmin
 from .infant_off_study_admin import InfantOffStudyAdmin
 from .infant_visit_admin import InfantVisitAdmin
 from .maternal_eligibility_post_admin import MaternalEligibilityPost
-from .maternal_eligibility_pre_admin import MaternalEligibilityPreAdmin
+from .maternal_screening_admin import MaternalScreeningAdmin
 from .subject_consent_admin import SubjectConsentAdmin
 from .maternal_locator_admin import MaternalLocatorAdmin
 from .maternal_labour_del_admin import (MaternalLabourDelAdmin, MaternalLabDelMedAdmin,

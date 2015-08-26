@@ -5,7 +5,7 @@ from edc_base.model.fields import IdentityTypeField
 
 from edc_consent.models import BaseConsent
 
-from ..models import MaternalEligibilityPre
+from ..models import MaternalScreening
 from ..choices import YES_NO_UNKNOWN
 
 
@@ -17,8 +17,8 @@ class SubjectConsent(BaseConsent):
         choices=YES_NO_UNKNOWN,
         help_text="")
 
-    maternal_eligibility_pre = models.OneToOneField(
-        MaternalEligibilityPre,
+    maternal_screening = models.OneToOneField(
+        MaternalScreening,
     )
     identity = IdentityField(
         verbose_name="Identity number (OMANG, etc)",

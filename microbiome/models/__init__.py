@@ -1,4 +1,4 @@
-from .maternal_eligibility_pre import MaternalEligibilityPre
+from .maternal_screening import MaternalScreening
 from .subject_consent import SubjectConsent 
 from .maternal_eligibility_post import MaternalEligibilityPost
 from .maternal_enrollment_post import MaternalEnrollmentPost

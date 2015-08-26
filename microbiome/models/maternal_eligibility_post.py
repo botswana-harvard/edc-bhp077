@@ -10,7 +10,7 @@ from edc_base.models import BaseUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
 from edc_registration.models import RegisteredSubject
 
-from ..models import SubjectConsent, MaternalEligibilityPre
+from ..models import SubjectConsent, MaternalScreening
 from ..choices import (BIRTH_TYPE, VAGINAL, NOT_ENROLLED, HIV_INFECTED_COHOT, HIV_UNIFECTED_COHOT, POS, NEG,
                        PENDING_INFANT_RESULT, YES_NO, CHECKLIST_DISEASES, HIVRESULT_CHOICE, HAART_DURING_PREG,
                        YES, PENDING_BIRTH, NOT_APPLICABLE)
@@ -50,13 +50,6 @@ class MaternalEligibilityPost (BaseUuidModel):
         choices=YES_NO,
         help_text='If yes, then they are provisionally enrolled pending birth.'
     )
-
-#     pregnancy_weeks = models.IntegerField(
-#         verbose_name='If pregnant, how many weeks in to the pregnancy?',
-#         null=True,
-#         blank=True,
-#         help_text='Must be at least 36 weeks pregnant.'
-#     )
 
     weeks_of_gestation = models.IntegerField(
         verbose_name="If delivered, how many weeks of gestation was the pregnancy?",
@@ -210,7 +203,7 @@ class MaternalEligibilityPost (BaseUuidModel):
     def maternal_screening(self):
         sc = SubjectConsent.objects.get(registered_subject=self.registered_subject)
         screen_identifier = sc.screening_identifier
-        return MaternalEligibilityPre.objects.get(screening_identifier=screen_identifier)
+        return MaternalScreening.objects.get(screening_identifier=screen_identifier)
 
     @property
     def mother_hiv_result(self):
