@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 from microbiome.models import SubjectConsent
 
-from .factories import MaternalEligibilityPreFactory, SubjectConsentFactory
+from .factories import MaternalScreeningFactory, SubjectConsentFactory
 
 
 class TestSubject(TransactionTestCase):

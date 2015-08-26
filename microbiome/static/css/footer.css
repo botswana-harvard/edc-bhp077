@@ -11,20 +11,37 @@
 -------------------------------------------------- 
 */
 .footer {
-  position: absolute;
-  bottom: -60px;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 50px; 
-  background-color: #1f201e;
-  padding:20px 0 20px;
-  color:white;
+	clear: both;
+    position: relative;
+    z-index: 10;
+    height: 60px;
+    margin-top: -3em;
+    text-align:center;
+    background: rgba(46, 51, 56, 0.2)!important;
+    position: fixed;
+ 	bottom: -50px;
+ 	width:100%;
+ 	color:black;
+ 	padding:20px;
 }
-
+.footer_test{
+	clear: both;
+    position: relative;
+    z-index: 10;
+    height: 60px;
+    margin-top: -3em;
+    text-align:center;
+    background: rgba(46, 51, 56, 0.2)!important;
+    position: fixed;
+ 	bottom: -50px;
+ 	width:100%;
+ 	color:black;
+ 	padding:20px;
+}
 
 /* Custom page CSS
 -------------------------------------------------- */
-/* Not required for template or sticky footer method.  */
+/* Not required for template or sticky footer method.  
 
 body > .container {
   padding: 60px 15px 0;
@@ -41,3 +58,5 @@ body > .container {
 code {
   font-size: 80%;
 }
+
+*/

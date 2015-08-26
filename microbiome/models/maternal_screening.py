@@ -7,7 +7,7 @@ from edc_base.model.validators import (datetime_not_before_study_start, datetime
 from edc_constants.choices import GENDER
 
 
-class MaternalEligibilityPre (BaseUuidModel):
+class MaternalScreening(BaseUuidModel):
     """A model completed by the user that confirms basic eligibility. Before or after delivery."""
 
     report_datetime = models.DateTimeField(
@@ -17,6 +17,12 @@ class MaternalEligibilityPre (BaseUuidModel):
             datetime_not_future,
         ],
         help_text='Date and time of assessing eligibility'
+    )
+
+    gender = models.CharField(
+        verbose_name='Gender',
+        max_length=1,
+        choices=GENDER
     )
 
     age_in_years = models.IntegerField(
@@ -29,10 +35,11 @@ class MaternalEligibilityPre (BaseUuidModel):
                   "than one year old, enter 1",
     )
 
-    gender = models.CharField(
-        verbose_name='Gender',
-        max_length=1,
-        choices=GENDER
+    pregnancy_weeks = models.IntegerField(
+        verbose_name='If pregnant, how many weeks in to the pregnancy?',
+        null=True,
+        blank=True,
+        help_text='Must be at least 36 weeks pregnant.'
     )
 
     screening_identifier = models.CharField(
@@ -46,9 +53,9 @@ class MaternalEligibilityPre (BaseUuidModel):
     def save(self, *args, **kwargs):
         if not self.screening_identifier:
             self.screening_identifier = uuid.uuid4()
-        super(MaternalEligibilityPre, self).save(*args, **kwargs)
+        super(MaternalScreening, self).save(*args, **kwargs)
 
     class Meta:
         app_label = "microbiome"
-        verbose_name = "Maternal Eligibility Pre"
-        verbose_name_plural = "Maternal Eligibility Pre"
+        verbose_name = "Maternal Screening"
+        verbose_name_plural = "Maternal Screening"
