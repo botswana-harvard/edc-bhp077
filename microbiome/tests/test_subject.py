@@ -24,9 +24,9 @@ class TestSubject(TransactionTestCase):
         with self.assertRaises(ValidationError):
             subject_consent.matches_maternal_eligibility_pre(subject_consent, pre_eligibility)
 
-    def test_pre_eligibility_matches_citizen(self):
-        pre_eligibility = MaternalEligibilityPreFactory()
-        subject_consent = SubjectConsentFactory(maternal_eligibility_pre=pre_eligibility)
-        pre_eligibility.citizen = 'No'
-        with self.assertRaises(ValidationError):
-            subject_consent.matches_maternal_eligibility_pre(subject_consent, pre_eligibility)
+#     def test_pre_eligibility_matches_age(self):
+#         pre_eligibility = MaternalEligibilityPreFactory()
+#         subject_consent = SubjectConsentFactory(maternal_eligibility_pre=pre_eligibility)
+#         pre_eligibility.age_in_years = pre_eligibility.age_in_years - 1
+#         with self.assertRaises(ValidationError):
+#             subject_consent.matches_maternal_eligibility_pre(subject_consent, pre_eligibility)

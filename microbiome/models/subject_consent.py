@@ -1,12 +1,17 @@
+from dateutil.relativedelta import relativedelta
 from django.db import models
+from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django_crypto_fields.fields import IdentityField
-from edc_base.model.fields import IdentityTypeField
 
+from edc_base.model.fields import IdentityTypeField
 from edc_consent.models import BaseConsent
+from edc_registration.models import RegisteredSubject
 
 from ..models import MaternalEligibilityPre
 from ..choices import YES_NO_UNKNOWN
+
+from .identifiers import MaternalIdentifier
 
 
 class SubjectConsent(BaseConsent):
@@ -39,29 +44,45 @@ class SubjectConsent(BaseConsent):
         null=True)
 
     def save(self, *args, **kwargs):
+        if not self.id:
+            self.subject_identifier = MaternalIdentifier().identifier
         self.matches_maternal_eligibility_pre(self, self.maternal_eligibility_pre)
         # Registered subject values that might have changed are updated in post save signal.
+        self.identity_match()
+        # super(SubjectConsent, self).save(*args, **kwargs)
+
+    def identity_match(self):
         if self.confirm_identity:
             if self.identity != self.confirm_identity:
                 raise ValueError(
                     'Attribute \'identity\' must match attribute \'confirm_identity\'. '
-                    'Catch this error on the form'
                 )
-        # super(SubjectConsent, self).save(*args, **kwargs)
+        return True
+
+    @property
+    def age_in_years(self):
+        return relativedelta(timezone.now().date(), self.dob).years
+
+    @property
+    def is_eligible(self):
+        """Evaluates the initial maternal eligibility criteria"""
+        if not (self.age_in_years < 18):
+            return False
+        elif self.has_identity.lower() == 'no':
+            return False
+        elif self.citizen.lower() == 'no':
+            return False
+        else:
+            return True
 
     def matches_maternal_eligibility_pre(self, subject_consent, maternal_eligibility_pre, exception_cls=None):
         """Matches values in this consent against the pre maternal eligibility."""
         exception_cls = exception_cls or ValidationError
         flag = True
         error_field = ''
-        if not maternal_eligibility_pre.is_eligible:
-            raise exception_cls('Cannot save a consent when the Maternal Eligibility has not passed.')
         if maternal_eligibility_pre.gender != self.gender:
             flag = False
             error_field = 'gender'
-        if maternal_eligibility_pre.citizen != self.citizen:
-            flag = False
-            error_field = 'citizen'
         if not flag:
             raise exception_cls('Subject consent does not match Maternal Pre Elgibility: {}'.format(error_field))
         return flag

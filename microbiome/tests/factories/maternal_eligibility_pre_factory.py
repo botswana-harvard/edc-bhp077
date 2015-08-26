@@ -22,3 +22,4 @@ class MaternalEligibilityPreFactory(factory.DjangoModelFactory):
     currently_pregnant = 'pregnant'
     verbal_hiv_status = 'POS'
     rapid_test_result = 'POS'
+    age_in_years = 20
