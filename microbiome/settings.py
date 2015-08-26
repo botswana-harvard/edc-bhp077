@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'edc_appointment',
     'edc_consent',
     'edc_identifier',
+    'getresults_identifier',
     'microbiome',
 )
 
