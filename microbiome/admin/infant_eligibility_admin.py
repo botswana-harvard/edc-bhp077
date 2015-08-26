@@ -7,7 +7,7 @@ from ..models import InfantEligibility
 
 class InfantEligibilityAdmin(admin.ModelAdmin):
 
-    list_display = ('maternal_enrollment_post', 'report_datetime',)
+    list_display = ('maternal_eligibility_post', 'report_datetime',)
 
     list_filter = ('report_datetime',)
 
