@@ -20,3 +20,9 @@ class TestMicrobiomeHomePageSelenium(BaseSeleniumTest):
         self.login()
         martenal_link_text = self.browser.find_element_by_link_text('INFANT').text
         self.assertEqual('INFANT', martenal_link_text)
+
+    def test_enrollment_link(self):
+        self.login()
+        enrollment_link = self.browser.find_element_by_id('enrollment')
+        enrollment_link.click()
+        self.browser.save_screenshot('microbiome/screenshots/eligibility_pre.png')

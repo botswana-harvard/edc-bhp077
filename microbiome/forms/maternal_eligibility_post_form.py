@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from ..models import MaternalEligibilityPost
 
 
-class MaternalEligibilityPostPreForm(ModelForm):
+class MaternalEligibilityPostForm(ModelForm):
 
     class Meta:
         model = MaternalEligibilityPost

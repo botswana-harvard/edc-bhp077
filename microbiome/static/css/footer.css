@@ -1,5 +1,43 @@
 #footer {
-	position:relative;
+	position:absolute;
+    width:100%;  
     bottom:0;
-    width:100%;    
+    margin-top: 1em;
+    background-color:black;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- 
+*/
+.footer {
+  position: absolute;
+  bottom: -60px;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 50px; 
+  background-color: #1f201e;
+  padding:20px 0 20px;
+  color:white;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method.  */
+
+body > .container {
+  padding: 60px 15px 0;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
 }

@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
 from edc_base.models import BaseUuidModel
 
-from ..choices import HIVRESULT_CHOICE
+from ..choices import HIVRESULT_CHOICE, NEG, POS
 
 from .maternal_enrollment_post import MaternalEnrollmentPost
 
@@ -43,14 +43,25 @@ class InfantEligibility (BaseUuidModel):
     def save(self, *args, **kwargs):
         super(MaternalEnrollmentPost, self).save(*args, **kwargs)
 
-    def __str__(self):
-        return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
+#     def __str__(self):
+#         return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
+#     
+#     @property
+#     def age_in_years(self):
+#         return True
+    @property
+    def is_resulted(self):
+        if self.infant_hiv_result in [POS, NEG]:
+            return True
+        return False
 
     @property
-    def age_in_years(self):
-        return True
+    def is_eligible(self):
+        if self.infant_hiv_result == NEG:
+            return True
+        return False
 
     class Meta:
         app_label = "microbiome"
-        verbose_name = "Eligibility Checklist"
-        verbose_name_plural = "Eligibility Checklist"
+        verbose_name = "Infant Eligibility"
+        verbose_name_plural = "Infant Eligibility"

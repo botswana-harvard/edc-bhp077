@@ -33,6 +33,7 @@ class MaternalSearchView(TemplateView):
         context.update(
             search=True,
             consents_search_result=self.search_results(request),
+            identifier=request.POST.get('identifier_search', None)
         )
         return render(request, self.template_name, context)
 
@@ -42,4 +43,3 @@ class MaternalSearchView(TemplateView):
         return SubjectConsent.objects.filter(
             Q(subject_identifier__icontains=search_value)
         ).order_by('created')
-

@@ -123,7 +123,7 @@ STATICFILES_FINDERS = (
 
 GIT_DIR = BASE_DIR.ancestor(1)
 
-STUDY_OPEN_DATETIME = timezone.datetime(2015, 8, 19)
+STUDY_OPEN_DATETIME = timezone.now()
 
 # To be removed
 MAX_SUBJECTS = {}

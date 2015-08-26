@@ -1,3 +1,4 @@
+import time
 from .base_selenium_test import BaseSeleniumTest
 
 
@@ -11,10 +12,12 @@ class LoginSeleniumTest(BaseSeleniumTest):
         self.username = 'testuser_y'
         self.password = '12345_y'
         self.login()
+        time.sleep(1)
         self.assertEqual(self.browser.current_url, 'http://localhost:8081/login/')
 
     def test_failed_login_with_message(self):
         self.username = 'testuser_y'
         self.password = '12345_y'
         self.login()
+        time.sleep(1)
         self.assertTrue(self.browser.find_element_by_name('login_message_name').is_displayed())

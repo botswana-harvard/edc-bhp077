@@ -1,22 +1,16 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from edc.audit.audit_trail import AuditTrail
-from edc.choices.common import YES_NO
-from edc.base.model.fields.custom.custom_fields import OtherCharField, IsDateEstimatedField
-
-from apps.mpepu_list.models.maternal_enroll import PriorArv
-from apps.mpepu.choices import PRIOR_PREG_HAART_STATUS
-
-from .base_scheduled_visit_model import BaseScheduledVisitModel
-from .maternal_enroll import MaternalEnroll
+from ..choices import PRIOR_PREG_HAART_STATUS
+from edc_constants.choices import YES_NO
+from ..list.maternal_enroll_prior_arv import PriorArv
+from edc_base.model.fields import IsDateEstimatedField, OtherCharField
+from edc_base.model.models import BaseUuidModel
 
 
-class MaternalEnrollArv(BaseScheduledVisitModel):
+class MaternalEnrollArv(BaseUuidModel):
 
     """Model for Maternal Enrollment: ARV History"""
-
-    maternal_enroll = models.OneToOneField(MaternalEnroll)
 
     haart_start_date = models.DateField(
         verbose_name="Date of HAART first started",
@@ -54,13 +48,8 @@ class MaternalEnrollArv(BaseScheduledVisitModel):
         null=True,
     )
 
-    history = AuditTrail()
-
-    def __unicode__(self):
-        return "%s" % (self.maternal_enroll)
-
     def get_absolute_url(self):
-        return reverse('admin:mpepu_maternal_maternalenrollarv_change', args=(self.id,))
+        return reverse('admin:microbiome_maternalenrollarv_change', args=(self.id,))
 
     class Meta:
         app_label = 'microbiome'

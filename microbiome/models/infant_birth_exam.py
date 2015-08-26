@@ -10,7 +10,7 @@ from .infant_visit import InfantVisit
 
 class InfantBirthExam(BaseUuidModel):
 
-    """infant examination"""
+    """A model completed by the user to record details of the infant's birth."""
 
     infant_visit = models.ForeignKey(InfantVisit)
 

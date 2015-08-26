@@ -1,9 +1,8 @@
 from django.contrib import admin
-
+from .site import admin_site
 from ..models import InfantBirth
 
 
-@admin.register(InfantBirth)
 class InfantBirthAdmin(admin.ModelAdmin):
 
     list_display = (
@@ -16,3 +15,6 @@ class InfantBirthAdmin(admin.ModelAdmin):
     )
 
     list_filter = ('gender',)
+
+    radio_fields = {'gender': admin.VERTICAL}
+admin_site.register(InfantBirth, InfantBirthAdmin)
