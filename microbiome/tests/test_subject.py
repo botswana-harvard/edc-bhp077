@@ -9,4 +9,4 @@ from .factories import MaternalScreeningFactory, SubjectConsentFactory
 class TestSubject(TransactionTestCase):
 
     def test_consent(self):
-        subject_consent = SubjectConsent()
+        subject_consent = SubjectConsentFactory()
