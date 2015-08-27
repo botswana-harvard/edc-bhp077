@@ -23,17 +23,34 @@
 	          		<div class="col-md-12" class="list-inline">
 		          		
 		          		<ul class="list-inline">
+		          		
 		          			<li style="margin-left:10px;">
 		          				<mark>
-		          				<a href="{% url 'admin:microbiome_subjectconsent_add' %}?dashboard_id={{dashboard_id}}" >Add Consent</a>
+		          				<a href="{% url 'admin:microbiome_maternalscreening_change' maternal_screening.id %}?next='dashboard'" >Maternal Screening</a>
 		          				</mark>
 		          			</li>
+		          			{% if show_consent_link %}|
+		          			<li style="margin-left:10px;">
+		          				{% if subject_consent %}
+			          				<mark>
+			          				<a href="{% url 'admin:microbiome_subjectconsent_change' subject_consent.id %}?dashboard_id={{dashboard_id}}" > Subject Consent</a>
+			          				</mark>
+			          			{% else %}
+			          				<mark>
+			          					<a href="{% url 'admin:microbiome_subjectconsent_add' %}" >Add Consent</a>
+			          				</mark>
+			          			{% endif %}
+		          			</li>
+		          			{% endif %}
+		          			
+		          			{% if show_consent_eligibiltiypost %}
 		          			|
-		          			<li>
-		          				<mark>
-		          				<a href="{% url 'admin:microbiome_maternaleligibilitypost_add' %}" >Add Maternal Eligibility Post</a>
-		          				</mark>
-		          			</li>
+			          			<li>
+			          				<mark>
+			          				<a href="{% url 'admin:microbiome_maternaleligibilitypost_add' %}" >Add Maternal Eligibility Post</a>
+			          				</mark>
+			          			</li>
+		          			{% endif %}
 		          		</ul>
 		          		</mark>
 	          		</div>

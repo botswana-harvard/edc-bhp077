@@ -5,6 +5,8 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.shortcuts import render
 
+from microbiome.models import MaternalScreening, SubjectConsent
+
 
 class Option(object):
 
@@ -43,8 +45,14 @@ class SubjectDashboardView(TemplateView):
     def get(self, request, *args, **kwargs):
         """Allows a GET."""
         self.context = self.get_context_data(**kwargs)
+        dashboard_id = request.GET.get('dashboard_id')
         self.context.update(
-            dashboard_id=request.GET.get('dashboard_id')
+            maternal_screening=self.maternal_screening(dashboard_id),
+            show_consent_link=True if self.maternal_screening(dashboard_id)
+            else self.subject_consent(dashboard_id),
+            subject_consent_eligibity_link=True if self.subject_consent(dashboard_id)
+            else False,
+            subject_consent=self.subject_consent(dashboard_id),
         )
         return render(request, self.template_name, self.context)
 
@@ -53,8 +61,14 @@ class SubjectDashboardView(TemplateView):
         self.context = self.get_context_data(**kwargs)
         return render(request, self.template_name, self.context)
 
-    def dashboard_id(self):
-        re_pk = re.compile('[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}')
-        if not re_pk.match(self.context.get('dashboard_id') or ''):
-            raise TypeError('Dashboard id must be a uuid (pk). Got {0}'.format(self.context.get('dashboard_id')))
-        return self.context.get('dashboard_id')
+    def maternal_screening(self, dashboard_id):
+        try:
+            return MaternalScreening.objects.get(id=dashboard_id)
+        except MaternalScreening.DoesNotExist:
+            return self.subject_consent(dashboard_id).maternal_screening
+
+    def subject_consent(self, dashboard_id):
+        try:
+            return SubjectConsent.objects.get(id=dashboard_id)
+        except SubjectConsent.DoesNotExist:
+            return False
