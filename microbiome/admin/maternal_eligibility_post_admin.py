@@ -13,6 +13,14 @@ class MaternalEligibilityPostAdmin(BaseModelAdmin):
               'days_post_natal',
               'weeks_of_gestation',
               'type_of_birth',
-              'live_infants', )
+              'live_infants',
+              'verbal_hiv_status',
+              'evidence_pos_hiv_status',
+              'rapid_test_result',
+              'rapid_test_result_datetime',
+              'haart_during_preg',
+              'haart_start_date',
+              'drug_during_preg',
+              'enrollment_status')
     radio_fields = {'type_of_birth': admin.VERTICAL, }
 admin_site.register(MaternalEligibilityPost, MaternalEligibilityPostAdmin)
