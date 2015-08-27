@@ -17,7 +17,8 @@ class MaternalLabourDelAdmin(BaseModelAdmin):
                     'del_mode',
                     'live_infants',
                     'live_infants_to_register')
-    radio_fields = {'has_ga': admin.VERTICAL,
+    radio_fields = {'del_time_is_est': admin.VERTICAL,
+                    'has_ga': admin.VERTICAL,
                     'has_uterine_tender': admin.VERTICAL,
                     'has_chorioamnionitis': admin.VERTICAL,
                     'has_del_comp': admin.VERTICAL,

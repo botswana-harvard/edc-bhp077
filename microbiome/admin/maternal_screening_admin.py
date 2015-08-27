@@ -16,6 +16,7 @@ class MaternalScreeningAdmin(BaseModelAdmin):
               'gender',
               'age_in_years',
               'screening_identifier', )
+    radio_fields = {'gender': admin.VERTICAL, }
     readonly_fields = ('screening_identifier',)
 
     def reverse_next_to_dashboard(self, next_url_name, request, obj, **kwargs):
