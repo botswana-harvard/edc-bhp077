@@ -10,8 +10,10 @@ class MaternalEligibilityPostAdmin(BaseModelAdmin):
     form = MaternalEligibilityPostForm
     fields = ('registered_subject',
               'report_datetime',
-              'days_post_natal',
+              'disease',
+              'currently_pregnant',
               'weeks_of_gestation',
+              'days_post_natal',
               'type_of_birth',
               'live_infants',
               'verbal_hiv_status',
