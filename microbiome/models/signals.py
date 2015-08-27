@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from ..exceptions import CreateInfantEligibilityError
 
 from ..models import MaternalEligibilityPost, InfantEligibility, SubjectConsent
-from ..choices import POS
+from ..choices import POS, NOT_ENROLLED
 
 @receiver(post_save, weak=False, dispatch_uid='maternal_eligibility_post_save')
 def maternal_eligibility_post_save(sender, instance, raw, created, using, update_fields, **kwargs):
@@ -15,11 +15,11 @@ def maternal_eligibility_post_save(sender, instance, raw, created, using, update
     if not raw:
         if isinstance(instance, MaternalEligibilityPost):
             num_live_infants = instance.live_infants
-            if instance.mother_hiv_result == POS:
+            if instance.mother_hiv_result == POS and instance.enrollment_status != NOT_ENROLLED:
                 try:
                     with transaction.atomic():
-                        for index in range(1, num_live_infants):
-                            InfantEligibility.objects.create(maternal_enrollment_post=instance)
+                        for index in list(range(0, num_live_infants)):
+                            InfantEligibility.objects.create(maternal_eligibility_post=instance)
                 except:
                     raise CreateInfantEligibilityError(
                         'An ERROR occurred while attempting to create infant eligibility for {}'.format(instance)

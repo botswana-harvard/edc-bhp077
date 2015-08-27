@@ -3,7 +3,7 @@ from django.utils import timezone
 from edc_registration.tests.factories import RegisteredSubjectFactory
 
 from ...models import MaternalEligibilityPost
-
+from ...choices import NOT_APPLICABLE
 
 class MaternalEligibilityPostFactory(factory.DjangoModelFactory):
 
@@ -12,7 +12,7 @@ class MaternalEligibilityPostFactory(factory.DjangoModelFactory):
 
     registered_subject = factory.SubFactory(RegisteredSubjectFactory)
     report_datetime = timezone.now()
-    disease = 'n/a'
+    disease = NOT_APPLICABLE
     currently_pregnant = 'Yes'
 #     pregnancy_weeks = 37
     verbal_hiv_status = 'NEG'

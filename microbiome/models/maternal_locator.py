@@ -50,5 +50,6 @@ class MaternalLocator(BaseLocator):
         null=True, )
 
     class Meta:
-        verbose_name = 'Maternal Locator'
         app_label = 'microbiome'
+        verbose_name = 'Maternal Locator'
+        verbose_name_plural = 'Maternal Locator'
