@@ -41,7 +41,7 @@ class MaternalScreeningAdmin(BaseModelAdmin):
     def response_add_redirect_on_next_url(
             self, next_url_name, request, obj, post_url_continue, post_save=None,
             post_save_next=None, post_cancel=None):
-        return HttpResponseRedirect(reverse('dashboard'))
-
+            url = ('{0}?dashboard_id={1}').format(reverse('dashboard_id_url', kwargs={'dashboard_id': obj.id}), obj.id)
+            return HttpResponseRedirect(url)
 
 admin_site.register(MaternalScreening, MaternalScreeningAdmin)

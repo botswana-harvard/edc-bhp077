@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^logout/', logout_view, name='logout_url'),
     url(r'^home/', HomeView.as_view(), name='home'),
     url(r'^dashboard/', SubjectDashboardView.as_view(), name='dashboard'),
+    url(r'^dashboard/(?P<dashboard_id>[0-9A-Za-z\-]+)/', SubjectDashboardView.as_view(), name='dashboard_id_url'),
     url(r'maternal_search/', MaternalSearchView.as_view(), name='maternal_search'),
     url(r'^$', HomeView.as_view(), name='default'),
 ]

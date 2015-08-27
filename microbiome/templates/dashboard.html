@@ -18,23 +18,26 @@
               </div>
             </div> -->
             {%block content %}
-	          <div class="col-sm-10 table-bordered" style="height:auto; padding:10px; width:100%; margin-top:25px;">
-	          	<div class="row" style="height:50px; padding:20px;">
-	          		<div class="col-md-2" class="list-inline">
-		          		<ul>
+	          <div class="col-sm-10 table-bordered" style="height:auto; padding:20px 0 0; width:105%; margin-top:25px; margin-left:20px;">
+	          	<div class="row" style="height:50px; padding:10px;">
+	          		<div class="col-md-12" class="list-inline">
+		          		
+		          		<ul class="list-inline">
+		          			<li style="margin-left:10px;">
+		          				<mark>
+		          				<a href="{% url 'admin:microbiome_subjectconsent_add' %}?dashboard_id={{dashboard_id}}" >Add Consent</a>
+		          				</mark>
+		          			</li>
+		          			|
 		          			<li>
-		          				<a href="{% url 'admin:microbiome_subjectconsent_add' %}" >Add Consent</a>
+		          				<mark>
+		          				<a href="{% url 'admin:microbiome_maternaleligibilitypost_add' %}" >Add Maternal Eligibility Post</a>
+		          				</mark>
 		          			</li>
 		          		</ul>
+		          		</mark>
 	          		</div>
-	          		<div class="col-md-2">
-	          			<ul>
-	          				<li>
-	          					<a href="{% url 'admin:microbiome_subjectconsent_add' %}" >Add Consent</a>
-	          				</li>
-	          			</ul>
-	          		</div>
-	          		<div class="col-md-8">
+	          		<div class="col-md-1">
 	          		</div>
 	          	</div>
 	          </div>

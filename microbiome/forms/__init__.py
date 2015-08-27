@@ -10,3 +10,4 @@ from .maternal_infected_form import MaternalInfectedForm
 from .maternal_uninfected_form import MaternalUninfectedForm
 from .maternal_enrollment_post_form import MaternalEnrollmentPostForm
 from .maternal_enroll_arv_form import MaternalEnrollArvForm
+from .subject_consent_form import SubjectConsentForm

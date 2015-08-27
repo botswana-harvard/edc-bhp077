@@ -1,6 +1,9 @@
+import re
+
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from django.shortcuts import render
 
 
 class Option(object):
@@ -15,6 +18,10 @@ class Option(object):
 
 class SubjectDashboardView(TemplateView):
     template_name = 'dashboard.html'
+
+    def __init__(self, **kwargs):
+        super(SubjectDashboardView, self).__init__(**kwargs)
+        self.context = None
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -32,3 +39,22 @@ class SubjectDashboardView(TemplateView):
             ],
         )
         return context
+
+    def get(self, request, *args, **kwargs):
+        """Allows a GET."""
+        self.context = self.get_context_data(**kwargs)
+        self.context.update(
+            dashboard_id=request.GET.get('dashboard_id')
+        )
+        return render(request, self.template_name, self.context)
+
+    def post(self, request, *args, **kwargs):
+        """Allows a GET."""
+        self.context = self.get_context_data(**kwargs)
+        return render(request, self.template_name, self.context)
+
+    def dashboard_id(self):
+        re_pk = re.compile('[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}')
+        if not re_pk.match(self.context.get('dashboard_id') or ''):
+            raise TypeError('Dashboard id must be a uuid (pk). Got {0}'.format(self.context.get('dashboard_id')))
+        return self.context.get('dashboard_id')
