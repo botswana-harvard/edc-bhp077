@@ -1,6 +1,7 @@
 import factory
 
 from django.utils import timezone
+from edc_constants.constants import YES, NO
 
 from microbiome.models import MaternalLabourDel
 
@@ -11,16 +12,16 @@ class MaternalLabourDelFactory(factory.DjangoModelFactory):
         model = MaternalLabourDel
 
     delivery_datetime = timezone.now()
-    del_time_is_est = 'Yes'
+    del_time_is_est = YES
     labour_hrs = '10'
     del_mode = 'Vaginal'
-    has_ga = 'Yes'
+    has_ga = YES
     ga = 36
     del_hosp = 'PMH'
-    has_uterine_tender = 'No'
+    has_uterine_tender = NO
     labr_max_temp = -1
-    has_chorioamnionitis = 'No'
-    has_del_comp = 'No'
+    has_chorioamnionitis = NO
+    has_del_comp = NO
     live_infants = 1
     live_infants_to_register = 1
     still_borns = 0

@@ -1,8 +1,9 @@
 from django.db import models
 
-from ..choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 from edc_base.model.fields import OtherCharField
 from edc_base.model.models import BaseUuidModel
+
+from ..choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 
 
 class BaseMother(BaseUuidModel):

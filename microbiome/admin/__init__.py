@@ -12,12 +12,12 @@ from .infant_death_admin import InfantDeathAdmin
 from .infant_eligibility_admin import InfantEligibilityAdmin
 from .infant_off_study_admin import InfantOffStudyAdmin
 from .infant_visit_admin import InfantVisitAdmin
-from .maternal_eligibility_post_admin import MaternalEligibilityPost
+from .maternal_eligibility_admin import MaternalEligibilityAdmin
 from .maternal_screening_admin import MaternalScreeningAdmin
 from .subject_consent_admin import SubjectConsentAdmin
 from .maternal_locator_admin import MaternalLocatorAdmin
 from .maternal_labour_del_admin import (MaternalLabourDelAdmin, MaternalLabDelMedAdmin,
-                                        MaternalLabDelClinicAdmin, MaternalLabDelDxAdmin, 
+                                        MaternalLabDelClinicAdmin, MaternalLabDelDxAdmin,
                                         MaternalLabDelDxTAdmin)
 from .maternal_infected_admin import MaternalInfectedAdmin
 from .maternal_enroll_arv_admin import MaternalEnrollArvAdmin

@@ -4,7 +4,7 @@ from .maternal_labour_del_form import (MaternalLabourDelForm, MaternalLabDelMedF
                                        MaternalLabDelClinicForm, MaternalLabDelDxForm,
                                        MaternalLabDelDxTForm)
 from .maternal_screening_form import MaternalScreeningForm
-from .maternal_eligibility_post_form import MaternalEligibilityPostForm
+from .maternal_eligibility_form import MaternalEligibilityForm
 from .maternal_locator_form import MaternalLocatorForm
 from .maternal_infected_form import MaternalInfectedForm
 from .maternal_uninfected_form import MaternalUninfectedForm

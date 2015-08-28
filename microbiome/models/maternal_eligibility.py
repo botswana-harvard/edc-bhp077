@@ -1,27 +1,27 @@
 from dateutil import rrule
-from datetime import datetime, date, timedelta
-from django.utils import timezone
+from datetime import date, timedelta
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.apps import apps
-try:
-    get_model = apps.get_model
-except ImportError:
-    from django.db.models.loading import get_model
 
-from edc_base.models import BaseUuidModel
+from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
+from edc_constants.constants import YES, POS, NEG, NOT_APPLICABLE
+from edc_constants.choices import YES_NO
 from edc_registration.models import RegisteredSubject
 
 from ..models import SubjectConsent, MaternalScreening
-from ..choices import (BIRTH_TYPE, VAGINAL, NOT_ENROLLED, HIV_INFECTED_COHOT, HIV_UNIFECTED_COHOT, POS, NEG,
-                       PENDING_INFANT_RESULT, YES_NO, CHECKLIST_DISEASES, HIVRESULT_CHOICE, HAART_DURING_PREG,
-                       YES, PENDING_BIRTH, NOT_APPLICABLE)
+from ..choices import (BIRTH_TYPE, CHECKLIST_DISEASES, HIVRESULT_CHOICE, HAART_DURING_PREG)
+from ..constants import (
+    VAGINAL, NOT_ENROLLED, HIV_INFECTED_COHORT, HIV_UNIFECTED_COHORT, PENDING_INFANT_RESULT, PENDING_BIRTH)
 
 
-class MaternalEligibilityPost (BaseUuidModel):
-    """A model completed to evaluate post consent Eligibility. This could be the 1st step of eligibility.
-    The last step  will be InfantEligibility fro HIV infected mothers."""
+class MaternalEligibility (BaseUuidModel):
+    """A model completed by the user to evaluate post consent maternal eligibility.
+
+    This is the 1st step of eligibility.
+
+    The last step  will be InfantEligibility from HIV infected mothers."""
 
     registered_subject = models.OneToOneField(
         RegisteredSubject,
@@ -156,7 +156,7 @@ class MaternalEligibilityPost (BaseUuidModel):
 
     def save(self, *args, **kwargs):
         self.enrollment_status = self.evaluate_enrollment_status
-        super(MaternalEligibilityPost, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     @property
     def evaluate_enrollment_status(self):
@@ -168,7 +168,7 @@ class MaternalEligibilityPost (BaseUuidModel):
         if self.currently_pregnant == YES:
             return PENDING_BIRTH
         else:
-            if self.verbal_hiv_status.lower() == 'neg' and self.rapid_test_result.lower() == 'pos':
+            if self.verbal_hiv_status == NEG and self.rapid_test_result == POS:
                 return NOT_ENROLLED
             if self.days_post_natal and self.days_post_natal > 3:
                 return NOT_ENROLLED
@@ -199,9 +199,9 @@ class MaternalEligibilityPost (BaseUuidModel):
                 return NOT_ENROLLED
             elif (self.mother_hiv_result == POS and self.haart_during_preg == YES and
                   self.haart_start_date and self.haart_weeks >= 6 and self.atleast_one_infant_resulted):
-                return HIV_INFECTED_COHOT
+                return HIV_INFECTED_COHORT
             elif (self.mother_hiv_result == NEG and self.live_infants and self.live_infants > 0):
-                return HIV_UNIFECTED_COHOT
+                return HIV_UNIFECTED_COHORT
             else:
                 raise ValidationError('Failed to allocate an enrollment status to mother-child pair.')
 
@@ -228,7 +228,7 @@ class MaternalEligibilityPost (BaseUuidModel):
 
     @property
     def atleast_one_infant_eligible(self):
-        InfantEligibility = get_model('microbiome', 'InfantEligibility')
+        InfantEligibility = apps.get_model('microbiome', 'InfantEligibility')
         infant_eligibilities = InfantEligibility.objects.filter(maternal_eligibility_post=self)
         for infant in infant_eligibilities:
             if infant.is_eligible:
@@ -239,7 +239,7 @@ class MaternalEligibilityPost (BaseUuidModel):
 
     @property
     def atleast_one_infant_resulted(self):
-        InfantEligibility = get_model('microbiome', 'InfantEligibility')
+        InfantEligibility = apps.get_model('microbiome', 'InfantEligibility')
         infant_eligibilities = InfantEligibility.objects.filter(maternal_eligibility_post=self)
         for infant in infant_eligibilities:
             if infant.is_resulted:
@@ -253,5 +253,4 @@ class MaternalEligibilityPost (BaseUuidModel):
 
     class Meta:
         app_label = "microbiome"
-        verbose_name = "Maternal Eligibility Post"
-        verbose_name_plural = "Maternal Eligibility Post"
+        verbose_name_plural = "Maternal Eligibility"

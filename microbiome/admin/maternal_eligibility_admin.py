@@ -1,13 +1,17 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from ..forms import MaternalEligibilityPostForm
-from ..models import MaternalEligibilityPost
+
+from ..forms import MaternalEligibilityForm
+from ..models import MaternalEligibility
+
 from .site import admin_site
 
 
-class MaternalEligibilityPostAdmin(BaseModelAdmin):
-    form = MaternalEligibilityPostForm
+class MaternalEligibilityAdmin(BaseModelAdmin):
+
+    form = MaternalEligibilityForm
+
     fields = ('registered_subject',
               'report_datetime',
               'disease',
@@ -25,4 +29,4 @@ class MaternalEligibilityPostAdmin(BaseModelAdmin):
               'drug_during_preg',
               'enrollment_status')
     radio_fields = {'type_of_birth': admin.VERTICAL, }
-admin_site.register(MaternalEligibilityPost, MaternalEligibilityPostAdmin)
+admin_site.register(MaternalEligibility, MaternalEligibilityAdmin)

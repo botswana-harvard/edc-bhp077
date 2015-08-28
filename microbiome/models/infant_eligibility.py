@@ -2,11 +2,12 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
-from edc_base.models import BaseUuidModel
+from edc_base.model.models import BaseUuidModel
+from edc_constants.constants import NEG, POS
 
-from ..choices import HIVRESULT_CHOICE, NEG, POS
+from ..choices import HIVRESULT_CHOICE
 
-from .maternal_eligibility_post import MaternalEligibilityPost
+from .maternal_eligibility import MaternalEligibility
 
 
 class InfantEligibility (BaseUuidModel):
@@ -14,7 +15,7 @@ class InfantEligibility (BaseUuidModel):
        HIV +ve mother to determine study eligibility."""
 
     maternal_eligibility_post = models.ForeignKey(
-        MaternalEligibilityPost,
+        MaternalEligibility,
         help_text=''
     )
 
@@ -45,10 +46,7 @@ class InfantEligibility (BaseUuidModel):
 
 #     def __str__(self):
 #         return "{} ({}) {}/{}".format(self.first_name, self.initials, self.gender, self.age_in_years)
-#     
-#     @property
-#     def age_in_years(self):
-#         return True
+
     @property
     def is_resulted(self):
         if self.infant_hiv_result in [POS, NEG]:

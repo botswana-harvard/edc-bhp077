@@ -1,9 +1,12 @@
 Django==1.8.3
 python-dateutil
 Unipath
+django-revision
+django-crypto-fields
 django-simple-history
 factory-boy==2.5.2
 django_crypto_fields
 -e git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc_constants
 -e git+https://github.com/botswana-harvard/edc-base@develop#egg=edc_base
 -e git+https://github.com/botswana-harvard/edc-registration.git@develop#egg=edc_registration
+-e git+https://github.com/botswana-harvard/edc-locator.git@develop#egg=edc_locator

@@ -1,22 +1,4 @@
-NOT_APPLICABLE = 'N/A'
-UNKNOWN = 'Unknown'
-VAGINAL =  'vaginal'
-CESAREAN = 'cesarean'
-NOT_ENROLLED = 'NOT_ENROLLED'
-HIV_INFECTED_COHOT = 'HIV_INFECTED_COHOT'
-HIV_UNIFECTED_COHOT = 'HIV_UNIFECTED_COHOT'
-POS = 'POS'
-NEG = 'NEG'
-YES = 'Yes'
-NO = 'No'
-PENDING_INFANT_RESULT = 'PENDING_INFANT_RESULT'
-PENDING_BIRTH = 'PENDING_BIRTH'
-
-YES_NO_UNKNOWN = (
-    ('Yes', 'Yes'),
-    ('No', 'No'),
-    (UNKNOWN, UNKNOWN),
-)
+from edc_constants.constants import NOT_APPLICABLE, POS, NEG, OTHER, UNKNOWN
 
 HAART_DURING_PREG = (
     ('Atripla', 'Atripla'),
@@ -26,11 +8,6 @@ HAART_DURING_PREG = (
     (NOT_APPLICABLE, 'Not Applicable'),
 )
 
-YES_NO = (
-    ('Yes', 'Yes'),
-    ('No', 'No'),
-)
-
 CHECKLIST_DISEASES = (
     (NOT_APPLICABLE, 'Not Applicable'),
     ('tuberculosis', 'Tuberculosis'),
@@ -38,8 +15,8 @@ CHECKLIST_DISEASES = (
 )
 
 HIVRESULT_CHOICE = (
-    ('POS', 'POS'),
-    ('NEG ', 'NEG '),
+    (POS, 'POS'),
+    (NEG, 'NEG '),
 )
 
 PREG_DELIVERED_CHOICE = (
@@ -57,13 +34,16 @@ AUTOPSY_SOURCE = (
     ('family_mem', 'Other family member'),
     ('hlth_prof', 'Health Professional who cared for the infant'),
     ('med_rec', 'Medical records'),
-    ('OTHER', 'Other'),
+    (OTHER, 'Other'),
 )
 
 PRIOR_PREG_HAART_STATUS = (
-    ('Received continuos HAART from the time she started', 'Received continuos HAART from the time she started'),
-    ('Had treatment interruption but restarted ', 'Had treatment interruption but restarted HAART prior to this pregnancy'),
-    ('interruption never restarted','Had treatment interruption and never restarted HAART prior to this pregnancy' ),
+    ('Received continuos HAART from the time she started',
+     'Received continuos HAART from the time she started'),
+    ('Had treatment interruption but restarted ',
+     'Had treatment interruption but restarted HAART prior to this pregnancy'),
+    ('interruption never restarted',
+     'Had treatment interruption and never restarted HAART prior to this pregnancy'),
 )
 
 AUTOPSY_SIGNS = (
@@ -102,19 +82,23 @@ CARDIOVASCULAR_DISORDER = (
     ('Atrial septal defect', 'Atrial septal defect'),
     ('Ventricula septal defect', 'Ventricula septal defect'),
     ('Atrioventricular canal', 'Atrioventricular canal'),
-    ('Complete transposition of the great vessels (without VSD)', 'Complete transposition of the great vessels (without VSD)'),
-    ('Complete transposition of the great vessels (with VSD)', 'Complete transposition of the great vessels (with VSD)'),
+    ('Complete transposition of the great vessels (without VSD)',
+     'Complete transposition of the great vessels (without VSD)'),
+    ('Complete transposition of the great vessels (with VSD)',
+     'Complete transposition of the great vessels (with VSD)'),
     ('Tetralogy of Fallot', 'Tetralogy of Fallot'),
     ('Pulmonary valve stenosis or atresia', 'Pulmonary valve stenosis or atresia'),
     ('Tricuspid valve stenosis or atresia', 'Tricuspid valve stenosis or atresia'),
     ('Mitral valve stenosis or atresia', 'Mitral valve stenosis or atresia'),
     ('Hypoplastic left ventricle', 'Hypoplastic left ventricle'),
     ('Hypoplastic right ventricle', 'Hypoplastic right ventricle'),
-    ('Congenital cardiomyopath (do not code if only isolated cardiomegaly)', 'Congenital cardiomyopath (do not code if only isolated cardiomegaly)'),
+    ('Congenital cardiomyopath (do not code if only isolated cardiomegaly)',
+     'Congenital cardiomyopath (do not code if only isolated cardiomegaly)'),
     ('Coarclation of the aorta', 'Coarclation of the aorta'),
     ('Total anomalous pulmonary venous return', 'Total anomalous pulmonary venous return'),
     ('Arteriovenous malformation, specify site', 'Arteriovenous malformation, specify site'),
-    ('Patent ductous arteriosus (persisting >6 weeks of age)', 'Patent ductous arteriosus (persisting >6 weeks of age)'),
+    ('Patent ductous arteriosus (persisting >6 weeks of age)',
+     'Patent ductous arteriosus (persisting >6 weeks of age)'),
     ('OTHER', 'Other cardiovascular malformation, specify'),
 )
 
@@ -133,7 +117,8 @@ CNS_ABNORMALITIES = (
     ('Spina bifida, open', 'Spina bifida, open'),
     ('Spina bifida, closed', 'Spina bifida, closed'),
     ('Holoprosencephaly', 'Holoprosencephaly'),
-    ('Isolated hydroencephaly (not associated with spina bifida)', 'Isolated hydroencephaly (not associated with spina bifida)'),
+    ('Isolated hydroencephaly (not associated with spina bifida)',
+     'Isolated hydroencephaly (not associated with spina bifida)'),
     ('Other CNS defect, specify', 'Other CNS defect, specify'),
 )
 
@@ -149,20 +134,29 @@ CTX_PLACEBO_STATUS = (
     ('Starting CTX/Placebo today', 'Starting CTX/Placebo today or since the last scheduled visit'),
     ('Permanently discontinued', 'Permanently discontinued CTX/Placebo at or before last scheduled visit'),
     ('Never started', 'Never started CTX/Placebo'),
-    ('Change in CTX/Placebo since the last scheduled visit or today', 'Change in CTX/Placebo since the last scheduled visit or today (dose modification, permanent discontinuation, temporary hold, resumption / initiation after temporary hold)'),
+    ('Change in CTX/Placebo since the last scheduled visit or today',
+     'Change in CTX/Placebo since the last scheduled visit or today (dose modification, permanent discontinuation, temporary hold, resumption / initiation after temporary hold)'),
 )
 
 DX_INFANT = (
-    ('Pneumonia, suspected (no CXR or microbiologic confirmation)', 'Pneumonia, suspected (no CXR or microbiologic confirmation)'),
-    ('Pneumonia, CXR confirmed, no bacterial pathogen', 'Pneumonia, CXR confirmed, no bacterial pathogen'),
-    ('Pneumonia, CXR confirmed, bacterial pathogen isolated (specify pathogen)', 'Pneumonia, CXR confirmed, bacterial pathogen isolated (specify pathogen)'),
-    ('Pulmonary TB, suspected(no CXR or microbiologic confirmation)', 'Pulmonary TB, suspected(no CXR or microbiologic confirmation)'),
-    ('Pulmonary TB, CXR-confirmed (no microbiologic confirmation)', 'Pulmonary TB, CXR-confirmed (no microbiologic confirmation)'),
-    ('Pulmonary TB, smear and/or culture positive', 'Pulmonary TB, smear and/or culture positive'),
-    ('Extrapulmonary TB,suspected (no CXR or microbiologic confirmation)', 'Extrapulmonary TB,suspected (no CXR or microbiologic confirmation)'),
+    ('Pneumonia, suspected (no CXR or microbiologic confirmation)',
+     'Pneumonia, suspected (no CXR or microbiologic confirmation)'),
+    ('Pneumonia, CXR confirmed, no bacterial pathogen',
+     'Pneumonia, CXR confirmed, no bacterial pathogen'),
+    ('Pneumonia, CXR confirmed, bacterial pathogen isolated (specify pathogen)',
+     'Pneumonia, CXR confirmed, bacterial pathogen isolated (specify pathogen)'),
+    ('Pulmonary TB, suspected(no CXR or microbiologic confirmation)',
+     'Pulmonary TB, suspected(no CXR or microbiologic confirmation)'),
+    ('Pulmonary TB, CXR-confirmed (no microbiologic confirmation)',
+     'Pulmonary TB, CXR-confirmed (no microbiologic confirmation)'),
+    ('Pulmonary TB, smear and/or culture positive',
+     'Pulmonary TB, smear and/or culture positive'),
+    ('Extrapulmonary TB,suspected (no CXR or microbiologic confirmation)',
+     'Extrapulmonary TB,suspected (no CXR or microbiologic confirmation)'),
     ('Bronchiolitis (not bronchitis)', 'Bronchiolitis (not bronchitis)'),
     ('Hepatitis:Drug related', 'Hepatitis:Drug related (report for Grades 2,3,4)'),
-    ('Hepatitis:Traditional medication related', 'Hepatitis:Traditional medication related'),
+    ('Hepatitis:Traditional medication related',
+     'Hepatitis:Traditional medication related'),
     ('Hepatitis:Hepatitis A', 'Hepatitis:Hepatitis A'),
     ('Hepatitis:Hepatitis B', 'Hepatitis:Hepatitis B'),
     ('Hepatitis:Other/Unknown', 'Hepatitis:Other/Unknown'),
@@ -174,14 +168,23 @@ DX_INFANT = (
     ('Appendicitis', 'Appendicitis'),
     ('Cholecystitis/cholanangitis', 'Cholecystitis/cholanangitis'),
     ('Pancreatitis', 'Pancreatitis'),
-    ('Acute Renal Failure', 'Acute Renal Failure (Record highest creatinine level if creatine tested outside of the study) '),
+    ('Acute Renal Failure',
+     'Acute Renal Failure (Record highest creatinine level if creatine tested outside of the study) '),
     ('Anemia', 'Anemia(Only report grade 3 or 4 anemia based on a lab value drawn outside the study'),
     ('Rash', 'Rash (report for Grades 2,3,4)'),
     ('Trauma/accident', 'Trauma/accident'),
-    ('Other abnormallaboratory tests(other than tests listed above or tests done as part of this study),specify test and result', 'Other abnormallaboratory tests(other than tests listed above or tests done as part of this study),specify test and result'),
-    ('New congenital abnormality not previously identified?,specify', 'New congenital abnormality not previously identified?,specify and complete "Congenital Anomaly"form'),
-    ('Other serious (grade 3 or 4)infection(not listed above),specify', 'Other serious (grade 3 or 4)infection(not listed above),specify'),
-    ('Other serious (grade 3 or 4) non-infectious(not listed above),specify', 'Other serious (grade 3 or 4)non-infectious(not listed above),specify'),
+    (
+        ('Other abnormallaboratory tests(other than tests listed above '
+         'or tests done as part of this study), specify test and result'),
+        ('Other abnormallaboratory tests(other than tests listed above or '
+         'tests done as part of this study),specify test and result')
+    ),
+    ('New congenital abnormality not previously identified?,specify',
+     'New congenital abnormality not previously identified?,specify and complete "Congenital Anomaly"form'),
+    ('Other serious (grade 3 or 4)infection(not listed above),specify',
+     'Other serious (grade 3 or 4)infection(not listed above),specify'),
+    ('Other serious (grade 3 or 4) non-infectious(not listed above),specify',
+     'Other serious (grade 3 or 4)non-infectious(not listed above),specify'),
 
 )
 
@@ -229,15 +232,23 @@ INFO_PROVIDER = (
 INFANT_OFF_DRUG_REASON = (
     ('completed protocol', '1. Completion of protocol-required period of study treatment'),
     ('off-study', '2. Participant going off-study for any reason, including death or lost to follow-up'),
-    ('toxicity', '3. At Investigator\'s discretion, due to persistent toxicity (confirmed or suspected to be possibly related to study drug)'),
+    (
+        'toxicity',
+        ('3. At Investigator\'s discretion, due to persistent toxicity '
+         '(confirmed or suspected to be possibly related to study drug)')),
     ('caregiver', '4. Participant\'s mother/caregiver no longer wants child to receive study drug'),
     ('hiv infected', '5. Child is HIV- infected (Open-label CTX indicated)'),
     ('OTHER', '9. Other'),
 )
 
 INFANT_VISIT_STUDY_STATUS = (
-    ('onstudy rando ondrug', '1. On study/On drug (CTX/Placebo), study medication(s) continuing or temporarily held'),
-    ('onstudy rando offdrug', '2. On study/Off drug (CTX/Placebo), study medication(s) permanently discontinued- clinic follow-up continuing'),
+    ('onstudy rando ondrug',
+     '1. On study/On drug (CTX/Placebo), study medication(s) continuing or temporarily held'),
+    (
+        'onstudy rando offdrug',
+        ('2. On study/Off drug (CTX/Placebo), study medication(s) permanently '
+         'discontinued- clinic follow-up continuing')
+    ),
     ('onstudy rando notstarteddrug', '3. On study/has not yet started study medication(s)(CTX/Placebo)'),
     ('onstudy rando today', '4. Being randomised today'),
     ('onstudy notrando', '5. On Study / Not yet randomized'),
@@ -252,14 +263,25 @@ OFF_STUDY_REASON = [
     ('lost_no_contact', ' 4. Lost to follow-up, unable to locate'),
     ('lost_contacted', ' 5. Lost to follow-up, contacted but did not come to study clinic'),
     ('withdrew_by_mother', ' 6. Mother changed mind and withdrew consent'),
-    ('withdrew_by_father', ' 7. Father of baby did not want infant to participate and participant withdrew consent'),
-    ('withdrew_by_family', ' 8. Other family member did not want mother/infant to participate and participant withdrew consent'),
-    ('mother_died', '9. Mother died after consenting, before infant randomized'),
+    ('withdrew_by_father',
+     ' 7. Father of baby did not want infant to participate and participant withdrew consent'),
+    ('withdrew_by_family',
+     ' 8. Other family member did not want mother/infant to participate and participant withdrew consent'),
+    ('mother_died',
+     '9. Mother died after consenting, before infant randomized'),
     ('hiv_pos', '10. Infant found to be HIV-infected'),
     ('ill', '11. Infant diagnosed with medical condition making survival to 18 months unlikely'),
     ('>34_day_old', '12. Infant over 34 days old'),
-    ('complete', '13. Completion of protocol required period of time for observation (see Study Protocol for definition of Completion.) [skip to end of form]'),
-    ('death', '14. Participant death (complete the DEATH REPORT FORM AF005) (For EAE Reporting requirements see EAE Reporting Manual)'),
+    (
+        'complete',
+        ('13. Completion of protocol required period of time for observation '
+         '(see Study Protocol for definition of Completion.) [skip to end of form]')
+    ),
+    (
+        'death',
+        ('14. Participant death (complete the DEATH REPORT FORM AF005) '
+         '(For EAE Reporting requirements see EAE Reporting Manual)')
+    ),
     ('OTHER', '99. Other'),
 ]
 
@@ -303,8 +325,10 @@ MUSCULOSKELETAL_ABNORMALITY = (
     ('Torticollis', 'Torticollis'),
     ('Congenital scoliosis, lordosis', 'Congenital scoliosis, lordosis'),
     ('Congenital dislocation of hip', 'Congenital dislocation of hip'),
-    ('Talipes equinovarus (club feet excluding metatarsus varus)', 'Talipes equinovarus (club feet excluding metatarsus varus)'),
-    ('Funnel chest or pigeon chest (pectus excavatum or carinaturn)', 'Funnel chest or pigeon chest (pectus excavatum or carinaturn)'),
+    ('Talipes equinovarus (club feet excluding metatarsus varus)',
+     'Talipes equinovarus (club feet excluding metatarsus varus)'),
+    ('Funnel chest or pigeon chest (pectus excavatum or carinaturn)',
+     'Funnel chest or pigeon chest (pectus excavatum or carinaturn)'),
     ('Polydactyly', 'Polydactyly'),
     ('Syndactyly', 'Syndactyly'),
     ('Other hand malformation, specify', 'Other hand malformation, specify'),
@@ -349,10 +373,13 @@ REASON_RCV_FORMULA = (
     ('no milk', '1. Mother did not have enough breast milk'),
     ('back to work', '2. Mother returned to work so unable to breastfeed participant exclusively'),
     ('off HAART', '3. Mother stopped breastfeeding because no longer taking HAART'),
-    ('afraid to transmit', '4. Mother stopped because she is afraid she will transmit HIV to the participant even though she\'s taking HAART'),
+    ('afraid to transmit', ('4. Mother stopped because she is afraid she will transmit HIV '
+                            'to the participant even though she\'s taking HAART')),
     ('advised to mix feed', '5. Mother advised to add other food/liquids by partner/family'),
-    ('felt to mix feed', '6. Mother felt that baby needed other foods/liquids to be healthy (for babies <= 6 months old)'),
-    ('complete per protocol', '7. <Per breastfeeding randomisation, infant is >5 months or >11 months of age and completed breastfeeding per protocol'),
+    ('felt to mix feed', ('6. Mother felt that baby needed other foods/liquids to be healthy '
+                          '(for babies <= 6 months old)')),
+    ('complete per protocol', ('7. <Per breastfeeding randomisation, infant is >5 months or >11 '
+                               'months of age and completed breastfeeding per protocol')),
     ('OTHER', '9. Other'),
     ('N/A', 'Not Applicable'),
 )
@@ -360,9 +387,11 @@ REASON_RCV_FORMULA = (
 REASON_MISSED_CTX_PLACEBO = (
     ('caregiver forgot', 'Caregiver forgot to give the CTX/Placebo'),
     ('caregiver ran out/lost', 'Caregiver ran out of CTX/Placebo or lost the bottle'),
-    ('caregiver away', 'Primary caregiver was away from home and did not have another person give the CTX/Placebo'),
+    ('caregiver away',
+     'Primary caregiver was away from home and did not have another person give the CTX/Placebo'),
     ('infant away', 'Infant was away from home and the CTX/Placebo bottle was not at the other location'),
-    ('caregiver decision/sick', 'Caregiver chose not to give the CTX/Placebo because baby was sick or for other reasons'),
+    ('caregiver decision/sick',
+     'Caregiver chose not to give the CTX/Placebo because baby was sick or for other reasons'),
     ('OTHER', 'Other'),
     ('N/A', 'Not Applicable'),
 )
@@ -524,7 +553,7 @@ STOOLS_PAST_24HOURS = (
     ('6', '6'),
     ('7', '7'),
     ('>7', '>7'),
-    ('UNKNOWN', 'Unknown')
+    (UNKNOWN, 'Unknown')
 )
 
 CONTINUOUS_LOOSE_STOOLS = (
@@ -540,34 +569,33 @@ CONTINUOUS_LOOSE_STOOLS = (
 )
 
 RECRUIT_SOURCE = (
-    ('Poster/pamphlet at ANC','Recruitment poster/pamphlet at ANC'),
+    ('Poster/pamphlet at ANC', 'Recruitment poster/pamphlet at ANC'),
     ('ANC clinic staff', 'ANC clinic staff'),
     ('Staff at site of delivery', 'Staff at site of delivery'),
     ('BHP recruiter', 'BHP recruiter'),
-    ('OTHER', 'Other, specify'),   
-) 
+    (OTHER, 'Other, specify'),
+)
 
 RECRUIT_CLINIC = (
     ('PHH', 'Gaborone(PMH)'),
     ('SLH', 'Molepolole(SLH)'),
     ('ATHLONE', 'Lobatse(Athlone)'),
     ('G.West Clinic', 'G.West Clinic'),
-    ('Old Naledi Clinic','Old Naledi Clinic'),
+    ('Old Naledi Clinic', 'Old Naledi Clinic'),
     ('BH3 Clinic', 'BH3 Clinic'),
-    ('Mafitlhakgosi Clinic','Mafitlhakgosi Clinic'),
+    ('Mafitlhakgosi Clinic', 'Mafitlhakgosi Clinic'),
     ('Tsopeng Clinic', 'Tsopeng Clinic'),
-    ('Peleng East Clinic', 'Peleng East Clinic'), 
-    ('Tlokweng main','Tlokweng Main Clinic'),
+    ('Peleng East Clinic', 'Peleng East Clinic'),
+    ('Tlokweng main', 'Tlokweng Main Clinic'),
     ('Khayakhulu', 'Khayakhulu Clinic'),
-    ('Nkoyaphiri','Nkoyaphiri Clinic'),
-    ('Phuthadikobo','Phuthadikobo Clinic'),
-    ('Boribamo','Boribamo Clinic'),
-    ('Borakalalo','Borakalalo Clinic'),
-    ('Bokaa','Bokaa Clinic'),
-    ('Kgosing','Kgosing Clininc'),
+    ('Nkoyaphiri', 'Nkoyaphiri Clinic'),
+    ('Phuthadikobo', 'Phuthadikobo Clinic'),
+    ('Boribamo', 'Boribamo Clinic'),
+    ('Borakalalo', 'Borakalalo Clinic'),
+    ('Bokaa', 'Bokaa Clinic'),
+    ('Kgosing', 'Kgosing Clininc'),
     ('MCC', 'Molepolole Community Centre'),
-    ('OTHER health facility', 'Other health facilities not associated with study site'),
+    ('{} health facility'.format(OTHER), 'Other health facilities not associated with study site'),
     ('HOME', 'Home'),
-    ('OTHER location', 'Other location'), 
-) 
-
+    ('{} location'.format(OTHER), 'Other location'),
+)

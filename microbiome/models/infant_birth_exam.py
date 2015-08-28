@@ -1,8 +1,9 @@
 from django.db import models
 
 from edc_base.model.models import BaseUuidModel
-from edc_constants.choices import (GENDER_UNDETERMINED, NORMAL_ABNORMAL, YES_NO_NOT_EVALUATED_NA,
-                                   NORMAL_ABNORMAL_NOEXAM)
+from edc_constants.choices import (
+    GENDER_UNDETERMINED, NORMAL_ABNORMAL, YES_NO_NOT_EVALUATED_NA,
+    NORMAL_ABNORMAL_NOEXAM)
 
 from .infant_birth import InfantBirth
 from .infant_visit import InfantVisit

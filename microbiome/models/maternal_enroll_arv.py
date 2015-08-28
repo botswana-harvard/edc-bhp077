@@ -1,11 +1,12 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from ..choices import PRIOR_PREG_HAART_STATUS
-from edc_constants.choices import YES_NO
-from ..list.maternal_enroll_prior_arv import PriorArv
 from edc_base.model.fields import IsDateEstimatedField, OtherCharField
 from edc_base.model.models import BaseUuidModel
+from edc_constants.choices import YES_NO
+
+from ..choices import PRIOR_PREG_HAART_STATUS
+from ..list.maternal_enroll_prior_arv import PriorArv
 
 
 class MaternalEnrollArv(BaseUuidModel):

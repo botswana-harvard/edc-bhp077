@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from edc_base.models import BaseUuidModel
+from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
 from edc_constants.choices import GENDER
 

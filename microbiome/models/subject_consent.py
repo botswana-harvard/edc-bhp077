@@ -1,15 +1,13 @@
 from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.utils import timezone
-from django.core.exceptions import ValidationError
 from django_crypto_fields.fields import IdentityField
 
 from edc_base.model.fields import IdentityTypeField
 from edc_consent.models import BaseConsent
-from edc_registration.models import RegisteredSubject
+from edc_constants.choices import YES_NO_UNKNOWN, NO
 
 from ..models import MaternalScreening
-from ..choices import YES_NO_UNKNOWN
 
 from .identifiers import MaternalIdentifier
 
@@ -47,7 +45,7 @@ class SubjectConsent(BaseConsent):
         if not self.id:
             self.subject_identifier = MaternalIdentifier().identifier
         self.identity_match()
-        # super(SubjectConsent, self).save(*args, **kwargs)
+        super(SubjectConsent, self).save(*args, **kwargs)
 
     def identity_match(self):
         if self.confirm_identity:
@@ -66,9 +64,9 @@ class SubjectConsent(BaseConsent):
         """Evaluates the initial maternal eligibility criteria"""
         if not (self.age_in_years < 18):
             return False
-        elif self.has_identity.lower() == 'no':
+        elif self.has_identity == NO:
             return False
-        elif self.citizen.lower() == 'no':
+        elif self.citizen == NO:
             return False
         else:
             return True

@@ -15,7 +15,9 @@ from unipath import Path
 from django.utils import timezone
 
 PROJECT_NAME = 'Microbiome'
-
+PROJECT_TITLE = PROJECT_NAME
+INSTITUTION = 'Botswana-Harvard AIDS Institute'
+PROTOCOL_REVISION = '0.1dev'
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
 
@@ -41,6 +43,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_crypto_fields',
+    'django_revision',
+    'edc_base',
     'edc_content_type_map',  # to be removed
     'edc_registration',
     'edc_entry',
@@ -130,3 +134,6 @@ STUDY_OPEN_DATETIME = timezone.now()
 MAX_SUBJECTS = {}
 SERVER_DEVICE_ID_LIST = [99, ]
 MIDDLEMAN_DEVICE_ID_LIST = [98, ]
+
+MINIMUM_AGE_OF_CONSENT = 18
+MAXIMUM_AGE_OF_CONSENT = 64

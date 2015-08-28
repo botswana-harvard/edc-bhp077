@@ -1,8 +1,9 @@
-from django.db import models
 from django.core.urlresolvers import reverse
+from django.db import models
+
+from edc_constants.choices import YES_NO, YES_NO_NA
 
 from .base_mother import BaseMother
-from edc_constants.choices import YES_NO, YES_NO_NA
 
 
 class MaternalInfected(BaseMother):
