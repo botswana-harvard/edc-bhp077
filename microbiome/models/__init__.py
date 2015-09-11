@@ -23,6 +23,11 @@ from .infant_fu import InfantFu
 from .infant_fu_physical import InfantFuPhysical
 from .infant_arv_proph import InfantArvProph
 from .infant_arv_proph_mod import InfantArvProphMod
+from .infant_fu_new_med import InfantFuNewMed
+from .infant_fu_new_med_items import InfantFuNewMedItems
+from .infant_fu_immunizations import InfantFuImmunizations
+from .infant_fu_dx import InfantFuDx
+from .infant_fu_dx_items import InfantFuDxItems
 from .infant_congenital_anomalies import (
     InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
     InfantCleftDisorderItems, InfantMouthUpGastrointestinalItems, InfantCardiovascularDisorderItems,
