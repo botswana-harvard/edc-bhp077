@@ -21,6 +21,8 @@ from .infant_birth_exam import InfantBirthExam
 from .infant_birth_feeding import InfantBirthFeedVaccine
 from .infant_fu import InfantFu
 from .infant_fu_physical import InfantFuPhysical
+from .infant_arv_proph import InfantArvProph
+from .infant_arv_proph_mod import InfantArvProphMod
 from .infant_congenital_anomalies import (
     InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
     InfantCleftDisorderItems, InfantMouthUpGastrointestinalItems, InfantCardiovascularDisorderItems,

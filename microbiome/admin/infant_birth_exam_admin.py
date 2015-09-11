@@ -9,7 +9,8 @@ class InfantBirthExamAdmin(admin.ModelAdmin):
 
     list_display = (
         'infant_birth',
-        'gender', 'general_activity',
+        'gender',
+        'general_activity',
         'physical_exam_result',
         'resp_exam',
     )
