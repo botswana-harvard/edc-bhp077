@@ -4,7 +4,7 @@ from django.utils import timezone
 from django_crypto_fields.fields import IdentityField
 
 from edc_base.model.fields import IdentityTypeField
-from edc_consent.models import BaseConsent
+from edc_consent.models.base_consent import BaseConsent
 from edc_constants.choices import YES_NO_UNKNOWN, NO
 from .maternal_eligibility import MaternalEligibility
 from .identifiers import MaternalIdentifier
@@ -14,7 +14,7 @@ class MaternalConsent(BaseConsent):
 
     maternal_eligibility = models.OneToOneField(
         MaternalEligibility,
-        verbose_name="Mother'\s Eligibility")
+        verbose_name="Mother's Eligibility")
 
     citizen = models.CharField(
         verbose_name="Are you a Botswana citizen? ",

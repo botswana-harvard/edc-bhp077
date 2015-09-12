@@ -12,6 +12,32 @@ class MaternalConsentAdmin(BaseModelAdmin):
 
     form = MaternalConsentForm
 
+    fields = ('maternal_eligibility',
+              'first_name',
+              'last_name',
+              'initials',
+              'language',
+              'is_literate',
+              'witness_name',
+              'consent_datetime',
+              'gender',
+              'dob',
+              'guardian_name',
+              'is_dob_estimated',
+              'citizen',
+              'identity',
+              'identity_type',
+              'confirm_identity',
+              'may_store_samples',
+              'comment')
+    radio_fields = {'citizen': admin.VERTICAL,
+                    'language': admin.VERTICAL,
+                    'is_literate': admin.VERTICAL,
+                    'gender': admin.VERTICAL,
+                    'is_dob_estimated': admin.VERTICAL,
+                    'identity_type': admin.VERTICAL,
+                    'may_store_samples': admin.VERTICAL}
+
     def reverse_next_to_dashboard(self, next_url_name, request, obj, **kwargs):
         pass
 

@@ -15,7 +15,7 @@ class BaseEnrollment(BaseUuidModel):
 
     maternal_consent = models.OneToOneField(
         MaternalConsent,
-        verbose_name="Mother'\s Consent")
+        verbose_name="Mother's Consent")
 
     report_datetime = models.DateTimeField(
         verbose_name="Date and Time of Enrollment",

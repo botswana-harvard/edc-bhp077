@@ -18,7 +18,7 @@ class MaternalEligibilityAdmin(BaseModelAdmin):
               'citizen',
               'is_diabetic',
               'has_tb',
-              'breastfeed_a_year',
+              'breastfeed_for_a_year',
               'instudy_for_a_year',
               'currently_pregnant')
     radio_fields = {'citizen': admin.VERTICAL,
