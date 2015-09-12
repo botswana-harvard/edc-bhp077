@@ -1,17 +1,17 @@
 from django.contrib import admin
 from .site import admin_site
-from ..models import InfantProphMod, InfantProph
+from ..models import InfantArvProphMod, InfantArvProph
 
 
-class InfantProphAdmin(admin.ModelAdmin):
+class InfantArvProphAdmin(admin.ModelAdmin):
 
     radio_fields = {'prophylatic_nvp': admin.VERTICAL}
 
-admin_site.register(InfantProph, InfantProphAdmin)
+admin_site.register(InfantArvProph, InfantArvProphAdmin)
 
 
-class InfantProphModAdmin(admin.ModelAdmin):
+class InfantArvProphModAdmin(admin.ModelAdmin):
 
     list_filter = ('infant_arv_proph',)
 
-admin_site.register(InfantProphMod, InfantProphModAdmin)
+admin_site.register(InfantArvProphMod, InfantArvProphModAdmin)

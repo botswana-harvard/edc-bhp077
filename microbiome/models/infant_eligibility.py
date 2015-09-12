@@ -5,7 +5,7 @@ from edc_base.model.validators import (datetime_not_before_study_start, datetime
 from edc_base.model.models import BaseUuidModel
 from edc_constants.constants import NEG, POS
 
-from ..choices import HIVRESULT_CHOICE
+from edc_constants.choices import POS_NEG_ONLY
 
 from .maternal_eligibility import MaternalEligibility
 
@@ -35,7 +35,7 @@ class InfantEligibility (BaseUuidModel):
         null=True,
         blank=True,
         max_length=30,
-        choices=HIVRESULT_CHOICE,
+        choices=POS_NEG_ONLY,
         help_text=_('If the infant is HIV +ve then mother-infant pair is not eligible.')
     )
 

@@ -25,10 +25,10 @@ class InfantFuAdmin(admin.ModelAdmin):
 admin_site.register(InfantFu, InfantFuAdmin)
 
 
-class InfantFuPhysicalAdmin(admin.ModelAdmin):
-
-    list_display = (
-        'has_abnormalities',
-    )
-
-admin_site.register(InfantFuPhysical, InfantFuPhysicalAdmin)
+# class InfantFuPhysicalAdmin(admin.ModelAdmin):
+# 
+#     list_display = (
+#         'has_abnormalities',
+#     )
+# 
+# admin_site.register(InfantFuPhysical, InfantFuPhysicalAdmin)

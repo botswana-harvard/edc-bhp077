@@ -21,6 +21,7 @@ class InfantFuImmunizations(BaseUuidModel):
 
     vaccination = models.CharField(
         verbose_name="Vaccines received",
+        max_length=15,
         help_text="Select all the vaccines that were received",
     )
 
