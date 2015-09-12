@@ -2,10 +2,10 @@ from django.db import models
 
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
-from edc_constants.choices import YES_NO
+from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 from edc_registration.models import RegisteredSubject
 
-from ..list.diseases_at_enrollment import DiseasesAtEnrollment
+# from ..list.diseases_at_enrollment import DiseasesAtEnrollment
 
 
 class MaternalEligibility (BaseUuidModel):
@@ -29,6 +29,12 @@ class MaternalEligibility (BaseUuidModel):
 
     age_in_years = models.IntegerField(
         verbose_name='What is the age of the participant?')
+
+    citizen = models.CharField(
+        verbose_name="Are you a Botswana citizen? ",
+        max_length=7,
+        choices=YES_NO_UNKNOWN,
+        help_text="if NO, ineligible")
 
 #     disease = models.ManyToManyField(
 #         DiseasesAtEnrollment,
