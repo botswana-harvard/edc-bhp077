@@ -2,16 +2,15 @@ from django.contrib import admin
 
 from .site import admin_site
 from edc_base.modeladmin.admin import BaseModelAdmin
-from microbiome.models import SubjectConsent
-from microbiome.models import MaternalScreening
-from microbiome.forms import SubjectConsentForm
+from microbiome.models import MaternalConsent
+from microbiome.forms import MaternalConsentForm
 from django.http.response import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 
-class SubjectConsentAdmin(BaseModelAdmin):
+class MaternalConsentAdmin(BaseModelAdmin):
 
-    form = SubjectConsentForm
+    form = MaternalConsentForm
 
     def reverse_next_to_dashboard(self, next_url_name, request, obj, **kwargs):
         pass
@@ -19,7 +18,7 @@ class SubjectConsentAdmin(BaseModelAdmin):
     def response_add(self, request, obj, post_url_continue=None):
         """Redirects as default unless keyword 'next' is in the GET and is a
         valid url_name (e.g. can be reversed using other GET values)."""
-        http_response_redirect = super(SubjectConsent, self).response_add(request, obj, post_url_continue)
+        http_response_redirect = super(MaternalConsent, self).response_add(request, obj, post_url_continue)
         custom_http_response_redirect = None
         if '_addanother' not in request.POST and '_continue' not in request.POST:
             if request.GET.get('next'):
@@ -39,12 +38,4 @@ class SubjectConsentAdmin(BaseModelAdmin):
             url = ('{0}?dashboard_id={1}').format(reverse('dashboard_id_url', kwargs={'dashboard_id': obj.id}), obj.id)
             return HttpResponseRedirect(url)
 
-#     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-#             if db_field.name == "maternal_screening":
-#                 maternal_screening = MaternalScreening.objects.none()
-#                 if MaternalScreening.objects.filter(id=request.GET.get('dashboard_id', 0)):
-#                     maternal_screening = MaternalScreening.objects.filter(id=request.GET.get('dashboard_id', 0))
-#                 kwargs["queryset"] = maternal_screening
-#             return super(SubjectConsentAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
-admin_site.register(SubjectConsent, SubjectConsentAdmin)
+admin_site.register(MaternalConsent, MaternalConsentAdmin)

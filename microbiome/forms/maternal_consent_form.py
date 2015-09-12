@@ -1,14 +1,14 @@
 from django.forms import ModelForm
 
-from ..models import SubjectConsent
+from ..models import MaternalConsent
 
 
-class SubjectConsentForm(ModelForm):
+class MaternalConsentForm(ModelForm):
 
     def clean(self):
-        clean_data = super(SubjectConsentForm, self).clean()
+        clean_data = super(MaternalConsentForm, self).clean()
         return clean_data
 
     class Meta:
-        model = SubjectConsent
+        model = MaternalConsent
         fields = '__all__'

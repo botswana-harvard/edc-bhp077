@@ -6,13 +6,15 @@ from django_crypto_fields.fields import IdentityField
 from edc_base.model.fields import IdentityTypeField
 from edc_consent.models import BaseConsent
 from edc_constants.choices import YES_NO_UNKNOWN, NO
-
-from ..models import MaternalScreening
-
+from .maternal_eligibility import MaternalEligibility
 from .identifiers import MaternalIdentifier
 
 
-class SubjectConsent(BaseConsent):
+class MaternalConsent(BaseConsent):
+
+    maternal_eligibility = models.OneToOneField(
+        MaternalEligibility,
+        verbose_name="Mother'\s Eligibility")
 
     citizen = models.CharField(
         verbose_name="Are you a Botswana citizen? ",
@@ -20,9 +22,6 @@ class SubjectConsent(BaseConsent):
         choices=YES_NO_UNKNOWN,
         help_text="")
 
-    maternal_screening = models.OneToOneField(
-        MaternalScreening,
-    )
     identity = IdentityField(
         verbose_name="Identity number (OMANG, etc)",
         unique=True,
@@ -45,7 +44,7 @@ class SubjectConsent(BaseConsent):
         if not self.id:
             self.subject_identifier = MaternalIdentifier().identifier
         self.identity_match()
-        super(SubjectConsent, self).save(*args, **kwargs)
+        super(MaternalConsent, self).save(*args, **kwargs)
 
     def identity_match(self):
         if self.confirm_identity:
@@ -61,10 +60,8 @@ class SubjectConsent(BaseConsent):
 
     @property
     def is_eligible(self):
-        """Evaluates the initial maternal eligibility criteria"""
+        """Evaluates maternal eligibility criteria"""
         if not (self.age_in_years < 18):
-            return False
-        elif self.has_identity == NO:
             return False
         elif self.citizen == NO:
             return False
@@ -73,3 +70,5 @@ class SubjectConsent(BaseConsent):
 
     class Meta:
         app_label = 'microbiome'
+        verbose_name = 'Maternal Consent'
+        verbose_name_plural = 'Maternal Consent'
