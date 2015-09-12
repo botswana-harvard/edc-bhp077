@@ -1,4 +1,5 @@
-from edc_constants.constants import NOT_APPLICABLE, POS, NEG, OTHER, UNKNOWN
+from edc_constants.constants import NOT_APPLICABLE, POS, NEG, UNKNOWN
+from .constants import LIVE, STILL_BIRTH
 
 HAART_DURING_PREG = (
     ('Atripla', 'Atripla'),
@@ -6,17 +7,6 @@ HAART_DURING_PREG = (
     ('Tenofovir-Emtricitibine-Efavirenz', 'Tenofovir-Emtricitibine-Efavirenz'),
     ('Truvad-Lamivudine-Efavirenz', 'Truvad-Lamivudine-Efavirenz'),
     (NOT_APPLICABLE, 'Not Applicable'),
-)
-
-CHECKLIST_DISEASES = (
-    (NOT_APPLICABLE, 'Not Applicable'),
-    ('tuberculosis', 'Tuberculosis'),
-    ('diabetes ', 'Diabetes '),
-)
-
-HIVRESULT_CHOICE = (
-    (POS, 'POS'),
-    (NEG, 'NEG '),
 )
 
 PREG_DELIVERED_CHOICE = (
@@ -29,12 +19,17 @@ BIRTH_TYPE = (
     ('cesarean ', 'cesarean'),
 )
 
+LIVE_STILL_BIRTH = (
+    (LIVE, 'live birth'),
+    (STILL_BIRTH, 'still birth')
+)
+
 AUTOPSY_SOURCE = (
     ('mother', 'Mother of infant'),
     ('family_mem', 'Other family member'),
     ('hlth_prof', 'Health Professional who cared for the infant'),
     ('med_rec', 'Medical records'),
-    (OTHER, 'Other'),
+    ('OTHER', 'Other'),
 )
 
 PRIOR_PREG_HAART_STATUS = (
@@ -630,7 +625,7 @@ RECRUIT_SOURCE = (
     ('ANC clinic staff', 'ANC clinic staff'),
     ('Staff at site of delivery', 'Staff at site of delivery'),
     ('BHP recruiter', 'BHP recruiter'),
-    (OTHER, 'Other, specify'),
+    ('OTHER', 'Other, specify'),
 )
 
 RECRUIT_CLINIC = (
@@ -652,7 +647,16 @@ RECRUIT_CLINIC = (
     ('Bokaa', 'Bokaa Clinic'),
     ('Kgosing', 'Kgosing Clininc'),
     ('MCC', 'Molepolole Community Centre'),
-    ('{} health facility'.format(OTHER), 'Other health facilities not associated with study site'),
+    ('OTHER health facility', 'Other health facilities not associated with study site'),
     ('HOME', 'Home'),
-    ('{} location'.format(OTHER), 'Other location'),
+    ('OTHER location', 'Other location'),
+)
+
+ARV_STATUS_WITH_NEVER = (
+    ('no_mod', '1. No modifications made since the last attended scheduled visit or today'),
+    ('start', '2. Starting today or has started since last attended scheduled visit'),
+    ('discontinued', '3. Permanently discontinued at or before the last attended scheduled visit'),
+    ('never started', '4. Never started'),
+    ('modified', '5. Change in at least one medication since the last attended scheduled visit or today'),
+    ('N/A', 'Not applicable'),
 )
