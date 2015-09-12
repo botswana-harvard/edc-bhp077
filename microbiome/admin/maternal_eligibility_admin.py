@@ -14,19 +14,15 @@ class MaternalEligibilityAdmin(BaseModelAdmin):
 
     fields = ('registered_subject',
               'report_datetime',
-              'disease',
-              'currently_pregnant',
-              'weeks_of_gestation',
-              'days_post_natal',
-              'type_of_birth',
-              'live_infants',
-              'verbal_hiv_status',
-              'evidence_pos_hiv_status',
-              'rapid_test_result',
-              'rapid_test_result_datetime',
-              'haart_during_preg',
-              'haart_start_date',
-              'drug_during_preg',
-              'enrollment_status')
-    radio_fields = {'type_of_birth': admin.VERTICAL, }
+              'age_in_years',
+              'is_diabetic',
+              'has_tb',
+              'breastfeed_a_year',
+              'instudy_for_a_year',
+              'currently_pregnant')
+    radio_fields = {'is_diabetic': admin.VERTICAL,
+                    'has_tb': admin.VERTICAL,
+                    'breastfeed_for_a_year': admin.VERTICAL,
+                    'instudy_for_a_year': admin.VERTICAL,
+                    'currently_pregnant': admin.VERTICAL}
 admin_site.register(MaternalEligibility, MaternalEligibilityAdmin)
