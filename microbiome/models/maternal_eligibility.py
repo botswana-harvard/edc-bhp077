@@ -1,22 +1,22 @@
+import uuid
 from django.db import models
 
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
-from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
-from edc_registration.models import RegisteredSubject
-
-# from ..list.diseases_at_enrollment import DiseasesAtEnrollment
+from edc_constants.choices import YES_NO
+from .maternal_eligibility_loss import MaternalEligibilityLoss
 
 
 class MaternalEligibility (BaseUuidModel):
-    """This is the main eligibility which determines
-    the mothers enrollment type.
-    e.g. antenatal or postnatal"""
+    """This is the eligibility entry point for all mothers.
+    If age eligible or not, an eligibility identifier is created for each mother"""
 
-    registered_subject = models.OneToOneField(
-        RegisteredSubject,
+    eligibility_id = models.CharField(
+        verbose_name="Eligibility Identifier",
+        max_length=36,
         null=True,
-        blank=True,
+        blank=False,
+        editable=False,
         help_text='')
 
     report_datetime = models.DateTimeField(
@@ -30,36 +30,12 @@ class MaternalEligibility (BaseUuidModel):
     age_in_years = models.IntegerField(
         verbose_name='What is the age of the participant?')
 
-    citizen = models.CharField(
-        verbose_name="Are you a Botswana citizen? ",
-        max_length=7,
-        choices=YES_NO_UNKNOWN,
-        help_text="if NO, ineligible")
-
-#     disease = models.ManyToManyField(
-#         DiseasesAtEnrollment,
-#         verbose_name="Do you currently have any of the following diseases?",
-#         max_length=15,
-#         help_text="If participant has any of the diseases, then not eligible.")
-    is_diabetic = models.CharField(
-        verbose_name='Are you diabetic?',
-        choices=YES_NO,
-        max_length=3)
-
-    has_tb = models.CharField(
-        verbose_name="Do you have tubercolosis",
-        choices=YES_NO,
-        max_length=3)
-
-    breastfeed_for_a_year = models.CharField(
-        verbose_name='Are you willing to breast-feed your child for a whole year?',
-        choices=YES_NO,
-        max_length=3)
-
-    instudy_for_a_year = models.CharField(
-        verbose_name="Are you willing to remain in the study during the infants first year of life",
-        choices=YES_NO,
-        max_length=3)
+    ineligibility = models.TextField(
+        verbose_name="Reason ineligible",
+        max_length=150,
+        null=True,
+        editable=False,
+        help_text='')
 
     currently_pregnant = models.CharField(
         verbose_name="Are you currently pregnant?",
@@ -68,6 +44,38 @@ class MaternalEligibility (BaseUuidModel):
         help_text='')
 
     objects = models.Manager()
+
+    def save(self, *args, **kwargs):
+        if not self.eligibility_id:
+            self.eligibility_id = uuid.uuid4()
+        self.ineligibility = self.mother_is_eligible()
+        super(MaternalEligibility, self).save(*args, **kwargs)
+
+    def mother_is_eligible(self):
+        ineligibility = []
+        if self.age_in_years < 18:
+            ineligibility.append('Mother is under 18')
+        if self.age_in_years > 50:
+            ineligibility.append('Mother is too old (>50)')
+        return (False if ineligibility else True, ineligibility)
+
+    @property
+    def maternal_ineligibility(self):
+        reason_ineligible = []
+        if self.age_in_years < 18:
+            reason_ineligible.append('Under age')
+        if self.age_in_years > 50:
+            reason_ineligible.append('Over age')
+        return reason_ineligible
+
+    @property
+    def maternal_eligibility_loss(self):
+        try:
+            maternal_eligibility_loss = MaternalEligibilityLoss.objects.get(
+                maternal_eligibility__id=self.eligibility_id)
+        except MaternalEligibilityLoss.DoesNotExist:
+            maternal_eligibility_loss = None
+        return maternal_eligibility_loss
 
     class Meta:
         app_label = "microbiome"
