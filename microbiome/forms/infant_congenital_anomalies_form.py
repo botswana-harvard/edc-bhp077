@@ -79,7 +79,7 @@ class InfantMaleGenitalAnomalyItemsForm(ModelForm):
         fields = '__all__'
 
 
-class InfantRenalAnomalyItems(ModelForm):
+class InfantRenalAnomalyItemsForm(ModelForm):
 
     class Meta:
         model = InfantRenalAnomalyItems

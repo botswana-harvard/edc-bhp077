@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from ..models import InfantFu, InfantFuPhysical
+from ..models import InfantFu
 
 from .site import admin_site
 
@@ -23,12 +23,3 @@ class InfantFuAdmin(admin.ModelAdmin):
     }
 
 admin_site.register(InfantFu, InfantFuAdmin)
-
-
-# class InfantFuPhysicalAdmin(admin.ModelAdmin):
-# 
-#     list_display = (
-#         'has_abnormalities',
-#     )
-# 
-# admin_site.register(InfantFuPhysical, InfantFuPhysicalAdmin)
