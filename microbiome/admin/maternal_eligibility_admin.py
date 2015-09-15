@@ -12,7 +12,7 @@ class MaternalEligibilityAdmin(BaseModelAdmin):
 
     form = MaternalEligibilityForm
 
-    fields = ('registered_subject',
+    fields = ('eligibility_id',
               'report_datetime',
               'age_in_years',
               'currently_pregnant')

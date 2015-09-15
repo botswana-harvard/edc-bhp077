@@ -12,8 +12,7 @@ class MaternalConsentAdmin(BaseModelAdmin):
 
     form = MaternalConsentForm
 
-    fields = ('maternal_eligibility',
-              'first_name',
+    fields = ('first_name',
               'last_name',
               'initials',
               'language',
