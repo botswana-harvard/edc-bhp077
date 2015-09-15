@@ -7,4 +7,4 @@ class InfantBirthExamForm(ModelForm):
 
     class Meta:
         model = InfantBirthExam
-        model = '__all__'
+        fields = '__all__'

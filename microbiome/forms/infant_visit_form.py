@@ -3,7 +3,7 @@ from django.forms.models import ModelForm
 from ..models import InfantVisit
 
 
-class InfantVisit(ModelForm):
+class InfantVisitForm(ModelForm):
 
     class Meta:
         model = InfantVisit

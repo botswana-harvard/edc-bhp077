@@ -62,7 +62,7 @@ class InfantLowerGastrointestinalItemsForm(ModelForm):
 
     class Meta:
         model = InfantLowerGastrointestinalItems
-        fields = '__fields__'
+        fields = '__all__'
 
 
 class InfantFemaleGenitalAnomalyItemsForm(ModelForm):
