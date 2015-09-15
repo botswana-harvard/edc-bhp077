@@ -3,7 +3,8 @@ from django.db import models
 from edc_base.model.fields import OtherCharField
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
-from edc_constants.choices import POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG
+from edc_constants.choices import (POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO_UNKNOWN,
+                                   YES_NO)
 from edc_constants.constants import NOT_APPLICABLE
 
 from .maternal_consent import MaternalConsent
@@ -24,6 +25,32 @@ class BaseEnrollment(BaseUuidModel):
             datetime_not_future, ],
         help_text='')
 
+    citizen = models.CharField(
+        verbose_name="Are you a Botswana citizen? ",
+        max_length=7,
+        choices=YES_NO_UNKNOWN,
+        help_text="if NO, ineligible")
+
+    is_diabetic = models.CharField(
+        verbose_name='Are you diabetic?',
+        choices=YES_NO,
+        max_length=3)
+
+    on_tb_treatment = models.CharField(
+        verbose_name="Are you being treated for tubercolosis",
+        choices=YES_NO,
+        max_length=3)
+
+    breastfeed_for_a_year = models.CharField(
+        verbose_name='Are you willing to breast-feed your child for a whole year?',
+        choices=YES_NO,
+        max_length=3)
+
+    instudy_for_a_year = models.CharField(
+        verbose_name="Are you willing to remain in the study during the infants first year of life",
+        choices=YES_NO,
+        max_length=3)
+
     verbal_hiv_status = models.CharField(
         verbose_name="What is your current HIV status?",
         choices=POS_NEG_UNTESTED_REFUSAL,
@@ -40,7 +67,7 @@ class BaseEnrollment(BaseUuidModel):
         help_text=("evidence = clinic and/or IDCC records. check regimes/drugs. If NO, participant"
                    "will not be enrolled"))
 
-    valid_regime = models.CharField(
+    valid_regimen = models.CharField(
         verbose_name="(Interviewer) If HIV +VE, do records show that participant takes ARV'\s?",
         choices=YES_NO_NA,
         null=True,

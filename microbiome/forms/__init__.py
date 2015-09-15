@@ -4,6 +4,7 @@ from .maternal_labour_del_form import (MaternalLabourDelForm, MaternalLabDelMedF
                                        MaternalLabDelClinicForm, MaternalLabDelDxForm,
                                        MaternalLabDelDxTForm)
 from .maternal_eligibility_form import MaternalEligibilityForm
+from .maternal_eligibility_loss_form import MaternalEligibilityLossForm
 from .antenatal_enrollment_form import AntenatalEnrollmentForm
 from .postnatal_enrollment_form import PostnatalEnrollmentForm
 from .maternal_locator_form import MaternalLocatorForm

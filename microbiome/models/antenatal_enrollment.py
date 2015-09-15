@@ -10,7 +10,7 @@ class AntenatalEnrollment(BaseEnrollment):
         verbose_name="How many weeks pregnant?",
         null=True,
         blank=True,
-        help_text="IF >=32 weeks do rapid test", )
+        help_text=" (weeks of gestation). If >=32 weeks do rapid test", )
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_antenatalenrollment_change', args=(self.id,))
