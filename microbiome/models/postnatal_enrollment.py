@@ -18,6 +18,10 @@ class PostnatalEnrollment(BaseEnrollment):
         max_length=3,
         help_text="INELIGIBLE if NO")
 
+    gestation_before_birth = models.IntegerField(
+        verbose_name="How many weeks after gestation was the child born?",
+        help_text="ineligible if premature or born before 37weeks")
+
     live_or_still_birth = models.CharField(
         verbose_name="Was this a live or still birth?",
         choices=LIVE_STILL_BIRTH,

@@ -16,6 +16,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
               'report_datetime',
               'postpartum_days',
               'delivery_type',
+              'gestation_before_birth',
               'live_or_still_birth',
               'live_infants',
               'citizen',
