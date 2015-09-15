@@ -26,3 +26,10 @@ from .infant_congenital_anomalies_form import (
     InfantMaleGenitalAnomalyItemsForm, InfantRenalAnomalyItemsForm, InfantMusculoskeletalAbnormalItemsForm,
     InfantSkinAbnormalItemsForm, InfantTrisomiesChromosomeItemsForm, InfantOtherAbnormalityItemsForm
 )
+from .infant_fu_dx_form import InfantFuDxForm
+from .infant_fu_form import InfantFuForm
+from .infant_fu_immunizations_form import InfantFuImmunizationsForm
+from .infant_fu_new_med_form import InfantFuNewMedForm
+from .infant_fu_new_med_items_form import InfantFuNewMedItemsForm
+from .infant_fu_physical_form import InfantFuPhysicalForm
+from .infant_visit_form import InfantVisitForm
