@@ -4,6 +4,7 @@ from django.db import models
 from edc_constants.choices import YES_NO, YES_NO_NA
 
 from .base_mother import BaseMother
+from microbiome.maternal_choices import KNOW_HIV_STATUS
 
 
 class MaternalInfected(BaseMother):
@@ -19,6 +20,12 @@ class MaternalInfected(BaseMother):
         choices=YES_NO_NA,
         verbose_name="Was the mother on any ARVs during previous pregnancies (or immediately following delivery) for PMTCT purposes (and not for her own health)? ",
         help_text="not including this pregnancy", )
+
+    know_hiv_status = models.CharField(
+        max_length=50,
+        verbose_name="How many people know that you are HIV infected?",
+        choices=KNOW_HIV_STATUS,
+        help_text="",)
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternalinfected_change', args=(self.id,))

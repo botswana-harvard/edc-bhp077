@@ -16,6 +16,7 @@ class MaternalInfectedAdmin(BaseModelAdmin):
               'prev_pregnancies',
               'prior_health_haart',
               'prev_pregnancy_arv',
+              'know_hiv_status',
               'weight',
               'height',
               'bp')
@@ -32,5 +33,6 @@ class MaternalInfectedAdmin(BaseModelAdmin):
     radio_fields = {'recruit_source': admin.VERTICAL,
                     'recruitment_clinic': admin.VERTICAL,
                     'prior_health_haart': admin.VERTICAL,
-                    'prev_pregnancy_arv': admin.VERTICAL}
+                    'prev_pregnancy_arv': admin.VERTICAL,
+                    'know_hiv_status': admin.VERTICAL}
 admin_site.register(MaternalInfected, MaternalInfectedAdmin)
