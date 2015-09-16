@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from ..models.maternal_labour_del import (MaternalLabourDel, MaternalLabDelMed, 
+from ..models.maternal_labour_del import (MaternalLabourDel, MaternalLabDelMed,
                                           MaternalLabDelClinic, MaternalLabDelDx,
                                           MaternalLabDelDxT)
 

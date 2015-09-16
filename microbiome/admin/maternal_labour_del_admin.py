@@ -4,7 +4,7 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 from .site import admin_site
 from ..models import (MaternalLabourDel, MaternalLabDelMed, MaternalLabDelClinic,
                       MaternalLabDelDx, MaternalLabDelDxT)
-from ..forms import (MaternalLabourDelForm, MaternalLabDelMedForm, MaternalLabDelMedForm,
+from ..forms import (MaternalLabourDelForm, MaternalLabDelMedForm,
                      MaternalLabDelClinicForm, MaternalLabDelDxForm, MaternalLabDelDxTForm)
 
 
@@ -14,15 +14,12 @@ class MaternalLabourDelAdmin(BaseModelAdmin):
 
     list_display = ('delivery_datetime',
                     'labour_hrs',
-                    'del_mode',
-                    'live_infants',
+                    'del_hosp',
                     'live_infants_to_register')
     radio_fields = {'del_time_is_est': admin.VERTICAL,
-                    'has_ga': admin.VERTICAL,
                     'has_uterine_tender': admin.VERTICAL,
                     'has_chorioamnionitis': admin.VERTICAL,
-                    'has_del_comp': admin.VERTICAL,
-                    'still_born_has_congen_abn': admin.VERTICAL}
+                    'has_del_comp': admin.VERTICAL}
 admin_site.register(MaternalLabourDel, MaternalLabourDelAdmin)
 
 
