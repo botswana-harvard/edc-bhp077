@@ -10,6 +10,7 @@ from .maternal_infected import MaternalInfected
 from .maternal_demographics import MaternalDemographics
 from .maternal_medical_history import MaternalMedicalHistory
 from .maternal_obsterical_history import MaternalObstericalHistory
+from .maternal_clinical_history import MaternalClinicalHistory
 from .maternal_enroll_arv import MaternalEnrollArv
 from .maternal_arv_preg import (MaternalArvPreg, MaternalArvPregHistory, MaternalArvPPHistory,
                                 MaternalArv)
