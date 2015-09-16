@@ -47,12 +47,12 @@ class SubjectDashboardView(TemplateView):
         self.context = self.get_context_data(**kwargs)
         dashboard_id = request.GET.get('dashboard_id')
         self.context.update(
-            maternal_screening=self.maternal_screening(dashboard_id),
-            show_consent_link=True if self.maternal_screening(dashboard_id)
-            else self.subject_consent(dashboard_id),
-            subject_consent_eligibity_link=True if self.subject_consent(dashboard_id)
+            maternal_eligibility=self.maternal_eligibility(dashboard_id),
+            show_consent_link=True if self.maternal_eligibility(dashboard_id)
+            else self.maternal_consent(dashboard_id),
+            maternal_consent_eligibity_link=True if self.maternal_consent(dashboard_id)
             else False,
-            subject_consent=self.subject_consent(dashboard_id),
+            maternal_consent=self.maternal_consent(dashboard_id),
         )
         return render(request, self.template_name, self.context)
 
@@ -61,11 +61,11 @@ class SubjectDashboardView(TemplateView):
         self.context = self.get_context_data(**kwargs)
         return render(request, self.template_name, self.context)
 
-    def maternal_screening(self, dashboard_id):
+    def maternal_eligibility(self, dashboard_id):
         try:
             return MaternalEligibility.objects.get(id=dashboard_id)
         except MaternalEligibility.DoesNotExist:
-            return self.subject_consent(dashboard_id).maternal_screening
+            return self.maternal_consent(dashboard_id).maternal_eligibility
 
     def subject_consent(self, dashboard_id):
         try:

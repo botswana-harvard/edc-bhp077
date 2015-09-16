@@ -1,4 +1,5 @@
 import uuid
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from edc_base.model.models import BaseUuidModel
@@ -66,6 +67,9 @@ class MaternalEligibility (BaseUuidModel):
         if self.age_in_years > 50:
             reason_ineligible.append('Over age')
         return reason_ineligible
+
+    def get_absolute_url(self):
+        return reverse('admin:microbiome_maternaleligibility_change', args=(self.id,))
 
     class Meta:
         app_label = "microbiome"
