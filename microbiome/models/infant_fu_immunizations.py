@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from edc_constants.choices import YES_NO
 from edc_base.model.models import BaseUuidModel
 
+from ..choices import REASON_NOT_RECEIVED_VACCINATION
 
 from .infant_fu import InfantFu
 
@@ -23,6 +24,13 @@ class InfantFuImmunizations(BaseUuidModel):
         verbose_name="Vaccines received",
         max_length=15,
         help_text="Select all the vaccines that were received",
+    )
+
+    reason_not_received = models.CharField(
+        verbose_name="Reason not received",
+        max_length=50,
+        choices=REASON_NOT_RECEIVED_VACCINATION,
+        help_text="",
     )
 
     comments = models.TextField(

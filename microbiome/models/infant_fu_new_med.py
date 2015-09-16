@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc_constants.choices import YES_NO
@@ -26,6 +27,11 @@ class InfantFuNewMed(models.Model):
                      "of potential overlapping toxicity with study CTX/placebo or NVP,or for some other "
                      "reason(specify medication)",
         help_text="",
+    )
+
+    date_first_medication = models.DateField(
+        verbose_name="Date of first medication use",
+        default=timezone.now().date()
     )
 
     def __str__(self):

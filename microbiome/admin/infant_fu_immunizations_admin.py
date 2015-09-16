@@ -9,5 +9,5 @@ class InfantFuImmunizationsAdmin(admin.ModelAdmin):
 
     list_display = ('vaccines_received', )
 
-    radio_fields = {'vaccines_received': admin.VERTICAL, }
+    radio_fields = {'vaccines_received': admin.VERTICAL, 'reason_not_received': admin.VERTICAL, }
 admin_site.register(InfantFuImmunizations, InfantFuImmunizationsAdmin)
