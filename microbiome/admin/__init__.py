@@ -27,6 +27,7 @@ from .maternal_consent_admin import MaternalConsentAdmin
 from .maternal_locator_admin import MaternalLocatorAdmin
 from .maternal_demographics_admin import MaternalDemographicsAdmin
 from .maternal_medical_history_admin import MaternalMedicalHistoryAdmin
+from .maternal_obsterical_history_admin import MaternalObstericalHistoryAdmin
 from .maternal_labour_del_admin import (MaternalLabourDelAdmin, MaternalLabDelMedAdmin,
                                         MaternalLabDelClinicAdmin, MaternalLabDelDxAdmin,
                                         MaternalLabDelDxTAdmin)

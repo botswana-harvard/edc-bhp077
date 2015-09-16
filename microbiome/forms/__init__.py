@@ -12,6 +12,7 @@ from .maternal_infected_form import MaternalInfectedForm
 from .maternal_uninfected_form import MaternalUninfectedForm
 from .maternal_demographics_form import MaternalDemographicsForm
 from .maternal_medical_history_form import MaternalMedicalHistoryForm
+from .maternal_obsterical_history_form import MaternalObstericalHistoryForm
 from .maternal_enroll_arv_form import MaternalEnrollArvForm
 from .maternal_consent_form import MaternalConsentForm
 from .infant_arv_proph_form import InfantArvProphForm
