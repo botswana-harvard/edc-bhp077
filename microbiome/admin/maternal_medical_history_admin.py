@@ -13,8 +13,8 @@ class MaternalMedicalHistoryAdmin(BaseModelAdmin):
               'chronic_cond',
               'chronic_cond_other',
               'who_diagnosis')
-    list_display = ('has_chronic_cond')
-    list_filter = ('has_chronic_cond')
+    list_display = ('has_chronic_cond', )
+    list_filter = ('has_chronic_cond', )
     radio_fields = {'has_chronic_cond': admin.VERTICAL,
                     'who_diagnosis': admin.VERTICAL}
     filter_horizontal = ('chronic_cond',)

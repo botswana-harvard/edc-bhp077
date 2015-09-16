@@ -12,8 +12,7 @@ from .maternal_medical_history import MaternalMedicalHistory
 from .maternal_obsterical_history import MaternalObstericalHistory
 from .maternal_clinical_history import MaternalClinicalHistory
 from .maternal_arv_history import MaternalArvHistory
-from .maternal_arv_preg import (MaternalArvPreg, MaternalArvPregHistory, MaternalArvPPHistory,
-                                MaternalArv)
+from .maternal_arv_preg import MaternalArvPreg, MaternalArv
 from .maternal_labour_del import (MaternalLabourDel, MaternalLabDelMed,
                                   MaternalLabDelClinic, MaternalLabDelDx, MaternalLabDelDxT)
 from .infant_eligibility import InfantEligibility

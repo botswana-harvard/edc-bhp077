@@ -9,7 +9,7 @@ from edc_constants.choices import YES_NO
 class PostnatalEnrollment(BaseEnrollment):
 
     postpartum_days = models.IntegerField(
-        verbose_name="How days postpartum?",
+        verbose_name="How many days postpartum?",
         help_text="If more than 3days, not eligible")
 
     delivery_type = models.CharField(

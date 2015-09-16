@@ -6,7 +6,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import YES_NO
 
 from ..choices import PRIOR_PREG_HAART_STATUS
-from ..list.maternal_enroll_prior_arv import PriorArv
+from ..list.prior_arv import PriorArv
 
 
 class MaternalArvHistory(BaseUuidModel):
@@ -50,7 +50,7 @@ class MaternalArvHistory(BaseUuidModel):
     )
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_maternalenrollarv_change', args=(self.id,))
+        return reverse('admin:microbiome_maternalarvhistory_change', args=(self.id,))
 
     class Meta:
         app_label = 'microbiome'
