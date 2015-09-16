@@ -33,5 +33,5 @@ from .maternal_labour_del_admin import (MaternalLabourDelAdmin, MaternalLabDelMe
                                         MaternalLabDelClinicAdmin, MaternalLabDelDxAdmin,
                                         MaternalLabDelDxTAdmin)
 from .maternal_infected_admin import MaternalInfectedAdmin
-from .maternal_enroll_arv_admin import MaternalEnrollArvAdmin
+from .maternal_arv_history_admin import MaternalArvHistoryAdmin
 from .maternal_arv_preg_admin import MaternalArvPregAdmin

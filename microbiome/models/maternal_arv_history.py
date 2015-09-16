@@ -9,9 +9,9 @@ from ..choices import PRIOR_PREG_HAART_STATUS
 from ..list.maternal_enroll_prior_arv import PriorArv
 
 
-class MaternalEnrollArv(BaseUuidModel):
+class MaternalArvHistory(BaseUuidModel):
 
-    """Model for Maternal Enrollment: ARV History"""
+    """ARV history for infected mothers only"""
 
     haart_start_date = models.DateField(
         verbose_name="Date of HAART first started",
@@ -54,3 +54,5 @@ class MaternalEnrollArv(BaseUuidModel):
 
     class Meta:
         app_label = 'microbiome'
+        verbose_name = "Maternal ARV History"
+        verbose_name_plural = "Maternal ARV History"
