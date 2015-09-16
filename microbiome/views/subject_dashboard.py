@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.shortcuts import render
 
-from microbiome.models import MaternalScreening, SubjectConsent
+from microbiome.models import MaternalEligibility, MaternalConsent
 
 
 class Option(object):
@@ -63,12 +63,12 @@ class SubjectDashboardView(TemplateView):
 
     def maternal_screening(self, dashboard_id):
         try:
-            return MaternalScreening.objects.get(id=dashboard_id)
-        except MaternalScreening.DoesNotExist:
+            return MaternalEligibility.objects.get(id=dashboard_id)
+        except MaternalEligibility.DoesNotExist:
             return self.subject_consent(dashboard_id).maternal_screening
 
     def subject_consent(self, dashboard_id):
         try:
-            return SubjectConsent.objects.get(id=dashboard_id)
-        except SubjectConsent.DoesNotExist:
+            return MaternalConsent.objects.get(id=dashboard_id)
+        except MaternalConsent.DoesNotExist:
             return False

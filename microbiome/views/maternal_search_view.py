@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.db.models import Q
 
-from microbiome.models import SubjectConsent
+from microbiome.models import MaternalConsent
 
 
 class MaternalSearchView(TemplateView):
@@ -40,6 +40,6 @@ class MaternalSearchView(TemplateView):
     def search_results(self, request):
         """Search for receive with specified identifier."""
         search_value = request.POST.get('identifier_search', None)
-        return SubjectConsent.objects.filter(
+        return MaternalConsent.objects.filter(
             Q(subject_identifier__icontains=search_value)
         ).order_by('created')
