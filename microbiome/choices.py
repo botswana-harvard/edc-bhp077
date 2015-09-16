@@ -456,6 +456,13 @@ REASON_NOT_RECEIVED_VACCINATION = (
     ('other', 'Other, specify'),
 )
 
+YES_NOT_SCHEDULED_NOT_RECEIVED = (
+    ('yes', 'Yes'),
+    ('not scheduled', 'Not scheduled'),
+    ('not received', 'Not received'),
+    ('no health card', 'No Health Card Brought Today')
+)
+
 REASON_MISSED_PROPHYLAXIS = (
     ('caregiver forgot', 'Caregiver forgot to give the NVP'),
     ('caregiver ran out/lost', 'Caregiver ran out of NVP or lost the bottle'),
