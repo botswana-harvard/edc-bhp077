@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .site import admin_site
 
 from ..models import InfantDeath
 
@@ -18,4 +17,4 @@ class InfantDeathAdmin(admin.ModelAdmin):
         'trad_med_relate': admin.VERTICAL
     }
 
-admin_site.register(InfantDeath, InfantDeathAdmin)
+admin.site.register(InfantDeath, InfantDeathAdmin)

@@ -3,7 +3,6 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from ..forms import MaternalUninfectedForm
 from ..models import MaternalUninfected
-from .site import admin_site
 
 
 class MaternalUninfectedAdmin(BaseModelAdmin):
@@ -25,4 +24,4 @@ class MaternalUninfectedAdmin(BaseModelAdmin):
                    'prev_pregnancies')
     radio_fields = {'recruit_source': admin.VERTICAL,
                     'recruitment_clinic': admin.VERTICAL}
-admin_site.register(MaternalUninfected, MaternalUninfectedAdmin)
+admin.site.register(MaternalUninfected, MaternalUninfectedAdmin)

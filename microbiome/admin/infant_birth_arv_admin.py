@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .site import admin_site
 
 from ..models import InfantBirthArv
 
@@ -19,4 +18,4 @@ class InfantBirthArvAdmin(admin.ModelAdmin):
         'azt_discharge_supply': admin.VERTICAL,
         'nvp_discharge_supply': admin.VERTICAL,
     }
-admin_site.register(InfantBirthArv, InfantBirthArvAdmin)
+admin.site.register(InfantBirthArv, InfantBirthArvAdmin)

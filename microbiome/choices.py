@@ -675,3 +675,8 @@ ARV_STATUS_WITH_NEVER = (
     ('modified', '5. Change in at least one medication since the last attended scheduled visit or today'),
     ('N/A', 'Not applicable'),
 )
+
+CIRCUMCISION = (
+    ('CIRC', 'circumcised'),
+    ('UNCIRC', 'uncircumcised'),
+)

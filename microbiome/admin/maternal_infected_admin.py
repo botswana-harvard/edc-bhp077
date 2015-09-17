@@ -3,7 +3,6 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from ..forms import MaternalInfectedForm
 from ..models import MaternalInfected
-from .site import admin_site
 
 
 class MaternalInfectedAdmin(BaseModelAdmin):
@@ -35,4 +34,4 @@ class MaternalInfectedAdmin(BaseModelAdmin):
                     'prior_health_haart': admin.VERTICAL,
                     'prev_pregnancy_arv': admin.VERTICAL,
                     'know_hiv_status': admin.VERTICAL}
-admin_site.register(MaternalInfected, MaternalInfectedAdmin)
+admin.site.register(MaternalInfected, MaternalInfectedAdmin)

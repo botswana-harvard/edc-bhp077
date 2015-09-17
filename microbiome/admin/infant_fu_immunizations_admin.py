@@ -2,7 +2,6 @@ from django.contrib import admin
 
 from ..models import InfantFuImmunizations
 
-from .site import admin_site
 
 
 class InfantFuImmunizationsAdmin(admin.ModelAdmin):
@@ -33,4 +32,4 @@ class InfantFuImmunizationsAdmin(admin.ModelAdmin):
         'reason_not_received_pentavalent': admin.VERTICAL,
     }
 
-admin_site.register(InfantFuImmunizations, InfantFuImmunizationsAdmin)
+admin.site.register(InfantFuImmunizations, InfantFuImmunizationsAdmin)

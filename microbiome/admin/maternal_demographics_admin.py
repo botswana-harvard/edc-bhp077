@@ -3,7 +3,6 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from ..forms import MaternalDemographicsForm
 from ..models import MaternalDemographics
-from .site import admin_site
 
 
 class MaternalDemographicsAdmin(BaseModelAdmin):
@@ -52,4 +51,4 @@ class MaternalDemographicsAdmin(BaseModelAdmin):
                     'toilet_facility': admin.VERTICAL,
                     'house_type': admin.VERTICAL}
     filter_horizontal = ('hh_goods',)
-admin_site.register(MaternalDemographics, MaternalDemographicsAdmin)
+admin.site.register(MaternalDemographics, MaternalDemographicsAdmin)

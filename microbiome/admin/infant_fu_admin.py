@@ -2,8 +2,6 @@ from django.contrib import admin
 
 from ..models import InfantFu
 
-from .site import admin_site
-
 
 class InfantFuAdmin(admin.ModelAdmin):
 
@@ -22,4 +20,4 @@ class InfantFuAdmin(admin.ModelAdmin):
         'was_hospitalized': admin.VERTICAL,
     }
 
-admin_site.register(InfantFu, InfantFuAdmin)
+admin.site.register(InfantFu, InfantFuAdmin)

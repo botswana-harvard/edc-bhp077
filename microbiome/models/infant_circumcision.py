@@ -1,7 +1,7 @@
 from django.db import models
 
 from edc_base.model.models import BaseUuidModel
-from edc_constants.choices import CIRCUMCISION
+from ..choices import CIRCUMCISION
 
 
 class InfantCircumcision(BaseUuidModel):

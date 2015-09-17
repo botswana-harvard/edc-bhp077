@@ -5,8 +5,6 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 from ..forms import AntenatalEnrollmentForm
 from ..models import AntenatalEnrollment
 
-from .site import admin_site
-
 
 class AntenatalEnrollmentAdmin(BaseModelAdmin):
 
@@ -36,4 +34,4 @@ class AntenatalEnrollmentAdmin(BaseModelAdmin):
                     'valid_regimen': admin.VERTICAL,
                     'process_rapid_test': admin.VERTICAL,
                     'rapid_test_result': admin.VERTICAL}
-admin_site.register(AntenatalEnrollment, AntenatalEnrollmentAdmin)
+admin.register(AntenatalEnrollment, AntenatalEnrollmentAdmin)

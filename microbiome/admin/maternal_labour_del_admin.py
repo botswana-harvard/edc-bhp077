@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from .site import admin_site
 from ..models import (MaternalLabourDel, MaternalLabDelMed, MaternalLabDelClinic,
                       MaternalLabDelDx, MaternalLabDelDxT)
 from ..forms import (MaternalLabourDelForm, MaternalLabDelMedForm,
@@ -20,7 +19,7 @@ class MaternalLabourDelAdmin(BaseModelAdmin):
                     'has_uterine_tender': admin.VERTICAL,
                     'has_chorioamnionitis': admin.VERTICAL,
                     'has_del_comp': admin.VERTICAL}
-admin_site.register(MaternalLabourDel, MaternalLabourDelAdmin)
+admin.site.register(MaternalLabourDel, MaternalLabourDelAdmin)
 
 
 class MaternalLabDelMedAdmin(BaseModelAdmin):
@@ -29,7 +28,7 @@ class MaternalLabDelMedAdmin(BaseModelAdmin):
     list_display = ('has_health_cond', 'has_ob_comp')
     radio_fields = {'has_health_cond': admin.VERTICAL,
                     'has_ob_comp': admin.VERTICAL}
-admin_site.register(MaternalLabDelMed, MaternalLabDelMedAdmin)
+admin.site.register(MaternalLabDelMed, MaternalLabDelMedAdmin)
 
 
 class MaternalLabDelClinicAdmin(BaseModelAdmin):
@@ -38,7 +37,7 @@ class MaternalLabDelClinicAdmin(BaseModelAdmin):
     radio_fields = {'has_cd4': admin.VERTICAL,
                     'has_vl': admin.VERTICAL,
                     'took_suppliments': admin.VERTICAL}
-admin_site.register(MaternalLabDelClinic, MaternalLabDelClinicAdmin)
+admin.site.register(MaternalLabDelClinic, MaternalLabDelClinicAdmin)
 
 
 class MaternalLabDelDxAdmin(BaseModelAdmin):
@@ -46,11 +45,11 @@ class MaternalLabDelDxAdmin(BaseModelAdmin):
     form = MaternalLabDelDxForm
     radio_fields = {'has_preg_dx': admin.VERTICAL,
                     'has_who_dx': admin.VERTICAL}
-admin_site.register(MaternalLabDelDx, MaternalLabDelDxAdmin)
+admin.site.register(MaternalLabDelDx, MaternalLabDelDxAdmin)
 
 
 class MaternalLabDelDxTAdmin(BaseModelAdmin):
 
     form = MaternalLabDelDxTForm
     radio_fields = {'hospitalized': admin.VERTICAL}
-admin_site.register(MaternalLabDelDxT, MaternalLabDelDxTAdmin)
+admin.site.register(MaternalLabDelDxT, MaternalLabDelDxTAdmin)

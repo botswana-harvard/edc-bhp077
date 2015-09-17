@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from .site import admin_site
 from ..models import MaternalLocator
 
 
@@ -42,4 +41,4 @@ class MaternalLocatorAdmin(BaseModelAdmin):
                     "may_call_work": admin.VERTICAL,
                     "may_contact_someone": admin.VERTICAL,
                     'has_caretaker_alt': admin.VERTICAL, }
-admin_site.register(MaternalLocator, MaternalLocatorAdmin)
+admin.site.register(MaternalLocator, MaternalLocatorAdmin)

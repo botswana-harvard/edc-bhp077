@@ -3,7 +3,6 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from ..forms import MaternalClinicalHistoryForm
 from ..models import MaternalClinicalHistory
-from .site import admin_site
 
 
 class MaternalClinicalHistoryAdmin(BaseModelAdmin):
@@ -27,4 +26,4 @@ class MaternalClinicalHistoryAdmin(BaseModelAdmin):
     radio_fields = {'prev_preg_azt': admin.VERTICAL,
                     'prev_sdnvp_labour': admin.VERTICAL,
                     'prev_preg_haart': admin.VERTICAL}
-admin_site.register(MaternalClinicalHistory, MaternalClinicalHistoryAdmin)
+admin.site.register(MaternalClinicalHistory, MaternalClinicalHistoryAdmin)

@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .site import admin_site
 
 from ..models import InfantBirthExam
 
@@ -32,4 +31,4 @@ class InfantBirthExamAdmin(admin.ModelAdmin):
         'abdominal_exam': admin.VERTICAL,
         'neurologic_exam': admin.VERTICAL
     }
-admin_site.register(InfantBirthExam, InfantBirthExamAdmin)
+admin.site.register(InfantBirthExam, InfantBirthExamAdmin)

@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .site import admin_site
 
 from ..models import (
     InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
@@ -15,7 +14,7 @@ class InfantCongenitalAnomaliesAdmin(admin.ModelAdmin):
 
     list_display = ('infant_visit',)
 
-admin_site.register(InfantCongenitalAnomalies, InfantCongenitalAnomaliesAdmin)
+admin.site.register(InfantCongenitalAnomalies, InfantCongenitalAnomaliesAdmin)
 
 
 class InfantCnsAbnormalityItemsAdmin(admin.ModelAdmin):
@@ -29,7 +28,7 @@ class InfantCnsAbnormalityItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantCnsAbnormalityItems, InfantCnsAbnormalityItemsAdmin)
+admin.site.register(InfantCnsAbnormalityItems, InfantCnsAbnormalityItemsAdmin)
 
 
 class InfantFacialDefectItemsAdmin(admin.ModelAdmin):
@@ -41,7 +40,7 @@ class InfantFacialDefectItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantFacialDefectItems, InfantFacialDefectItemsAdmin)
+admin.site.register(InfantFacialDefectItems, InfantFacialDefectItemsAdmin)
 
 
 class InfantCleftDisorderItemsAdmin(admin.ModelAdmin):
@@ -53,7 +52,7 @@ class InfantCleftDisorderItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantCleftDisorderItems, InfantCleftDisorderItemsAdmin)
+admin.site.register(InfantCleftDisorderItems, InfantCleftDisorderItemsAdmin)
 
 
 class InfantMouthUpGastrointestinalItemsAdmin(admin.ModelAdmin):
@@ -65,7 +64,7 @@ class InfantMouthUpGastrointestinalItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantMouthUpGastrointestinalItems, InfantMouthUpGastrointestinalItemsAdmin)
+admin.site.register(InfantMouthUpGastrointestinalItems, InfantMouthUpGastrointestinalItemsAdmin)
 
 
 class InfantCardiovascularDisorderItemsAdmin(admin.ModelAdmin):
@@ -77,7 +76,7 @@ class InfantCardiovascularDisorderItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantCardiovascularDisorderItems, InfantCardiovascularDisorderItemsAdmin)
+admin.site.register(InfantCardiovascularDisorderItems, InfantCardiovascularDisorderItemsAdmin)
 
 
 class InfantRespiratoryDefectItemsAdmin(admin.ModelAdmin):
@@ -89,7 +88,7 @@ class InfantRespiratoryDefectItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantRespiratoryDefectItems, InfantRespiratoryDefectItemsAdmin)
+admin.site.register(InfantRespiratoryDefectItems, InfantRespiratoryDefectItemsAdmin)
 
 
 class InfantLowerGastrointestinalItemsAdmin(admin.ModelAdmin):
@@ -101,7 +100,7 @@ class InfantLowerGastrointestinalItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantLowerGastrointestinalItems, InfantLowerGastrointestinalItemsAdmin)
+admin.site.register(InfantLowerGastrointestinalItems, InfantLowerGastrointestinalItemsAdmin)
 
 
 class InfantFemaleGenitalAnomalyItemsAdmin(admin.ModelAdmin):
@@ -113,7 +112,7 @@ class InfantFemaleGenitalAnomalyItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantFemaleGenitalAnomalyItems, InfantFemaleGenitalAnomalyItemsAdmin)
+admin.site.register(InfantFemaleGenitalAnomalyItems, InfantFemaleGenitalAnomalyItemsAdmin)
 
 
 class InfantMaleGenitalAnomalyItemsAdmin(admin.ModelAdmin):
@@ -125,7 +124,7 @@ class InfantMaleGenitalAnomalyItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantMaleGenitalAnomalyItems, InfantMaleGenitalAnomalyItemsAdmin)
+admin.site.register(InfantMaleGenitalAnomalyItems, InfantMaleGenitalAnomalyItemsAdmin)
 
 
 class InfantRenalAnomalyItemsAdmin(admin.ModelAdmin):
@@ -137,7 +136,7 @@ class InfantRenalAnomalyItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantRenalAnomalyItems, InfantRenalAnomalyItemsAdmin)
+admin.site.register(InfantRenalAnomalyItems, InfantRenalAnomalyItemsAdmin)
 
 
 class InfantMusculoskeletalAbnormalItemsAdmin(admin.ModelAdmin):
@@ -150,7 +149,7 @@ class InfantMusculoskeletalAbnormalItemsAdmin(admin.ModelAdmin):
     }
 
 
-admin_site.register(InfantMusculoskeletalAbnormalItems, InfantMusculoskeletalAbnormalItemsAdmin)
+admin.site.register(InfantMusculoskeletalAbnormalItems, InfantMusculoskeletalAbnormalItemsAdmin)
 
 
 class InfantSkinAbnormalItemsAdmin(admin.ModelAdmin):
@@ -162,7 +161,7 @@ class InfantSkinAbnormalItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantSkinAbnormalItems, InfantSkinAbnormalItemsAdmin)
+admin.site.register(InfantSkinAbnormalItems, InfantSkinAbnormalItemsAdmin)
 
 
 class InfantTrisomiesChromosomeItemsAdmin(admin.ModelAdmin):
@@ -174,4 +173,4 @@ class InfantTrisomiesChromosomeItemsAdmin(admin.ModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-admin_site.register(InfantTrisomiesChromosomeItems, InfantTrisomiesChromosomeItemsAdmin)
+admin.site.register(InfantTrisomiesChromosomeItems, InfantTrisomiesChromosomeItemsAdmin)

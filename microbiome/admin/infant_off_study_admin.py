@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-from .site import admin_site
-
 from ..models import InfantOffStudy
 
 
@@ -19,4 +17,4 @@ class InfantOffStudyAdmin(admin.ModelAdmin):
 
     radio_fields = {'has_scheduled_data': admin.VERTICAL}
 
-admin_site.register(InfantOffStudy, InfantOffStudyAdmin)
+admin.site.register(InfantOffStudy, InfantOffStudyAdmin)

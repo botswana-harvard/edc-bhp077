@@ -2,8 +2,6 @@ from django.contrib import admin
 
 from ..models import InfantFuPhysical
 
-from .site import admin_site
-
 
 class InfantFuPhysicalAdmin(admin.ModelAdmin):
 
@@ -11,4 +9,4 @@ class InfantFuPhysicalAdmin(admin.ModelAdmin):
 
     radio_fields = {'has_abnormalities': admin.VERTICAL, }
 
-admin_site.register(InfantFuPhysical, InfantFuPhysicalAdmin)
+admin.site.register(InfantFuPhysical, InfantFuPhysicalAdmin)

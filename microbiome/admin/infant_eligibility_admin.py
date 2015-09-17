@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .site import admin_site
 
 from ..models import InfantEligibility
 
@@ -13,4 +12,4 @@ class InfantEligibilityAdmin(admin.ModelAdmin):
 
     radio_fields = {'infant_hiv_result': admin.VERTICAL}
 
-admin_site.register(InfantEligibility, InfantEligibilityAdmin)
+admin.site.register(InfantEligibility, InfantEligibilityAdmin)

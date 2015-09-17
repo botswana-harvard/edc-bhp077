@@ -3,7 +3,6 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from ..forms import MaternalObstericalHistoryForm
 from ..models import MaternalObstericalHistory
-from .site import admin_site
 
 
 class MaternalObstericalHistoryAdmin(BaseModelAdmin):
@@ -18,4 +17,4 @@ class MaternalObstericalHistoryAdmin(BaseModelAdmin):
                     'lost_before_24wks',
                     'lost_after_24wks',
                     'live_children')
-admin_site.register(MaternalObstericalHistory, MaternalObstericalHistoryAdmin)
+admin.site.register(MaternalObstericalHistory, MaternalObstericalHistoryAdmin)

@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .site import admin_site
 from edc_base.modeladmin.admin import BaseModelAdmin
 from microbiome.models import MaternalConsent
 from microbiome.forms import MaternalConsentForm
@@ -63,4 +62,4 @@ class MaternalConsentAdmin(BaseModelAdmin):
             url = ('{0}?dashboard_id={1}').format(reverse('dashboard_id_url', kwargs={'dashboard_id': obj.id}), obj.id)
             return HttpResponseRedirect(url)
 
-admin_site.register(MaternalConsent, MaternalConsentAdmin)
+admin.site.register(MaternalConsent, MaternalConsentAdmin)
