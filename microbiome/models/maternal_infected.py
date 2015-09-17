@@ -18,7 +18,8 @@ class MaternalInfected(BaseMother):
     prev_pregnancy_arv = models.CharField(
         max_length=25,
         choices=YES_NO_NA,
-        verbose_name="Was the mother on any ARVs during previous pregnancies (or immediately following delivery) for PMTCT purposes (and not for her own health)? ",
+        verbose_name="Was the mother on any ARVs during previous pregnancies (or immediately following delivery) "
+                     "for PMTCT purposes (and not for her own health)? ",
         help_text="not including this pregnancy", )
 
     know_hiv_status = models.CharField(

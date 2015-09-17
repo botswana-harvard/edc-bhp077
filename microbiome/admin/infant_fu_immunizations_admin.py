@@ -3,7 +3,6 @@ from django.contrib import admin
 from ..models import InfantFuImmunizations
 
 
-
 class InfantFuImmunizationsAdmin(admin.ModelAdmin):
 
     list_display = ('vaccines_received', 'vitamin_a_vaccine', 'pneumonia_conjugated_vaccine')

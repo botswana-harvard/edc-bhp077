@@ -3,7 +3,6 @@ from django.contrib import admin
 from ..models import InfantFuDxItems
 
 
-
 class InfantFuDxItemsAdmin(admin.ModelAdmin):
 
     list_display = (

@@ -1,4 +1,4 @@
-from edc_constants.constants import NOT_APPLICABLE, POS, NEG, UNKNOWN
+from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
 from .constants import LIVE, STILL_BIRTH
 
 HAART_DURING_PREG = (
