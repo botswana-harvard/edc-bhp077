@@ -51,9 +51,9 @@ class MaternalClinicalHistory(BaseUuidModel):
         null=True)
 
     def get_absolute_url(self):
-        return reverse('admin:microbiomel_maternalclinicalhistory_change', args=(self.id,))
+        return reverse('admin:microbiome_maternalclinicalhistory_change', args=(self.id,))
 
     class Meta:
-        app_label = "mpepu_maternal"
+        app_label = "microbiome"
         verbose_name = 'Maternal Clinical History'
         verbose_name_plural = 'Maternal Clinical History'
