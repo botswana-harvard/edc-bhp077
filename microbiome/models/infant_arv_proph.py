@@ -11,8 +11,8 @@ class InfantArvProph(models.Model):
     prophylatic_nvp = models.CharField(
         max_length=3,
         choices=YES_NO,
-        verbose_name="Was the baby supposed to be taking taking prophylactic NVP for any period since "
-                     "the last attended scheduled visit?",
+        verbose_name="Was the baby supposed to be taking taking prophylactic antiretroviral medication for "
+                     "any period since the last attended scheduled visit?",
     )
 
     arv_status = models.CharField(

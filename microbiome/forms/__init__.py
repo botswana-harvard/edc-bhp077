@@ -20,6 +20,7 @@ from .infant_birth_arv_form import InfantBirthArvForm
 from .infant_birth_exam_form import InfantBirthExamForm
 from .infant_birth_feeding_form import InfantBirthFeedVaccineForm
 from .infant_birth_form import InfantBirthForm
+from .infant_circumcision_form import InfantCircumcisionForm
 from .infant_death_form import InfantDeathForm
 from .infant_off_study_form import InfantOffStudyForm
 from .infant_visit_form import InfantVisitForm

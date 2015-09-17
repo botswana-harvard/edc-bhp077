@@ -2,6 +2,7 @@ from .infant_birth_admin import InfantBirthAdmin
 from .infant_birth_arv_admin import InfantBirthArvAdmin
 from .infant_birth_exam_admin import InfantBirthExamAdmin
 from .infant_birth_feeding_admin import InfantBirthFeedVaccineAdmin
+from .infant_circumcision_admin import InfantCircumcisionAdmin
 from .infant_congenital_anomalies_admin import (
     InfantCongenitalAnomalies, InfantCnsAbnormalityItemsAdmin,
     InfantFacialDefectItemsAdmin, InfantCleftDisorderItemsAdmin, InfantMouthUpGastrointestinalItemsAdmin,
