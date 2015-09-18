@@ -14,3 +14,5 @@ class AdminFinder(object):
     TITLE = (By.CSS_SELECTOR, 'h1')
     ELIGIBILITY_LINK = (By.LINK_TEXT, 'Maternal Eligibility')
     ADD_ELIGIBILITY_LINK = (By.LINK_TEXT, 'Add Maternal Eligibility')
+    CONSENT_LINK = (By.LINK_TEXT, 'Maternal Consent')
+    ADD_CONSENT_LINK = (By.LINK_TEXT, 'Add Maternal Consent')

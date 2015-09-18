@@ -1,7 +1,8 @@
 import unittest
 from maternal_finders import *
-from maternal_pages import *
-from microbiome_pages import *
+from microbiome_finders import *
+from maternal_pages import EligibilityPage, ConsentPage
+from microbiome_pages import LoginPage, AdminPage
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -24,6 +25,19 @@ class TestMaternalPages(unittest.TestCase):
         page.fill_eligibility_form()
         self.assertTrue('18', page)
         page.click_save_button()
+
+    def test_find_consent_link_and_fill(self):
+        page = LoginPage(self.driver)
+        login = page.mylogin()
+        self.assertIn('/admin/', login.get_url())
+        page = AdminPage(self.driver)
+        self.assertTrue('Maternal Consent', page)
+        page.check_consent_link()
+        page.click_add_consent()
+        self.assertTrue('Add Maternal Consent', page)
+        page = ConsentPage(self.driver)
+        page.fill_consent_form()
+        page.click_to_save_consent()
 
     def tearDown(self):
         self.driver.close()

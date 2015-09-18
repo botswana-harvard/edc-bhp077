@@ -36,3 +36,9 @@ class AdminPage(MicrobiomeBasePage):
 
     def click_add_eligibility(self):
         self.driver.find_element(*AdminFinder.ADD_ELIGIBILITY_LINK).click()
+
+    def check_consent_link(self):
+        self.driver.find_element(*AdminFinder.CONSENT_LINK).click()
+
+    def click_add_consent(self):
+        self.driver.find_element(*AdminFinder.ADD_CONSENT_LINK).click()

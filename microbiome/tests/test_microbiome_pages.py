@@ -21,8 +21,16 @@ class TestMicrobiomePages(unittest.TestCase):
         self.test_mylogin()
         page = AdminPage(self.driver)
         self.assertTrue('Microbiome Administration', page)
+        self.assertTrue('Maternal Eligibility', page)
         page.check_eligibility_link()
         page.click_add_eligibility()
+
+    def test_check_and_click_consent_link(self):
+        self.test_mylogin()
+        page = AdminPage(self.driver)
+        self.assertTrue('Maternal Consent', page)
+        page.check_consent_link()
+        page.click_add_consent()
 
     def tearDown(self):
         self.driver.close()
