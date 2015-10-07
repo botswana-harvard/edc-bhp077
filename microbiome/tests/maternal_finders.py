@@ -29,5 +29,5 @@ class ConsentFinder(object):
     OMANG_ID = (By.ID, 'id_identity')
     ID_TYPE = (By.ID, 'id_identity_type_0')
     CONFIRM_OMANG_ID = (By.ID, 'id_confirm_identity')
-    SAMPLE_STORAGE = (By.ID, 'id_may_store_samples_0')
+    # SAMPLE_STORAGE = (By.ID, 'id_may_store_samples_0')
     SUBMIT = (By.NAME, '_save')

@@ -83,8 +83,8 @@ class ConsentPage(MicrobiomeBasePage):
     def enter_confirm_omang(self):
         self.find_element(*ConsentFinder.CONFIRM_OMANG_ID).send_keys('111121111')
 
-    def click_sample_storage(self):
-        self.find_element(*ConsentFinder.SAMPLE_STORAGE).click()
+    # def click_sample_storage(self):
+        # self.find_element(*ConsentFinder.SAMPLE_STORAGE).click()
 
     def click_to_save_consent(self):
         self.find_element(*ConsentFinder.SUBMIT).click()
@@ -104,4 +104,4 @@ class ConsentPage(MicrobiomeBasePage):
         self.enter_omang()
         self.click_id_type()
         self.enter_confirm_omang()
-        self.click_sample_storage()
+        # self.click_sample_storage()
