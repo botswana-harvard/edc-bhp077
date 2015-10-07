@@ -1,6 +1,7 @@
 from .maternal_eligibility import MaternalEligibility
 from .maternal_eligibility_loss import MaternalEligibilityLoss
 from .maternal_consent import MaternalConsent
+from .sample_consent import SampleConsent
 from .antenatal_enrollment import AntenatalEnrollment
 from .postnatal_enrollment import PostnatalEnrollment
 from .maternal_visit import MaternalVisit
