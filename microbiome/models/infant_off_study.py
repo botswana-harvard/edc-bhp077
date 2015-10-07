@@ -2,7 +2,7 @@ from django.db import models
 
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import (
-    datetime_not_before_study_start, datetime_is_after_consent, datetime_not_future)
+    datetime_not_before_study_start, datetime_not_future)
 from edc_constants.choices import YES_NO, YES
 
 from .infant_visit import InfantVisit
@@ -16,7 +16,6 @@ class InfantOffStudy(BaseUuidModel):
         verbose_name="Report Date and Time",
         validators=[
             datetime_not_before_study_start,
-            datetime_is_after_consent,
             datetime_not_future,
         ],
     )

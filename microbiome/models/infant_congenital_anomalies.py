@@ -3,7 +3,7 @@ from django.db import models
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.fields import OtherCharField
 from edc_base.model.validators import (
-    datetime_not_before_study_start, datetime_not_future, datetime_is_after_consent)
+    datetime_not_before_study_start, datetime_not_future)
 from edc_constants.choices import CONFIRMED_SUSPECTED
 
 from ..choices import (
@@ -30,7 +30,6 @@ class BaseCnsItem(BaseUuidModel):
         verbose_name="Visit Date and Time",
         validators=[
             datetime_not_before_study_start,
-            datetime_is_after_consent,
             datetime_not_future,
         ],
     )
