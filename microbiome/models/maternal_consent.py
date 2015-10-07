@@ -5,11 +5,13 @@ from django_crypto_fields.fields import IdentityField
 
 from edc_base.model.fields import IdentityTypeField
 from edc_consent.models.base_consent import BaseConsent
+from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_consent.models.fields import PersonalFieldsMixin, VulnerabilityFieldsMixin
 from edc_constants.choices import YES_NO_UNKNOWN, NO
 from .identifiers import MaternalIdentifier
 
 
-class MaternalConsent(BaseConsent):
+class MaternalConsent(BaseConsent, PersonalFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
 
     citizen = models.CharField(
         verbose_name="Are you a Botswana citizen? ",

@@ -26,15 +26,13 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'identity',
               'identity_type',
               'confirm_identity',
-              'may_store_samples',
               'comment')
     radio_fields = {'citizen': admin.VERTICAL,
                     'language': admin.VERTICAL,
                     'is_literate': admin.VERTICAL,
                     'gender': admin.VERTICAL,
                     'is_dob_estimated': admin.VERTICAL,
-                    'identity_type': admin.VERTICAL,
-                    'may_store_samples': admin.VERTICAL}
+                    'identity_type': admin.VERTICAL}
 
     def reverse_next_to_dashboard(self, next_url_name, request, obj, **kwargs):
         pass
