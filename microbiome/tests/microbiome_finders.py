@@ -16,3 +16,5 @@ class AdminFinder(object):
     ADD_ELIGIBILITY_LINK = (By.LINK_TEXT, 'Add Maternal Eligibility')
     CONSENT_LINK = (By.LINK_TEXT, 'Maternal Consent')
     ADD_CONSENT_LINK = (By.LINK_TEXT, 'Add Maternal Consent')
+    SAMPLE_CONSENT_LINK = (By.LINK_TEXT, 'Sample Consent')
+    ADD_SAMPLECONSENT_LINK = (By.CSS_SELECTOR, "a[href*='/admin/microbiome/sampleconsent/add/']")

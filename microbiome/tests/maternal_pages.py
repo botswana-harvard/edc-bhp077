@@ -2,7 +2,7 @@ from datetime import date, time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from microbiome_base_page import MicrobiomeBasePage
-from maternal_finders import MaternalEligibilityFinder, ConsentFinder
+from maternal_finders import MaternalEligibilityFinder, ConsentFinder, SampleConsentFinder
 from microbiome_pages import AdminPage
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -83,9 +83,6 @@ class ConsentPage(MicrobiomeBasePage):
     def enter_confirm_omang(self):
         self.find_element(*ConsentFinder.CONFIRM_OMANG_ID).send_keys('111121111')
 
-    # def click_sample_storage(self):
-        # self.find_element(*ConsentFinder.SAMPLE_STORAGE).click()
-
     def click_to_save_consent(self):
         self.find_element(*ConsentFinder.SUBMIT).click()
 
@@ -104,4 +101,27 @@ class ConsentPage(MicrobiomeBasePage):
         self.enter_omang()
         self.click_id_type()
         self.enter_confirm_omang()
-        # self.click_sample_storage()
+
+
+class SampleConsentPage(MicrobiomeBasePage):
+
+    def click_consent_language(self):
+        self.find_element(*SampleConsentFinder.SAMPLE_CONSENT_LANGUAGE).click()
+
+    def click_sample_storage(self):
+        self.find_element(*SampleConsentFinder.SAMPLE_STORAGE).click()
+
+    def click_is_literate(self):
+        self.find_element(*SampleConsentFinder.IS_LITERATE).click()
+
+    def click_consent_benefits(self):
+        self.find_element(*SampleConsentFinder.CONSENT_BENEFITS).click()
+
+    def click_sample_save(self):
+        self.find_element(*SampleConsentFinder.SUBMIT).click()
+
+    def fill_sample_storage(self):
+        self.click_consent_language()
+        self.click_sample_storage()
+        self.click_is_literate()
+        self.click_consent_benefits()

@@ -42,3 +42,9 @@ class AdminPage(MicrobiomeBasePage):
 
     def click_add_consent(self):
         self.driver.find_element(*AdminFinder.ADD_CONSENT_LINK).click()
+
+    def check_sample_consent_link(self):
+        self.driver.find_element(*AdminFinder.SAMPLE_CONSENT_LINK).click()
+
+    def click_add_sample_consent(self):
+        self.driver.find_element(*AdminFinder.ADD_SAMPLECONSENT_LINK).click()
