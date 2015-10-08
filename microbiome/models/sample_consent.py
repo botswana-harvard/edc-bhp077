@@ -27,4 +27,5 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
 
     class Meta:
         app_label = 'microbiome'
+        verbose_name = 'Sample Consent'
         verbose_name_plural = 'Sample Consent'
