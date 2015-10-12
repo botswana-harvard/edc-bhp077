@@ -6,17 +6,12 @@ from edc_base.model.validators import datetime_not_before_study_start, datetime_
 from edc_constants.choices import (POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO_UNKNOWN,
                                    YES_NO)
 from edc_constants.constants import NOT_APPLICABLE
+from edc_consent.models import RequiresConsentMixin
 
-from .maternal_consent import MaternalConsent
 
-
-class BaseEnrollment(BaseUuidModel):
+class BaseEnrollment(BaseUuidModel, RequiresConsentMixin):
 
     """Base Model for antenal and postnatal enrollment"""
-
-    maternal_consent = models.OneToOneField(
-        MaternalConsent,
-        verbose_name="Mother's Consent")
 
     report_datetime = models.DateTimeField(
         verbose_name="Date and Time of Enrollment",
