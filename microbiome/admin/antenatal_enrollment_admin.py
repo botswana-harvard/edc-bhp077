@@ -10,8 +10,7 @@ class AntenatalEnrollmentAdmin(BaseModelAdmin):
 
     form = AntenatalEnrollmentForm
 
-    fields = ('maternal_consent',
-              'report_datetime',
+    fields = ('report_datetime',
               'weeks_of_gestation',
               'citizen',
               'is_diabetic',

@@ -4,9 +4,33 @@ from django.db import models
 from .base_enrollment import BaseEnrollment
 from ..choices import LIVE_STILL_BIRTH
 from edc_constants.choices import YES_NO
+from .maternal_consent import MaternalConsent
+from .antenatal_enrollment import AntenatalEnrollment
 
 
 class PostnatalEnrollment(BaseEnrollment):
+
+    CONSENT_MODEL = MaternalConsent
+
+    def save_postnatal_enrollment(self):
+        """Confirms if antenatal enrollment exists"""
+        try:
+            ante_natal = AntenatalEnrollment.objects.get(
+                CONSENT_MODEL__subject_identifier=self.CONSENT_MODEL.subject_identifier)
+            if ante_natal:
+                data = {self.citizen: 'citizen',
+                        self.is_diabetic: 'is_diabetic',
+                        self.on_tb_treatment: 'on_tb_treatment',
+                        self.breastfeed_for_a_year: 'breastfeed_for_a_year',
+                        self.instudy_for_a_year: 'instudy_for_a_year',
+                        self.verbal_hiv_status: 'verbal_hiv_status',
+                        self.evidence_hiv_status: 'evidence_hiv_status',
+                        self.valid_regimen: 'valid_regimen',
+                        self.process_rapid_test: 'process_rapid_test',
+                        self.date_of_rapid_test: 'date_of_rapid_test',
+                        self.rapid_test_result: 'rapid_test_result'}
+        except AntenatalEnrollment.DoesNotExist:
+            pass
 
     postpartum_days = models.IntegerField(
         verbose_name="How many days postpartum?",

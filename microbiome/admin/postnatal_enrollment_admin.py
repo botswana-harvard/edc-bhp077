@@ -10,8 +10,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
 
     form = PostnatalEnrollmentForm
 
-    fields = ('maternal_consent',
-              'report_datetime',
+    fields = ('report_datetime',
               'postpartum_days',
               'delivery_type',
               'gestation_before_birth',

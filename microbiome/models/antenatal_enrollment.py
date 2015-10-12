@@ -2,9 +2,12 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 from .base_enrollment import BaseEnrollment
+from .maternal_consent import MaternalConsent
 
 
 class AntenatalEnrollment(BaseEnrollment):
+
+    CONSENT_MODEL = MaternalConsent
 
     weeks_of_gestation = models.IntegerField(
         verbose_name="How many weeks pregnant?",
