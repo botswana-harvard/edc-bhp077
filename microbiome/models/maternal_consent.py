@@ -1,9 +1,9 @@
 from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.utils import timezone
-from django_crypto_fields.fields import IdentityField
 
 from edc_base.model.fields import IdentityTypeField
+from edc_base.model.fields.custom_fields import OmangField
 from edc_consent.models.base_consent import BaseConsent
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_consent.models.fields import PersonalFieldsMixin, VulnerabilityFieldsMixin
@@ -19,14 +19,14 @@ class MaternalConsent(BaseConsent, PersonalFieldsMixin, VulnerabilityFieldsMixin
         choices=YES_NO_UNKNOWN,
         help_text="")
 
-    identity = IdentityField(
+    identity = OmangField(
         verbose_name="Identity number (OMANG, etc)",
         unique=True,
         null=True,
         blank=True,
         help_text="Use Omang, Passport number, driver's license number or Omang receipt number"
     )
-    confirm_identity = IdentityField(
+    confirm_identity = OmangField(
         verbose_name="Confirm identity",
         unique=True,
         null=True,
