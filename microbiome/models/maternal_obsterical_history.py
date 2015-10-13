@@ -1,10 +1,10 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from edc_base.model.models import BaseUuidModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
-class MaternalObstericalHistory(BaseUuidModel):
+class MaternalObstericalHistory(MaternalScheduledVisitModel):
 
     """Obsterical History for all mothers"""
 

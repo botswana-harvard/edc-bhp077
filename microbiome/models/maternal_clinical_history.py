@@ -3,11 +3,11 @@ from django.core.urlresolvers import reverse
 
 
 from edc_base.model.fields.custom_fields import IsDateEstimatedField
-from edc_base.model.models import BaseUuidModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
 
 
-class MaternalClinicalHistory(BaseUuidModel):
+class MaternalClinicalHistory(MaternalScheduledVisitModel):
 
     """Clinical History for infected mothers only."""
 

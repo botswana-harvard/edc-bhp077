@@ -2,13 +2,13 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_base.model.fields import OtherCharField
-from edc_base.model.models import BaseUuidModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
 
 from microbiome.list import ChronicConditions
 
 
-class MaternalMedicalHistory(BaseUuidModel):
+class MaternalMedicalHistory(MaternalScheduledVisitModel):
 
     """Medical History for all mothers"""
 

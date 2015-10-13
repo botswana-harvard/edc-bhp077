@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.model.fields import OtherCharField
-from edc_base.model.models import BaseUuidModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
 from microbiome.maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
                                          CURRENT_OCCUPATION, MONEY_PROVIDER, MONEY_EARNED,
@@ -12,7 +12,7 @@ from microbiome.maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUC
 from microbiome.list import HouseholdGoods
 
 
-class MaternalDemographics(BaseUuidModel):
+class MaternalDemographics(MaternalScheduledVisitModel):
 
     """Demographics form for all mothers"""
 

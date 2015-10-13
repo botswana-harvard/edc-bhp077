@@ -1,10 +1,10 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
 
 
-class MaternalArvPreg(BaseUuidModel):
+class MaternalArvPreg(MaternalScheduledVisitModel):
 
     """ This form is for all HIV positive mothers who are pregnant (whom we hope to enroll their infant)
      and/or for mothers who have just delivered """
@@ -46,7 +46,7 @@ class MaternalArvPreg(BaseUuidModel):
         verbose_name_plural = 'Maternal ARV In This Preg: Pregnancy'
 
 
-class MaternalArv(BaseUuidModel):
+class MaternalArv(MaternalScheduledVisitModel):
 
     """ ARV table to indicate ARV medication taken by mother """
 

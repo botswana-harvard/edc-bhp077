@@ -16,6 +16,8 @@ from .maternal_arv_history import MaternalArvHistory
 from .maternal_arv_preg import MaternalArvPreg, MaternalArv
 from .maternal_labour_del import (MaternalLabourDel, MaternalLabDelMed,
                                   MaternalLabDelClinic, MaternalLabDelDx, MaternalLabDelDxT)
+from .maternal_off_study import MaternalOffStudy
+from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .infant_eligibility import InfantEligibility
 from .infant_visit import InfantVisit
 from .infant_birth import InfantBirth

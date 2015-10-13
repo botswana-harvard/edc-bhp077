@@ -2,11 +2,11 @@ from django.db import models
 
 from edc_base.model.fields import OtherCharField
 from edc_base.model.validators import datetime_not_future
-from edc_base.model.models import BaseUuidModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 
 
-class MaternalLabourDel(BaseUuidModel):
+class MaternalLabourDel(MaternalScheduledVisitModel):
 
     """ Maternal Labor and Delivery which triggers registration of infants"""
 
@@ -85,7 +85,7 @@ class MaternalLabourDel(BaseUuidModel):
         verbose_name_plural = "Maternal Labour & Delivery"
 
 
-class MaternalLabDelMed(BaseUuidModel):
+class MaternalLabDelMed(MaternalScheduledVisitModel):
 
     """ Medical history collected during labor and delivery. """
 
@@ -121,7 +121,7 @@ class MaternalLabDelMed(BaseUuidModel):
         verbose_name_plural = "Maternal Labour & Delivery: MedHistory"
 
 
-class MaternalLabDelClinic(BaseUuidModel):
+class MaternalLabDelClinic(MaternalScheduledVisitModel):
 
     """ Laboratory and other clinical information collected during labor and delivery"""
 
@@ -183,7 +183,7 @@ class MaternalLabDelClinic(BaseUuidModel):
         verbose_name_plural = "Maternal Labour & Delivery: ClinHist"
 
 
-class MaternalLabDelDx(BaseUuidModel):
+class MaternalLabDelDx(MaternalScheduledVisitModel):
 
     """ Diagnosis during pregnancy collected during labor and delivery.
     This is for HIV positive mothers only"""
@@ -208,7 +208,7 @@ class MaternalLabDelDx(BaseUuidModel):
         verbose_name_plural = "Maternal Labour & Delivery: Preg Dx"
 
 
-class MaternalLabDelDxT (BaseUuidModel):
+class MaternalLabDelDxT (MaternalScheduledVisitModel):
 
     """ Diagnosis during pregnancy collected during labor and delivery (transactions). """
 

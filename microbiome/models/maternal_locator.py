@@ -1,11 +1,12 @@
 from django.db import models
 
+from edc.entry_meta_data.managers import EntryMetaDataManager
+from edc.subject.locator.models import BaseLocator
 from edc_base.encrypted_fields import EncryptedCharField
-from edc_constants.choices import YES_NO
+from edc_base.model.fields import OtherCharField
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_base.model.validators import CellNumber, TelephoneNumber
-from edc_base.model.fields import OtherCharField
-from edc.subject.locator.models import BaseLocator
+from edc_constants.choices import YES_NO
 
 from .maternal_visit import MaternalVisit
 
@@ -49,6 +50,8 @@ class MaternalLocator(BaseLocator, BaseUuidModel):
         help_text="",
         blank=True,
         null=True, )
+
+    entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 
     class Meta:
         app_label = 'microbiome'

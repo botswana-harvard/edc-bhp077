@@ -1,12 +1,12 @@
 from django.db import models
 
 from edc_base.model.fields import OtherCharField
-from edc_base.model.models import BaseUuidModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 from ..choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 
 
-class BaseMother(BaseUuidModel):
+class BaseMother(MaternalScheduledVisitModel):
 
     """Base Model for infected and uninfected mothers
     """

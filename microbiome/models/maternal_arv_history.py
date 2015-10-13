@@ -2,14 +2,14 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_base.model.fields import IsDateEstimatedField, OtherCharField
-from edc_base.model.models import BaseUuidModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
 
 from ..choices import PRIOR_PREG_HAART_STATUS
 from ..list.prior_arv import PriorArv
 
 
-class MaternalArvHistory(BaseUuidModel):
+class MaternalArvHistory(MaternalScheduledVisitModel):
 
     """ARV history for infected mothers only"""
 
