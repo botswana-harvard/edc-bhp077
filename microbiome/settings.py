@@ -20,12 +20,12 @@ INSTITUTION = 'Botswana-Harvard AIDS Institute'
 PROTOCOL_REVISION = '0.1dev'
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
-
+MEDIA_ROOT = BASE_DIR.child('media')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'w^k+nty=&d-)qvc^mn_eo&c7-*^v7-e)f_kk&gbrpiv-d)6x(4'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,29 +42,111 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_crypto_fields',
-    'django_revision',
     'edc_base',
-    'edc_content_type_map',  # to be removed
-    'edc_registration',
-    'edc_entry',
-    'edc_visit_schedule',
-    'edc_appointment',
-    'edc_consent',
-    'edc_identifier',
+    'edc',
+    'edc.apps.app_configuration',
+    'edc.core.identifier',
+    'edc.core.crypto_fields',
+    'edc.core.model_data_inspector',
+    'edc.core.model_selector',
+    'edc.core.bhp_static',
+    'edc.core.bhp_string',
+    'edc.core.bhp_userprofile',
+    'edc.core.bhp_poll_mysql',
+    'edc.core.bhp_common',
+    'edc.core.bhp_content_type_map',
+    'edc.data_manager',
+    'edc.core.bhp_variables',
+    'edc.core.bhp_site_edc',
+    'edc.core.bhp_context',
+    'edc.core.bhp_using',
+    'edc.core.bhp_export_data',
+    'edc.core.bhp_birt_reports',
+    'edc_device',
+    'edc.dashboard.base',
+    'edc.dashboard.search',
+    'edc.dashboard.section',
+    'edc.dashboard.subject',
+
+    'edc.export',
+    'edc.import',
+    'edc.entry_meta_data',
+
+    'edc.data_dictionary',
+
+    'edc.map',
+
+    'edc.testing',
+    'edc.utils',
+
+    'edc.subject.lab_tracker',
+    'edc.subject.code_lists',
+    'edc.subject.rule_groups',
+    'edc.subject.actg',
+    'edc.subject.entry',
+    'edc.subject.contact',
+    'edc.subject.locator',
+    'edc.subject.subject',
+    'edc.subject.subject_summary',
+    'edc.subject.off_study',
+    'edc.subject.registration',
+    'edc.subject.appointment',
+    'edc.subject.appointment_helper',
+    'edc.subject.visit_schedule',
+    'edc.subject.visit_tracking',
+    'edc.subject.subject_config',
+    'edc.subject.adverse_event',
+    'edc.notification',
+    'edc.lab.lab_clinic_api',
+    'edc.lab.lab_clinic_reference',
+    'edc.lab.lab_requisition',
+    'edc.lab.lab_packing',
+    'edc.lab.lab_profile',
     'getresults_identifier',
+    'edc_consent',
+    'edc_audit',
+    'edc_constants',
     'microbiome',
+    'microbiome.lab',
+
+    # LIS
+    'lis.base.model',
+    'lis.labeling',
+    'lis.core.lab_common',
+    'lis.core.lab_flag',
+    'lis.core.lab_reference',
+    'lis.core.lab_grading',
+
+    'lis.core.lab_result_report',
+    'lis.core.bhp_research_protocol',
+    'lis.core.lock',
+
+    'lis.specimen.lab_aliquot_list',
+    'lis.specimen.lab_panel',
+    'lis.specimen.lab_test_code',
+    'lis.specimen.lab_receive',
+    'lis.specimen.lab_aliquot',
+    'lis.specimen.lab_order',
+    'lis.specimen.lab_result',
+    'lis.specimen.lab_result_item',
+
+    'lis.subject.lab_account',
+    'lis.subject.lab_patient',
+
+    'lis.exim.lab_export',
+    'lis.exim.lab_import',
+    'lis.exim.lab_import_lis',
+    'lis.exim.lab_import_dmis',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'microbiome.urls'
@@ -98,6 +180,9 @@ DATABASES = {
     }
 }
 
+DEVICE_ID = 95
+IS_SECURE_DEVICE = True
+FIELD_MAX_LENGTH = 'default'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
