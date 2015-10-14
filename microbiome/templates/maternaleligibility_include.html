@@ -1,0 +1,33 @@
+  {% load common_tags %}{% load crypto_tags %}
+  <div class="results">
+      <table  cellspacing="0" id="result_list" border=1>
+        <thead>
+            <tr>
+        <th>Dashboard</th>
+        <th>Registration</th>
+        <th>Date Registered</th>
+        <th>Age</th>
+        <th>Pregnancy status</th>
+        <th>User Created</th>
+        <th>Date Modified</th>
+        <th>Host</host>             
+        </thead>
+        
+        <tbody>
+        {% for eligibility in search_result.object_list %}
+            {% if eligibility.eligibility_id %}
+                <tr class="{% cycle 'row1' 'row2' %}">
+                <td><A href="{% url 'subject_dashboard_url' dashboard_type='maternal' dashboard_model='maternal_eligibility' dashboard_id=eligibility.pk show='appointments' %}">{{eligibility.eligibility_id}}</A></td>
+                <td>{{ eligibility.report_datetime|date:'Y-m-d H:i' }}</td> 
+                <td>{{ eligibility.age }}</td>
+                <td>{{ eligibility.currently_pregnant }}</td>    
+                <td>{{ eligibility.user_created }}</td>
+                <td>{{ eligibility.modified|date:"Y-m-d" }}</td>
+                <td>{{ eligibility.hostname_created }}</td>            
+                </tr>
+             {% endif %}
+        {% endfor %}
+        <tr><td colspan="9">{{ search_result.object_list.count }} Eligibility {{ search_result.object_list|pluralize }} found.</td></tr>                  
+      </tbody>
+    </table>    
+    </div>
