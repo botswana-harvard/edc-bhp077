@@ -16,4 +16,4 @@ class InfantBirthAdmin(admin.ModelAdmin):
     list_filter = ('gender',)
 
     radio_fields = {'gender': admin.VERTICAL}
-admin.register(InfantBirth, InfantBirthAdmin)
+admin.site.register(InfantBirth, InfantBirthAdmin)
