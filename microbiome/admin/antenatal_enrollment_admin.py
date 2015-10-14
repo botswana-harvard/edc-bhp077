@@ -33,4 +33,4 @@ class AntenatalEnrollmentAdmin(BaseModelAdmin):
                     'valid_regimen': admin.VERTICAL,
                     'process_rapid_test': admin.VERTICAL,
                     'rapid_test_result': admin.VERTICAL}
-admin.register(AntenatalEnrollment, AntenatalEnrollmentAdmin)
+admin.site.register(AntenatalEnrollment, AntenatalEnrollmentAdmin)
