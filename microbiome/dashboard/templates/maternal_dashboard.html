@@ -1,0 +1,17 @@
+{% extends "base_registered_subject_dashboard.html"%}
+{% load common_tags %}{% load crypto_tags%}
+
+{% block clinic_dashboard_marquee %}
+<table>
+<tr style="background:lightyellow;">
+<td><B>Name:</B> {{maternal_consent.first_name|encrypted }} ({{ maternal_consent.initials|encrypted }}) </td>
+<td><B>Gender:</B> {{maternal_consent.gender|gender }}</td> 
+<td><B>Born:</B> {{maternal_consent.dob|date:"Y-m-d" }}</td> 
+<td><B>Age:</B> {{maternal_consent.dob|age }}</td>
+<td><B>Consented:</B> {{maternal_consent.consent_datetime|date:"Y-m-d H:i" }}</td>
+{% if delivery_datetime %}
+    <td><B>Delivered:</B> {{delivery_datetime|date:"Y-m-d" }}</td>
+{% endif %}
+</tr>
+</table>
+{% endblock %}  
