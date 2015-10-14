@@ -6,11 +6,11 @@ class InfantArvProphAdmin(admin.ModelAdmin):
 
     radio_fields = {'prophylatic_nvp': admin.VERTICAL}
 
-admin.register(InfantArvProph, InfantArvProphAdmin)
+admin.site.register(InfantArvProph, InfantArvProphAdmin)
 
 
 class InfantArvProphModAdmin(admin.ModelAdmin):
 
     list_filter = ('infant_arv_proph',)
 
-admin.register(InfantArvProphMod, InfantArvProphModAdmin)
+admin.site.register(InfantArvProphMod, InfantArvProphModAdmin)
