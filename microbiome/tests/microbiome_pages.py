@@ -1,8 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-from microbiome_finders import LoginFinder, AdminFinder
-from microbiome_base_page import MicrobiomeBasePage
+from .microbiome_finders import LoginFinder, AdminFinder
+from .microbiome_base_page import MicrobiomeBasePage
 
 
 class LoginPage(MicrobiomeBasePage):

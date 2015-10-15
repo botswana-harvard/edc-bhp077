@@ -2,7 +2,7 @@ import time
 
 from selenium.webdriver.common.keys import Keys
 
-from microbiome.tests.base_selenium_test import BaseSeleniumTest
+from .base_selenium_test import BaseSeleniumTest
 
 
 class TestMicrobiomeHomePageSelenium(BaseSeleniumTest):

@@ -1,8 +1,10 @@
 import unittest
 import time
-from microbiome_finders import *
-from microbiome_pages import LoginPage, AdminPage
+
 from selenium import webdriver
+
+from .microbiome_finders import *
+from .microbiome_pages import LoginPage, AdminPage
 
 
 class TestMicrobiomePages(unittest.TestCase):

@@ -1,10 +1,7 @@
 from datetime import timedelta
-from django.test import TestCase
-from datetime import timedelta
 
-from django.conf import settings
-from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.test import TestCase
 from django.utils import timezone
 
 from ..models import InfantCongenitalAnomalies

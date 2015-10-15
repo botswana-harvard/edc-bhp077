@@ -1,10 +1,12 @@
 import unittest
-from maternal_finders import *
-from microbiome_finders import *
-from maternal_pages import EligibilityPage, ConsentPage
-from microbiome_pages import LoginPage, AdminPage
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+
+from .maternal_finders import *
+from .microbiome_finders import *
+from .maternal_pages import EligibilityPage, ConsentPage
+from .microbiome_pages import LoginPage, AdminPage
 
 
 class TestMaternalPages(unittest.TestCase):

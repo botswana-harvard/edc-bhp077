@@ -5,5 +5,5 @@ from .factories import MaternalScreeningFactory, SubjectConsentFactory
 
 
 class TestConsentProcess(TestCase):
-    
+
     pass

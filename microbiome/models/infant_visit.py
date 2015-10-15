@@ -15,7 +15,7 @@ class InfantVisit(BaseUuidModel):
     )
 
     information_provider_other = models.CharField(
-        verbose_name=" if information provider is Other, please specify",
+        verbose_name="if information provider is Other, please specify",
         max_length=20,
         help_text="",
         blank=True,

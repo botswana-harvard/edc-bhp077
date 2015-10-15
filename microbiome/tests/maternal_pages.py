@@ -1,10 +1,5 @@
-from datetime import date, time
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from microbiome_base_page import MicrobiomeBasePage
-from maternal_finders import MaternalEligibilityFinder, ConsentFinder, SampleConsentFinder
-from microbiome_pages import AdminPage
-from selenium.webdriver.support.ui import WebDriverWait
+from .microbiome_base_page import MicrobiomeBasePage
+from .maternal_finders import MaternalEligibilityFinder, ConsentFinder, SampleConsentFinder
 
 
 '''Defining functions for each maternal page (class)'''

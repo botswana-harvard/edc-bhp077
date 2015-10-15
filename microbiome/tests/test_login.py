@@ -4,7 +4,7 @@ from selenium import webdriver
 from django.contrib.auth.models import User
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
-from microbiome.tests.pages import LoginPage
+from .pages import LoginPage
 
 
 class LoginSeleniumTest(StaticLiveServerTestCase):

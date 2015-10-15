@@ -1,6 +1,6 @@
 import time
 
-from microbiome.tests.base_selenium_test import BaseSeleniumTest
+from .base_selenium_test import BaseSeleniumTest
 
 
 class TestDashboardSelenium(BaseSeleniumTest):
