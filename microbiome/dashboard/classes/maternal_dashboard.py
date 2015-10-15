@@ -30,7 +30,7 @@ class MaternalDashboard(RegisteredSubjectDashboard):
         self._dashboard_type_list = ['maternal']
         self.extra_url_context = ""
         kwargs.update({'dashboard_models': {'maternal_eligibility': MaternalEligibility},
-                       'membership_form_category': ['maternal_consent', 'sample_consent',
+                       'membership_form_category': [#'maternal_consent', 'sample_consent',
                                                     'antenatal', 'postnatal']})
         self._locator_model = None
         self._requisition_model = None
