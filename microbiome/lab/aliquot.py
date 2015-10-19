@@ -48,7 +48,7 @@ class Aliquot(BaseAliquot, BaseUuidModel):
 
     @property
     def subject_visit(self):
-        MaternalVisit = models.get_model('microbiome', 'MaternalVisit')
+        MaternalVisit = models.get_model('maternal', 'MaternalVisit')
         try:
             return MaternalVisit.objects.get(
                 appointment__visit_definition__code=self.visit_code,

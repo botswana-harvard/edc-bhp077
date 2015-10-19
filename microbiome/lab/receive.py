@@ -9,7 +9,7 @@ from lis.specimen.lab_receive.models import BaseReceive
 
 class Receive(BaseReceive, BaseUuidModel):
 
-    registered_subject = models.ForeignKey(RegisteredSubject, null=True, related_name='bcpp_receive')
+    registered_subject = models.ForeignKey(RegisteredSubject, null=True, related_name='microbiome_receive')
 
     requisition_model_name = models.CharField(max_length=25, null=True, editable=False)
 
