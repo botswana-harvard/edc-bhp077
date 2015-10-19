@@ -7,7 +7,7 @@ from edc_constants.constants import NEG, POS
 
 from edc_constants.choices import POS_NEG_ONLY
 
-from .maternal_eligibility import MaternalEligibility
+from microbiome.maternal.models import MaternalEligibility
 
 
 class InfantEligibility (BaseUuidModel):
