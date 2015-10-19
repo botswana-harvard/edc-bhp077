@@ -1,10 +1,23 @@
 from microbiome.constants import LIVE, STILL_BIRTH
+from edc_constants.choices import YES, NO
 
 LIVE_STILL_BIRTH = (
     (LIVE, 'live birth'),
     (STILL_BIRTH, 'still birth')
 )
 
+YES_NO_DNT_DWTA = (
+    (YES, YES),
+    (NO, NO),
+    ('Dont know right now', 'I do not know right now'),
+    ('DWTA', 'Don\'t want to answer'))
+
+NEXT_CHILD_PLAN = (
+    ('within 2years', 'Within the next 2 years'),
+    ('between 2-5years from now', 'From 2 years to 5 years from now'),
+    ('More than 5years from now', 'More than 5 years from now'),
+    ('Dont know right now', 'I do not know right now'),
+    ('DWTA', 'Don\'t want to answer'))
 
 RECRUIT_SOURCE = (
     ('Poster/pamphlet at ANC', 'Recruitment poster/pamphlet at ANC'),
