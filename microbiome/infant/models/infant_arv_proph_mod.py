@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from infant.models.infant_arv_proph import InfantArvProph
+from .infant_arv_proph import InfantArvProph
 
 
 class InfantArvProphMod(models.Model):

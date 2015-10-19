@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from edc_constants.choices import DRUG_ROUTE
 from ..choices import MEDICATIONS
 
-from infant.models.infant_fu_new_med import InfantFuNewMed
+from .infant_fu_new_med import InfantFuNewMed
 
 
 class InfantFuNewMedItems(models.Model):

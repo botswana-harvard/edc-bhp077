@@ -6,7 +6,7 @@ from edc_base.model.models import BaseUuidModel
 
 from ..choices import REASON_NOT_RECEIVED_VACCINATION, YES_NOT_SCHEDULED_NOT_RECEIVED
 
-from infant.models.infant_fu import InfantFu
+from .infant_fu import InfantFu
 
 
 class InfantFuImmunizations(BaseUuidModel):

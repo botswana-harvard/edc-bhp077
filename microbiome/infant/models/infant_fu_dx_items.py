@@ -6,7 +6,7 @@ from edc_base.model.models import BaseUuidModel
 
 from ..choices import DX_INFANT
 
-from infant.models.infant_fu_dx import InfantFuDx
+from .infant_fu_dx import InfantFuDx
 
 
 class InfantFuDxItems(BaseUuidModel):

@@ -4,8 +4,8 @@ from edc_base.model.models import BaseUuidModel
 
 from ..choices import FEEDING_CHOICES
 
-from infant.models.infant_birth import InfantBirth
-from infant.models.infant_visit import InfantVisit
+from .infant_birth import InfantBirth
+from .infant_visit import InfantVisit
 
 
 class InfantBirthFeedVaccine(BaseUuidModel):

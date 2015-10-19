@@ -6,7 +6,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc_constants.choices import YES_NO
 
-from infant.models.infant_fu import InfantFu
+from .infant_fu import InfantFu
 
 
 class InfantFuPhysical(BaseUuidModel):

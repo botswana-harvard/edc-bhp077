@@ -5,7 +5,7 @@ from edc_base.model.validators import (
     datetime_not_before_study_start, datetime_not_future)
 from edc_constants.choices import YES_NO, YES
 
-from infant.models.infant_visit import InfantVisit
+from .infant_visit import InfantVisit
 
 
 class InfantOffStudy(BaseUuidModel):
