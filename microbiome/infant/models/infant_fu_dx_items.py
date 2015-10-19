@@ -52,6 +52,6 @@ class InfantFuDxItems(BaseUuidModel):
         return reverse('admin:microbiome_infantfudxitems_change', args=(self.id,))
 
     class Meta:
-        app_label = "microbiome"
+        app_label = "infant"
         verbose_name = "Infant FollowUp: Dx Items"
         verbose_name_plural = "Infant FollowUp: Dx Items"

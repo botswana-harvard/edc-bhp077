@@ -110,6 +110,7 @@ INSTALLED_APPS = (
     'microbiome.infant',
     'microbiome.maternal',
     'microbiome.lab',
+    'microbiome.list',
 
     # LIS
     'lis.base.model',

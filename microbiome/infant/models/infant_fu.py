@@ -49,5 +49,5 @@ class InfantFu(BaseUuidModel):
         return "%s" % (self.infant_visit)
 
     class Meta:
-        app_label = 'microbiome'
+        app_label = 'infant'
         verbose_name = "Infant FollowUp"

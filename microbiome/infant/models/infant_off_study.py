@@ -45,5 +45,5 @@ class InfantOffStudy(BaseUuidModel):
         null=True)
 
     class Meta:
-        app_label = "microbiome"
+        app_label = "infant"
         verbose_name = "Infant Off-Study"

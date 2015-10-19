@@ -22,5 +22,5 @@ class InfantArvProphMod(models.Model):
         return reverse('admin:microbiome_infantarvprophmod_change', args=(self.id,))
 
     class Meta:
-        app_label = "microbiome"
+        app_label = "infant"
         verbose_name = 'Infant NVP or AZT Proph: Mods'

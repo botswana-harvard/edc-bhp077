@@ -60,6 +60,6 @@ class InfantEligibility (BaseUuidModel):
         return False
 
     class Meta:
-        app_label = "microbiome"
+        app_label = "infant"
         verbose_name = "Infant Eligibility"
         verbose_name_plural = "Infant Eligibility"

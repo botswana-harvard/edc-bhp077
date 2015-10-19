@@ -178,5 +178,5 @@ class InfantFuImmunizations(BaseUuidModel):
         return reverse('admin:microbiome_infantfumed_change', args=(self.id,))
 
     class Meta:
-        app_label = "microbiome"
+        app_label = "infant"
         verbose_name = "Infant FollowUp: Medication"

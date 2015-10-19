@@ -57,6 +57,6 @@ class InfantFuPhysical(BaseUuidModel):
         return reverse('admin:microbiome_infantfuphysical_change', args=(self.id,))
 
     class Meta:
-        app_label = "microbiome"
+        app_label = "infant"
         verbose_name = "Infant FollowUp: Physical"
         verbose_name_plural = "Infant FollowUp: Physical"

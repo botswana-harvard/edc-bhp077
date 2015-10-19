@@ -79,5 +79,5 @@ class InfantBirthArv(BaseUuidModel):
     )
 
     class Meta:
-        app_label = "microbiome"
+        app_label = "infant"
         verbose_name = "Infant Birth Record: ARV"
