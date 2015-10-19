@@ -37,15 +37,15 @@ class AntenatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'instructions': '',
         'requisitions': (),
         'entries': (
-            EntryTuple(10L, u'microbiome', u'maternallocator', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(20L, u'microbiome', u'maternaldemographics', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(30L, u'microbiome', u'maternalmedicalhistory', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'microbiome', u'maternalobstericalhistory', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(50L, u'microbiome', u'maternalclinicalhistory', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(60L, u'microbiome', u'maternalarvhistory', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(70L, u'microbiome', u'maternalarvpreg', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(10L, u'maternal', u'maternallocator', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(20L, u'maternal', u'maternaldemographics', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(30L, u'maternal', u'maternalmedicalhistory', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(40L, u'maternal', u'maternalobstericalhistory', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(50L, u'maternal', u'maternalclinicalhistory', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(60L, u'maternal', u'maternalarvhistory', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(70L, u'maternal', u'maternalarvpreg', REQUIRED, NOT_ADDITIONAL),
             # EntryTuple(200L, u'microbiome', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(210L, u'microbiome', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )
+            EntryTuple(210L, u'maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )
     }
 site_visit_schedules.register(AntenatalEnrollmentVisitSchedule)
 
@@ -79,15 +79,15 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'instructions': '',
         'requisitions': (),
         'entries': (
-            EntryTuple(10L, u'microbiome', u'maternallocator', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(20L, u'microbiome', u'maternaldemographics', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(30L, u'microbiome', u'maternalmedicalhistory', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'microbiome', u'maternalobstericalhistory', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(50L, u'microbiome', u'maternalclinicalhistory', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(60L, u'microbiome', u'maternalarvhistory', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(70L, u'microbiome', u'maternalarvpreg', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(10L, u'maternal', u'maternallocator', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(20L, u'maternal', u'maternaldemographics', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(30L, u'maternal', u'maternalmedicalhistory', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(40L, u'maternal', u'maternalobstericalhistory', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(50L, u'maternal', u'maternalclinicalhistory', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(60L, u'maternal', u'maternalarvhistory', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(70L, u'maternal', u'maternalarvpreg', REQUIRED, NOT_ADDITIONAL),
             # EntryTuple(200L, u'microbiome', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(210L, u'microbiome', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(210L, u'maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL),
             )
     }
 site_visit_schedules.register(PostnatalEnrollmentVisitSchedule)

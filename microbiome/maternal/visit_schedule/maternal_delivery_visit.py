@@ -49,14 +49,14 @@ class MaternalDeliveryVisitSchedule(VisitScheduleConfiguration):
 #                                       'Vaginal Swab (multiplex PCR)', 'TEST', 'VSM', REQUIRED, NOT_ADDITIONAL)
                 ),
             'entries': (
-                EntryTuple(10L, u'microbiome', u'maternallabourdel', REQUIRED, NOT_ADDITIONAL),
-                EntryTuple(20L, u'microbiome', u'maternallabdelmed', REQUIRED, NOT_ADDITIONAL),
-                EntryTuple(30L, u'microbiome', u'maternallabdelclinic', REQUIRED, NOT_ADDITIONAL),
-                EntryTuple(40L, u'microbiome', u'maternallabdeldx', REQUIRED, NOT_ADDITIONAL),
-                EntryTuple(50L, u'microbiome', u'maternallabdeldxt', REQUIRED, NOT_ADDITIONAL),
-                EntryTuple(60L, u'microbiome', u'maternalarvpreg', REQUIRED, NOT_ADDITIONAL),
-                EntryTuple(70L, u'microbiome', u'maternalarv', REQUIRED, NOT_ADDITIONAL),
+                EntryTuple(10L, u'maternal', u'maternallabourdel', REQUIRED, NOT_ADDITIONAL),
+                EntryTuple(20L, u'maternal', u'maternallabdelmed', REQUIRED, NOT_ADDITIONAL),
+                EntryTuple(30L, u'maternal', u'maternallabdelclinic', REQUIRED, NOT_ADDITIONAL),
+                EntryTuple(40L, u'maternal', u'maternallabdeldx', REQUIRED, NOT_ADDITIONAL),
+                EntryTuple(50L, u'maternal', u'maternallabdeldxt', REQUIRED, NOT_ADDITIONAL),
+                EntryTuple(60L, u'maternal', u'maternalarvpreg', REQUIRED, NOT_ADDITIONAL),
+                EntryTuple(70L, u'maternal', u'maternalarv', REQUIRED, NOT_ADDITIONAL),
                 # EntryTuple(200L, u'microbiome', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
-                EntryTuple(210L, u'microbiome', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}}
+                EntryTuple(210L, u'maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}}
     )
 site_visit_schedules.register(MaternalDeliveryVisitSchedule)
