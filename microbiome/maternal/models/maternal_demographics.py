@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from edc_base.model.fields import OtherCharField
 from maternal.models.maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
-from microbiome.maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
+from microbiome.maternal.maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
                                          CURRENT_OCCUPATION, MONEY_PROVIDER, MONEY_EARNED,
                                          WATER_SOURCE, COOKING_METHOD, TOILET_FACILITY,
                                          HOUSE_TYPE)
