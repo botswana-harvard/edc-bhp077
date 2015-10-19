@@ -4,7 +4,7 @@ from django.db import models
 
 from edc_base.model.models import BaseUuidModel
 
-from maternal.models.maternal_eligibility import MaternalEligibility
+from .maternal_eligibility import MaternalEligibility
 
 
 class MaternalEligibilityLoss(BaseUuidModel):
@@ -27,6 +27,6 @@ class MaternalEligibilityLoss(BaseUuidModel):
     reason_ineligible.allow_tags = True
 
     class Meta:
-        app_label = 'microbiome'
+        app_label = 'maternal'
         verbose_name = 'Maternal Eligibility Loss'
         verbose_name_plural = 'Maternal Eligibility Loss'

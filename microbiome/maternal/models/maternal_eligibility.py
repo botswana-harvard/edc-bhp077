@@ -72,6 +72,6 @@ class MaternalEligibility (BaseUuidModel):
         return reverse('admin:microbiome_maternaleligibility_change', args=(self.id,))
 
     class Meta:
-        app_label = "microbiome"
+        app_label = 'maternal'
         verbose_name = "Maternal Eligibility"
         verbose_name_plural = "Maternal Eligibility"

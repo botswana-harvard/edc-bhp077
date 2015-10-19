@@ -8,7 +8,7 @@ from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_base.model.validators import CellNumber, TelephoneNumber
 from edc_constants.choices import YES_NO
 
-from maternal.models.maternal_visit import MaternalVisit
+from .maternal_visit import MaternalVisit
 
 
 class MaternalLocator(BaseLocator, BaseUuidModel):
@@ -54,6 +54,6 @@ class MaternalLocator(BaseLocator, BaseUuidModel):
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 
     class Meta:
-        app_label = 'microbiome'
+        app_label = 'maternal'
         verbose_name = 'Maternal Locator'
         verbose_name_plural = 'Maternal Locator'

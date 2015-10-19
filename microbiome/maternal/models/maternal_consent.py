@@ -8,7 +8,7 @@ from edc_consent.models.base_consent import BaseConsent
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_consent.models.fields import PersonalFieldsMixin, VulnerabilityFieldsMixin
 from edc_constants.choices import YES_NO_UNKNOWN, NO
-from .identifiers import MaternalIdentifier
+# from .identifiers import MaternalIdentifier
 
 
 class MaternalConsent(BaseConsent, PersonalFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
@@ -36,12 +36,12 @@ class MaternalConsent(BaseConsent, PersonalFieldsMixin, VulnerabilityFieldsMixin
 
     identity_type = IdentityTypeField(
         null=True)
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.subject_identifier = MaternalIdentifier().identifier
-        self.identity_match()
-        super(MaternalConsent, self).save(*args, **kwargs)
+# 
+#     def save(self, *args, **kwargs):
+#         if not self.id:
+#             self.subject_identifier = MaternalIdentifier().identifier
+#         self.identity_match()
+#         super(MaternalConsent, self).save(*args, **kwargs)
 
     def identity_match(self):
         if self.confirm_identity:
@@ -66,6 +66,6 @@ class MaternalConsent(BaseConsent, PersonalFieldsMixin, VulnerabilityFieldsMixin
             return True
 
     class Meta:
-        app_label = 'microbiome'
+        app_label = 'maternal'
         verbose_name = 'Maternal Consent'
         verbose_name_plural = 'Maternal Consent'

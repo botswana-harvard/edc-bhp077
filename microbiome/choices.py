@@ -1,5 +1,5 @@
 from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
-from .constants import LIVE, STILL_BIRTH
+from microbiome.constants import LIVE
 
 HAART_DURING_PREG = (
     ('Atripla', 'Atripla'),
@@ -19,26 +19,12 @@ BIRTH_TYPE = (
     ('cesarean ', 'cesarean'),
 )
 
-LIVE_STILL_BIRTH = (
-    (LIVE, 'live birth'),
-    (STILL_BIRTH, 'still birth')
-)
-
 AUTOPSY_SOURCE = (
     ('mother', 'Mother of infant'),
     ('family_mem', 'Other family member'),
     ('hlth_prof', 'Health Professional who cared for the infant'),
     ('med_rec', 'Medical records'),
     ('OTHER', 'Other'),
-)
-
-PRIOR_PREG_HAART_STATUS = (
-    ('Received continuos HAART from the time she started',
-     'Received continuos HAART from the time she started'),
-    ('Had treatment interruption but restarted ',
-     'Had treatment interruption but restarted HAART prior to this pregnancy'),
-    ('interruption never restarted',
-     'Had treatment interruption and never restarted HAART prior to this pregnancy'),
 )
 
 AUTOPSY_SIGNS = (
@@ -633,38 +619,6 @@ CONTINUOUS_LOOSE_STOOLS = (
     ('7days', '7 days'),
     ('>7days', 'Greater than 7 days but not more than 13 days'),
     ('>14days', '14 days or greater')
-)
-
-RECRUIT_SOURCE = (
-    ('Poster/pamphlet at ANC', 'Recruitment poster/pamphlet at ANC'),
-    ('ANC clinic staff', 'ANC clinic staff'),
-    ('Staff at site of delivery', 'Staff at site of delivery'),
-    ('BHP recruiter', 'BHP recruiter'),
-    ('OTHER', 'Other, specify'),
-)
-
-RECRUIT_CLINIC = (
-    ('PHH', 'Gaborone(PMH)'),
-    ('SLH', 'Molepolole(SLH)'),
-    ('ATHLONE', 'Lobatse(Athlone)'),
-    ('G.West Clinic', 'G.West Clinic'),
-    ('Old Naledi Clinic', 'Old Naledi Clinic'),
-    ('BH3 Clinic', 'BH3 Clinic'),
-    ('Mafitlhakgosi Clinic', 'Mafitlhakgosi Clinic'),
-    ('Tsopeng Clinic', 'Tsopeng Clinic'),
-    ('Peleng East Clinic', 'Peleng East Clinic'),
-    ('Tlokweng main', 'Tlokweng Main Clinic'),
-    ('Khayakhulu', 'Khayakhulu Clinic'),
-    ('Nkoyaphiri', 'Nkoyaphiri Clinic'),
-    ('Phuthadikobo', 'Phuthadikobo Clinic'),
-    ('Boribamo', 'Boribamo Clinic'),
-    ('Borakalalo', 'Borakalalo Clinic'),
-    ('Bokaa', 'Bokaa Clinic'),
-    ('Kgosing', 'Kgosing Clininc'),
-    ('MCC', 'Molepolole Community Centre'),
-    ('OTHER health facility', 'Other health facilities not associated with study site'),
-    ('HOME', 'Home'),
-    ('OTHER location', 'Other location'),
 )
 
 ARV_STATUS_WITH_NEVER = (

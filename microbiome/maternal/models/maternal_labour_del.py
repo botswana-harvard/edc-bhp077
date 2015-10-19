@@ -2,7 +2,7 @@ from django.db import models
 
 from edc_base.model.fields import OtherCharField
 from edc_base.model.validators import datetime_not_future
-from maternal.models.maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 
 
@@ -116,7 +116,7 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         null=True)
 
     class Meta:
-        app_label = "microbiome"
+        app_label = 'maternal'
         verbose_name = "Maternal Labour & Delivery: MedHistory"
         verbose_name_plural = "Maternal Labour & Delivery: MedHistory"
 
@@ -178,7 +178,7 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         null=True)
 
     class Meta:
-        app_label = "microbiome"
+        app_label = 'maternal'
         verbose_name = "Maternal Labour & Delivery: ClinHist"
         verbose_name_plural = "Maternal Labour & Delivery: ClinHist"
 
@@ -203,7 +203,7 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
         help_text="If yes, answer 4, otherwise go to Question 5")
 
     class Meta:
-        app_label = "microbiome"
+        app_label = 'maternal'
         verbose_name = "Maternal Labour & Delivery: Preg Dx"
         verbose_name_plural = "Maternal Labour & Delivery: Preg Dx"
 
@@ -234,6 +234,6 @@ class MaternalLabDelDxT (MaternalScheduledVisitModel):
         help_text="")
 
     class Meta:
-        app_label = "microbiome"
+        app_label = 'maternal'
         verbose_name = "Maternal Labour & Delivery: Preg DxT"
         verbose_name_plural = "Maternal Labour & Delivery: Preg DxT"

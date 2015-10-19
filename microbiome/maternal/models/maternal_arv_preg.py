@@ -1,6 +1,6 @@
 from django.db import models
 
-from maternal.models.maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
 
 
@@ -69,6 +69,6 @@ class MaternalArv(MaternalScheduledVisitModel):
         blank=True)
 
     class Meta:
-        app_label = "microbiome"
+        app_label = 'maternal'
         verbose_name = 'Maternal ARV'
         verbose_name_plural = 'Maternal ARV'

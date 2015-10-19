@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from maternal.models.maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalObstericalHistory(MaternalScheduledVisitModel):
@@ -34,6 +34,6 @@ class MaternalObstericalHistory(MaternalScheduledVisitModel):
         return reverse('admin:microbiome_maternalobstericalhistory_change', args=(self.id,))
 
     class Meta:
-        app_label = "microbiome"
+        app_label = 'maternal'
         verbose_name = "Maternal Obsterical History"
         verbose_name_plural = "Maternal Obsterical History"
