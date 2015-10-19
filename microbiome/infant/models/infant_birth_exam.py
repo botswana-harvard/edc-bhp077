@@ -5,8 +5,8 @@ from edc_constants.choices import (
     GENDER_UNDETERMINED, NORMAL_ABNORMAL, YES_NO_NOT_EVALUATED_NA,
     NORMAL_ABNORMAL_NOEXAM)
 
-from infant.models.infant_birth import InfantBirth
-from infant.models.infant_visit import InfantVisit
+from .infant_birth import InfantBirth
+from .infant_visit import InfantVisit
 
 
 class InfantBirthExam(BaseUuidModel):

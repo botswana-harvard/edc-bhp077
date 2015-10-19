@@ -107,6 +107,8 @@ INSTALLED_APPS = (
     'edc_audit',
     'edc_constants',
     'microbiome',
+    'microbiome.infant',
+    'microbiome.maternal',
     'microbiome.lab',
 
     # LIS

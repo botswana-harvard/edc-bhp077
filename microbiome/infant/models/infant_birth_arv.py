@@ -4,8 +4,8 @@ from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import YES_NO_UNKNOWN, YES_NO_UNKNOWN_NA
 
-from infant.models.infant_birth import InfantBirth
-from infant.models.infant_visit import InfantVisit
+from .infant_birth import InfantBirth
+from .infant_visit import InfantVisit
 
 
 class InfantBirthArv(BaseUuidModel):
