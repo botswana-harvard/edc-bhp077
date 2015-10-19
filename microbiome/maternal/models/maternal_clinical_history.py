@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 
 
 from edc_base.model.fields.custom_fields import IsDateEstimatedField
-from maternal.models.maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
 
 
@@ -54,6 +54,6 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
         return reverse('admin:microbiome_maternalclinicalhistory_change', args=(self.id,))
 
     class Meta:
-        app_label = "microbiome"
+        app_label = 'maternal'
         verbose_name = 'Maternal Clinical History'
         verbose_name_plural = 'Maternal Clinical History'

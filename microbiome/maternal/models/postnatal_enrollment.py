@@ -2,9 +2,9 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 from .base_enrollment import BaseEnrollment
-from ..choices import LIVE_STILL_BIRTH
+from ..maternal_choices import LIVE_STILL_BIRTH
 from edc_constants.choices import YES_NO
-from maternal.models.maternal_consent import MaternalConsent
+from .maternal_consent import MaternalConsent
 from .antenatal_enrollment import AntenatalEnrollment
 
 
@@ -61,6 +61,6 @@ class PostnatalEnrollment(BaseEnrollment):
         return reverse('admin:microbiome_postnatalenrollment_change', args=(self.id,))
 
     class Meta:
-        app_label = 'microbiome'
+        app_label = 'maternal'
         verbose_name = 'Postnatal Enrollment'
         verbose_name_plural = 'Postnatal Enrollment'

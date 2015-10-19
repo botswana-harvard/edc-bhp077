@@ -3,12 +3,12 @@ from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.model.fields import OtherCharField
-from maternal.models.maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
-from microbiome.maternal.maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
-                                         CURRENT_OCCUPATION, MONEY_PROVIDER, MONEY_EARNED,
-                                         WATER_SOURCE, COOKING_METHOD, TOILET_FACILITY,
-                                         HOUSE_TYPE)
+from ..maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
+                                CURRENT_OCCUPATION, MONEY_PROVIDER, MONEY_EARNED,
+                                WATER_SOURCE, COOKING_METHOD, TOILET_FACILITY,
+                                HOUSE_TYPE)
 from microbiome.list import HouseholdGoods
 
 
@@ -143,5 +143,5 @@ class MaternalDemographics(MaternalScheduledVisitModel):
         return reverse('admin:microbiome_maternaldemographics_change', args=(self.id,))
 
     class Meta:
-        app_label = "microbiome"
+        app_label = 'maternal'
         verbose_name = "Maternal Demographics"

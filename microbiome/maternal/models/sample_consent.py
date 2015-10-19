@@ -6,7 +6,7 @@ from edc_consent.models import RequiresConsentMixin
 from edc_consent.models.validators import eligible_if_yes
 from edc_constants.choices import YES_NO
 
-from maternal.models.maternal_consent import MaternalConsent
+from .maternal_consent import MaternalConsent
 
 
 class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, VulnerabilityFieldsMixin,
@@ -26,6 +26,6 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
         help_text="If no, INELIGIBLE")
 
     class Meta:
-        app_label = 'microbiome'
+        app_label = 'maternal'
         verbose_name = 'Sample Consent'
         verbose_name_plural = 'Sample Consent'

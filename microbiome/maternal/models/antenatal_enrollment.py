@@ -1,8 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from maternal.models.base_enrollment import BaseEnrollment
-from maternal.models.maternal_consent import MaternalConsent
+from .base_enrollment import BaseEnrollment
+from .maternal_consent import MaternalConsent
 
 
 class AntenatalEnrollment(BaseEnrollment):
@@ -19,6 +19,6 @@ class AntenatalEnrollment(BaseEnrollment):
         return reverse('admin:microbiome_antenatalenrollment_change', args=(self.id,))
 
     class Meta:
-        app_label = 'microbiome'
+        app_label = 'maternal'
         verbose_name = 'Antenatal Enrollment'
         verbose_name_plural = 'Antenatal Enrollment'

@@ -1,6 +1,6 @@
 from edc.subject.off_study.mixins import OffStudyMixin
 
-from maternal.models.maternal_off_study import MaternalOffStudy
+from .maternal_off_study import MaternalOffStudy
 
 
 class MaternalOffStudyMixin(OffStudyMixin):

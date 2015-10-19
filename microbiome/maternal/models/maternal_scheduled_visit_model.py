@@ -12,8 +12,8 @@ from edc_consent.models import RequiresConsentMixin
 
 from ..managers import ScheduledModelManager
 
-from maternal.models.maternal_off_study_mixin import MaternalOffStudyMixin
-from maternal.models.maternal_visit import MaternalVisit
+from .maternal_off_study_mixin import MaternalOffStudyMixin
+from .maternal_visit import MaternalVisit
 
 
 class MaternalScheduledVisitModel(MaternalOffStudyMixin, RequiresConsentMixin,

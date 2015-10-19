@@ -2,7 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_base.model.fields import OtherCharField
-from maternal.models.maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
 
 from microbiome.list import ChronicConditions
@@ -39,6 +39,6 @@ class MaternalMedicalHistory(MaternalScheduledVisitModel):
         return reverse('admin:microbiome_maternalmedicalhistory_change', args=(self.id,))
 
     class Meta:
-        app_label = "microbiome"
+        app_label = 'maternal'
         verbose_name = "Maternal Medical History"
         verbose_name_plural = "Maternal Medical History"

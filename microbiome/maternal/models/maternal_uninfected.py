@@ -9,6 +9,6 @@ class MaternalUninfected(BaseMother):
         return reverse('admin:microbiome_maternaluninfected_change', args=(self.id,))
 
     class Meta:
-        app_label = 'microbiome'
+        app_label = 'maternal'
         verbose_name = 'Maternal Uninfected'
         verbose_name_plural = 'Maternal Uninfected'

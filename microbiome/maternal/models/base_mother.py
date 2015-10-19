@@ -1,9 +1,9 @@
 from django.db import models
 
 from edc_base.model.fields import OtherCharField
-from maternal.models.maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
-from ..choices import RECRUIT_SOURCE, RECRUIT_CLINIC
+from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 
 
 class BaseMother(MaternalScheduledVisitModel):

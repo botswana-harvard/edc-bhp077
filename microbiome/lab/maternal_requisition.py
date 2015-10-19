@@ -4,7 +4,7 @@ from django.db import models
 from edc.audit.audit_trail import AuditTrail
 from edc.lab.lab_requisition.models import BaseClinicRequisition
 
-from microbiome.models import MaternalVisit
+from ..maternal.models import MaternalVisit
 
 from .aliquot_type import AliquotType
 from .packing_list import PackingList
