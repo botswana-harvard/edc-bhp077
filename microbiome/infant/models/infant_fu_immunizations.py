@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from edc_constants.choices import YES_NO
 from edc_base.model.models import BaseUuidModel
 
-from ..choices import REASON_NOT_RECEIVED_VACCINATION, YES_NOT_SCHEDULED_NOT_RECEIVED
+from microbiome.choices import REASON_NOT_RECEIVED_VACCINATION, YES_NOT_SCHEDULED_NOT_RECEIVED
 
 from .infant_fu import InfantFu
 

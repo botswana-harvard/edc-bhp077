@@ -5,7 +5,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import GENDER_UNDETERMINED
 
-from .maternal_labour_del import MaternalLabourDel
+from microbiome.maternal.models import MaternalLabourDel
 
 
 class InfantBirth(BaseUuidModel):
