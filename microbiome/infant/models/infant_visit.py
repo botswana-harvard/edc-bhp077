@@ -2,7 +2,7 @@ from django.db import models
 
 from edc_base.model.models import BaseUuidModel
 
-from ..choices import (INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS, ALIVE_DEAD_UNKNOWN)
+from microbiome.choices import (INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS, ALIVE_DEAD_UNKNOWN)
 
 
 class InfantVisit(BaseUuidModel):

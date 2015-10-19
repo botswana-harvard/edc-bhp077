@@ -2,7 +2,7 @@ from django.db import models
 
 from edc_base.model.models import BaseUuidModel
 
-from ..choices import FEEDING_CHOICES
+from microbiome.choices import FEEDING_CHOICES
 
 from .infant_birth import InfantBirth
 from .infant_visit import InfantVisit

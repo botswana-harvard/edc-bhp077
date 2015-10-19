@@ -2,7 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_constants.choices import YES_NO
-from ..choices import ARV_STATUS_WITH_NEVER
+from microbiome.choices import ARV_STATUS_WITH_NEVER
 # from edc.subject.haart.choices import ARV_STATUS_WITH_NEVER
 
 
