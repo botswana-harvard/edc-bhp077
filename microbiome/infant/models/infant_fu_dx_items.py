@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from edc_constants.choices import YES_NO
 from edc_base.model.models import BaseUuidModel
 
-from ..choices import DX_INFANT
+from microbiome.choices import DX_INFANT
 
 from .infant_fu_dx import InfantFuDx
 

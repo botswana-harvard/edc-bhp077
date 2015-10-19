@@ -1,7 +1,7 @@
 from django.db import models
 
 from edc_base.model.models import BaseUuidModel
-from ..choices import CIRCUMCISION
+from microbiome.choices import CIRCUMCISION
 
 
 class InfantCircumcision(BaseUuidModel):

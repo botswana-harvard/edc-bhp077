@@ -2,7 +2,8 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_base.model.models import BaseUuidModel
-from infant.models.infant_fu import InfantFu
+
+from .infant_fu import InfantFu
 
 
 class InfantFuDx(BaseUuidModel):

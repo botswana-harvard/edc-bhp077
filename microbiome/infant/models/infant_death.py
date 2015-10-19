@@ -2,7 +2,7 @@ from django.db import models
 
 from edc_base.model.models import BaseUuidModel
 
-from ..choices import DRUG_RELATIONSHIP
+from microbiome.choices import DRUG_RELATIONSHIP
 
 
 class InfantDeath (BaseUuidModel):
