@@ -1,14 +1,15 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from edc_base.model.models import BaseUuidModel
-from edc_base.model.validators.date import date_not_future
+# from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import GENDER_UNDETERMINED
 
 from microbiome.maternal.models import MaternalLabourDel
 
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
-class InfantBirth(BaseUuidModel):
+
+class InfantBirth(InfantScheduledVisitModel):
 
     maternal_labour_del = models.ForeignKey(
         MaternalLabourDel,
@@ -36,7 +37,7 @@ class InfantBirth(BaseUuidModel):
     dob = models.DateField(
         verbose_name='Date of Birth',
         help_text="Must match labour and delivery report.",
-        validators=[date_not_future, ],
+#         validators=[date_not_future, ],
     )
 
     gender = models.CharField(

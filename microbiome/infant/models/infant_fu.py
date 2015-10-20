@@ -1,10 +1,11 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import YES_NO
 
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
-class InfantFu(BaseUuidModel):
+
+class InfantFu(InfantScheduledVisitModel):
 
     physical_assessment = models.CharField(
         max_length=3,

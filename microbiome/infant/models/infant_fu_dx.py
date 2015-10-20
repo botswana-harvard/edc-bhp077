@@ -1,12 +1,11 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from edc_base.model.models import BaseUuidModel
-
 from .infant_fu import InfantFu
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantFuDx(BaseUuidModel):
+class InfantFuDx(InfantScheduledVisitModel):
 
     infant_fu = models.OneToOneField(InfantFu)
 

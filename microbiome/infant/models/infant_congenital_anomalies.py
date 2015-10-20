@@ -1,9 +1,8 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
-from edc_base.model.fields import OtherCharField
-from edc_base.model.validators import (
-    datetime_not_before_study_start, datetime_not_future)
+from edc.base.model.fields import OtherCharField
+# from edc_base.model.validators import (
+#     datetime_not_before_study_start, datetime_not_future)
 from edc_constants.choices import CONFIRMED_SUSPECTED
 
 from microbiome.choices import (
@@ -13,9 +12,10 @@ from microbiome.choices import (
     SKIN_ABNORMALITY, TRISOME_CHROSOMESOME_ABNORMALITY, OTHER_DEFECT)
 
 from .infant_visit import InfantVisit
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantCongenitalAnomalies(BaseUuidModel):
+class InfantCongenitalAnomalies(InfantScheduledVisitModel):
 
     infant_visit = models.OneToOneField(InfantVisit)
 
@@ -24,14 +24,14 @@ class InfantCongenitalAnomalies(BaseUuidModel):
         verbose_name = "Infant Congenital Anomalies"
 
 
-class BaseCnsItem(BaseUuidModel):
+class BaseCnsItem(InfantScheduledVisitModel):
 
     report_datetime = models.DateTimeField(
         verbose_name="Visit Date and Time",
-        validators=[
-            datetime_not_before_study_start,
-            datetime_not_future,
-        ],
+#         validators=[
+#             datetime_not_before_study_start,
+#             datetime_not_future,
+#         ],
     )
 
     class Meta:

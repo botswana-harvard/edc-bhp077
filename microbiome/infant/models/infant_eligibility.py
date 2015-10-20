@@ -1,16 +1,17 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
-from edc_base.model.models import BaseUuidModel
-from edc_constants.constants import NEG, POS
+# from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
 
+from edc_constants.constants import NEG, POS
 from edc_constants.choices import POS_NEG_ONLY
 
 from microbiome.maternal.models import MaternalEligibility
 
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
-class InfantEligibility (BaseUuidModel):
+
+class InfantEligibility (InfantScheduledVisitModel):
     """A model completed by the user for an infant delivered to an
        HIV +ve mother to determine study eligibility."""
 
@@ -23,10 +24,10 @@ class InfantEligibility (BaseUuidModel):
         verbose_name="Report Date and Time",
         null=True,
         blank=True,
-        validators=[
-            datetime_not_before_study_start,
-            datetime_not_future,
-        ],
+#         validators=[
+#             datetime_not_before_study_start,
+#             datetime_not_future,
+#         ],
         help_text='Date and time of assessing eligibility'
     )
 

@@ -2,14 +2,14 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_constants.choices import YES_NO
-from edc_base.model.models import BaseUuidModel
 
 from microbiome.choices import REASON_NOT_RECEIVED_VACCINATION, YES_NOT_SCHEDULED_NOT_RECEIVED
 
 from .infant_fu import InfantFu
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantFuImmunizations(BaseUuidModel):
+class InfantFuImmunizations(InfantScheduledVisitModel):
 
     infant_fu = models.OneToOneField(InfantFu)
 

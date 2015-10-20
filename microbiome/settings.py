@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'edc_base',
     'edc',
     'edc.apps.app_configuration',
@@ -106,11 +107,6 @@ INSTALLED_APPS = (
     'edc_consent',
     'edc_audit',
     'edc_constants',
-    'microbiome',
-    'microbiome.infant',
-    'microbiome.maternal',
-    'microbiome.lab',
-    'microbiome.list',
 
     # LIS
     'lis.base.model',
@@ -140,6 +136,12 @@ INSTALLED_APPS = (
     'lis.exim.lab_import',
     'lis.exim.lab_import_lis',
     'lis.exim.lab_import_dmis',
+
+    'microbiome.infant',
+    'microbiome.maternal',
+    'microbiome.lab',
+    'microbiome.list',
+    'microbiome',
 )
 
 MIDDLEWARE_CLASSES = (

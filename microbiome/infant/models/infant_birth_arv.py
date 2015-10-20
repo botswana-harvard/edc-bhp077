@@ -1,14 +1,14 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
-from edc_base.model.validators.date import date_not_future
+# from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import YES_NO_UNKNOWN, YES_NO_UNKNOWN_NA
 
 from .infant_birth import InfantBirth
 from .infant_visit import InfantVisit
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantBirthArv(BaseUuidModel):
+class InfantBirthArv(InfantScheduledVisitModel):
 
     """infant arv information"""
     infant_visit = models.ForeignKey(InfantVisit)
@@ -23,7 +23,7 @@ class InfantBirthArv(BaseUuidModel):
 
     azt_dose_date = models.DateField(
         verbose_name="If yes,date of first dose of AZT?",
-        validators=[date_not_future, ],
+#         validators=[date_not_future, ],
         blank=True,
         null=True,
     )

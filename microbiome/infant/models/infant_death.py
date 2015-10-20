@@ -1,11 +1,11 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
-
 from microbiome.choices import DRUG_RELATIONSHIP
 
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
-class InfantDeath (BaseUuidModel):
+
+class InfantDeath (InfantScheduledVisitModel):
 
     death_reason_hospitalized_other = models.TextField(
         verbose_name="if other illness or pathogen specify or non infectious reason, please specify below:",

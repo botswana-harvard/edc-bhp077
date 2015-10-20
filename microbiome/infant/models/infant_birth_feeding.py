@@ -1,14 +1,14 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
 
 from microbiome.choices import FEEDING_CHOICES
 
 from .infant_birth import InfantBirth
 from .infant_visit import InfantVisit
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantBirthFeedVaccine(BaseUuidModel):
+class InfantBirthFeedVaccine(InfantScheduledVisitModel):
 
     """infant feeding"""
 

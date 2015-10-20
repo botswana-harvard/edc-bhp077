@@ -1,15 +1,15 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import (
     GENDER_UNDETERMINED, NORMAL_ABNORMAL, YES_NO_NOT_EVALUATED_NA,
     NORMAL_ABNORMAL_NOEXAM)
 
 from .infant_birth import InfantBirth
 from .infant_visit import InfantVisit
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantBirthExam(BaseUuidModel):
+class InfantBirthExam(InfantScheduledVisitModel):
 
     """A model completed by the user to record details of the infant's birth."""
 

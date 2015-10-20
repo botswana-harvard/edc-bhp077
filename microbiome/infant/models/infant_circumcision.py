@@ -1,10 +1,11 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
 from microbiome.choices import CIRCUMCISION
 
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
-class InfantCircumcision(BaseUuidModel):
+
+class InfantCircumcision(InfantScheduledVisitModel):
 
     circumcised = models.CharField(
         max_length=15,

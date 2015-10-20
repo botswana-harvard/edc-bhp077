@@ -1,11 +1,11 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
-
 from microbiome.choices import (INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS, ALIVE_DEAD_UNKNOWN)
 
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
-class InfantVisit(BaseUuidModel):
+
+class InfantVisit(InfantScheduledVisitModel):
 
     information_provider = models.CharField(
         verbose_name="Please indicate who provided most of the information for this child's visit",

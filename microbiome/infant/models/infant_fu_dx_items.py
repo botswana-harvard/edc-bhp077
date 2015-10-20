@@ -2,14 +2,14 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_constants.choices import YES_NO
-from edc_base.model.models import BaseUuidModel
 
 from microbiome.choices import DX_INFANT
 
 from .infant_fu_dx import InfantFuDx
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantFuDxItems(BaseUuidModel):
+class InfantFuDxItems(InfantScheduledVisitModel):
 
     infant_fu_dx = models.ForeignKey(InfantFuDx)
 
