@@ -1,42 +1,32 @@
+import pprint
+from datetime import datetime
+
 from django.db.models.signals import post_save
-from django.db import transaction
 from django.dispatch import receiver
-from edc_constants.constants import POS
 
-from ..constants import NOT_ENROLLED
-from ..exceptions import CreateInfantEligibilityError
-from ..models import MaternalEligibility, InfantEligibility, SubjectConsent
+from .maternal_eligibility import MaternalEligibility
+from .maternal_eligibility_loss import MaternalEligibilityLoss
 
 
-@receiver(post_save, weak=False, dispatch_uid='maternal_eligibility_post_save')
-def maternal_eligibility_post_save(sender, instance, raw, created, using, update_fields, **kwargs):
-    """Creates the Infant Eligibility recored to match the number in MaternalEligibility.live_infants.
-    Only the foreign key to MaternalEligibility. The user will need to open the form and populate all
-    other fields accordingly, before proceeding."""
+@receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")
+def maternal_eligibility_on_post_save(sender, instance, raw, created, using, **kwargs):
+    """Creates a ClinicEnrollmentLoss instance if not eligible."""
     if not raw:
         if isinstance(instance, MaternalEligibility):
-            num_live_infants = instance.live_infants
-            if instance.mother_hiv_result == POS and instance.enrollment_status != NOT_ENROLLED:
+            if not instance.is_eligible:
                 try:
-                    with transaction.atomic():
-                        for _ in list(range(0, num_live_infants)):
-                            InfantEligibility.objects.create(maternal_eligibility_post=instance)
-                except:
-                    raise CreateInfantEligibilityError(
-                        'An ERROR occurred while attempting to create infant eligibility for {}'.format(instance)
-                    )
-
-
-@receiver(post_save, weak=False, dispatch_uid='update_registered_subject_from_consent_post_save')
-def update_registered_subject_from_consent_post_save(sender, instance, raw, created, using, **kwargs):
-    if not raw:
-        if isinstance(instance, SubjectConsent):
-            registered_subject = instance.maternal_eligibility_pre.registered_subject
-            registered_subject.first_name = instance.first_name,
-            registered_subject.last_name = instance.last_name,
-            registered_subject.initials = instance.initials,
-            registered_subject.gender = instance.gender,
-            registered_subject.dob = instance.dob,
-            registered_subject.identity = instance.identity,
-            registered_subject.identity_type = instance.identity_type
-            registered_subject.save()
+                    maternal_eligibility_loss = MaternalEligibilityLoss.objects.get(
+                        maternal_eligibility_id=instance.id)
+                    maternal_eligibility_loss.report_datetime = instance.report_datetime
+                    maternal_eligibility_loss.reason_ineligible = instance.ineligibility
+                    maternal_eligibility_loss.user_modified = instance.user_modified
+                    maternal_eligibility_loss.save()
+                except MaternalEligibilityLoss.DoesNotExist:
+                    MaternalEligibilityLoss.objects.create(
+                        maternal_eligibility_id=instance.id,
+                        report_datetime=instance.report_datetime,
+                        reason_ineligible=instance.ineligibility,
+                        user_created=instance.user_created,
+                        user_modified=instance.user_modified)
+            else:
+                MaternalEligibilityLoss.objects.filter(maternal_eligibility_id=instance.id).delete()
