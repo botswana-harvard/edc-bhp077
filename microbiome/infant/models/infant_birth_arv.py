@@ -1,6 +1,6 @@
 from django.db import models
 
-# from edc_base.model.validators.date import date_not_future
+from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import YES_NO_UNKNOWN, YES_NO_UNKNOWN_NA
 
 from .infant_birth import InfantBirth
@@ -23,7 +23,7 @@ class InfantBirthArv(InfantScheduledVisitModel):
 
     azt_dose_date = models.DateField(
         verbose_name="If yes,date of first dose of AZT?",
-#         validators=[date_not_future, ],
+        validators=[date_not_future, ],
         blank=True,
         null=True,
     )

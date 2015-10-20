@@ -1,8 +1,8 @@
 from django.db import models
 
 from edc.base.model.fields import OtherCharField
-# from edc_base.model.validators import (
-#     datetime_not_before_study_start, datetime_not_future)
+from edc_base.model.validators import (
+    datetime_not_before_study_start, datetime_not_future)
 from edc_constants.choices import CONFIRMED_SUSPECTED
 
 from microbiome.choices import (
@@ -28,10 +28,10 @@ class BaseCnsItem(InfantScheduledVisitModel):
 
     report_datetime = models.DateTimeField(
         verbose_name="Visit Date and Time",
-#         validators=[
-#             datetime_not_before_study_start,
-#             datetime_not_future,
-#         ],
+        validators=[
+            datetime_not_before_study_start,
+            datetime_not_future,
+        ],
     )
 
     class Meta:

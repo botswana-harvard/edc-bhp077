@@ -1,7 +1,7 @@
 from django.db import models
 
-# from edc_base.model.validators import (
-#     datetime_not_before_study_start, datetime_not_future)
+from edc_base.model.validators import (
+    datetime_not_before_study_start, datetime_not_future)
 from edc_constants.choices import YES_NO, YES
 
 from .infant_visit import InfantVisit
@@ -14,10 +14,10 @@ class InfantOffStudy(InfantScheduledVisitModel):
 
     report_datetime = models.DateTimeField(
         verbose_name="Report Date and Time",
-#         validators=[
-#             datetime_not_before_study_start,
-#             datetime_not_future,
-#         ],
+        validators=[
+            datetime_not_before_study_start,
+            datetime_not_future,
+        ],
     )
 
     offstudy_date = models.DateField(
