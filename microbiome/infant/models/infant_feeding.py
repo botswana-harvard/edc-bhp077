@@ -6,8 +6,10 @@ from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNSURE_NA
 
 from microbiome.choices import COWS_MILK, REASON_RCV_FORMULA, TIMES_BREASTFED, WATER_USED
 
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
-class InfantFeeding(models.Model):
+
+class InfantFeeding(InfantScheduledVisitModel):
 
     """Infant Feeding """
 

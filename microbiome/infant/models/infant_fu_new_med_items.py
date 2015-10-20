@@ -5,9 +5,10 @@ from edc_constants.choices import DRUG_ROUTE
 from microbiome.choices import MEDICATIONS
 
 from .infant_fu_new_med import InfantFuNewMed
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantFuNewMedItems(models.Model):
+class InfantFuNewMedItems(InfantScheduledVisitModel):
 
     infant_fu_med = models.ForeignKey(InfantFuNewMed)
 

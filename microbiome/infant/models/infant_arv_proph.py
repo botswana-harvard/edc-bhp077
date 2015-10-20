@@ -3,10 +3,11 @@ from django.core.urlresolvers import reverse
 
 from edc_constants.choices import YES_NO
 from microbiome.choices import ARV_STATUS_WITH_NEVER
-# from edc.subject.haart.choices import ARV_STATUS_WITH_NEVER
+
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantArvProph(models.Model):
+class InfantArvProph(InfantScheduledVisitModel):
 
     prophylatic_nvp = models.CharField(
         max_length=3,

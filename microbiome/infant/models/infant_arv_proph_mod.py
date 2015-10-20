@@ -2,9 +2,10 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from .infant_arv_proph import InfantArvProph
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantArvProphMod(models.Model):
+class InfantArvProphMod(InfantScheduledVisitModel):
 
     infant_arv_proph = models.ForeignKey(InfantArvProph)
 
