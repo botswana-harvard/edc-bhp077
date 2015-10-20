@@ -14,7 +14,9 @@ class MaternalEligibilityAdmin(BaseModelAdmin):
               'report_datetime',
               'age_in_years',
               # 'ineligibility',
-              'currently_pregnant')
-    radio_fields = {'currently_pregnant': admin.VERTICAL}
+              'currently_pregnant',
+              'recently_delivered')
+    radio_fields = {'currently_pregnant': admin.VERTICAL,
+                    'recently_delivered': admin.VERTICAL}
     readonly_fields = ('eligibility_id',)
 admin.site.register(MaternalEligibility, MaternalEligibilityAdmin)
