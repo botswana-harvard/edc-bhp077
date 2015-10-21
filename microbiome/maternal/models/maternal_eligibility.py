@@ -5,7 +5,6 @@ from django.db import models
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_constants.choices import YES_NO
-from .maternal_eligibility_loss import MaternalEligibilityLoss
 
 
 class MaternalEligibility (BaseUuidModel):
@@ -82,6 +81,7 @@ class MaternalEligibility (BaseUuidModel):
 
     @property
     def maternal_eligibility_loss(self):
+        from .maternal_eligibility_loss import MaternalEligibilityLoss
         try:
             maternal_eligibility_loss = MaternalEligibilityLoss.objects.get(
                 maternal_eligibility_id=self.id)
