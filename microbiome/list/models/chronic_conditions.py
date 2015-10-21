@@ -5,5 +5,5 @@ class ChronicConditions (BaseListModel):
 
     class Meta:
         app_label = "list"
-        verbose_name = "ChronicConditions"
-        verbose_name_plural = "ChronicConditions"
+        verbose_name = "Chronic Conditions"
+        verbose_name_plural = "Chronic Conditions"

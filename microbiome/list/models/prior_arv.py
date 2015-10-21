@@ -6,3 +6,4 @@ class PriorArv (BaseListModel):
     class Meta:
         app_label = "list"
         verbose_name = "Maternal Enroll: Prior Arv"
+        verbose_name_plural = "Maternal Enroll: Prior Arv"
