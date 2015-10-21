@@ -10,16 +10,6 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantOffStudy(InfantScheduledVisitModel):
 
-    infant_visit = models.OneToOneField(InfantVisit)
-
-    report_datetime = models.DateTimeField(
-        verbose_name="Report Date and Time",
-        validators=[
-            datetime_not_before_study_start,
-            datetime_not_future,
-        ],
-    )
-
     offstudy_date = models.DateField(
         verbose_name="Off-study Date",
     )

@@ -4,14 +4,12 @@ from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import YES_NO_UNKNOWN, YES_NO_UNKNOWN_NA
 
 from .infant_birth import InfantBirth
-from .infant_visit import InfantVisit
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantBirthArv(InfantScheduledVisitModel):
 
     """infant arv information"""
-    infant_visit = models.ForeignKey(InfantVisit)
 
     infant_birth = models.ForeignKey(InfantBirth)
 

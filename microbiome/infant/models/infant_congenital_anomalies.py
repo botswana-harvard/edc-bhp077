@@ -11,13 +11,10 @@ from microbiome.choices import (
     FEM_GENITAL_ANOMALY, MALE_GENITAL_ANOMALY, RENAL_ANOMALY, MUSCULOSKELETAL_ABNORMALITY,
     SKIN_ABNORMALITY, TRISOME_CHROSOMESOME_ABNORMALITY, OTHER_DEFECT)
 
-from .infant_visit import InfantVisit
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantCongenitalAnomalies(InfantScheduledVisitModel):
-
-    infant_visit = models.OneToOneField(InfantVisit)
 
     class Meta:
         app_label = "infant"
@@ -25,14 +22,6 @@ class InfantCongenitalAnomalies(InfantScheduledVisitModel):
 
 
 class BaseCnsItem(InfantScheduledVisitModel):
-
-    report_datetime = models.DateTimeField(
-        verbose_name="Visit Date and Time",
-        validators=[
-            datetime_not_before_study_start,
-            datetime_not_future,
-        ],
-    )
 
     class Meta:
         abstract = True

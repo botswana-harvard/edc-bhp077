@@ -5,15 +5,12 @@ from edc_constants.choices import (
     NORMAL_ABNORMAL_NOEXAM)
 
 from .infant_birth import InfantBirth
-from .infant_visit import InfantVisit
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantBirthExam(InfantScheduledVisitModel):
 
     """A model completed by the user to record details of the infant's birth."""
-
-    infant_visit = models.ForeignKey(InfantVisit)
 
     infant_birth = models.OneToOneField(InfantBirth)
 

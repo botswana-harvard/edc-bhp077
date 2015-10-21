@@ -4,15 +4,12 @@ from django.db import models
 from microbiome.choices import FEEDING_CHOICES
 
 from .infant_birth import InfantBirth
-from .infant_visit import InfantVisit
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantBirthFeedVaccine(InfantScheduledVisitModel):
 
     """infant feeding"""
-
-    infant_visit = models.ForeignKey(InfantVisit)
 
     infant_birth = models.ForeignKey(InfantBirth)
 

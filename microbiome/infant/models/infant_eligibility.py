@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
+# from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future)
 
 from edc_constants.constants import NEG, POS
 from edc_constants.choices import POS_NEG_ONLY
@@ -20,16 +20,16 @@ class InfantEligibility (InfantScheduledVisitModel):
         help_text=''
     )
 
-    report_datetime = models.DateTimeField(
-        verbose_name="Report Date and Time",
-        null=True,
-        blank=True,
-        validators=[
-            datetime_not_before_study_start,
-            datetime_not_future,
-        ],
-        help_text='Date and time of assessing eligibility'
-    )
+#     report_datetime = models.DateTimeField(
+#         verbose_name="Report Date and Time",
+#         null=True,
+#         blank=True,
+#         validators=[
+#             datetime_not_before_study_start,
+#             datetime_not_future,
+#         ],
+#         help_text='Date and time of assessing eligibility'
+#     )
 
     infant_hiv_result = models.CharField(
         verbose_name=_("(Interviewer) What is the infant's hiv result?"),
