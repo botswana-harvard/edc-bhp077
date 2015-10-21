@@ -1,7 +1,7 @@
 from django.db import models
 
 from edc_base.model.fields import OtherCharField
-from edc_constrants.choices import YES_NO_DWTA
+from edc_constants.choices import YES_NO_DWTA
 
 from ..maternal_choices import YES_NO_DNT_DWTA, NEXT_CHILD_PLAN
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
