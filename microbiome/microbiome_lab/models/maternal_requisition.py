@@ -1,8 +1,9 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from edc.audit.audit_trail import AuditTrail
-from edc.lab.lab_requisition.models import BaseClinicRequisition
+from edc.lab.lab_requisition.models import BaseRequisition
+from edc_base.audit_trail import AuditTrail
+from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from microbiome.maternal.models import MaternalVisit
 
@@ -13,7 +14,7 @@ from .panel import Panel
 from .managers import RequisitionManager
 
 
-class MaternalRequisition(BaseClinicRequisition):
+class MaternalRequisition(BaseRequisition, BaseUuidModel):
 
     maternal_visit = models.ForeignKey(MaternalVisit)
 
@@ -39,3 +40,4 @@ class MaternalRequisition(BaseClinicRequisition):
         app_label = 'microbiome_lab'
         verbose_name = 'Maternal Requisition'
         unique_together = ('maternal_visit', 'panel', 'is_drawn')
+        ordering = ('-created', )
