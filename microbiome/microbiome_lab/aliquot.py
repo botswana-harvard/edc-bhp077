@@ -2,16 +2,16 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from lis.specimen.lab_aliquot.models import BaseAliquot
-from edc_base.model.models import BaseUuidModel
+# from edc_base.model.models import BaseUuidModel
 
 from lis.specimen.lab_aliquot.managers import AliquotManager
 
-from .aliquot_condition import AliquotCondition
-from .aliquot_type import AliquotType
-from .receive import Receive
+from microbiome.microbiome_lab import AliquotCondition
+from microbiome.microbiome_lab import AliquotType
+from microbiome.microbiome_lab import Receive
 
 
-class Aliquot(BaseAliquot, BaseUuidModel):
+class Aliquot(BaseAliquot):
 
     receive = models.ForeignKey(
         Receive,

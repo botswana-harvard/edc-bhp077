@@ -4,10 +4,10 @@ from django.core.urlresolvers import reverse
 from lis.specimen.lab_result.models import BaseResult
 
 from .order_item import OrderItem
-from edc_base.model.models import BaseUuidModel
+# from edc_base.model.models import BaseUuidModel
 
 
-class Result(BaseResult, BaseUuidModel):
+class Result(BaseResult):
     """Stores result information in a one-to-many relation with :class:`ResultItem`."""
     order_item = models.ForeignKey(OrderItem)
 
@@ -43,5 +43,5 @@ class Result(BaseResult, BaseUuidModel):
     report.allow_tags = True
 
     class Meta:
-        app_label = 'lab'
+        app_label = 'microbiome_lab'
         ordering = ['result_identifier']

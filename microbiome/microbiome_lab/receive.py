@@ -2,12 +2,12 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 from edc.subject.registration.models import RegisteredSubject
-from edc_base.model.models import BaseUuidModel
+# from edc_base.model.models import BaseUuidModel
 
 from lis.specimen.lab_receive.models import BaseReceive
 
 
-class Receive(BaseReceive, BaseUuidModel):
+class Receive(BaseReceive):
 
     registered_subject = models.ForeignKey(RegisteredSubject, null=True, related_name='microbiome_receive')
 

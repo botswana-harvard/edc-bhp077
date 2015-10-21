@@ -1,7 +1,7 @@
 from django.db import models
 
 from edc.lab.lab_profile.models import BaseProfileItem
-from edc_base.model.models import BaseUuidModel
+# from edc_base.model.models import BaseUuidModel
 
 from .managers import ProfileItemManager
 
@@ -9,7 +9,7 @@ from .aliquot_type import AliquotType
 from .aliquot_profile import AliquotProfile
 
 
-class AliquotProfileItem(BaseProfileItem, BaseUuidModel):
+class AliquotProfileItem(BaseProfileItem):
 
     profile = models.ForeignKey(AliquotProfile)
 
@@ -24,6 +24,6 @@ class AliquotProfileItem(BaseProfileItem, BaseUuidModel):
         return self.profile.natural_key() + self.aliquot_type.natural_key()
 
     class Meta:
-        app_label = 'lab'
+        app_label = 'microbiome_lab'
         unique_together = ('profile', 'aliquot_type')
         db_table = 'microbiome_lab_profileitem'

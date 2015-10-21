@@ -36,6 +36,6 @@ class MaternalRequisition(BaseClinicRequisition):
     aliquot.allow_tags = True
 
     class Meta:
-        app_label = 'lab'
+        app_label = 'microbiome_lab'
         verbose_name = 'Maternal Requisition'
         unique_together = ('maternal_visit', 'panel', 'is_drawn')

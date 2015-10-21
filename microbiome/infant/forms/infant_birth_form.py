@@ -1,9 +1,9 @@
-from django.forms import ModelForm
-
 from ..models import InfantBirth
 
+from .base_infant_model_form import BaseInfantModelForm
 
-class InfantBirthForm(ModelForm):
+
+class InfantBirthForm(BaseInfantModelForm):
 
     class Meta:
         model = InfantBirth

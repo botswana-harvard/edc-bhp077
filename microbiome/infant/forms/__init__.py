@@ -1,3 +1,4 @@
+from .base_infant_model_form import BaseInfantModelForm
 from .infant_arv_proph_form import InfantArvProphForm
 from .infant_birth_arv_form import InfantBirthArvForm
 from .infant_birth_exam_form import InfantBirthExamForm

@@ -1,7 +1,7 @@
 from django.db import models
 
 from edc.lab.lab_packing.models import BasePackingListItem
-from edc_base.model.models import BaseUuidModel
+# from edc_base.model.models import BaseUuidModel
 
 from .aliquot import Aliquot
 from .packing_list import PackingList
@@ -12,7 +12,7 @@ from .receive import Receive
 from .managers import PackingListItemManager
 
 
-class PackingListItem(BasePackingListItem, BaseUuidModel):
+class PackingListItem(BasePackingListItem):
 
     packing_list = models.ForeignKey(PackingList, null=True)
 
@@ -75,6 +75,6 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
         return (self.item_reference, )
 
     class Meta:
-        app_label = "lab"
+        app_label = "microbiome_lab"
         verbose_name = 'Packing List Item'
         ordering = ('-created', )

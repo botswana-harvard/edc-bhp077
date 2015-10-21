@@ -1,9 +1,9 @@
-from django.forms.models import ModelForm
-
 from ..models import InfantFuDx
 
+from .base_infant_model_form import BaseInfantModelForm
 
-class InfantFuDxForm(ModelForm):
+
+class InfantFuDxForm(BaseInfantModelForm):
 
     class Meta:
         model = InfantFuDx

@@ -3,13 +3,15 @@ from datetime import datetime
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from edc_base.model.models import BaseUuidModel
+# from edc_base.model.models import BaseUuidModel
 from edc_base.audit_trail import AuditTrail
+
+from edc.device.sync.models import BaseSyncUuidModel
 
 from .managers import OrderManager
 
 
-class Order(BaseUuidModel):
+class Order(BaseSyncUuidModel):
 
     order_datetime = models.DateTimeField(default=datetime.today())
 
