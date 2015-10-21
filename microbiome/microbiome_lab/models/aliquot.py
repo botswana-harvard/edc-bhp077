@@ -87,4 +87,3 @@ class Aliquot(BaseAliquot):
     class Meta:
         app_label = 'microbiome_lab'
         unique_together = (('receive', 'count'), )
-        ordering = ('-created', 'count')

@@ -3,8 +3,9 @@ from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.model.fields import OtherCharField
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
+
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from ..maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
                                 CURRENT_OCCUPATION, MONEY_PROVIDER, MONEY_EARNED,
                                 WATER_SOURCE, COOKING_METHOD, TOILET_FACILITY,
@@ -140,7 +141,7 @@ class MaternalDemographics(MaternalScheduledVisitModel):
         help_text="Indicate the primary type of housing used over the past 30 days",)
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_maternaldemographics_change', args=(self.id,))
+        return reverse('admin:maternal_maternaldemographics_change', args=(self.id,))
 
     class Meta:
         app_label = 'maternal'

@@ -77,4 +77,3 @@ class PackingListItem(BasePackingListItem):
     class Meta:
         app_label = "microbiome_lab"
         verbose_name = 'Packing List Item'
-        ordering = ('-created', )

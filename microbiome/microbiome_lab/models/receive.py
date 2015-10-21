@@ -38,4 +38,3 @@ class Receive(BaseReceive):
 
     class Meta:
         app_label = 'microbiome_lab'
-        ordering = ('-created', )
