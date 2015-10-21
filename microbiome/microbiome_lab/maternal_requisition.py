@@ -31,7 +31,7 @@ class MaternalRequisition(BaseClinicRequisition):
         return self.maternal_visit
 
     def aliquot(self):
-        url = reverse('admin:lab_aliquot_changelist')
+        url = reverse('admin:microbiome_lab_aliquot_changelist')
         return """<a href="{url}?q={requisition_identifier}" />aliquot</a>""".format(url=url, requisition_identifier=self.requisition_identifier)
     aliquot.allow_tags = True
 

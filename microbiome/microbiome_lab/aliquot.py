@@ -75,16 +75,16 @@ class Aliquot(BaseAliquot):
             return None
 
     def processing(self):
-        url = reverse('admin:lab_aliquotprocessing_add')
+        url = reverse('admin:microbiome_lab_aliquotprocessing_add')
         return '<a href="{0}?aliquot={1}">process</a>'.format(url, self.pk)
     processing.allow_tags = True
 
     def related(self):
-        url = reverse('admin:lab_aliquot_changelist')
+        url = reverse('admin:microbiome_lab_aliquot_changelist')
         return '<a href="{0}?q={1}">related</a>'.format(url, self.receive.receive_identifier)
     related.allow_tags = True
 
     class Meta:
-        app_label = 'lab'
+        app_label = 'microbiome_lab'
         unique_together = (('receive', 'count'), )
         ordering = ('-created', 'count')

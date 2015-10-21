@@ -73,5 +73,5 @@ class ResultItem(BaseResultItem):
         return self.result_item_datetime
 
     class Meta:
-        app_label = "lab"
+        app_label = "microbiome_lab"
         ordering = ('-result_item_datetime', )
