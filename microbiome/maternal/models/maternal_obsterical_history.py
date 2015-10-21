@@ -31,7 +31,7 @@ class MaternalObstericalHistory(MaternalScheduledVisitModel):
         help_text="")
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_maternalobstericalhistory_change', args=(self.id,))
+        return reverse('admin:maternal_maternalobstericalhistory_change', args=(self.id,))
 
     class Meta:
         app_label = 'maternal'

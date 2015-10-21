@@ -36,7 +36,7 @@ class MaternalMedicalHistory(MaternalScheduledVisitModel):
         help_text="Please use the WHO Staging Guidelines. ONLY for HIV infected mothers")
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_maternalmedicalhistory_change', args=(self.id,))
+        return reverse('admin:maternal_maternalmedicalhistory_change', args=(self.id,))
 
     class Meta:
         app_label = 'maternal'
