@@ -80,7 +80,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         null=True)
 
     class Meta:
-        app_label = 'microbiome'
+        app_label = 'maternal'
         verbose_name = "Maternal Labour & Delivery"
         verbose_name_plural = "Maternal Labour & Delivery"
 

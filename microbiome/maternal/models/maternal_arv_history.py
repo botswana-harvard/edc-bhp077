@@ -2,11 +2,11 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_base.model.fields import IsDateEstimatedField, OtherCharField
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
 
 from ..maternal_choices import PRIOR_PREG_HAART_STATUS
-from microbiome.list import PriorArv
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from microbiome.list.models import PriorArv
 
 
 class MaternalArvHistory(MaternalScheduledVisitModel):

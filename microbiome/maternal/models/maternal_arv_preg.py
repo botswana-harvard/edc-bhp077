@@ -41,7 +41,7 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
         null=True)
 
     class Meta:
-        app_label = "microbiome"
+        app_label = "maternal"
         verbose_name = 'Maternal ARV In This Preg: Pregnancy'
         verbose_name_plural = 'Maternal ARV In This Preg: Pregnancy'
 

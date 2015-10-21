@@ -2,10 +2,10 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_base.model.fields import OtherCharField
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO
 
-from microbiome.list import ChronicConditions
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from microbiome.list.models import ChronicConditions
 
 
 class MaternalMedicalHistory(MaternalScheduledVisitModel):
