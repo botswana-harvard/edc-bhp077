@@ -1,9 +1,9 @@
-from django.forms.models import ModelForm
+from edc.subject.off_study.forms import BaseOffStudyForm
 
 from ..models import InfantOffStudy
 
 
-class InfantOffStudyForm(ModelForm):
+class InfantOffStudyForm(BaseOffStudyForm):
 
     class Meta:
         model = InfantOffStudy

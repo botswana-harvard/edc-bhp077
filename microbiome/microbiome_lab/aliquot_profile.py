@@ -1,14 +1,14 @@
 from django.db import models
 
 from edc.lab.lab_profile.models import BaseProfile
-from edc_base.model.models import BaseUuidModel
+# from edc_base.model.models import BaseUuidModel
 
 from .managers import ProfileManager
 
 from .aliquot_type import AliquotType
 
 
-class AliquotProfile(BaseProfile, BaseUuidModel):
+class AliquotProfile(BaseProfile):
 
     aliquot_type = models.ForeignKey(
         AliquotType,
@@ -20,5 +20,5 @@ class AliquotProfile(BaseProfile, BaseUuidModel):
         return (self.name,)
 
     class Meta:
-        app_label = 'lab'
+        app_label = 'microbiome_lab'
         db_table = 'microbiome_lab_profile'

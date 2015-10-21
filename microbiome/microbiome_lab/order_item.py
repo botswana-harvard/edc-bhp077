@@ -3,7 +3,9 @@ from datetime import datetime
 from django.db import models
 
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
+
+from edc.device.sync.models import BaseSyncUuidModel
+
 
 from .aliquot import Aliquot
 from .order import Order
@@ -12,7 +14,7 @@ from .panel import Panel
 from .managers import OrderItemManager
 
 
-class OrderItem(BaseUuidModel):
+class OrderItem(BaseSyncUuidModel):
 
     order = models.ForeignKey(Order)
 
@@ -51,5 +53,5 @@ class OrderItem(BaseUuidModel):
         return (self.order_identifier, )
 
     class Meta:
-        app_label = 'lab'
+        app_label = 'microbiome_lab'
         ordering = ['-order_datetime', ]

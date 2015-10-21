@@ -1,9 +1,9 @@
-from django.forms import ModelForm
-
 from ..models import InfantCircumcision
 
+from .base_infant_model_form import BaseInfantModelForm
 
-class InfantCircumcisionForm(ModelForm):
+
+class InfantCircumcisionForm(BaseInfantModelForm):
 
     class Meta:
         model = InfantCircumcision

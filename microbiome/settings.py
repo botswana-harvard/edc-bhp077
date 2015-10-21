@@ -139,7 +139,7 @@ INSTALLED_APPS = (
 
     'microbiome.infant',
     'microbiome.maternal',
-    'microbiome.lab',
+    'microbiome.microbiome_lab',
     'microbiome.list',
     'microbiome',
 )

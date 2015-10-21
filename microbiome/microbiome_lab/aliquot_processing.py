@@ -1,7 +1,7 @@
 from django.db import models
 
 from edc.lab.lab_profile.models import BaseProcessing
-from edc_base.model.models import BaseUuidModel
+# from edc_base.model.models import BaseUuidModel
 
 from .managers import AliquotProcessingManager
 
@@ -9,7 +9,7 @@ from .aliquot import Aliquot
 from .aliquot_profile import AliquotProfile
 
 
-class AliquotProcessing(BaseProcessing, BaseUuidModel):
+class AliquotProcessing(BaseProcessing):
 
     aliquot = models.ForeignKey(
         Aliquot,
@@ -31,5 +31,5 @@ class AliquotProcessing(BaseProcessing, BaseUuidModel):
         return retval
 
     class Meta:
-        app_label = 'lab'
+        app_label = 'microbiome_lab'
         db_table = 'microbiome_lab_processing'

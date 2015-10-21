@@ -1,9 +1,9 @@
-from django.forms import ModelForm
-
 from ..models import InfantArvProph
 
+from .base_infant_model_form import BaseInfantModelForm
 
-class InfantArvProphForm(ModelForm):
+
+class InfantArvProphForm(BaseInfantModelForm):
 
     class Meta:
         model = InfantArvProph

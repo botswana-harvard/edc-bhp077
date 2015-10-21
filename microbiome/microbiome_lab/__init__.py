@@ -1,9 +1,10 @@
-from .aliquot import Aliquot
-from .aliquot_condition import AliquotCondition
+from .maternal_requisition import MaternalRequisition
 from .aliquot_processing import AliquotProcessing
 from .aliquot_profile import AliquotProfile
 from .aliquot_profile_item import AliquotProfileItem
 from .aliquot_type import AliquotType
+from .aliquot import Aliquot
+from .aliquot_condition import AliquotCondition
 from .order import Order
 from .order_identifier_history import OrderIdentifierHistory
 from .order_item import OrderItem
@@ -13,4 +14,3 @@ from .panel import Panel
 from .receive import Receive
 from .result import Result
 from .result_item import ResultItem
-from .maternal_requisition import MaternalRequisition
