@@ -1,9 +1,9 @@
-from django.forms import ModelForm
+from edc_consent.forms.base_consent_form import BaseConsentForm
 
 from ..models import AntenatalEnrollment
 
 
-class AntenatalEnrollmentForm(ModelForm):
+class AntenatalEnrollmentForm(BaseConsentForm):
 
     class Meta:
         model = AntenatalEnrollment

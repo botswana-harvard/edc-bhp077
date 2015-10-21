@@ -1,38 +1,38 @@
-from django.forms import ModelForm
+from base_maternal_model_form import BaseMaternalModelForm
 from maternal.models.maternal_labour_del import (MaternalLabourDel, MaternalLabDelMed,
                                           MaternalLabDelClinic, MaternalLabDelDx,
                                           MaternalLabDelDxT)
 
 
-class MaternalLabourDelForm(ModelForm):
+class MaternalLabourDelForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalLabourDel
         fields = '__all__'
 
 
-class MaternalLabDelMedForm(ModelForm):
+class MaternalLabDelMedForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalLabDelMed
         fields = '__all__'
 
 
-class MaternalLabDelClinicForm(ModelForm):
+class MaternalLabDelClinicForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalLabDelClinic
         fields = '__all__'
 
 
-class MaternalLabDelDxForm(ModelForm):
+class MaternalLabDelDxForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalLabDelDx
         fields = '__all__'
 
 
-class MaternalLabDelDxTForm(ModelForm):
+class MaternalLabDelDxTForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalLabDelDxT

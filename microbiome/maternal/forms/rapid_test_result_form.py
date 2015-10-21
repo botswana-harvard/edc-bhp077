@@ -1,9 +1,9 @@
-from django.forms import ModelForm
+from base_maternal_model_form import BaseMaternalModelForm
 
 from ..models import RapidTestResult
 
 
-class RapidTestResultForm(ModelForm):
+class RapidTestResultForm(BaseMaternalModelForm):
 
     class Meta:
         model = RapidTestResult

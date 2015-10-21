@@ -1,9 +1,9 @@
-from django.forms import ModelForm
+from base_maternal_model_form import BaseMaternalModelForm
 
 from ..models import MaternalObstericalHistory
 
 
-class MaternalObstericalHistoryForm(ModelForm):
+class MaternalObstericalHistoryForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalObstericalHistory
