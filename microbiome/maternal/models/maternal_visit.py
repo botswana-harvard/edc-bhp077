@@ -2,15 +2,22 @@ from django.db import models
 
 from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
 
-from maternal_off_study_mixin import MaternalOffStudyMixin
+from microbiome.choices import VISIT_UNSCHEDULED_REASON
+from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
-class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
+class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
+
+    reason_unscheduled = models.CharField(
+        verbose_name="If 'Unscheduled' above, provide reason for the unscheduled visit",
+        max_length=25,
+        blank=True,
+        null=True,
+        choices=VISIT_UNSCHEDULED_REASON)
 
     history = AuditTrail(True)
 

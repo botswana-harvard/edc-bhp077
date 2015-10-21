@@ -1,14 +1,14 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.off_study.models import BaseOffStudy
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from .maternal_visit import MaternalVisit
 
 
-class MaternalOffStudy(BaseOffStudy, BaseUuidModel):
+class MaternalOffStudy(BaseOffStudy):
 
     """A model completed by the user that completed when the subject is taken off-study."""
 
@@ -17,6 +17,12 @@ class MaternalOffStudy(BaseOffStudy, BaseUuidModel):
     maternal_visit = models.OneToOneField(MaternalVisit)
 
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
+
+    def get_visit(self):
+        return self.maternal_visit
+
+    def get_absolute_url(self):
+        return reverse('admin:maternal_maternaloffstudy_change', args=(self.id,))
 
     class Meta:
         app_label = 'maternal'
