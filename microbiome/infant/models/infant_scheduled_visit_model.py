@@ -2,14 +2,19 @@ from django.db import models
 
 from datetime import datetime
 
-from edc.subject.consent.models.base_consented_uuid_model import BaseConsentedUuidModel
+from edc_base.model.models.base_uuid_model import BaseUuidModel
+
 from edc.entry_meta_data.managers import EntryMetaDataManager
+from edc.data_manager.models import TimePointStatusMixin
+
+from edc_consent.models import RequiresConsentMixin
 
 from .infant_visit import InfantVisit
 from .infant_off_study_mixin import InfantOffStudyMixin
 
 
-class InfantScheduledVisitModel(InfantOffStudyMixin, BaseConsentedUuidModel):
+class InfantScheduledVisitModel(InfantOffStudyMixin, BaseUuidModel,
+                                TimePointStatusMixin, RequiresConsentMixin):
 
     infant_visit = models.OneToOneField(InfantVisit)
 
