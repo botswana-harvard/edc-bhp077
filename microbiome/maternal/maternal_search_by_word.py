@@ -1,5 +1,5 @@
 from edc.dashboard.search.classes import BaseSearchByWord
-from ..models import MaternalEligibility
+from .models import MaternalEligibility
 
 
 class MaternalSearchByWord(BaseSearchByWord):
