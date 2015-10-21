@@ -20,3 +20,4 @@ from .maternal_death_form import MaternalDeathForm
 from .sample_consent_form import SampleConsentForm
 from .rapid_test_result_form import RapidTestResultForm
 from .sexual_reproductive_health_form import SexualReproductiveHealthForm
+from .maternal_visit_form import MaternalVisitForm

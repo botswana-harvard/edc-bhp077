@@ -1,6 +1,26 @@
 from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
 from microbiome.constants import LIVE
 
+VISIT_INFO_SOURCE = [
+    ('subject', 'Subject'),
+    ('other_member', 'Other household member'),
+    ('OTHER', 'Other'),
+]
+
+VISIT_REASON = [
+    ('consent', 'Consent and Survey with subject'),
+    ('absent', 'Absentee'),
+    ('undecided', 'Undecided (with subject)'),
+    ('refuse', 'Refusal (with subject)'),
+]
+
+VISIT_UNSCHEDULED_REASON = (
+    ('Routine oncology', 'Routine oncology clinic visit'),
+    ('Ill oncology', 'Ill oncology clinic visit'),
+    ('Patient called', 'Patient called to come for visit'),
+    ('OTHER', 'Other, specify:'),
+)
+
 HAART_DURING_PREG = (
     ('Atripla', 'Atripla'),
     ('Truvada-Efavirenz ', 'Truvada-Efavirenz '),
