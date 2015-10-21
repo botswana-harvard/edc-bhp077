@@ -3,7 +3,7 @@ from django.db import models
 from edc.lab.lab_profile.models import BaseProfileItem
 # from edc_base.model.models import BaseUuidModel
 
-from .managers import ProfileItemManager
+from ..managers import ProfileItemManager
 
 from .aliquot_type import AliquotType
 from .aliquot_profile import AliquotProfile

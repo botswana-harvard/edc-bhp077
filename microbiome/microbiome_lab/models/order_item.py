@@ -11,7 +11,7 @@ from .aliquot import Aliquot
 from .order import Order
 from .panel import Panel
 
-from .managers import OrderItemManager
+from ..managers import OrderItemManager
 
 
 class OrderItem(BaseSyncUuidModel):

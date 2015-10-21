@@ -9,7 +9,7 @@ from .panel import Panel
 from .maternal_requisition import MaternalRequisition
 from .receive import Receive
 
-from .managers import PackingListItemManager
+from ..managers import PackingListItemManager
 
 
 class PackingListItem(BasePackingListItem):

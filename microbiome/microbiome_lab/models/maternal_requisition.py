@@ -11,7 +11,7 @@ from .aliquot_type import AliquotType
 from .packing_list import PackingList
 from .panel import Panel
 
-from .managers import RequisitionManager
+from ..managers import RequisitionManager
 
 
 class MaternalRequisition(BaseRequisition, BaseUuidModel):

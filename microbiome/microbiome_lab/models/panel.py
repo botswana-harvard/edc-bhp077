@@ -7,7 +7,7 @@ from lis.specimen.lab_panel.models import BasePanel
 
 from .aliquot_type import AliquotType
 
-from .managers import PanelManager
+from ..managers import PanelManager
 
 
 class Panel(BasePanel):

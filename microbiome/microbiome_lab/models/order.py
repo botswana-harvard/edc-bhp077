@@ -8,7 +8,7 @@ from edc_base.audit_trail import AuditTrail
 
 from edc.device.sync.models import BaseSyncUuidModel
 
-from .managers import OrderManager
+from ..managers import OrderManager
 
 
 class Order(BaseSyncUuidModel):
