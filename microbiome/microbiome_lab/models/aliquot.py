@@ -6,9 +6,9 @@ from lis.specimen.lab_aliquot.models import BaseAliquot
 
 from lis.specimen.lab_aliquot.managers import AliquotManager
 
-from microbiome.microbiome_lab import AliquotCondition
-from microbiome.microbiome_lab import AliquotType
-from microbiome.microbiome_lab import Receive
+from .aliquot_condition import AliquotCondition
+from .aliquot_type import AliquotType
+from .receive import Receive
 
 
 class Aliquot(BaseAliquot):
