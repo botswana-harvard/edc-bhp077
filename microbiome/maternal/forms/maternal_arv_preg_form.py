@@ -1,15 +1,15 @@
-from django.forms.models import ModelForm
+from base_maternal_model_form import BaseMaternalModelForm
 from ..models import MaternalArvPreg, MaternalArv
 
 
-class MaternalArvPregForm(ModelForm):
+class MaternalArvPregForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalArvPreg
         fields = '__all__'
 
 
-class MaternalArvForm(ModelForm):
+class MaternalArvForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalArv

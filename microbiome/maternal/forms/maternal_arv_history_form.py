@@ -1,9 +1,8 @@
-from django.forms.models import ModelForm
-
 from ..models import MaternalArvHistory
+from base_maternal_model_form import BaseMaternalModelForm
 
 
-class MaternalArvHistoryForm(ModelForm):
+class MaternalArvHistoryForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalArvHistory

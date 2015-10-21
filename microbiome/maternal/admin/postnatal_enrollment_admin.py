@@ -1,12 +1,12 @@
 from django.contrib import admin
 
-from edc_base.modeladmin.admin import BaseModelAdmin
+from .registered_subject_model_admin import RegisteredSubjectModelAdmin
 
 from ..forms import PostnatalEnrollmentForm
 from ..models import PostnatalEnrollment
 
 
-class PostnatalEnrollmentAdmin(BaseModelAdmin):
+class PostnatalEnrollmentAdmin(RegisteredSubjectModelAdmin):
 
     form = PostnatalEnrollmentForm
 

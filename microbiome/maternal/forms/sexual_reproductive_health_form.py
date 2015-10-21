@@ -1,9 +1,9 @@
-from django import forms
+from base_maternal_model_form import BaseMaternalModelForm
 
 from ..models import SexualReproductiveHealth
 
 
-class SexualReproductiveHealthForm(forms.ModelForm):
+class SexualReproductiveHealthForm(BaseMaternalModelForm):
 
     class Meta:
         model = SexualReproductiveHealth

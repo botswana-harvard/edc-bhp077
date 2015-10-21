@@ -1,9 +1,9 @@
-from django.forms import ModelForm
+from base_maternal_model_form import BaseMaternalModelForm
 
 from ..models import MaternalLocator
 
 
-class MaternalLocatorForm(ModelForm):
+class MaternalLocatorForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalLocator

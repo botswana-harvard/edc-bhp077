@@ -1,9 +1,9 @@
-from django import forms
+from base_maternal_model_form import BaseMaternalModelForm
 
 from ..models import MaternalUninfected
 
 
-class MaternalUninfectedForm(forms.ModelForm):
+class MaternalUninfectedForm(BaseMaternalModelForm):
 
     class Meta:
         model = MaternalUninfected
