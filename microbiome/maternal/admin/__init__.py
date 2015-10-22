@@ -19,3 +19,5 @@ from .maternal_off_study_admin import MaternalOffStudyAdmin
 from .rapid_test_result_admin import RapidTestResultAdmin
 from .maternal_post_fu_admin import (MaternalPostFuAdmin, MaternalPostFuDxAdmin,
                                      MaternalPostFuDxTAdmin, MaternalPostFuDxTInlineAdmin)
+from .maternal_arv_post_admin import (MaternalArvPostModInlineAdmin, MaternalArvPostModAdmin,
+                                      MaternalArvPostAdmin, MaternalArvPostAdhAdmin)
