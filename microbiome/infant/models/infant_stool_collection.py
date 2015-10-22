@@ -1,8 +1,8 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from edc.audit.audit_trail import AuditTrail
-from edc.choices.common import YES_NO, YES_NO_NA
+from edc_base.audit_trail import AuditTrail
+from edc_constants.choices import YES_NO, YES_NO_NA
 
 from ..infant_choices import STOOL_COLLECTION_TIME, STOOL_STORED
 
