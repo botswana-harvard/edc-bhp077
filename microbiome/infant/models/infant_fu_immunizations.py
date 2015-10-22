@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
+from edc_base.model.validators.date import date_not_future
+
 from edc_constants.choices import YES_NO
 
 from microbiome.choices import REASON_NOT_RECEIVED_VACCINATION, YES_NOT_SCHEDULED_NOT_RECEIVED
@@ -28,6 +30,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         "18-29 months, 24-29 months, 30-35 months, 36-41 months, 42-47 months, 48-53 months, 54-59 months. ",
     )
 
+    date_vitamin_a = models.DateField(
+        verbose_name='Date Vitamin A vaccination received.',
+        help_text="",
+        validators=[date_not_future, ],
+    )
+
     reason_not_received_vita_a = models.CharField(
         max_length=50,
         verbose_name="Reason Vitamin A vaccine not received",
@@ -42,6 +50,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
         verbose_name="BCG vaccine",
         help_text="Given at birth or within first few days after birth."
+    )
+
+    date_bcg = models.DateField(
+        verbose_name='Date BCG vaccination received.',
+        help_text="",
+        validators=[date_not_future, ],
     )
 
     reason_not_received_bcg = models.CharField(
@@ -59,6 +73,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         "but if late, can still receive up to four vaccinations.",
     )
 
+    date_hepatitis_b = models.DateField(
+        verbose_name='Date Hepatitis B vaccination received.',
+        help_text="",
+        validators=[date_not_future, ],
+    )
+
     reason_not_received_hepatitis_b = models.CharField(
         max_length=50,
         verbose_name="Reason Hepatitis B vaccine not received",
@@ -71,6 +91,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
         verbose_name="Diphtheria, Pertussis and Tetanus",
         help_text="Should receive at 2, 3 and 4 months of life. ",
+    )
+
+    date_dpt = models.DateField(
+        verbose_name='Date Diphtheria, Pertussis and Tetanus vaccination received.',
+        help_text="",
+        validators=[date_not_future, ],
     )
 
     reason_not_received_dpt = models.CharField(
@@ -87,6 +113,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         help_text="Should receive at 2, 3 and 4 months of life or later.",
     )
 
+    date_haemophilus_influenza_b = models.DateField(
+        verbose_name='Date Haemophilus Influenza B vaccination received.',
+        help_text="",
+        validators=[date_not_future, ],
+    )
+
     reason_not_received_haemophilus = models.CharField(
         max_length=50,
         verbose_name="Reason Haemophilus Influenza B vaccine not received",
@@ -99,6 +131,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name="Pneumonia Conjugated Vaccine",
         choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
         help_text="Should receive at 2, 3 and 4 months of life. ",
+    )
+
+    date_pcv = models.DateField(
+        verbose_name='Date Pneumonia Conjugated vaccination received.',
+        help_text="",
+        validators=[date_not_future, ],
     )
 
     reason_not_received_pcv = models.CharField(
@@ -115,6 +153,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         help_text="Should receive at 2, 3, 4 and 18 months of life.",
     )
 
+    date_polio = models.DateField(
+        verbose_name='Date Polio received.',
+        help_text="",
+        validators=[date_not_future, ],
+    )
+
     reason_not_received_polio = models.CharField(
         max_length=50,
         verbose_name="Reason Polio vaccine not received",
@@ -127,6 +171,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name="Rotavirus vaccine",
         choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
         help_text="Should receive at 2 and 3 months of life.",
+    )
+
+    date_rotavirus = models.DateField(
+        verbose_name='Date Rotavirus received.',
+        help_text="",
+        validators=[date_not_future, ],
     )
 
     reason_not_received_rotavirus = models.CharField(
@@ -143,6 +193,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         help_text="Should receive at 9 and 18 months",
     )
 
+    date_measles = models.DateField(
+        verbose_name='Date Measles received.',
+        help_text="",
+        validators=[date_not_future, ],
+    )
+
     reason_not_received_measles = models.CharField(
         max_length=50,
         verbose_name="Reason Measles vaccine not received",
@@ -155,6 +211,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name="Pentavalent vaccine",
         choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
         help_text="Should receive at 2, 3 and 4 months of life.",
+    )
+
+    date_pentavalent = models.DateField(
+        verbose_name='Date Pentavalent received.',
+        help_text="",
+        validators=[date_not_future, ],
     )
 
     reason_not_received_pentavalent = models.CharField(
@@ -175,8 +237,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         return "%s" % (self.infant_visit)
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_infantfumed_change', args=(self.id,))
+        return reverse('admin:microbiome_infantfuimmunization_change', args=(self.id,))
 
     class Meta:
         app_label = "infant"
-        verbose_name = "Infant FollowUp: Medication"
+        verbose_name = "Infant FollowUp: Immunizations"

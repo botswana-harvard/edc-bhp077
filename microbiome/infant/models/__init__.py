@@ -18,6 +18,7 @@ from .infant_off_study import InfantOffStudy
 from .infant_visit import InfantVisit
 from .infant_off_study_mixin import InfantOffStudyMixin
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_stool_collection import InfantStoolCollection
 from .infant_congenital_anomalies import (
     InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
     InfantCleftDisorderItems, InfantMouthUpGastrointestinalItems, InfantCardiovascularDisorderItems,
