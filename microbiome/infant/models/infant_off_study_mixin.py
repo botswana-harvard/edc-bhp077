@@ -6,3 +6,6 @@ class InfantOffStudyMixin(OffStudyMixin):
     def get_off_study_cls(self):
         from .infant_off_study import InfantOffStudy
         return InfantOffStudy
+
+    class Meta:
+        abstract = True
