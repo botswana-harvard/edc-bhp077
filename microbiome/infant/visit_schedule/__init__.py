@@ -1,1 +1,1 @@
-from .infant_birth_visit_schedul import InfantBirthVisitSchedule
+from .infant_birth_visit_schedule import InfantBirthVisitSchedule

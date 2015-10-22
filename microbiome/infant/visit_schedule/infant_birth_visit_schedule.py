@@ -3,7 +3,7 @@ from collections import OrderedDict
 from edc.subject.visit_schedule.classes import (VisitScheduleConfiguration, site_visit_schedules,
                                                 EntryTuple, MembershipFormTuple, ScheduleGroupTuple,
                                                 RequisitionPanelTuple)
-from edc.constants import REQUIRED, NOT_REQUIRED, ADDITIONAL, NOT_ADDITIONAL
+from edc_constants.constants import REQUIRED, NOT_REQUIRED, ADDITIONAL, NOT_ADDITIONAL
 
 from ..models import InfantVisit, InfantBirth
 
@@ -48,17 +48,17 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Stool storage', 'STORAGE', 'ST', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
-            EntryTuple(10L, u'mpepu_infant', u'infantbirthdata', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(20L, u'mpepu_infant', u'infantbirthexam', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(30L, u'mpepu_infant', u'infantbirtharv', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(40L, u'mpepu_infant', u'infantbirthfeed', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(10L, u'infant', u'infantbirthdata', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(20L, u'infant', u'infantbirthexam', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(30L, u'infant', u'infantbirtharv', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(40L, u'infant', u'infantbirthfeed', NOT_REQUIRED, ADDITIONAL),
             # following are additional forms
-            EntryTuple(100L, u'mpepu_infant', u'infantcongenitalanomalies', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(200L, u'mpepu_infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(201L, u'mpepu_infant', u'infantsurvival', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(210L, u'mpepu_infant', u'infantverbalautopsy', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(220L, u'mpepu_infant', u'infantprerandoloss', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(230L, u'mpepu_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(100L, u'infant', u'infantcongenitalanomalies', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(200L, u'infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(201L, u'infant', u'infantsurvival', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(210L, u'infant', u'infantverbalautopsy', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(220L, u'infant', u'infantprerandoloss', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(230L, u'infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL),
         )}
     visit_definitions['2010'] = {
         'title': 'Infant 1 Month Visit',
@@ -90,11 +90,11 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(120L, u'infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
 
             # following are additional forms
-            EntryTuple(200L, u'mpepu_infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(201L, u'mpepu_infant', u'infantsurvival', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(210L, u'mpepu_infant', u'infantverbalautopsy', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(230L, u'mpepu_infant', u'infantoffdrug', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(240L, u'mpepu_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(200L, u'infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(201L, u'infant', u'infantsurvival', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(210L, u'infant', u'infantverbalautopsy', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(230L, u'infant', u'infantoffdrug', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(240L, u'infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL),
         )}
 
 site_visit_schedules.register(InfantBirthVisitSchedule)
