@@ -17,3 +17,5 @@ from .maternal_arv_preg_admin import MaternalArvPregAdmin
 from .maternal_death_admin import MaternalDeathAdmin
 from .maternal_off_study_admin import MaternalOffStudyAdmin
 from .rapid_test_result_admin import RapidTestResultAdmin
+from .maternal_post_fu_admin import (MaternalPostFuAdmin, MaternalPostFuDxAdmin,
+                                     MaternalPostFuDxTAdmin, MaternalPostFuDxTInlineAdmin)
