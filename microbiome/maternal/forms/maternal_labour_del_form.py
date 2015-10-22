@@ -1,5 +1,5 @@
 from base_maternal_model_form import BaseMaternalModelForm
-from maternal.models import (MaternalLabourDel, MaternalLabDelMed,
+from ..models import (MaternalLabourDel, MaternalLabDelMed,
                                           MaternalLabDelClinic, MaternalLabDelDx,
                                           MaternalLabDelDxT)
 
