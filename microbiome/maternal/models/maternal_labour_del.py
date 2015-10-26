@@ -2,9 +2,10 @@ from django.db import models
 
 from edc_base.model.fields import OtherCharField
 from edc_base.model.validators import datetime_not_future
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from ..maternal_choices import DELIVERY_HEALTH_FACILITY
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
+
+from ..maternal_choices import DELIVERY_HEALTH_FACILITY
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalLabourDel(MaternalScheduledVisitModel):
