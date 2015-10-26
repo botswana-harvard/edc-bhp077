@@ -20,15 +20,14 @@ NEXT_CHILD_PLAN = (
     ('DWTA', 'Don\'t want to answer'))
 
 RECRUIT_SOURCE = (
-    ('Poster/pamphlet at ANC', 'Recruitment poster/pamphlet at ANC'),
     ('ANC clinic staff', 'ANC clinic staff'),
     ('Staff at site of delivery', 'Staff at site of delivery'),
-    ('BHP recruiter', 'BHP recruiter'),
+    ('BHP recruiter/clinician', 'BHP recruiter/clinician'),
     ('OTHER', 'Other, specify'),
 )
 
 RECRUIT_CLINIC = (
-    ('PHH', 'Gaborone(PMH)'),
+    ('PMH', 'Gaborone(PMH)'),
     ('SLH', 'Molepolole(SLH)'),
     ('ATHLONE', 'Lobatse(Athlone)'),
     ('G.West Clinic', 'G.West Clinic'),
