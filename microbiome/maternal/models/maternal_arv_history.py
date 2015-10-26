@@ -14,20 +14,21 @@ class MaternalArvHistory(MaternalScheduledVisitModel):
     """ARV history for infected mothers only"""
 
     haart_start_date = models.DateField(
-        verbose_name="Date of HAART first started",
+        verbose_name="Date of triple antiretrovirals first started",
         help_text="",
     )
     is_date_estimated = IsDateEstimatedField(
-        verbose_name=("Is the subject's date of HAART estimated?"),
+        verbose_name=("Is the subject's date of triple antiretrovirals estimated?"),
     )
     preg_on_haart = models.CharField(
         max_length=25,
         choices=YES_NO,
-        verbose_name="Was she still on HAART at the time she became pregnant for this pregnancy? ",
+        verbose_name=("Was she still on triple antiretrovirals at the time she became pregnant"
+                      " for this pregnancy? "),
         help_text="",
     )
     haart_changes = models.IntegerField(
-        verbose_name="How many times did you change your HAART medicines?",
+        verbose_name="How many times did you change your triple antiretrovirals medicines?",
         help_text="",
     )
     prior_preg = models.CharField(
@@ -50,7 +51,7 @@ class MaternalArvHistory(MaternalScheduledVisitModel):
     )
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_maternalarvhistory_change', args=(self.id,))
+        return reverse('admin:maternal_maternalarvhistory_change', args=(self.id,))
 
     class Meta:
         app_label = 'maternal'
