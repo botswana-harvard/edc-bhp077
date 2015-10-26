@@ -29,7 +29,7 @@ class MaternalInfected(BaseMother):
         help_text="",)
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_maternalinfected_change', args=(self.id,))
+        return reverse('admin:maternal_maternalinfected_change', args=(self.id,))
 
     class Meta:
         app_label = 'maternal'

@@ -58,8 +58,8 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
                 EntryTuple(30L, u'maternal', u'maternalmedicalhistory', REQUIRED, NOT_ADDITIONAL),
                 EntryTuple(40L, u'maternal', u'maternalobstericalhistory', REQUIRED, NOT_ADDITIONAL),
                 EntryTuple(50L, u'maternal', u'maternalclinicalhistory', REQUIRED, NOT_ADDITIONAL),
-                EntryTuple(60L, u'maternal', u'maternalarvhistory', REQUIRED, NOT_ADDITIONAL),
-                EntryTuple(70L, u'maternal', u'maternalarvpreg', REQUIRED, NOT_ADDITIONAL),
+                EntryTuple(60L, u'maternal', u'maternalarvhistory', NOT_REQUIRED, ADDITIONAL),
+                EntryTuple(70L, u'maternal', u'maternalarvpreg', NOT_REQUIRED, ADDITIONAL),
                 EntryTuple(200L, u'maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
                 EntryTuple(210L, u'maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}}
     )
