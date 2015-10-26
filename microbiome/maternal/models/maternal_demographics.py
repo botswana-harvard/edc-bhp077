@@ -146,3 +146,4 @@ class MaternalDemographics(MaternalScheduledVisitModel):
     class Meta:
         app_label = 'maternal'
         verbose_name = "Maternal Demographics"
+        verbose_name_plural = "Maternal Demographics"
