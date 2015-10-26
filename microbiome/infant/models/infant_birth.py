@@ -1,15 +1,19 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+from edc.subject.appointment_helper.models import BaseAppointmentMixin
+from edc.subject.registration.models import RegisteredSubject
+from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators.date import date_not_future
+from edc_consent.models import RequiresConsentMixin
 from edc_constants.choices import GENDER_UNDETERMINED
 
 from microbiome.maternal.models import MaternalLabourDel
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
+class InfantBirth(BaseUuidModel, BaseAppointmentMixin):
 
-class InfantBirth(InfantScheduledVisitModel):
+    registered_subject = models.OneToOneField(RegisteredSubject, editable=False, null=True)
 
     maternal_labour_del = models.ForeignKey(
         MaternalLabourDel,
@@ -48,3 +52,4 @@ class InfantBirth(InfantScheduledVisitModel):
     class Meta:
         app_label = "infant"
         verbose_name = "Infant Birth Record"
+        verbose_name_plural = "Infant Birth Record"
