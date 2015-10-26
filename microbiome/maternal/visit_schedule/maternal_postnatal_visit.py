@@ -3,7 +3,7 @@ from collections import OrderedDict
 from edc.subject.visit_schedule.classes import (VisitScheduleConfiguration, site_visit_schedules,
                                                 EntryTuple, MembershipFormTuple,
                                                 ScheduleGroupTuple, RequisitionPanelTuple)
-from edc.constants import REQUIRED, NOT_REQUIRED, ADDITIONAL, NOT_ADDITIONAL
+from edc_constants.constants import REQUIRED, NOT_REQUIRED, ADDITIONAL, NOT_ADDITIONAL
 
 from ..models import MaternalVisit, PostnatalEnrollment
 
@@ -41,10 +41,11 @@ class MaternalPostnatalVisitSchedule(VisitScheduleConfiguration):
         'entries': (
             EntryTuple(10L, u'maternal', u'maternalpostfu', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(20L, u'maternal', u'maternalpostfudx', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(30L, u'maternal', u'sexualreproductivehealth', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(50L, u'maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(60L, u'maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(30L, u'maternal', u'sexualreproductivehealth', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(40L, u'maternal', u'srhservicesutilization', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(50L, u'maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(60L, u'maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(70L, u'maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
@@ -67,10 +68,11 @@ class MaternalPostnatalVisitSchedule(VisitScheduleConfiguration):
         'entries': (
             EntryTuple(10L, u'maternal', u'maternalpostfu', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(20L, u'maternal', u'maternalpostfudx', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(30L, u'maternal', u'sexualreproductivehealth', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(50L, u'maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(60L, u'maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(30L, u'maternal', u'sexualreproductivehealth', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(40L, u'maternal', u'srhservicesutilization', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(50L, u'maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(60L, u'maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(70L, u'maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
@@ -93,10 +95,11 @@ class MaternalPostnatalVisitSchedule(VisitScheduleConfiguration):
         'entries': (
             EntryTuple(10L, u'maternal', u'maternalpostfu', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(20L, u'maternal', u'maternalpostfudx', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(30L, u'maternal', u'sexualreproductivehealth', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(50L, u'maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(60L, u'maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(30L, u'maternal', u'sexualreproductivehealth', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(40L, u'maternal', u'srhservicesutilization', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(50L, u'maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(60L, u'maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(70L, u'maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
@@ -119,10 +122,11 @@ class MaternalPostnatalVisitSchedule(VisitScheduleConfiguration):
         'entries': (
             EntryTuple(10L, u'maternal', u'maternalpostfu', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(20L, u'maternal', u'maternalpostfudx', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(30L, u'maternal', u'sexualreproductivehealth', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(50L, u'maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(60L, u'maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(30L, u'maternal', u'sexualreproductivehealth', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(40L, u'maternal', u'srhservicesutilization', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(50L, u'maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(60L, u'maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(70L, u'maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
@@ -145,10 +149,11 @@ class MaternalPostnatalVisitSchedule(VisitScheduleConfiguration):
         'entries': (
             EntryTuple(10L, u'maternal', u'maternalpostfu', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(20L, u'maternal', u'maternalpostfudx', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(30L, u'maternal', u'sexualreproductivehealth', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(50L, u'maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(60L, u'maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(30L, u'maternal', u'sexualreproductivehealth', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(40L, u'maternal', u'srhservicesutilization', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(50L, u'maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(60L, u'maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(70L, u'maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 

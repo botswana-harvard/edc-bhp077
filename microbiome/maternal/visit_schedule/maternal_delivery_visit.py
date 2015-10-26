@@ -46,7 +46,7 @@ class MaternalDeliveryVisitSchedule(VisitScheduleConfiguration):
                 RequisitionPanelTuple(50L, u'microbiome_lab', u'maternalrequisition',
                                       'Skin Flora (Storage)', 'STORAGE', 'SF', REQUIRED, NOT_ADDITIONAL),
                 RequisitionPanelTuple(60L, u'microbiome_lab', u'maternalrequisition',
-                                      'Vaginal Swab (multiplex PCR)', 'TEST', 'VSM', REQUIRED, NOT_ADDITIONAL)),
+                                      'Vaginal Swab (multiplex PCR)', 'TEST', 'VM', REQUIRED, NOT_ADDITIONAL)),
             'entries': (
                 EntryTuple(10L, u'maternal', u'maternallabourdel', REQUIRED, NOT_ADDITIONAL),
                 EntryTuple(20L, u'maternal', u'maternallabdelmed', REQUIRED, NOT_ADDITIONAL),
