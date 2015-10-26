@@ -9,7 +9,6 @@ class MaternalDeathAdmin(RegisteredSubjectModelAdmin):
 
     form = MaternalDeathForm
     fields = (
-        "registered_subject",
         "maternal_visit",
         "death_date",
         "death_cause_info",

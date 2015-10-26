@@ -2,8 +2,10 @@ from django.db import models
 
 from edc_base.model.fields import OtherCharField
 from edc_base.model.validators import datetime_not_future
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
+
+from ..maternal_choices import DELIVERY_HEALTH_FACILITY
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalLabourDel(MaternalScheduledVisitModel):
@@ -29,8 +31,9 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
 
     del_hosp = models.CharField(
         verbose_name="Where did the participant deliver? ",
-        max_length=25,
-        help_text="If 'Other health facility' or 'Other', specify below",)
+        max_length=65,
+        choices=DELIVERY_HEALTH_FACILITY,
+        help_text="If 'OTHER', specify below",)
     del_hosp_other = OtherCharField()
 
     has_uterine_tender = models.CharField(

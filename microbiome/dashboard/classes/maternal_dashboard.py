@@ -21,7 +21,7 @@ class MaternalDashboard(RegisteredSubjectDashboard):
         RegisteredSubjectDashboard.urlpattern_options,
         dashboard_model=RegisteredSubjectDashboard.urlpattern_options['dashboard_model'] + '|maternal_eligibility',
         dashboard_type='maternal',
-        appointment_code='A1000M|P1000M|2000M', )
+        appointment_code='1000M|2000M|2010M|2030M|2060M|2090M|2120M', )
 
     def __init__(self, *args, **kwargs):
         super(MaternalDashboard, self).__init__(*args, **kwargs)
@@ -30,8 +30,7 @@ class MaternalDashboard(RegisteredSubjectDashboard):
         self._dashboard_type_list = ['maternal']
         self.extra_url_context = ""
         kwargs.update({'dashboard_models': {'maternal_eligibility': MaternalEligibility},
-                       'membership_form_category': [#'maternal_consent', 'sample_consent',
-                                                    'antenatal', 'postnatal']})
+                       'membership_form_category': ['postnatal', 'childbirth', 'after_birth']})
         self._locator_model = None
         self._requisition_model = None
 

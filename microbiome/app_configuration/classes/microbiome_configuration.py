@@ -77,42 +77,42 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
 
     consent_catalogue_list = [consent_catalogue_setup]
 
-    lab_clinic_api_setup = {
-        'panel': [],
-        'aliquot_type': []}
-
-    lab_setup = {'microbiome': {
-        'panel': [],
-        'aliquot_type': [],
-        'profile': [],
-        'profile_item': []}}
-
 #     lab_clinic_api_setup = {
-#         'panel': [PanelTuple('Viral Load', 'TEST', 'WB'),
-#                   PanelTuple('Breast Milk (Storage)', 'STORAGE', 'BM'),
-#                   PanelTuple('Vaginal swab (Storage)', 'STORAGE', 'VS'),
-#                   PanelTuple('Rectal swab (Storage)', 'STORAGE', 'RS'),
-#                   PanelTuple('Skin Flora (Storage)', 'STORAGE', 'SF'),
-#                   PanelTuple('Vaginal Swab (multiplex PCR)', 'TEST', 'VSM')],
-#         'aliquot_type': [AliquotTypeTuple('Whole Blood', 'WB', '02'),
-#                          AliquotTypeTuple('Plasma', 'PL', '32'),
-#                          AliquotTypeTuple('Buffy Coat', 'BC', '16')]}
-#
-#     lab_setup = {
-#         'microbiome': {
-#             'panel': [PanelTuple('Viral Load', 'TEST', 'WB'),
-#                       PanelTuple('Breast Milk (Storage)', 'STORAGE', 'BM'),
-#                       PanelTuple('Vaginal swab (Storage)', 'STORAGE', 'VS'),
-#                       PanelTuple('Rectal swab (Storage)', 'STORAGE', 'RS'),
-#                       PanelTuple('Skin Flora (Storage)', 'STORAGE', 'SF'),
-#                       PanelTuple('Vaginal Swab (multiplex PCR)', 'TEST', 'VSM')],
-#             'aliquot_type': [AliquotTypeTuple('Whole Blood', 'WB', '02'),
-#                              AliquotTypeTuple('Plasma', 'PL', '32'),
-#                              AliquotTypeTuple('Buffy Coat', 'BC', '16')],
-#             'profile': [ProfileTuple('Viral Load', 'WB')],
-#             'profile_item': [ProfileItemTuple('Viral Load', 'PL', 1.0, 2),
-#                              ProfileItemTuple('Viral Load', 'BC', 0.5, 3)]}}
-#
+#         'panel': [],
+#         'aliquot_type': []}
+# 
+#     lab_setup = {'microbiome': {
+#         'panel': [],
+#         'aliquot_type': [],
+#         'profile': [],
+#         'profile_item': []}}
+
+    lab_clinic_api_setup = {
+        'panel': [PanelTuple('Viral Load', 'TEST', 'WB'),
+                  PanelTuple('Breast Milk (Storage)', 'STORAGE', 'BM'),
+                  PanelTuple('Vaginal swab (Storage)', 'STORAGE', 'VS'),
+                  PanelTuple('Rectal swab (Storage)', 'STORAGE', 'RS'),
+                  PanelTuple('Skin Flora (Storage)', 'STORAGE', 'SF'),
+                  PanelTuple('Vaginal Swab (multiplex PCR)', 'TEST', 'VSM')],
+        'aliquot_type': [AliquotTypeTuple('Whole Blood', 'WB', '02'),
+                         AliquotTypeTuple('Plasma', 'PL', '32'),
+                         AliquotTypeTuple('Buffy Coat', 'BC', '16')]}
+
+    lab_setup = {
+        'microbiome': {
+            'panel': [PanelTuple('Viral Load', 'TEST', 'WB'),
+                      PanelTuple('Breast Milk (Storage)', 'STORAGE', 'BM'),
+                      PanelTuple('Vaginal swab (Storage)', 'STORAGE', 'VS'),
+                      PanelTuple('Rectal swab (Storage)', 'STORAGE', 'RS'),
+                      PanelTuple('Skin Flora (Storage)', 'STORAGE', 'SF'),
+                      PanelTuple('Vaginal Swab (multiplex PCR)', 'TEST', 'VSM')],
+            'aliquot_type': [AliquotTypeTuple('Whole Blood', 'WB', '02'),
+                             AliquotTypeTuple('Plasma', 'PL', '32'),
+                             AliquotTypeTuple('Buffy Coat', 'BC', '16')],
+            'profile': [ProfileTuple('Viral Load', 'WB')],
+            'profile_item': [ProfileItemTuple('Viral Load', 'PL', 1.0, 2),
+                             ProfileItemTuple('Viral Load', 'BC', 0.5, 3)]}}
+
     labeling_setup = {
         'label_printer': [LabelPrinterTuple
                           ('Zebra_Technologies_ZTC_GK420t', 'hostname', 'localhost', False), ],
