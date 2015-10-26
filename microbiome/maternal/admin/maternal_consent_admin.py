@@ -1,10 +1,11 @@
 from django.contrib import admin
+from django.core.urlresolvers import reverse
+from django.http.response import HttpResponseRedirect
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from microbiome.models import MaternalConsent
-from microbiome.forms import MaternalConsentForm
-from django.http.response import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+
+from microbiome.maternal.forms import MaternalConsentForm
+from microbiome.maternal.models import MaternalConsent
 
 
 class MaternalConsentAdmin(BaseModelAdmin):

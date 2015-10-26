@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from microbiome.models import SampleConsent
-from microbiome.forms import SampleConsentForm
+from microbiome.maternal.models import SampleConsent
+from microbiome.maternal.forms import SampleConsentForm
 
 
 class SampleConsentAdmin(BaseModelAdmin):
