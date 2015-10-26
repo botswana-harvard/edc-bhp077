@@ -34,6 +34,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name='Date Vitamin A vaccination received.',
         help_text="",
         validators=[date_not_future, ],
+        blank=True,
+        null=True,
     )
 
     reason_not_received_vita_a = models.CharField(
@@ -56,6 +58,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name='Date BCG vaccination received.',
         help_text="",
         validators=[date_not_future, ],
+        blank=True,
+        null=True,
     )
 
     reason_not_received_bcg = models.CharField(
@@ -77,6 +81,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name='Date Hepatitis B vaccination received.',
         help_text="",
         validators=[date_not_future, ],
+        blank=True,
+        null=True,
     )
 
     reason_not_received_hepatitis_b = models.CharField(
@@ -97,6 +103,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name='Date Diphtheria, Pertussis and Tetanus vaccination received.',
         help_text="",
         validators=[date_not_future, ],
+        blank=True,
+        null=True,
     )
 
     reason_not_received_dpt = models.CharField(
@@ -117,6 +125,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name='Date Haemophilus Influenza B vaccination received.',
         help_text="",
         validators=[date_not_future, ],
+        blank=True,
+        null=True,
     )
 
     reason_not_received_haemophilus = models.CharField(
@@ -137,6 +147,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name='Date Pneumonia Conjugated vaccination received.',
         help_text="",
         validators=[date_not_future, ],
+        blank=True,
+        null=True,
     )
 
     reason_not_received_pcv = models.CharField(
@@ -157,6 +169,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name='Date Polio received.',
         help_text="",
         validators=[date_not_future, ],
+        blank=True,
+        null=True,
     )
 
     reason_not_received_polio = models.CharField(
@@ -177,6 +191,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name='Date Rotavirus received.',
         help_text="",
         validators=[date_not_future, ],
+        blank=True,
+        null=True,
     )
 
     reason_not_received_rotavirus = models.CharField(
@@ -197,6 +213,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name='Date Measles received.',
         help_text="",
         validators=[date_not_future, ],
+        blank=True,
+        null=True,
     )
 
     reason_not_received_measles = models.CharField(
@@ -217,6 +235,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name='Date Pentavalent received.',
         help_text="",
         validators=[date_not_future, ],
+        blank=True,
+        null=True,
     )
 
     reason_not_received_pentavalent = models.CharField(

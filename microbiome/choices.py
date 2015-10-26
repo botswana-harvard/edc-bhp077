@@ -363,6 +363,7 @@ MEDICATIONS = (
     ('Traditional medicines', 'Traditional medicines'),
     ('Vancomycin', 'Vancomycin'),
     ('Vitamins(iron,B12,Folate)', 'Vitamins(iron,B12,Folate)'),
+    ('Traditional', 'Traditional Medications'),
 )
 
 MOUTH_UP_GASTROINT_DISORDER = (

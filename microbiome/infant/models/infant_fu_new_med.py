@@ -35,6 +35,12 @@ class InfantFuNewMed(InfantScheduledVisitModel):
         default=timezone.now().date()
     )
 
+    date_stoped = models.DateField(
+        verbose_name="Date medication was stopped",
+        blank=True,
+        null=True,
+    )
+
     def __str__(self):
         return "%s" % (self.infant_visit)
 
