@@ -264,3 +264,26 @@ ARV_MODIFICATION_REASON = (
     ('Death', 'Death'),
     ('OTHER', 'Other'),
 )
+
+REASON_UNSEEN_AT_CLINIC = (
+    ('I have not yet sought the clinic', 'I have not yet sought the clinic'),
+    ('could not get booking at clinic', 'I went to the clinic but could not get a booking'),
+    ('oberving confinement', 'I am observing confinement'),
+    ('not sexually active rigt now', 'I am not sexually active right now'),
+    ('I dont need contraception, breastfeeding', 'I do not need contraception because I am breastfeeding'),
+    ('clinic is far', 'The clinic is too far from my home'),
+    ('partner does not want to me attend', 'My partner does not want me to attend'),
+    ('mother does not want to me attend', 'My mother does not want me to attend'),
+    ('OTHER', 'Other'),
+)
+
+REASON_CONTRACEPTIVE_NOT_INITIATED = (
+    ('no option i preferred', 'There was not an option I preferred'),
+    ('option of preference out of stock', 'The option I preferred was out of stock (state option if this answer is indicated)'),
+    ('i am sexually active', 'I am not currently sexually active'),
+    ('i felt disrespected', 'I felt disrespected by the SRH clinic'),
+    ('i am breastfeeding and was told i dont need contraceptives', 'I was told that because I am breastfeeding, I do not need a contraceptive metod'),
+    ('partner does not want me to use contraceptive', 'My current partner does not want me to use a contraceptive method'),
+    ('was not attended by a clinician', 'I was not attended by a clinician when I went to the SRH clinic'),
+    ('OTHER', 'Other'),
+)
