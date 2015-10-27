@@ -2,7 +2,7 @@ import factory
 from django.utils import timezone
 from edc_constants.constants import POS
 
-from ...models import InfantEligibility
+from ...infant.models import InfantEligibility
 
 from .maternal_eligibility_factory import MaternalEligibilityFactory
 

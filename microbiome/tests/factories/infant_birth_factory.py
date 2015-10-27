@@ -2,7 +2,7 @@ import factory
 
 from django.utils import timezone
 
-from microbiome.models import InfantBirth
+from ...infant.models import InfantBirth
 
 from .maternal_labour_del_factory import MaternalLabourDelFactory
 

@@ -2,7 +2,7 @@ import factory
 
 from django.utils import timezone
 
-from ...models import InfantBirthArv
+from ...infant.models import InfantBirthArv
 from .infant_visit_factory import InfantVisitFactory
 from .infant_birth_factory import InfantBirthFactory
 
