@@ -2,7 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from lis.specimen.lab_aliquot.models import BaseAliquot
-# from edc_base.model.models import BaseUuidModel
+from edc_base.model.models import BaseUuidModel
 
 from lis.specimen.lab_aliquot.managers import AliquotManager
 
@@ -11,7 +11,7 @@ from .aliquot_type import AliquotType
 from .receive import Receive
 
 
-class Aliquot(BaseAliquot):
+class Aliquot(BaseAliquot, BaseUuidModel):
 
     receive = models.ForeignKey(
         Receive,
