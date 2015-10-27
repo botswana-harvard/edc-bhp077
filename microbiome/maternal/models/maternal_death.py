@@ -3,9 +3,10 @@ from datetime import datetime, time
 
 from django.core.urlresolvers import reverse
 
-from edc_base.audit_trail import AuditTrail
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.adverse_event.models import BaseDeathReport
+from edc.subject.registration.models import RegisteredSubject
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
@@ -15,6 +16,8 @@ from .maternal_visit import MaternalVisit
 class MaternalDeath (MaternalOffStudyMixin, BaseDeathReport, BaseUuidModel):
 
     maternal_visit = models.OneToOneField(MaternalVisit)
+
+    registered_subject = models.OneToOneField(RegisteredSubject)
 
     history = AuditTrail()
 

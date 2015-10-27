@@ -1,3 +1,4 @@
+from .registered_subject_model_admin import RegisteredSubjectModelAdmin
 from .maternal_eligibility_admin import MaternalEligibilityAdmin
 from .antenatal_enrollment_admin import AntenatalEnrollmentAdmin
 from .postnatal_enrollment_admin import PostnatalEnrollmentAdmin

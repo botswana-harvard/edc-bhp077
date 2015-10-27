@@ -1,14 +1,15 @@
 from django.contrib import admin
 
 from .registered_subject_model_admin import RegisteredSubjectModelAdmin
-from ..models import MaternalDeath, MaternalVisit
-from ..forms import MaternalDeathForm
+from microbiome.maternal.forms import MaternalDeathForm
+from microbiome.maternal.models import MaternalDeath, MaternalVisit
 
 
 class MaternalDeathAdmin(RegisteredSubjectModelAdmin):
 
     form = MaternalDeathForm
     fields = (
+        "registered_subject",
         "maternal_visit",
         "death_date",
         "death_cause_info",

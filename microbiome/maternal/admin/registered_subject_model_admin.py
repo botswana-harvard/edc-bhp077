@@ -5,4 +5,4 @@ class RegisteredSubjectModelAdmin (BaseRegisteredSubjectModelAdmin):
 
     """ModelAdmin subclass for models with a ForeignKey to 'registered_subject'"""
 
-    dashboard_type = 'subject'
+    dashboard_type = 'maternal'
