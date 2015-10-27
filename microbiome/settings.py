@@ -159,6 +159,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 ROOT_URLCONF = 'microbiome.urls'
 
 TEMPLATE_DIRS = (
+    os.path.join(PROJECT_DIR, 'templates'),
     os.path.join(SOURCE_ROOT.child('edc-base').child('edc_base'), 'templates'))
 
 TEMPLATE_LOADERS = (
