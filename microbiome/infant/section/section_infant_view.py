@@ -1,7 +1,7 @@
-from edc.dashboard.section.classes import BaseSectionForDashboardView, site_sections
+from edc.dashboard.section.classes import BaseSectionView, site_sections
 
 
-class SectionInfantView(BaseSectionForDashboardView):
+class SectionInfantView(BaseSectionView):
     section_name = 'infant'
     section_display_name = 'Infants'
     section_display_index = 30
