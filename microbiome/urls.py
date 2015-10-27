@@ -1,20 +1,4 @@
-"""xx URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.8/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Add an import:  from blog import urls as blog_urls
-    2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
-"""
-
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls import include, url, patterns
 from django.conf.urls import patterns, include, url
@@ -48,8 +32,9 @@ site_rule_groups.autodiscover()
 site_lab_tracker.autodiscover()
 data_manager.prepare()
 site_sections.autodiscover()
+site_sections.update_section_lists()
 admin.autodiscover()
-admin.site.site_header = 'Microbiome Administration'
+# admin.site.site_header = 'Microbiome Administration'
 
 for model in get_models():
     try:
@@ -57,7 +42,7 @@ for model in get_models():
     except:
         pass
 
-APP_NAME = 'microbiome'
+APP_NAME = settings.APP_NAME
 
 urlpatterns = patterns(
     '',
@@ -81,7 +66,7 @@ urlpatterns += patterns(
 urlpatterns += patterns(
     '',
     url(r'^/dashboard/'.format(app_name=APP_NAME),
-        include('microbiome.dashboard.urls'.format(app_name=APP_NAME))),
+        include('{app_name}.dashboard.urls'.format(app_name=APP_NAME))),
 )
 
 urlpatterns += patterns(
@@ -101,16 +86,14 @@ urlpatterns += patterns(
 )
 urlpatterns += patterns(
     '',
-    url(r'^microbiome/section/'.format(app_name=APP_NAME), include('edc.dashboard.section.urls'), name='section'),
+    url(r'^{app_name}/section/'.format(app_name=APP_NAME), include('edc.dashboard.section.urls'), name='section'),
 )
 
 urlpatterns += patterns(
     '',
-    url(r'^microbiome/$'.format(app_name=APP_NAME),
-        RedirectView.as_view(url='/section/'.format(app_name=APP_NAME))),
-    url(r'', RedirectView.as_view(url='/section/'.format(app_name=APP_NAME))),
+    url(r'^{app_name}/$'.format(app_name=APP_NAME),
+        RedirectView.as_view(url='/{app_name}/section/'.format(app_name=APP_NAME))),
+    url(r'', RedirectView.as_view(url='/{app_name}/section/'.format(app_name=APP_NAME))),
 )
 
-urlpatterns = patterns(
-    '',
-    url(r'^admin/', include(admin.site.urls)))
+urlpatterns += staticfiles_urlpatterns()
