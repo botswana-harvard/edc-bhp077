@@ -1,0 +1,14 @@
+{% extends "section_administration.html"%}
+{% load admin_urls %}
+{% load url from future %}
+
+{% block admin_sections %}
+    <ul><li><A href="/admin/">All sections</A></ul>
+    <H5>Maternal</H5>
+    <ul>
+    <li><A href="{% url 'admin:maternal_maternaleligibility_changelist' %}">Maternal Eligibility</A>
+    <li><A href="{% url 'admin:maternal_maternalconsent_changelist' %}">Maternal Consents</A>
+    <li><A href="{% url 'admin:maternal_maternaleligibilityloss_changelist' %}">Maternal Eligibility Loss</A>
+    </ul>
+
+{% endblock admin_sections %}
