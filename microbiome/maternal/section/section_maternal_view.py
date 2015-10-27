@@ -1,7 +1,7 @@
 from edc.dashboard.section.classes import BaseSectionView, site_sections
 
-from .maternal_search_by_word import MaternalSearchByWord
-from .models import MaternalEligibility
+from ..search import MaternalSearchByWord
+from ..models import MaternalEligibility
 
 
 class SectionMaternalView(BaseSectionView):
