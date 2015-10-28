@@ -22,7 +22,7 @@
                 <tr class="{% cycle 'row2' 'row1' %}">
 
                 {% if maternal_eligibility.is_eligible %}
-                    <td><A href="{% url 'admin:microbiome_maternal_maternalconsent_add' %}&next=section_url&section_name=maternal">add maternal consent</A></td>            
+                    <td><A href="{% url 'admin:microbiome_maternal_maternalconsent_add' %}">add maternal consent</A></td>            
                 {% else %}
                     <td>{{ maternal_eligibility.ineligibility }}</td>
                 {% endif %}
