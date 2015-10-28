@@ -4,7 +4,9 @@ from edc.core.bhp_common.utils import convert_from_camel
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 
-from apps.microbiome_maternal.models import MaternalVisit, MaternalEligibility, MaternalLocator
+from apps.microbiome_maternal.models import (MaternalVisit, MaternalEligibility,
+                                             MaternalLocator, MaternalConsent)
+from bhp077.apps.microbiome_lab.models.maternal_requisition import MaternalRequisition
 
 
 class MaternalDashboard(RegisteredSubjectDashboard):
@@ -23,19 +25,19 @@ class MaternalDashboard(RegisteredSubjectDashboard):
         dashboard_type='maternal',
         appointment_code='1000M|2000M|2010M|2030M|2060M|2090M|2120M', )
 
-    def __init__(self, *args, **kwargs):
-        super(MaternalDashboard, self).__init__(*args, **kwargs)
-        self._visit_model = MaternalVisit
-        self._registered_subject = None
-        self._dashboard_type_list = ['maternal']
-        self.extra_url_context = ""
-        kwargs.update({'dashboard_models': {'maternal_eligibility': MaternalEligibility},
-                       'membership_form_category': ['postnatal', 'childbirth', 'after_birth']})
+    def __init__(self, **kwargs):
+        super(MaternalDashboard, self).__init__(**kwargs)
+        self.subject_dashboard_url = 'subject_dashboard_url'
+        self.visit_model = MaternalVisit
+        self.dashboard_type_list = ['maternal']
+        self.membership_form_category = ['postnatal', 'childbirth', 'after_birth']
+        self.dashboard_models['maternal_eligibility'] = MaternalEligibility
+        self.dashboard_models['maternal_consent'] = MaternalConsent
+        self.requisition_model = MaternalRequisition
         self._locator_model = None
-        self._requisition_model = None
 
-    def get_context_data(self):
-        super(MaternalDashboard, self).add_to_context()
+    def get_context_data(self, **kwargs):
+        super(MaternalDashboard, self).get_context_data(**kwargs)
         self.context.update(
             home='microbiome',
             search_name='maternal',

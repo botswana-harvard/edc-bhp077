@@ -42,9 +42,9 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
     }
 
     study_variables_setup = {
-        'protocol_number': 'BHP071',
-        'protocol_code': '071',
-        'protocol_title': 'BHP071',
+        'protocol_number': 'BHP077',
+        'protocol_code': '077',
+        'protocol_title': 'BHP077',
         'research_title': 'Gut Microbiome Evolution',
         'study_start_datetime': study_start_datetime,
         'minimum_age_of_consent': 18,
@@ -80,18 +80,7 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
          'end_datetime': study_end_datetime,
          'version': '1'}]
 
-    consent_catalogue_setup = {
-        'name': 'microbiome',
-        'content_type_map': 'postnatalenrollment',
-        'consent_type': 'study',
-        'version': 1,
-        'start_datetime': study_start_datetime,
-        'end_datetime': study_end_datetime,
-        'add_for_app': 'maternal'}
-
     study_site_setup = [{'site_name': 'Gaborone', 'site_code': '001'}]
-
-    consent_catalogue_list = [consent_catalogue_setup]
 
     lab_clinic_api_setup = {
         'panel': [PanelTuple('Viral Load', 'TEST', 'WB'),
