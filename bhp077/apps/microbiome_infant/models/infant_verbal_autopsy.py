@@ -6,7 +6,7 @@ from edc.base.model.fields.custom.custom_fields import OtherCharField
 from edc.choices import YES_NO, SEVERITY_LEVEL
 from edc.base.model.validators import datetime_not_before_study_start, datetime_not_future
 
-from apps.mpepu_list.models import AutopsyInfoSource
+from bhp077.apps.microbiome_list.models import AutopsyInfoSource
 
 from ..choices import AUTOPSY_SIGNS
 from .infant_base_uuid_model import InfantBaseUuidModel
@@ -30,26 +30,27 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
             ],
         )
 
-    source = models.ManyToManyField(AutopsyInfoSource,
+    source = models.ManyToManyField(
+        AutopsyInfoSource,
         verbose_name='Source of verbal autopsy',
-        max_length=50,
-        )
+        max_length=50)
 
     first_sign = models.TextField(
-        verbose_name="Starting with the last illness preceding (participant\'s) death, describe the first noticeable sign or symptom of illness, continuing until the time of death.",
-        max_length=1000,
-        )
+        verbose_name=("Starting with the last illness preceding (participant\'s) death,"
+                      " describe the first noticeable sign or symptom of illness, continuing"
+                      " until the time of death."),
+        max_length=1000)
 
     prop_cause = models.TextField(
         verbose_name="What do you think probably caused (participant\'s) death?",
         max_length=1000,
-        help_text="Note: Please avoid HIV as cause of death",
-        )
+        help_text="Note: Please avoid HIV as cause of death")
+
     sign_symptoms = models.CharField(
-        verbose_name="During the last illness preceding death, did  the participant experience ANY of the following signs or symptoms:",
+        verbose_name=("During the last illness preceding death, did  the participant"
+                      " experience ANY of the following signs or symptoms:"),
         max_length=3,
-        choices=YES_NO,
-        )
+        choices=YES_NO)
 
     history = AuditTrail()
 
