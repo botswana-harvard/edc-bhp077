@@ -34,18 +34,16 @@ class MaternalDashboard(RegisteredSubjectDashboard):
         self.dashboard_models['maternal_eligibility'] = MaternalEligibility
         self.dashboard_models['maternal_consent'] = MaternalConsent
         self.requisition_model = MaternalRequisition
-        self._locator_model = None
+        self._locator_model = MaternalLocator
 
     def get_context_data(self, **kwargs):
         super(MaternalDashboard, self).get_context_data(**kwargs)
         self.context.update(
             home='microbiome',
             search_name='maternal',
-            title='Maternal Dashboard', )
+            title='Maternal Dashboard',
+            subject_dashboard_url=self.subject_dashboard_url, )
         return self.context
-
-    def set_dashboard_type_list(self):
-        self._dashboard_type_list = ['maternal']
 
     def get_visit_model(self):
         return MaternalVisit

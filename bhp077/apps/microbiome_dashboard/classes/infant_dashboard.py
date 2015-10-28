@@ -37,7 +37,8 @@ class InfantDashboard(RegisteredSubjectDashboard):
         self.context.update(
             home='microbiome',
             search_name='infant',
-            title='Infant Dashboard', )
+            title='Infant Dashboard',
+            subject_dashboard_url=self.subject_dashboard_url, )
         return self.context
 
     def get_visit_model(self):
