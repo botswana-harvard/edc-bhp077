@@ -109,6 +109,7 @@ INSTALLED_APPS = (
     'edc.lab.lab_clinic_api',
     'edc.lab.lab_clinic_reference',
     'edc.lab.lab_requisition',
+    'edc.map',
     'edc.lab.lab_packing',
     'edc.lab.lab_profile',
     'getresults_identifier',
