@@ -32,5 +32,17 @@ class MaternalConsentAdmin(BaseModelAdmin):
                     'gender': admin.VERTICAL,
                     'is_dob_estimated': admin.VERTICAL,
                     'identity_type': admin.VERTICAL}
+    list_display = ('subject_identifier',
+                    'is_verified',
+                    'is_verified_datetime',
+                    'first_name',
+                    'initials',
+                    'gender',
+                    'dob',
+                    'consent_datetime',
+                    'created',
+                    'modified',
+                    'user_created',
+                    'user_modified')
 
 admin.site.register(MaternalConsent, MaternalConsentAdmin)
