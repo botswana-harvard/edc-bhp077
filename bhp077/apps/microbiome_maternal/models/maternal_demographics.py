@@ -10,7 +10,7 @@ from ..maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
                                 CURRENT_OCCUPATION, MONEY_PROVIDER, MONEY_EARNED,
                                 WATER_SOURCE, COOKING_METHOD, TOILET_FACILITY,
                                 HOUSE_TYPE)
-from microbiome.list.models import HouseholdGoods
+from bhp077.apps.microbiome_list.models import HouseholdGoods
 
 
 class MaternalDemographics(MaternalScheduledVisitModel):

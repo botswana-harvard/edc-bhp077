@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 from edc_constants.constants import NEG, POS
 from edc_constants.choices import POS_NEG_ONLY
 
-from microbiome.maternal.models import MaternalEligibility
+from bhp077.apps.microbiome_maternal.models import MaternalEligibility
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 

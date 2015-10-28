@@ -1,6 +1,6 @@
 from edc.lab.lab_requisition.admin import BaseRequisitionModelAdmin
 
-from microbiome.infant.models import InfantVisit
+from apps.microbiome_infant.models import InfantVisit
 
 
 class InfantRequisitionAdmin(BaseRequisitionModelAdmin):

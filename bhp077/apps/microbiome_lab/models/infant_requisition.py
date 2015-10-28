@@ -9,7 +9,7 @@ from edc_base.model.models.base_uuid_model import BaseUuidModel
 from .aliquot_type import AliquotType
 from .packing_list import PackingList
 from .panel import Panel
-from microbiome.infant.models import InfantVisit
+from bhp077.apps.microbiome_infant.models import InfantVisit
 
 from ..managers import RequisitionManager
 

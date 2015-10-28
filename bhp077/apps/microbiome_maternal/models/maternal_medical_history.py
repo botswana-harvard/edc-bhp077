@@ -5,7 +5,7 @@ from edc_base.model.fields import OtherCharField
 from edc_constants.choices import YES_NO
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from microbiome.list.models import ChronicConditions
+from bhp077.apps.microbiome_list.models import ChronicConditions
 
 
 class MaternalMedicalHistory(MaternalScheduledVisitModel):

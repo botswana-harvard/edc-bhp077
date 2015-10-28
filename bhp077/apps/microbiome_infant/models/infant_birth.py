@@ -8,7 +8,7 @@ from edc_base.model.validators.date import date_not_future
 from edc_consent.models import RequiresConsentMixin
 from edc_constants.choices import GENDER_UNDETERMINED
 
-from microbiome.maternal.models import MaternalLabourDel
+from bhp077.apps.microbiome_maternal.models import MaternalLabourDel
 
 
 class InfantBirth(BaseUuidModel, BaseAppointmentMixin):

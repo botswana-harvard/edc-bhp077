@@ -5,7 +5,7 @@ from edc_base.model.validators import (
     datetime_not_before_study_start, datetime_not_future)
 from edc_constants.choices import CONFIRMED_SUSPECTED
 
-from microbiome.choices import (
+from bhp077.apps.microbiome.choices import (
     CNS_ABNORMALITIES, FACIAL_DEFECT, CLEFT_DISORDER, MOUTH_UP_GASTROINT_DISORDER,
     CARDIOVASCULAR_DISORDER, RESPIRATORY_DEFECT, LOWER_GASTROINTESTINAL_ABNORMALITY,
     FEM_GENITAL_ANOMALY, MALE_GENITAL_ANOMALY, RENAL_ANOMALY, MUSCULOSKELETAL_ABNORMALITY,

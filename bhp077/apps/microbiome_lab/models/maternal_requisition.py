@@ -5,7 +5,7 @@ from edc.lab.lab_requisition.models import BaseRequisition
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.entry_meta_data.managers import RequisitionMetaDataManager
-from microbiome.maternal.models import MaternalVisit
+from bhp077.apps.microbiome_maternal.models import MaternalVisit
 
 from .aliquot_type import AliquotType
 from .packing_list import PackingList

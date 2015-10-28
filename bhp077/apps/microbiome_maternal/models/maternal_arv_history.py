@@ -6,7 +6,7 @@ from edc_constants.choices import YES_NO
 
 from ..maternal_choices import PRIOR_PREG_HAART_STATUS
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from microbiome.list.models import PriorArv
+from bhp077.apps.microbiome_list.models import PriorArv
 
 
 class MaternalArvHistory(MaternalScheduledVisitModel):

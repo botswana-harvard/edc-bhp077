@@ -1,6 +1,6 @@
 from django.db import models
 
-from microbiome.choices import DRUG_RELATIONSHIP
+from bhp077.apps.microbiome.choices import DRUG_RELATIONSHIP
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 

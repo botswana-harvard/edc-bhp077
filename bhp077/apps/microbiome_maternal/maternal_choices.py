@@ -1,4 +1,4 @@
-from microbiome.constants import LIVE, STILL_BIRTH
+from bhp077.apps.microbiome.constants import LIVE, STILL_BIRTH
 from edc_constants.choices import YES, NO
 
 LIVE_STILL_BIRTH = (

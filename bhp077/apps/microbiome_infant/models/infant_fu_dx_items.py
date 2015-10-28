@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 
 from edc_constants.choices import YES_NO
 
-from microbiome.choices import DX_INFANT
+from bhp077.apps.microbiome.choices import DX_INFANT
 
 from .infant_fu_dx import InfantFuDx
 from .infant_scheduled_visit_model import InfantScheduledVisitModel

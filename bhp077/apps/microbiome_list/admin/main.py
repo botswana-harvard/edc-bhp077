@@ -1,7 +1,7 @@
 from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
-from microbiome.list.models import (ChronicConditions, Contraceptives,
-                                    DiseasesAtEnrollment, HouseholdGoods, PriorArv)
+from apps.microbiome_list.models import (ChronicConditions, Contraceptives,
+                                         DiseasesAtEnrollment, HouseholdGoods, PriorArv)
 
 
 class ChronicConditionsAdmin(BaseModelAdmin):

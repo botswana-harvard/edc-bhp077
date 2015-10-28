@@ -4,8 +4,8 @@ from edc.core.bhp_common.utils import convert_from_camel
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 
-from microbiome.infant.models import InfantVisit, InfantBirth
-from microbiome.microbiome_lab.models import InfantRequisition
+from apps.microbiome_infant.models import InfantVisit, InfantBirth
+from apps.microbiome_lab.models import InfantRequisition
 
 
 class InfantDashboard(RegisteredSubjectDashboard):
@@ -13,7 +13,7 @@ class InfantDashboard(RegisteredSubjectDashboard):
     view = 'infant_dashboard'
     dashboard_url_name = 'subject_dashboard_url'
     dashboard_name = 'Infant Dashboard'
-    urlpattern_view = 'microbiome.dashboard.views'
+    urlpattern_view = 'apps.microbiome_dashboard.views'
     template_name = 'infant_dashboard.html'
 
     def __init__(self, *args, **kwargs):

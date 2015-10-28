@@ -5,7 +5,7 @@ from edc_constants.choices import YES_NO_DWTA
 
 from ..maternal_choices import REASON_UNSEEN_AT_CLINIC, REASON_CONTRACEPTIVE_NOT_INITIATED
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from microbiome.list.models import Contraceptives
+from bhp077.apps.microbiome_list.models import Contraceptives
 
 
 class SrhServicesUtilization(MaternalScheduledVisitModel):

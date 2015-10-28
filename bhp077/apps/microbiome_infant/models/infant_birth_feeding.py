@@ -1,7 +1,7 @@
 from django.db import models
 
 
-from microbiome.choices import FEEDING_CHOICES
+from bhp077.apps.microbiome.choices import FEEDING_CHOICES
 
 from .infant_birth import InfantBirth
 from .infant_scheduled_visit_model import InfantScheduledVisitModel

@@ -5,7 +5,7 @@ from edc_base.model.validators.date import date_not_future
 
 from edc_constants.choices import YES_NO
 
-from microbiome.choices import REASON_NOT_RECEIVED_VACCINATION, YES_NOT_SCHEDULED_NOT_RECEIVED
+from bhp077.apps.microbiome.choices import REASON_NOT_RECEIVED_VACCINATION, YES_NOT_SCHEDULED_NOT_RECEIVED
 
 from .infant_fu import InfantFu
 from .infant_scheduled_visit_model import InfantScheduledVisitModel

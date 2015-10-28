@@ -1,6 +1,6 @@
 from django.db import models
 
-from microbiome.choices import CIRCUMCISION
+from bhp077.apps.microbiome.choices import CIRCUMCISION
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 

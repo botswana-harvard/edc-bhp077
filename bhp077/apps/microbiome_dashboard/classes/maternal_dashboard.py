@@ -4,7 +4,7 @@ from edc.core.bhp_common.utils import convert_from_camel
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 
-from microbiome.maternal.models import MaternalVisit, MaternalEligibility, MaternalLocator
+from apps.microbiome_maternal.models import MaternalVisit, MaternalEligibility, MaternalLocator
 
 
 class MaternalDashboard(RegisteredSubjectDashboard):
@@ -12,7 +12,7 @@ class MaternalDashboard(RegisteredSubjectDashboard):
     view = 'maternal_dashboard'
     dashboard_url_name = 'subject_dashboard_url'
     dashboard_name = 'Maternal Dashboard'
-    urlpattern_view = 'microbiome.dashboard.views'
+    urlpattern_view = 'apps.microbiome_dashboard.views'
     template_name = 'maternal_dashboard.html'
     urlpatterns = [
         RegisteredSubjectDashboard.urlpatterns[0][:-1] +

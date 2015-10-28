@@ -4,7 +4,7 @@ from django.db import models
 from edc_constants.choices import YES_NO, YES_NO_NA
 
 from .base_mother import BaseMother
-from microbiome.maternal.maternal_choices import KNOW_HIV_STATUS
+from bhp077.apps.microbiome_maternal.maternal_choices import KNOW_HIV_STATUS
 
 
 class MaternalInfected(BaseMother):

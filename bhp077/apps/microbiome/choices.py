@@ -1,5 +1,5 @@
 from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
-from microbiome.constants import LIVE
+from bhp077.apps.microbiome.constants import LIVE
 
 VISIT_INFO_SOURCE = [
     ('subject', 'Subject'),

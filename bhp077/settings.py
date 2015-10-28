@@ -131,13 +131,12 @@ INSTALLED_APPS = (
     'lis.exim.lab_import_lis',
     'lis.exim.lab_import_dmis',
     # LOCAL_APPS
-    'microbiome',
-    'microbiome.list',
-    'microbiome.dashboard',
-    'microbiome.infant',
-    'microbiome.maternal',
-    'microbiome.microbiome_lab',
-    'microbiome.m_config')
+    'bhp077.apps.microbiome',
+    'bhp077.apps.microbiome_list',
+    'bhp077.apps.microbiome_dashboard',
+    'bhp077.apps.microbiome_infant',
+    'bhp077.apps.microbiome_maternal',
+    'bhp077.apps.microbiome_lab')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -157,7 +156,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages")
 
-ROOT_URLCONF = 'microbiome.urls'
+ROOT_URLCONF = 'bhp077.config.urls'
 
 TEMPLATE_DIRS = (
     os.path.join(SOURCE_ROOT.child('edc_project').child('edc'), 'templates'),
@@ -171,7 +170,7 @@ TEMPLATE_LOADERS = (
      'django.template.loaders.app_directories.Loader',
      'django.template.loaders.eggs.Loader')))
 
-WSGI_APPLICATION = 'microbiome.wsgi.application'
+WSGI_APPLICATION = 'bhp077.config.wsgi.application'
 
 # Database
 DATABASES = {
@@ -187,8 +186,8 @@ DAJAXICE_MEDIA_PREFIX = "dajaxice"
 # django auth
 AUTH_PROFILE_MODULE = "bhp_userprofile.userprofile"
 
-PROJECT_NUMBER = 'BHP071'
-PROJECT_IDENTIFIER_PREFIX = '071'
+PROJECT_NUMBER = 'BHP077'
+PROJECT_IDENTIFIER_PREFIX = '077'
 PROJECT_IDENTIFIER_MODULUS = 7
 IS_SECURE_DEVICE = True
 FIELD_MAX_LENGTH = 'default'

@@ -2,7 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_constants.choices import YES_NO
-from microbiome.choices import ARV_STATUS_WITH_NEVER
+from bhp077.apps.microbiome.choices import ARV_STATUS_WITH_NEVER
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 

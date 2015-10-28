@@ -21,7 +21,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.subject.visit_schedule.classes import site_visit_schedules
 
-from microbiome.m_config.app_configuration.classes import MicrobiomeConfiguration
+from apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 
 site_lab_profiles.autodiscover()
 dajaxice_autodiscover()
@@ -66,7 +66,7 @@ urlpatterns += patterns(
 urlpatterns += patterns(
     '',
     url(r'^/dashboard/'.format(app_name=APP_NAME),
-        include('{app_name}.dashboard.urls'.format(app_name=APP_NAME))),
+        include('bhp077.apps.{app_name}_dashboard.urls'.format(app_name=APP_NAME))),
 )
 
 urlpatterns += patterns(

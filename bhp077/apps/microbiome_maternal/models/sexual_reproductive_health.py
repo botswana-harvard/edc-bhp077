@@ -5,7 +5,7 @@ from edc_constants.choices import YES_NO_DWTA
 
 from ..maternal_choices import YES_NO_DNT_DWTA, NEXT_CHILD_PLAN
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from microbiome.list.models import Contraceptives
+from bhp077.apps.microbiome_list.models import Contraceptives
 
 
 class SexualReproductiveHealth(MaternalScheduledVisitModel):

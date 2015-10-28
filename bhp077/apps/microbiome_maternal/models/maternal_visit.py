@@ -4,7 +4,7 @@ from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
 from edc_consent.models import RequiresConsentMixin
 
-from microbiome.choices import VISIT_UNSCHEDULED_REASON
+from bhp077.apps.microbiome.choices import VISIT_UNSCHEDULED_REASON
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 

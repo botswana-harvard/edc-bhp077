@@ -2,7 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_constants.choices import DRUG_ROUTE
-from microbiome.choices import MEDICATIONS
+from bhp077.apps.microbiome.choices import MEDICATIONS
 
 from .infant_fu_new_med import InfantFuNewMed
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
