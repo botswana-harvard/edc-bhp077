@@ -4,8 +4,8 @@ from django.http.response import HttpResponseRedirect
 
 from edc_base.modeladmin.admin import BaseModelAdmin
 
-from apps.microbiome_maternal.forms import MaternalConsentForm
-from apps.microbiome_maternal.models import MaternalConsent
+from bhp077.apps.microbiome_maternal.forms import MaternalConsentForm
+from bhp077.apps.microbiome_maternal.models import MaternalConsent
 
 
 class MaternalConsentAdmin(BaseModelAdmin):

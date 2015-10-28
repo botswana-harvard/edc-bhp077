@@ -4,7 +4,7 @@ from edc.core.bhp_common.utils import convert_from_camel
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 
-from apps.microbiome_maternal.models import (MaternalVisit, MaternalEligibility,
+from bhp077.apps.microbiome_maternal.models import (MaternalVisit, MaternalEligibility,
                                              MaternalLocator, MaternalConsent)
 from bhp077.apps.microbiome_lab.models.maternal_requisition import MaternalRequisition
 

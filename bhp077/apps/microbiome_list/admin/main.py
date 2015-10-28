@@ -1,6 +1,6 @@
 from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
-from apps.microbiome_list.models import (ChronicConditions, Contraceptives,
+from bhp077.apps.microbiome_list.models import (ChronicConditions, Contraceptives,
                                          DiseasesAtEnrollment, HouseholdGoods, PriorArv)
 
 

@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from apps.microbiome_maternal.models import SrhServicesUtilization
-from apps.microbiome_maternal.forms import SrhServicesUtilizationForm
+from bhp077.apps.microbiome_maternal.models import SrhServicesUtilization
+from bhp077.apps.microbiome_maternal.forms import SrhServicesUtilizationForm
 
 
 class SrhServicesUtilizationAdmin(BaseModelAdmin):

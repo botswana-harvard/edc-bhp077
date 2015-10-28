@@ -3,7 +3,7 @@ from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRender
 
 # from edc.subject.off_study.forms import BaseOffStudyForm
 from ..models import MaternalOffStudy
-from apps.microbiome.choices import OFF_STUDY_REASON
+from bhp077.apps.microbiome.choices import OFF_STUDY_REASON
 from .base_maternal_model_form import BaseMaternalModelForm
 
 

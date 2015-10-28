@@ -4,8 +4,8 @@ from edc.core.bhp_common.utils import convert_from_camel
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 
-from apps.microbiome_infant.models import InfantVisit, InfantBirth
-from apps.microbiome_lab.models import InfantRequisition
+from bhp077.apps.microbiome_infant.models import InfantVisit, InfantBirth
+from bhp077.apps.microbiome_lab.models import InfantRequisition
 
 
 class InfantDashboard(RegisteredSubjectDashboard):

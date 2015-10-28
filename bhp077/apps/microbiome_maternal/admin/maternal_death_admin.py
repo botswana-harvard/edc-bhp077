@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 from .registered_subject_model_admin import RegisteredSubjectModelAdmin
-from apps.microbiome_maternal.forms import MaternalDeathForm
-from apps.microbiome_maternal.models import MaternalDeath, MaternalVisit
+from bhp077.apps.microbiome_maternal.forms import MaternalDeathForm
+from bhp077.apps.microbiome_maternal.models import MaternalDeath, MaternalVisit
 
 
 class MaternalDeathAdmin(RegisteredSubjectModelAdmin):
