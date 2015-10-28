@@ -7,3 +7,4 @@ from .maternal_eligibility_factory import MaternalEligibilityFactory
 from .maternal_screening_factory import MaternalScreeningFactory
 from .maternal_labour_del_factory import MaternalLabourDelFactory
 from .subject_consent_factory import SubjectConsentFactory
+from .antenatal_enrollment_factory import AntenatalEnrollmentFactory

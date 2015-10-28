@@ -3,7 +3,7 @@ import factory
 from django.utils import timezone
 from edc_constants.constants import ALIVE
 
-from microbiome.models import InfantVisit
+from ...infant.models import InfantVisit
 
 
 class InfantVisitFactory(factory.DjangoModelFactory):

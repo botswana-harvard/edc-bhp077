@@ -15,6 +15,7 @@ def infant_dashboard(request, **kwargs):
         dashboard_type_list=['infant'],
         show=kwargs.get('show'),
         )
+
     dashboard.set_context()
     return render_to_response(
         'infant_dashboard.html',

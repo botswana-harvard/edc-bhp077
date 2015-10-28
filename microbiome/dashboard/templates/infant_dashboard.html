@@ -1,0 +1,17 @@
+{% extends "base_registered_subject_dashboard.html"%}
+{% load common_tags %}{% load crypto_tags %}
+
+{% block clinic_dashboard_marquee %}
+    {% if infant_birth%}
+    <table>
+    <tr style="background:lightyellow;">
+    <td><B>Name:</B> {{infant_birth.first_name|encrypted }} ({{ infant_birth.initials|encrypted }})</td>  
+    <td><B>Gender:</B> {{infant_birth.gender|gender }} </td> 
+    <td><B>Born:</B> {{infant_birth.dob|date:"Y-m-d" }}</td> 
+    <td><B>Age:</B> {% if infant_birth.dob %}{{infant_birth.dob|age }}{% endif %} </td> 
+    {% else %}
+    <td><B>Name:</B> BABY-{{maternal_consent.first_name|encrypted}}</td> 
+    {% endif %}
+    </tr>
+    </table>               
+{% endblock %}

@@ -4,7 +4,7 @@ from django.utils import timezone
 from edc_registration.tests.factories import RegisteredSubjectFactory
 from edc_constants.constants import NOT_APPLICABLE, YES, NEG
 
-from ...models import MaternalEligibility
+from ...maternal.models import MaternalEligibility
 
 
 class MaternalEligibilityFactory(factory.DjangoModelFactory):

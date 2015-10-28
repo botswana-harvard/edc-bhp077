@@ -1,6 +1,6 @@
 import factory
 
-from ...models import InfantCongenitalAnomalies
+from ...infant.models import InfantCongenitalAnomalies
 
 from .infant_visit_factory import InfantVisitFactory
 
