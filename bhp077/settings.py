@@ -48,8 +48,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dajaxice',
+    'django_revision',
     #'django-extensions',
-
+    # EDC
     'edc_base',
     'edc',
     'edc.apps.app_configuration',
@@ -57,6 +58,7 @@ INSTALLED_APPS = (
     'edc.core.crypto_fields',
     'edc.core.model_data_inspector',
     'edc.core.model_selector',
+    # 'edc.core.bhp_templates',
     'edc.core.bhp_static',
     'edc.core.bhp_string',
     'edc.core.bhp_userprofile',
@@ -70,7 +72,11 @@ INSTALLED_APPS = (
     'edc.core.bhp_using',
     'edc.core.bhp_export_data',
     'edc.core.bhp_birt_reports',
+    'edc.device.inspector',
+    'edc.device.dispatch',
+    'edc.device.netbook',
     'edc_device',
+    'edc.device.sync',
     'edc.dashboard.base',
     'edc.dashboard.search',
     'edc.dashboard.section',
@@ -79,6 +85,7 @@ INSTALLED_APPS = (
     'edc.import',
     'edc.entry_meta_data',
     'edc.data_dictionary',
+    'edc.map',
     'edc.testing',
     'edc.utils',
     'edc.subject.lab_tracker',
@@ -104,7 +111,6 @@ INSTALLED_APPS = (
     'edc.lab.lab_requisition',
     'edc.lab.lab_packing',
     'edc.lab.lab_profile',
-    'django_revision',
     'getresults_identifier',
     'edc_consent',
     'edc_audit',
@@ -160,11 +166,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages")
 
 ROOT_URLCONF = 'bhp077.config.urls'
-print(os.path.join(SOURCE_ROOT.child('edc_project').child('edc'), 'templates'))
-print(os.path.join(PROJECT_DIR, 'templates'))
-print(os.path.join(SOURCE_ROOT.child('edc-base').child('edc_base'), 'templates'))
 TEMPLATE_DIRS = (
-    os.path.join(SOURCE_ROOT.child('edc_project').child('edc'), 'templates'),
     os.path.join(PROJECT_DIR, 'templates'),
     os.path.join(SOURCE_ROOT.child('edc-base').child('edc_base'), 'templates'),
 )
@@ -173,7 +175,7 @@ TEMPLATE_LOADERS = (
     (#'django.template.loaders.cached.Loader', (
      'django.template.loaders.filesystem.Loader',
      'django.template.loaders.app_directories.Loader',
-     'django.template.loaders.eggs.Loader' #)
+     'django.template.loaders.eggs.Loader'
     )
 )
 
@@ -200,8 +202,6 @@ IS_SECURE_DEVICE = True
 FIELD_MAX_LENGTH = 'default'
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 LANGUAGES = (
@@ -213,9 +213,6 @@ TIME_ZONE = 'Africa/Gaborone'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = False
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR.child('static')
@@ -231,12 +228,11 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'dajaxice.finders.DajaxiceFinder',
-    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 GIT_DIR = BASE_DIR.ancestor(1)
 
-STUDY_OPEN_DATETIME = timezone.now()
+STUDY_OPEN_DATETIME = timezone.datetime(2015, 10, 18, 0, 0, 0)
 
 SUBJECT_APP_LIST = ['maternal', 'infant']
 SUBJECT_TYPES = ['maternal', 'infant']
