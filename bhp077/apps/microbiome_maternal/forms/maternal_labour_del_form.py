@@ -1,7 +1,7 @@
 from base_maternal_model_form import BaseMaternalModelForm
 from ..models import (MaternalLabourDel, MaternalLabDelMed,
-                                          MaternalLabDelClinic, MaternalLabDelDx,
-                                          MaternalLabDelDxT)
+                      MaternalLabDelClinic, MaternalLabDelDx,
+                    MaternalLabDelDxT)
 
 
 class MaternalLabourDelForm(BaseMaternalModelForm):
