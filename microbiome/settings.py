@@ -136,7 +136,8 @@ INSTALLED_APPS = (
     'microbiome.dashboard',
     'microbiome.infant',
     'microbiome.maternal',
-    'microbiome.microbiome_lab')
+    'microbiome.microbiome_lab',
+    'microbiome.m_config')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -159,8 +160,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 ROOT_URLCONF = 'microbiome.urls'
 
 TEMPLATE_DIRS = (
+    os.path.join(SOURCE_ROOT.child('edc_project').child('edc'), 'templates'),
     os.path.join(PROJECT_DIR, 'templates'),
-    os.path.join(SOURCE_ROOT.child('edc-base').child('edc_base'), 'templates'))
+    os.path.join(SOURCE_ROOT.child('edc-base').child('edc_base'), 'templates'),
+)
 
 TEMPLATE_LOADERS = (
     ('django.template.loaders.cached.Loader', (

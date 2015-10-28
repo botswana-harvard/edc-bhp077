@@ -21,7 +21,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.subject.visit_schedule.classes import site_visit_schedules
 
-from microbiome.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.m_config.app_configuration.classes import MicrobiomeConfiguration
 
 site_lab_profiles.autodiscover()
 dajaxice_autodiscover()
