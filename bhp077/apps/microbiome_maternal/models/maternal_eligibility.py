@@ -70,6 +70,9 @@ class MaternalEligibility (BaseUuidModel):
             ineligibility.append('Mother is too old (>50)')
         return (False if ineligibility else True, ineligibility)
 
+    def __unicode__(self):
+        return (("eligibility_id"))
+
     @property
     def maternal_ineligibility(self):
         reason_ineligible = []
