@@ -9,5 +9,5 @@ class SectionInfantView(BaseSectionView):
     section_display_index = 30
     section_template = 'section_infant.html'
     dashboard_url_name = 'subject_dashboard_url'
-    search = [InfantSearchByWord]
+    search = {'word': InfantSearchByWord}
 site_sections.register(SectionInfantView)
