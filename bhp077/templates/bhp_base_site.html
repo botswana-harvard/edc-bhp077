@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% load common_tags %}
+{% load revision_tags %}
+{% load static from staticfiles %}
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/section.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/laboratory.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/result_report.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/custom_fieldset.css" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/lab_results.js"></script>
+{% endblock %}
+{% block title %}EDC {% project_number %} {{ title }} | {% project_title %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% project_title %}</h1>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+    <a href="/">{% trans 'Home' %}</a>
+    &rsaquo;<a href="{% url 'admin:index' %}">{% trans 'Admin' %}</a>
+    {% if title %} &rsaquo; {{ title }}{% endif %}
+    </div>
+{% endblock %}
+
+{% block footer %}<div style="width:auto;float:left;margin:10px 10px 5px 10px;"><small><B>{% now 'Y' %} {% institution %}</B><BR>For Research Purposes Only. Unauthorized access is prohibited. Data collection schedule based on protocol "{% protocol_revision %}". Edc {% revision_tag %}{% if admin_exclude_code %} {{admin_exclude_code}}{% endif %}
+</small></div>{% endblock %}

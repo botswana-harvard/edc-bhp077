@@ -47,6 +47,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dajaxice',
+    #'django-extensions',
 
     'edc_base',
     'edc',
@@ -102,6 +104,7 @@ INSTALLED_APPS = (
     'edc.lab.lab_requisition',
     'edc.lab.lab_packing',
     'edc.lab.lab_profile',
+    'django_revision',
     'getresults_identifier',
     'edc_consent',
     'edc_audit',
@@ -157,7 +160,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages")
 
 ROOT_URLCONF = 'bhp077.config.urls'
-
+print(os.path.join(SOURCE_ROOT.child('edc_project').child('edc'), 'templates'))
+print(os.path.join(PROJECT_DIR, 'templates'))
+print(os.path.join(SOURCE_ROOT.child('edc-base').child('edc_base'), 'templates'))
 TEMPLATE_DIRS = (
     os.path.join(SOURCE_ROOT.child('edc_project').child('edc'), 'templates'),
     os.path.join(PROJECT_DIR, 'templates'),
@@ -165,10 +170,12 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
+    (#'django.template.loaders.cached.Loader', (
      'django.template.loaders.filesystem.Loader',
      'django.template.loaders.app_directories.Loader',
-     'django.template.loaders.eggs.Loader')))
+     'django.template.loaders.eggs.Loader' #)
+    )
+)
 
 WSGI_APPLICATION = 'bhp077.config.wsgi.application'
 
