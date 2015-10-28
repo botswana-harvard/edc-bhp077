@@ -16,9 +16,9 @@ class AntenatalEnrollment(BaseEnrollment):
         help_text=" (weeks of gestation). If >=32 weeks do rapid test", )
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_antenatalenrollment_change', args=(self.id,))
+        return reverse('admin:microbiome_maternal_antenatalenrollment_change', args=(self.id,))
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = 'Antenatal Enrollment'
         verbose_name_plural = 'Antenatal Enrollment'

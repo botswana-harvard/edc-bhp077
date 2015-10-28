@@ -163,5 +163,5 @@ class AntenatalCallLogEntry (BaseSyncUuidModel):
         return self.antenatal_call_log.natural_key() + (self.call_datetime, )
 
     class Meta:
-        app_label = 'call'
+        app_label = 'microbiome_call'
         unique_together = ['antenatal_call_log', 'call_datetime']

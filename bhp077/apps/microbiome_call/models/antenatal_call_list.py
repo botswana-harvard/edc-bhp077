@@ -73,4 +73,4 @@ class AntenatalCallList (BaseSyncUuidModel):
         )
 
     class Meta:
-        app_label = 'call'
+        app_label = 'microbiome_call'

@@ -45,8 +45,8 @@ class InfantFuNewMed(InfantScheduledVisitModel):
         return "%s" % (self.infant_visit)
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_infantfunewmed_change', args=(self.id,))
+        return reverse('admin:microbiome_infant_infantfunewmed_change', args=(self.id,))
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant FollowUp: New Medication"

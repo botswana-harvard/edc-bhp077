@@ -31,6 +31,6 @@ class RapidTestResult(MaternalScheduledVisitModel):
         blank=True,)
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = 'Rapid Test Result'
         verbose_name_plural = 'Rapid Test Result'

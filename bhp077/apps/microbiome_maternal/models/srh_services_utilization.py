@@ -61,6 +61,6 @@ class SrhServicesUtilization(MaternalScheduledVisitModel):
         help_text='')
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = 'SRH Services Utilization'
         verbose_name_plural = 'SRH Services Utilization'

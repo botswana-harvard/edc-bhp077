@@ -51,9 +51,9 @@ class MaternalArvHistory(MaternalScheduledVisitModel):
     )
 
     def get_absolute_url(self):
-        return reverse('admin:maternal_maternalarvhistory_change', args=(self.id,))
+        return reverse('admin:microbiome_maternal_maternalarvhistory_change', args=(self.id,))
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = "Maternal ARV History"
         verbose_name_plural = "Maternal ARV History"

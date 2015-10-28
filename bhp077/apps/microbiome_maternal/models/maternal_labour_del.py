@@ -83,7 +83,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         null=True)
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = "Maternal Labour & Delivery"
         verbose_name_plural = "Maternal Labour & Delivery"
 
@@ -119,7 +119,7 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         null=True)
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = "Maternal Labour & Delivery: MedHistory"
         verbose_name_plural = "Maternal Labour & Delivery: MedHistory"
 
@@ -181,7 +181,7 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         null=True)
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = "Maternal Labour & Delivery: ClinHist"
         verbose_name_plural = "Maternal Labour & Delivery: ClinHist"
 
@@ -206,7 +206,7 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
         help_text="If yes, answer 4, otherwise go to Question 5")
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = "Maternal Labour & Delivery: Preg Dx"
         verbose_name_plural = "Maternal Labour & Delivery: Preg Dx"
 
@@ -237,6 +237,6 @@ class MaternalLabDelDxT (MaternalScheduledVisitModel):
         help_text="")
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = "Maternal Labour & Delivery: Preg DxT"
         verbose_name_plural = "Maternal Labour & Delivery: Preg DxT"

@@ -11,7 +11,7 @@ from ..models import InfantVisit, InfantBirth
 class InfantBirthVisitSchedule(VisitScheduleConfiguration):
 
     name = 'birth visit schedule'
-    app_label = 'infant'
+    app_label = 'microbiome_infant'
 
     membership_forms = OrderedDict({
         'infant_birth_record': MembershipFormTuple('infant_birth_record', InfantBirth, True)})
@@ -40,13 +40,13 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Stool storage', 'STORAGE', 'ST', NOT_REQUIRED, ADDITIONAL)),
         'entries': (
             # EntryTuple(10L, u'infant', u'infantbirthdata', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(20L, u'infant', u'infantbirthexam', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(30L, u'infant', u'infantbirtharv', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(20L, u'microbiome_infant', u'infantbirthexam', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(30L, u'microbiome_infant', u'infantbirtharv', NOT_REQUIRED, ADDITIONAL),
             # EntryTuple(40L, u'infant', u'infantbirthfeed', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(100L, u'infant', u'infantcongenitalanomalies', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(200L, u'infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(100L, u'microbiome_infant', u'infantcongenitalanomalies', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(200L, u'microbiome_infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
             # EntryTuple(210L, u'infant', u'infantverbalautopsy', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(230L, u'infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
+            EntryTuple(230L, u'microbiome_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
     visit_definitions['2010'] = {
         'title': 'Infant 1 Month Visit',
         'time_point': 10,
@@ -66,16 +66,16 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
             RequisitionPanelTuple(400L, u'microbiome_lab', u'infantrequisition',
                                   'Stool storage', 'STORAGE', 'ST', NOT_REQUIRED, ADDITIONAL)),
         'entries': (
-            EntryTuple(30L, u'infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(50L, u'infant', u'infantfudx', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(80L, u'infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(80L, u'infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(30L, u'microbiome_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(40L, u'microbiome_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(50L, u'microbiome_infant', u'infantfudx', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(80L, u'microbiome_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(80L, u'microbiome_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
             # EntryTuple(120L, u'infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
             # EntryTuple(120L, u'infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(200L, u'infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(200L, u'microbiome_infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
             # EntryTuple(210L, u'infant', u'infantverbalautopsy', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(240L, u'infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
+            EntryTuple(240L, u'microbiome_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
     visit_definitions['2030'] = {
         'title': 'Infant 3 Month Visit',
         'time_point': 30,
@@ -95,15 +95,15 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
             RequisitionPanelTuple(400L, u'microbiome_lab', u'infantrequisition',
                                   'Stool storage', 'STORAGE', 'ST', NOT_REQUIRED, ADDITIONAL)),
         'entries': (
-            EntryTuple(30L, u'infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(50L, u'infant', u'infantfudx', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(80L, u'infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(80L, u'infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(30L, u'microbiome_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(40L, u'microbiome_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(50L, u'microbiome_infant', u'infantfudx', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(80L, u'microbiome_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(80L, u'microbiome_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
             # EntryTuple(120L, u'infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
             # EntryTuple(120L, u'infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(200L, u'infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(200L, u'microbiome_infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
             # EntryTuple(210L, u'infant', u'infantverbalautopsy', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(240L, u'infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
+            EntryTuple(240L, u'microbiome_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
 
 site_visit_schedules.register(InfantBirthVisitSchedule)

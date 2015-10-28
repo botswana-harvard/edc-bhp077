@@ -50,5 +50,5 @@ class InfantFu(InfantScheduledVisitModel):
         return "%s" % (self.infant_visit)
 
     class Meta:
-        app_label = 'infant'
+        app_label = 'microbiome_infant'
         verbose_name = "Infant FollowUp"

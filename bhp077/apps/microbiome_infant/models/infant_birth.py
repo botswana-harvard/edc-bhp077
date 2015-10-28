@@ -50,6 +50,6 @@ class InfantBirth(BaseUuidModel, BaseAppointmentMixin):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Birth Record"
         verbose_name_plural = "Infant Birth Record"

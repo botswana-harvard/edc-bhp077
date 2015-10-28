@@ -17,7 +17,7 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 class InfantCongenitalAnomalies(InfantScheduledVisitModel):
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies"
 
 
@@ -55,7 +55,7 @@ class InfantCnsAbnormalityItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Cns"
 
 
@@ -87,7 +87,7 @@ class InfantFacialDefectItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Facial"
 
 
@@ -119,7 +119,7 @@ class InfantCleftDisorderItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Cleft"
 
 
@@ -151,7 +151,7 @@ class InfantMouthUpGastrointestinalItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:MouthUpp"
 
 
@@ -183,7 +183,7 @@ class InfantCardiovascularDisorderItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Cardio"
 
 
@@ -215,7 +215,7 @@ class InfantRespiratoryDefectItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Respitarory"
 
 
@@ -247,7 +247,7 @@ class InfantLowerGastrointestinalItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:LowerGast"
 
 
@@ -279,7 +279,7 @@ class InfantFemaleGenitalAnomalyItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:FemaleGen"
 
 
@@ -311,7 +311,7 @@ class InfantMaleGenitalAnomalyItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:MaleGen"
 
 
@@ -343,7 +343,7 @@ class InfantRenalAnomalyItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Renal"
 
 
@@ -375,7 +375,7 @@ class InfantMusculoskeletalAbnormalItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Musculosk"
 
 
@@ -409,7 +409,7 @@ class InfantSkinAbnormalItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Skin"
 
 
@@ -441,7 +441,7 @@ class InfantTrisomiesChromosomeItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Trisomes"
 
 
@@ -473,5 +473,5 @@ class InfantOtherAbnormalityItems(BaseCnsItem):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Other"

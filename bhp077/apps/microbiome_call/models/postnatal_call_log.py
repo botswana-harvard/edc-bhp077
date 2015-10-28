@@ -160,5 +160,5 @@ class PostnatalCallLogEntry (BaseSyncUuidModel):
         return self.postnatal_call_log.natural_key() + (self.call_datetime, )
 
     class Meta:
-        app_label = 'call'
+        app_label = 'microbiome_call'
         unique_together = ['postnatal_call_log', 'call_datetime']

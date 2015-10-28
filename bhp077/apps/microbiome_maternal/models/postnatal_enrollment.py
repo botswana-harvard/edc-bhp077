@@ -58,9 +58,9 @@ class PostnatalEnrollment(BaseEnrollment):
         blank=True)
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_postnatalenrollment_change', args=(self.id,))
+        return reverse('admin:microbiome_maternal_postnatalenrollment_change', args=(self.id,))
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = 'Postnatal Enrollment'
         verbose_name_plural = 'Postnatal Enrollment'

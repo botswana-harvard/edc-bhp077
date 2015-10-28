@@ -23,9 +23,9 @@ class MaternalOffStudy(BaseOffStudy, BaseUuidModel):
         return self.maternal_visit
 
     def get_absolute_url(self):
-        return reverse('admin:maternal_maternaloffstudy_change', args=(self.id,))
+        return reverse('admin:microbiome_maternal_maternaloffstudy_change', args=(self.id,))
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = "Maternal Off Study"
         verbose_name_plural = "Maternal Off Study"

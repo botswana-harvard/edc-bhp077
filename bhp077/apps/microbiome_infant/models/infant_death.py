@@ -39,5 +39,5 @@ class InfantDeath (InfantScheduledVisitModel):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Death"

@@ -54,6 +54,6 @@ class MaternalLocator(BaseLocator, BaseUuidModel):
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = 'Maternal Locator'
         verbose_name_plural = 'Maternal Locator'

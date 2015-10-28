@@ -46,5 +46,5 @@ class InfantVisit(BaseVisitTracking, BaseUuidModel):
     )
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Visit"

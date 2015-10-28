@@ -61,7 +61,7 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
         return self.registered_subject.subject_identifier
 
     def get_absolute_url(self):
-        return reverse('admin:infant_infantverbalautopsy_change', args=(self.id,))
+        return reverse('admin:microbiome_infant_infantverbalautopsy_change', args=(self.id,))
 
     def get_consenting_subject_identifier(self):
         """Returns mother's identifier."""
@@ -71,7 +71,7 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
         return self.report_datetime
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
 
 
 class InfantVerbalAutopsyItems(InfantBaseUuidModel):
@@ -108,7 +108,7 @@ class InfantVerbalAutopsyItems(InfantBaseUuidModel):
         return self.verbal_autopsy.report_datetime
 
     def get_absolute_url(self):
-        return reverse('admin:infant_infantverbalautopsy_change', args=(self.id,))
+        return reverse('admin:microbiome_infant_infantverbalautopsy_change', args=(self.id,))
 
     def get_consenting_subject_identifier(self):
         """Returns mother's identifier."""
@@ -118,5 +118,5 @@ class InfantVerbalAutopsyItems(InfantBaseUuidModel):
         return self.verbal_autopsy.infant_visit
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Verbal Autopsy:Item"

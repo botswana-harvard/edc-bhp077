@@ -28,6 +28,6 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
                                       self.appointment.visit_definition.code)
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = 'Maternal Visit'
         verbose_name_plural = 'Maternal Visit'

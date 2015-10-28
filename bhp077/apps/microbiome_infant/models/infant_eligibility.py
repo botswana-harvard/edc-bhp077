@@ -61,6 +61,6 @@ class InfantEligibility (InfantScheduledVisitModel):
         return False
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Eligibility"
         verbose_name_plural = "Infant Eligibility"

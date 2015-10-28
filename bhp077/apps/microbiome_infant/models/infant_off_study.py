@@ -35,5 +35,5 @@ class InfantOffStudy(InfantScheduledVisitModel):
         null=True)
 
     class Meta:
-        app_label = "infant"
+        app_label = "microbiome_infant"
         verbose_name = "Infant Off-Study"

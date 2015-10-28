@@ -18,6 +18,6 @@ class MaternalConsent(BaseConsent, IdentityFieldsMixin, PersonalFieldsMixin,
     registered_subject = models.ForeignKey(RegisteredSubject, null=True, editable=False)
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = 'Maternal Consent'
         verbose_name_plural = 'Maternal Consent'

@@ -26,6 +26,6 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
         help_text="If no, INELIGIBLE")
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = 'Sample Consent'
         verbose_name_plural = 'Sample Consent'

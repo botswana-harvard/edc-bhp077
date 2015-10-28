@@ -54,7 +54,7 @@ class MaternalArvPost (MaternalScheduledVisitModel):
         return "%s" % (self.maternal_visit)
 
     class Meta:
-        app_label = "maternal"
+        app_label = "microbiome_maternal"
         verbose_name = "Maternal ARV Post"
         verbose_name_plural = "Maternal ARV Post"
 
@@ -84,13 +84,13 @@ class MaternalArvPostMod(MaternalOffStudyMixin, BaseHaartModification):
         return self.get_visit().get_subject_identifier()
 
     def get_absolute_url(self):
-        return reverse('admin:maternal_maternalarvpostmod_change', args=(self.id,))
+        return reverse('admin:microbiome_maternal_maternalarvpostmod_change', args=(self.id,))
 
     def natural_key(self):
         return super(MaternalArvPostMod, self).natural_key() + self.maternal_arv_post.natural_key()
 
     class Meta:
-        app_label = "maternal"
+        app_label = "microbiome_maternal"
         verbose_name = 'Maternal ARVs Post: Mods'
         verbose_name_plural = 'Maternal ARVs Post: Mods'
         unique_together = ('maternal_arv_post', 'arv_code', 'modification_date')
@@ -128,7 +128,7 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
         return "%s" % (self.maternal_arv_post)
 
     def get_absolute_url(self):
-        return reverse('admin:maternal_maternalarvspostadherence_change', args=(self.id,))
+        return reverse('admin:microbiome_maternal_maternalarvspostadherence_change', args=(self.id,))
 
     def get_report_datetime(self):
         return self.maternal_arv_post.get_report_datetime()
@@ -137,6 +137,6 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
         return self.maternal_arv_post.get_subject_identifier()
 
     class Meta:
-        app_label = "maternal"
+        app_label = "microbiome_maternal"
         verbose_name = "Maternal ARVs Post: Adherence"
         verbose_name_plural = "Maternal ARVs Post: Adherence"

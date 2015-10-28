@@ -49,7 +49,7 @@ class MaternalPostFu(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "maternal"
+        app_label = "microbiome_maternal"
         verbose_name = "Maternal Postnatal Follow-Up"
         verbose_name_plural = "Maternal Postnatal Follow-Up"
 
@@ -90,7 +90,7 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     def get_absolute_url(self):
-        return reverse('admin:maternal_maternalpostfudx_change', args=(self.id,))
+        return reverse('admin:microbiome_maternal_maternalpostfudx_change', args=(self.id,))
 
     def get_report_datetime(self):
         return self.maternal_post_fu.get_report_datetime()
@@ -99,7 +99,7 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
         return self.maternal_post_fu.get_subject_identifier()
 
     class Meta:
-        app_label = "maternal"
+        app_label = "microbiome_maternal"
         verbose_name = "Maternal Postnatal Follow-Up: Dx"
         verbose_name_plural = "Maternal Postnatal Follow-Up: Dx"
 
@@ -157,9 +157,9 @@ class MaternalPostFuDxT(BaseUuidModel):
         return unicode(self.get_visit())
 
     def get_absolute_url(self):
-        return reverse('admin:maternal_maternalpostfudxt_change', args=(self.id,))
+        return reverse('admin:microbiome_maternal_maternalpostfudxt_change', args=(self.id,))
 
     class Meta:
-        app_label = "maternal"
+        app_label = "microbiome_maternal"
         verbose_name = "Maternal Postnatal Follow-Up: DxT"
         verbose_name_plural = "Maternal Postnatal Follow-Up: DxT"

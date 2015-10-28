@@ -54,6 +54,6 @@ class SexualReproductiveHealth(MaternalScheduledVisitModel):
         help_text='')
 
     class Meta:
-        app_label = 'maternal'
+        app_label = 'microbiome_maternal'
         verbose_name = 'Sexual Reproductive Health'
         verbose_name_plural = 'Sexual Reproductive Health'
