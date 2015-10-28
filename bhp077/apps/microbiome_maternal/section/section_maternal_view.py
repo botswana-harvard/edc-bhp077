@@ -8,7 +8,7 @@ class SectionMaternalView(BaseSectionView):
     section_name = 'maternal'
     section_display_name = 'Mothers'
     section_display_index = 10
-    section_template = 'maternaleligibility_include.html'
+    section_template = 'section_maternal.html'
     dashboard_url_name = 'subject_dashboard_url'
     add_model = MaternalEligibility
     search = {'word': MaternalSearchByWord}

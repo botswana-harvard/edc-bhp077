@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from datetime import datetime
 
 from django.db import models
@@ -25,6 +26,9 @@ class MaternalEligibilityLoss(BaseUuidModel):
     def ineligibility(self):
         return self.reason_ineligible or []
     reason_ineligible.allow_tags = True
+
+    def get_absolute_url(self):
+        return reverse('admin:microbiome_maternal_eligibilityloss_change', args=(self.id,))
 
     class Meta:
         app_label = 'microbiome_maternal'
