@@ -13,7 +13,9 @@ def infant_dashboard(request, **kwargs):
         dashboard_category=kwargs.get('dashboard_category'),
         registered_subject=kwargs.get('registered_subject'),
         dashboard_type_list=['infant'],
-        show=kwargs.get('show'))
+        show=kwargs.get('show'),
+    )
+
     dashboard.set_context()
     return render_to_response(
         'infant_dashboard.html',
