@@ -22,12 +22,12 @@
                 <tr class="{% cycle 'row2' 'row1' %}">
 
                 {% if maternal_eligibility.is_eligible %}
-                    <td><A href="{% url 'admin:microbiome_maternal_maternalconsent_add' %}">add maternal consent</A></td>            
+                    <td><A href="{% url 'admin:microbiome_maternal_maternalconsent_add' %}?&next=section_url&section_name=maternal">add maternal consent</A></td>            
                 {% else %}
                     <td>{{ maternal_eligibility.ineligibility }}</td>
                 {% endif %}
                 
-                <td><A href="{% url 'admin:microbiome_maternal_maternaleligibility_change' maternal_eligibility.pk %}&next=section_url&section_name=maternal">edit eligibility</A></td>
+                <td><A href="{% url 'admin:microbiome_maternal_maternaleligibility_change' maternal_eligibility.pk %}?&next=section_url&section_name=maternal">edit eligibility</A></td>
                 <td>{{maternal_eligibility.maternal_eligibility_loss.reason_ineligible|default:"-----" }}</td>
                 <td>{{maternal_eligibility.report_datetime}}</td>
                 <td>{{maternal_eligibility.age_in_years}}</td>
