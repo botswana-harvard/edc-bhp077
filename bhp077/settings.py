@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import os
+import socket
 from unipath import Path
 from django.utils import timezone
 
@@ -33,7 +34,8 @@ print 'PROJECT_ROOT', PROJECT_ROOT
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'sdfsdfsdfsdf'
 
-ALLOW_MODEL_SERIALIZATION = True
+ALLOW_MODEL_SERIALIZATION = False
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -231,6 +233,23 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'dajaxice.finders.DajaxiceFinder',
 )
+
+
+
+
+# edc.crytpo_fields encryption keys
+# developers should set by catching their hostname instead of setting explicitly
+if socket.gethostname() == 'ckgathi':
+    KEY_PATH = '/Users/ckgathi/source/microbiome/bhp077/keys'
+else:
+    # KEY_PATH = PROJECT_DIR.child('keys')  # DONT DELETE ME!!, just comment out
+    KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
+
+
+
+
+
+
 
 GIT_DIR = BASE_DIR.ancestor(1)
 
