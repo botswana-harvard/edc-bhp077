@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
+from edc.subject.registration.models import RegisteredSubject
 
 from bhp077.apps.microbiome_maternal.forms import MaternalConsentForm
 from bhp077.apps.microbiome_maternal.models import MaternalConsent
@@ -10,7 +11,8 @@ class MaternalConsentAdmin(BaseModelAdmin):
 
     form = MaternalConsentForm
 
-    fields = ('first_name',
+    fields = ('registered_subject',
+              'first_name',
               'last_name',
               'initials',
               'language',
@@ -31,6 +33,7 @@ class MaternalConsentAdmin(BaseModelAdmin):
                     'is_dob_estimated': admin.VERTICAL,
                     'identity_type': admin.VERTICAL}
     list_display = ('subject_identifier',
+                    'registered_subject',
                     'is_verified',
                     'is_verified_datetime',
                     'first_name',

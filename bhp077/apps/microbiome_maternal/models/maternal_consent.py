@@ -15,7 +15,7 @@ from edc_constants.choices import YES_NO_UNKNOWN, NO
 class MaternalConsent(BaseConsent, IdentityFieldsMixin, PersonalFieldsMixin,
                       CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
 
-    registered_subject = models.ForeignKey(RegisteredSubject, null=True, editable=False)
+    registered_subject = models.ForeignKey(RegisteredSubject, null=True)
 
     def __unicode__(self):
         return '{0} {1} {2} ({3})'.format(self.subject_identifier, self.first_name,
