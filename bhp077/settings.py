@@ -234,9 +234,6 @@ STATICFILES_FINDERS = (
     'dajaxice.finders.DajaxiceFinder',
 )
 
-
-
-
 # edc.crytpo_fields encryption keys
 # developers should set by catching their hostname instead of setting explicitly
 if socket.gethostname() == 'ckgathi':
@@ -244,12 +241,6 @@ if socket.gethostname() == 'ckgathi':
 else:
     # KEY_PATH = PROJECT_DIR.child('keys')  # DONT DELETE ME!!, just comment out
     KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
-
-
-
-
-
-
 
 GIT_DIR = BASE_DIR.ancestor(1)
 
