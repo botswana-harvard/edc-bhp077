@@ -38,16 +38,19 @@ def maternal_eligibility_on_post_save(sender, instance, raw, created, using, **k
 @receiver(post_save, weak=False, dispatch_uid="criteria_passed_create_registered_subject")
 def criteria_passed_create_registered_subject(sender, instance, raw, created, using, **kwargs):
     """Creates a Registered Subject ONLY if maternal eligibility is passed."""
-    if isinstance(instance, MaternalEligibility):
-        if instance.is_eligible:
-            registered_subject = RegisteredSubject.objects.using(using).create(
-                created=instance.created,
-                first_name='Mother',
-                gender='F',
-                subject_type='maternal',
-                registration_datetime=instance.created,
-                user_created=instance.user_created)
-            instance.registered_subject = registered_subject
+    if not raw:
+        if isinstance(instance, MaternalEligibility):
+            if instance.is_eligible:
+                if not instance.registered_subject:
+                    registered_subject = RegisteredSubject.objects.create(
+                        created=instance.created,
+                        first_name='Mother',
+                        gender='F',
+                        subject_type='maternal',
+                        registration_datetime=instance.created,
+                        user_created=instance.user_created)
+                    instance.registered_subject = registered_subject
+                    instance.save()
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_consent_on_post_save")
@@ -55,6 +58,7 @@ def maternal_consent_on_post_save(sender, instance, raw, created, using, **kwarg
     """This will update the is_consented boolean on maternal eligibility"""
     if not raw:
         if isinstance(instance, MaternalConsent):
-            maternal_eligibility = MaternalEligibility.objects.get(registered_subject__id=instance.registered_subject.id)
-            maternal_eligibility.is_consented = True
-            maternal_eligibility.save(update_fields='is_consented')
+            pass
+#             maternal_eligibility = MaternalEligibility.objects.get(registered_subject=instance.registered_subject)
+#             maternal_eligibility.is_consented = True
+#             maternal_eligibility.save(update_fields='is_consented')
