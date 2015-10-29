@@ -17,7 +17,6 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'is_literate',
               'witness_name',
               'consent_datetime',
-              'gender',
               'dob',
               'guardian_name',
               'is_dob_estimated',
@@ -29,7 +28,6 @@ class MaternalConsentAdmin(BaseModelAdmin):
     radio_fields = {'citizen': admin.VERTICAL,
                     'language': admin.VERTICAL,
                     'is_literate': admin.VERTICAL,
-                    'gender': admin.VERTICAL,
                     'is_dob_estimated': admin.VERTICAL,
                     'identity_type': admin.VERTICAL}
     list_display = ('subject_identifier',
