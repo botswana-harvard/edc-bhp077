@@ -21,7 +21,10 @@
       {% for maternal_eligibility in search_result.object_list %}
                 <tr class="{% cycle 'row2' 'row1' %}">
 
-                {% if maternal_eligibility.is_eligible %}
+                {% if maternal_eligibility.mothers_consent %}
+                    <td><A href="{% url 'subject_dashboard_url' dashboard_type='maternal' dashboard_model='maternal_consent' dashboard_id=maternal_consent.pk show='appointments' %}"><div nowrap>{{ maternal_eligibility.mothers_consent.subject_identifier }}</div></A></td>
+                
+                {% elif maternal_eligibility.is_eligible %}
                     <td><A href="{% url 'admin:microbiome_maternal_maternalconsent_add' %}?&next=section_url&section_name=maternal">add maternal consent</A></td>            
                 {% else %}
                     <td>{{ maternal_eligibility.ineligibility }}</td>
@@ -38,7 +41,7 @@
                 <td>{{maternal_eligibility.hostname_created}}</td>
 
       {% endfor %}
-      <tr><td colspan="9">{{ search_result.object_list.count }} maternal eligibility records found.</td></tr>                  
+      <tr><td colspan="9">{{ search_result.object_list.count }} maternal eligibility records found.</td></tr>
       </tbody>
       </table>
       </div>

@@ -4,7 +4,10 @@ from datetime import datetime
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from edc.subject.registration.models import RegisteredSubject
+
 from .maternal_eligibility import MaternalEligibility
+from .maternal_consent import MaternalConsent
 from .maternal_eligibility_loss import MaternalEligibilityLoss
 
 
@@ -30,3 +33,28 @@ def maternal_eligibility_on_post_save(sender, instance, raw, created, using, **k
                         user_modified=instance.user_modified)
             else:
                 MaternalEligibilityLoss.objects.filter(maternal_eligibility_id=instance.id).delete()
+
+
+@receiver(post_save, weak=False, dispatch_uid="criteria_passed_create_registered_subject")
+def criteria_passed_create_registered_subject(sender, instance, raw, created, using, **kwargs):
+    """Creates a Registered Subject ONLY if maternal eligibility is passed."""
+    if isinstance(instance, MaternalEligibility):
+        if instance.is_eligible:
+            registered_subject = RegisteredSubject.objects.using(using).create(
+                created=instance.created,
+                first_name='Mother',
+                gender='F',
+                subject_type='maternal',
+                registration_datetime=instance.created,
+                user_created=instance.user_created)
+            instance.registered_subject = registered_subject
+
+
+@receiver(post_save, weak=False, dispatch_uid="maternal_consent_on_post_save")
+def maternal_consent_on_post_save(sender, instance, raw, created, using, **kwargs):
+    """This will update the is_consented boolean on maternal eligibility"""
+    if not raw:
+        if isinstance(instance, MaternalConsent):
+            maternal_eligibility = MaternalEligibility.objects.get(registered_subject__id=instance.registered_subject.id)
+            maternal_eligibility.is_consented = True
+            maternal_eligibility.save(update_fields='is_consented')
