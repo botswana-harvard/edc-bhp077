@@ -61,3 +61,22 @@ def maternal_consent_on_post_save(sender, instance, raw, created, using, **kwarg
             maternal_eligibility = MaternalEligibility.objects.get(registered_subject=instance.registered_subject)
             maternal_eligibility.is_consented = True
             maternal_eligibility.save()
+
+
+@receiver(post_save, weak=False, dispatch_uid='update_registered_subject_on_post_save')
+def update_registered_subject_on_post_save(sender, instance, raw, created, using, **kwargs):
+    """Updates an instance of RegisteredSubject on the sender instance.
+
+    Sender instance is a Consent"""
+    if not raw:
+        if isinstance(instance, MaternalConsent):
+            instance.registered_subject.dob = instance.dob
+            instance.registered_subject.is_dob_estimated = instance.is_dob_estimated
+            instance.registered_subject.gender = instance.gender
+            instance.registered_subject.initials = instance.initials
+            instance.registered_subject.identity = instance.identity
+            instance.registered_subject.identity_type = instance.identity_type
+            instance.registered_subject.first_name = instance.first_name
+            instance.registered_subject.last_name = instance.last_name
+            instance.registered_subject.subject_identifier = instance.subject_identifier
+            instance.registered_subject.save(using=using)
