@@ -2,14 +2,19 @@ import uuid
 from django.core.urlresolvers import reverse
 from django.db import models
 
+from edc.subject.registration.models import RegisteredSubject
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_constants.choices import YES_NO
+
+from .maternal_consent import MaternalConsent
 
 
 class MaternalEligibility (BaseUuidModel):
     """This is the eligibility entry point for all mothers.
     If age eligible or not, an eligibility identifier is created for each mother"""
+
+    registered_subject = models.OneToOneField(RegisteredSubject, editable=False, null=True)
 
     eligibility_id = models.CharField(
         verbose_name="Eligibility Identifier",
@@ -52,6 +57,10 @@ class MaternalEligibility (BaseUuidModel):
     is_eligible = models.BooleanField(
         default=False,
         editable=False)
+    # is updated via signal once subject is consented
+    is_consented = models.BooleanField(
+        default=False,
+        editable=False)
 
     objects = models.Manager()
 
@@ -91,6 +100,14 @@ class MaternalEligibility (BaseUuidModel):
         except MaternalEligibilityLoss.DoesNotExist:
             maternal_eligibility_loss = None
         return maternal_eligibility_loss
+
+    @property
+    def mothers_consent(self):
+        try:
+            mothers_consent = MaternalConsent.objects.get(registered_subject__id=self.registered_subject.id)
+        except MaternalConsent.DoesNotExist:
+            mothers_consent = None
+        return mothers_consent
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_maternaleligibility_change', args=(self.id,))
