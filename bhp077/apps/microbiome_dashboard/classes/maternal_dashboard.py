@@ -42,8 +42,17 @@ class MaternalDashboard(RegisteredSubjectDashboard):
             home='microbiome',
             search_name='maternal',
             title='Maternal Dashboard',
-            subject_dashboard_url=self.subject_dashboard_url, )
+            subject_dashboard_url=self.subject_dashboard_url,
+            maternal_consent=self.consent
+        )
         return self.context
+
+    @property
+    def consent(self):
+        self._consent = None
+        if MaternalConsent.objects.filter(subject_identifier=self.subject_identifier):
+            self._consent = MaternalConsent.objects.get(subject_identifier=self.subject_identifier)
+        return self._consent
 
     def get_visit_model(self):
         return MaternalVisit
