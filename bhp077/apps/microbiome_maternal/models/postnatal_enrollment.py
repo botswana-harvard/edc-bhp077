@@ -1,12 +1,16 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from .base_enrollment import BaseEnrollment
-from ..maternal_choices import LIVE_STILL_BIRTH
 from edc_constants.choices import YES_NO
+
+from ..maternal_choices import LIVE_STILL_BIRTH
+from .base_enrollment import BaseEnrollment
+from .maternal_consent import MaternalConsent
 
 
 class PostnatalEnrollment(BaseEnrollment):
+
+    CONSENT_MODEL = MaternalConsent
 
     postpartum_days = models.IntegerField(
         verbose_name="How many days postpartum?",
@@ -35,6 +39,13 @@ class PostnatalEnrollment(BaseEnrollment):
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_postnatalenrollment_change', args=(self.id,))
+
+    def get_subject_identifier(self):
+        return self.registered_subject.subject_identifier
+
+    def __unicode__(self):
+        return "{0} {1}".format(self.registered_subject.subject_identifier,
+                                self.registered_subject.first_name)
 
     class Meta:
         app_label = 'microbiome_maternal'

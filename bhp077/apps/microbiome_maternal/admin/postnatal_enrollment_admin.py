@@ -1,16 +1,19 @@
 from django.contrib import admin
 
-from .registered_subject_model_admin import RegisteredSubjectModelAdmin
+from edc.base.modeladmin.admin import BaseModelAdmin
 
 from ..forms import PostnatalEnrollmentForm
 from ..models import PostnatalEnrollment
 
 
-class PostnatalEnrollmentAdmin(RegisteredSubjectModelAdmin):
+class PostnatalEnrollmentAdmin(BaseModelAdmin):
+
+    dashboard_type = 'maternal'
 
     form = PostnatalEnrollmentForm
 
-    fields = ('report_datetime',
+    fields = ('registered_subject',
+              'report_datetime',
               'postpartum_days',
               'delivery_type',
               'gestation_before_birth',
@@ -39,4 +42,6 @@ class PostnatalEnrollmentAdmin(RegisteredSubjectModelAdmin):
                     'valid_regimen': admin.VERTICAL,
                     'process_rapid_test': admin.VERTICAL,
                     'rapid_test_result': admin.VERTICAL}
+    list_display = ('registered_subject', 'report_datetime', 'delivery_type',
+                    'evidence_hiv_status', 'valid_regimen')
 admin.site.register(PostnatalEnrollment, PostnatalEnrollmentAdmin)
