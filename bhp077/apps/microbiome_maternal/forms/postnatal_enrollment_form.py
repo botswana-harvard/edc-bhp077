@@ -1,9 +1,8 @@
-from edc_consent.forms.base_consent_form import BaseConsentForm
-
+from edc.base.form.forms import BaseModelForm
 from ..models import PostnatalEnrollment
 
 
-class PostnatalEnrollmentForm(BaseConsentForm):
+class PostnatalEnrollmentForm(BaseModelForm):
 
     class Meta:
         model = PostnatalEnrollment

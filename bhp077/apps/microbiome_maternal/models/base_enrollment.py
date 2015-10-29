@@ -4,14 +4,15 @@ from edc.subject.registration.models import RegisteredSubject
 from edc_base.model.fields import OtherCharField
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
-from edc_consent.models import RequiresConsentMixin
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc_constants.choices import (POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO_UNKNOWN,
                                    YES_NO)
 from edc_constants.constants import NOT_APPLICABLE
 
+from .maternal_off_study_mixin import MaternalOffStudyMixin
 
-class BaseEnrollment(BaseUuidModel, RequiresConsentMixin, BaseAppointmentMixin):
+
+class BaseEnrollment(BaseUuidModel, MaternalOffStudyMixin, BaseAppointmentMixin):
 
     """Base Model for antenal and postnatal enrollment"""
 
