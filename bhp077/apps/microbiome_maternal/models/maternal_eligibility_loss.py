@@ -28,7 +28,7 @@ class MaternalEligibilityLoss(BaseUuidModel):
     reason_ineligible.allow_tags = True
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_eligibilityloss_change', args=(self.id,))
+        return reverse('admin:microbiome_maternal_maternaleligibilityloss_change', args=(self.id,))
 
     class Meta:
         app_label = 'microbiome_maternal'
