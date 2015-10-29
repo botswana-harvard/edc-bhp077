@@ -30,6 +30,12 @@ class RapidTestResult(MaternalScheduledVisitModel):
         null=True,
         blank=True,)
 
+    def get_result_datetime(self):
+        return self.report_datetime
+
+    def get_test_code(self):
+        return 'HIV'
+
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = 'Rapid Test Result'
