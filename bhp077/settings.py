@@ -33,6 +33,7 @@ print 'PROJECT_ROOT', PROJECT_ROOT
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'sdfsdfsdfsdf'
 
+ALLOW_MODEL_SERIALIZATION = True
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -242,6 +243,7 @@ MINIMUM_AGE_OF_CONSENT = 18
 MAXIMUM_AGE_OF_CONSENT = 64
 
 DEVICE_ID = 95
+SITE_CODE = '40'
 SERVER_DEVICE_ID_LIST = [91, 92, 93, 94, 95, 96, 97, 99]
 MIDDLEMAN_DEVICE_ID_LIST = [98]
 if str(DEVICE_ID) == range(91, 97):
