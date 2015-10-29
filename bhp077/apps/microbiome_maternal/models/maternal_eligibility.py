@@ -80,7 +80,7 @@ class MaternalEligibility (BaseUuidModel):
         return (False if ineligibility else True, ineligibility)
 
     def __unicode__(self):
-        return (("eligibility_id"))
+        return "{0} ({1})".format(self.eligibility_id, self.age_in_years)
 
     @property
     def maternal_ineligibility(self):
@@ -104,7 +104,7 @@ class MaternalEligibility (BaseUuidModel):
     @property
     def mothers_consent(self):
         try:
-            mothers_consent = MaternalConsent.objects.get(registered_subject__id=self.registered_subject.id)
+            mothers_consent = MaternalConsent.objects.get(registered_subject=self.registered_subject)
         except MaternalConsent.DoesNotExist:
             mothers_consent = None
         return mothers_consent

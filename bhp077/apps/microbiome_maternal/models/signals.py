@@ -58,7 +58,6 @@ def maternal_consent_on_post_save(sender, instance, raw, created, using, **kwarg
     """This will update the is_consented boolean on maternal eligibility"""
     if not raw:
         if isinstance(instance, MaternalConsent):
-            pass
-#             maternal_eligibility = MaternalEligibility.objects.get(registered_subject=instance.registered_subject)
-#             maternal_eligibility.is_consented = True
-#             maternal_eligibility.save(update_fields='is_consented')
+            maternal_eligibility = MaternalEligibility.objects.get(registered_subject=instance.registered_subject)
+            maternal_eligibility.is_consented = True
+            maternal_eligibility.save()
