@@ -30,7 +30,7 @@ class MaternalDashboard(RegisteredSubjectDashboard):
         self.subject_dashboard_url = 'subject_dashboard_url'
         self.visit_model = MaternalVisit
         self.dashboard_type_list = ['maternal']
-        self.membership_form_category = ['antenatal', 'postnatal']
+        self.membership_form_category = ['sample', 'antenatal', 'postnatal']
         self.dashboard_models['maternal_eligibility'] = MaternalEligibility
         self.dashboard_models['maternal_consent'] = MaternalConsent
         self.requisition_model = MaternalRequisition

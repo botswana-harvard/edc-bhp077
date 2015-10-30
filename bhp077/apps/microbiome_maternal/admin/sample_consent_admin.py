@@ -7,9 +7,11 @@ from bhp077.apps.microbiome_maternal.forms import SampleConsentForm
 
 class SampleConsentAdmin(BaseModelAdmin):
 
+    dashboard_type = 'maternal'
     form = SampleConsentForm
 
-    fields = ('language',
+    fields = ('registered_subject',
+              'language',
               'may_store_samples',
               'is_literate',
               'witness_name',
@@ -18,5 +20,5 @@ class SampleConsentAdmin(BaseModelAdmin):
                     'may_store_samples': admin.VERTICAL,
                     'is_literate': admin.VERTICAL,
                     'consent_benefits': admin.VERTICAL}
-
+    list_dispay = ('registered_subject', 'may_store_samples')
 admin.site.register(SampleConsent, SampleConsentAdmin)

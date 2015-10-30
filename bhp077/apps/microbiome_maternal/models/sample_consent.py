@@ -1,8 +1,10 @@
 from django.db import models
 
+from edc.subject.appointment_helper.models import BaseAppointmentMixin
+from edc.subject.registration.models import RegisteredSubject
 from edc_base.model.models.base_uuid_model import BaseUuidModel
-from edc_consent.models.fields import SampleCollectionFieldsMixin, VulnerabilityFieldsMixin
 from edc_consent.models import RequiresConsentMixin
+from edc_consent.models.fields import SampleCollectionFieldsMixin, VulnerabilityFieldsMixin
 from edc_consent.models.validators import eligible_if_yes
 from edc_constants.choices import YES_NO
 
@@ -10,9 +12,11 @@ from .maternal_consent import MaternalConsent
 
 
 class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, VulnerabilityFieldsMixin,
-                    BaseUuidModel):
+                    BaseUuidModel, BaseAppointmentMixin):
 
     CONSENT_MODEL = MaternalConsent
+
+    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
     consent_benefits = models.CharField(
         verbose_name=("I have explained the purpose of the Infant Gut Microbiome Study"
