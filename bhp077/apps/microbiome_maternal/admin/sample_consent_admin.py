@@ -11,6 +11,7 @@ class SampleConsentAdmin(BaseModelAdmin):
     form = SampleConsentForm
 
     fields = ('registered_subject',
+              'report_datetime',
               'language',
               'may_store_samples',
               'is_literate',

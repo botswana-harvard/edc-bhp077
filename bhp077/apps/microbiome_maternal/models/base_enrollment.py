@@ -10,10 +10,8 @@ from edc_constants.choices import (POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG,
                                    YES_NO)
 from edc_constants.constants import NOT_APPLICABLE
 
-from .maternal_off_study_mixin import MaternalOffStudyMixin
 
-
-class BaseEnrollment(BaseUuidModel, MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsentMixin):
+class BaseEnrollment(BaseUuidModel, BaseAppointmentMixin, RequiresConsentMixin):
 
     """Base Model for antenal and postnatal enrollment"""
 
