@@ -30,7 +30,7 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
                    'the date/time this information was reported.'))
 
     consent_benefits = models.CharField(
-        verbose_name=("I have explained the purpose of the Infant Gut Microbiome Study"
+        verbose_name=("I have explained the purpose of the sample storage"
                       " to the participant. To the best of my knowledge, she understands"
                       " the purpose, procedures, risks and benefits to her and her baby."),
         max_length=3,
