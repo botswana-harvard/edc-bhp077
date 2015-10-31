@@ -6,7 +6,6 @@ from django.conf import settings
 from edc.core.identifier.classes import SubjectIdentifier
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc_base.model.fields import IdentityTypeField
 from edc_base.model.fields.custom_fields import OmangField
 from edc_base.model.models.base_uuid_model import BaseUuidModel
@@ -18,7 +17,7 @@ from edc_constants.choices import YES_NO_UNKNOWN, NO
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
-class MaternalConsent(BaseConsent, BaseAppointmentMixin, MaternalOffStudyMixin,
+class MaternalConsent(BaseConsent, MaternalOffStudyMixin,
                       IdentityFieldsMixin, PersonalFieldsMixin,
                       CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
 

@@ -1,9 +1,9 @@
-from edc_consent.forms.base_consent_form import BaseConsentForm
+from edc.base.form.forms import BaseModelForm
 
 from ..models import MaternalConsent
 
 
-class MaternalConsentForm(BaseConsentForm):
+class MaternalConsentForm(BaseModelForm):
 
     def clean(self):
         clean_data = super(MaternalConsentForm, self).clean()

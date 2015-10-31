@@ -14,7 +14,7 @@ class MaternalEligibility (BaseUuidModel):
     """This is the eligibility entry point for all mothers.
     If age eligible or not, an eligibility identifier is created for each mother"""
 
-    registered_subject = models.OneToOneField(RegisteredSubject, editable=False, null=True)
+    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
     eligibility_id = models.CharField(
         verbose_name="Eligibility Identifier",
