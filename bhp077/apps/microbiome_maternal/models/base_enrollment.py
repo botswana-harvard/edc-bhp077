@@ -9,9 +9,10 @@ from edc_consent.models import RequiresConsentMixin
 from edc_constants.choices import (POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO_UNKNOWN,
                                    YES_NO)
 from edc_constants.constants import NOT_APPLICABLE
+from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
-class BaseEnrollment(BaseUuidModel, BaseAppointmentMixin, RequiresConsentMixin):
+class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsentMixin, BaseUuidModel):
 
     """Base Model for antenal and postnatal enrollment"""
 
@@ -98,6 +99,13 @@ class BaseEnrollment(BaseUuidModel, BaseAppointmentMixin, RequiresConsentMixin):
         max_length=15,
         null=True,
         blank=True,)
+
+    def get_subject_identifier(self):
+        return self.registered_subject.subject_identifier
+
+    def __unicode__(self):
+        return "{0} {1}".format(self.registered_subject.subject_identifier,
+                                self.registered_subject.first_name)
 
     class Meta:
         abstract = True
