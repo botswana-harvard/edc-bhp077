@@ -21,13 +21,10 @@ INSTITUTION = 'Botswana-Harvard AIDS Institute'
 PROTOCOL_REVISION = '0.1dev'
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOURCE_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2)
-print 'SOURCE_ROOT', SOURCE_ROOT
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
 MEDIA_ROOT = BASE_DIR.child('media')
 PROJECT_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
-print 'PROJECT DIR', PROJECT_DIR
 PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
-print 'PROJECT_ROOT', PROJECT_ROOT
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -35,6 +32,7 @@ print 'PROJECT_ROOT', PROJECT_ROOT
 SECRET_KEY = 'sdfsdfsdfsdf'
 
 ALLOW_MODEL_SERIALIZATION = False
+DISPATCH_APP_LABELS = []
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -176,10 +174,10 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_LOADERS = (
-    (#'django.template.loaders.cached.Loader', (
+    (  # 'django.template.loaders.cached.Loader', (
      'django.template.loaders.filesystem.Loader',
      'django.template.loaders.app_directories.Loader',
-     'django.template.loaders.eggs.Loader'
+     'django.template.loaders.eggs.Loader'  # )
     )
 )
 

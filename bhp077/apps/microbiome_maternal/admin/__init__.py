@@ -3,6 +3,8 @@ from .maternal_eligibility_admin import MaternalEligibilityAdmin
 from .antenatal_enrollment_admin import AntenatalEnrollmentAdmin
 from .postnatal_enrollment_admin import PostnatalEnrollmentAdmin
 from .maternal_consent_admin import MaternalConsentAdmin
+from .maternal_visit_admin import MaternalVisitAdmin
+from .maternal_eligibility_loss_admin import MaternalEligibilityLossAdmin
 from .sample_consent_admin import SampleConsentAdmin
 from .maternal_locator_admin import MaternalLocatorAdmin
 from .maternal_demographics_admin import MaternalDemographicsAdmin
