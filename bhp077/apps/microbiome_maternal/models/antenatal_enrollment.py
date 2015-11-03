@@ -18,13 +18,6 @@ class AntenatalEnrollment(BaseEnrollment):
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_antenatalenrollment_change', args=(self.id,))
 
-    def __unicode__(self):
-        return "{0} {1}".format(self.registered_subject.subject_identifier,
-                                self.registered_subject.first_name)
-
-    def get_subject_identifier(self):
-        return self.registered_subject.subject_identifier
-
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = 'Antenatal Enrollment'

@@ -1,9 +1,9 @@
-from django import forms
+from edc_consent.forms import BaseConsentedModelForm
 
 from ..models import MaternalVisit
 
 
-class MaternalVisitForm (forms.ModelForm):
+class MaternalVisitForm (BaseConsentedModelForm):
 
     class Meta:
         model = MaternalVisit

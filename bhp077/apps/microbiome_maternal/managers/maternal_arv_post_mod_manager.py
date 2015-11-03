@@ -4,8 +4,8 @@ from django.db import models
 class MaternalArvPostModManager(models.Manager):
 
     def get_by_natural_key(self, arv_code, report_datetime, visit_instance, appt_status, visit_definition_code, subject_identifier_as_pk):
-        MaternalVisit = models.get_model('maternal', 'MaternalVisit')
-        MaternalArvPost = models.get_model('maternal', 'MaternalArvPost')
+        MaternalVisit = models.get_model('microbiome_maternal', 'MaternalVisit')
+        MaternalArvPost = models.get_model('microbiome_maternal', 'MaternalArvPost')
         maternal_visit = MaternalVisit.objects.get_by_natural_key(report_datetime,
                                                                   visit_instance,
                                                                   appt_status,
