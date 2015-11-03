@@ -8,7 +8,8 @@ class RapidTestResultAdmin(BaseModelAdmin):
     fields = ('maternal_visit',
               'process_rapid_test',
               'date_of_rapid_test',
-              'rapid_test_result',)
+              'rapid_test_result',
+              'comments')
     list_display = ('maternal_visit',
                     'process_rapid_test',
                     'rapid_test_result')

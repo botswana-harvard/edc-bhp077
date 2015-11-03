@@ -1,9 +1,23 @@
+from django import forms
 from base_maternal_model_form import BaseMaternalModelForm
 
 from ..models import RapidTestResult
 
 
 class RapidTestResultForm(BaseMaternalModelForm):
+
+    def clean(self):
+
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('process_rapid_test'):
+            if not cleaned_data.get('date_of_rapid_test'):
+                raise forms.ValidationError('If a rapid test was processed, what is the date'
+                                            ' of the rapid test?')
+            if not cleaned_data.get('rapid_test_result'):
+                raise forms.ValidationError('If a rapid test was processed, what is the test'
+                                            ' result?')
+        cleaned_data = super(RapidTestResultForm, self).clean()
+        return cleaned_data
 
     class Meta:
         model = RapidTestResult
