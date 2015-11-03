@@ -2,9 +2,9 @@ import factory
 
 from datetime import datetime
 
-from edc_registration.tests.factories import RegisteredSubjectFactory
+from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 
-from ...maternal.models import AntenatalEnrollment
+from bhp077.apps.microbiome_maternal.models import AntenatalEnrollment
 
 
 class AntenatalEnrollmentFactory(factory.DjangoModelFactory):

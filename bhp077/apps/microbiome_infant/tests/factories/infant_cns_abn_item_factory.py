@@ -2,7 +2,7 @@ import factory
 
 from django.utils import timezone
 
-from ...infant.models import InfantCnsAbnormalityItems
+from bhp077.apps.microbiome_infant.models import InfantCnsAbnormalityItems
 
 
 class InfantBirthCnsAbnItemFactory(factory.DjangoModelFactory):

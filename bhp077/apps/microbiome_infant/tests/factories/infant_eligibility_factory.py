@@ -2,9 +2,9 @@ import factory
 from django.utils import timezone
 from edc_constants.constants import POS
 
-from ...infant.models import InfantEligibility
+from bhp077.apps.microbiome_infant.models import InfantEligibility
 
-from .maternal_eligibility_factory import MaternalEligibilityFactory
+from bhp077.apps.microbiome_maternal.tests.factories.maternal_eligibility_factory import MaternalEligibilityFactory
 
 
 class InfantEligibilityFactory(factory.DjangoModelFactory):

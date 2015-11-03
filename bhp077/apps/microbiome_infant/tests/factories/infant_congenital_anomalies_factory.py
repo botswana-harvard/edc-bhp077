@@ -1,6 +1,6 @@
 import factory
 
-from ...infant.models import InfantCongenitalAnomalies
+from bhp077.apps.microbiome_infant.models import InfantCongenitalAnomalies
 
 from .infant_visit_factory import InfantVisitFactory
 

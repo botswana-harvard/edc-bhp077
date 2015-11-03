@@ -2,9 +2,9 @@ import factory
 
 from django.utils import timezone
 
-from ...infant.models import InfantBirth
+from bhp077.apps.microbiome_infant.models import InfantBirth
 
-from .maternal_labour_del_factory import MaternalLabourDelFactory
+from bhp077.apps.microbiome_maternal.tests.factories.maternal_labour_del_factory import MaternalLabourDelFactory
 
 
 class InfantBirthFactory(factory.DjangoModelFactory):

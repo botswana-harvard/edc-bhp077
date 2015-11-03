@@ -3,7 +3,7 @@ import factory
 from django.utils import timezone
 from edc_constants.constants import YES, NO
 
-from ...maternal.models import MaternalLabourDel
+from bhp077.apps.microbiome_maternal.models import MaternalLabourDel
 
 
 class MaternalLabourDelFactory(factory.DjangoModelFactory):

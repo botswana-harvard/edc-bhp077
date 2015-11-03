@@ -3,8 +3,5 @@ from .infant_eligibility_factory import InfantEligibilityFactory
 from .infant_birth_arv_factory import InfantBirthArvFactory
 from .infant_visit_factory import InfantVisitFactory
 from .infant_cns_abn_item_factory import InfantBirthCnsAbnItemFactory
-from .maternal_eligibility_factory import MaternalEligibilityFactory
-from .maternal_screening_factory import MaternalScreeningFactory
-from .maternal_labour_del_factory import MaternalLabourDelFactory
-from .subject_consent_factory import SubjectConsentFactory
-from .antenatal_enrollment_factory import AntenatalEnrollmentFactory
+from bhp077.apps.microbiome_maternal.tests.factories.maternal_labour_del_factory import MaternalLabourDelFactory
+from bhp077.apps.microbiome_maternal.tests.factories.antenatal_enrollment_factory import AntenatalEnrollmentFactory
