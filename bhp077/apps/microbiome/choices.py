@@ -2,17 +2,22 @@ from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
 from bhp077.apps.microbiome.constants import LIVE
 
 VISIT_INFO_SOURCE = [
-    ('subject', 'Subject'),
-    ('other_member', 'Other household member'),
-    ('OTHER', 'Other'),
-]
+    ('participant', 'Clinic visit with participant'),
+    ('other_contact', 'Other contact with participant (for example telephone call)'),
+    ('other_doctor', 'Contact with external health care provider/medical doctor'),
+    ('family', 'Contact with family or designated person who can provide information'),
+    ('chart', 'Hospital chart or other medical record'),
+    ('telephone', 'Telephone call with participant'),
+    ('OTHER', 'Other')]
 
+# DONT CHANGE THESE !!
 VISIT_REASON = [
-    ('consent', 'Consent and Survey with subject'),
-    ('absent', 'Absentee'),
-    ('undecided', 'Undecided (with subject)'),
-    ('refuse', 'Refusal (with subject)'),
-]
+    ('scheduled', 'Scheduled visit/contact'),
+    ('missed', 'Missed Scheduled visit'),
+    ('unscheduled', 'Unscheduled visit at which lab samples or data are being submitted'),
+    ('lost', 'Lost to follow-up (use only when taking subject off study)'),
+    ('death', 'Death'),
+    ('off study', 'Subject has completed the study')]
 
 VISIT_UNSCHEDULED_REASON = (
     ('Routine oncology', 'Routine oncology clinic visit'),
@@ -564,28 +569,6 @@ VACCINES = (
     ('Varicella', 'Varicella'),
     ('Influenza', 'Influenza'),
 )
-
-VISIT_INFO_SOURCE = [
-    ('participant', '1. Clinic visit with participant'),
-    ('other_contact', '2. Other contact with participant (for example telephone call)'),
-    ('other_doctor', '3. Contact with external health care provider/medical doctor'),
-    ('family', '4. Contact with family or designated person who can provide information'),
-    ('chart', '5. Hospital chart or other medical record'),
-    ('telephone', '6. Telephone call with participant'),
-    ('OTHER', '9. Other'),
-]
-
-# DONT CHANGE THESE !!
-VISIT_REASON = [
-    ('scheduled', '1. Scheduled visit/contact'),
-    ('missed', '2. Missed Scheduled visit'),
-    ('unscheduled', '3. Unscheduled visit at which lab samples or data are being submitted'),
-    ('lost', '4. Lost to follow-up (use only when taking subject off study)'),
-    ('death', '5. Death'),
-    ('off study', '6. Subject has completed the study'),
-    ('deferred', '7. Deferred (2010 only)'),
-    ('vital status', '8. Vital Status'),
-]
 
 WATER_USED = (
     ('Water direct from source', 'Water direct from source'),

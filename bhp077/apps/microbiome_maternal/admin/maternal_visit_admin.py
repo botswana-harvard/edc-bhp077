@@ -17,4 +17,31 @@ class MaternalVisitAdmin(BaseAppointmentModelAdmin):
 
     dashboard_type = 'maternal'
 
+    fields = (
+        "appointment",
+        "report_datetime",
+        "info_source",
+        "info_source_other",
+        "reason",
+        "reason_unscheduled",
+        "reason_missed",
+        "comments")
+    
+    radio_fields = {
+        "reason_unscheduled": admin.VERTICAL}
+
+    list_display = (
+        'appointment',
+        'report_datetime',
+        'reason',
+        "info_source",
+        'created',
+        'user_created')
+
+    list_filter = (
+        'report_datetime',
+        'reason',
+        'appointment__appt_status',
+        'appointment__visit_definition__code')
+
 admin.site.register(MaternalVisit, MaternalVisitAdmin)

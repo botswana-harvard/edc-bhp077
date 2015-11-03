@@ -7,7 +7,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_consent.models import RequiresConsentMixin
 from bhp077.apps.microbiome_maternal.models import MaternalConsent
 
-from bhp077.apps.microbiome.choices import VISIT_UNSCHEDULED_REASON
+from bhp077.apps.microbiome.choices import VISIT_UNSCHEDULED_REASON, VISIT_REASON
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
@@ -29,15 +29,14 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_maternalvisit_add', args=(self.id,))
 
-#     @property
-#     def subject_identifier(self):
-#         return self.appointment.registered_subject.subject_identifier
-
     def __unicode__(self):
         return '{} {} ({}) {}'.format(self.appointment.registered_subject.subject_identifier,
                                       self.appointment.registered_subject.first_name,
                                       self.appointment.registered_subject.gender,
                                       self.appointment.visit_definition.code)
+
+    def get_visit_reason_choices(self):
+        return VISIT_REASON
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
