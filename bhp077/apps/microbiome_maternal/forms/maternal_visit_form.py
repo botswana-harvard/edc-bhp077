@@ -1,13 +1,13 @@
 from django import forms
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
-from edc_consent.forms import BaseConsentedModelForm
+from edc.base.form.forms import BaseModelForm
 
 from ..models import MaternalVisit
 from bhp077.apps.microbiome.choices import VISIT_REASON, VISIT_INFO_SOURCE
 
 
-class MaternalVisitForm (BaseConsentedModelForm):
+class MaternalVisitForm (BaseModelForm):
 
     reason = forms.ChoiceField(
         label='Reason for visit',

@@ -21,19 +21,20 @@ INSTITUTION = 'Botswana-Harvard AIDS Institute'
 PROTOCOL_REVISION = '0.1dev'
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOURCE_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2)
+print 'SOURCE_ROOT', SOURCE_ROOT
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
 MEDIA_ROOT = BASE_DIR.child('media')
 PROJECT_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
+print 'PROJECT DIR', PROJECT_DIR
 PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
+print 'PROJECT_ROOT', PROJECT_ROOT
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+ALLOW_MODEL_SERIALIZATION = True
 SECRET_KEY = 'sdfsdfsdfsdf'
-
-ALLOW_MODEL_SERIALIZATION = False
-DISPATCH_APP_LABELS = []
-
+KEY_PATH = ''
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -174,10 +175,10 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_LOADERS = (
-    (  # 'django.template.loaders.cached.Loader', (
+    (#'django.template.loaders.cached.Loader', (
      'django.template.loaders.filesystem.Loader',
      'django.template.loaders.app_directories.Loader',
-     'django.template.loaders.eggs.Loader'  # )
+     'django.template.loaders.eggs.Loader'
     )
 )
 
@@ -234,11 +235,6 @@ STATICFILES_FINDERS = (
 
 # edc.crytpo_fields encryption keys
 # developers should set by catching their hostname instead of setting explicitly
-if socket.gethostname() == 'ckgathi':
-    KEY_PATH = '/Users/ckgathi/source/microbiome/bhp077/keys'
-else:
-    # KEY_PATH = PROJECT_DIR.child('keys')  # DONT DELETE ME!!, just comment out
-    KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
 
 GIT_DIR = BASE_DIR.ancestor(1)
 
@@ -249,6 +245,7 @@ SUBJECT_TYPES = ['maternal', 'infant']
 MAX_SUBJECTS = {'maternal': 3000, 'infant': 3000}
 MINIMUM_AGE_OF_CONSENT = 18
 MAXIMUM_AGE_OF_CONSENT = 64
+DISPATCH_APP_LABELS = []
 
 DEVICE_ID = 95
 SITE_CODE = '40'
