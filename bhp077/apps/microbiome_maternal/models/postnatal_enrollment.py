@@ -40,6 +40,9 @@ class PostnatalEnrollment(BaseEnrollment):
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_postnatalenrollment_change', args=(self.id,))
 
+    def get_registration_datetime(self):
+        return self.report_datetime
+
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = 'Postnatal Enrollment'
