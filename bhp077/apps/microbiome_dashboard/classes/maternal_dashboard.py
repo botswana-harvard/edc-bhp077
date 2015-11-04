@@ -1,8 +1,4 @@
-from collections import OrderedDict
-
-from edc.core.bhp_common.utils import convert_from_camel
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
-from edc.subject.registration.models import RegisteredSubject
 
 from bhp077.apps.microbiome_maternal.models import (MaternalVisit, MaternalEligibility,
                                              MaternalLocator, MaternalConsent)
@@ -30,9 +26,10 @@ class MaternalDashboard(RegisteredSubjectDashboard):
         self.subject_dashboard_url = 'subject_dashboard_url'
         self.visit_model = MaternalVisit
         self.dashboard_type_list = ['maternal']
-        self.membership_form_category = ['sample', 'antenatal', 'postnatal']
+        self.membership_form_category = ['postnatal', 'antenatal', 'sample',]
         self.dashboard_models['maternal_eligibility'] = MaternalEligibility
         self.dashboard_models['maternal_consent'] = MaternalConsent
+        self.dashboard_models['visit'] = MaternalVisit
         self.requisition_model = MaternalRequisition
         self._locator_model = MaternalLocator
 
@@ -43,7 +40,7 @@ class MaternalDashboard(RegisteredSubjectDashboard):
             search_name='maternal',
             title='Maternal Dashboard',
             subject_dashboard_url=self.subject_dashboard_url,
-            maternal_consent=self.consent
+            maternal_consent=self.consent,
         )
         return self.context
 
