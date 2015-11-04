@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import get_model
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
@@ -8,11 +9,14 @@ from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from bhp077.apps.microbiome_list.models import Suppliments
+from bhp077.apps.microbiome_maternal.models import MaternalConsent
 
 
 class MaternalLabourDel(MaternalScheduledVisitModel):
 
     """ Maternal Labor and Delivery which triggers registration of infants"""
+
+    CONSENT_MODEL = MaternalConsent
 
     delivery_datetime = models.DateTimeField(
         verbose_name="Date and time of delivery :",
@@ -90,6 +94,8 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
 
     """ Medical history collected during labor and delivery. """
 
+    CONSENT_MODEL = MaternalConsent
+
     has_health_cond = models.CharField(
         max_length=3,
         choices=YES_NO,
@@ -122,6 +128,8 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
 
     """ Laboratory and other clinical information collected during labor and delivery.
     for HIV +ve mothers ONLY"""
+
+    CONSENT_MODEL = MaternalConsent
 
     maternal_lab_del = models.OneToOneField(MaternalLabourDel)
 
@@ -193,6 +201,8 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
     """ Diagnosis during pregnancy collected during labor and delivery.
     This is for HIV positive mothers only"""
 
+    CONSENT_MODEL = MaternalConsent
+
     has_preg_dx = models.CharField(
         max_length=3,
         choices=YES_NO,
@@ -218,6 +228,9 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
 class MaternalLabDelDxT (MaternalScheduledVisitModel):
 
     """ Diagnosis during pregnancy collected during labor and delivery (transactions). """
+
+    CONSENT_MODEL = MaternalConsent
+
     maternal_lab_del_dx = models.OneToOneField(MaternalLabDelDx)
 
     lab_del_dx = models.CharField(
