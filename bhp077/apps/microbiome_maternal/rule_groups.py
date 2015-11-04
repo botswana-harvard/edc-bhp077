@@ -12,14 +12,16 @@ class PostnatalEnrollmentRuleGroup(RuleGroup):
             predicate=(('verbal_hiv_status', 'equals', POS), ('evidence_hiv_status', 'equals', YES, 'and')),
             consequence='new',
             alternative='not_required'),
-        target_model=['maternalinfected', 'maternalarvhistory'])
+        target_model=['maternalinfected', 'maternalarvhistory', 'maternalarvpost',
+                      'maternalarvpreg', 'maternallabdelclinic'])
 
     has_rapid_test_is_pos = ScheduledDataRule(
         logic=Logic(
             predicate=(('process_rapid_test', 'equals', YES), ('rapid_test_result', 'equals', POS, 'and')),
             consequence='new',
             alternative='not_required'),
-        target_model=['maternalarvpost', 'maternalarvhistory'])
+        target_model=['maternalinfected', 'maternalarvpost', 'maternalarvhistory',
+                      'maternalarvpreg', 'maternallabdelclinic'])
 
     class Meta:
         app_label = 'microbiome_maternal'

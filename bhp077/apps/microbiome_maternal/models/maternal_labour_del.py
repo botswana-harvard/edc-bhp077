@@ -1,11 +1,13 @@
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
 from edc_base.model.validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from bhp077.apps.microbiome_list.models import Suppliments
 
 
 class MaternalLabourDel(MaternalScheduledVisitModel):
@@ -27,7 +29,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
     labour_hrs = models.CharField(
         verbose_name="How long prior to to delivery, in HRS, did labour begin? ",
         max_length=10,
-        help_text="For multiple births, time of delivery = time first infant born")
+        help_text="")
 
     del_hosp = models.CharField(
         verbose_name="Where did the participant deliver? ",
@@ -58,13 +60,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         max_length=3,
         choices=YES_NO,
         verbose_name="Were there other complications at delivery? ",
-        help_text="( if 'YES' continue.)")
-
-    del_comp_other = models.TextField(
-        max_length=250,
-        verbose_name="if other, describe the complication",
-        blank=True,
-        null=True)
+        help_text="")
 
     live_infants_to_register = models.IntegerField(
         verbose_name="How many babies are registering to the study? ",
@@ -72,7 +68,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
 
     del_comment = models.TextField(
         max_length=250,
-        verbose_name="List any addtional information about the labour and delivery (mother only) ",
+        verbose_name="List any additional information about the labour and delivery (mother only) ",
         blank=True,
         null=True)
 
@@ -81,6 +77,8 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         verbose_name="Comment if any additional pertinent information ",
         blank=True,
         null=True)
+
+    history = AuditTrail()
 
     class Meta:
         app_label = 'microbiome_maternal'
@@ -97,20 +95,14 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         choices=YES_NO,
         verbose_name="Has the mother been newly diagnosed (during this pregnancy) "
         "with any major chronic health condition(s) that remain ongoing?",
-        help_text="if yes answer Question 4, otherwise go to Question 6")
+        help_text="")
 
-    health_cond_other = OtherCharField()
     has_ob_comp = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name="During this pregnancy, did the mother have any of the following "
-        "obstetrical complications? (in 7)",
+        "obstetrical complications?",
         help_text="")
-
-    ob_comp_other = models.TextField(
-        max_length=250,
-        blank=True,
-        null=True)
 
     comment = models.TextField(
         max_length=250,
@@ -118,15 +110,18 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
+    history = AuditTrail()
+
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = "Maternal Labour & Delivery: MedHistory"
-        verbose_name_plural = "Maternal Labour & Delivery: MedHistory"
+        verbose_name = "Maternal LAB-DEL: Medical History"
+        verbose_name_plural = "Maternal LAB-DEL: Medical History"
 
 
 class MaternalLabDelClinic(MaternalScheduledVisitModel):
 
-    """ Laboratory and other clinical information collected during labor and delivery"""
+    """ Laboratory and other clinical information collected during labor and delivery.
+    for HIV +ve mothers ONLY"""
 
     maternal_lab_del = models.OneToOneField(MaternalLabourDel)
 
@@ -135,7 +130,7 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         choices=YES_NO,
         verbose_name=("During this pregnancy did the mother have at least one CD4 count"
                       " performed (outside the study)? "),
-        help_text="( if 'YES' continue)")
+        help_text="")
 
     cd4_date = models.DateField(
         verbose_name="Date of most recent CD4 test? ",
@@ -171,8 +166,13 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
     took_suppliments = models.CharField(
         max_length=3,
         choices=YES_NO,
-        verbose_name="Did the mother take any of the following during this pregnancy?(in 10)   ",
-        help_text="( if 'YES' continue. Otherwise go to question 11 )")
+        verbose_name="Did the mother take any of the following medications during this pregnancy?",
+        help_text="")
+
+    suppliments = models.ManyToManyField(
+        Suppliments,
+        verbose_name="Please select relevant medications taken:",
+        help_text="Select all that apply")
 
     comment = models.TextField(
         max_length=250,
@@ -180,10 +180,12 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
+    history = AuditTrail()
+
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = "Maternal Labour & Delivery: ClinHist"
-        verbose_name_plural = "Maternal Labour & Delivery: ClinHist"
+        verbose_name = "Maternal LAB-DEL: Clinical History"
+        verbose_name_plural = "Maternal LAB-DEL: Clinical History"
 
 
 class MaternalLabDelDx(MaternalScheduledVisitModel):
@@ -202,18 +204,21 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
         choices=YES_NO,
         verbose_name="During this pregnancy, did the mother have any new diagnoses "
         "listed in the WHO Adult/Adolescent HIV clinical staging document which "
-        "is/are NOT reported below in Question 5 ",
-        help_text="If yes, answer 4, otherwise go to Question 5")
+        "is/are NOT reported?",
+        help_text="")
+
+    history = AuditTrail()
 
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = "Maternal Labour & Delivery: Preg Dx"
-        verbose_name_plural = "Maternal Labour & Delivery: Preg Dx"
+        verbose_name = "Maternal LAB-DEL: Preg Dx"
+        verbose_name_plural = "Maternal LAB-DEL: Preg Dx"
 
 
 class MaternalLabDelDxT (MaternalScheduledVisitModel):
 
     """ Diagnosis during pregnancy collected during labor and delivery (transactions). """
+    maternal_lab_del_dx = models.OneToOneField(MaternalLabDelDx)
 
     lab_del_dx = models.CharField(
         max_length=175,
@@ -236,7 +241,21 @@ class MaternalLabDelDxT (MaternalScheduledVisitModel):
         verbose_name="Hospitalized",
         help_text="")
 
+    history = AuditTrail()
+
+    def get_visit(self):
+        return self.maternal_lab_del_dx.maternal_visit
+
+    def get_report_datetime(self):
+        return self.maternal_lab_del_dx.maternal_visit.report_datetime
+
+    def get_subject_identifier(self):
+        return self.maternal_lab_del_dx.maternal_visit.subject_identifier
+
+    def __unicode__(self):
+        return unicode(self.get_visit())
+
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = "Maternal Labour & Delivery: Preg DxT"
-        verbose_name_plural = "Maternal Labour & Delivery: Preg DxT"
+        verbose_name = "Maternal LAB-DEL: Preg DxT"
+        verbose_name_plural = "Maternal LAB-DEL: Preg DxT"
