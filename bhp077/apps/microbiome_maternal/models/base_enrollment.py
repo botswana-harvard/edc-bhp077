@@ -25,12 +25,6 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
             datetime_not_future, ],
         help_text='')
 
-    citizen = models.CharField(
-        verbose_name="Are you a Botswana citizen? ",
-        max_length=7,
-        choices=YES_NO_UNKNOWN,
-        help_text="if NO, ineligible")
-
     is_diabetic = models.CharField(
         verbose_name='Are you diabetic?',
         choices=YES_NO,
