@@ -21,3 +21,4 @@ from .infant_fu_immunizations_form import InfantFuImmunizationsForm
 from .infant_fu_new_med_form import InfantFuNewMedForm
 from .infant_fu_new_med_items_form import InfantFuNewMedItemsForm
 from .infant_fu_physical_form import InfantFuPhysicalForm
+from .infant_stool_collection_form import InfantStoolCollectionForm

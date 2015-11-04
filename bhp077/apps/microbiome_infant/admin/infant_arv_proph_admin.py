@@ -4,7 +4,9 @@ from ..models import InfantArvProphMod, InfantArvProph
 
 class InfantArvProphAdmin(admin.ModelAdmin):
 
-    radio_fields = {'prophylatic_nvp': admin.VERTICAL}
+    radio_fields = {'prophylatic_nvp': admin.VERTICAL,
+                    'arv_status': admin.VERTICAL,
+    }
 
 admin.site.register(InfantArvProph, InfantArvProphAdmin)
 
