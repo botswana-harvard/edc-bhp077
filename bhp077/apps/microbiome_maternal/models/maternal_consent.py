@@ -6,13 +6,13 @@ from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_consent.models.base_consent import BaseConsent
-from edc_consent.models.fields import (PersonalFieldsMixin, CitizenFieldsMixin,
+from edc_consent.models.fields import (PersonalFieldsMixin, CitizenFieldsMixin, ReviewFieldsMixin,
                                        VulnerabilityFieldsMixin, IdentityFieldsMixin)
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
-class MaternalConsent(BaseConsent, MaternalOffStudyMixin,
+class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
                       IdentityFieldsMixin, PersonalFieldsMixin,
                       CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
 
