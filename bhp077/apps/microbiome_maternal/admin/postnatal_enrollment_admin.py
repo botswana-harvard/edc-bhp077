@@ -19,7 +19,6 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
               'gestation_before_birth',
               'live_or_still_birth',
               'live_infants',
-              'citizen',
               'is_diabetic',
               'on_tb_treatment',
               'breastfeed_for_a_year',
@@ -32,7 +31,6 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
               'rapid_test_result')
     radio_fields = {'delivery_type': admin.VERTICAL,
                     'live_or_still_birth': admin.VERTICAL,
-                    'citizen': admin.VERTICAL,
                     'is_diabetic': admin.VERTICAL,
                     'on_tb_treatment': admin.VERTICAL,
                     'breastfeed_for_a_year': admin.VERTICAL,
