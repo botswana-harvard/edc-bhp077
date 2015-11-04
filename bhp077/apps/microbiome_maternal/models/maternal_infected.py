@@ -4,10 +4,13 @@ from django.db import models
 from edc_constants.choices import YES_NO, YES_NO_NA
 
 from .base_mother import BaseMother
+from .maternal_consent import MaternalConsent
 from bhp077.apps.microbiome_maternal.maternal_choices import KNOW_HIV_STATUS
 
 
 class MaternalInfected(BaseMother):
+
+    CONSENT_MODEL = MaternalConsent
 
     prior_health_haart = models.CharField(
         max_length=25,

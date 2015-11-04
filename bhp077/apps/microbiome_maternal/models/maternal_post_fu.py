@@ -10,11 +10,14 @@ from edc_base.model.models import BaseUuidModel
 from ..managers import MaternalPostFuDxTManager
 from ..maternal_choices import DX
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_consent import MaternalConsent
 
 
 class MaternalPostFu(MaternalScheduledVisitModel):
 
     """ General post-partum follow-up. """
+
+    CONSENT_MODEL = MaternalConsent
 
     mother_weight = models.CharField(
         max_length=3,

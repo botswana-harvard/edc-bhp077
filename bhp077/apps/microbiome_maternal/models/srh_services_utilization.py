@@ -6,9 +6,12 @@ from edc_constants.choices import YES_NO_DWTA
 from ..maternal_choices import REASON_UNSEEN_AT_CLINIC, REASON_CONTRACEPTIVE_NOT_INITIATED
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from bhp077.apps.microbiome_list.models import Contraceptives
+from .maternal_consent import MaternalConsent
 
 
 class SrhServicesUtilization(MaternalScheduledVisitModel):
+
+    CONSENT_MODEL = MaternalConsent
 
     seen_at_clinic = models.CharField(
         verbose_name=('At the last visit, you had asked to be referred to the Sexual'

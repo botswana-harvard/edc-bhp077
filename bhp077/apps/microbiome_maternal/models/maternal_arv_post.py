@@ -10,12 +10,15 @@ from ..maternal_choices import REASON_FOR_HAART
 
 from ..managers import MaternalArvPostModManager
 from .maternal_off_study_mixin import MaternalOffStudyMixin
+from .maternal_consent import MaternalConsent
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalArvPost (MaternalScheduledVisitModel):
 
     """ Maternal ARV post-partum"""
+
+    CONSENT_MODEL = MaternalConsent
 
     haart_last_visit = models.CharField(
         max_length=25,

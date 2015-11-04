@@ -6,11 +6,14 @@ from edc_constants.choices import YES_NO
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from bhp077.apps.microbiome_list.models import ChronicConditions
+from .maternal_consent import MaternalConsent
 
 
 class MaternalMedicalHistory(MaternalScheduledVisitModel):
 
     """Medical History for all mothers"""
+
+    CONSENT_MODEL = MaternalConsent
 
     has_chronic_cond = models.CharField(
         max_length=25,

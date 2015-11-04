@@ -6,6 +6,7 @@ from edc_base.model.fields import OtherCharField
 from edc_constants.choices import YES_NO
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_consent import MaternalConsent
 from ..maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
                                 CURRENT_OCCUPATION, MONEY_PROVIDER, MONEY_EARNED,
                                 WATER_SOURCE, COOKING_METHOD, TOILET_FACILITY,
@@ -16,6 +17,8 @@ from bhp077.apps.microbiome_list.models import HouseholdGoods
 class MaternalDemographics(MaternalScheduledVisitModel):
 
     """Demographics form for all mothers"""
+
+    CONSENT_MODEL = MaternalConsent
 
     marital_status = models.CharField(
         max_length=25,

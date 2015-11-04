@@ -3,9 +3,12 @@ from django.db import models
 from edc_constants.choices import YES_NO, POS_NEG
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_consent import MaternalConsent
 
 
 class RapidTestResult(MaternalScheduledVisitModel):
+
+    CONSENT_MODEL = MaternalConsent
 
     process_rapid_test = models.CharField(
         verbose_name="Was a rapid test processed?",

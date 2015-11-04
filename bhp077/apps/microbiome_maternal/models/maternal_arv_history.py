@@ -6,12 +6,15 @@ from edc_constants.choices import YES_NO
 
 from ..maternal_choices import PRIOR_PREG_HAART_STATUS
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_consent import MaternalConsent
 from bhp077.apps.microbiome_list.models import PriorArv
 
 
 class MaternalArvHistory(MaternalScheduledVisitModel):
 
     """ARV history for infected mothers only"""
+
+    CONSENT_MODEL = MaternalConsent
 
     haart_start_date = models.DateField(
         verbose_name="Date of triple antiretrovirals first started",

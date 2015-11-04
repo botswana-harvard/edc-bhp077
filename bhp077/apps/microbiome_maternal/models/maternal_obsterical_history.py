@@ -2,11 +2,14 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_consent import MaternalConsent
 
 
 class MaternalObstericalHistory(MaternalScheduledVisitModel):
 
     """Obsterical History for all mothers"""
+
+    CONSENT_MODEL = MaternalConsent
 
     pregs_24wks_or_more = models.IntegerField(
         verbose_name="Number of pregnancies at least 24 weeks.?",

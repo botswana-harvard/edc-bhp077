@@ -4,11 +4,14 @@ from edc_base.model.fields import OtherCharField
 from edc_constants.choices import YES_NO_DWTA
 
 from ..maternal_choices import YES_NO_DNT_DWTA, NEXT_CHILD_PLAN
+from .maternal_consent import MaternalConsent
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from bhp077.apps.microbiome_list.models import Contraceptives
 
 
 class SexualReproductiveHealth(MaternalScheduledVisitModel):
+
+    CONSENT_MODEL = MaternalConsent
 
     more_children = models.CharField(
         verbose_name='Do you desire more children?',
