@@ -14,7 +14,6 @@ class AntenatalEnrollmentAdmin(BaseModelAdmin):
     fields = ('registered_subject',
               'report_datetime',
               'weeks_of_gestation',
-              'citizen',
               'is_diabetic',
               'on_tb_treatment',
               'breastfeed_for_a_year',
@@ -25,8 +24,7 @@ class AntenatalEnrollmentAdmin(BaseModelAdmin):
               'process_rapid_test',
               'date_of_rapid_test',
               'rapid_test_result')
-    radio_fields = {'citizen': admin.VERTICAL,
-                    'is_diabetic': admin.VERTICAL,
+    radio_fields = {'is_diabetic': admin.VERTICAL,
                     'on_tb_treatment': admin.VERTICAL,
                     'breastfeed_for_a_year': admin.VERTICAL,
                     'instudy_for_a_year': admin.VERTICAL,

@@ -1,6 +1,8 @@
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
+
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
@@ -47,6 +49,8 @@ class BaseMother(MaternalScheduledVisitModel):
         max_length=7,
         verbose_name="Mother's blood pressure?",
         help_text="in mm/hg E.G. 120/80 ", )
+
+    history = AuditTrail()
 
     class Meta:
         abstract = True

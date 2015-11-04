@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from edc_base.modeladmin.admin import BaseModelAdmin
+from edc_base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
 from ..models import (MaternalLabourDel, MaternalLabDelMed, MaternalLabDelClinic,
                       MaternalLabDelDx, MaternalLabDelDxT)
 from ..forms import (MaternalLabourDelForm, MaternalLabDelMedForm,
@@ -18,6 +18,7 @@ class MaternalLabourDelAdmin(BaseModelAdmin):
     radio_fields = {'del_time_is_est': admin.VERTICAL,
                     'has_uterine_tender': admin.VERTICAL,
                     'has_chorioamnionitis': admin.VERTICAL,
+                    'del_hosp': admin.VERTICAL,
                     'has_del_comp': admin.VERTICAL}
 admin.site.register(MaternalLabourDel, MaternalLabourDelAdmin)
 
@@ -37,7 +38,14 @@ class MaternalLabDelClinicAdmin(BaseModelAdmin):
     radio_fields = {'has_cd4': admin.VERTICAL,
                     'has_vl': admin.VERTICAL,
                     'took_suppliments': admin.VERTICAL}
+    filter_horizontal = ('suppliments', )
 admin.site.register(MaternalLabDelClinic, MaternalLabDelClinicAdmin)
+
+
+class MaternalLabDelDxTInlineAdmin(BaseTabularInline):
+    model = MaternalLabDelDxT
+    form = MaternalLabDelDxTForm
+    extra = 1
 
 
 class MaternalLabDelDxAdmin(BaseModelAdmin):
@@ -45,6 +53,7 @@ class MaternalLabDelDxAdmin(BaseModelAdmin):
     form = MaternalLabDelDxForm
     radio_fields = {'has_preg_dx': admin.VERTICAL,
                     'has_who_dx': admin.VERTICAL}
+    inlines = [MaternalLabDelDxTInlineAdmin, ]
 admin.site.register(MaternalLabDelDx, MaternalLabDelDxAdmin)
 
 

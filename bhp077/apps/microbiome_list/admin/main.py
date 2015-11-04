@@ -2,7 +2,8 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from bhp077.apps.microbiome_list.models import (ChronicConditions, Contraceptives,
                                                 DiseasesAtEnrollment, HouseholdGoods,
-                                                PriorArv, AutopsyInfoSource)
+                                                PriorArv, AutopsyInfoSource,
+                                                Suppliments)
 
 
 class ChronicConditionsAdmin(BaseModelAdmin):
@@ -33,3 +34,8 @@ admin.site.register(PriorArv, PriorArvAdmin)
 class AutopsyInfoSourceAdmin(BaseModelAdmin):
     pass
 admin.site.register(AutopsyInfoSource, AutopsyInfoSourceAdmin)
+
+
+class SupplimentsAdmin(BaseModelAdmin):
+    pass
+admin.site.register(Suppliments, SupplimentsAdmin)

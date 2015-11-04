@@ -4,3 +4,4 @@ from .household_goods import HouseholdGoods
 from .chronic_conditions import ChronicConditions
 from .contraceptives import Contraceptives
 from .autopsy_info_source import AutopsyInfoSource
+from .suppliments import Suppliments

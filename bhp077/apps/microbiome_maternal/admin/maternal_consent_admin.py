@@ -26,12 +26,22 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'identity',
               'identity_type',
               'confirm_identity',
-              'comment')
+              'comment',
+              'consent_reviewed',
+              'study_questions',
+              'assessment_score',
+              'consent_signature',
+              'consent_copy')
     radio_fields = {'citizen': admin.VERTICAL,
                     'language': admin.VERTICAL,
                     'is_literate': admin.VERTICAL,
                     'is_dob_estimated': admin.VERTICAL,
-                    'identity_type': admin.VERTICAL}
+                    'identity_type': admin.VERTICAL,
+                    'consent_reviewed': admin.VERTICAL,
+                    'study_questions': admin.VERTICAL,
+                    'assessment_score': admin.VERTICAL,
+                    'consent_signature': admin.VERTICAL,
+                    'consent_copy': admin.VERTICAL}
     list_display = ('subject_identifier',
                     'registered_subject',
                     'is_verified',

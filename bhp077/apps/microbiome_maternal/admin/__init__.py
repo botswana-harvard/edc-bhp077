@@ -13,7 +13,7 @@ from .maternal_obsterical_history_admin import MaternalObstericalHistoryAdmin
 from .maternal_clinical_history_admin import MaternalClinicalHistoryAdmin
 from .maternal_labour_del_admin import (MaternalLabourDelAdmin, MaternalLabDelMedAdmin,
                                         MaternalLabDelClinicAdmin, MaternalLabDelDxAdmin,
-                                        MaternalLabDelDxTAdmin)
+                                        MaternalLabDelDxTInlineAdmin, MaternalLabDelDxTAdmin)
 from .maternal_infected_admin import MaternalInfectedAdmin
 from .maternal_arv_history_admin import MaternalArvHistoryAdmin
 from .maternal_arv_preg_admin import MaternalArvPregAdmin
