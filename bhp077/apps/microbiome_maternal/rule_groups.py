@@ -1,7 +1,7 @@
 from edc.subject.rule_groups.classes import (RuleGroup, site_rule_groups, Logic,
                                              ScheduledDataRule, RequisitionRule)
 
-from .models import PostnatalEnrollment
+from .models import PostnatalEnrollment, MaternalVisit, SexualReproductiveHealth
 from edc_constants.constants import POS, YES
 
 
@@ -26,3 +26,19 @@ class PostnatalEnrollmentRuleGroup(RuleGroup):
         source_fk = None
         source_model = PostnatalEnrollment
 site_rule_groups.register(PostnatalEnrollmentRuleGroup)
+
+
+class ReproductiveHealthRuleGroup(RuleGroup):
+
+    is_srh_referral = ScheduledDataRule(
+        logic=Logic(
+            predicate=('srh_referral', 'equals', YES),
+            consequence='new',
+            alternative='not_required'),
+        target_model=['srhservicesutilization'])
+
+    class Meta:
+        app_label = 'microbiome_maternal'
+        source_fk = MaternalVisit
+        source_model = SexualReproductiveHealth
+site_rule_groups.register(ReproductiveHealthRuleGroup)
