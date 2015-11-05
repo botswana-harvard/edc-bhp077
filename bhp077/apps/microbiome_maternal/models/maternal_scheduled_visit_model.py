@@ -48,7 +48,7 @@ class MaternalScheduledVisitModel(MaternalOffStudyMixin, RequiresConsentMixin,
         return self.get_visit().report_datetime
 
     def get_subject_identifier(self):
-        return self.get_visit().get_subject_identifier()
+        return self.get_visit().appointment.registered_subject.subject_identifier
 
     def get_visit(self):
         return self.maternal_visit
