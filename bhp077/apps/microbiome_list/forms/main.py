@@ -2,7 +2,7 @@ from django import forms
 from bhp077.apps.microbiome_list.models import (ChronicConditions, Contraceptives,
                                                 DiseasesAtEnrollment, HouseholdGoods,
                                                 PriorArv, AutopsyInfoSource,
-                                                Suppliments)
+                                                Suppliments, InfantVaccines)
 
 
 class ChronicConditionsForm (forms.ModelForm):
@@ -45,3 +45,9 @@ class SupplimentsForm (forms.ModelForm):
 
     class Meta:
         model = Suppliments
+
+
+class InfantVaccinesForm (forms.ModelForm):
+
+    class Meta:
+        model = InfantVaccines
