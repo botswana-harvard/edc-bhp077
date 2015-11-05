@@ -16,6 +16,7 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'last_name',
               'initials',
               'language',
+              'study_site',
               'is_literate',
               'witness_name',
               'consent_datetime',
@@ -34,6 +35,7 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'consent_copy')
     radio_fields = {'citizen': admin.VERTICAL,
                     'language': admin.VERTICAL,
+                    'study_site': admin.VERTICAL,
                     'is_literate': admin.VERTICAL,
                     'is_dob_estimated': admin.VERTICAL,
                     'identity_type': admin.VERTICAL,

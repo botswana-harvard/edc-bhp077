@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+from edc.core.bhp_variables.models import StudySite
 from edc.core.identifier.classes import SubjectIdentifier
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
@@ -18,12 +19,18 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
+    study_site = models.ForeignKey(
+        StudySite,
+        verbose_name='Site',
+        null=True,
+        help_text="")
+
     def __unicode__(self):
         return '{0} {1} {2} ({3})'.format(self.subject_identifier, self.first_name,
                                           self.last_name, self.initials)
 
     def save(self, *args, **kwargs):
-        self.subject_identifier = SubjectIdentifier(site_code=settings.SITE_CODE).get_identifier()
+        self.subject_identifier = SubjectIdentifier(site_code=self.study_site.site_code).get_identifier()
         super(MaternalConsent, self).save(*args, **kwargs)
 
     def get_registration_datetime(self):
