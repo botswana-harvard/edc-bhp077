@@ -1,39 +1,29 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
-from edc_base.model.validators import (
-    datetime_not_before_study_start, datetime_not_future)
-from edc_constants.choices import YES_NO, YES
+from edc.entry_meta_data.managers import EntryMetaDataManager
+from edc.subject.off_study.models import BaseOffStudy
+from edc_base.audit_trail import AuditTrail
+from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from .infant_visit import InfantVisit
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
-class InfantOffStudy(InfantScheduledVisitModel):
+class InfantOffStudy(BaseOffStudy, BaseUuidModel):
 
-    offstudy_date = models.DateField(
-        verbose_name="Off-study Date",
-    )
+    history = AuditTrail()
 
-    reason = models.CharField(
-        verbose_name="Please code the primary reason participant taken off-study",
-        max_length=115)
+    infant_visit = models.OneToOneField(InfantVisit)
 
-    reason_other = models.CharField(
-        max_length=100)
+    entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 
-    has_scheduled_data = models.CharField(
-        max_length=10,
-        verbose_name='Are scheduled data being submitted on the off-study date?',
-        choices=YES_NO,
-        default=YES,
-        help_text='')
+    def get_visit(self):
+        return self.infant_visit
 
-    comment = models.TextField(
-        max_length=250,
-        verbose_name="Comments:",
-        blank=True,
-        null=True)
+    def get_absolute_url(self):
+        return reverse('admin:microbiome_infant_infantoffstudy_change', args=(self.id,))
 
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Off-Study"
+        verbose_name_plural = "Infant Off-Study"
