@@ -8,14 +8,16 @@ from ..models import MaternalClinicalHistory
 class MaternalClinicalHistoryAdmin(BaseModelAdmin):
 
     form = MaternalClinicalHistoryForm
-    fields = ('prev_preg_azt',
+    fields = ('maternal_visit',
+              'prev_preg_azt',
               'prev_sdnvp_labour',
               'prev_preg_haart',
               'cd4_count',
               'cd4_date',
               'is_date_estimated',
               'comment')
-    list_display = ('prev_preg_azt',
+    list_display = ('maternal_visit',
+                    'prev_preg_azt',
                     'prev_sdnvp_labour',
                     'prev_preg_haart',
                     'cd4_count',
@@ -25,5 +27,6 @@ class MaternalClinicalHistoryAdmin(BaseModelAdmin):
                    'prev_preg_haart')
     radio_fields = {'prev_preg_azt': admin.VERTICAL,
                     'prev_sdnvp_labour': admin.VERTICAL,
-                    'prev_preg_haart': admin.VERTICAL}
+                    'prev_preg_haart': admin.VERTICAL,
+                    'is_date_estimated': admin.VERTICAL}
 admin.site.register(MaternalClinicalHistory, MaternalClinicalHistoryAdmin)

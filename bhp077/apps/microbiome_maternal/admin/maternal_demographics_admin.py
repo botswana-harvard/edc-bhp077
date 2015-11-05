@@ -8,7 +8,8 @@ from ..models import MaternalDemographics
 class MaternalDemographicsAdmin(BaseModelAdmin):
 
     form = MaternalDemographicsForm
-    fields = ('marital_status',
+    fields = ('maternal_visit',
+              'marital_status',
               'marital_status_other',
               'ethnicity',
               'ethnicity_other',
@@ -29,7 +30,8 @@ class MaternalDemographicsAdmin(BaseModelAdmin):
               'toilet_facility_other',
               'house_people_number',
               'house_type')
-    list_display = ('marital_status',
+    list_display = ('maternal_visit',
+                    'marital_status',
                     'ethnicity',
                     'highest_education',
                     'own_phone')
