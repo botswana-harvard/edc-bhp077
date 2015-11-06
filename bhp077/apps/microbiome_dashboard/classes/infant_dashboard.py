@@ -29,11 +29,13 @@ class InfantDashboard(RegisteredSubjectDashboard):
         self.subject_dashboard_url = 'subject_dashboard_url'
         self.visit_model = InfantVisit
         self.dashboard_type_list = ['infant']
+        self.dashboard_models['registered_subject'] = RegisteredSubject
         self.dashboard_models['infant_birth'] = InfantBirth
         self.dashboard_models['visit'] = InfantVisit
         self.membership_form_category = ['infant_birth_record']
         self.requisition_model = InfantRequisition
         self._locator_model = None
+        self._maternal_identifier = None
 
     def get_context_data(self, **kwargs):
         super(InfantDashboard, self).get_context_data(**kwargs)
@@ -41,15 +43,9 @@ class InfantDashboard(RegisteredSubjectDashboard):
             home='microbiome',
             search_name='infant',
             title='Infant Dashboard',
-            subject_dashboard_url=self.get_maternal_dashboard_url,
-            maternal_consent=self.get_maternal_consent(), )
+            subject_dashboard_url=self.subject_dashboard_url,
+            maternal_consent=self.maternal_consent, )
         return self.context
-
-    def get_visit_model(self):
-        return InfantVisit
-
-    def get_maternal_dashboard_url(self):
-        return 'subject_dashboard_url'
 
     def get_locator_model(self):
         return MaternalLocator
@@ -58,16 +54,14 @@ class InfantDashboard(RegisteredSubjectDashboard):
     def locator_model(self):
         return self.get_locator_model()
 
-    def get_maternal_consent(self):
-        return MaternalConsent.objects.get(subject_identifier=self.get_maternal_identifier())
+    @property
+    def maternal_consent(self):
+        return MaternalConsent.objects.get(subject_identifier=self.maternal_identifier)
 
-    def get_subject_identifier(self):
-        return self.subject_identifier
+    @property
+    def subject_identifier(self):
+        return self.registered_subject.subject_identifier
 
-    def get_maternal_identifier(self):
-        if not self._maternal_identifier:
-            self.set_maternal_identifier()
-        return self._maternal_identifier
-
-    def set_maternal_identifier(self):
-        self._maternal_identifier = self.get_registered_subject().relative_identifier
+    @property
+    def maternal_identifier(self):
+        return self.registered_subject.relative_identifier
