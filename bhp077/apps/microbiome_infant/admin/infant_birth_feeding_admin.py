@@ -10,5 +10,7 @@ class InfantBirthFeedVaccineAdmin(admin.ModelAdmin):
 
     list_filter = ('feeding_after_delivery',)
 
+    filter_horizontal = ('vaccination', )
+
     radio_fields = {'feeding_after_delivery': admin.VERTICAL}
 admin.site.register(InfantBirthFeedVaccine, InfantBirthFeedVaccineAdmin)

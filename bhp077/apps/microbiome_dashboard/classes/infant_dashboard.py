@@ -6,6 +6,7 @@ from edc.subject.registration.models import RegisteredSubject
 
 from bhp077.apps.microbiome_infant.models import InfantVisit, InfantBirth
 from bhp077.apps.microbiome_lab.models import InfantRequisition
+from bhp077.apps.microbiome_maternal.models import MaternalLocator, MaternalConsent
 
 
 class InfantDashboard(RegisteredSubjectDashboard):
@@ -28,9 +29,13 @@ class InfantDashboard(RegisteredSubjectDashboard):
         self.subject_dashboard_url = 'subject_dashboard_url'
         self.visit_model = InfantVisit
         self.dashboard_type_list = ['infant']
+        self.dashboard_models['registered_subject'] = RegisteredSubject
         self.dashboard_models['infant_birth'] = InfantBirth
+        self.dashboard_models['visit'] = InfantVisit
         self.membership_form_category = ['infant_birth_record']
         self.requisition_model = InfantRequisition
+        self._locator_model = None
+        self._maternal_identifier = None
 
     def get_context_data(self, **kwargs):
         super(InfantDashboard, self).get_context_data(**kwargs)
@@ -38,8 +43,25 @@ class InfantDashboard(RegisteredSubjectDashboard):
             home='microbiome',
             search_name='infant',
             title='Infant Dashboard',
-            subject_dashboard_url=self.subject_dashboard_url, )
+            subject_dashboard_url=self.subject_dashboard_url,
+            maternal_consent=self.maternal_consent, )
         return self.context
 
-    def get_visit_model(self):
-        return InfantVisit
+    def get_locator_model(self):
+        return MaternalLocator
+
+    @RegisteredSubjectDashboard.locator_model.getter
+    def locator_model(self):
+        return self.get_locator_model()
+
+    @property
+    def maternal_consent(self):
+        return MaternalConsent.objects.get(subject_identifier=self.maternal_identifier)
+
+    @property
+    def subject_identifier(self):
+        return self.registered_subject.subject_identifier
+
+    @property
+    def maternal_identifier(self):
+        return self.registered_subject.relative_identifier

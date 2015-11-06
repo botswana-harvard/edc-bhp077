@@ -3,7 +3,7 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 from bhp077.apps.microbiome_list.models import (ChronicConditions, Contraceptives,
                                                 DiseasesAtEnrollment, HouseholdGoods,
                                                 PriorArv, AutopsyInfoSource,
-                                                Suppliments)
+                                                Suppliments, InfantVaccines)
 
 
 class ChronicConditionsAdmin(BaseModelAdmin):
@@ -39,3 +39,8 @@ admin.site.register(AutopsyInfoSource, AutopsyInfoSourceAdmin)
 class SupplimentsAdmin(BaseModelAdmin):
     pass
 admin.site.register(Suppliments, SupplimentsAdmin)
+
+
+class InfantVaccinesAdmin(BaseModelAdmin):
+    pass
+admin.site.register(InfantVaccines, InfantVaccinesAdmin)

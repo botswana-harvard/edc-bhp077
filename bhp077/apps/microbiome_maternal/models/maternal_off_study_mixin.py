@@ -10,7 +10,7 @@ class MaternalOffStudyMixin(OffStudyMixin):
         return MaternalOffStudy
 
     def save(self, *args, **kwargs):
-        self.OFF_STUDY_MODEL = get_model("microbiome_maternal", "MaternalOffStudy")
+        self.OFF_STUDY_MODEL = self.get_off_study_cls()
         super(MaternalOffStudyMixin, self).save(*args, **kwargs)
 
     class Meta:

@@ -9,6 +9,7 @@ from edc.subject.registration.models import RegisteredSubject
 from .maternal_eligibility import MaternalEligibility
 from .maternal_consent import MaternalConsent
 from .maternal_eligibility_loss import MaternalEligibilityLoss
+from .maternal_labour_del import MaternalLabourDel
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")
@@ -80,3 +81,9 @@ def update_registered_subject_on_post_save(sender, instance, raw, created, using
             instance.registered_subject.last_name = instance.last_name
             instance.registered_subject.subject_identifier = instance.subject_identifier
             instance.registered_subject.save(using=using)
+
+
+@receiver(post_save, weak=False, dispatch_uid='post_save_create_infant_identifier')
+def post_save_create_infant_identifier(sender, instance, raw, created, using, **kwarg):
+    if isinstance(instance, MaternalLabourDel):
+        instance.post_save_create_infant_identifier(created)
