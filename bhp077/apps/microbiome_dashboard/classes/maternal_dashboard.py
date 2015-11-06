@@ -1,8 +1,13 @@
-from edc.dashboard.subject.classes import RegisteredSubjectDashboard
+from collections import OrderedDict
 
-from bhp077.apps.microbiome_maternal.models import (MaternalVisit, MaternalEligibility,
-                                             MaternalLocator, MaternalConsent)
+from edc.dashboard.subject.classes import RegisteredSubjectDashboard
+from edc.subject.registration.models import RegisteredSubject
+from edc_base.utils import convert_from_camel
+
 from bhp077.apps.microbiome_lab.models.maternal_requisition import MaternalRequisition
+from bhp077.apps.microbiome_maternal.models import (MaternalVisit, MaternalEligibility,
+                                                    MaternalLocator, MaternalConsent)
+from bhp077.apps.microbiome_infant.models import InfantBirth
 
 
 class MaternalDashboard(RegisteredSubjectDashboard):
@@ -39,7 +44,8 @@ class MaternalDashboard(RegisteredSubjectDashboard):
             home='microbiome',
             search_name='maternal',
             title='Maternal Dashboard',
-            subject_dashboard_url=self.subject_dashboard_url,
+            subject_dashboard_url=self.get_infant_dashboard_url(),
+            infants=self.get_registered_infant_identifier(),
             maternal_consent=self.consent,
         )
         return self.context
@@ -56,3 +62,32 @@ class MaternalDashboard(RegisteredSubjectDashboard):
 
     def get_locator_model(self):
         return MaternalLocator
+
+    def get_infant_dashboard_url(self):
+        return 'subject_dashboard_url'
+
+    def get_subject_identifier(self):
+        return self.subject_identifier
+
+    @RegisteredSubjectDashboard.locator_model.getter
+    def locator_model(self):
+        return self.get_locator_model()
+
+    def get_registered_infant_identifier(self):
+        """Returns an infant identifier associated with the maternal identifier"""
+        infants = OrderedDict()
+        for infant_registered_subject in RegisteredSubject.objects.filter(subject_type='infant', relative_identifier__iexact=self.get_subject_identifier()):
+            if InfantBirth.objects.filter(registered_subject__exact=infant_registered_subject).exists():
+                infant_birth = InfantBirth.objects.get(registered_subject__exact=infant_registered_subject)
+                dct = infant_birth.__dict__
+                dct['dashboard_model'] = convert_from_camel(infant_birth._meta.object_name)
+                dct['dashboard_id'] = convert_from_camel(infant_birth.pk)
+                dct['dashboard_type'] = 'infant'
+                infants[infant_registered_subject.subject_identifier] = dct
+            else:
+                dct = {'subject_identifier': infant_registered_subject.subject_identifier}
+                dct['dashboard_model'] = 'registered_subject'
+                dct['dashboard_id'] = infant_registered_subject.pk
+                dct['dashboard_type'] = 'infant'
+                infants[infant_registered_subject.subject_identifier] = dct
+        return infants

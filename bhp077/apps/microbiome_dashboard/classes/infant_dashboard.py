@@ -6,6 +6,7 @@ from edc.subject.registration.models import RegisteredSubject
 
 from bhp077.apps.microbiome_infant.models import InfantVisit, InfantBirth
 from bhp077.apps.microbiome_lab.models import InfantRequisition
+from bhp077.apps.microbiome_maternal.models import MaternalLocator, MaternalConsent
 
 
 class InfantDashboard(RegisteredSubjectDashboard):
@@ -29,8 +30,10 @@ class InfantDashboard(RegisteredSubjectDashboard):
         self.visit_model = InfantVisit
         self.dashboard_type_list = ['infant']
         self.dashboard_models['infant_birth'] = InfantBirth
+        self.dashboard_models['visit'] = InfantVisit
         self.membership_form_category = ['infant_birth_record']
         self.requisition_model = InfantRequisition
+        self._locator_model = None
 
     def get_context_data(self, **kwargs):
         super(InfantDashboard, self).get_context_data(**kwargs)
@@ -38,8 +41,33 @@ class InfantDashboard(RegisteredSubjectDashboard):
             home='microbiome',
             search_name='infant',
             title='Infant Dashboard',
-            subject_dashboard_url=self.subject_dashboard_url, )
+            subject_dashboard_url=self.get_maternal_dashboard_url,
+            maternal_consent=self.get_maternal_consent(), )
         return self.context
 
     def get_visit_model(self):
         return InfantVisit
+
+    def get_maternal_dashboard_url(self):
+        return 'subject_dashboard_url'
+
+    def get_locator_model(self):
+        return MaternalLocator
+
+    @RegisteredSubjectDashboard.locator_model.getter
+    def locator_model(self):
+        return self.get_locator_model()
+
+    def get_maternal_consent(self):
+        return MaternalConsent.objects.get(subject_identifier=self.get_maternal_identifier())
+
+    def get_subject_identifier(self):
+        return self.subject_identifier
+
+    def get_maternal_identifier(self):
+        if not self._maternal_identifier:
+            self.set_maternal_identifier()
+        return self._maternal_identifier
+
+    def set_maternal_identifier(self):
+        self._maternal_identifier = self.get_registered_subject().relative_identifier

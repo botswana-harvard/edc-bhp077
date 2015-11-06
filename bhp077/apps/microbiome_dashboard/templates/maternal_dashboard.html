@@ -14,4 +14,20 @@
         <td><B>Consented:</B> {{maternal_consent.consent_datetime|date:"Y-m-d H:i" }}</td>
     </tr>
 </table>
-{% endblock %}  
+{% endblock %}
+
+{% block infants %}
+    <tr name="top right"><td>
+    <H3>Registered Infant</H3>
+    {% if infants %}
+        <ol>
+        {% for subject_identifier, infant in infants %}
+          <li><A href="{% url 'subject_dashboard_url' dashboard_type='maternal' dashboard_model='registered_subject' dashboard_id=registered_subject.pk show='appointments' %}">{{ subject_identifier }} {{ infant.gender }} {{ infant.first_name|encrypted }}</A>
+        {% endfor %}
+        </ol>        
+    {% else %}    
+        no infants
+    {% endif %}
+
+    </td></tr>
+{% endblock infants %}  
