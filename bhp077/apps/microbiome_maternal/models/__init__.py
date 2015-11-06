@@ -21,6 +21,7 @@ from .sexual_reproductive_health import SexualReproductiveHealth
 from .maternal_death import MaternalDeath
 from .maternal_off_study import MaternalOffStudy
 from .maternal_off_study_mixin import MaternalOffStudyMixin
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_post_fu import MaternalPostFu, MaternalPostFuDx, MaternalPostFuDxT
 from .maternal_arv_post import MaternalArvPost, MaternalArvPostMod, MaternalArvPostAdh
 from .srh_services_utilization import SrhServicesUtilization

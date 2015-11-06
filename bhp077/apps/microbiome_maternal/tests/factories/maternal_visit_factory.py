@@ -1,10 +1,10 @@
 import factory
 from django.utils import timezone
 
-from edc_constants.constants import YES, NO, NEG
-from edc.subject.appointment.factories import AppointmentFactory
+from edc.subject.appointment.tests.factories import AppointmentFactory
 
 from bhp077.apps.microbiome_maternal.models import MaternalVisit
+
 
 class MaternalVisitFactory(factory.DjangoModelFactory):
 
@@ -16,7 +16,3 @@ class MaternalVisitFactory(factory.DjangoModelFactory):
     reason = "NA"
 #    info_source = ""
 #    subject_identifier = ""
-
-
-
-
