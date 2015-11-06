@@ -21,9 +21,12 @@
     <H3>Registered Infant</H3>
     {% if infants %}
         <ol>
-        {% for subject_identifier, infant in infants %}
-          <li><A href="{% url 'subject_dashboard_url' dashboard_type='maternal' dashboard_model='registered_subject' dashboard_id=registered_subject.pk show='appointments' %}">{{ subject_identifier }} {{ infant.gender }} {{ infant.first_name|encrypted }}</A>
-        {% endfor %}
+          <li>
+          {% for subject_identifier,infant in infants.iteritems %}
+           <A href="{% url 'subject_dashboard_url' dashboard_type='infant' dashboard_model='registered_subject' dashboard_id=infant.dashboard_id show='appointments' %}">
+             {{subject_identifier}} {{ infant.gender }} {{ infant.first_name|encrypted }}
+          </A>
+          {% endfor %}
         </ol>        
     {% else %}    
         no infants
