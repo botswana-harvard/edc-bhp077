@@ -4,7 +4,6 @@ from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
-from edc.device.dispatch.models import BaseDispatchSyncUuidModel
 from edc.data_manager.models import TimePointStatusMixin
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.entry_meta_data.managers import EntryMetaDataManager

@@ -1,10 +1,11 @@
 import factory
 from django.utils import timezone
 
-from edc_constants.constants import YES, NO, NEG
+from edc_constants.constants import YES, NO, POS
+
+from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
-
 
 
 class PostnatalEnrollmentFactory(factory.DjangoModelFactory):
@@ -24,4 +25,3 @@ class PostnatalEnrollmentFactory(factory.DjangoModelFactory):
     valid_regimen = YES
     process_rapid_test = NO
     date_of_rapid_test = timezone.now().date()
-
