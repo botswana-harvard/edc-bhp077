@@ -6,7 +6,7 @@ from edc.subject.registration.models import RegisteredSubject
 
 from bhp077.apps.microbiome_infant.models import InfantVisit, InfantBirth
 from bhp077.apps.microbiome_lab.models import InfantRequisition
-from bhp077.apps.microbiome_maternal.models import MaternalLocator, MaternalConsent
+from bhp077.apps.microbiome_maternal.models import MaternalLocator, MaternalConsent, MaternalEligibility
 
 
 class InfantDashboard(RegisteredSubjectDashboard):
@@ -44,7 +44,8 @@ class InfantDashboard(RegisteredSubjectDashboard):
             search_name='infant',
             title='Infant Dashboard',
             subject_dashboard_url=self.subject_dashboard_url,
-            maternal_consent=self.maternal_consent, )
+            maternal_consent=self.maternal_consent,
+            maternal_eligibility=self.maternal_eligibility, )
         return self.context
 
     def get_locator_model(self):
@@ -65,3 +66,10 @@ class InfantDashboard(RegisteredSubjectDashboard):
     @property
     def maternal_identifier(self):
         return self.registered_subject.relative_identifier
+
+    @property
+    def maternal_eligibility(self):
+        try:
+            return MaternalEligibility.objects.get(registered_subject__subject_identifier=self.maternal_identifier)
+        except MaternalEligibility.DoesNotExist:
+            pass
