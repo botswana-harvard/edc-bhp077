@@ -1,5 +1,6 @@
-from django.db import models
+from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db import models
 
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
@@ -15,7 +16,7 @@ from bhp077.apps.microbiome_infant.models.infant_off_study_mixin import InfantOf
 
 class InfantBirth(InfantOffStudyMixin, BaseUuidModel, BaseAppointmentMixin):
 
-    registered_subject = models.OneToOneField(RegisteredSubject, editable=False, null=True)
+    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
     maternal_labour_del = models.ForeignKey(
         MaternalLabourDel,
@@ -50,6 +51,12 @@ class InfantBirth(InfantOffStudyMixin, BaseUuidModel, BaseAppointmentMixin):
     gender = models.CharField(
         max_length=10,
         choices=GENDER_UNDETERMINED)
+
+    def get_absolute_url(self):
+        return reverse('admin:microbiome_infant_infantbirth_change', args=(self.id,))
+
+    def __unicode__(self):
+        return "{} ({}) {}".format(self.first_name, self.initials, self.gender)
 
     class Meta:
         app_label = "microbiome_infant"

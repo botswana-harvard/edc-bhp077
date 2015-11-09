@@ -36,6 +36,7 @@ class InfantDashboard(RegisteredSubjectDashboard):
         self.requisition_model = InfantRequisition
         self._locator_model = None
         self._maternal_identifier = None
+        self._infant_birth = None
 
     def get_context_data(self, **kwargs):
         super(InfantDashboard, self).get_context_data(**kwargs)
@@ -45,7 +46,8 @@ class InfantDashboard(RegisteredSubjectDashboard):
             title='Infant Dashboard',
             subject_dashboard_url=self.subject_dashboard_url,
             maternal_consent=self.maternal_consent,
-            maternal_eligibility=self.maternal_eligibility, )
+            maternal_eligibility=self.maternal_eligibility,
+            infant_birth=self.infant_birth, )
         return self.context
 
     def get_locator_model(self):
@@ -73,3 +75,30 @@ class InfantDashboard(RegisteredSubjectDashboard):
             return MaternalEligibility.objects.get(registered_subject__subject_identifier=self.maternal_identifier)
         except MaternalEligibility.DoesNotExist:
             pass
+
+    @property
+    def infant_birth(self):
+        try:
+            self._infant_birth = InfantBirth.objects.get(registered_subject__subject_identifier=self.subject_identifier)
+        except InfantBirth.DoesNotExist:
+            self._infant_birth = None
+        return self._infant_birth
+
+    @property
+    def registered_subject(self):
+        if not self._registered_subject:
+            try:
+                self._registered_subject = RegisteredSubject.objects.get(pk=self.dashboard_id)
+            except RegisteredSubject.DoesNotExist:
+                try:
+                    self._registered_subject = self.dashboard_model_instance.registered_subject
+                except AttributeError:
+                    try:
+                        self._registered_subject = self.dashboard_model_instance.appointment.registered_subject
+                    except AttributeError:
+                        try:
+                            self._infant_birth = InfantBirth.objects.get(pk=self.dashboard_id)
+                            self._registered_subject = self._infant_birth.registered_subject
+                        except InfantBirth.DoesNotExist:
+                            pass
+        return self._registered_subject
