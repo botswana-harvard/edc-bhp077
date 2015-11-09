@@ -71,20 +71,24 @@ class MaternalDashboard(RegisteredSubjectDashboard):
     def get_registered_infant_identifier(self):
         """Returns an infant identifier associated with the maternal identifier"""
         infants = OrderedDict()
-        infant_registered_subject = RegisteredSubject.objects.get(
-            subject_type='infant', relative_identifier__iexact=self.subject_identifier
-        )
+        infant_registered_subject = None
         try:
-            infant_birth = InfantBirth.objects.get(registered_subject__exact=infant_registered_subject)
-            dct = infant_birth.__dict__
-            dct['dashboard_model'] = convert_from_camel(infant_birth._meta.object_name)
-            dct['dashboard_id'] = convert_from_camel(infant_birth.pk)
-            dct['dashboard_type'] = 'infant'
-            infants[infant_registered_subject.subject_identifier] = dct
-        except InfantBirth.DoesNotExist:
-            dct = {'subject_identifier': infant_registered_subject.subject_identifier}
-            dct['dashboard_model'] = 'registered_subject'
-            dct['dashboard_id'] = infant_registered_subject.pk
-            dct['dashboard_type'] = 'infant'
-            infants[infant_registered_subject.subject_identifier] = dct
+            infant_registered_subject = RegisteredSubject.objects.get(
+                subject_type='infant', relative_identifier__iexact=self.subject_identifier
+            )
+            try:
+                infant_birth = InfantBirth.objects.get(registered_subject__exact=infant_registered_subject)
+                dct = infant_birth.__dict__
+                dct['dashboard_model'] = convert_from_camel(infant_birth._meta.object_name)
+                dct['dashboard_id'] = convert_from_camel(infant_birth.pk)
+                dct['dashboard_type'] = 'infant'
+                infants[infant_registered_subject.subject_identifier] = dct
+            except InfantBirth.DoesNotExist:
+                dct = {'subject_identifier': infant_registered_subject.subject_identifier}
+                dct['dashboard_model'] = 'registered_subject'
+                dct['dashboard_id'] = infant_registered_subject.pk
+                dct['dashboard_type'] = 'infant'
+                infants[infant_registered_subject.subject_identifier] = dct
+        except RegisteredSubject.DoesNotExist:
+            pass
         return infants
