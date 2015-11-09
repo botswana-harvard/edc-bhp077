@@ -10,7 +10,6 @@ from .infant_congenital_anomalies_admin import (
     InfantFemaleGenitalAnomalyItemsAdmin, InfantMaleGenitalAnomalyItemsAdmin, InfantRenalAnomalyItemsAdmin,
     InfantMusculoskeletalAbnormalItemsAdmin, InfantSkinAbnormalItemsAdmin, InfantTrisomiesChromosomeItemsAdmin)
 from .infant_death_admin import InfantDeathAdmin
-from .infant_eligibility_admin import InfantEligibilityAdmin
 from .infant_off_study_admin import InfantOffStudyAdmin
 from .infant_visit_admin import InfantVisitAdmin
 from .infant_arv_proph_admin import InfantArvProphAdmin, InfantArvProphModAdmin

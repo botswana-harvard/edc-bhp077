@@ -6,7 +6,6 @@ from .infant_birth_exam import InfantBirthExam
 from .infant_birth_feeding import InfantBirthFeedVaccine
 from .infant_circumcision import InfantCircumcision
 from .infant_death import InfantDeath
-from .infant_eligibility import InfantEligibility
 from .infant_fu import InfantFu
 from .infant_fu_dx import InfantFuDx
 from .infant_fu_dx_items import InfantFuDxItems
@@ -25,4 +24,4 @@ from .infant_congenital_anomalies import (
     InfantRespiratoryDefectItems, InfantLowerGastrointestinalItems, InfantFemaleGenitalAnomalyItems,
     InfantMaleGenitalAnomalyItems, InfantRenalAnomalyItems, InfantMusculoskeletalAbnormalItems,
     InfantSkinAbnormalItems, InfantTrisomiesChromosomeItems, InfantOtherAbnormalityItems, )
-from .signals import update_registered_subject_on_post_save
+from .signals import update_infant_registered_subject_on_post_save
