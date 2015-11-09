@@ -20,9 +20,9 @@ class InfantDashboard(RegisteredSubjectDashboard):
         RegisteredSubjectDashboard.urlpatterns[0][:-1] + '(?P<appointment_code>{appointment_code})/$'] + RegisteredSubjectDashboard.urlpatterns
     urlpattern_options = dict(
         RegisteredSubjectDashboard.urlpattern_options,
-        dashboard_model=RegisteredSubjectDashboard.urlpattern_options['dashboard_model'] + '|infant_birth',
+        dashboard_model=RegisteredSubjectDashboard.urlpattern_options['dashboard_model'] + '|infant_enrollment',
         dashboard_type='infant',
-        appointment_code='2000|2010|2030')
+        appointment_code='2000|2010|2030|2060|2090|2120')
 
     def __init__(self, **kwargs):
         super(InfantDashboard, self).__init__(**kwargs)
@@ -32,7 +32,7 @@ class InfantDashboard(RegisteredSubjectDashboard):
         self.dashboard_models['registered_subject'] = RegisteredSubject
         self.dashboard_models['infant_birth'] = InfantBirth
         self.dashboard_models['visit'] = InfantVisit
-        self.membership_form_category = ['infant_birth_record']
+        self.membership_form_category = ['infant_enrollment']
         self.requisition_model = InfantRequisition
         self._locator_model = None
         self._maternal_identifier = None

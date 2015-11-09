@@ -1,9 +1,9 @@
-from edc.subject.off_study.forms import BaseOffStudyForm
+from ..forms import BaseInfantModelForm
 
 from ..models import InfantOffStudy
 
 
-class InfantOffStudyForm(BaseOffStudyForm):
+class InfantOffStudyForm(BaseInfantModelForm):
 
     class Meta:
         model = InfantOffStudy

@@ -1,4 +1,3 @@
-from ...microbiome import choices
 from ..models import InfantArvProph
 
 

@@ -1,9 +1,9 @@
 from ..models import InfantBirth
 
-from .base_infant_model_form import BaseInfantModelForm
+from edc.base.form.forms import BaseModelForm
 
 
-class InfantBirthForm(BaseInfantModelForm):
+class InfantBirthForm(BaseModelForm):
 
     class Meta:
         model = InfantBirth

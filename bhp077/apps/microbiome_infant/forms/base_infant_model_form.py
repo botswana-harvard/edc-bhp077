@@ -1,13 +1,6 @@
-from edc.subject.consent.forms import BaseConsentedModelForm
-
-from ..models import InfantVisit
+from edc.base.form.forms import BaseModelForm
 
 
-class BaseInfantModelForm(BaseConsentedModelForm):
+class BaseInfantModelForm(BaseModelForm):
 
-    def __init__(self, *args, **kwargs):
-        super(BaseInfantModelForm, self).__init__(*args, **kwargs)
-        try:
-            self.fields['infant_visit'].queryset = InfantVisit.objects.filter(pk=self.instance.infant_visit.pk)
-        except:
-            pass
+    pass

@@ -33,3 +33,4 @@ class InfantArvProph(InfantScheduledVisitModel):
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = 'Infant NVP or AZT Proph'
+        verbose_name_plural = 'Infant NVP or AZT Proph'
