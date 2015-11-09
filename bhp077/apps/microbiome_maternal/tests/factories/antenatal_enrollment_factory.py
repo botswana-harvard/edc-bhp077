@@ -1,6 +1,6 @@
 import factory
 
-from datetime import datetime
+from django.utils import timezone
 
 from edc_constants.choices import POS, YES, NO
 
@@ -23,4 +23,4 @@ class AntenatalEnrollmentFactory(factory.DjangoModelFactory):
     verbal_hiv_status = POS
     evidence_hiv_status = YES
     valid_regimen = YES
-    report_datetime = datetime.today()
+    report_datetime = timezone.now()

@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 
 from edc.core.bhp_variables.models import StudySite
 from edc.core.identifier.classes import SubjectIdentifier
