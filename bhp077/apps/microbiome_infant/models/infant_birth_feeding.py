@@ -10,7 +10,7 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantBirthFeedVaccine(InfantScheduledVisitModel):
 
-    """infant feeding & vaccination"""
+    """infant feeding & vaccination/ immunization"""
 
     infant_birth = models.ForeignKey(InfantBirth)
 

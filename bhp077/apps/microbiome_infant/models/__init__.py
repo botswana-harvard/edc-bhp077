@@ -3,6 +3,7 @@ from .infant_arv_proph_mod import InfantArvProphMod
 from .infant_birth import InfantBirth
 from .infant_birth_arv import InfantBirthArv
 from .infant_birth_exam import InfantBirthExam
+from .infant_birth_data import InfantBirthData
 from .infant_birth_feeding import InfantBirthFeedVaccine
 from .infant_circumcision import InfantCircumcision
 from .infant_death import InfantDeath
@@ -13,6 +14,7 @@ from .infant_fu_immunizations import InfantFuImmunizations
 from .infant_fu_new_med import InfantFuNewMed
 from .infant_fu_new_med_items import InfantFuNewMedItems
 from .infant_fu_physical import InfantFuPhysical
+from .infant_feeding import InfantFeeding
 from .infant_off_study import InfantOffStudy
 from .infant_visit import InfantVisit
 from .infant_off_study_mixin import InfantOffStudyMixin
