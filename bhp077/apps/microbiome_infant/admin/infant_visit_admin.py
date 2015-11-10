@@ -1,9 +1,19 @@
 from django.contrib import admin
 
+from edc.subject.appointment.admin import BaseAppointmentModelAdmin
+
+from ..forms import InfantVisitForm
 from ..models import InfantVisit
+from bhp077.apps.microbiome_lab.models import InfantRequisition
 
 
-class InfantVisitAdmin(admin.ModelAdmin):
+class InfantVisitAdmin(BaseAppointmentModelAdmin):
+
+    form = InfantVisitForm
+
+    dashboard_type = 'infant'
+
+    requisition_model = InfantRequisition
 
     list_display = ('information_provider', 'information_provider_other', 'study_status')
 

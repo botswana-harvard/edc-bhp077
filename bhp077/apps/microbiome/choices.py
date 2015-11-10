@@ -248,17 +248,8 @@ INFANT_OFF_DRUG_REASON = (
 )
 
 INFANT_VISIT_STUDY_STATUS = (
-    ('onstudy rando ondrug',
-     '1. On study/On drug (CTX/Placebo), study medication(s) continuing or temporarily held'),
-    (
-        'onstudy rando offdrug',
-        ('2. On study/Off drug (CTX/Placebo), study medication(s) permanently '
-         'discontinued- clinic follow-up continuing')
-    ),
-    ('onstudy rando notstarteddrug', '3. On study/has not yet started study medication(s)(CTX/Placebo)'),
-    ('onstudy rando today', '4. Being randomised today'),
-    ('onstudy notrando', '5. On Study / Not yet randomized'),
-    ('offstudy', '6. Off study-no further follow-up (including death); use only for last study contact'),
+    ('onstudy', 'On study'),
+    ('offstudy', 'Off study-no further follow-up (including death); use only for last study contact'),
 )
 
 
