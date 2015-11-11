@@ -2,7 +2,6 @@ from django import forms
 from edc.base.form.forms import BaseModelForm
 from ..models import PostnatalEnrollment
 from bhp077.apps.microbiome.constants import LIVE
-from edc.subject.registration.models import RegisteredSubject
 
 
 class PostnatalEnrollmentForm(BaseModelForm):

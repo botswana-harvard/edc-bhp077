@@ -10,6 +10,7 @@ from .maternal_eligibility import MaternalEligibility
 from .maternal_consent import MaternalConsent
 from .maternal_eligibility_loss import MaternalEligibilityLoss
 from .maternal_labour_del import MaternalLabourDel
+from .maternal_visit import MaternalVisit
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")
@@ -87,3 +88,10 @@ def update_registered_subject_on_post_save(sender, instance, raw, created, using
 def post_save_create_infant_identifier(sender, instance, raw, created, using, **kwarg):
     if isinstance(instance, MaternalLabourDel):
         instance.post_save_create_infant_identifier(created)
+
+@receiver(post_save, weak=False, dispatch_uid="maternal_visit_on_post_save")
+def maternal_visit_on_post_save(sender, instance, raw, created, using, **kwargs):
+    """Creates a ClinicEnrollmentLoss instance if not eligible."""
+    if not raw:
+        if isinstance(instance, MaternalVisit):
+            instance.update_scheduled_entry_meta_data()

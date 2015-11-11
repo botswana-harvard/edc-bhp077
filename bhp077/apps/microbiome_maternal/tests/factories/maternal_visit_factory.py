@@ -13,6 +13,5 @@ class MaternalVisitFactory(factory.DjangoModelFactory):
 
     report_datetime = timezone.now()
     appointment = factory.SubFactory(AppointmentFactory)
-    reason = "NA"
-#    info_source = ""
-#    subject_identifier = ""
+    reason = "scheduled"
+    info_source = "participant"

@@ -76,12 +76,11 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
     consent_type_setup = [
         {'app_label': 'microbiome_maternal',
          'model_name': 'maternalconsent',
-         # 'model_name': 'postnatalenrollment',
          'start_datetime': study_start_datetime,
          'end_datetime': study_end_datetime,
          'version': '1'}]
 
-    study_site_setup = [{'site_name': 'Gaborone', 'site_code': '001'}]
+    study_site_setup = [{'site_name': 'Gaborone', 'site_code': '40'}]
 
     lab_clinic_api_setup = {
         'panel': [PanelTuple('Viral Load', 'TEST', 'WB'),

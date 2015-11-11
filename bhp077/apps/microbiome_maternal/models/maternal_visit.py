@@ -7,10 +7,11 @@ from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
+from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 from bhp077.apps.microbiome.choices import VISIT_UNSCHEDULED_REASON, VISIT_REASON
-from bhp077.apps.microbiome_maternal.models import MaternalConsent
+from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
 
 
 class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
@@ -43,6 +44,58 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
         self.create_additional_maternal_forms_meta()
         super(MaternalVisit, self).save(*args, **kwargs)
+
+    @property
+    def hiv_rapid_test_pos(self):
+        try:
+            PostnatalEnrollment.objects.get(
+                registered_subject=self.appointment.registered_subject,
+                process_rapid_test=YES,
+                rapid_test_result=POS
+            )
+        except PostnatalEnrollment.DoesNotExist:
+            return False
+        return True
+
+    def model_options(self, app_label, model_name):
+        model_options = {}
+        model_options.update(
+            entry__app_label=app_label,
+            entry__model_name=model_name,
+            appointment=self.appointment)
+        return model_options
+
+    @property
+    def hiv_status_pos_and_evidence_yes(self):
+        try:
+            PostnatalEnrollment.objects.get(
+                registered_subject=self.appointment.registered_subject,
+                verbal_hiv_status=POS,
+                evidence_hiv_status=YES
+            )
+        except PostnatalEnrollment.DoesNotExist:
+            return False
+        return True
+
+    def scheduled_entry_meta_data(self, model_name):
+        sd = ScheduledEntryMetaData.objects.filter(**self.model_options(
+            'microbiome_maternal', model_name)).first()
+        sd.entry_status = NEW
+        sd.save()
+
+    def update_scheduled_entry_meta_data(self):
+        if self.hiv_rapid_test_pos or \
+                self.hiv_status_pos_and_evidence_yes:
+            if self.appointment.visit_definition.code == '1000M':
+                for model_name in  ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg']:
+                    self.scheduled_entry_meta_data(model_name)
+            elif self.appointment.visit_definition.code == '2000M':
+                for model_name in ['maternalarvpreg', 'maternallabdelclinic']:
+                     self.scheduled_entry_meta_data(model_name)
+            elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
+                 self.scheduled_entry_meta_data('maternalarvpost')
+        else:
+            pass
 
     def create_additional_maternal_forms_meta(self):
         if self.reason == 'off study':

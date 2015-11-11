@@ -2,7 +2,6 @@ import factory
 from django.utils import timezone
 
 from edc_constants.constants import YES, NO, POS
-
 from bhp077.apps.microbiome.constants import LIVE
 
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
@@ -31,3 +30,6 @@ class PostnatalEnrollmentFactory(factory.DjangoModelFactory):
     valid_regimen_duration = YES
     process_rapid_test = NO
     date_of_rapid_test = timezone.now().date()
+    live_or_still_birth = LIVE
+    live_infants = 1
+    postpartum_days = 2
