@@ -70,6 +70,15 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
                    "Entricitibine-Efavirenz, Truvad-Lamivudine-Efavirenz. If NO, participant"
                    "will not be enrolled"))
 
+    valid_regimen_duration = models.CharField(
+        verbose_name="Has the participant been on the regimen for a valid period of time?",
+        choices=YES_NO_NA,
+        null=True,
+        blank=False,
+        default=NOT_APPLICABLE,
+        max_length=15,
+        help_text=("If not 6 or more weeks then not eligible."))
+
     process_rapid_test = models.CharField(
         verbose_name="Was a rapid test processed?",
         choices=YES_NO_NA,

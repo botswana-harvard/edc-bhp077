@@ -1,5 +1,3 @@
-from django.db.models import get_model
-
 from edc.subject.off_study.mixins import OffStudyMixin
 
 

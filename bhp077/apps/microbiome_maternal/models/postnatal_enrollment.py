@@ -1,9 +1,9 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from edc_constants.choices import YES_NO
+from edc_constants.choices import YES_NO, YES, NO, POS, NEG
 
-from ..maternal_choices import LIVE_STILL_BIRTH
+from ..maternal_choices import LIVE_STILL_BIRTH, LIVE
 from .base_enrollment import BaseEnrollment
 from .maternal_consent import MaternalConsent
 
@@ -42,6 +42,27 @@ class PostnatalEnrollment(BaseEnrollment):
 
     def get_registration_datetime(self):
         return self.report_datetime
+
+    @property
+    def postnatal_eligible(self):
+        """Returns true if the participant is eligible."""
+        if (self.breastfeed_for_a_year == YES and self.on_tb_treatment == NO and self.is_diabetic == NO and
+                self.instudy_for_a_year == YES and self.postpartum_days <= 3 and self.delivery_type == YES and
+                self.live_or_still_birth == LIVE and self.gestation_before_birth >= 37):
+            if (self.verbal_hiv_status == POS and self.evidence_hiv_status == YES and self.valid_regimen == YES and
+                    self.valid_regimen_duration == YES):
+                return True
+            elif (self.verbal_hiv_status == POS and self.evidence_hiv_status == NO and
+                    self.rapid_test_result == POS and self.valid_regimen == YES and self.valid_regimen_duration == YES):
+                return True
+            elif self.verbal_hiv_status == NEG and self.evidence_hiv_status == NO and self.rapid_test_result == NEG:
+                return True
+            elif self.verbal_hiv_status == NEG and self.evidence_hiv_status == YES:
+                return True
+            elif (self.verbal_hiv_status in ['Never tested for HIV', 'Unknown', 'Refused to answer'] and
+                    self.rapid_test_result == NEG):
+                return True
+        return False
 
     class Meta:
         app_label = 'microbiome_maternal'

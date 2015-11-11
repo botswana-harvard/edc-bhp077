@@ -21,6 +21,7 @@ class AntenatalEnrollmentAdmin(BaseModelAdmin):
               'verbal_hiv_status',
               'evidence_hiv_status',
               'valid_regimen',
+              'valid_regimen_duration',
               'process_rapid_test',
               'date_of_rapid_test',
               'rapid_test_result')
