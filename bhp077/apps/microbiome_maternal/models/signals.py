@@ -89,9 +89,10 @@ def post_save_create_infant_identifier(sender, instance, raw, created, using, **
     if isinstance(instance, MaternalLabourDel):
         instance.post_save_create_infant_identifier(created)
 
+
 @receiver(post_save, weak=False, dispatch_uid="maternal_visit_on_post_save")
 def maternal_visit_on_post_save(sender, instance, raw, created, using, **kwargs):
-    """Creates a ClinicEnrollmentLoss instance if not eligible."""
+    """Updates maternal scheduled meta data."""
     if not raw:
         if isinstance(instance, MaternalVisit):
             instance.update_scheduled_entry_meta_data()
