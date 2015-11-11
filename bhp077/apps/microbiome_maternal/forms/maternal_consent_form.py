@@ -1,13 +1,18 @@
-from edc.base.form.forms import BaseModelForm
+from django import forms
+
+from edc_consent.forms import BaseSubjectConsentForm
 
 from ..models import MaternalConsent
 
 
-class MaternalConsentForm(BaseModelForm):
+class MaternalConsentForm(BaseSubjectConsentForm):
 
     def clean(self):
-        clean_data = super(MaternalConsentForm, self).clean()
-        return clean_data
+        self.cleaned_data['gender'] = 'F'
+        cleaned_data = super(MaternalConsentForm, self).clean()
+        if cleaned_data.get('identity_type') == 'OMANG' and cleaned_data.get('identity')[4] != '2':
+            raise forms.ValidationError('Identity provided indicates participant is Male. Please correct.')
+        return cleaned_data
 
     class Meta:
         model = MaternalConsent
