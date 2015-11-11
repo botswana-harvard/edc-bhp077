@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from edc_constants.constants import YES
+from edc_constants.constants import YES, NO
 
 from ..models import SampleConsent, MaternalConsent
 
@@ -17,6 +17,14 @@ class SampleConsentForm(ModelForm):
                 if cleaned_data.get('is_literate') != primary_consent[0].is_literate:
                     raise forms.ValidationError("Sample Consent and Maternal Consent literacy "
                                                 "answers do not match. Please Correct!")
+                if cleaned_data.get("consent_benefits") != YES:
+                    raise forms.ValidationError("If may_store_samples is YES, ensure that sample"
+                                                " storage benefits is explained to and understood by"
+                                                " participant.")
+        if cleaned_data.get('is_literate', None) == NO and not cleaned_data.get('witness_name', None):
+            raise forms.ValidationError('You wrote subject is illiterate. Please provide the name of a witness here and with signature on the paper document.')
+        if cleaned_data.get('is_literate') == YES and cleaned_data.get('witness_name', None):
+            raise forms.ValidationError('You wrote subject is literate. The name of a witness is NOT required.')
 
         return super(SampleConsentForm, self).clean()
 
