@@ -13,8 +13,6 @@ class AntenatalEnrollment(BaseEnrollment):
 
     weeks_of_gestation = models.IntegerField(
         verbose_name="How many weeks pregnant?",
-        null=True,
-        blank=True,
         help_text=" (weeks of gestation). If >=32 weeks do rapid test", )
 
     @property
