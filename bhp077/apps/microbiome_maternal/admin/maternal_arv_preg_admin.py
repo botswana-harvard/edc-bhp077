@@ -7,6 +7,7 @@ from ..models import MaternalArvPreg, MaternalArv
 
 class MaternalArvInlineAdmin(BaseTabularInline):
     model = MaternalArv
+    extra = 1
 
 
 class MaternalArvPregAdmin(BaseModelAdmin):
