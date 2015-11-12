@@ -31,10 +31,17 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
 
     def save(self, *args, **kwargs):
         self.subject_identifier = SubjectIdentifier(site_code=self.study_site.site_code).get_identifier()
+        self.gender = self.maternal_eligibility.registered_subject.gender
         super(MaternalConsent, self).save(*args, **kwargs)
 
     def get_registration_datetime(self):
         return self.consent_datetime
+
+    @property
+    def maternal_eligibility(self):
+        from bhp077.apps.microbiome_maternal.models import MaternalEligibility
+        maternal_eligibility = MaternalEligibility.objects.get(registered_subject=self.registered_subject)
+        return maternal_eligibility
 
     history = AuditTrail()
 
