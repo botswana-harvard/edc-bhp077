@@ -65,7 +65,7 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
                 raise forms.ValidationError('You indicated that a VL count was NOT performed, yet provided a date VL '
                                             'was performed. Please correct.')
             if cleaned_data.get('vl_result'):
-                raise forms.ValidationError('You indicated that a VL count was  NOT performed, yet provided a VL result'
+                raise forms.ValidationError('You indicated that a VL count was NOT performed, yet provided a VL result'
                                             ' Please correct.')
         return cleaned_data
 
