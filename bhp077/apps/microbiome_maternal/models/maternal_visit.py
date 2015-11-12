@@ -87,7 +87,7 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         if self.hiv_rapid_test_pos or \
                 self.hiv_status_pos_and_evidence_yes:
             if self.appointment.visit_definition.code == '1000M':
-                for model_name in ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg']:
+                for model_name in ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg', 'maternalclinicalhistory']:
                     self.scheduled_entry_meta_data(model_name)
             elif self.appointment.visit_definition.code == '2000M':
                 for model_name in ['maternalarvpreg', 'maternallabdelclinic']:
