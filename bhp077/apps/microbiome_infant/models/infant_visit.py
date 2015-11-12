@@ -73,6 +73,10 @@ class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
             return False
 
     @property
+    def postnatal_enrollment(self):
+        return  PostnatalEnrollment.objects.get(registered_subject=self.maternal_registered_subject)
+
+    @property
     def hiv_status_pos_and_evidence_yes(self):
         try:
             PostnatalEnrollment.objects.get(
@@ -98,7 +102,7 @@ class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
                 appointment=self.appointment
             )
         if rq:
-            rq.first()
+            rq = rq.first()
             rq.entry_status = NEW
             rq.save()
 
