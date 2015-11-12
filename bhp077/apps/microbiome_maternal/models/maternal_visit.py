@@ -45,6 +45,14 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         self.create_additional_maternal_forms_meta()
         super(MaternalVisit, self).save(*args, **kwargs)
 
+    def model_options(self, app_label, model_name):
+        model_options = {}
+        model_options.update(
+            entry__app_label=app_label,
+            entry__model_name=model_name,
+            appointment=self.appointment)
+        return model_options
+
     @property
     def hiv_rapid_test_pos(self):
         try:
@@ -56,14 +64,6 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         except PostnatalEnrollment.DoesNotExist:
             return False
         return True
-
-    def model_options(self, app_label, model_name):
-        model_options = {}
-        model_options.update(
-            entry__app_label=app_label,
-            entry__model_name=model_name,
-            appointment=self.appointment)
-        return model_options
 
     @property
     def hiv_status_pos_and_evidence_yes(self):
@@ -84,8 +84,7 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         sd.save()
 
     def update_scheduled_entry_meta_data(self):
-        if self.hiv_rapid_test_pos or \
-                self.hiv_status_pos_and_evidence_yes:
+        if self.hiv_status_pos_and_evidence_yes:
             if self.appointment.visit_definition.code == '1000M':
                 for model_name in ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg']:
                     self.scheduled_entry_meta_data(model_name)
