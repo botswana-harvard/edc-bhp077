@@ -7,7 +7,6 @@ VISIT_INFO_SOURCE = [
     ('other_doctor', 'Contact with external health care provider/medical doctor'),
     ('family', 'Contact with family or designated person who can provide information'),
     ('chart', 'Hospital chart or other medical record'),
-    ('telephone', 'Telephone call with participant'),
     ('OTHER', 'Other')]
 
 # DONT CHANGE THESE !!

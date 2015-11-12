@@ -23,4 +23,5 @@ class AntenatalEnrollmentFactory(factory.DjangoModelFactory):
     verbal_hiv_status = POS
     evidence_hiv_status = YES
     valid_regimen = YES
+    valid_regimen_duration = YES
     report_datetime = timezone.now()

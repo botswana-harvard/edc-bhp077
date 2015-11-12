@@ -29,12 +29,6 @@ class TestAntenatalEnroll(TestCase):
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
-    def test_eligibility_for_correct_age(self):
-        """Test for a positive mother on a valid regimen."""
-
-        antenatal_enrollment = AntenatalEnrollmentFactory(verbal_hiv_status=POS, evidence_hiv_status=YES, registered_subject=self.registered_subject)
-        self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
-
     def test_weeks_of_gestation_below_32(self):
         """Test for a positive mother on a valid regimen but weeks of gestation below 32."""
 
