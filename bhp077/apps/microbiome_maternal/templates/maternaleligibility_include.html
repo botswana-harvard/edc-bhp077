@@ -22,8 +22,11 @@
                 <tr class="{% cycle 'row2' 'row1' %}">
 
                 {% if maternal_eligibility.mothers_consent %}
-                    <td><A href="{% url 'subject_dashboard_url' dashboard_type='maternal' dashboard_model='maternal_eligibility' dashboard_id=maternal_eligibility.pk show='appointments' %}"><div nowrap>{{ maternal_eligibility.mothers_consent.subject_identifier }}</div></A></td>
-                
+                	{% if maternal_eligibility.mothers_consent.citizen == "Yes" %}
+                    	<td><A href="{% url 'subject_dashboard_url' dashboard_type='maternal' dashboard_model='maternal_eligibility' dashboard_id=maternal_eligibility.pk show='appointments' %}"><div nowrap>{{ maternal_eligibility.mothers_consent.subject_identifier }}</div></A></td>
+                	{% else %}
+                		<td>Not a Citizen</td>
+                	{% endif %}
                 {% elif maternal_eligibility.is_eligible %}
                     <td><A href="{% url 'admin:microbiome_maternal_maternalconsent_add' %}?registered_subject={{maternal_eligibility.registered_subject.pk}}&next=section_url&section_name=maternal">add maternal consent</A></td>
                 {% else %}
