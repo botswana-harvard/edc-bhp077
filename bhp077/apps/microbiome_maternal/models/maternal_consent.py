@@ -8,6 +8,7 @@ from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_consent.models.base_consent import BaseConsent
 from edc_consent.models.fields import (PersonalFieldsMixin, CitizenFieldsMixin, ReviewFieldsMixin,
                                        VulnerabilityFieldsMixin, IdentityFieldsMixin)
+from edc_constants.constants import NO
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
@@ -30,10 +31,17 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
 
     def save(self, *args, **kwargs):
         self.subject_identifier = SubjectIdentifier(site_code=self.study_site.site_code).get_identifier()
+        self.gender = self.maternal_eligibility.registered_subject.gender
         super(MaternalConsent, self).save(*args, **kwargs)
 
     def get_registration_datetime(self):
         return self.consent_datetime
+
+    @property
+    def maternal_eligibility(self):
+        from bhp077.apps.microbiome_maternal.models import MaternalEligibility
+        maternal_eligibility = MaternalEligibility.objects.get(registered_subject=self.registered_subject)
+        return maternal_eligibility
 
     history = AuditTrail()
 
