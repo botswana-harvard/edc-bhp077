@@ -68,7 +68,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         help_text="")
 
     live_infants_to_register = models.IntegerField(
-        verbose_name="How many babies are registering to the study? ",
+        verbose_name="How many babies are you registering to the study? ",
         help_text="")
 
     del_comment = models.TextField(
