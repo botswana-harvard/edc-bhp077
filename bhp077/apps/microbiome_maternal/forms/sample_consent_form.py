@@ -25,7 +25,6 @@ class SampleConsentForm(ModelForm):
             raise forms.ValidationError('You wrote subject is illiterate. Please provide the name of a witness here and with signature on the paper document.')
         if cleaned_data.get('is_literate') == YES and cleaned_data.get('witness_name', None):
             raise forms.ValidationError('You wrote subject is literate. The name of a witness is NOT required.')
-
         return super(SampleConsentForm, self).clean()
 
     class Meta:

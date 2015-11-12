@@ -4,7 +4,7 @@ import time
 from selenium import webdriver
 
 from .microbiome_finders import *
-from .microbiome_pages import LoginPage, AdminPage
+from bhp077.apps.microbiome_maternal.tests.functional_tests.microbiome_pages import LoginPage, AdminPage
 
 
 class TestMicrobiomePages(unittest.TestCase):

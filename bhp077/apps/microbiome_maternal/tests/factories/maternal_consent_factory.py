@@ -11,8 +11,7 @@ from bhp077.apps.microbiome_maternal.models import MaternalConsent
 
 class MaternalConsentFactory(factory.DjangoModelFactory):
 
-    class Meta:
-        model = MaternalConsent
+    FACTORY_FOR = MaternalConsent
 
     registered_subject = factory.SubFactory(RegisteredSubjectFactory)
     report_datetime = timezone.now()
@@ -23,10 +22,10 @@ class MaternalConsentFactory(factory.DjangoModelFactory):
     initials = "DD"
     dob = timezone.datetime(1988, 7, 7, 0, 0, 0, 0)
     is_dob_estimated = NO
-    gender = "Female"
+    gender = "F"
     citizen = YES
     identity = "111121111"
-    identity_type = "Omang"
+    identity_type = "OMANG"
     confirm_identity = "111121111"
     consent_reviewed = YES
     study_questions = YES
