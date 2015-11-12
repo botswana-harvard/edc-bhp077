@@ -61,6 +61,10 @@ class MaternalEligibility (BaseUuidModel):
     is_consented = models.BooleanField(
         default=False,
         editable=False)
+    # updated by signal on saving consent, is determined by participant citizenship
+    has_passed_consent = models.BooleanField(
+        default=False,
+        editable=False)
 
     objects = models.Manager()
 

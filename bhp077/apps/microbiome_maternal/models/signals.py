@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from edc.subject.registration.models import RegisteredSubject
-
+from edc_constants.constants import NO, YES
 from .maternal_eligibility import MaternalEligibility
 from .maternal_consent import MaternalConsent
 from .maternal_eligibility_loss import MaternalEligibilityLoss
@@ -62,6 +62,10 @@ def maternal_consent_on_post_save(sender, instance, raw, created, using, **kwarg
         if isinstance(instance, MaternalConsent):
             maternal_eligibility = MaternalEligibility.objects.get(registered_subject=instance.registered_subject)
             maternal_eligibility.is_consented = True
+            if instance.citizen == YES:
+                maternal_eligibility.has_passed_consent = True
+            elif instance.citizen == NO:
+                maternal_eligibility.has_passed_consent = False
             maternal_eligibility.save()
 
 
