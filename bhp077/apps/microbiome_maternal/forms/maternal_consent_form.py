@@ -1,12 +1,11 @@
 from django import forms
 
-# from edc_consent.forms import BaseSubjectConsentForm
-from edc_consent.forms.base_consent_form import BaseConsentForm
+from edc_consent.forms import BaseSubjectConsentForm
 
 from ..models import MaternalConsent
 
 
-class MaternalConsentForm(BaseConsentForm):
+class MaternalConsentForm(BaseSubjectConsentForm):
 
     def clean(self):
         self.cleaned_data['gender'] = 'F'
