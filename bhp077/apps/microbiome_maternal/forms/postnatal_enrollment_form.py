@@ -3,8 +3,10 @@ from edc.base.form.forms import BaseModelForm
 from ..models import PostnatalEnrollment
 from bhp077.apps.microbiome.constants import LIVE
 
+from .base_enrollment_form import BaseEnrollmentForm
 
-class PostnatalEnrollmentForm(BaseModelForm):
+
+class PostnatalEnrollmentForm(BaseEnrollmentForm):
 
     def clean(self):
 

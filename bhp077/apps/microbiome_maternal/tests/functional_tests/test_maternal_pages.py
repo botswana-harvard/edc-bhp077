@@ -5,8 +5,8 @@ from selenium.webdriver.common.by import By
 
 from .maternal_finders import *
 from .microbiome_finders import *
-from .maternal_pages import EligibilityPage, ConsentPage
-from .microbiome_pages import LoginPage, AdminPage
+from bhp077.apps.microbiome_maternal.tests.functional_tests.maternal_pages import EligibilityPage, ConsentPage
+from bhp077.apps.microbiome_maternal.tests.functional_tests.microbiome_pages import LoginPage, AdminPage
 
 
 class TestMaternalPages(unittest.TestCase):

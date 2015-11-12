@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from edc_constants.constants import YES
+from edc_constants.constants import YES, NO
 
 from ..models import SampleConsent, MaternalConsent
 
@@ -17,7 +17,6 @@ class SampleConsentForm(ModelForm):
                 if cleaned_data.get('is_literate') != primary_consent[0].is_literate:
                     raise forms.ValidationError("Sample Consent and Maternal Consent literacy "
                                                 "answers do not match. Please Correct!")
-
         return super(SampleConsentForm, self).clean()
 
     class Meta:
