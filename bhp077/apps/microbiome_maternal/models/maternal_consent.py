@@ -7,7 +7,8 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_consent.models.base_consent import BaseConsent
 from edc_consent.models.fields import (PersonalFieldsMixin, CitizenFieldsMixin, ReviewFieldsMixin,
-                                       VulnerabilityFieldsMixin, IdentityFieldsMixin)
+                                       VulnerabilityFieldsMixin)
+from edc_consent.models.fields.bw import IdentityFieldsMixin
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
