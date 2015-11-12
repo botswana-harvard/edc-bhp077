@@ -7,7 +7,7 @@ from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
+from edc_constants.constants import NEW, YES, POS
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 from bhp077.apps.microbiome.choices import VISIT_UNSCHEDULED_REASON, VISIT_REASON
@@ -86,7 +86,7 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
     def update_scheduled_entry_meta_data(self):
         if self.hiv_status_pos_and_evidence_yes:
             if self.appointment.visit_definition.code == '1000M':
-                for model_name in ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg']:
+                for model_name in ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg', 'maternalclinicalhistory']:
                     self.scheduled_entry_meta_data(model_name)
             elif self.appointment.visit_definition.code == '2000M':
                 for model_name in ['maternalarvpreg', 'maternallabdelclinic']:

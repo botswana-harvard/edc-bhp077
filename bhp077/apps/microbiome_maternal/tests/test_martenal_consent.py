@@ -24,22 +24,3 @@ class TestMaternalConsent(TestCase):
         site_lab_tracker.autodiscover()
         AntenatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
-
-    def test_martenal_consent_identity(self):
-        """Test identity duplication."""
-
-        maternal_eligibility1 = MaternalEligibilityFactory()
-        MaternalConsentFactory(
-            registered_subject=maternal_eligibility1.registered_subject,
-            identity="111121111",
-            identity_type="Omang",
-            confirm_identity="111121111"
-        )
-
-        maternal_eligibility2 = MaternalEligibilityFactory()
-        MaternalConsentFactory(
-            registered_subject=maternal_eligibility2.registered_subject,
-            identity="111121111",
-            identity_type="Omang",
-            confirm_identity="111121111"
-        )

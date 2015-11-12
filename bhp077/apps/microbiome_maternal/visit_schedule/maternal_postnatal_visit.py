@@ -41,7 +41,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(20L, u'microbiome_maternal', u'maternaldemographics', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(30L, u'microbiome_maternal', u'maternalmedicalhistory', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(40L, u'microbiome_maternal', u'maternalobstericalhistory', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(50L, u'microbiome_maternal', u'maternalclinicalhistory', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(50L, u'microbiome_maternal', u'maternalclinicalhistory', NOT_REQUIRED, NOT_ADDITIONAL),
             EntryTuple(60L, u'microbiome_maternal', u'maternalarvhistory', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(70L, u'microbiome_maternal', u'maternalarvpreg', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(80L, u'microbiome_maternal', u'maternalinfected', NOT_REQUIRED, ADDITIONAL),

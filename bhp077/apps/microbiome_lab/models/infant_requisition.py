@@ -33,6 +33,9 @@ class InfantRequisition(BaseRequisition, BaseUuidModel):
     def get_visit(self):
         return self.infant_visit
 
+    def get_absolute_url(self):
+        return reverse('admin:microbiome_lab_infantrequisition_change', args=(self.id,))
+
     def aliquot(self):
         url = reverse('admin:microbiome_lab_aliquot_changelist')
         return """<a href="{url}?q={requisition_identifier}" />aliquot</a>""".format(
