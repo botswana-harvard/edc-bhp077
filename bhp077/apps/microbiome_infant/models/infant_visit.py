@@ -4,6 +4,7 @@ from django.db import models
 from edc.subject.visit_tracking.models import BaseVisitTracking
 
 from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
+from edc.subject.entry.models import Entry
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.subject.registration.models import RegisteredSubject
 from edc_constants.constants import POS, YES, NEW
@@ -109,23 +110,22 @@ class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
     def create_additional_maternal_forms_meta(self):
         self.reason = 'off study' if not self.postnatal_enrollment.postnatal_eligible else self.reason
         if self.reason == 'off study':
-            entry = Entry.objects.filter(
-                model_name='maternaloffstudy',
+            entry = Entry.objects.get(
+                model_name='infantoffstudy',
                 visit_definition_id=self.appointment.visit_definition_id)
-            if entry:
-                scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
+            scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
+                appointment=self.appointment,
+                entry=entry,
+                registered_subject=self.appointment.registered_subject)
+            if not scheduled_meta_data:
+                scheduled_meta_data = ScheduledEntryMetaData.objects.create(
                     appointment=self.appointment,
-                    entry=entry[0],
-                    registered_subject=self.registered_subject)
-                if not scheduled_meta_data:
-                    scheduled_meta_data = ScheduledEntryMetaData.objects.create(
-                        appointment=self.appointment,
-                        entry=entry[0],
-                        registered_subject=self.registered_subject)
-                else:
-                    scheduled_meta_data = scheduled_meta_data[0]
-                scheduled_meta_data.entry_status = NEW
-                scheduled_meta_data.save()
+                    entry=entry,
+                    registered_subject=self.appointment.registered_subject)
+            else:
+                scheduled_meta_data = scheduled_meta_data[0]
+            scheduled_meta_data.entry_status = NEW
+            scheduled_meta_data.save()
         if self.reason == 'death':
             entries = Entry.objects.filter(
                 model_name__in=['infantdeath', 'infantoffstudy'],
@@ -134,12 +134,12 @@ class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
                 scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
                     appointment=self.appointment,
                     entry=entry[0],
-                    registered_subject=self.registered_subject)
+                    registered_subject=self.appointment.registered_subject)
                 if not scheduled_meta_data:
                     scheduled_meta_data = ScheduledEntryMetaData.objects.create(
                         appointment=self.appointment,
                         entry=entry[0],
-                        registered_subject=self.registered_subject)
+                        registered_subject=self.appointment.registered_subject)
                 else:
                     scheduled_meta_data = scheduled_meta_data[0]
                 scheduled_meta_data.entry_status = NEW

@@ -3,11 +3,15 @@ from django.contrib import admin
 from edc.base.modeladmin.admin import BaseModelAdmin
 from edc.subject.registration.models import RegisteredSubject
 
-from ..models import InfantBirth
 from bhp077.apps.microbiome_maternal.models import MaternalLabourDel
+
+from ..models import InfantBirth
+from ..forms import InfantBirthForm
 
 
 class InfantBirthAdmin(BaseModelAdmin):
+
+    form = InfantBirthForm
 
     list_display = (
         'registered_subject',
