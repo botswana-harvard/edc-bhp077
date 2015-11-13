@@ -1,8 +1,10 @@
 from django.contrib import admin
 from ..models import InfantCircumcision
 
+from edc.base.modeladmin.admin import BaseModelAdmin
 
-class InfantCircumcisionAdmin(admin.ModelAdmin):
+
+class InfantCircumcisionAdmin(BaseModelAdmin):
 
     list_filter = ('circumcised',)
 

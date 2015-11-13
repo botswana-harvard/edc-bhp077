@@ -7,8 +7,12 @@ class MaternalOffStudyMixin(OffStudyMixin):
         from .maternal_off_study import MaternalOffStudy
         return MaternalOffStudy
 
+    @property
+    def OFF_STUDY_MODEL(self):
+        from .maternal_off_study import MaternalOffStudy
+        return MaternalOffStudy
+
     def save(self, *args, **kwargs):
-        self.OFF_STUDY_MODEL = self.get_off_study_cls()
         super(MaternalOffStudyMixin, self).save(*args, **kwargs)
 
     class Meta:

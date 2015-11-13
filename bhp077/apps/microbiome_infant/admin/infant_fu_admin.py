@@ -2,8 +2,10 @@ from django.contrib import admin
 
 from ..models import InfantFu
 
+from edc.base.modeladmin.admin import BaseModelAdmin
 
-class InfantFuAdmin(admin.ModelAdmin):
+
+class InfantFuAdmin(BaseModelAdmin):
 
     list_display = (
         'physical_assessment',

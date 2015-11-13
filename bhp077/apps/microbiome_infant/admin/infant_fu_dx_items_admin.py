@@ -1,9 +1,10 @@
 from django.contrib import admin
 
 from ..models import InfantFuDxItems
+from edc.base.modeladmin.admin import BaseModelAdmin
 
 
-class InfantFuDxItemsAdmin(admin.ModelAdmin):
+class InfantFuDxItemsAdmin(BaseModelAdmin):
 
     list_display = (
         'fu_dx',
