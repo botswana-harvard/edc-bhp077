@@ -1,13 +1,13 @@
 from django import forms
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
-from edc_consent.forms import BaseConsentedModelForm
+from edc.base.form.forms import BaseModelForm
 
 from ..models import MaternalVisit, MaternalConsent
 from bhp077.apps.microbiome.choices import VISIT_REASON, VISIT_INFO_SOURCE
 
 
-class MaternalVisitForm (BaseConsentedModelForm):
+class MaternalVisitForm (BaseModelForm):
 
     reason = forms.ChoiceField(
         label='Reason for visit',
@@ -21,7 +21,7 @@ class MaternalVisitForm (BaseConsentedModelForm):
         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     def clean(self):
-        cleaned_data = self.cleaned_data
+        cleaned_data = super(MaternalVisitForm, self).clean()
         try:
             maternal_consent = MaternalConsent.objects.get(
                 registered_subject__subject_identifier=cleaned_data.get('appointment').registered_subject.subject_identifier)

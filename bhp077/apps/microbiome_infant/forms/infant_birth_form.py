@@ -11,7 +11,7 @@ class InfantBirthForm(BaseModelForm):
 
     def clean(self):
         cleaned_data = super(InfantBirthForm, self).clean()
-        # does dob match maternal lab del?
+        # DOB should match delivery date
         maternal_identifier = cleaned_data.get('registered_subject', None).relative_identifier
         try:
             maternal_lab_del = MaternalLabourDel.objects.get(
