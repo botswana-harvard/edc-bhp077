@@ -1,3 +1,4 @@
+from __future__ import print_function
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -42,7 +43,7 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
 
     @property
     def postnatal_enrollment(self):
-        return  PostnatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+        return PostnatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
@@ -137,14 +138,15 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
                 model_name__in=['maternaldeath', 'maternaloffstudy'],
                 visit_definition_id=self.appointment.visit_definition_id)
             for entry in entries:
+                print("**********", entry, "**********")
                 scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
                     appointment=self.appointment,
-                    entry=entry[0],
-                    registered_subject=self.registered_subject)
+                    entry=entry,
+                    registered_subject=self.appointment.registered_subject)
                 if not scheduled_meta_data:
                     scheduled_meta_data = ScheduledEntryMetaData.objects.create(
                         appointment=self.appointment,
-                        entry=entry[0],
+                        entry=entry,
                         registered_subject=self.appointment.registered_subject)
                 else:
                     scheduled_meta_data = scheduled_meta_data[0]
