@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-
+from edc.base.modeladmin.admin import BaseModelAdmin
 from ..models import (
     InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
     InfantCleftDisorderItems, InfantMouthUpGastrointestinalItems, InfantCardiovascularDisorderItems,
@@ -10,14 +10,14 @@ from ..models import (
 )
 
 
-class InfantCongenitalAnomaliesAdmin(admin.ModelAdmin):
+class InfantCongenitalAnomaliesAdmin(BaseModelAdmin):
 
     list_display = ('infant_visit',)
 
 admin.site.register(InfantCongenitalAnomalies, InfantCongenitalAnomaliesAdmin)
 
 
-class InfantCnsAbnormalityItemsAdmin(admin.ModelAdmin):
+class InfantCnsAbnormalityItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies', 'abnormality_status',)
 
@@ -31,7 +31,7 @@ class InfantCnsAbnormalityItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantCnsAbnormalityItems, InfantCnsAbnormalityItemsAdmin)
 
 
-class InfantFacialDefectItemsAdmin(admin.ModelAdmin):
+class InfantFacialDefectItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -43,7 +43,7 @@ class InfantFacialDefectItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantFacialDefectItems, InfantFacialDefectItemsAdmin)
 
 
-class InfantCleftDisorderItemsAdmin(admin.ModelAdmin):
+class InfantCleftDisorderItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -55,7 +55,7 @@ class InfantCleftDisorderItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantCleftDisorderItems, InfantCleftDisorderItemsAdmin)
 
 
-class InfantMouthUpGastrointestinalItemsAdmin(admin.ModelAdmin):
+class InfantMouthUpGastrointestinalItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -67,7 +67,7 @@ class InfantMouthUpGastrointestinalItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantMouthUpGastrointestinalItems, InfantMouthUpGastrointestinalItemsAdmin)
 
 
-class InfantCardiovascularDisorderItemsAdmin(admin.ModelAdmin):
+class InfantCardiovascularDisorderItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -79,7 +79,7 @@ class InfantCardiovascularDisorderItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantCardiovascularDisorderItems, InfantCardiovascularDisorderItemsAdmin)
 
 
-class InfantRespiratoryDefectItemsAdmin(admin.ModelAdmin):
+class InfantRespiratoryDefectItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -91,7 +91,7 @@ class InfantRespiratoryDefectItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantRespiratoryDefectItems, InfantRespiratoryDefectItemsAdmin)
 
 
-class InfantLowerGastrointestinalItemsAdmin(admin.ModelAdmin):
+class InfantLowerGastrointestinalItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -103,7 +103,7 @@ class InfantLowerGastrointestinalItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantLowerGastrointestinalItems, InfantLowerGastrointestinalItemsAdmin)
 
 
-class InfantFemaleGenitalAnomalyItemsAdmin(admin.ModelAdmin):
+class InfantFemaleGenitalAnomalyItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -115,7 +115,7 @@ class InfantFemaleGenitalAnomalyItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantFemaleGenitalAnomalyItems, InfantFemaleGenitalAnomalyItemsAdmin)
 
 
-class InfantMaleGenitalAnomalyItemsAdmin(admin.ModelAdmin):
+class InfantMaleGenitalAnomalyItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -127,7 +127,7 @@ class InfantMaleGenitalAnomalyItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantMaleGenitalAnomalyItems, InfantMaleGenitalAnomalyItemsAdmin)
 
 
-class InfantRenalAnomalyItemsAdmin(admin.ModelAdmin):
+class InfantRenalAnomalyItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -139,7 +139,7 @@ class InfantRenalAnomalyItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantRenalAnomalyItems, InfantRenalAnomalyItemsAdmin)
 
 
-class InfantMusculoskeletalAbnormalItemsAdmin(admin.ModelAdmin):
+class InfantMusculoskeletalAbnormalItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -152,7 +152,7 @@ class InfantMusculoskeletalAbnormalItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantMusculoskeletalAbnormalItems, InfantMusculoskeletalAbnormalItemsAdmin)
 
 
-class InfantSkinAbnormalItemsAdmin(admin.ModelAdmin):
+class InfantSkinAbnormalItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
@@ -164,7 +164,7 @@ class InfantSkinAbnormalItemsAdmin(admin.ModelAdmin):
 admin.site.register(InfantSkinAbnormalItems, InfantSkinAbnormalItemsAdmin)
 
 
-class InfantTrisomiesChromosomeItemsAdmin(admin.ModelAdmin):
+class InfantTrisomiesChromosomeItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
 
