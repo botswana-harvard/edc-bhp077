@@ -96,6 +96,9 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
     date_of_rapid_test = models.DateField(
         verbose_name="Date of rapid test",
         null=True,
+        validators=[
+            datetime_not_before_study_start,
+            datetime_not_future, ],
         blank=True)
 
     rapid_test_result = models.CharField(
