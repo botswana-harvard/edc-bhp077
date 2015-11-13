@@ -106,6 +106,45 @@ class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
             rq.entry_status = NEW
             rq.save()
 
+    def create_additional_maternal_forms_meta(self):
+        self.reason = 'off study' if not self.postnatal_enrollment.postnatal_eligible else self.reason
+        if self.reason == 'off study':
+            entry = Entry.objects.filter(
+                model_name='maternaloffstudy',
+                visit_definition_id=self.appointment.visit_definition_id)
+            if entry:
+                scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
+                    appointment=self.appointment,
+                    entry=entry[0],
+                    registered_subject=self.registered_subject)
+                if not scheduled_meta_data:
+                    scheduled_meta_data = ScheduledEntryMetaData.objects.create(
+                        appointment=self.appointment,
+                        entry=entry[0],
+                        registered_subject=self.registered_subject)
+                else:
+                    scheduled_meta_data = scheduled_meta_data[0]
+                scheduled_meta_data.entry_status = NEW
+                scheduled_meta_data.save()
+        if self.reason == 'death':
+            entries = Entry.objects.filter(
+                model_name__in=['infantdeath', 'infantoffstudy'],
+                visit_definition_id=self.appointment.visit_definition_id)
+            for entry in entries:
+                scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
+                    appointment=self.appointment,
+                    entry=entry[0],
+                    registered_subject=self.registered_subject)
+                if not scheduled_meta_data:
+                    scheduled_meta_data = ScheduledEntryMetaData.objects.create(
+                        appointment=self.appointment,
+                        entry=entry[0],
+                        registered_subject=self.registered_subject)
+                else:
+                    scheduled_meta_data = scheduled_meta_data[0]
+                scheduled_meta_data.entry_status = NEW
+                scheduled_meta_data.save()
+
     def update_scheduled_entry_meta_data(self):
         if self.hiv_status_pos_and_evidence_yes:
             if self.appointment.visit_definition.code == '2000':
@@ -126,6 +165,10 @@ class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
         return '{} {} {}'.format(self.appointment.registered_subject.subject_identifier,
                                  self.appointment.registered_subject.first_name,
                                  self.appointment.visit_definition.code)
+
+    def save(self, *args, **kwargs):
+        self.create_additional_maternal_forms_meta()
+        super(InfantVisit, self).save(*args, **kwargs)
 
     class Meta:
         app_label = "microbiome_infant"

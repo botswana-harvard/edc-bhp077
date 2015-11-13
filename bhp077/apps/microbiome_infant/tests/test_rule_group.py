@@ -186,7 +186,7 @@ class TestRuleGroupInfant(TestCase):
             InfantVisitFactory(appointment=appointment)
             self.assertEqual(RequisitionMetaData.objects.filter(
                 entry_status=NEW, lab_entry__requisition_panel__name='DNA PCR',
-                lab_entry__app_label='microbiome_infant',
+                lab_entry__app_label='microbiome_lab',
                 lab_entry__model_name='infantrequisition',
                 appointment=appointment
             ).count(), 1)
