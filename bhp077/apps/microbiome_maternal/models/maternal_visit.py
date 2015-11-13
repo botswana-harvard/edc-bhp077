@@ -40,6 +40,10 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
     def get_visit_reason_choices(self):
         return VISIT_REASON
 
+    @property
+    def postnatal_enrollment(self):
+        return  PostnatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
         self.create_additional_maternal_forms_meta()
@@ -61,7 +65,7 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
     #         dct.update({'vital status': 'Vital Status'})
     #     del dct['death']
     #     del dct['lost']
-        return dct
+    #     return dct
 
 
     @property
@@ -107,7 +111,9 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         else:
             pass
 
+
     def create_additional_maternal_forms_meta(self):
+        self.reason = 'off study' if not self.postnatal_enrollment.postnatal_eligible else self.reason
         if self.reason == 'off study':
             entry = Entry.objects.filter(
                 model_name='maternaloffstudy',
@@ -116,12 +122,12 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
                 scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
                     appointment=self.appointment,
                     entry=entry[0],
-                    registered_subject=self.registered_subject)
+                    registered_subject=self.appointment.registered_subject)
                 if not scheduled_meta_data:
                     scheduled_meta_data = ScheduledEntryMetaData.objects.create(
                         appointment=self.appointment,
                         entry=entry[0],
-                        registered_subject=self.registered_subject)
+                        registered_subject=self.appointment.registered_subject)
                 else:
                     scheduled_meta_data = scheduled_meta_data[0]
                 scheduled_meta_data.entry_status = 'NEW'
@@ -139,10 +145,10 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
                     scheduled_meta_data = ScheduledEntryMetaData.objects.create(
                         appointment=self.appointment,
                         entry=entry[0],
-                        registered_subject=self.registered_subject)
+                        registered_subject=self.appointment.registered_subject)
                 else:
                     scheduled_meta_data = scheduled_meta_data[0]
-                scheduled_meta_data.entry_status = 'NEW'
+                scheduled_meta_data.entry_status = NEW
                 scheduled_meta_data.save()
 
     class Meta:

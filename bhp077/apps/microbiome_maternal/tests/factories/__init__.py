@@ -5,3 +5,4 @@ from .postnatal_enrollment_factory import PostnatalEnrollmentFactory
 from .maternal_consent_factory import MaternalConsentFactory
 from .maternal_visit_factory import MaternalVisitFactory
 from .sexual_behavior_factory import SexualReproductiveHealthFactory
+from .maternal_offstudy_factory import MaternalOffStudyFactory
