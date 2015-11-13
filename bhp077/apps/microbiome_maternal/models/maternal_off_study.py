@@ -22,6 +22,12 @@ class MaternalOffStudy(BaseOffStudy, BaseUuidModel):
     def get_visit(self):
         return self.maternal_visit
 
+    def get_visit_model_cls(self):
+        return MaternalVisit
+
+    def get_subject_identifier(self):
+        return self.maternal_visit.appointment.registered_subject.subject_identifier
+
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_maternaloffstudy_change', args=(self.id,))
 

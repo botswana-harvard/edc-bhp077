@@ -10,7 +10,7 @@ from .maternal_eligibility import MaternalEligibility
 from .maternal_consent import MaternalConsent
 from .maternal_eligibility_loss import MaternalEligibilityLoss
 from .maternal_labour_del import MaternalLabourDel
-from .maternal_visit import MaternalVisit
+from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment, MaternalVisit
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")

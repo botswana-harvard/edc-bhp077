@@ -40,10 +40,33 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
     def get_visit_reason_choices(self):
         return VISIT_REASON
 
+    @property
+    def postnatal_enrollment(self):
+        return  PostnatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
         self.create_additional_maternal_forms_meta()
         super(MaternalVisit, self).save(*args, **kwargs)
+
+    def model_options(self, app_label, model_name):
+        model_options = {}
+        model_options.update(
+            entry__app_label=app_label,
+            entry__model_name=model_name,
+            appointment=self.appointment)
+        return model_options
+
+    # def get_visit_reason_no_follow_up_choices(self):
+    #     """Returns the visit reasons that do not imply any data collection; that is, the subject is not available."""
+    #     dct = {}
+    #     for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
+    #         dct.update({item: item})
+    #         dct.update({'vital status': 'Vital Status'})
+    #     del dct['death']
+    #     del dct['lost']
+    #     return dct
+
 
     @property
     def hiv_rapid_test_pos(self):
@@ -56,14 +79,6 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         except PostnatalEnrollment.DoesNotExist:
             return False
         return True
-
-    def model_options(self, app_label, model_name):
-        model_options = {}
-        model_options.update(
-            entry__app_label=app_label,
-            entry__model_name=model_name,
-            appointment=self.appointment)
-        return model_options
 
     @property
     def hiv_status_pos_and_evidence_yes(self):
@@ -84,8 +99,7 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         sd.save()
 
     def update_scheduled_entry_meta_data(self):
-        if self.hiv_rapid_test_pos or \
-                self.hiv_status_pos_and_evidence_yes:
+        if self.hiv_status_pos_and_evidence_yes:
             if self.appointment.visit_definition.code == '1000M':
                 for model_name in ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg', 'maternalclinicalhistory']:
                     self.scheduled_entry_meta_data(model_name)
@@ -97,7 +111,9 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         else:
             pass
 
+
     def create_additional_maternal_forms_meta(self):
+        self.reason = 'off study' if not self.postnatal_enrollment.postnatal_eligible else self.reason
         if self.reason == 'off study':
             entry = Entry.objects.filter(
                 model_name='maternaloffstudy',
@@ -106,12 +122,12 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
                 scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
                     appointment=self.appointment,
                     entry=entry[0],
-                    registered_subject=self.registered_subject)
+                    registered_subject=self.appointment.registered_subject)
                 if not scheduled_meta_data:
                     scheduled_meta_data = ScheduledEntryMetaData.objects.create(
                         appointment=self.appointment,
                         entry=entry[0],
-                        registered_subject=self.registered_subject)
+                        registered_subject=self.appointment.registered_subject)
                 else:
                     scheduled_meta_data = scheduled_meta_data[0]
                 scheduled_meta_data.entry_status = 'NEW'
@@ -129,10 +145,10 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
                     scheduled_meta_data = ScheduledEntryMetaData.objects.create(
                         appointment=self.appointment,
                         entry=entry[0],
-                        registered_subject=self.registered_subject)
+                        registered_subject=self.appointment.registered_subject)
                 else:
                     scheduled_meta_data = scheduled_meta_data[0]
-                scheduled_meta_data.entry_status = 'NEW'
+                scheduled_meta_data.entry_status = NEW
                 scheduled_meta_data.save()
 
     class Meta:

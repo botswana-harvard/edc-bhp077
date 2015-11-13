@@ -1,3 +1,4 @@
+from django.db.models import get_model
 from django.db import models
 
 from datetime import datetime
@@ -7,14 +8,12 @@ from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.data_manager.models import TimePointStatusMixin
 
-from edc_consent.models import RequiresConsentMixin
-
 from .infant_visit import InfantVisit
 from .infant_off_study_mixin import InfantOffStudyMixin
 
 
 class InfantScheduledVisitModel(InfantOffStudyMixin, BaseUuidModel,
-                                TimePointStatusMixin, RequiresConsentMixin):
+                                TimePointStatusMixin):
 
     infant_visit = models.OneToOneField(InfantVisit)
 
@@ -24,13 +23,12 @@ class InfantScheduledVisitModel(InfantOffStudyMixin, BaseUuidModel,
 
     report_datetime = models.DateTimeField(
         verbose_name="Visit Date and Time",
-#         validators=[
-#             datetime_not_before_study_start,
-#             datetime_is_after_consent,
-#             datetime_not_future,
-#         ],
         default=datetime.today()
     )
+
+    def save(self, *args, **kwargs):
+        self.OFF_STUDY_MODEL = get_model('microbiome_infant', 'InfantOffStudy')
+        super(InfantScheduledVisitModel, self).save(*args, **kwargs)
 
     def get_consenting_subject_identifier(self):
         """Returns mother's identifier."""
