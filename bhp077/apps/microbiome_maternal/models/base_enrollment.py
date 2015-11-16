@@ -110,6 +110,7 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         verbose_name="What is the rapid test result?",
         choices=POS_NEG,
         max_length=15,
+        default=NOT_APPLICABLE,
         null=True,
         blank=True,)
 
