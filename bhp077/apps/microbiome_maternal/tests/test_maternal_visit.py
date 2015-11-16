@@ -1,26 +1,22 @@
-import datetime
-
 from django.test import TestCase
 from django.utils import timezone
 
+from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc.lab.lab_profile.classes import site_lab_profiles
+from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
+from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc.subject.appointment.models import Appointment
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc_constants.choices import YES, NO, POS, NEG, NOT_APPLICABLE
+from edc_constants.choices import YES
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.models import MaternalVisit
-from bhp077.apps.microbiome_maternal.forms import MaternalVisitForm
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
+from bhp077.apps.microbiome_maternal.forms import MaternalVisitForm
+from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
+from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
+
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from .factories import PostnatalEnrollmentFactory
-from bhp077.apps.microbiome_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
-from edc.subject.appointment.tests.factories.appointment_factory import AppointmentFactory
 
 
 class TestMaternalVisit(TestCase):
