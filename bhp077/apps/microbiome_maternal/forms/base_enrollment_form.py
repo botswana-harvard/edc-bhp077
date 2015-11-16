@@ -31,14 +31,14 @@ class BaseEnrollmentForm(BaseModelForm):
                                             'result CANNOT be Not Applicable. Please correct.')
             if cleaned_data.get('valid_regimen') == NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that the participant is Negative, "do records show that'
-                                            ' participant takes ARVs" cannot be Not Applicable')
+                                            ' participant takes ARVs" cannot be Not Applicable.')
         if cleaned_data.get('verbal_hiv_status') == POS:
             if cleaned_data.get('evidence_hiv_status') == NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that the participant is Positive, Evidence of HIV '
                                             'result CANNOT be Not Applicable. Please correct.')
             if cleaned_data.get('valid_regimen') == NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that the participant is Positive, "do records show that'
-                                            ' participant takes ARVs" cannot be Not Applicable')
+                                            ' participant takes ARVs" cannot be Not Applicable.')
         if cleaned_data.get('valid_regimen') == YES:
             if cleaned_data.get('valid_regimen_duration') == NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that the participant is on ARV. Regimen validity period'
@@ -46,7 +46,7 @@ class BaseEnrollmentForm(BaseModelForm):
         else:
             if cleaned_data.get('valid_regimen_duration') != NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that there are no records of Participant taking ARVs. '
-                                            'Regimen validity period should be Not Applicable. Please correct')
+                                            'Regimen validity period should be Not Applicable. Please correct.')
         if cleaned_data.get('process_rapid_test') == YES:
             # date of rapid test is required if rapid test processed is indicated as Yes
             if not cleaned_data.get('date_of_rapid_test'):
