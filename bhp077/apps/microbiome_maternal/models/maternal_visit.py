@@ -68,7 +68,6 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
     #     del dct['lost']
     #     return dct
 
-
     @property
     def hiv_rapid_test_pos(self):
         try:
@@ -111,7 +110,6 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
                 self.scheduled_entry_meta_data('maternalarvpost')
         else:
             pass
-
 
     def create_additional_maternal_forms_meta(self):
         self.reason = 'off study' if not self.postnatal_enrollment.postnatal_eligible else self.reason
