@@ -4,7 +4,8 @@ from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
 
 from edc_base.model.models import BaseUuidModel
-from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
+from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,
+                                       date_not_before_study_start, date_not_future)
 
 from edc_consent.models import RequiresConsentMixin
 
@@ -101,8 +102,8 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         verbose_name="Date of rapid test",
         null=True,
         validators=[
-            datetime_not_before_study_start,
-            datetime_not_future, ],
+            date_not_before_study_start,
+            date_not_future, ],
         blank=True)
 
     rapid_test_result = models.CharField(
