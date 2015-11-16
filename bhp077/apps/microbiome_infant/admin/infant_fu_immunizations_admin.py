@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from ..models import InfantFuImmunizations
-
+from edc.base.modeladmin.admin import BaseModelAdmin
 
 class InfantFuImmunizationsAdmin(admin.ModelAdmin):
 

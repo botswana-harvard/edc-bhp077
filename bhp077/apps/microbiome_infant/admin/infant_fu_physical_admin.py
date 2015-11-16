@@ -2,8 +2,10 @@ from django.contrib import admin
 
 from ..models import InfantFuPhysical
 
+from edc.base.modeladmin.admin import BaseModelAdmin
 
-class InfantFuPhysicalAdmin(admin.ModelAdmin):
+
+class InfantFuPhysicalAdmin(BaseModelAdmin):
 
     list_display = ('has_abnormalities', )
 

@@ -32,6 +32,7 @@ class AntenatalEnrollmentAdmin(BaseModelAdmin):
                     'verbal_hiv_status': admin.VERTICAL,
                     'evidence_hiv_status': admin.VERTICAL,
                     'valid_regimen': admin.VERTICAL,
+                    'valid_regimen_duration': admin.VERTICAL,
                     'process_rapid_test': admin.VERTICAL,
                     'rapid_test_result': admin.VERTICAL}
     list_display = ('registered_subject', 'report_datetime', 'evidence_hiv_status',

@@ -2,8 +2,10 @@ from django.contrib import admin
 
 from ..models import InfantFuNewMed
 
+from edc.base.modeladmin.admin import BaseModelAdmin
 
-class InfantFuNewMedAdmin(admin.ModelAdmin):
+
+class InfantFuNewMedAdmin(BaseModelAdmin):
 
     radio_fields = {'new_medications': admin.VERTICAL, }
 

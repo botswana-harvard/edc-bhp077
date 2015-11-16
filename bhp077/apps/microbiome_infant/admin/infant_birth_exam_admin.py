@@ -1,10 +1,11 @@
 from django.contrib import admin
 
+from edc_base.modeladmin.admin import BaseModelAdmin
 
 from ..models import InfantBirthExam
 
 
-class InfantBirthExamAdmin(admin.ModelAdmin):
+class InfantBirthExamAdmin(BaseModelAdmin):
 
     list_display = (
         'infant_birth',

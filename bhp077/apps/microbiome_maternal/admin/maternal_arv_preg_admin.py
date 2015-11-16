@@ -13,8 +13,7 @@ class MaternalArvInlineAdmin(BaseTabularInline):
 class MaternalArvPregAdmin(BaseModelAdmin):
     form = MaternalArvPregForm
     inlines = [MaternalArvInlineAdmin, ]
-    list_display = ('took_arv', 'is_interrupt')
-    list_filter = ('took_arv', 'is_interrupt')
-    radio_fields = {'took_arv': admin.VERTICAL,
-                    'is_interrupt': admin.VERTICAL}
+    list_display = ('took_arv',)
+    list_filter = ('took_arv',)
+    radio_fields = {'took_arv': admin.VERTICAL}
 admin.site.register(MaternalArvPreg, MaternalArvPregAdmin)
