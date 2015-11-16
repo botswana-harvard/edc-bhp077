@@ -35,10 +35,17 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         max_length=3)
 
     on_tb_treatment = models.CharField(
-        verbose_name="Are you being treated for tubercolosis",
+        verbose_name="Are you being treated for tubercolosis?",
         choices=YES_NO,
         default=NO,
         max_length=3)
+
+    on_hypertension_treatment = models.CharField(
+        verbose_name='Are you being treated for hypertension?',
+        choices=YES_NO,
+        default=NO,
+        max_length=3
+    )
 
     breastfeed_for_a_year = models.CharField(
         verbose_name='Are you willing to breast-feed your child for a whole year?',
