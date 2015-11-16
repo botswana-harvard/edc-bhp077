@@ -12,6 +12,7 @@ class MaternalClinicalHistoryAdmin(BaseModelAdmin):
               'prev_preg_azt',
               'prev_sdnvp_labour',
               'prev_preg_haart',
+              'lowest_cd4_known',
               'cd4_count',
               'cd4_date',
               'is_date_estimated',
@@ -20,6 +21,7 @@ class MaternalClinicalHistoryAdmin(BaseModelAdmin):
                     'prev_preg_azt',
                     'prev_sdnvp_labour',
                     'prev_preg_haart',
+                    'lowest_cd4_known',
                     'cd4_count',
                     'cd4_date')
     list_filter = ('prev_preg_azt',
@@ -28,5 +30,6 @@ class MaternalClinicalHistoryAdmin(BaseModelAdmin):
     radio_fields = {'prev_preg_azt': admin.VERTICAL,
                     'prev_sdnvp_labour': admin.VERTICAL,
                     'prev_preg_haart': admin.VERTICAL,
+                    'lowest_cd4_known': admin.VERTICAL,
                     'is_date_estimated': admin.VERTICAL}
 admin.site.register(MaternalClinicalHistory, MaternalClinicalHistoryAdmin)

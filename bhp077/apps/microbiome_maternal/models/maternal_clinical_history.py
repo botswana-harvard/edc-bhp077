@@ -33,10 +33,19 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
                       "previous pregnancy? "),
         help_text="")
 
+    lowest_cd4_known = models.CharField(
+        max_length=4,
+        choices=YES_NO,
+        verbose_name="Is the mother's lowest CD4 known?"
+    )
+
     cd4_count = models.IntegerField(
         verbose_name=("What was the mother's lowest known (nadir) CD4 cell count(cells/mm3)"
                       " at any time in the past?"),
-        help_text="")
+        null=True,
+        blank=True,
+        help_text=""
+    )
 
     cd4_date = models.DateField(
         verbose_name="Year/Month of CD4 test ",
@@ -45,7 +54,10 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
         null=True)
 
     is_date_estimated = IsDateEstimatedField(
-        verbose_name=("Is the subject's date of CD4 test estimated?"))
+        verbose_name=("Is the subject's date of CD4 test estimated?"),
+        blank=True,
+        null=True
+    )
 
     comment = models.TextField(
         max_length=250,
