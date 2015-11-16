@@ -26,6 +26,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
               'verbal_hiv_status',
               'evidence_hiv_status',
               'valid_regimen',
+              'valid_regimen_duration',
               'process_rapid_test',
               'date_of_rapid_test',
               'rapid_test_result')
@@ -38,8 +39,9 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
                     'verbal_hiv_status': admin.VERTICAL,
                     'evidence_hiv_status': admin.VERTICAL,
                     'valid_regimen': admin.VERTICAL,
+                    'valid_regimen_duration': admin.VERTICAL,
                     'process_rapid_test': admin.VERTICAL,
-                    'rapid_test_result': admin.VERTICAL}
+                    'rapid_test_result': admin.VERTICAL,}
     list_display = ('registered_subject', 'report_datetime', 'delivery_type',
                     'evidence_hiv_status', 'valid_regimen')
 admin.site.register(PostnatalEnrollment, PostnatalEnrollmentAdmin)
