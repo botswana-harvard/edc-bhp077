@@ -120,8 +120,6 @@ class TestMaternalLabourDelClinic(TestCase):
             'has_vl': NO,
             'vl_date': '',
             'vl_result': '',
-            'took_suppliments': NO,
-            'suppliments': 7,
             'comment': ''
         }
 
@@ -156,16 +154,20 @@ class TestMaternalLabourDelClinic(TestCase):
         self.assertIn(u'You indicated that a CD4 count was NOT performed, yet provided a CD4 '
                       'result. Please correct.', form.errors.get('__all__'))
 
-#     def test_has_cd4_5(self):
-#         """If has CD4 is indicated asYes, then CD4 count date and result should be provided."""
-#         supp = SupplimentsFactory(name='Not applicable', short_name='NA')
-#         self.data['has_cd4'] = YES
-#         self.data['cd4_date'] = timezone.now() - timezone.timedelta(days=2)
-#         self.data['cd4_result'] = 600
-#         self.data['suppliments'] = supp
-#         form = MaternalLabDelClinicForm(data=self.data)
-#         print form.errors
-#         self.assertTrue(form.is_valid())
+    def test_has_cd4_5(self):
+        """If has CD4 is indicated as Yes, then CD4 count date and result should be provided."""
+        self.data['has_cd4'] = YES
+        self.data['cd4_date'] = timezone.now() - timezone.timedelta(days=2)
+        self.data['cd4_result'] = 600
+        form = MaternalLabDelClinicForm(data=self.data)
+        print form.errors
+        self.assertTrue(form.is_valid())
+
+    def test_has_cd4_6(self):
+        """If has CD4 is indicated as NO, then CD4 count date and result should be  NOT provided."""
+        form = MaternalLabDelClinicForm(data=self.data)
+        print form.errors
+        self.assertTrue(form.is_valid())
 
     def test_has_vl_1(self):
         """If has VL is indicated as yes, then date VL was performed should be provided."""
@@ -197,3 +199,16 @@ class TestMaternalLabourDelClinic(TestCase):
         form = MaternalLabDelClinicForm(data=self.data)
         self.assertIn(u'You indicated that a VL count was NOT performed, yet provided a VL result'
                       ' Please correct.', form.errors.get('__all__'))
+
+    def test_has_vl_5(self):
+        """If has vl is No then VL date and result shot NOT be provided"""
+        form = MaternalLabDelClinicForm(data=self.data)
+        self.assertTrue(form.is_valid())
+
+    def test_has_vl_6(self):
+        """If has VL  is YES, the both VL date and result should be provided"""
+        self.data['has_vl'] = YES
+        self.data['vl_date'] = timezone.now() - timezone.timedelta(days=2)
+        self.data['vl_result'] = 1389
+        form = MaternalLabDelClinicForm(data=self.data)
+        self.assertTrue(form.is_valid())

@@ -28,7 +28,9 @@ class MaternalLabDelMedAdmin(BaseModelAdmin):
     form = MaternalLabDelMedForm
     list_display = ('has_health_cond', 'has_ob_comp')
     radio_fields = {'has_health_cond': admin.VERTICAL,
-                    'has_ob_comp': admin.VERTICAL}
+                    'has_ob_comp': admin.VERTICAL,
+                    'took_suppliments': admin.VERTICAL}
+    filter_horizontal = ('suppliments', 'health_cond', 'ob_comp')
 admin.site.register(MaternalLabDelMed, MaternalLabDelMedAdmin)
 
 
@@ -36,9 +38,7 @@ class MaternalLabDelClinicAdmin(BaseModelAdmin):
 
     form = MaternalLabDelClinicForm
     radio_fields = {'has_cd4': admin.VERTICAL,
-                    'has_vl': admin.VERTICAL,
-                    'took_suppliments': admin.VERTICAL}
-    filter_horizontal = ('suppliments', )
+                    'has_vl': admin.VERTICAL}
 admin.site.register(MaternalLabDelClinic, MaternalLabDelClinicAdmin)
 
 
