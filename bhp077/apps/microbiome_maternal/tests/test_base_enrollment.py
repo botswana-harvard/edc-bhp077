@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
+from django import forms
 
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
@@ -9,9 +10,9 @@ from edc_constants.choices import POS, YES, NO, NEG, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
-
+from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory,
+                                                             MaternalConsentFactory,
+                                                             SampleConsentFactory)
 from bhp077.apps.microbiome_maternal.models import BaseEnrollment
 from bhp077.apps.microbiome_maternal.forms import BaseEnrollmentForm
 
@@ -145,9 +146,8 @@ class TestBaseEnroll(TestCase):
         self.assertIn(u'You have indicated that the participant is Negative, Evidence of HIV '
                       'result CANNOT be Not Applicable. Please correct.', form.errors.get('__all__'))
 
-    def test_hiv_evidence_neg_reg_na(self):
-        self.data['verbal_hiv_status'] = NEG
-        self.data['valid_regimen'] = NOT_APPLICABLE
-        form = BaseEnrollTestForm(data=self.data)
-        self.assertIn(u'You have indicated that the participant is Negative, "do records show that'
-                      ' participant takes ARVs" cannot be Not Applicable.', form.errors.get('__all__'))
+    def test_sample_filled_before_enrollment(self):
+        sample_consent = SampleConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        if not sample_consent:
+            # self.assertIn(u'Please ensure to save the SAMPLE CONSENT before completing Enrollment')
+            self.assertRaises(forms.ValidationError)

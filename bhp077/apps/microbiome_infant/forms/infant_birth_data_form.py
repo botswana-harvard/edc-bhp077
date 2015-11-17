@@ -2,9 +2,24 @@ from ..models import InfantBirthData
 
 from .base_infant_model_form import BaseInfantModelForm
 
+from edc_constants.constants import YES
+
 
 class InfantBirthDataForm(BaseInfantModelForm):
 
     class Meta:
         model = InfantBirthData
         fields = '__all__'
+
+    def clean(self):
+        cleaned_data = super(InfantVisitForm, self).clean()
+        self.validate_apgar_score(cleaned_data)
+
+    def validate_apgar_score(self, cleaned_data):
+        if cleaned_data.get('apgar_score') == YES:
+            if not cleaned_data.get('apgar_score_min_1'):
+                raise forms.ValidationError('If Apgar scored performed, then you should answer At 1 minute(Q7).')
+            if not leaned_data.get('apgar_score_min_5'):
+                raise forms.ValidationError('If Apgar scored performed, then you should answer At 5 minute(Q8).')
+            if not cleaned_data.get('apgar_score_min_10'):
+                raise forms.ValidationError('If Apgar scored performed, then you should answer At 10 minute(Q9).')

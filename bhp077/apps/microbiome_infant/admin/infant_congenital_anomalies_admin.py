@@ -8,9 +8,14 @@ from ..models import (
     InfantFemaleGenitalAnomalyItems, InfantRenalAnomalyItems, InfantMusculoskeletalAbnormalItems,
     InfantSkinAbnormalItems, InfantTrisomiesChromosomeItems
 )
+from bhp077.apps.microbiome_infant.forms import InfantCongenitalAnomaliesForm
 
 
 class InfantCongenitalAnomaliesAdmin(BaseModelAdmin):
+
+    form = InfantCongenitalAnomaliesForm
+    dashboard_type = 'infant'
+    visit_model_name = 'infantvisit'
 
     list_display = ('infant_visit',)
 
