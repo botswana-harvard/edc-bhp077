@@ -1,7 +1,7 @@
 from django import forms
-from .base_infant_model_form import BaseInfantModelForm
 
 from ..models import InfantStoolCollection
+from .base_infant_model_form import BaseInfantModelForm
 
 
 class InfantStoolCollectionForm(BaseInfantModelForm):

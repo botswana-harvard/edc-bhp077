@@ -46,7 +46,6 @@ class TestRuleGroupInfant(TestCase):
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
-
     def model_options(self, app_label, model_name, appointment):
         model_options = {}
         model_options.update(
@@ -89,8 +88,6 @@ class TestRuleGroupInfant(TestCase):
         )).count(), 1)
 
     def test_infant_birth_male(self):
-        """
-        """
         post = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             verbal_hiv_status=POS,

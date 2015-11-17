@@ -4,6 +4,7 @@ from bhp077.apps.microbiome_list.models import (ChronicConditions, Contraceptive
                                                 DiseasesAtEnrollment, HouseholdGoods,
                                                 PriorArv, AutopsyInfoSource,
                                                 Suppliments, InfantVaccines)
+from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond, DelComp, ObComp, LabDelDx
 
 
 class ChronicConditionsAdmin(BaseModelAdmin):
@@ -44,3 +45,23 @@ admin.site.register(Suppliments, SupplimentsAdmin)
 class InfantVaccinesAdmin(BaseModelAdmin):
     pass
 admin.site.register(InfantVaccines, InfantVaccinesAdmin)
+
+
+class HealthCondAdmin(BaseModelAdmin):
+    pass
+admin.site.register(HealthCond, HealthCondAdmin)
+
+
+class DelCompAdmin(BaseModelAdmin):
+    pass
+admin.site.register(DelComp, DelCompAdmin)
+
+
+class ObCompAdmin(BaseModelAdmin):
+    pass
+admin.site.register(ObComp, ObCompAdmin)
+
+
+class LabDelDxAdmin(BaseModelAdmin):
+    pass
+admin.site.register(LabDelDx, LabDelDxAdmin)

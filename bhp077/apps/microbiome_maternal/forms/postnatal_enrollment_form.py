@@ -1,9 +1,8 @@
 from django import forms
 
 from ..models import PostnatalEnrollment
-from bhp077.apps.microbiome.constants import LIVE
-
 from .base_enrollment_form import BaseEnrollmentForm
+from bhp077.apps.microbiome.constants import LIVE
 
 
 class PostnatalEnrollmentForm(BaseEnrollmentForm):

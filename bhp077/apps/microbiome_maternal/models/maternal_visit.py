@@ -1,12 +1,8 @@
-from datetime import datetime
-
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.core.exceptions import ValidationError
 
 from edc.entry_meta_data.models import ScheduledEntryMetaData
 from edc.subject.entry.models import Entry
-from edc.entry_meta_data.models import RequisitionMetaData
 from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
