@@ -16,6 +16,7 @@ class AntenatalEnrollmentAdmin(BaseModelAdmin):
               'weeks_of_gestation',
               'is_diabetic',
               'on_tb_treatment',
+              'on_hypertension_treatment',
               'breastfeed_for_a_year',
               'instudy_for_a_year',
               'verbal_hiv_status',
@@ -27,6 +28,7 @@ class AntenatalEnrollmentAdmin(BaseModelAdmin):
               'rapid_test_result')
     radio_fields = {'is_diabetic': admin.VERTICAL,
                     'on_tb_treatment': admin.VERTICAL,
+                    'on_hypertension_treatment': admin.VERTICAL,
                     'breastfeed_for_a_year': admin.VERTICAL,
                     'instudy_for_a_year': admin.VERTICAL,
                     'verbal_hiv_status': admin.VERTICAL,
