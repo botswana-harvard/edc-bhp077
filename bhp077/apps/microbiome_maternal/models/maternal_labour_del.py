@@ -179,7 +179,7 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
-    maternal_lab_del = models.OneToOneField(MaternalLabourDel)
+#     maternal_lab_del = models.OneToOneField(MaternalLabourDel)
 
     has_cd4 = models.CharField(
         max_length=3,
