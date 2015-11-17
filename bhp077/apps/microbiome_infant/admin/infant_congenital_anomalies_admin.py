@@ -17,12 +17,6 @@ class InfantCongenitalAnomaliesAdmin(BaseModelAdmin):
     dashboard_type = 'infant'
     visit_model_name = 'infantvisit'
 
-    fields = (
-        '',
-        '',
-
-    )
-
     list_display = ('infant_visit',)
 
 admin.site.register(InfantCongenitalAnomalies, InfantCongenitalAnomaliesAdmin)
