@@ -7,10 +7,12 @@ from edc_base.model.fields import OtherCharField
 from edc_base.model.validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 
+from bhp077.apps.microbiome_list.models import Suppliments
+from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond, DelComp, ObComp
+from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
+
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from bhp077.apps.microbiome_list.models import Suppliments
-from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
 
 
 class MaternalLabourDel(MaternalScheduledVisitModel):
@@ -120,12 +122,41 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         "with any major chronic health condition(s) that remain ongoing?",
         help_text="")
 
+    health_cond = models.ManyToManyField(
+        HealthCond,
+        verbose_name="Select all that apply ",
+        help_text="",
+    )
+
     has_ob_comp = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name="During this pregnancy, did the mother have any of the following "
         "obstetrical complications?",
         help_text="")
+
+    ob_comp = models.ManyToManyField(
+        ObComp,
+        verbose_name="Select all that apply",
+        help_text="",
+    )
+
+    ob_comp_other = models.TextField(
+        max_length=250,
+        blank=True,
+        null=True,
+    )
+
+    took_suppliments = models.CharField(
+        max_length=3,
+        choices=YES_NO,
+        verbose_name="Did the mother take any of the following medications during this pregnancy?",
+        help_text="")
+
+    suppliments = models.ManyToManyField(
+        Suppliments,
+        verbose_name="Please select relevant medications taken:",
+        help_text="Select all that apply")
 
     comment = models.TextField(
         max_length=250,
@@ -137,8 +168,8 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = "Maternal LAB-DEL: Medical History"
-        verbose_name_plural = "Maternal LAB-DEL: Medical History"
+        verbose_name = "Maternal Labour & Delivery: Medical History"
+        verbose_name_plural = "Maternal Labour & Delivery: Medical History"
 
 
 class MaternalLabDelClinic(MaternalScheduledVisitModel):
@@ -148,7 +179,7 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
-    maternal_lab_del = models.OneToOneField(MaternalLabourDel)
+#     maternal_lab_del = models.OneToOneField(MaternalLabourDel)
 
     has_cd4 = models.CharField(
         max_length=3,
@@ -187,17 +218,6 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         verbose_name="Result of most recent VL test",
         blank=True,
         null=True)
-
-    took_suppliments = models.CharField(
-        max_length=3,
-        choices=YES_NO,
-        verbose_name="Did the mother take any of the following medications during this pregnancy?",
-        help_text="")
-
-    suppliments = models.ManyToManyField(
-        Suppliments,
-        verbose_name="Please select relevant medications taken:",
-        help_text="Select all that apply")
 
     comment = models.TextField(
         max_length=250,

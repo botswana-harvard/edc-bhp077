@@ -13,12 +13,12 @@ class AntenatalEnrollment(BaseEnrollment):
 
     weeks_of_gestation = models.IntegerField(
         verbose_name="How many weeks pregnant?",
-        help_text=" (weeks of gestation). If >=32 weeks do rapid test", )
+        help_text=" (weeks of gestation). Eligible if >=32 weeks", )
 
     @property
     def eligible_for_postnatal(self):
         """return true if a mother is eligible for postnatalenrollment."""
-        if self.weeks_of_gestation >= 32 and self.is_diabetic == NO and self.on_tb_treatment == NO and self.breastfeed_for_a_year == YES and self.instudy_for_a_year:
+        if self.weeks_of_gestation >= 32 and self.is_diabetic == NO and self.on_tb_treatment == NO and self.on_hypertension_treatment == NO and self.breastfeed_for_a_year == YES and self.instudy_for_a_year:
             if self.verbal_hiv_status == POS and self.evidence_hiv_status == YES and self.valid_regimen == YES and self.valid_regimen_duration == YES:
                 return True
             elif self.verbal_hiv_status == NEG and self.evidence_hiv_status == YES:

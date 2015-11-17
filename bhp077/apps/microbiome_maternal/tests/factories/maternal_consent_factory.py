@@ -11,7 +11,8 @@ from bhp077.apps.microbiome_maternal.models import MaternalConsent
 
 class MaternalConsentFactory(factory.DjangoModelFactory):
 
-    FACTORY_FOR = MaternalConsent
+    class Meta:
+        model = MaternalConsent
 
     registered_subject = factory.SubFactory(RegisteredSubjectFactory)
     report_datetime = timezone.now()

@@ -1,9 +1,9 @@
-from django.forms.models import ModelForm
+from bhp077.apps.microbiome.base_model_form import BaseModelForm
 
 from ..models import InfantDeath
 
 
-class InfantDeathForm(ModelForm):
+class InfantDeathForm(BaseModelForm):
 
     class Meta:
         model = InfantDeath

@@ -1,4 +1,3 @@
-from __future__ import print_function
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -9,6 +8,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
 from edc_constants.constants import NEW, YES, POS
+from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 from bhp077.apps.microbiome.choices import VISIT_UNSCHEDULED_REASON, VISIT_REASON
@@ -58,16 +58,15 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
             appointment=self.appointment)
         return model_options
 
-    # def get_visit_reason_no_follow_up_choices(self):
-    #     """Returns the visit reasons that do not imply any data collection; that is, the subject is not available."""
-    #     dct = {}
-    #     for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
-    #         dct.update({item: item})
-    #         dct.update({'vital status': 'Vital Status'})
-    #     del dct['death']
-    #     del dct['lost']
-    #     return dct
-
+    def get_visit_reason_no_follow_up_choices(self):
+        """Returns the visit reasons that do not imply any data collection; that is, the subject is not available."""
+        dct = {}
+        for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
+            dct.update({item: item})
+            dct.update({'vital status': 'Vital Status'})
+        del dct['death']
+        del dct['lost']
+        return dct
 
     @property
     def hiv_rapid_test_pos(self):
@@ -112,7 +111,6 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         else:
             pass
 
-
     def create_additional_maternal_forms_meta(self):
         self.reason = 'off study' if not self.postnatal_enrollment.postnatal_eligible else self.reason
         if self.reason == 'off study':
@@ -138,7 +136,6 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
                 model_name__in=['maternaldeath', 'maternaloffstudy'],
                 visit_definition_id=self.appointment.visit_definition_id)
             for entry in entries:
-                print("**********", entry, "**********")
                 scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
                     appointment=self.appointment,
                     entry=entry,
