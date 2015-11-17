@@ -1,10 +1,9 @@
 from django import forms
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
-from edc.base.form.forms import BaseModelForm
-
 from ..models import MaternalVisit, MaternalConsent
 from bhp077.apps.microbiome.choices import VISIT_REASON, VISIT_INFO_SOURCE
+from bhp077.apps.microbiome.base_model_form import BaseModelForm
 
 
 class MaternalVisitForm (BaseModelForm):

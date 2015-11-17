@@ -1,5 +1,3 @@
-from django.forms.models import ModelForm
-
 from ..models import InfantFu
 from .base_infant_model_form import BaseInfantModelForm
 

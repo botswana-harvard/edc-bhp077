@@ -1,6 +1,7 @@
-from edc.base.form.forms import BaseModelForm
+from ..models import InfantVisit
+from bhp077.apps.microbiome.base_model_form import BaseModelForm
 
 
 class BaseInfantModelForm(BaseModelForm):
 
-    pass
+    visit_model = InfantVisit
