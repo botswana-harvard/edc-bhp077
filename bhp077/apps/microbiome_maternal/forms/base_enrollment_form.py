@@ -1,8 +1,8 @@
 from django import forms
 
-from edc_constants.constants import POS, NEG, NOT_APPLICABLE, YES
+from edc_constants.constants import POS, NEG, NOT_APPLICABLE, YES, NO
 
-from ..models import BaseEnrollment, MaternalConsent
+from ..models import BaseEnrollment, MaternalConsent, SampleConsent
 from bhp077.apps.microbiome.base_model_form import BaseModelForm
 
 
@@ -29,9 +29,16 @@ class BaseEnrollmentForm(BaseModelForm):
             if cleaned_data.get('evidence_hiv_status') == NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that the participant is Negative, Evidence of HIV '
                                             'result CANNOT be Not Applicable. Please correct.')
-            if cleaned_data.get('valid_regimen') == NOT_APPLICABLE:
-                raise forms.ValidationError('You have indicated that the participant is Negative, "do records show that'
-                                            ' participant takes ARVs" cannot be Not Applicable.')
+            if not cleaned_data.get('valid_regimen') == NOT_APPLICABLE:
+                raise forms.ValidationError('You have indicated that the participant is Negative.'
+                                            ' Answer for REGIMEN should be Not Applicable.')
+            if not cleaned_data.get('valid_regimen_duration') == NOT_APPLICABLE:
+                raise forms.ValidationError('You have indicated that the participant is Negative.'
+                                            ' Answer for REGIMEN DURATION should be Not Applicable.')
+            if cleaned_data.get('evidence_hiv_status') == NO:
+                if not cleaned_data.get('process_rapid_test') == YES:
+                    raise forms.ValidationError("Participant is NEG and has no doc evidence. "
+                                                "Rapid test is REQUIRED. Please Correct")
         if cleaned_data.get('verbal_hiv_status') == POS:
             if cleaned_data.get('evidence_hiv_status') == NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that the participant is Positive, Evidence of HIV '
@@ -61,6 +68,10 @@ class BaseEnrollmentForm(BaseModelForm):
             if cleaned_data.get('rapid_test_result'):
                 raise forms.ValidationError('You indicated that a rapid test was NOT processed, yet rapid test result '
                                             'was provided. Please correct.')
+        sample_consent = SampleConsent.objects.filter(registered_subject__subject_identifier=cleaned_data.get('registered_subject').subject_identifier).exists()
+        if not sample_consent:
+            raise forms.ValidationError("Please ensure to save the SAMPLE CONSENT before "
+                                        "completing Enrollment")
         return cleaned_data
 
     class Meta:
