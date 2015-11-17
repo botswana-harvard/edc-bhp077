@@ -30,6 +30,27 @@ class MaternalLabourDelForm(BaseMaternalModelForm):
 
 class MaternalLabDelMedForm(BaseMaternalModelForm):
 
+    def clean(self):
+        cleaned_data = super(MaternalLabDelMedForm, self).clean()
+        if 'health_cond' in cleaned_data.keys():
+            self.validate_m2m(
+                label='health condition',
+                leading=cleaned_data.get('has_health_cond'),
+                m2m=cleaned_data.get('health_cond'),
+                other=cleaned_data.get('health_cond_other'))
+        if 'ob_comp' in cleaned_data.keys():
+            self.validate_m2m(
+                label='obstetric complication',
+                leading=cleaned_data.get('has_ob_comp'),
+                m2m=cleaned_data.get('ob_comp'),
+                other=cleaned_data.get('ob_comp_other'))
+        if 'suppliments' in cleaned_data.keys():
+            self.validate_m2m(
+                label='pregnancy suppliment',
+                leading=cleaned_data.get('took_suppliments'),
+                m2m=cleaned_data.get('suppliments'))
+        return cleaned_data
+
     class Meta:
         model = MaternalLabDelMed
         fields = '__all__'

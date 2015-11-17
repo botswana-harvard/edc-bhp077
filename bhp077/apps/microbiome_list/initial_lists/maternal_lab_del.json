@@ -89,6 +89,40 @@
   "model": "microbiome_list.healthcond", 
   "fields": {
     "hostname_created": "django", 
+    "name": "Diabetes", 
+    "short_name": "Diabetes", 
+    "created": "2015-11-16T16:55:22", 
+    "user_modified": "", 
+    "modified": "2015-11-16T16:55:22", 
+    "hostname_modified": "django", 
+    "version": "1.0", 
+    "display_index": 50, 
+    "user_created": "django", 
+    "field_name": ""
+  }
+},
+{
+  "pk": 7, 
+  "model": "microbiome_list.healthcond", 
+  "fields": {
+    "hostname_created": "django", 
+    "name": "Tuberculosis", 
+    "short_name": "Tuberculosis", 
+    "created": "2015-11-16T16:55:22", 
+    "user_modified": "", 
+    "modified": "2015-11-16T16:55:22", 
+    "hostname_modified": "django", 
+    "version": "1.0", 
+    "display_index": 50, 
+    "user_created": "django", 
+    "field_name": ""
+  }
+},
+{
+  "pk": 8, 
+  "model": "microbiome_list.healthcond", 
+  "fields": {
+    "hostname_created": "django", 
     "name": "Hepatitis: Other/Unknown", 
     "short_name": "Chronic Hepatitis Diagnosed prior to this pregnancy: Other/Unkown", 
     "created": "2015-11-16T16:55:45", 
@@ -102,7 +136,7 @@
   }
 },
 {
-  "pk": 7, 
+  "pk": 9, 
   "model": "microbiome_list.healthcond", 
   "fields": {
     "hostname_created": "django", 
@@ -119,12 +153,12 @@
   }
 },
 {
-  "pk": 8, 
+  "pk": 10, 
   "model": "microbiome_list.healthcond", 
   "fields": {
     "hostname_created": "django", 
-    "name": "Not applicable", 
-    "short_name": "Not applicable", 
+    "name": "N/A", 
+    "short_name": "N/A", 
     "created": "2015-11-16T16:56:18", 
     "user_modified": "", 
     "modified": "2015-11-16T16:56:18", 
@@ -259,8 +293,8 @@
   "model": "microbiome_list.delcomp", 
   "fields": {
     "hostname_created": "django", 
-    "name": "Not applicable", 
-    "short_name": "Not applicable", 
+    "name": "N/A", 
+    "short_name": "N/A", 
     "created": "2011-06-15T09:06:37", 
     "user_modified": "", 
     "modified": "2011-06-15T09:06:37", 
@@ -531,8 +565,8 @@
   "model": "microbiome_list.obcomp", 
   "fields": {
     "hostname_created": "django", 
-    "name": "Not applicable", 
-    "short_name": "Not applicable", 
+    "name": "N/A", 
+    "short_name": "N/A", 
     "created": "2015-11-16T17:06:41", 
     "user_modified": "", 
     "modified": "2015-11-16T17:06:41", 

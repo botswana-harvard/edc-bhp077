@@ -21,8 +21,8 @@
   "model": "microbiome_list.suppliments", 
   "fields": {
     "hostname_created": "django", 
-    "name": "Ferrous (separate from prenatal vitamins)", 
-    "short_name": "Ferrous (separate from prenatal vitamins)", 
+    "name": "Iron (Ferrous Sulfate)", 
+    "short_name": "Iron (Ferrous Sulfate)", 
     "created": "2015-11-16T18:05:32", 
     "user_modified": "django", 
     "modified": "2015-07-11T09:30:58", 
@@ -106,8 +106,110 @@
   "model": "microbiome_list.suppliments", 
   "fields": {
     "hostname_created": "django", 
-    "name": "Not applicable", 
-    "short_name": "Not applicable", 
+    "name": "Folate", 
+    "short_name": "Folate", 
+    "created": "2015-11-16T18:06:45", 
+    "user_modified": "", 
+    "modified": "2015-11-16T18:06:45", 
+    "hostname_modified": "django", 
+    "version": "1.0", 
+    "display_index": 60, 
+    "user_created": "django", 
+    "field_name": ""
+  }
+},
+{
+  "pk": 8, 
+  "model": "microbiome_list.suppliments", 
+  "fields": {
+    "hostname_created": "django", 
+    "name": "Flagyl (Metronidazole)", 
+    "short_name": "Flagyl (Metronidazole)", 
+    "created": "2015-11-16T18:06:45", 
+    "user_modified": "", 
+    "modified": "2015-11-16T18:06:45", 
+    "hostname_modified": "django", 
+    "version": "1.0", 
+    "display_index": 60, 
+    "user_created": "django", 
+    "field_name": ""
+  }
+},
+{
+  "pk": 9, 
+  "model": "microbiome_list.suppliments", 
+  "fields": {
+    "hostname_created": "django", 
+    "name": "Amoxicillin", 
+    "short_name": "Amoxicillin", 
+    "created": "2015-11-16T18:06:45", 
+    "user_modified": "", 
+    "modified": "2015-11-16T18:06:45", 
+    "hostname_modified": "django", 
+    "version": "1.0", 
+    "display_index": 60, 
+    "user_created": "django", 
+    "field_name": ""
+  }
+},
+{
+  "pk": 10, 
+  "model": "microbiome_list.suppliments", 
+  "fields": {
+    "hostname_created": "django", 
+    "name": "Gentamicin", 
+    "short_name": "Gentamicin", 
+    "created": "2015-11-16T18:06:45", 
+    "user_modified": "", 
+    "modified": "2015-11-16T18:06:45", 
+    "hostname_modified": "django", 
+    "version": "1.0", 
+    "display_index": 60, 
+    "user_created": "django", 
+    "field_name": ""
+  }
+},
+{
+  "pk": 11, 
+  "model": "microbiome_list.suppliments", 
+  "fields": {
+    "hostname_created": "django", 
+    "name": "Ceftriaxone", 
+    "short_name": "Ceftriaxone", 
+    "created": "2015-11-16T18:06:45", 
+    "user_modified": "", 
+    "modified": "2015-11-16T18:06:45", 
+    "hostname_modified": "django", 
+    "version": "1.0", 
+    "display_index": 60, 
+    "user_created": "django", 
+    "field_name": ""
+  }
+},
+{
+  "pk": 12, 
+  "model": "microbiome_list.suppliments", 
+  "fields": {
+    "hostname_created": "django", 
+    "name": "Traditional Medicines", 
+    "short_name": "Traditional Medicines", 
+    "created": "2015-11-16T18:06:45", 
+    "user_modified": "", 
+    "modified": "2015-11-16T18:06:45", 
+    "hostname_modified": "django", 
+    "version": "1.0", 
+    "display_index": 60, 
+    "user_created": "django", 
+    "field_name": ""
+  }
+},
+{
+  "pk": 13, 
+  "model": "microbiome_list.suppliments", 
+  "fields": {
+    "hostname_created": "django", 
+    "name": "N/A", 
+    "short_name": "N/A", 
     "created": "2015-11-16T18:07:05", 
     "user_modified": "django", 
     "modified": "2015-11-16T19:12:29", 

@@ -143,7 +143,7 @@ class BaseModelForm(forms.ModelForm):
                 "You stated there ARE " + label + "s, yet you selected '{0}'".format(item.name))
 
         # if leading question is 'No', ensure the m2m item is 'not applicable'
-        if leading == NO and not [True for item in m2m if item.name.lower() == NOT_APPLICABLE]:
+        if leading == NO and not [True for item in m2m if item.name == NOT_APPLICABLE]:
             raise forms.ValidationError("You stated there are NO {0}s. Please correct".format(label))
 
         # if leading question is 'No', ensure only one m2m item is selected.
