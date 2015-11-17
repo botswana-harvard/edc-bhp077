@@ -79,7 +79,7 @@ class TestOffStudy(TestCase):
             registered_subject=registered_subject_infant, visit_definition__code='2000'
         )
 
-        InfantVisitFactory(appointment=appointment, reason = 'off study')
+        InfantVisitFactory(appointment=appointment, reason='off study')
 
         self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
                 app_label='microbiome_infant', model_name='infantoffstudy', appointment=appointment
