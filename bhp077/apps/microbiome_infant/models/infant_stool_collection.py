@@ -90,7 +90,7 @@ class InfantStoolCollection(InfantScheduledVisitModel):
         return "%s" % (self.infant_visit)
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infant_infantstoolcollection_change', args=(self.id,))
+        return reverse('admin:microbiome_infant_infantstoolcollection_change', args=(self.id,))
 
     class Meta:
         app_label = "microbiome_infant"
