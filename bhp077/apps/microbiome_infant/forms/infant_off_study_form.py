@@ -1,19 +1,17 @@
 from ..forms import BaseInfantModelForm
 
 from ..models import InfantOffStudy
-
+from bhp077.apps.microbiome_infant.infant_choices import OFF_STUDY_REASON
 
 class InfantOffStudyForm(BaseInfantModelForm):
+
+    reason = forms.ChoiceField(
+        label='Please code the primary reason participant taken off-study',
+        choices=[choice for choice in OFF_STUDY_REASON],
+        help_text="",
+        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer),
+    )
 
     class Meta:
         model = InfantOffStudy
         fields = '__all__'
-
-    def clean(self):
-        cleaned_data = super(InfantVisitForm, self).clean()
-        self.validate_azt_after_birth(cleaned_data)
-        self.validate_sdnvp_after_birth(cleaned_data)
-        self.validate_nvp_discharge_supply(cleaned_data)
-
-    def validate_offstudy_date(self, cleaned_data):
-        pass
