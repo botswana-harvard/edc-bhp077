@@ -74,6 +74,28 @@ class TestAntenatalEnroll(TestCase):
         )
         self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
 
+    def test_has_hyptertension(self):
+        """Test for a positive mother on a valid regimen and has hypertension."""
+
+        antenatal_enrollment = AntenatalEnrollmentFactory(
+            verbal_hiv_status=POS,
+            evidence_hiv_status=YES,
+            registered_subject=self.registered_subject,
+            on_hypertension_treatment=YES
+        )
+        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+
+    def test_has_no_hyptertension(self):
+        """Test for a positive mother on a valid regimen and not hypertensive."""
+
+        antenatal_enrollment = AntenatalEnrollmentFactory(
+            verbal_hiv_status=POS,
+            evidence_hiv_status=YES,
+            registered_subject=self.registered_subject,
+            on_hypertension_treatment=NO
+        )
+        self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
+
     def test_breastfeed_for_a_year(self):
         """Test for a negative mother who agrees to breastfeed for a year."""
 
