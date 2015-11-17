@@ -10,12 +10,6 @@ from .base_infant_model_form import BaseInfantModelForm
 
 class InfantVisitForm(BaseInfantModelForm):
 
-    # def __init__(self, *args, **kwargs):
-    #     super(InfantVisitForm, self).__init__(*args, **kwargs)
-    #     _cleaned_data = super(InfantVisitForm, self).clean()
-    #     if _cleaned_data.get('reason') == 'missed':
-    #         self.fields['info_source'].required = False
-
     reason = forms.ChoiceField(
         label='Reason for visit',
         choices=[choice for choice in VISIT_REASON],
@@ -36,7 +30,7 @@ class InfantVisitForm(BaseInfantModelForm):
         self.validate_survival_status(cleaned_data)
 
         if not cleaned_data.get('reason') == 'missed':
-            if  not cleaned_data.get('info_source'):
+            if not cleaned_data.get('info_source'):
                 raise forms.ValidationError("Provide source of information.")
 
         try:
@@ -66,7 +60,7 @@ class InfantVisitForm(BaseInfantModelForm):
         if cleaned_data.get('reason') == 'missed':
             if not cleaned_data.get('reason_missed'):
                 raise forms.ValidationError("Provide reason scheduled visit was missed.")
-            if  cleaned_data.get('info_source'):
+            if cleaned_data.get('info_source'):
                 raise forms.ValidationError("Do not provide source of information.")
 
     def validate_survival_status(self, cleaned_data):
