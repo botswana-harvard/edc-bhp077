@@ -24,12 +24,8 @@ class MaternalVisitAdmin(BaseAppointmentModelAdmin):
         "info_source",
         "info_source_other",
         "reason",
-        "reason_unscheduled",
         "reason_missed",
         "comments")
-
-    radio_fields = {
-        "reason_unscheduled": admin.VERTICAL}
 
     list_display = (
         'appointment',
