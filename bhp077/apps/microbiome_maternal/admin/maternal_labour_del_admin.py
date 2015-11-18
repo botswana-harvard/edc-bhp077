@@ -53,6 +53,7 @@ class MaternalLabDelDxAdmin(BaseModelAdmin):
     form = MaternalLabDelDxForm
     radio_fields = {'has_preg_dx': admin.VERTICAL,
                     'has_who_dx': admin.VERTICAL}
+    filter_horizontal = ('wcs_dx_adult',)
     inlines = [MaternalLabDelDxTInlineAdmin, ]
 admin.site.register(MaternalLabDelDx, MaternalLabDelDxAdmin)
 

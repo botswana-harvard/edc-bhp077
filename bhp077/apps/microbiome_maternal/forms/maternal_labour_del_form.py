@@ -96,6 +96,21 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
 
 
 class MaternalLabDelDxForm(BaseMaternalModelForm):
+    def clean(self):
+        cleaned_data = super(MaternalLabDelDxForm, self).clean()
+        check_dx = self.data.get('maternallabdeldxt_set-0-lab_del_dx')
+
+        # WHO validations
+        if 'wcs_dx_adult' in cleaned_data.keys():
+            self.validate_m2m_wcs_dx(
+                label='who diagnoses',
+                leading=cleaned_data.get('has_who_dx'),
+                m2m=cleaned_data.get('wcs_dx_adult'))
+
+        # Validate diagnosis
+        if cleaned_data.get('has_preg_dx') == 'Yes' and not check_dx:
+            raise forms.ValidationError('You indicated that participant had diagnosis. Please list them.')
+        return cleaned_data
 
     class Meta:
         model = MaternalLabDelDx
