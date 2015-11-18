@@ -38,6 +38,19 @@ class MaternalPostFuForm(BaseMaternalModelForm):
 
 
 class MaternalPostFuDxForm(BaseMaternalModelForm):
+    def clean(self):
+        cleaned_data = super(MaternalPostFuDxForm, self).clean()
+        # WHO validations
+        if 'wcs_dx_adult' in cleaned_data.keys():
+            self.validate_m2m_wcs_dx(
+                label='who diagnoses',
+                leading=cleaned_data.get('who_clinical_stage'),
+                m2m=cleaned_data.get('wcs_dx_adult'))
+        check_dx = self.data.get('maternalpostfudxt_set-0-post_fu_dx')
+        if cleaned_data.get('new_diagnoses') == 'Yes' and not check_dx:
+            raise forms.ValidationError('You indicated that participant had new diagnosis and yet did not provide '
+                                        'them. Please correct.')
+        return cleaned_data
 
     class Meta:
         model = MaternalPostFuDx
@@ -53,7 +66,9 @@ class MaternalPostFuDxTForm (BaseMaternalModelForm):
                                         ' and yet provided a diagnosis. Please correct.')
 
         if cleaned_data.get('post_fu_dx'):
-            if not cleaned_data.get('post_fu_specify') or not cleaned_data.get('grade') or not cleaned_data.get('hospitalized'):
+            if not (cleaned_data.get('post_fu_specify') or
+                    not cleaned_data.get('grade') or
+                    not cleaned_data.get('hospitalized')):
                 raise forms.ValidationError('Please fill in all diagnosis information.')
 
         if cleaned_data.get('maternal_post_fu').mother_hospitalized == NO and cleaned_data.get('hospitalized'):
