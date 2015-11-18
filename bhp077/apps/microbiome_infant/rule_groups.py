@@ -1,7 +1,7 @@
 from edc.subject.rule_groups.classes import (RuleGroup, site_rule_groups, Logic,
                                              ScheduledDataRule, RequisitionRule)
 
-from bhp077.apps.microbiome_infant.models import InfantBirthData, InfantVisit
+from bhp077.apps.microbiome_infant.models import InfantBirthData, InfantVisit, InfantFu
 
 from edc_constants.constants import POS, YES, NEW, NOT_REQUIRED
 from edc.subject.registration.models import RegisteredSubject
@@ -22,3 +22,27 @@ class InfantBirthDataRuleGroup(RuleGroup):
         source_model = InfantBirthData
 
 site_rule_groups.register(InfantBirthDataRuleGroup)
+
+
+class InfantFuRuleGroup(RuleGroup):
+
+    physical_assessment_yes = ScheduledDataRule(
+        logic=Logic(
+            predicate=('physical_assessment', 'equals', YES),
+            consequence=NEW,
+            alternative=NOT_REQUIRED),
+        target_model=['infantfuphysical'])
+
+    has_dx_yes = ScheduledDataRule(
+        logic=Logic(
+            predicate=('has_dx', 'equals', YES),
+            consequence=NEW,
+            alternative=NOT_REQUIRED),
+        target_model=['infantfudx'])
+
+    class Meta:
+        app_label = 'microbiome_infant'
+        source_fk = (InfantVisit, 'infant_visit')
+        source_model = InfantFu
+
+site_rule_groups.register(InfantFuRuleGroup)

@@ -7,3 +7,4 @@ from .infant_cns_abn_item_factory import InfantBirthCnsAbnItemFactory
 from bhp077.apps.microbiome_maternal.tests.factories.maternal_labour_del_factory import MaternalLabourDelFactory
 from bhp077.apps.microbiome_maternal.tests.factories.antenatal_enrollment_factory import AntenatalEnrollmentFactory
 from bhp077.apps.microbiome_infant.tests.factories.infant_birth_feed_vaccine_factory import InfantBirthFeedVaccineFactory
+from bhp077.apps.microbiome_infant.tests.factories.infant_fu_factory import  InfantFuFactory

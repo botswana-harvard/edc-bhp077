@@ -497,19 +497,12 @@ REASON_MISSED_CTX_PLACEBO = (
     ('N/A', 'Not Applicable'),
 )
 
-REASON_NOT_RECEIVED_VACCINATION = (
+REASONS_VACCINES_MISSED = (
     ('missed scheduled vaccination', 'Mother or Caregiver has not yet taken infant '
         'to clinic for this scheduled vaccination'),
     ('caregiver declines vaccination', 'Mother or Caregiver declines this vaccicnation'),
     ('no stock', 'Stock out at clinic'),
-    ('other', 'Other, specify'),
-)
-
-YES_NOT_SCHEDULED_NOT_RECEIVED = (
-    ('yes', 'Yes'),
-    ('not scheduled', 'Not scheduled'),
-    ('not received', 'Not received'),
-    ('no health card', 'No Health Card Brought Today')
+    ('OTHER', 'Other, specify'),
 )
 
 REASON_MISSED_PROPHYLAXIS = (
