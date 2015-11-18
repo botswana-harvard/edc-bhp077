@@ -7,12 +7,13 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
+from edc.subject.code_lists.models import WcsDxAdult
 from edc_constants.choices import YES, NO
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
-from bhp077.apps.microbiome_maternal.forms import (MaternalPostFuForm)
+from bhp077.apps.microbiome_maternal.forms import (MaternalPostFuForm, MaternalPostFuDxForm)
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
@@ -92,17 +93,16 @@ class TestMaternalFollowup(TestCase):
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn("You stated there ARE chronic conditionss, yet you selected 'N/A'", errors)
 
-#     def test_chronic_cond_2(self):
-#         """Assert that if has chronic conditions is indicated as YES, then chronic conditions cannot be N/A"""
-#         cond = ChronicConditions.objects.create(
-#             name='Tuberculosis',
-#             short_name='Tuberculosis',
-#             display_index=20,
-#             field_name='chronic_cond'
-#         )
-#         self.data['has_chronic_cond'] = NO
-#         self.data['chronic_cond'] = [cond]
-#         form = MaternalPostFuForm(data=self.data)
-#         print form.errors.get('__all__')
-#         errors = ''.join(form.errors.get('__all__'))
-#         self.assertIn("You stated there NO chronic conditionss.", errors)
+    def test_chronic_cond_2(self):
+        """Assert that if has chronic conditions is indicated as YES, then chronic conditions cannot be N/A"""
+        cond = ChronicConditions.objects.create(
+            name='Tuberculosis',
+            short_name='Tuberculosis',
+            display_index=20,
+            field_name='chronic_cond'
+        )
+        self.data['has_chronic_cond'] = NO
+        self.data['chronic_cond'] = [cond.id]
+        form = MaternalPostFuForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn(u'You stated there are NO chronic conditionss. Please correct', errors)

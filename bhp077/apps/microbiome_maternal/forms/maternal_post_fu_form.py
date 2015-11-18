@@ -59,7 +59,7 @@ class MaternalPostFuDxForm(BaseMaternalModelForm):
 
 class MaternalPostFuDxTForm (BaseMaternalModelForm):
     def clean(self):
-        cleaned_data = self.cleaned_data
+        cleaned_data = super(MaternalPostFuDxTForm, self).clean()
 
         if cleaned_data.get('maternal_post_fu').new_diagnoses == NO and cleaned_data.get('post_fu_dx'):
             raise forms.ValidationError('You indicated that there was NO new diagnosis'
@@ -74,7 +74,7 @@ class MaternalPostFuDxTForm (BaseMaternalModelForm):
         if cleaned_data.get('maternal_post_fu').mother_hospitalized == NO and cleaned_data.get('hospitalized'):
             raise forms.ValidationError('You indicated that participant was not hospitalized above. Please correct.')
 
-        return super(MaternalPostFuDxTForm, self).clean()
+        return cleaned_data
 
     class Meta:
         model = MaternalPostFuDxT
