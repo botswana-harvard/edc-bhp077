@@ -1,50 +1,27 @@
 from django.contrib import admin
 
 from edc.base.modeladmin.admin import BaseModelAdmin
+from edc.base.modeladmin.admin import BaseTabularInline
+
 from ..models import (
     InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
     InfantCleftDisorderItems, InfantMouthUpGastrointestinalItems, InfantCardiovascularDisorderItems,
     InfantRespiratoryDefectItems, InfantLowerGastrointestinalItems, InfantMaleGenitalAnomalyItems,
     InfantFemaleGenitalAnomalyItems, InfantRenalAnomalyItems, InfantMusculoskeletalAbnormalItems,
-    InfantSkinAbnormalItems, InfantTrisomiesChromosomeItems
+    InfantSkinAbnormalItems, InfantTrisomiesChromosomeItems, InfantVisit
 )
-from bhp077.apps.microbiome_infant.forms import InfantCongenitalAnomaliesForm
 
 
-class InfantCongenitalAnomaliesAdmin(BaseModelAdmin):
-
-    form = InfantCongenitalAnomaliesForm
-    dashboard_type = 'infant'
-    visit_model_name = 'infantvisit'
-
-    list_display = ('infant_visit',)
-
-    inlines = [
-        InfantCnsAbnormalityItemsAdmin,
-        InfantFacialDefectItemsAdmin,
-        InfantCleftDisorderItemsAdmin,
-        InfantMouthUpGastrointestinalItemsAdmin,
-        InfantCardiovascularDisorderItemsAdmin,
-        InfantRespiratoryDefectItemsAdmin,
-        InfantLowerGastrointestinalItemsAdmin,
-        InfantFemaleGenitalAnomalyItemsAdmin,
-        InfantMaleGenitalAnomalyItemsAdmin,
-        InfantRenalAnomalyItemsAdmin,
-        InfantMusculoskeletalAbnormalItemsAdmin,
-        InfantSkinAbnormalItemsAdmin,
-        InfantTrisomiesChromosomeItemsAdmin,]
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "infant_visit":
-            if request.GET.get('infant_visit'):
-                kwargs["queryset"] = InfantVisit.objects.filter(id=request.GET.get('infant_visit'))
-        return super(InfantCongenitalAnomaliesAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
-admin.site.register(InfantCongenitalAnomalies, InfantCongenitalAnomaliesAdmin)
-
+from bhp077.apps.microbiome_infant.forms import (
+    InfantCongenitalAnomaliesForm, InfantCnsAbnormalityItemsForm, InfantFacialDefectItemsForm,
+    InfantCleftDisorderItemsForm, InfantMouthUpGastrointestinalItemsForm, InfantCardiovascularDisorderItemsForm,
+    InfantRespiratoryDefectItemsForm, InfantLowerGastrointestinalItemsForm, InfantFemaleGenitalAnomalyItemsForm,
+    InfantMaleGenitalAnomalyItemsForm, InfantRenalAnomalyItemsForm, InfantMusculoskeletalAbnormalItemsForm,
+    InfantSkinAbnormalItemsForm, InfantTrisomiesChromosomeItemsForm, InfantOtherAbnormalityItemsForm,
+    InfantCnsAbnormalityItemsForm
+)
 
 class InfantCnsAbnormalityItemsAdmin(BaseModelAdmin):
-
     list_display = ('congenital_anomalies', 'abnormality_status',)
 
     list_filter = ('cns_abnormality',)
@@ -56,17 +33,27 @@ class InfantCnsAbnormalityItemsAdmin(BaseModelAdmin):
 
 admin.site.register(InfantCnsAbnormalityItems, InfantCnsAbnormalityItemsAdmin)
 
+class InfantCnsAbnormalityItemsInline(BaseTabularInline):
+
+    model = InfantCnsAbnormalityItems
+    form = InfantCnsAbnormalityItemsForm
+    extra = 0
+
 
 class InfantFacialDefectItemsAdmin(BaseModelAdmin):
-
     list_display = ('congenital_anomalies',)
 
     radio_fields = {
         'facial_defect': admin.VERTICAL,
         'abnormality_status': admin.VERTICAL
     }
-
 admin.site.register(InfantFacialDefectItems, InfantFacialDefectItemsAdmin)
+
+class InfantFacialDefectItemsInline(BaseTabularInline):
+
+    model = InfantFacialDefectItems
+    form = InfantFacialDefectItemsForm
+    extra = 0
 
 
 class InfantCleftDisorderItemsAdmin(BaseModelAdmin):
@@ -81,6 +68,12 @@ class InfantCleftDisorderItemsAdmin(BaseModelAdmin):
 admin.site.register(InfantCleftDisorderItems, InfantCleftDisorderItemsAdmin)
 
 
+class InfantCleftDisorderItemsInline(BaseTabularInline):
+
+    model = InfantCleftDisorderItems
+    form = InfantCleftDisorderItemsForm
+    extra = 0
+
 class InfantMouthUpGastrointestinalItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
@@ -91,6 +84,13 @@ class InfantMouthUpGastrointestinalItemsAdmin(BaseModelAdmin):
     }
 
 admin.site.register(InfantMouthUpGastrointestinalItems, InfantMouthUpGastrointestinalItemsAdmin)
+
+
+class InfantMouthUpGastrointestinalItemsInline(BaseTabularInline):
+
+    model = InfantMouthUpGastrointestinalItems
+    form = InfantMouthUpGastrointestinalItemsForm
+    extra = 0
 
 
 class InfantCardiovascularDisorderItemsAdmin(BaseModelAdmin):
@@ -105,6 +105,13 @@ class InfantCardiovascularDisorderItemsAdmin(BaseModelAdmin):
 admin.site.register(InfantCardiovascularDisorderItems, InfantCardiovascularDisorderItemsAdmin)
 
 
+class InfantCardiovascularDisorderItemsInline(BaseTabularInline):
+
+    model = InfantCardiovascularDisorderItems
+    form = InfantCardiovascularDisorderItemsForm
+    extra = 0
+
+
 class InfantRespiratoryDefectItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
@@ -115,6 +122,13 @@ class InfantRespiratoryDefectItemsAdmin(BaseModelAdmin):
     }
 
 admin.site.register(InfantRespiratoryDefectItems, InfantRespiratoryDefectItemsAdmin)
+
+
+class InfantRespiratoryDefectItemsInline(BaseTabularInline):
+
+    model = InfantRespiratoryDefectItems
+    form = InfantRespiratoryDefectItemsForm
+    extra = 0
 
 
 class InfantLowerGastrointestinalItemsAdmin(BaseModelAdmin):
@@ -129,6 +143,12 @@ class InfantLowerGastrointestinalItemsAdmin(BaseModelAdmin):
 admin.site.register(InfantLowerGastrointestinalItems, InfantLowerGastrointestinalItemsAdmin)
 
 
+class InfantLowerGastrointestinalItemsInline(BaseTabularInline):
+
+    model = InfantLowerGastrointestinalItems
+    form = InfantLowerGastrointestinalItemsForm
+    extra = 0
+
 class InfantFemaleGenitalAnomalyItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
@@ -141,6 +161,12 @@ class InfantFemaleGenitalAnomalyItemsAdmin(BaseModelAdmin):
 admin.site.register(InfantFemaleGenitalAnomalyItems, InfantFemaleGenitalAnomalyItemsAdmin)
 
 
+class InfantFemaleGenitalAnomalyItemsInline(BaseTabularInline):
+
+    model = InfantFemaleGenitalAnomalyItems
+    form = InfantFemaleGenitalAnomalyItemsForm
+    extra = 0
+
 class InfantMaleGenitalAnomalyItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
@@ -151,6 +177,13 @@ class InfantMaleGenitalAnomalyItemsAdmin(BaseModelAdmin):
     }
 
 admin.site.register(InfantMaleGenitalAnomalyItems, InfantMaleGenitalAnomalyItemsAdmin)
+
+
+class InfantMaleGenitalAnomalyItemsInline(BaseTabularInline):
+
+    model = InfantMaleGenitalAnomalyItems
+    form = InfantMaleGenitalAnomalyItemsForm
+    extra = 0
 
 
 class InfantRenalAnomalyItemsAdmin(BaseModelAdmin):
@@ -165,6 +198,13 @@ class InfantRenalAnomalyItemsAdmin(BaseModelAdmin):
 admin.site.register(InfantRenalAnomalyItems, InfantRenalAnomalyItemsAdmin)
 
 
+class InfantRenalAnomalyItemsInline(BaseTabularInline):
+
+    model = InfantRenalAnomalyItems
+    form = InfantRenalAnomalyItemsForm
+    extra = 0
+
+
 class InfantMusculoskeletalAbnormalItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
@@ -174,8 +214,14 @@ class InfantMusculoskeletalAbnormalItemsAdmin(BaseModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
-
 admin.site.register(InfantMusculoskeletalAbnormalItems, InfantMusculoskeletalAbnormalItemsAdmin)
+
+
+class InfantMusculoskeletalAbnormalItemsInline(BaseTabularInline):
+
+    model = InfantMusculoskeletalAbnormalItems
+    form = InfantMusculoskeletalAbnormalItemsForm
+    extra = 0
 
 
 class InfantSkinAbnormalItemsAdmin(BaseModelAdmin):
@@ -190,6 +236,12 @@ class InfantSkinAbnormalItemsAdmin(BaseModelAdmin):
 admin.site.register(InfantSkinAbnormalItems, InfantSkinAbnormalItemsAdmin)
 
 
+class InfantSkinAbnormalItemsInline(BaseTabularInline):
+
+    model = InfantSkinAbnormalItems
+    form = InfantSkinAbnormalItemsForm
+    extra = 0
+
 class InfantTrisomiesChromosomeItemsAdmin(BaseModelAdmin):
 
     list_display = ('congenital_anomalies',)
@@ -200,3 +252,40 @@ class InfantTrisomiesChromosomeItemsAdmin(BaseModelAdmin):
     }
 
 admin.site.register(InfantTrisomiesChromosomeItems, InfantTrisomiesChromosomeItemsAdmin)
+
+class InfantTrisomiesChromosomeItemsInline(BaseTabularInline):
+
+    model = InfantTrisomiesChromosomeItems
+    form = InfantTrisomiesChromosomeItemsForm
+    extra = 0
+
+class InfantCongenitalAnomaliesAdmin(BaseModelAdmin):
+
+    form = InfantCongenitalAnomaliesForm
+    dashboard_type = 'infant'
+    visit_model_name = 'infantvisit'
+
+    list_display = ('infant_visit',)
+
+    inlines = [
+        InfantCnsAbnormalityItemsInline,
+        InfantFacialDefectItemsInline,
+        InfantCleftDisorderItemsInline,
+        InfantMouthUpGastrointestinalItemsInline,
+        InfantCardiovascularDisorderItemsInline,
+        InfantRespiratoryDefectItemsInline,
+        InfantLowerGastrointestinalItemsInline,
+        InfantFemaleGenitalAnomalyItemsInline,
+        InfantMaleGenitalAnomalyItemsInline,
+        InfantRenalAnomalyItemsInline,
+        InfantMusculoskeletalAbnormalItemsInline,
+        InfantSkinAbnormalItemsInline,
+        InfantTrisomiesChromosomeItemsInline,]
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "infant_visit":
+            if request.GET.get('infant_visit'):
+                kwargs["queryset"] = InfantVisit.objects.filter(id=request.GET.get('infant_visit'))
+        return super(InfantCongenitalAnomaliesAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+admin.site.register(InfantCongenitalAnomalies, InfantCongenitalAnomaliesAdmin)

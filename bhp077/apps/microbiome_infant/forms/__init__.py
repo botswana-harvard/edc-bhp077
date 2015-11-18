@@ -14,7 +14,8 @@ from .infant_congenital_anomalies_form import (
     InfantCleftDisorderItemsForm, InfantMouthUpGastrointestinalItemsForm, InfantCardiovascularDisorderItemsForm,
     InfantRespiratoryDefectItemsForm, InfantLowerGastrointestinalItemsForm, InfantFemaleGenitalAnomalyItemsForm,
     InfantMaleGenitalAnomalyItemsForm, InfantRenalAnomalyItemsForm, InfantMusculoskeletalAbnormalItemsForm,
-    InfantSkinAbnormalItemsForm, InfantTrisomiesChromosomeItemsForm, InfantOtherAbnormalityItemsForm
+    InfantSkinAbnormalItemsForm, InfantTrisomiesChromosomeItemsForm, InfantOtherAbnormalityItemsForm,
+    InfantCnsAbnormalityItemsForm
 )
 from .infant_fu_dx_form import InfantFuDxForm
 from .infant_fu_form import InfantFuForm
