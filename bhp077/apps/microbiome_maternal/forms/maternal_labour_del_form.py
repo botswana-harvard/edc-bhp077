@@ -118,6 +118,14 @@ class MaternalLabDelDxForm(BaseMaternalModelForm):
 
 
 class MaternalLabDelDxTForm(BaseMaternalModelForm):
+    def clean(self):
+        cleaned_data = super(MaternalLabDelDxTForm, self).clean()
+        maternal_lab_del_dx = cleaned_data.get('maternal_lab_del_dx')
+
+        if maternal_lab_del_dx.has_preg_dx == 'No' and cleaned_data.get('lab_del_dx'):
+            raise forms.ValidationError('You have indicated that the participant did NOT have diagnosis '
+                                        'and yet provided them. Please correct.')
+        return cleaned_data
 
     class Meta:
         model = MaternalLabDelDxT

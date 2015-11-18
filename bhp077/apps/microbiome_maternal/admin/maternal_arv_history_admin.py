@@ -11,7 +11,8 @@ class MaternalArvHistoryAdmin(BaseModelAdmin):
     list_display = ('haart_start_date', 'preg_on_haart')
     list_filter = ('preg_on_haart', )
     radio_fields = {'preg_on_haart': admin.VERTICAL,
-                    'prior_preg': admin.VERTICAL, }
+                    'prior_preg': admin.VERTICAL, 
+                    'is_date_estimated': admin.VERTICAL}
     filter_horizontal = ('prior_arv', )
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):

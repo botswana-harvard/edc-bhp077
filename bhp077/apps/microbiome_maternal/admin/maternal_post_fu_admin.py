@@ -12,12 +12,18 @@ class MaternalPostFuAdmin(BaseModelAdmin):
         "maternal_visit",
         "mother_weight",
         "enter_weight",
-        "bp",
+        "systolic_bp",
+        "diastolic_bp",
         "had_mastitis",
+        "has_chronic_cond",
+        "chronic_cond",
+        "chronic_cond_other",
         "comment")
     radio_fields = {
         "mother_weight": admin.VERTICAL,
-        "had_mastitis": admin.VERTICAL}
+        "had_mastitis": admin.VERTICAL,
+        "has_chronic_cond": admin.VERTICAL}
+    filter_horizontal = ('chronic_cond',)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":

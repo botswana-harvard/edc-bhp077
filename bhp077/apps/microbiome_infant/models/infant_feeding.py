@@ -2,9 +2,12 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_base.model.fields.custom_fields import OtherCharField
+from edc_base.model.validators import date_not_future
+from edc_consent.plain_fields import IsDateEstimatedField
 from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNSURE_NA
+from edc_constants.constants import NOT_APPLICABLE
 
-from bhp077.apps.microbiome.choices import COWS_MILK, REASON_RCV_FORMULA, TIMES_BREASTFED, WATER_USED
+from bhp077.apps.microbiome.choices import COWS_MILK, TIMES_BREASTFED, WATER_USED
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
@@ -32,11 +35,10 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name=("Did the introduction of formula or other foods or liquids to the"
                       " participant occur before the last attended scheduled visit where"
                       " an infant feeding form was completed?"),
-        help_text=("If this is the randomization visit you must enter NO, because no infant"
-                   " could take any formula , foods or liquids before birth"),
-        default='N/A')
+        help_text=(""),
+        default=NOT_APPLICABLE)
 
-    formula_date = models.DateField(
+    formula_intro_date = models.DateField(
         verbose_name=("Date participant first received formula milk (or other foods or liquids)"
                       "since last attended scheduled visit where an infant feeding form"
                       " was completed"),
@@ -44,44 +46,33 @@ class InfantFeeding(InfantScheduledVisitModel):
         blank=True,
         null=True)
 
-    reason_rcv_formula = models.CharField(
-        verbose_name=("Which of the following is the most significant reason why the participant"
-                      " received formula milk (if the baby had breastfed) or other foods or"
-                      " liquids (if the baby has been breastfed or formula fed) since the"
-                      " last attended scheduled visit where an infant feeding form was completed? "),
-        max_length=25,
-        help_text=("If baby breastfed give reason why they received formula or other "
-                   "food/liquids, if the baby was formula feeding give reason for receiving"
-                   " other foods/liquids"),
-        choices=REASON_RCV_FORMULA,
-        default='N/A')
-
-    reason_rcv_fm_other = models.TextField(
-        max_length=250,
-        verbose_name="If 'other' specify",
-        blank=True,
-        null=True)
-
-    water_used = models.CharField(
-        max_length=50,
-        verbose_name="What water do you usually use to prepare the participant's milk?",
-        choices=WATER_USED,
-        help_text="",
-        default='N/A')
-
-    water_used_other = OtherCharField(
-        max_length=35,
-        verbose_name="If 'other', specify",
-        blank=True,
-        null=True)
-
-    formula = models.CharField(
+    took_formula = models.CharField(
         max_length=10,
         choices=YES_NO_UNSURE_NA,
         verbose_name="Since the last attended scheduled visit where an infant feeding form was completed "
                      "did the participant take Formula?",
         help_text="If formula feeding since last visit answer YES",
-        default='N/A')
+        default=NOT_APPLICABLE)
+
+    is_first_formula = models.CharField(
+        verbose_name="Is this the first reporting of infant formula use?",
+        max_length=15,
+        choices=YES_NO,
+        blank=True,
+        null=True,)
+
+    date_first_formula = models.DateField(
+        verbose_name="Date infant formula introduced?",
+        validators=[date_not_future, ],
+        blank=True,
+        null=True,
+        help_text="provide date if this is first reporting of infant formula")
+
+    est_date_first_formula = IsDateEstimatedField(
+        verbose_name="Is date infant formula introduced estimated?",
+        blank=True,
+        null=True,
+        help_text="provide date if this is first reporting of infant formula")
 
     water = models.CharField(
         max_length=10,
@@ -89,7 +80,7 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name="Since the last attended scheduled visit where an infant feeding form was completed did "
                      "the participant take Water?",
         help_text="Not as part of formula milk",
-        default='N/A')
+        default=NOT_APPLICABLE)
 
     juice = models.CharField(
         max_length=10,
@@ -98,8 +89,7 @@ class InfantFeeding(InfantScheduledVisitModel):
                      "did the participant take Juice?",
         help_text="If you answered YES to Q3 you must answer YES, NO or NOT SURE to this question, "
                   "you may not answer N/A ",
-        default='N/A',
-    )
+        default=NOT_APPLICABLE)
 
     cow_milk = models.CharField(
         max_length=15,
@@ -107,11 +97,10 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name="Since the last attended scheduled visit where an infant feeding form was completed "
                      "did the participant take Cow's milk?",
         help_text="",
-        default='N/A',
-    )
+        default=NOT_APPLICABLE)
 
     cow_milk_yes = models.CharField(
-        verbose_name="If 'Yes', was cow's milk...",
+        verbose_name="If 'Yes', cow's milk was...",
         max_length=25,
         choices=COWS_MILK,
         help_text="",
@@ -123,7 +112,7 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name="Since the last attended scheduled visit where an infant feeding form was "
                      "completed did the participant take Other animal milk?",
         help_text="",
-        default='N/A')
+        default=NOT_APPLICABLE)
 
     other_milk_animal = OtherCharField(
         max_length=35,
@@ -137,7 +126,7 @@ class InfantFeeding(InfantScheduledVisitModel):
         choices=YES_NO_UNSURE_NA,
         verbose_name="Was milk boiled?",
         help_text="",
-        default='N/A')
+        default=NOT_APPLICABLE)
 
     fruits_veg = models.CharField(
         max_length=10,
@@ -145,7 +134,7 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name="Since the last attended scheduled visit where an infant feeding form was completed "
                      "did the participant take Fruits/vegetables",
         help_text="",
-        default='N/A')
+        default=NOT_APPLICABLE)
 
     cereal_porridge = models.CharField(
         max_length=12,
@@ -153,8 +142,7 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name="Since the last attended scheduled visit where an infant feeding form was completed "
                      "did the participant take Cereal/porridge?",
         help_text="",
-        default='N/A',
-    )
+        default=NOT_APPLICABLE)
 
     solid_liquid = models.CharField(
         max_length=10,
@@ -162,8 +150,7 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name="Since the last attended scheduled visit where an infant feeding form was "
                      "completed did the participant take Other solids and liquids",
         help_text="",
-        default='N/A',
-    )
+        default=NOT_APPLICABLE)
 
     rehydration_salts = models.CharField(
         max_length=3,
@@ -171,15 +158,26 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name="Since the last attended scheduled visit where an infant feeding form was completed "
                      "did the participant take Oral rehydaration salts",
         help_text="",
-        default='N/A',
-    )
+        default=NOT_APPLICABLE)
+
+    water_used = models.CharField(
+        max_length=50,
+        verbose_name="What water do you usually use to prepare the participant's milk?",
+        choices=WATER_USED,
+        help_text="",
+        default=NOT_APPLICABLE)
+
+    water_used_other = OtherCharField(
+        max_length=35,
+        verbose_name="If 'other', specify",
+        blank=True,
+        null=True)
 
     ever_breastfeed = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name="Since the last attended scheduled visit,did the infant ever breast-feed",
-        help_text="",
-    )
+        help_text="")
 
     complete_weaning = models.CharField(
         max_length=3,
@@ -187,7 +185,7 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name="If 'NO', did complete weaning from breast milk take place before the last "
                      "attended scheduled visit?",
         help_text="",
-        default='N/A')
+        default=NOT_APPLICABLE)
 
     weaned_completely = models.CharField(
         max_length=3,
@@ -195,7 +193,7 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name=("Is the participant currently completely weaned from breast milk"
                       " (at least 72 hours without breast feeding,no intention to re-start)?"),
         help_text="",
-        default='N/A')
+        default=NOT_APPLICABLE)
 
     most_recent_bm = models.DateField(
         verbose_name="Date of most recent breastfeeding ",
@@ -210,7 +208,7 @@ class InfantFeeding(InfantScheduledVisitModel):
                       " the participant receive breast milk for feeding?"),
         choices=TIMES_BREASTFED,
         help_text="",
-        default='N/A')
+        default=NOT_APPLICABLE)
 
     comments = models.TextField(
         max_length=200,
