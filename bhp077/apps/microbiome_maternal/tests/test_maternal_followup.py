@@ -21,7 +21,7 @@ from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
 
 
 class TestMaternalFollowup(TestCase):
-    """Test eligibility of a mother for postnatal enrollment."""
+    """Test eligibility of a mother for postnatal followup."""
 
     def setUp(self):
         try:
