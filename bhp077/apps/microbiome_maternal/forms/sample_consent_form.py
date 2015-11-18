@@ -17,6 +17,9 @@ class SampleConsentForm(ModelForm):
                 if cleaned_data.get('is_literate') != primary_consent[0].is_literate:
                     raise forms.ValidationError("Sample Consent and Maternal Consent literacy "
                                                 "answers do not match. Please Correct!")
+                if cleaned_data.get('witness_name') != primary_consent[0].witness_name:
+                    raise forms.ValidationError("Sample Consent and Maternal Consent witness names"
+                                                "do not match. Please Correct!")
                 if cleaned_data.get("consent_benefits") != YES:
                     raise forms.ValidationError("If may_store_samples is YES, ensure that sample"
                                                 " storage benefits is explained to and understood by"
