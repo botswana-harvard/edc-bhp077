@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from edc.subject.registration.models import RegisteredSubject
+
 from .registered_subject_model_admin import RegisteredSubjectModelAdmin
 from bhp077.apps.microbiome_maternal.forms import MaternalDeathForm
 from bhp077.apps.microbiome_maternal.models import MaternalDeath, MaternalVisit
@@ -33,6 +35,6 @@ class MaternalDeathAdmin(RegisteredSubjectModelAdmin):
         if db_field.name == "maternal_visit":
             if request.GET.get('maternal_visit'):
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
-
         return super(MaternalDeathAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 admin.site.register(MaternalDeath, MaternalDeathAdmin)

@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
 from ..forms import MaternalClinicalHistoryForm
-from ..models import MaternalClinicalHistory
+from ..models import MaternalClinicalHistory, MaternalVisit
 
 
 class MaternalClinicalHistoryAdmin(BaseModelAdmin):
@@ -32,4 +32,10 @@ class MaternalClinicalHistoryAdmin(BaseModelAdmin):
                     'prev_preg_haart': admin.VERTICAL,
                     'lowest_cd4_known': admin.VERTICAL,
                     'is_date_estimated': admin.VERTICAL}
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "maternal_visit":
+                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
+        return super(MaternalClinicalHistoryAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 admin.site.register(MaternalClinicalHistory, MaternalClinicalHistoryAdmin)

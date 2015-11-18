@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from edc.subject.appointment.admin import BaseAppointmentModelAdmin
+from edc.subject.appointment.models import Appointment
 
 from ..forms import MaternalVisitForm
 from ..models import MaternalVisit
@@ -43,5 +44,10 @@ class MaternalVisitAdmin(BaseAppointmentModelAdmin):
         'reason',
         'appointment__appt_status',
         'appointment__visit_definition__code')
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "appointment":
+                kwargs["queryset"] = Appointment.objects.filter(id=request.GET.get('appointment'))
+        return super(MaternalVisitAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalVisit, MaternalVisitAdmin)
