@@ -3,7 +3,7 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 
 from ..forms import InfantFeedingForm
-from ..models import InfantFeeding
+from ..models import InfantFeeding, InfantVisit
 
 
 class InfantFeedingAdmin(BaseModelAdmin):
@@ -58,5 +58,10 @@ class InfantFeedingAdmin(BaseModelAdmin):
         "complete_weaning": admin.VERTICAL,
         "weaned_completely": admin.VERTICAL,
         "times_breastfed": admin.VERTICAL}
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "infant_visit":
+                kwargs["queryset"] = InfantVisit.objects.filter(id=request.GET.get('infant_visit'))
+        return super(InfantFeedingAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(InfantFeeding, InfantFeedingAdmin)

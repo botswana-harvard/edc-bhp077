@@ -2,7 +2,6 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from edc_base.model.fields import OtherCharField
-from edc_base.model.validators.date import date_not_future
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_UNKNOWN
 

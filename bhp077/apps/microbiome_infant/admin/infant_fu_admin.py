@@ -4,6 +4,8 @@ from ..models import InfantFu
 
 from edc.base.modeladmin.admin import BaseModelAdmin
 
+from ..models import InfantVisit
+
 
 class InfantFuAdmin(BaseModelAdmin):
 
@@ -21,5 +23,10 @@ class InfantFuAdmin(BaseModelAdmin):
         'has_dx': admin.VERTICAL,
         'was_hospitalized': admin.VERTICAL,
     }
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "infant_visit":
+                kwargs["queryset"] = InfantVisit.objects.filter(id=request.GET.get('infant_visit'))
+        return super(InfantFuAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(InfantFu, InfantFuAdmin)

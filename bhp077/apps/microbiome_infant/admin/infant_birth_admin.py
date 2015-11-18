@@ -1,3 +1,4 @@
+from __future__ import print_function
 from django.contrib import admin
 
 from edc.base.modeladmin.admin import BaseModelAdmin
@@ -29,13 +30,20 @@ class InfantBirthAdmin(BaseModelAdmin):
     radio_fields = {'gender': admin.VERTICAL}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "maternal_lab_del":
+        if db_field.name == "registered_subject":
+            if request.GET.get('registered_subject'):
+                kwargs["queryset"] = RegisteredSubject.objects.filter(
+                    id__exact=request.GET.get('registered_subject', 0))
+            else:
+                self.readonly_fields = list(self.readonly_fields)
+                try:
+                    self.readonly_fields.index('registered_subject')
+                except ValueError:
+                    self.readonly_fields.append('registered_subject')
+        if db_field.name == "maternal_labour_del":
             if request.GET.get('registered_subject'):
                 maternal_subject_identifier = RegisteredSubject.objects.get(id=request.GET.get('registered_subject')).relative_identifier
                 kwargs["queryset"] = MaternalLabourDel.objects.filter(maternal_visit__appointment__registered_subject__subject_identifier=maternal_subject_identifier)
-            else:
-                kwargs["queryset"] = MaternalLabourDel.objects.none()
-
         return super(InfantBirthAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(InfantBirth, InfantBirthAdmin)
