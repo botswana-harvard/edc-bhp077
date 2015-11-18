@@ -6,7 +6,9 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
 from edc_base.model.validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
+from edc.subject.code_lists.models import WcsDxAdult
 
+from bhp077.apps.microbiome.choices import DX_MATERNAL
 from bhp077.apps.microbiome_list.models import Suppliments
 from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond, DelComp, ObComp
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
@@ -240,12 +242,6 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
-    has_preg_dx = models.CharField(
-        max_length=3,
-        choices=YES_NO,
-        verbose_name="During this pregnancy, did the mother have any of the following? ",
-        help_text="If yes, Select all that apply in the table, only report grade 3 or 4 diagnoses")
-
     has_who_dx = models.CharField(
         max_length=3,
         choices=YES_NO,
@@ -253,6 +249,17 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
         "listed in the WHO Adult/Adolescent HIV clinical staging document which "
         "is/are NOT reported?",
         help_text="")
+
+    wcs_dx_adult = models.ManyToManyField(
+        WcsDxAdult,
+        verbose_name="List any new WHO Stage III/IV diagnoses that are not reported in Question 3 below:  ",
+    )
+
+    has_preg_dx = models.CharField(
+        max_length=3,
+        choices=YES_NO,
+        verbose_name="During this pregnancy, did the mother have any of the following diagnoses? ",
+        help_text="If yes, Select all that apply in the table, only report grade 3 or 4 diagnoses")
 
     history = AuditTrail()
 
@@ -273,6 +280,7 @@ class MaternalLabDelDxT (MaternalScheduledVisitModel):
     lab_del_dx = models.CharField(
         max_length=175,
         verbose_name="Diagnosis",
+        choices=DX_MATERNAL,
         help_text="")
 
     lab_del_dx_specify = models.CharField(
@@ -283,7 +291,8 @@ class MaternalLabDelDxT (MaternalScheduledVisitModel):
         null=True)
 
     grade = models.IntegerField(
-        verbose_name="Grade")
+        verbose_name="Grade",
+    )
 
     hospitalized = models.CharField(
         max_length=3,

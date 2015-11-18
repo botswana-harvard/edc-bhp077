@@ -11,12 +11,13 @@ from edc_constants.choices import YES, NO
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.forms import MaternalLabourDelForm, MaternalLabDelClinicForm
+from bhp077.apps.microbiome_maternal.forms import (MaternalLabourDelForm, MaternalLabDelClinicForm,
+                                                   MaternalLabDelMedForm)
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from .factories import (PostnatalEnrollmentFactory, MaternalLabourDelFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
-from bhp077.apps.microbiome_maternal.tests.factories.suppliments_factory import SupplimentsFactory
+from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond
 
 
 class TestMaternalLabourDel(TestCase):
@@ -212,3 +213,48 @@ class TestMaternalLabourDelClinic(TestCase):
         self.data['vl_result'] = 1389
         form = MaternalLabDelClinicForm(data=self.data)
         self.assertTrue(form.is_valid())
+
+
+class TestMaternalLabourMed(TestCase):
+    """Test eligibility of a mother for postnatal enrollment."""
+
+    def setUp(self):
+        try:
+            site_lab_profiles.register(MaternalProfile())
+        except AlreadyRegisteredLabProfile:
+            pass
+        MicrobiomeConfiguration().prepare()
+        site_lab_tracker.autodiscover()
+        PostnatalEnrollmentVisitSchedule().build()
+        site_rule_groups.autodiscover()
+        self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
+        self.maternal_eligibility = MaternalEligibilityFactory()
+        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject,
+                                                       study_site=self.study_site)
+        self.registered_subject = self.maternal_consent.registered_subject
+        self.postnatal_enrollment = PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            breastfeed_for_a_year=YES
+        )
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='2000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        self.labour_del = MaternalLabourDelFactory(maternal_visit=self.maternal_visit)
+        self.health_cond = HealthCond.objects.create(name='N/A', short_name='N/A', display_index=10, field_name='health_cond')
+        self.data = {
+            'maternal_visit': self.maternal_visit.id,
+            'report_datetime': timezone.now(),
+            'has_health_cond': NO,
+            'health_cond': self.health_cond.id,
+            'has_ob_comp': NO,
+            'ob_comp': 'N/A',
+            'ob_comp_other': '',
+            'took_suppliments': NO,
+            'suppliments': 'N/A',
+            'comment': '',
+        }
+
+    def test_has_health_cond(self):
+        self.data['has_health_cond'] = YES
+        form = MaternalLabDelMedForm(data=self.data)
+        print form.errors

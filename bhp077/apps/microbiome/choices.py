@@ -193,6 +193,53 @@ DX_INFANT = (
 
 )
 
+DX_MATERNAL = (
+    ('Pneumonia suspected, no CXR or microbiologic confirmation',
+     'Pneumonia suspected, no CXR or microbiologic confirmation'),
+    ('Pneumonia, CXR confirmed, no bacterial pathogen', 'Pneumonia, CXR confirmed, no bacterial pathogen'),
+    ('Pneumonia, CXR confirmed, bacterial pathogen isolated (specify pathogen)',
+     'Pneumonia, CXR confirmed, bacterial pathogen isolated (specify pathogen)'),
+    ('Pulmonary TB, suspected(no CXR or microbiologic confirmation)',
+     'Pulmonary TB, suspected(no CXR or microbiologic confirmation)'),
+    ('Pulmonary TB, CXR-confirmed (no microbiologic confirmation)',
+     'Pulmonary TB, CXR-confirmed (no microbiologic confirmation)'),
+    ('Pulmonary TB, smear and/or culture positive', 'Pulmonary TB, smear and/or culture positive'),
+    ('Extrapulmonary TB,suspected (no CXR or microbiologic confirmation) ',
+     'Extrapulmonary TB,suspected (no CXR or microbiologic confirmation) '),
+    ('Extrapulmonary TB, smear and/or culture positive', 'Extrapulmonary TB, smear and/or culture positive'),
+    (
+        ('Acute diarrheal illness (bloody diarrhean OR increase of at least 7 stools per day '
+         'OR life threatening for less than 14 days'),
+        ('Acute diarrheal illness (bloody diarrhean OR increase of at least 7 stools per day '
+         'OR life threatening for less than 14 days')),
+    ('Chronic diarrheal illness (as above but for 14 days or longer) ',
+     'Chronic diarrheal illness (as above but for 14 days or longer) '),
+    ('Acute Hepatitis in this pregnancy: Drug related ', 'Acute Hepatitis in this pregnancy: Drug related '),
+    ('Acute Hepatitis in this pregnancy:Traditional medication related',
+     'Acute Hepatitis in this pregnancy:Traditional medication related'),
+    ('Acute Hepatitis in this pregnancy:Fatty liver disease', 'Acute Hepatitis in this pregnancy:Fatty liver disease'),
+    ('Acute Hepatitis in this pregnancy:Hepatitis A', 'Acute Hepatitis in this pregnancy:Hepatitis A'),
+    ('Acute Hepatitis in this pregnancy:Hepatitis B ', 'Acute Hepatitis in this pregnancy:Hepatitis B'),
+    ('Acute Hepatitis in this pregnancy:Alcoholic', 'Acute Hepatitis in this pregnancy:Alcoholic'),
+    ('Acute Hepatitis in this pregnancy:Other/Unkown', 'Acute Hepatitis in this pregnancy:Other/Unkown'),
+    ('Sepsis, unspecified', 'Sepsis, unspecified'),
+    ('Sepsis, pathogen specified', 'Sepsis, pathogen specified'),
+    ('Meningitis, unspecified', 'Meningitis, unspecified'),
+    ('Meningitis, pathogen specified', 'Meningitis, pathogen specified'),
+    ('Appendicitis', 'Appendicitis'),
+    ('Cholecystitis/cholanangitis', 'Cholecystitis/cholanangitis'),
+    ('Pancreatitis', 'Pancreatitis'),
+    ('Acute Renal failure', 'Acute Renal failure (Record highest creatinine level if tested outside of the study)'),
+    ('Anemia', 'Anemia (Only report grade 3 or 4 anemia based on the lab value drawn outside the study)'),
+    ('Pregnancy/peripartum cardiomyopathy or CHF ', 'Pregnancy/peripartum cardiomyopathy or CHF '),
+    ('Drug rash on HAART', 'Drug rash on HAART'),
+    ('Trauma/Accident', 'Trauma/Accident'),
+    ('Other serious (grade 3 or 4) infection, specify',
+     'Other serious (grade 3 or 4) infection(not listed above), specify'),
+    ('Other serious (grade 3 or 4) non-infectious diagnosis, specify',
+     'Other serious (grade 3 or 4) non-infectious diagnosis(not listed above), specify'),
+)
+
 DRUG_RELATIONSHIP = (
     ('Not related', 'Not related'),
     ('Probably not related', 'Probably not related'),
