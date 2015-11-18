@@ -17,6 +17,12 @@ class MaternalArvPostModAdmin(BaseModelAdmin):
     form = MaternalArvPostModForm
     list_display = ('maternal_arv_post', 'arv_code', 'dose_status', 'modification_date', 'modification_code')
 
+    radio_fields = {
+        "arv_code": admin.VERTICAL,
+        "dose_status": admin.VERTICAL,
+        "modification_code": admin.VERTICAL,
+    }
+
 admin.site.register(MaternalArvPostMod, MaternalArvPostModAdmin)
 
 
