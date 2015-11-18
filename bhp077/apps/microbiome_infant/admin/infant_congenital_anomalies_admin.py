@@ -19,6 +19,27 @@ class InfantCongenitalAnomaliesAdmin(BaseModelAdmin):
 
     list_display = ('infant_visit',)
 
+    inlines = [
+        InfantCnsAbnormalityItemsAdmin,
+        InfantFacialDefectItemsAdmin,
+        InfantCleftDisorderItemsAdmin,
+        InfantMouthUpGastrointestinalItemsAdmin,
+        InfantCardiovascularDisorderItemsAdmin,
+        InfantRespiratoryDefectItemsAdmin,
+        InfantLowerGastrointestinalItemsAdmin,
+        InfantFemaleGenitalAnomalyItemsAdmin,
+        InfantMaleGenitalAnomalyItemsAdmin,
+        InfantRenalAnomalyItemsAdmin,
+        InfantMusculoskeletalAbnormalItemsAdmin,
+        InfantSkinAbnormalItemsAdmin,
+        InfantTrisomiesChromosomeItemsAdmin,]
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "infant_visit":
+            if request.GET.get('infant_visit'):
+                kwargs["queryset"] = InfantVisit.objects.filter(id=request.GET.get('infant_visit'))
+        return super(InfantCongenitalAnomaliesAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 admin.site.register(InfantCongenitalAnomalies, InfantCongenitalAnomaliesAdmin)
 
 
