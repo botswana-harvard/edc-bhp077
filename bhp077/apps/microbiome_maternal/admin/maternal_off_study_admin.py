@@ -11,6 +11,8 @@ class MaternalOffStudyAdmin(BaseOffStudyModelAdmin):
     dashboard_type = 'maternal'
     visit_model_name = 'maternalvisit'
 
+    radio_fields = {'has_scheduled_data': admin.VERTICAL}
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
             if request.GET.get('maternal_visit'):

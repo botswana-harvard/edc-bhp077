@@ -36,6 +36,11 @@ class MaternalPostFuDxTAdmin(BaseModelAdmin):
         'post_fu_specify',
         'grade',
         'hospitalized')
+    radio_fields = {
+        "post_fu_dx": admin.VERTICAL,
+        "grade": admin.VERTICAL,
+        "hospitalized": admin.VERTICAL,
+        }
 admin.site.register(MaternalPostFuDxT, MaternalPostFuDxTAdmin)
 
 

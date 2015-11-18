@@ -61,5 +61,7 @@ admin.site.register(MaternalLabDelDx, MaternalLabDelDxAdmin)
 class MaternalLabDelDxTAdmin(BaseModelAdmin):
 
     form = MaternalLabDelDxTForm
-    radio_fields = {'hospitalized': admin.VERTICAL}
+    radio_fields = {
+        'lab_del_dx': admin.VERTICAL,
+        'hospitalized': admin.VERTICAL,}
 admin.site.register(MaternalLabDelDxT, MaternalLabDelDxTAdmin)
