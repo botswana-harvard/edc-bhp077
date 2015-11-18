@@ -31,6 +31,8 @@ class InfantBirthExamAdmin(BaseModelAdmin):
         'resp_exam': admin.VERTICAL,
         'cardiac_exam': admin.VERTICAL,
         'abdominal_exam': admin.VERTICAL,
+        'skin_exam': admin.VERTICAL,
+        'macular_papular_rash': admin.VERTICAL,
         'neurologic_exam': admin.VERTICAL
     }
 admin.site.register(InfantBirthExam, InfantBirthExamAdmin)
