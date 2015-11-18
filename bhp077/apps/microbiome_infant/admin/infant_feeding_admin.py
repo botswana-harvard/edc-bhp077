@@ -45,6 +45,7 @@ class InfantFeedingAdmin(BaseModelAdmin):
         "water_used": admin.VERTICAL,
         "took_formula": admin.VERTICAL,
         "is_first_formula": admin.VERTICAL,
+        "est_date_first_formula": admin.VERTICAL,
         "water": admin.VERTICAL,
         "juice": admin.VERTICAL,
         "cow_milk": admin.VERTICAL,
