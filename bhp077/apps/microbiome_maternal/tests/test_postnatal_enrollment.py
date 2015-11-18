@@ -1,3 +1,4 @@
+from django import forms
 from django.test import TestCase
 
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -6,13 +7,14 @@ from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_constants.choices import YES, NO, POS, NEG, NOT_APPLICABLE
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from ..visit_schedule import PostnatalEnrollmentVisitSchedule
-from .factories import PostnatalEnrollmentFactory
 from ..maternal_choices import STILL_BIRTH, LIVE
+from ..visit_schedule import PostnatalEnrollmentVisitSchedule
+from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
+from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
+from bhp077.apps.microbiome_maternal.models import AntenatalEnrollment
+from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
+from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
+from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory, AntenatalEnrollmentFactory
 
 
 class TestPostnatalEnroll(TestCase):
@@ -335,3 +337,15 @@ class TestPostnatalEnroll(TestCase):
             rapid_test_result=NEG
         )
         self.assertTrue(postnatal_enrollment.postnatal_eligible)
+
+    def test_pos_with_evidence(self):
+        """Test that pos subject with evidence has unchanging status on postnatal enrollment"""
+        antenatal = AntenatalEnrollmentFactory(registered_subject=self.registered_subject)
+        self.assertEqual(AntenatalEnrollment.objects.count(), 1)
+        postnatal = PostnatalEnrollmentFactory(registered_subject=self.registered_subject)
+        self.assertEqual(antenatal.verbal_hiv_status, postnatal.verbal_hiv_status)
+        self.assertEqual(antenatal.evidence_hiv_status, postnatal.evidence_hiv_status)
+        pnt = postnatal
+        pnt.verbal_hiv_status = NEG
+        pnt.evidence_hiv_status = NO
+        self.assertRaises(forms.ValidationError)
