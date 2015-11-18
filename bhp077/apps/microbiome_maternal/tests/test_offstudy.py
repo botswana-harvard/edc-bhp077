@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
+from datetime import date
 
 from edc.subject.registration.models import RegisteredSubject
 from edc.entry_meta_data.models import ScheduledEntryMetaData
@@ -20,8 +21,10 @@ from bhp077.apps.microbiome_maternal.tests.factories import\
     (PostnatalEnrollmentFactory, SexualReproductiveHealthFactory, MaternalOffStudyFactory)
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
+from bhp077.apps.microbiome_maternal.forms import MaternalOffStudyForm
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+
 
 class TestOffStudy(TestCase):
 
@@ -39,6 +42,14 @@ class TestOffStudy(TestCase):
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
+
+        self.data = {
+            'registered_subject': self.registered_subject.id,
+            'reason': 'not_18',
+            'has_scheduled_data': YES,
+            'maternal_visit': None,
+            'offstudy_date': timezone.now().date(),
+        }
 
     def model_options(self, app_label, model_name, appointment):
         model_options = {}
@@ -98,5 +109,43 @@ class TestOffStudy(TestCase):
             registered_subject=self.registered_subject
         ).count(), 1)
 
+    def test_validate_offstudy_date(self):
 
+        PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            verbal_hiv_status=NEG,
+            evidence_hiv_status=YES,
+        )
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='1000M'
+        )
+        maternal_visit = MaternalVisitFactory(appointment=appointment, reason='off study')
+
+        self.data['maternal_visit'] = maternal_visit.id
+        self.data['offstudy_date'] = date(2015, 10, 6)
+
+        offstudy_form = MaternalOffStudyForm(data=self.data)
+
+        self.assertIn(u"Offstudy_Date CANNOT be before consent datetime", offstudy_form.errors.get("__all__"))
+
+    def test_validate_offstudy_date_dob(self):
+        self.maternal_consent.dob =  date(2015, 12, 7)
+        self.maternal_consent.save()
+
+        PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            verbal_hiv_status=NEG,
+            evidence_hiv_status=YES,
+        )
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='1000M'
+        )
+        maternal_visit = MaternalVisitFactory(appointment=appointment, reason='off study')
+
+        self.data['maternal_visit'] = maternal_visit.id
+        self.data['offstudy_date'] = timezone.now().date()
+
+        offstudy_form = MaternalOffStudyForm(data=self.data)
+
+        self.assertIn(u"Offstudy_Date CANNOT be before dob", offstudy_form.errors.get("__all__"))
 
