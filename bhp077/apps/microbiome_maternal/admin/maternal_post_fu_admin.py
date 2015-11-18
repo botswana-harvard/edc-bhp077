@@ -12,7 +12,8 @@ class MaternalPostFuAdmin(BaseModelAdmin):
         "maternal_visit",
         "mother_weight",
         "enter_weight",
-        "bp",
+        "systolic_bp",
+        "diastolic_bp",
         "had_mastitis",
         "comment")
     radio_fields = {
