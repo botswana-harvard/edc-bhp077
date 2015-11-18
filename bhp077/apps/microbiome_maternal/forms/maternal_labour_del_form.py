@@ -30,6 +30,27 @@ class MaternalLabourDelForm(BaseMaternalModelForm):
 
 class MaternalLabDelMedForm(BaseMaternalModelForm):
 
+    def clean(self):
+        cleaned_data = super(MaternalLabDelMedForm, self).clean()
+        if 'health_cond' in cleaned_data.keys():
+            self.validate_m2m(
+                label='health condition',
+                leading=cleaned_data.get('has_health_cond'),
+                m2m=cleaned_data.get('health_cond'),
+                other=cleaned_data.get('health_cond_other'))
+        if 'ob_comp' in cleaned_data.keys():
+            self.validate_m2m(
+                label='obstetric complication',
+                leading=cleaned_data.get('has_ob_comp'),
+                m2m=cleaned_data.get('ob_comp'),
+                other=cleaned_data.get('ob_comp_other'))
+        if 'suppliments' in cleaned_data.keys():
+            self.validate_m2m(
+                label='pregnancy suppliment',
+                leading=cleaned_data.get('took_suppliments'),
+                m2m=cleaned_data.get('suppliments'))
+        return cleaned_data
+
     class Meta:
         model = MaternalLabDelMed
         fields = '__all__'
@@ -75,6 +96,21 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
 
 
 class MaternalLabDelDxForm(BaseMaternalModelForm):
+    def clean(self):
+        cleaned_data = super(MaternalLabDelDxForm, self).clean()
+        check_dx = self.data.get('maternallabdeldxt_set-0-lab_del_dx')
+
+        # WHO validations
+        if 'wcs_dx_adult' in cleaned_data.keys():
+            self.validate_m2m_wcs_dx(
+                label='who diagnoses',
+                leading=cleaned_data.get('has_who_dx'),
+                m2m=cleaned_data.get('wcs_dx_adult'))
+
+        # Validate diagnosis
+        if cleaned_data.get('has_preg_dx') == 'Yes' and not check_dx:
+            raise forms.ValidationError('You indicated that participant had diagnosis. Please list them.')
+        return cleaned_data
 
     class Meta:
         model = MaternalLabDelDx

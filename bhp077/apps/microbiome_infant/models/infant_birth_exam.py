@@ -88,12 +88,12 @@ class InfantBirthExam(InfantScheduledVisitModel):
 
     skin_exam = models.CharField(
         max_length=15,
+        choices=YES_NO_NOT_EVALUATED_NA,
         verbose_name="Was Skin Exam Normal?",
         help_text="",
         default="N/A")
 
     skin_exam_other = models.TextField(
-        max_length=15,
         verbose_name="If abnormal or not evaluated, specify",
         help_text="",
         blank=True,
@@ -101,8 +101,14 @@ class InfantBirthExam(InfantScheduledVisitModel):
 
     macular_papular_rash = models.CharField(
         max_length=15,
+        choices=YES_NO_NOT_EVALUATED_NA,
         verbose_name="Was any macular / papular rash observed?",
         help_text="")
+
+    macular_papular_rash_other = models.TextField(
+        help_text="",
+        blank=True,
+        null=True)
 
     neurologic_exam = models.CharField(
         max_length=15,

@@ -46,7 +46,8 @@ class PostnatalEnrollment(BaseEnrollment):
     @property
     def postnatal_eligible(self):
         """Returns true if the participant is eligible."""
-        if (self.breastfeed_for_a_year == YES and self.on_tb_treatment == NO and self.is_diabetic == NO and
+        if (self.breastfeed_for_a_year == YES and self.on_tb_treatment == NO and
+                self.on_hypertension_treatment == NO and self.is_diabetic == NO and
                 self.instudy_for_a_year == YES and self.postpartum_days <= 3 and self.delivery_type == YES and
                 self.live_or_still_birth == LIVE and self.gestation_before_birth >= 37):
             if (self.verbal_hiv_status == POS and self.evidence_hiv_status == YES and self.valid_regimen == YES and

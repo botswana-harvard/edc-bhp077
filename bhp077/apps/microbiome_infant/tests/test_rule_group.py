@@ -21,7 +21,8 @@ from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 
 from bhp077.apps.microbiome_maternal.visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
 from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
-from bhp077.apps.microbiome_infant.tests.factories import InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory
+from bhp077.apps.microbiome_infant.tests.factories import \
+    (InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory, InfantFuFactory)
 from bhp077.apps.microbiome_infant.models import InfantBirth
 
 from bhp077.apps.microbiome_lab.models import Panel, AliquotType
@@ -187,3 +188,51 @@ class TestRuleGroupInfant(TestCase):
                 lab_entry__model_name='infantrequisition',
                 appointment=appointment
             ).count(), 1)
+
+    def test_infant_fu_rules(self):
+        """
+        """
+        post = PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            verbal_hiv_status=POS,
+            evidence_hiv_status=YES,
+        )
+
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='2000M'
+        )
+        maternal_visit = MaternalVisitFactory(appointment=appointment)
+
+        maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
+
+        registered_subject_infant = RegisteredSubject.objects.get(
+            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier
+        )
+
+        InfantBirthFactory(
+            registered_subject=registered_subject_infant,
+            maternal_labour_del=maternal_labour_del,
+        )
+        appointment = Appointment.objects.get(
+            visit_definition__code='2010', registered_subject=registered_subject_infant,
+        )
+
+        infant_visit = InfantVisitFactory(
+            appointment=appointment,
+            reason='scheduled'
+        )
+
+        InfantFuFactory(infant_visit=infant_visit)
+
+        self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
+            app_label='microbiome_infant', model_name='infantfuphysical', appointment=appointment
+        )).count(), 1)
+
+
+        self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
+            app_label='microbiome_infant', model_name='infantfudx', appointment=appointment
+        )).count(), 1)
+
+
+
+

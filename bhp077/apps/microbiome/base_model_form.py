@@ -101,7 +101,10 @@ class BaseModelForm(forms.ModelForm):
         if not required_word:
             required_word = ''
         if isinstance(m2m_qs, QuerySet):
-            answers = [l.name.lower() for l in cleaned_data.get(m2m_name, [])]
+            try:
+                answers = [l.name.lower() for l in cleaned_data.get(m2m_name, [])]
+            except AttributeError:
+                answers = [l.short_name.lower() for l in cleaned_data.get(m2m_name, [])]
             if answers:
                 for ans in answers:
                     if any([word in ans for word in optional_words]) and required_word in ans.lower():
@@ -143,7 +146,7 @@ class BaseModelForm(forms.ModelForm):
                 "You stated there ARE " + label + "s, yet you selected '{0}'".format(item.name))
 
         # if leading question is 'No', ensure the m2m item is 'not applicable'
-        if leading == NO and not [True for item in m2m if item.name.lower() == NOT_APPLICABLE]:
+        if leading == NO and not [True for item in m2m if item.name == NOT_APPLICABLE]:
             raise forms.ValidationError("You stated there are NO {0}s. Please correct".format(label))
 
         # if leading question is 'No', ensure only one m2m item is selected.
@@ -156,6 +159,35 @@ class BaseModelForm(forms.ModelForm):
 
         # if 'other' has a value but no m2m item is 'Other, specify'
         if other and not [True for item in m2m if 'other' in item.name.lower()]:
+            raise forms.ValidationError(
+                'You have specified an \'Other\' {0} but not selected \'Other, specify\'. '
+                'Please correct.'.format(label))
+
+    def validate_m2m_wcs_dx(self, **kwargs):
+        label = kwargs.get('label', 'items to be selected')
+        leading = kwargs.get('leading')
+        m2m = kwargs.get('m2m')
+        other = kwargs.get('other')
+
+        # if leading question is 'Yes', a m2m item cannot be 'Not applicable'
+        if leading == YES and [True for item in m2m if (item.short_name == NOT_APPLICABLE or item.short_name.lower() == 'asymptomatic')]:
+            raise forms.ValidationError(
+                "You stated there ARE " + label + "s, yet you selected '{0}'".format(item.short_name))
+
+        # if leading question is 'No', ensure the m2m item is 'not applicable'
+        if leading == NO and not [True for item in m2m if (item.short_name == NOT_APPLICABLE or item.short_name.lower() == 'asymptomatic')]:
+            raise forms.ValidationError("You stated there are NO {0}s. Please correct".format(label))
+
+        # if leading question is 'No', ensure only one m2m item is selected.
+        if leading == NO and len(m2m) > 1:
+            raise forms.ValidationError("You stated there are NO {0}s. Please correct".format(label))
+
+        # if leading question is 'Yes' and an m2m item is 'other, specify', ensure 'other' attribute has a value
+        if leading == YES and not other and [True for item in m2m if 'other' in item.short_name.lower()]:
+            raise forms.ValidationError("You have selected a '{0}' as 'Other', please specify.".format(label))
+
+        # if 'other' has a value but no m2m item is 'Other, specify'
+        if other and not [True for item in m2m if 'other' in item.short_name.lower()]:
             raise forms.ValidationError(
                 'You have specified an \'Other\' {0} but not selected \'Other, specify\'. '
                 'Please correct.'.format(label))

@@ -1,14 +1,13 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from edc_base.model.validators.date import date_not_future
-
-from edc_constants.choices import YES_NO
-
-from bhp077.apps.microbiome.choices import REASON_NOT_RECEIVED_VACCINATION, YES_NOT_SCHEDULED_NOT_RECEIVED
+from edc_base.model.fields import OtherCharField
+from edc_base.audit_trail import AuditTrail
+from edc_constants.choices import YES_NO_UNKNOWN
 
 from .infant_fu import InfantFu
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from bhp077.apps.microbiome.choices import REASONS_VACCINES_MISSED
 
 
 class InfantFuImmunizations(InfantScheduledVisitModel):
@@ -17,241 +16,17 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
 
     vaccines_received = models.CharField(
         max_length=25,
-        choices=YES_NO,
-        verbose_name="Since the last attended scheduled visit,did the child recieve any of the following vaccinations",
-        help_text="",
-    )
+        choices=YES_NO_UNKNOWN,
+        verbose_name="Did this infant receive any vaccinations since the last visit",
+        help_text="")
 
-    vitamin_a_vaccine = models.CharField(
-        max_length=20,
-        choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
-        verbose_name="Vitamin A vaccination",
-        help_text="Given to children between 6 and 59 months at intervals of 6-11 months, 12-17 months, "
-        "18-29 months, 24-29 months, 30-35 months, 36-41 months, 42-47 months, 48-53 months, 54-59 months. ",
-    )
+    vaccines_missed = models.CharField(
+        max_length=25,
+        choices=YES_NO_UNKNOWN,
+        verbose_name="Is the child missing any vacations?",
+        help_text="")
 
-    date_vitamin_a = models.DateField(
-        verbose_name='Date Vitamin A vaccination received.',
-        help_text="",
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,
-    )
-
-    reason_not_received_vita_a = models.CharField(
-        max_length=50,
-        verbose_name="Reason Vitamin A vaccine not received",
-        choices=REASON_NOT_RECEIVED_VACCINATION,
-        blank=True,
-        null=True,
-        help_text="Give reason if the answer for previous question is Not Received",
-    )
-
-    bcg_vaccine = models.CharField(
-        max_length=20,
-        choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
-        verbose_name="BCG vaccine",
-        help_text="Given at birth or within first few days after birth."
-    )
-
-    date_bcg = models.DateField(
-        verbose_name='Date BCG vaccination received.',
-        help_text="",
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,
-    )
-
-    reason_not_received_bcg = models.CharField(
-        verbose_name="Reason BCG vaccine not received",
-        max_length=50,
-        choices=REASON_NOT_RECEIVED_VACCINATION,
-        help_text="",
-    )
-
-    hepatitis_b_vaccine = models.CharField(
-        max_length=20,
-        verbose_name="Hepatitis B vaccine",
-        choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
-        help_text="Should receive at birth, 2 months, 3 months, and 4 months,"
-        "but if late, can still receive up to four vaccinations.",
-    )
-
-    date_hepatitis_b = models.DateField(
-        verbose_name='Date Hepatitis B vaccination received.',
-        help_text="",
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,
-    )
-
-    reason_not_received_hepatitis_b = models.CharField(
-        max_length=50,
-        verbose_name="Reason Hepatitis B vaccine not received",
-        choices=REASON_NOT_RECEIVED_VACCINATION,
-        help_text="",
-    )
-
-    dpt_vaccine = models.CharField(
-        max_length=20,
-        choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
-        verbose_name="Diphtheria, Pertussis and Tetanus",
-        help_text="Should receive at 2, 3 and 4 months of life. ",
-    )
-
-    date_dpt = models.DateField(
-        verbose_name='Date Diphtheria, Pertussis and Tetanus vaccination received.',
-        help_text="",
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,
-    )
-
-    reason_not_received_dpt = models.CharField(
-        max_length=50,
-        verbose_name="Reason Diphtheria, Pertussis and Tetanus vaccines not received",
-        choices=REASON_NOT_RECEIVED_VACCINATION,
-        help_text="",
-    )
-
-    haemophilus_influenza_b_vaccine = models.CharField(
-        max_length=20,
-        choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
-        verbose_name="Haemophilus Influenza B Vaccine",
-        help_text="Should receive at 2, 3 and 4 months of life or later.",
-    )
-
-    date_haemophilus_influenza_b = models.DateField(
-        verbose_name='Date Haemophilus Influenza B vaccination received.',
-        help_text="",
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,
-    )
-
-    reason_not_received_haemophilus = models.CharField(
-        max_length=50,
-        verbose_name="Reason Haemophilus Influenza B vaccine not received",
-        choices=REASON_NOT_RECEIVED_VACCINATION,
-        help_text="",
-    )
-
-    pneumonia_conjugated_vaccine = models.CharField(
-        max_length=20,
-        verbose_name="Pneumonia Conjugated Vaccine",
-        choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
-        help_text="Should receive at 2, 3 and 4 months of life. ",
-    )
-
-    date_pcv = models.DateField(
-        verbose_name='Date Pneumonia Conjugated vaccination received.',
-        help_text="",
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,
-    )
-
-    reason_not_received_pcv = models.CharField(
-        max_length=50,
-        verbose_name="Reason Pneumonia Conjugated Vaccine not received",
-        choices=REASON_NOT_RECEIVED_VACCINATION,
-        help_text="",
-    )
-
-    polio_vaccine = models.CharField(
-        max_length=20,
-        verbose_name="Polio vaccine",
-        choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
-        help_text="Should receive at 2, 3, 4 and 18 months of life.",
-    )
-
-    date_polio = models.DateField(
-        verbose_name='Date Polio received.',
-        help_text="",
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,
-    )
-
-    reason_not_received_polio = models.CharField(
-        max_length=50,
-        verbose_name="Reason Polio vaccine not received",
-        choices=REASON_NOT_RECEIVED_VACCINATION,
-        help_text="",
-    )
-
-    rotavirus_vaccine = models.CharField(
-        max_length=20,
-        verbose_name="Rotavirus vaccine",
-        choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
-        help_text="Should receive at 2 and 3 months of life.",
-    )
-
-    date_rotavirus = models.DateField(
-        verbose_name='Date Rotavirus received.',
-        help_text="",
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,
-    )
-
-    reason_not_received_rotavirus = models.CharField(
-        max_length=50,
-        verbose_name="Reason Rotavirus vaccine not received",
-        choices=REASON_NOT_RECEIVED_VACCINATION,
-        help_text="",
-    )
-
-    measles_vaccine = models.CharField(
-        max_length=20,
-        verbose_name="Measles vaccine",
-        choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
-        help_text="Should receive at 9 and 18 months",
-    )
-
-    date_measles = models.DateField(
-        verbose_name='Date Measles received.',
-        help_text="",
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,
-    )
-
-    reason_not_received_measles = models.CharField(
-        max_length=50,
-        verbose_name="Reason Measles vaccine not received",
-        choices=REASON_NOT_RECEIVED_VACCINATION,
-        help_text="",
-    )
-
-    pentavalent_vaccine = models.CharField(
-        max_length=20,
-        verbose_name="Pentavalent vaccine",
-        choices=YES_NOT_SCHEDULED_NOT_RECEIVED,
-        help_text="Should receive at 2, 3 and 4 months of life.",
-    )
-
-    date_pentavalent = models.DateField(
-        verbose_name='Date Pentavalent received.',
-        help_text="",
-        validators=[date_not_future, ],
-        blank=True,
-        null=True,
-    )
-
-    reason_not_received_pentavalent = models.CharField(
-        max_length=50,
-        verbose_name="Reason Pentavalent vaccine not received",
-        choices=REASON_NOT_RECEIVED_VACCINATION,
-        help_text="",
-    )
-
-    comments = models.TextField(
-        max_length=500,
-        verbose_name="Comment",
-        blank=True,
-        null=True,
-    )
+    history = AuditTrail()
 
     def __str__(self):
         return "%s" % (self.infant_visit)
@@ -262,3 +37,53 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant FollowUp: Immunizations"
+        verbose_name_plural = "Infant FollowUp: Immunizations"
+
+
+class VaccinesReceived(InfantScheduledVisitModel):
+
+    """ALL possible vaccines given to infant"""
+
+    infant_fu_immunizations = models.ForeignKey(InfantFuImmunizations)
+
+    received_vaccine_name = models.CharField(
+        verbose_name="Received vaccine name",
+        null=True,
+        blank=True,
+        max_length=25)
+
+    date_given = models.DateField(
+        verbose_name="Date Given",
+        null=True,
+        blank=True)
+
+    class Meta:
+        app_label = 'microbiome_infant'
+        verbose_name = 'Received Vaccines'
+        verbose_name_plural = 'Received Vaccines'
+
+
+class VaccinesMissed(InfantScheduledVisitModel):
+
+    """ALL vaccines missed by infant"""
+
+    infant_fu_immunizations = models.ForeignKey(InfantFuImmunizations)
+
+    missed_vaccine_name = models.CharField(
+        verbose_name="Missed vaccine name",
+        null=True,
+        blank=True,
+        max_length=25)
+
+    reason_missed = models.DateField(
+        verbose_name="Reasons infant missed vaccines",
+        choices=REASONS_VACCINES_MISSED,
+        null=True,
+        blank=True)
+
+    reason_missed_other = OtherCharField()
+
+    class Meta:
+        app_label = 'microbiome_infant'
+        verbose_name = 'Missed Vaccines'
+        verbose_name_plural = 'Missed Vaccines'

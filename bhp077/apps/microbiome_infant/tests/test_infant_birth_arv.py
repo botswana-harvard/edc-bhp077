@@ -1,6 +1,9 @@
 from django.test import TestCase
 from django.utils import timezone
 
+from bhp077.apps.microbiome_infant.models import InfantVisit
+from bhp077.apps.microbiome_infant.forms import InfantBirthArvForm
+
 from edc.subject.registration.models import RegisteredSubject
 from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -21,16 +24,17 @@ from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 
 from bhp077.apps.microbiome_maternal.visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
 from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
-from bhp077.apps.microbiome_infant.tests.factories import InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory
+from bhp077.apps.microbiome_infant.tests.factories import \
+    (InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
 from bhp077.apps.microbiome_infant.models import InfantBirth
 
-from bhp077.apps.microbiome_lab.models import Panel, AliquotType
 
-class TestOffStudy(TestCase):
+class TestInfantBirthArv(TestCase):
 
     def setUp(self):
         try:
             site_lab_profiles.register(MaternalProfile())
+            site_lab_profiles.register(InfantProfile())
         except AlreadyRegisteredLabProfile:
             pass
         MicrobiomeConfiguration().prepare()
@@ -44,43 +48,63 @@ class TestOffStudy(TestCase):
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
-    def model_options(self, app_label, model_name, appointment):
-        model_options = {}
-        model_options.update(
-            entry__app_label=app_label,
-            entry__model_name=model_name,
-            appointment=appointment)
-        return model_options
-
-    def test_offstudy(self):
-        PostnatalEnrollmentFactory(
+        post = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             verbal_hiv_status=POS,
-            evidence_hiv_status=YES
+            evidence_hiv_status=YES,
         )
-        appointment = Appointment.objects.get(
+        self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M'
         )
-
-        maternal_visit = MaternalVisitFactory(appointment=appointment)
-
+        maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
 
         registered_subject_infant = RegisteredSubject.objects.get(
             subject_type='infant', relative_identifier=self.registered_subject.subject_identifier
         )
-
-        InfantBirthFactory(
+        self.infant_birth = InfantBirthFactory(
             registered_subject=registered_subject_infant,
             maternal_labour_del=maternal_labour_del,
         )
-
-        appointment = Appointment.objects.get(
-            registered_subject=registered_subject_infant, visit_definition__code='2000'
+        self.appointment = Appointment.objects.get(
+            registered_subject=registered_subject_infant,
+            visit_definition__code='2000'
         )
+        self.infant_visit = InfantVisitFactory(appointment=self.appointment)
+        self.data = {
+            'report_datetime': timezone.now(),
+            'infant_birth': self.infant_birth.id,
+            'infant_visit': self.infant_visit.id,
+            'azt_after_birth': YES,
+            'azt_dose_date': timezone.now().date(),
+            'azt_additional_dose': YES,
+            'sdnvp_after_birth': YES,
+            'nvp_dose_date': timezone.now().date(),
+            'additional_nvp_doses': YES,
+            'nvp_discharge_supply': YES,
+        }
 
-        InfantVisitFactory(appointment=appointment, reason='off study')
+    def test_validate_azt_after_birth_azt_dose_date_empty(self):
+        del self.data['azt_dose_date']
+        infant_birth_arv = InfantBirthArvForm(data=self.data)
+        self.assertIn(u'Provide date of the first dose for AZT.', infant_birth_arv.errors.get('__all__'))
 
-        self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
-                app_label='microbiome_infant', model_name='infantoffstudy', appointment=appointment
-            )).count(), 1)
+    def test_validate_azt_additional_dose(self):
+        self.data['azt_additional_dose'] = 'N/A'
+        infant_birth_arv = InfantBirthArvForm(data=self.data)
+        self.assertIn(u'Do not select Not applicatable for Q6 if Q4 answer was yes.', infant_birth_arv.errors.get('__all__'))
+
+    def test_validate_sdnvp_after_birth(self):
+        del self.data['nvp_dose_date']
+        infant_birth_arv = InfantBirthArvForm(data=self.data)
+        self.assertIn(u'If infant has received single dose NVP then provide NVP date.', infant_birth_arv.errors.get('__all__'))
+
+    def test_validate_sdnvp_after_birth_breastfeeding(self):
+        InfantBirthFeedVaccineFactory(
+            infant_visit=self.infant_visit,
+            infant_birth=self.infant_birth,
+            feeding_after_delivery = 'Breastfeeding only',
+        )
+        self.data['nvp_discharge_supply'] = 'N/A'
+        infant_birth_arv = InfantBirthArvForm(data=self.data)
+        self.assertIn(u'If the infant is breast feeding then do not select not applicaticable for Q11.', infant_birth_arv.errors.get('__all__'))

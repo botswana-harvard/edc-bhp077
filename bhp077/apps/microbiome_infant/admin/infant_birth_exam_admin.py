@@ -8,6 +8,7 @@ from ..models import InfantBirthExam, InfantBirth
 class InfantBirthExamAdmin(BaseModelAdmin):
 
     list_display = (
+        'infant_visit',
         'infant_birth',
         'gender',
         'general_activity',
@@ -30,6 +31,8 @@ class InfantBirthExamAdmin(BaseModelAdmin):
         'resp_exam': admin.VERTICAL,
         'cardiac_exam': admin.VERTICAL,
         'abdominal_exam': admin.VERTICAL,
+        'skin_exam': admin.VERTICAL,
+        'macular_papular_rash': admin.VERTICAL,
         'neurologic_exam': admin.VERTICAL
     }
 
