@@ -2,11 +2,10 @@ import factory
 from django.utils import timezone
 
 from edc_constants.constants import YES, NO, POS
-from bhp077.apps.microbiome.constants import LIVE
-
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
+from bhp077.apps.microbiome.constants import LIVE
 
 
 class PostnatalEnrollmentFactory(factory.DjangoModelFactory):

@@ -300,8 +300,7 @@ INFANT_VISIT_STUDY_STATUS = (
 
 
 OFF_STUDY_REASON = [
-    ('not_18', ' Mother of infant found to be less than 18 years of age'),
-    ('not_citizen', ' Mother found not be a citizen of Botswana'),
+    ('gestations less than 37', ' Gestational age is less than 37 weeks'),
     ('moved', ' Subject will be moving out of study area or unable to stay in study area'),
     ('lost_no_contact', ' Lost to follow-up, unable to locate'),
     ('lost_contacted', ' Lost to follow-up, contacted but did not come to study clinic'),
