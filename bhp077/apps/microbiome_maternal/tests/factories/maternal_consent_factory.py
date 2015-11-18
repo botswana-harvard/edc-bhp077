@@ -2,6 +2,7 @@ import factory
 
 from django.conf import settings
 from django.utils import timezone
+
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 from edc.core.bhp_variables.tests.factories import StudySiteFactory
 from edc_constants.constants import YES, NO

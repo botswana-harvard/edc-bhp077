@@ -4,7 +4,6 @@ from bhp077.apps.microbiome_list.models import Suppliments, ChronicConditions
 from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond
 
 
-
 class SupplimentsFactory(factory.DjangoModelFactory):
 
     name = 'N/A'

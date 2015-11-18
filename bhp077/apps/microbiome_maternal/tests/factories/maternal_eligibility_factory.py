@@ -1,6 +1,7 @@
 import factory
 
 from django.utils import timezone
+
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 from edc_constants.constants import YES, NO
 
