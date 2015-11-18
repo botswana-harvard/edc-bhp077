@@ -34,11 +34,23 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         help_text="kg",
         blank=True,
         null=True,)
+<<<<<<< HEAD
     bp = models.CharField(
         max_length=7,
         verbose_name="Mother's blood pressure?",
         help_text="in mm/hg E.G. 120/80 ",)
 
+=======
+    systolic_bp = models.CharField(
+        max_length=3,
+        verbose_name="Mother's systolic blood pressure?",
+        help_text="in mm e.g. 120, should be between 75 and 175.",)
+    diastolic_bp = models.CharField(
+        max_length=3,
+        verbose_name="Mother's diastolic blood pressure?",
+        help_text="in hg e.g. 80, should be between 35 and 130.",
+    )
+>>>>>>> 8229dc6add3e82aa199df35a840b94f14d1242ed
     had_mastitis = models.CharField(
         max_length=3,
         choices=YES_NO,

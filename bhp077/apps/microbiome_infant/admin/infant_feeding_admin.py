@@ -3,7 +3,7 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 
 from ..forms import InfantFeedingForm
-from ..models import InfantFeeding
+from ..models import InfantFeeding, InfantVisit
 
 
 class InfantFeedingAdmin(BaseModelAdmin):
@@ -15,8 +15,11 @@ class InfantFeedingAdmin(BaseModelAdmin):
         "last_att_sche_visit",
         "other_feeding",
         "formula_intro_occur",
-        "formula_date",
-        "formula",
+        "formula_intro_date",
+        "took_formula",
+        "is_first_formula",
+        "date_first_formula",
+        "est_date_first_formula",
         "water",
         "juice",
         "cow_milk",
@@ -30,8 +33,6 @@ class InfantFeedingAdmin(BaseModelAdmin):
         "rehydration_salts",
         "water_used",
         "water_used_other",
-        "reason_rcv_formula",
-        "reason_rcv_fm_other",
         "ever_breastfeed",
         "complete_weaning",
         "weaned_completely",
@@ -41,9 +42,9 @@ class InfantFeedingAdmin(BaseModelAdmin):
     radio_fields = {
         "other_feeding": admin.VERTICAL,
         "formula_intro_occur": admin.VERTICAL,
-        "reason_rcv_formula": admin.VERTICAL,
         "water_used": admin.VERTICAL,
-        "formula": admin.VERTICAL,
+        "took_formula": admin.VERTICAL,
+        "is_first_formula": admin.VERTICAL,
         "water": admin.VERTICAL,
         "juice": admin.VERTICAL,
         "cow_milk": admin.VERTICAL,
@@ -58,5 +59,10 @@ class InfantFeedingAdmin(BaseModelAdmin):
         "complete_weaning": admin.VERTICAL,
         "weaned_completely": admin.VERTICAL,
         "times_breastfed": admin.VERTICAL}
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "infant_visit":
+                kwargs["queryset"] = InfantVisit.objects.filter(id=request.GET.get('infant_visit'))
+        return super(InfantFeedingAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(InfantFeeding, InfantFeedingAdmin)

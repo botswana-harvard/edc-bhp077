@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import get_model
 
 from edc.core.identifier.classes import InfantIdentifier
 from edc_base.audit_trail import AuditTrail
@@ -10,7 +9,7 @@ from edc.subject.code_lists.models import WcsDxAdult
 
 from bhp077.apps.microbiome.choices import DX_MATERNAL
 from bhp077.apps.microbiome_list.models import Suppliments
-from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond, DelComp, ObComp
+from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond, ObComp
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
 
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY

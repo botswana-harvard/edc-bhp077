@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
 
-from ..models import InfantBirthExam
+from ..models import InfantBirthExam, InfantBirth
 
 
 class InfantBirthExamAdmin(BaseModelAdmin):
@@ -35,4 +35,15 @@ class InfantBirthExamAdmin(BaseModelAdmin):
         'macular_papular_rash': admin.VERTICAL,
         'neurologic_exam': admin.VERTICAL
     }
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "maternal_lab_del":
+            if request.GET.get('infant_birth'):
+                maternal_subject_identifier = InfantBirth.objects.get(id=request.GET.get('infant_birth')).relative_identifier
+                kwargs["queryset"] = InfantBirth.objects.filter(maternal_visit__appointment__registered_subject__subject_identifier=maternal_subject_identifier)
+            else:
+                kwargs["queryset"] = InfantBirth.objects.none()
+
+        return super(InfantBirthExamAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 admin.site.register(InfantBirthExam, InfantBirthExamAdmin)
