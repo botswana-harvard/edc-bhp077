@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from ..models import MaternalLocator
+from ..models import MaternalLocator, MaternalVisit
 
 
 class MaternalLocatorAdmin(BaseModelAdmin):
@@ -41,4 +41,10 @@ class MaternalLocatorAdmin(BaseModelAdmin):
                     "may_call_work": admin.VERTICAL,
                     "may_contact_someone": admin.VERTICAL,
                     'has_caretaker_alt': admin.VERTICAL, }
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "maternal_visit":
+                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
+        return super(MaternalLocatorAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 admin.site.register(MaternalLocator, MaternalLocatorAdmin)

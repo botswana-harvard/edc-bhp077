@@ -280,14 +280,16 @@ class MaternalLabDelDxT (MaternalScheduledVisitModel):
         max_length=175,
         verbose_name="Diagnosis",
         choices=DX_MATERNAL,
-        help_text="")
+        help_text=""
+    )
 
     lab_del_dx_specify = models.CharField(
         max_length=50,
         verbose_name="Diagnosis specification",
         help_text="",
         blank=True,
-        null=True)
+        null=True
+    )
 
     grade = models.IntegerField(
         verbose_name="Grade",

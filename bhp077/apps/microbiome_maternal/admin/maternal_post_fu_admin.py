@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
 from ..forms import MaternalPostFuForm, MaternalPostFuDxForm, MaternalPostFuDxTForm
-from ..models import MaternalPostFu, MaternalPostFuDx, MaternalPostFuDxT
+from ..models import MaternalPostFu, MaternalPostFuDx, MaternalPostFuDxT, MaternalVisit
 
 
 class MaternalPostFuAdmin(BaseModelAdmin):
@@ -15,10 +15,21 @@ class MaternalPostFuAdmin(BaseModelAdmin):
         "systolic_bp",
         "diastolic_bp",
         "had_mastitis",
+        "has_chronic_cond",
+        "chronic_cond",
+        "chronic_cond_other",
         "comment")
     radio_fields = {
         "mother_weight": admin.VERTICAL,
-        "had_mastitis": admin.VERTICAL}
+        "had_mastitis": admin.VERTICAL,
+        "has_chronic_cond": admin.VERTICAL}
+    filter_horizontal = ('chronic_cond',)
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "maternal_visit":
+                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
+        return super(MaternalPostFuAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 admin.site.register(MaternalPostFu, MaternalPostFuAdmin)
 
 
@@ -40,7 +51,17 @@ class MaternalPostFuDxTAdmin(BaseModelAdmin):
         "post_fu_dx": admin.VERTICAL,
         "grade": admin.VERTICAL,
         "hospitalized": admin.VERTICAL,
-        }
+    }
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "maternal_visit":
+                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
+        if db_field.name == "post_fu_dx":
+            if request.GET.get('maternal_visit'):
+                infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
+                kwargs["queryset"] = MaternalPostFuDxT.objects.filter(registered_subject=infant_visit.appointment.registered_subject)
+        return super(MaternalPostFuDxTAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 admin.site.register(MaternalPostFuDxT, MaternalPostFuDxTAdmin)
 
 
@@ -60,5 +81,14 @@ class MaternalPostFuDxAdmin(BaseModelAdmin):
         "who_clinical_stage": admin.VERTICAL}
     filter_horizontal = ("wcs_dx_adult",)
     inlines = [MaternalPostFuDxTInlineAdmin, ]
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "maternal_visit":
+                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
+        if db_field.name == "maternal_post_fu":
+            if request.GET.get('maternal_visit'):
+                infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
+                kwargs["queryset"] = MaternalPostFuDx.objects.filter(registered_subject=infant_visit.appointment.registered_subject)
+        return super(MaternalPostFuDxAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalPostFuDx, MaternalPostFuDxAdmin)
