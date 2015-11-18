@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import get_model
 
 from edc.core.identifier.classes import InfantIdentifier
 from edc_base.audit_trail import AuditTrail
@@ -8,7 +7,7 @@ from edc_base.model.validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 
 from bhp077.apps.microbiome_list.models import Suppliments
-from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond, DelComp, ObComp
+from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond, ObComp
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
 
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY
