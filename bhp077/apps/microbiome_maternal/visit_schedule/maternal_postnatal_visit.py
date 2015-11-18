@@ -100,7 +100,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'instructions': None,
         'requisitions': (
             RequisitionPanelTuple(10L, u'microbiome_lab', u'maternalrequisition', 'Viral Load', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-            RequisitionPanelTuple(20L, u'microbiome_lab', u'maternalrequisition', 'Breast Milk (Storage)', 'STORAGE', 'BM', NOT_REQUIRED, ADDITIONAL)),
+            RequisitionPanelTuple(20L, u'microbiome_lab', u'maternalrequisition', 'Breast Milk (Storage)', 'STORAGE', 'BM', REQUIRED, NOT_ADDITIONAL)),
         'entries': (
             EntryTuple(10L, u'microbiome_maternal', u'maternalpostfu', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(20L, u'microbiome_maternal', u'maternalpostfudx', REQUIRED, NOT_ADDITIONAL),
