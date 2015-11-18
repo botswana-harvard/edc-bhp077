@@ -1,9 +1,9 @@
 from django import forms
-from ..models import InfantBirthExam
+
+from ..models import InfantBirthExam, InfantBirth
+from bhp077.apps.microbiome_maternal.models import MaternalConsent
 
 from .base_infant_model_form import BaseInfantModelForm
-
-from ..models import InfantBirth
 
 from edc_constants.constants import YES, NO
 
@@ -16,6 +16,8 @@ class InfantBirthExamForm(BaseInfantModelForm):
 
     def clean(self):
         cleaned_data = super(InfantBirthExamForm, self).clean()
+        self.validate_report_datetime(cleaned_data, 'report_datetime')
+        #self.validate_report_datetime(cleaned_data, 'infant_exam_date')
         self.validate_gender(cleaned_data)
         self.validate_general_activity(cleaned_data)
         self.validate_heent_exam(cleaned_data)
@@ -23,8 +25,17 @@ class InfantBirthExamForm(BaseInfantModelForm):
         self.validate_cardiac_exam(cleaned_data)
         return cleaned_data
 
-    def validate_report_datetime(self, cleaned_data):
-        pass
+    def validate_report_datetime(self, cleaned_data, field):
+        try:
+            relative_identifier = cleaned_data.get('infant_visit').appointment.registered_subject.relative_identifier
+            maternal_consent = MaternalConsent.objects.get(
+                registered_subject__subject_identifier=relative_identifier)
+            if cleaned_data.get(field) < maternal_consent.consent_datetime:
+                raise forms.ValidationError("{} CANNOT be before consent datetime".format(field.title()))
+            if cleaned_data.get(field).date() < maternal_consent.dob:
+                raise forms.ValidationError("{} CANNOT be before dob".format(field.title()))
+        except MaternalConsent.DoesNotExist:
+            raise forms.ValidationError('Maternal Consent does not exist.')
 
     def validate_gender(self, cleaned_data):
         infant_birth = InfantBirth.objects.get(

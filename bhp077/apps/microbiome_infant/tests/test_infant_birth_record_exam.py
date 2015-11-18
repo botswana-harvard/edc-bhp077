@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
+from datetime import datetime
 
 from bhp077.apps.microbiome_infant.models import InfantVisit
 from bhp077.apps.microbiome_infant.forms import InfantBirthExamForm
@@ -99,6 +100,7 @@ class TestInfantBirthRecordExam(TestCase):
         }
     def test_clean_gender(self):
         #infant_birth = InfantBirth.objects.get(registered_subject=self.registered_subject_infant)
+        print timezone.now().date()
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         self.assertIn(u'Gender mismatch you specified F for infant birth and infant birth exam M', self.infant_birth_record_arv_form.errors.get('__all__'))
 
@@ -167,3 +169,24 @@ class TestInfantBirthRecordExam(TestCase):
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         self.assertIn(u'Provide answer to Q14.',
                       self.infant_birth_record_arv_form.errors.get('__all__'))
+
+    def test_validate_report_datetime_invalid(self):
+        self.data['cardiac_exam'] = NO
+        self.data['gender'] = 'F'
+        self.data['report_datetime'] = datetime(2015, 11, 18, 8, 29, 44)
+        del self.data['resp_exam_other']
+        del self.data['heent_no_other']
+        del self.data['cardiac_exam_other']
+        self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
+        self.assertIn(u'Report_Datetime CANNOT be before consent datetime',
+                      self.infant_birth_record_arv_form.errors.get('__all__'))
+
+    def test_validate_report_datetime_valid(self):
+        self.data['cardiac_exam'] = NO
+        self.data['gender'] = 'F'
+        self.data['report_datetime'] = timezone.now()
+        del self.data['resp_exam_other']
+        del self.data['heent_no_other']
+        self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
+        self.assertTrue(self.infant_birth_record_arv_form.is_valid())
+
