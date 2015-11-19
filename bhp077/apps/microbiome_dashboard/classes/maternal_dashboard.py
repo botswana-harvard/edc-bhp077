@@ -49,6 +49,8 @@ class MaternalDashboard(RegisteredSubjectDashboard):
             subject_dashboard_url=self.subject_dashboard_url,
             infants=self.get_registered_infant_identifier(),
             maternal_consent=self.consent,
+            antenatal_enrollment=self.antenatal_enrollment(),
+            postnatal_enrollment=self.postnatal_enrollment(),
             antenatal_hiv_status=self.antenatal_maternal_hiv_status(),
             postnatal_hiv_status=self.postnatal_maternal_hiv_status())
         return self.context
@@ -137,3 +139,17 @@ class MaternalDashboard(RegisteredSubjectDashboard):
         except RegisteredSubject.DoesNotExist:
             pass
         return infants
+
+    def antenatal_enrollment(self):
+        try:
+            return AntenatalEnrollment.objects.get(registered_subject=self.registered_subject)
+        except AntenatalEnrollment.DoesNotExist:
+            return None
+        return None
+
+    def postnatal_enrollment(self):
+        try:
+            return PostnatalEnrollment.objects.get(registered_subject=self.registered_subject)
+        except PostnatalEnrollment.DoesNotExist:
+            return None
+        return None
