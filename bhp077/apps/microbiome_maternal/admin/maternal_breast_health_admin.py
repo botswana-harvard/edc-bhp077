@@ -16,7 +16,6 @@ class MaternalBreastHealthAdmin(BaseModelAdmin):
         "has_lesions": admin.VERTICAL,
         "lesions": admin.VERTICAL,
         "stop_breastfeeding": admin.VERTICAL,
-        "why_not_advised": admin.VERTICAL,
     }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
