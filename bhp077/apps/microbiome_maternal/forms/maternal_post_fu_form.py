@@ -23,14 +23,6 @@ class MaternalPostFuForm(BaseMaternalModelForm):
                 m2m=cleaned_data.get('chronic_cond'),
                 other=cleaned_data.get('chronic_cond_other'))
 
-        if cleaned_data.get('systolic_bp') < cleaned_data.get('diastolic_bp'):
-            forms.ValidationError('Systolic blood pressure can never be less than diastolic blood pressure, '
-                                  'please check and correct.')
-        if cleaned_data.get('systolic_bp') < 75 or cleaned_data.get('systolic_bp') > 175:
-            forms.ValidationError('Systolic blood pressure should be between 75 and 175, please check and correct.')
-        if cleaned_data.get('diastolic_bp') < 35 or cleaned_data.get('diastolic_bp') > 130:
-            forms.ValidationError('Diastolic blood pressure should be between 35 and 130, please check and correct.')
-        return cleaned_data
 
     class Meta:
         model = MaternalPostFu
