@@ -342,6 +342,13 @@ MALE_GENITAL_ANOMALY = (
     ('OTHER', 'Other male genital abnormality, specify'),
 )
 
+BREAST_CHOICE = (
+    ('right breast', 'Right breast only'),
+    ('left breast', 'Left breast only'),
+    ('both breasts', 'Both breasts'),
+    (NOT_APPLICABLE, 'Not Applicable'),
+)
+
 MEDICATIONS = (
     ('None', 'None'),
     ('Acyclovir', 'Acyclovir'),
