@@ -1,10 +1,9 @@
 from edc.subject.rule_groups.classes import (RuleGroup, site_rule_groups, Logic,
-                                             ScheduledDataRule, RequisitionRule)
+                                             ScheduledDataRule)
 
 from bhp077.apps.microbiome_infant.models import InfantBirthData, InfantVisit, InfantFu
 
-from edc_constants.constants import POS, YES, NEW, NOT_REQUIRED
-from edc.subject.registration.models import RegisteredSubject
+from edc_constants.constants import YES, NEW, NOT_REQUIRED
 
 
 class InfantBirthDataRuleGroup(RuleGroup):
