@@ -11,7 +11,7 @@ from edc_constants.constants import NEW, YES, POS
 from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
-from bhp077.apps.microbiome.choices import VISIT_UNSCHEDULED_REASON, VISIT_REASON
+from bhp077.apps.microbiome.choices import VISIT_REASON
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
 
 
@@ -20,13 +20,6 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 
     CONSENT_MODEL = MaternalConsent
-
-    reason_unscheduled = models.CharField(
-        verbose_name="If 'Unscheduled' above, provide reason for the unscheduled visit",
-        max_length=25,
-        blank=True,
-        null=True,
-        choices=VISIT_UNSCHEDULED_REASON)
 
     history = AuditTrail(True)
 

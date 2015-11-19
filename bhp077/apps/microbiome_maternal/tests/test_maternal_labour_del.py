@@ -21,7 +21,7 @@ from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond
 
 
 class TestMaternalLabourDel(TestCase):
-    """Test eligibility of a mother for postnatal enrollment."""
+    """Test eligibility of a mother for labour and delivery."""
 
     def setUp(self):
         try:

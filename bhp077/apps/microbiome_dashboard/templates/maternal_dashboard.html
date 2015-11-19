@@ -14,6 +14,12 @@
         <td><B>Consented:</B> {{maternal_consent.consent_datetime|date:"Y-m-d H:i" }}</td>
     </tr>
 </table>
+    <table>
+        <tr style=background:lightyellow;">
+            <td><B>Antenatal HIV status:</B>{%if antenatal_hiv_status%}<span style="color:red;"> {{antenatal_hiv_status}}</span>{%else%}<i> NO ANT Enrollment HIV result</i>{%endif%}</td>
+            <td><B>Postnatal HIV status:</B>{%if postnatal_hiv_status%}<span style="color:red;"> {{postnatal_hiv_status}}</span>{%else%}<i> NO PNT Enrollment HIV result</i>{%endif%}</td>
+        </tr>
+    </table>
 {% endblock %}
 
 {% block infants %}

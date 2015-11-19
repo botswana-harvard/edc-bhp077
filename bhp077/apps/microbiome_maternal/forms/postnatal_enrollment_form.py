@@ -19,11 +19,13 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
                 raise forms.ValidationError("Live infants were born. Number cannot be zero or less")
         ant = AntenatalEnrollment.objects.filter(registered_subject__subject_identifier=cleaned_data.get('registered_subject').subject_identifier)
         if ant:
-            if ant.verbal_hiv_status == POS and ant.evidence_hiv_status == YES:
-                if not cleaned_data.get('verbal_hiv_status') == POS and not cleaned_data.get('evidence_hiv_status'):
-                    raise forms.ValidationError("Antenatal Enrollment shows participant is POS with EVIDENCE."
-                                                " Please Correct {} and {}".format(cleaned_data.get('verbal_hiv_status'),
-                                                                                   cleaned_data.get('evidence_hiv_status')))
+            if ant[0].verbal_hiv_status == POS and ant[0].evidence_hiv_status == YES:
+                if not cleaned_data.get('verbal_hiv_status') == POS or not cleaned_data.get('evidence_hiv_status') == YES:
+                    raise forms.ValidationError("Antenatal Enrollment shows participant is {} and {} evidence ."
+                                                " Please Correct {} and {} evidence".format(ant[0].verbal_hiv_status,
+                                                                                            ant[0].evidence_hiv_status,
+                                                                                            cleaned_data.get('verbal_hiv_status'),
+                                                                                            cleaned_data.get('evidence_hiv_status')))
         return cleaned_data
 
     class Meta:
