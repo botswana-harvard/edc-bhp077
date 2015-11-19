@@ -23,3 +23,32 @@ OFF_STUDY_REASON = [
     ('death', ' Participant death (complete the DEATH REPORT FORM AF005) (For EAE Reporting requirements see EAE Reporting Manual)'),
     ('OTHER', ' Other'),
 ]
+
+IMMUNIZATIONS = (
+    ('Vitamin A', 'Vitamin A'),
+    ('BCG', 'BCG'),
+    ('Hepatitis B', 'Hepatitis B'),
+    ('DPT', 'DPT (Diphtheria, Pertussis and Tetanus)'),
+    ('Influenza B', 'Haemophilus Influenza B Vaccine'),
+    ('PCV Vaccine', 'PCV Vaccine (Pneumonia Conjugated Vaccine)'),
+    ('Polio', 'Polio'),
+    ('Rotavirus', 'Rotavirus'),
+    ('Measles', 'Measles'),
+    ('Pentavalent', 'Pentavalent Vaccine (Contains DPT, Hepatitis B and Haemophilus Influenza B Vaccine)'))
+
+INFANT_AGE_VACCINE_GIVEN = (
+    ('After Birth', 'After Birth'),
+    ('2', '2 months'),
+    ('3', '3 months'),
+    ('4', '3 months'),
+    ('6-11', '6-11 months'),
+    ('9', '9 months'),
+    ('12-17', '12-17 months'),
+    ('18', '18 months'),
+    ('18-29', '18-29 months'),
+    ('24-29', '24-29 months'),
+    ('30-35', '30-35 months'),
+    ('36-41', '36-41 months'),
+    ('42-47', '42-47 months'),
+    ('48-53', '48-53 months'),
+    ('54-59', '54-59 months'))
