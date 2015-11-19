@@ -19,6 +19,7 @@ from .maternal_arv_history_admin import MaternalArvHistoryAdmin
 from .maternal_arv_preg_admin import MaternalArvPregAdmin
 from .maternal_death_admin import MaternalDeathAdmin
 from .maternal_off_study_admin import MaternalOffStudyAdmin
+from .maternal_breast_health_admin import MaternalBreastHealthAdmin
 from .rapid_test_result_admin import RapidTestResultAdmin
 from .srh_services_utilization_admin import SrhServicesUtilizationAdmin
 from .maternal_post_fu_admin import (MaternalPostFuAdmin, MaternalPostFuDxAdmin,

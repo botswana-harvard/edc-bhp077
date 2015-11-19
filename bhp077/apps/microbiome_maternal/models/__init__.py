@@ -25,6 +25,7 @@ from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_post_fu import MaternalPostFu, MaternalPostFuDx, MaternalPostFuDxT
 from .maternal_arv_post import MaternalArvPost, MaternalArvPostMod, MaternalArvPostAdh
+from .maternal_breast_health import MaternalBreastHealth
 from .srh_services_utilization import SrhServicesUtilization
 from .signals import (criteria_passed_create_registered_subject,
                       maternal_eligibility_on_post_save,
