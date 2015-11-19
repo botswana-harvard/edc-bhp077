@@ -20,7 +20,7 @@ from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory, MaternalPostFuFactory)
 
 
-class TestMaternalPostFuMed(TestCase):
+class TestMaternalPostFuMedItems(TestCase):
     """Test eligibility of a mother for postnatal followup medications."""
 
     def setUp(self):

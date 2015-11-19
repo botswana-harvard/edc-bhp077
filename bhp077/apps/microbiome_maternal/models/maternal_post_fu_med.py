@@ -51,6 +51,8 @@ class MaternalPostFuMed(MaternalScheduledVisitModel):
 
 class MaternalPostFuMedItems(BaseUuidModel):
 
+    maternal_post_fu = models.OneToOneField(MaternalPostFuMed)
+
     date_first_medication = models.DateField(
         verbose_name="Date of first medication use",
         default=timezone.now().date()

@@ -17,6 +17,7 @@ class MaternalPostFuMedItemsAdmin(BaseModelAdmin):
 
     radio_fields = {
         "medication": admin.VERTICAL,
+        "drug_route": admin.VERTICAL,
     }
 
 admin.site.register(MaternalPostFuMedItems, MaternalPostFuMedItemsAdmin)
@@ -26,6 +27,13 @@ class MaternalPostFuMedAdmin(BaseModelAdmin):
 
     form = MaternalPostFuMedForm
     inlines = [MaternalPostFuMedItemsInlineAdmin, ]
+
+    fields = (
+        "maternal_visit",
+        "maternal_post_fu",
+        "report_datetime",
+        "has_taken_meds",
+    )
 
     radio_fields = {
         "has_taken_meds": admin.VERTICAL, }
