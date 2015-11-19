@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.core.validators import MinValueValidator
 
 from edc_base.model.fields import IsDateEstimatedField, OtherCharField
 from edc_constants.choices import YES_NO
@@ -31,6 +32,7 @@ class MaternalArvHistory(MaternalScheduledVisitModel):
         help_text="",
     )
     haart_changes = models.IntegerField(
+        validators=[MinValueValidator(0)],
         verbose_name="How many times did you change your triple antiretrovirals medicines?",
         help_text="",
     )
