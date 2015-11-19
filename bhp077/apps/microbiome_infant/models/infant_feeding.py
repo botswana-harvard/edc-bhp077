@@ -222,6 +222,37 @@ class InfantFeeding(InfantScheduledVisitModel):
     def get_absolute_url(self):
         return reverse('admin:microbiome_infant_infantfeeding_change', args=(self.id,))
 
+    def save(self, *args, **kwargs):
+        if self.previous_infant_feeding:
+            self.formula_intro_occur = self.previous_infant_feeding
+        super(InfantFeeding, self).save(*args, **kwargs)
+
+    def previous_infant_instance(self):
+        """ Returns previous infant visit. """
+        from .infant_visit import InfantVisit
+        from edc.subject.appointment.models import Appointment
+        try:
+            registered_subject = self.infant_visit.appointment.registered_subject
+            previous_time_point = self.infant_visit.appointment.visit_definition.time_point - 1
+            previous_appointment = Appointment.objects.get(registered_subject=registered_subject,
+                                                           visit_definition__time_point=previous_time_point)
+            return InfantVisit.objects.get(appointment=previous_appointment)
+        except Appointment.DoesNotExist:
+            return None
+        except InfantVisit.DoesNotExist:
+            return None
+        except AttributeError:
+            return None
+
+    @property
+    def previous_infant_feeding(self):
+        """ Return previous infant feeding form. """
+        from .infant_visit import InfantVisit
+        try:
+            return self._meta.model.objects.get(infant_visit=self.previous_infant_instance)
+        except InfantVisit.DoesNotExist:
+            return None
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Feeding"
