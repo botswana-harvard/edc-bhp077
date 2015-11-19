@@ -24,5 +24,7 @@ from .rapid_test_result_admin import RapidTestResultAdmin
 from .srh_services_utilization_admin import SrhServicesUtilizationAdmin
 from .maternal_post_fu_admin import (MaternalPostFuAdmin, MaternalPostFuDxAdmin,
                                      MaternalPostFuDxTAdmin, MaternalPostFuDxTInlineAdmin)
+from .maternal_post_fu_med_admin import (MaternalPostFuMedAdmin, MaternalPostFuMedItemsAdmin,
+                                         MaternalPostFuMedItemsInlineAdmin)
 from .maternal_arv_post_admin import (MaternalArvPostModInlineAdmin, MaternalArvPostModAdmin,
                                       MaternalArvPostAdmin, MaternalArvPostAdhAdmin)

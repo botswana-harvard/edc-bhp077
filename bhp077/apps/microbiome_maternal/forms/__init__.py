@@ -19,6 +19,7 @@ from .maternal_medical_history_form import MaternalMedicalHistoryForm
 from .maternal_obsterical_history_form import MaternalObstericalHistoryForm
 from .maternal_off_study_form import MaternalOffStudyForm
 from .maternal_post_fu_form import MaternalPostFuForm, MaternalPostFuDxForm, MaternalPostFuDxTForm
+from .maternal_post_fu_med_form import MaternalPostFuMedForm, MaternalPostFuMedItemsForm
 from .maternal_uninfected_form import MaternalUninfectedForm
 from .maternal_visit_form import MaternalVisitForm
 from .postnatal_enrollment_form import PostnatalEnrollmentForm

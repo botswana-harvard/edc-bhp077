@@ -6,7 +6,7 @@ from edc.subject.code_lists.models import WcsDxAdult
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc_base.model.models import BaseUuidModel
-from edc_constants.choices import YES_NO
+from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 
 from bhp077.apps.microbiome_list.models import ChronicConditions
 
@@ -46,16 +46,6 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         max_length=3,
         verbose_name="Mother's diastolic blood pressure?",
         help_text="in hg e.g. 80, should be between 35 and 130.",
-    )
-
-    had_mastitis = models.CharField(
-        max_length=3,
-        choices=YES_NO,
-        verbose_name=("Since the last attended scheduled visit,has the mother had"
-                      " mastitis at any time?"),
-        help_text="",
-        blank=True,
-        null=True,
     )
 
     has_chronic_cond = models.CharField(

@@ -23,12 +23,12 @@ class MaternalArvPost (MaternalScheduledVisitModel):
     haart_last_visit = models.CharField(
         max_length=25,
         choices=YES_NO,
-        verbose_name=("Was the mother supposed to be on HAART any time since the last"
+        verbose_name=("Was the mother supposed to be on triple ARVs any time since the last"
                       " attended scheduled visit?"),
         help_text="If 'NO' End. Otherwise continue go to section one",)
 
     haart_reason = models.CharField(
-        verbose_name="Reason for HAART ",
+        verbose_name="Reason for triple ARVs ",
         max_length=25,
         choices=REASON_FOR_HAART,
         default='N/A',
@@ -107,16 +107,16 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
 
     missed_doses = models.IntegerField(
         verbose_name=("Since the last attended last scheduled visit, how many doses of"
-                      " HAART were missed? "),
+                      " triple ARVs were missed? "),
         help_text="")
     missed_days = models.IntegerField(
         verbose_name=("Since the last attended scheduled visit, how many entire days"
-                      " was HAART not taken?"),
+                      " were triple ARVS not taken?"),
         help_text="",
         default='0')
     missed_days_discnt = models.IntegerField(
-        verbose_name=("If HAART discontinued by health provider, how many days was HAART missed"
-                      " prior to HAART discontinuation?"),
+        verbose_name=("If triple ARVs discontinued by health provider, how many days were triple ARVs missed"
+                      " prior to discontinuation?"),
         help_text="",
         default='0')
     comment = models.TextField(
