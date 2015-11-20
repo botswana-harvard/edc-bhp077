@@ -25,7 +25,7 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
     vaccines_missed = models.CharField(
         max_length=25,
         choices=YES_NO_UNKNOWN,
-        verbose_name="Is the child missing any vacations?",
+        verbose_name="Is the child missing any vaccinations?",
         help_text="")
 
     history = AuditTrail()
