@@ -34,7 +34,6 @@ class PostnatalEnrollment(BaseEnrollment):
         help_text='if still birth, not eligible')
 
     postnatal_enrollemet_eligible = models.NullBooleanField(
-        default=False,
         editable=False)
 
     live_infants = models.IntegerField(
