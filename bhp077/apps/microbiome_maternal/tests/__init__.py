@@ -7,3 +7,8 @@ from .test_offstudy import TestOffStudy
 from .test_rule_group import TestRuleGroup
 from .test_viral_load_requisition import TestViralLoadRequisition
 from .test_sample_consent import TestSampleConsent
+from .test_rapid_test_form import TestRapidTestForm
+from .test_maternal_medical_history import TestMaternalMedicalHistoryForm
+from .test_maternal_locator import TestMaternalLocator
+from .test_maternal_obsterical_history import TestMaternalObstericalHistoryForm
+from .test_srh_services_utilization_form import TestSrhServiceUtilizationForm
