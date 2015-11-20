@@ -22,7 +22,7 @@ class MaternalVisitForm (BaseModelForm):
 
     def clean(self):
         cleaned_data = super(MaternalVisitForm, self).clean()
-        self.validate_reason_missed(cleaned_data)
+        self.validate_cleaned_data(cleaned_data)
         try:
             maternal_consent = MaternalConsent.objects.get(
                 registered_subject__subject_identifier=cleaned_data.get('appointment').registered_subject.subject_identifier)
@@ -32,6 +32,7 @@ class MaternalVisitForm (BaseModelForm):
                 raise forms.ValidationError("Report datetime CANNOT be before DOB")
         except MaternalConsent.DoesNotExist:
             raise forms.ValidationError('Maternal Consent does not exist.')
+
         return cleaned_data
 
     def validate_reason_missed(self, cleaned_data):

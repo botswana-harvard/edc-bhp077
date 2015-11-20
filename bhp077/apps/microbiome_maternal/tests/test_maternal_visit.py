@@ -47,12 +47,10 @@ class TestMaternalVisit(TestCase):
             'report_datetime': timezone.now(),
             'info_source': 'participant',
             'info_source_other': '',
-            'reason': 'scheduled',
-            'reason_unscheduled': '',
+            'reason': '',
             'reason_missed': '',
             'comments': '',
         }
-
 
     def test_missed_visit_no_reason(self):
         self.data['reason'] = 'missed'
