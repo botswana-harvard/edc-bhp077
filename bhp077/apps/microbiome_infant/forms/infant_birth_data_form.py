@@ -1,3 +1,4 @@
+from django import forms
 from ..models import InfantBirthData
 
 from .base_infant_model_form import BaseInfantModelForm
@@ -12,8 +13,9 @@ class InfantBirthDataForm(BaseInfantModelForm):
         fields = '__all__'
 
     def clean(self):
-        cleaned_data = super(InfantVisitForm, self).clean()
+        cleaned_data = super(InfantBirthDataForm, self).clean()
         self.validate_apgar_score(cleaned_data)
+        return cleaned_data
 
     def validate_apgar_score(self, cleaned_data):
         if cleaned_data.get('apgar_score') == YES:

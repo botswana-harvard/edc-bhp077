@@ -1,11 +1,35 @@
 from django.db import models
+from datetime import datetime
 
 from bhp077.apps.microbiome.choices import DRUG_RELATIONSHIP
 
+from edc_base.audit_trail import AuditTrail
+
+from edc.subject.adverse_event.models import BaseDeathReport
+from edc_consent.models import RequiresConsentMixin
+from edc.data_manager.models import TimePointStatusMixin
+from edc.entry_meta_data.managers import EntryMetaDataManager
+from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
+
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_off_study_mixin import InfantOffStudyMixin
+from .infant_visit import InfantVisit
 
 
-class InfantDeath (InfantScheduledVisitModel):
+class InfantDeath (RequiresConsentMixin, InfantOffStudyMixin, TimePointStatusMixin, BaseDeathReport): # RequiresConsentMixin, InfantOffStudyMixin, TimePointStatusMixin
+
+
+    infant_visit = models.OneToOneField(InfantVisit)
+
+    report_datetime = models.DateTimeField(
+        verbose_name="Report Date",
+        validators=[
+            datetime_not_before_study_start,
+            datetime_not_future, ],
+        default=datetime.now,
+        help_text=('If reporting today, use today\'s date/time, otherwise use '
+                   'the date/time this information was reported.')
+    )
 
     death_reason_hospitalized_other = models.TextField(
         verbose_name="if other illness or pathogen specify or non infectious reason, please specify below:",
@@ -37,6 +61,12 @@ class InfantDeath (InfantScheduledVisitModel):
         max_length=25,
         choices=DRUG_RELATIONSHIP,
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
+
+    entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 
     class Meta:
         app_label = "microbiome_infant"
