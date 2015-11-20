@@ -1,3 +1,4 @@
+from django import forms
 from django.test import TestCase
 
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -7,7 +8,7 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc_constants.choices import POS, YES, NO, NEG
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import AntenatalEnrollmentFactory, MaternalEligibilityFactory
+from bhp077.apps.microbiome_maternal.tests.factories import (AntenatalEnrollmentFactory, MaternalEligibilityFactory, PostnatalEnrollmentFactory)
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule
@@ -140,7 +141,7 @@ class TestAntenatalEnroll(TestCase):
         )
         self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
 
-    def test_posotive_with_evidence(self):
+    def test_positive_with_evidence(self):
         """Test for a negative mother with evidence."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
@@ -150,7 +151,7 @@ class TestAntenatalEnroll(TestCase):
         )
         self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
 
-    def test_posotive_with_no_evidence_and_rapid_test_done(self):
+    def test_positive_with_no_evidence_and_rapid_test_done(self):
         """Test for a negative mother with no evidence and test not done."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
@@ -161,7 +162,7 @@ class TestAntenatalEnroll(TestCase):
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
-    def test_posotive_with_no_evidence_and_gestation_33(self):
+    def test_positive_with_no_evidence_and_gestation_33(self):
         """Test for a positive mother with no evidence and gestation 33 weeks."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
@@ -172,3 +173,9 @@ class TestAntenatalEnroll(TestCase):
             weeks_of_gestation=33,
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+
+    def test_fail_fill_antenatal_if_postnatal_filled(self):
+        """Test that antenatal fails if filled after postnatal is completed."""
+        PostnatalEnrollmentFactory(registered_subject=self.registered_subject)
+        AntenatalEnrollmentFactory(registered_subject=self.registered_subject)
+        self.assertRaises(forms.ValidationError)

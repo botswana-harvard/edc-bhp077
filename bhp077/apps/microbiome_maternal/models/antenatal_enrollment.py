@@ -16,7 +16,6 @@ class AntenatalEnrollment(BaseEnrollment):
         help_text=" (weeks of gestation). Eligible if >=32 weeks", )
 
     antenatal_eligible = models.NullBooleanField(
-        default=False,
         editable=False)
 
     def save(self, *args, **kwargs):

@@ -16,8 +16,8 @@
 </table>
 <table>
 	<tr style=background:lightyellow;>
-		<td><B> Antenatal enrollment status: </B>{{antenatal_enrollment.antenatal_eligible}}</td>
-		<td><B> Postnatal enrollment status: </B>{{postnatal_enrollment.antenatal_eligible}}</td>
+		<td><B> Antenatal enrollment status: </B>{% if antenatal_enrollment.antenatal_eligible %} passed {% elif antenatal_enrollment.antenatal_eligible == False %} failed {% endif %}</td>
+		<td><B> Postnatal enrollment status: </B>{% if antenatal_enrollment.antenatal_eligible == False %} failed antenatal {% elif postnatal_enrollment.postnatal_enrollemet_eligible %} passed {% elif postnatal_enrollment.postnatal_enrollemet_eligible == False %} failed {% endif %}</td>
 	</tr>
      <tr style=background:lightyellow;">
         <td><B>Antenatal HIV status:</B>{%if antenatal_hiv_status%}<span style="color:red;"> {{antenatal_hiv_status}}</span>{%else%}<i> NO ANT Enrollment HIV result</i>{%endif%}</td>

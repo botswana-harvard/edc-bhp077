@@ -17,3 +17,4 @@ from .test_maternal_obsterical_history import TestMaternalObstericalHistoryForm
 from .test_rapid_test_form import TestRapidTestForm
 from .test_srh_services_utilization_form import TestSrhServiceUtilizationForm
 from .test_viral_load_requisition import TestViralLoadRequisition
+from .test_maternal_death_form import TestMaternalDeathForm
