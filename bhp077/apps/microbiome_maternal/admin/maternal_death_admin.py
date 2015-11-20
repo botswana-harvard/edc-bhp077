@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from edc.base.modeladmin.admin import BaseModelAdmin
 from edc.subject.registration.models import RegisteredSubject
 
 from .registered_subject_model_admin import RegisteredSubjectModelAdmin
@@ -7,11 +8,10 @@ from bhp077.apps.microbiome_maternal.forms import MaternalDeathForm
 from bhp077.apps.microbiome_maternal.models import MaternalDeath, MaternalVisit
 
 
-class MaternalDeathAdmin(RegisteredSubjectModelAdmin):
+class MaternalDeathAdmin(BaseModelAdmin):
 
     form = MaternalDeathForm
     fields = (
-        "registered_subject",
         "maternal_visit",
         "death_date",
         "death_cause_info",

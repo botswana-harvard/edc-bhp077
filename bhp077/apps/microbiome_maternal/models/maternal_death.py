@@ -11,17 +11,11 @@ from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .maternal_visit import MaternalVisit
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
-class MaternalDeath (MaternalOffStudyMixin, BaseDeathReport, BaseUuidModel):
+class MaternalDeath (MaternalScheduledVisitModel, BaseDeathReport):
 
-    maternal_visit = models.OneToOneField(MaternalVisit)
-
-    registered_subject = models.OneToOneField(RegisteredSubject)
-
-    history = AuditTrail()
-
-    entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_maternaldeath_change', args=(self.id,))
