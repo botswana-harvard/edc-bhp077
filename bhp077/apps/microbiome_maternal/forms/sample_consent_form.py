@@ -9,7 +9,7 @@ from ..models import SampleConsent, MaternalConsent
 class SampleConsentForm(ModelForm):
 
     def clean(self):
-        cleaned_data = self.cleaned_data
+        cleaned_data = super(SampleConsentForm, self).clean()
         primary_consent = MaternalConsent.objects.filter(
             registered_subject__subject_identifier=cleaned_data.get('registered_subject').subject_identifier)
         if primary_consent:
@@ -28,7 +28,7 @@ class SampleConsentForm(ModelForm):
             raise forms.ValidationError('You wrote subject is illiterate. Please provide the name of a witness here and with signature on the paper document.')
         if cleaned_data.get('is_literate') == YES and cleaned_data.get('witness_name', None):
             raise forms.ValidationError('You wrote subject is literate. The name of a witness is NOT required.')
-        return super(SampleConsentForm, self).clean()
+        return cleaned_data
 
     class Meta:
         model = SampleConsent

@@ -18,11 +18,13 @@ class SampleConsentAdmin(BaseModelAdmin):
               'may_store_samples',
               'is_literate',
               'witness_name',
-              'consent_benefits')
+              'consent_benefits',
+              'consent_copy')
     radio_fields = {'language': admin.VERTICAL,
                     'may_store_samples': admin.VERTICAL,
                     'is_literate': admin.VERTICAL,
-                    'consent_benefits': admin.VERTICAL}
+                    'consent_benefits': admin.VERTICAL,
+                    'consent_copy': admin.VERTICAL, }
     list_dispay = ('registered_subject', 'may_store_samples')
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
