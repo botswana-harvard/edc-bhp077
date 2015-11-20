@@ -13,11 +13,12 @@ from edc_constants.choices import YES, NO
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
-from bhp077.apps.microbiome_maternal.forms import (MaternalPostFuMedForm)
+from bhp077.apps.microbiome_maternal.forms import (MaternalPostFuMedForm, MaternalPostFuMedItemsForm)
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory, MaternalPostFuFactory)
+from bhp077.apps.microbiome_maternal.tests.factories.maternal_postnatal_fu_factory import MaternalPostFuMedFactory
 
 
 class TestMaternalPostFuMedItems(TestCase):
@@ -44,12 +45,21 @@ class TestMaternalPostFuMedItems(TestCase):
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.chronic_cond = ChronicConditions.objects.create(name='N/A', short_name='N/A', display_index=10,
-                                                             field_name='chronic_cond')
-        self.post_fu = MaternalPostFuFactory(maternal_visit=self.maternal_visit, chronic_cond=self.chronic_cond)
+#         self.chronic_cond = ChronicConditions.objects.create(name='N/A', short_name='N/A', display_index=10,
+#                                                              field_name='chronic_cond')
+        self.post_fu = MaternalPostFuFactory(maternal_visit=self.maternal_visit)
+        self.post_fu_med = MaternalPostFuMedFactory(maternal_post_fu=self.post_fu, has_taken_meds=YES)
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
-            'maternal_post_fu': self.post_fu.id,
-            'has_taken_meds': NO,
+            'maternal_post_fu_med': self.post_fu_med.id,
+            'date_first_medication': timezone.now() - timezone.timedelta(days=1),
+            'medication': 'Amoxicillin',
+            'drug_route': "1",
+            'date_stoped': timezone.now()
         }
+
+    def test_date(self):
+        form = MaternalPostFuMedItemsForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn("Date stopped medication is before date started medications. Please correct", errors)

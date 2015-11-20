@@ -22,7 +22,7 @@ class MaternalPostFuFactory(factory.DjangoModelFactory):
     systolic_bp = 120
     diastolic_bp = 80
     has_chronic_cond = NO
-    chronic_cond = [factory.SubFactory(ChronicConditionsFactory)]
+#     chronic_cond = [factory.SubFactory(ChronicConditionsFactory)]
 
 
 class MaternalPostFuMedFactory(factory.DjangoModelFactory):

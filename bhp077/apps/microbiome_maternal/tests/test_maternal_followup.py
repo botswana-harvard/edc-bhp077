@@ -53,7 +53,6 @@ class TestMaternalFollowup(TestCase):
             'enter_weight': '',
             'systolic_bp': 120,
             'diastolic_bp': 80,
-            'had_mastitis': NO,
             'has_chronic_cond': NO,
             'chronic_cond': [self.chronic_cond.id],
             'chronic_cond_other': '',
