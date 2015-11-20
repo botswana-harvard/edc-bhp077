@@ -22,3 +22,4 @@ from .infant_fu_new_med_admin import InfantFuNewMedAdmin
 from .infant_fu_new_med_items_admin import InfantFuNewMedItemsAdmin
 from .infant_fu_physical_admin import InfantFuPhysicalAdmin
 from .infant_feeding_admin import InfantFeedingAdmin
+from .infant_stool_collection_admin import InfantStoolCollectionAdmin

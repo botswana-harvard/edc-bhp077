@@ -12,8 +12,12 @@ class MaternalPostFuAdmin(BaseModelAdmin):
         "maternal_visit",
         "mother_weight",
         "enter_weight",
+<<<<<<< HEAD
         "systolic_bp",
         "diastolic_bp",
+=======
+        "had_mastitis",
+>>>>>>> 86e2e8ca774d887f32a97b5435d842a63fadc7a5
         "has_chronic_cond",
         "chronic_cond",
         "chronic_cond_other",

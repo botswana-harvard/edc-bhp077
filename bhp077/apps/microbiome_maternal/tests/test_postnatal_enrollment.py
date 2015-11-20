@@ -349,3 +349,9 @@ class TestPostnatalEnroll(TestCase):
         pnt.verbal_hiv_status = NEG
         pnt.evidence_hiv_status = NO
         self.assertRaises(forms.ValidationError)
+
+    def test_postnatal_enrollment_if_antenatal_falied(self):
+        """Test if postnatal enrollment raise an error if antenatal enrollment failed."""
+        antinatal = AntenatalEnrollmentFactory(registered_subject=self.registered_subject, weeks_of_gestation=28)
+        PostnatalEnrollmentFactory(registered_subject=antinatal.registered_subject)
+        self.assertRaises(forms.ValidationError)

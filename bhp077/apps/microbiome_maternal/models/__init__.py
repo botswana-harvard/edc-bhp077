@@ -33,3 +33,4 @@ from .signals import (criteria_passed_create_registered_subject,
                       maternal_consent_on_post_save,
                       maternal_visit_on_post_save,
                       )
+from .base_mother import BaseMother

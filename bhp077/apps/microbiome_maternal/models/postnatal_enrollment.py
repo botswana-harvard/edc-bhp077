@@ -6,6 +6,7 @@ from edc_constants.choices import YES_NO, YES, NO, POS, NEG
 from ..maternal_choices import LIVE_STILL_BIRTH, LIVE
 from .base_enrollment import BaseEnrollment
 from .maternal_consent import MaternalConsent
+from .antenatal_enrollment import AntenatalEnrollment
 
 
 class PostnatalEnrollment(BaseEnrollment):
@@ -32,10 +33,18 @@ class PostnatalEnrollment(BaseEnrollment):
         max_length=15,
         help_text='if still birth, not eligible')
 
+    postnatal_enrollemet_eligible = models.NullBooleanField(
+        default=False,
+        editable=False)
+
     live_infants = models.IntegerField(
         verbose_name="How many live infants?",
         null=True,
         blank=True)
+
+    def save(self, *args, **kwargs):
+        self.postnatal_enrollemet_eligible = self.postnatal_eligible
+        super(PostnatalEnrollment, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_postnatalenrollment_change', args=(self.id,))
@@ -64,6 +73,14 @@ class PostnatalEnrollment(BaseEnrollment):
                     self.rapid_test_result == NEG):
                 return True
         return False
+
+    @property
+    def antenatal_enrollment(self):
+        try:
+            return AntenatalEnrollment.objects.get(registered_subject=self.registered_subject)
+        except AntenatalEnrollment.DoesNotExist:
+            return None
+        return None
 
     class Meta:
         app_label = 'microbiome_maternal'
