@@ -32,8 +32,6 @@ class MaternalMedicalHistory(MaternalScheduledVisitModel):
         null=True)
     who_diagnosis = models.CharField(
         max_length=25,
-        null=True,
-        blank=True,
         choices=YES_NO,
         verbose_name=("Prior to the current pregnancy, was the participant ever diagnosed with"
                       " a WHO Stage III or IV illness?"),
