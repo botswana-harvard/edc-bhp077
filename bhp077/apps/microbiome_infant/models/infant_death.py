@@ -16,20 +16,7 @@ from .infant_off_study_mixin import InfantOffStudyMixin
 from .infant_visit import InfantVisit
 
 
-class InfantDeath (RequiresConsentMixin, InfantOffStudyMixin, TimePointStatusMixin, BaseDeathReport): # RequiresConsentMixin, InfantOffStudyMixin, TimePointStatusMixin
-
-
-    infant_visit = models.OneToOneField(InfantVisit)
-
-    report_datetime = models.DateTimeField(
-        verbose_name="Report Date",
-        validators=[
-            datetime_not_before_study_start,
-            datetime_not_future, ],
-        default=datetime.now,
-        help_text=('If reporting today, use today\'s date/time, otherwise use '
-                   'the date/time this information was reported.')
-    )
+class InfantDeath (InfantScheduledVisitModel, BaseDeathReport):
 
     death_reason_hospitalized_other = models.TextField(
         verbose_name="if other illness or pathogen specify or non infectious reason, please specify below:",

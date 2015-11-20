@@ -22,6 +22,7 @@ class MaternalVisitForm (BaseModelForm):
 
     def clean(self):
         cleaned_data = super(MaternalVisitForm, self).clean()
+        self.validate_cleaned_data(cleaned_data)
         try:
             maternal_consent = MaternalConsent.objects.get(
                 registered_subject__subject_identifier=cleaned_data.get('appointment').registered_subject.subject_identifier)
@@ -31,20 +32,18 @@ class MaternalVisitForm (BaseModelForm):
                 raise forms.ValidationError("Report datetime CANNOT be before DOB")
         except MaternalConsent.DoesNotExist:
             raise forms.ValidationError('Maternal Consent does not exist.')
+
+        return cleaned_data
+
+    def validate_reason_missed(self, cleaned_data):
         if cleaned_data.get('reason') == 'missed':
             if not cleaned_data.get('reason_missed'):
-                raise forms.ValidationError('You indicated that this is a missed visit. Please provide reason missed')
-            if cleaned_data.get('info_source'):
-                raise forms.ValidationError('You have indicated that the visit was missed. '
-                                            'Please do not provide source of information.')
-        if cleaned_data.get('reason') != 'missed':
+                raise forms.ValidationError('You indicated that the visit was missed. Please provide a reason why '
+                                            'it was missed.')
+        else:
             if cleaned_data.get('reason_missed'):
-                raise forms.ValidationError('You indicated that this is NOT a missed visit, yet provided a '
-                                            'reason why it is missed. Please correct.')
-            if not cleaned_data.get('info_source'):
-                raise forms.ValidationError('You indicated that the visit was NOT missed. '
-                                            'Please provide source of information.')
-        return cleaned_data
+                raise forms.ValidationError('You indicated that the visit was NOT missed, yet you provided a reason '
+                                            'why it was missed. Please correct.')
 
     class Meta:
         model = MaternalVisit

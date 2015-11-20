@@ -19,7 +19,8 @@ class MaternalLabourDelAdmin(BaseModelAdmin):
                     'has_uterine_tender': admin.VERTICAL,
                     'has_chorioamnionitis': admin.VERTICAL,
                     'del_hosp': admin.VERTICAL,
-                    'has_del_comp': admin.VERTICAL}
+                    'has_del_comp': admin.VERTICAL,
+                    'has_temp': admin.VERTICAL, }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
