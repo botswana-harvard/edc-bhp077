@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.db import models
-
+from edc_constants.constants import NOT_APPLICABLE
 from edc_constants.choices import (GENDER_UNDETERMINED, NORMAL_ABNORMAL,
                                    YES_NO_NOT_EVALUATED_NA, NORMAL_ABNORMAL_NOEXAM)
 
@@ -46,6 +46,7 @@ class InfantBirthExam(InfantScheduledVisitModel):
         max_length=15,
         choices=YES_NO_NOT_EVALUATED_NA,
         verbose_name="Was HEENT Exam Normal? ",
+        default=NOT_APPLICABLE,
         help_text="")
 
     heent_no_other = models.TextField(
@@ -57,6 +58,7 @@ class InfantBirthExam(InfantScheduledVisitModel):
         max_length=15,
         choices=YES_NO_NOT_EVALUATED_NA,
         verbose_name="Was Respiratory Exam Normal?",
+        default=NOT_APPLICABLE,
         help_text="")
 
     resp_exam_other = models.TextField(
@@ -68,6 +70,7 @@ class InfantBirthExam(InfantScheduledVisitModel):
         max_length=15,
         choices=YES_NO_NOT_EVALUATED_NA,
         verbose_name="Was Cardiac Exam Normal?",
+        default=NOT_APPLICABLE,
         help_text="")
 
     cardiac_exam_other = models.TextField(
@@ -78,6 +81,7 @@ class InfantBirthExam(InfantScheduledVisitModel):
     abdominal_exam = models.CharField(
         max_length=15,
         choices=YES_NO_NOT_EVALUATED_NA,
+        default=NOT_APPLICABLE,
         verbose_name="Was Abdominal Exam Normal?",
         help_text="")
 
@@ -91,7 +95,7 @@ class InfantBirthExam(InfantScheduledVisitModel):
         choices=YES_NO_NOT_EVALUATED_NA,
         verbose_name="Was Skin Exam Normal?",
         help_text="",
-        default="N/A")
+        default=NOT_APPLICABLE,)
 
     skin_exam_other = models.TextField(
         verbose_name="If abnormal or not evaluated, specify",
@@ -103,6 +107,7 @@ class InfantBirthExam(InfantScheduledVisitModel):
         max_length=15,
         choices=YES_NO_NOT_EVALUATED_NA,
         verbose_name="Was any macular / papular rash observed?",
+        default=NOT_APPLICABLE,
         help_text="")
 
     macular_papular_rash_other = models.TextField(
@@ -114,6 +119,7 @@ class InfantBirthExam(InfantScheduledVisitModel):
         max_length=15,
         choices=YES_NO_NOT_EVALUATED_NA,
         verbose_name="Was Neurological Exam Normal?",
+        default=NOT_APPLICABLE,
         help_text="")
 
     neuro_exam_other = models.TextField(
