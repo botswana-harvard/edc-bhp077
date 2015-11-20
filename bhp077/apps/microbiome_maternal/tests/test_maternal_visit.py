@@ -47,57 +47,33 @@ class TestMaternalVisit(TestCase):
             'report_datetime': timezone.now(),
             'info_source': 'participant',
             'info_source_other': '',
-            'reason': 'scheduled',
-            'reason_unscheduled': '',
+            'reason': '',
             'reason_missed': '',
             'comments': '',
         }
 
-    def test_reason_unscheduled(self):
-        self.data['reason'] = 'unscheduled'
-        form = MaternalVisitForm(data=self.data)
-        self.assertIn(u'You indicated that this is an unscheduled visit. Please '
-                      'provide a reason for the unscheduled visit.', form.errors.get('__all__'))
-
-    def test_reason_not_unscheduled(self):
-        self.data['reason_unscheduled'] = 'Patient called'
-        form = MaternalVisitForm(data=self.data)
-        self.assertIn(u'You indicated that this is NOT an unscheduled visit, yet provided a '
-                      'reason why it is unscheduled. Please correct.', form.errors.get('__all__'))
-
-    def test_missed_visit_no_reason(self):
+    def test_reason_missed(self):
         self.data['reason'] = 'missed'
         form = MaternalVisitForm(data=self.data)
-        self.assertIn(u'You indicated that the visit was missed. Please provide a reason why '
-                      'it was missed.', form.errors.get('__all__'))
+        self.assertIn(u'You indicated that this is a missed visit. Please provide reason missed', form.errors.get('__all__'))
 
-    def test_attended_visit_reason_missed_given(self):
-        self.data['reason_missed'] = 'Shopping'
+    def test_reason_not_missed(self):
+        self.data['reason'] = 'scheduled'
+        self.data['reason_missed'] = 'Patient held up'
         form = MaternalVisitForm(data=self.data)
-        self.assertIn(u'You indicated that the visit was NOT missed, yet you provided a reason '
-                      'why it was missed. Please correct.', form.errors.get('__all__'))
+        self.assertIn(u'You indicated that this is NOT a missed visit, yet provided a '
+                      'reason why it is missed. Please correct.', form.errors.get('__all__'))
 
-    def test_missed_visit_info_source_1(self):
-        """If visit is missed, no information source provider should be provided"""
+    def test_reason_missed_info_source_given(self):
         self.data['reason'] = 'missed'
-        self.data['reason_missed'] = 'Shopping'
+        self.data['reason_missed'] = 'Patient held up'
+        form = MaternalVisitForm(data=self.data)
+        self.assertIn(u'You have indicated that the visit was missed. Please do not provide'
+                      ' source of information.', form.errors.get('__all__'))
+
+    def test_reason_not_missed_info_not_given(self):
+        self.data['reason'] = 'scheduled'
         self.data['info_source'] = ''
         form = MaternalVisitForm(data=self.data)
-        self.assertTrue(form.is_valid())
-
-    def test_missed_visit_info_source_2(self):
-        """If visit is missed, Information source should not be provided"""
-        self.data['reason'] = 'missed'
-        self.data['reason_missed'] = 'Shopping'
-        self.data['info_source'] = 'participant'
-        form = MaternalVisitForm(data=self.data)
-        self.assertIn(u'You have indicated that the visit was missed. '
-                      'Please do not provide source of information.', form.errors.get('__all__'))
-
-    def test_missed_visit_info_source_3(self):
-        """If visit is NOT missed, Information source should be provided"""
-        self.data['reason'] = 'reason'
-        self.data['info_source'] = ''
-        form = MaternalVisitForm(data=self.data)
-        self.assertIn(u'You indicated that the visit was NOT missed. '
-                      'Please provide source of information.', form.errors.get('__all__'))
+        self.assertIn(u'You indicated that the visit was NOT missed. Please provide source of'
+                      ' information.', form.errors.get('__all__'))
