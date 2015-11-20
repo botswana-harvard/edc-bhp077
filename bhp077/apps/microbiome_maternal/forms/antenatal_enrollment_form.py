@@ -1,7 +1,3 @@
-from django import forms
-
-from edc_constants.constants import NOT_APPLICABLE
-
 from ..models import AntenatalEnrollment
 
 from .base_enrollment_form import BaseEnrollmentForm

@@ -43,6 +43,15 @@ BIRTH_TYPE = (
     ('cesarean ', 'cesarean'),
 )
 
+ARV_INTERRUPTION_REASON = (
+    ('TOXICITY', 'Toxicity'),
+    ('NO_DRUGS', 'No drugs available'),
+    ('NO_REFILL', 'Didn\'t get to clinic for refill'),
+    ('FORGOT', 'Mother forgot to take the ARVs'),
+    ('OTHER', 'Other'),
+    ('N/A', 'Not Applicable'),
+)
+
 AUTOPSY_SOURCE = (
     ('mother', 'Mother of infant'),
     ('family_mem', 'Other family member'),
@@ -401,10 +410,9 @@ MEDICATIONS = (
     ('Terbinafine', 'Terbinafine'),
     ('Tetracycline', 'Tetracycline'),
     ('Theophylline', 'Theophylline'),
-    ('Traditional medicines', 'Traditional medicines'),
     ('Vancomycin', 'Vancomycin'),
     ('Vitamins(iron,B12,Folate)', 'Vitamins(iron,B12,Folate)'),
-    ('Traditional', 'Traditional Medications'),
+    ('Traditional medication', 'Traditional Medications'),
 )
 
 MOUTH_UP_GASTROINT_DISORDER = (
@@ -511,20 +519,6 @@ REASON_MISSED_PROPHYLAXIS = (
     ('infant away', 'Infant was away from home and the NVP bottle was not at the other location'),
     ('caregiver decision/sick', 'Caregiver chose not to give the NVP because baby was sick or for other reasons'),
     ('OTHER', 'Other'),
-)
-
-RENAL_ANOMALY = (
-    ('None', 'None'),
-    ('Bilateral renal agenesis', 'Bilateral renal agenesis'),
-    ('Unilateral renal agenesis or dysplasia', 'Unilateral renal agenesis or dysplasia'),
-    ('Polycystic kidneys', 'Polycystic kidneys'),
-    ('Congenital hydronephrosis', 'Congenital hydronephrosis'),
-    ('Unilateral stricture, stenosis, or hypoplasia', 'Unilateral stricture, stenosis, or hypoplasia'),
-    ('Duplicated kidney or collecting system', 'Duplicated kidney or collecting system'),
-    ('Horseshoe kidney', 'Horseshoe kidney'),
-    ('Exstrophy of bladder', 'Exstrophy of bladder'),
-    ('Posterior urethral valves', 'Posterior urethral valves'),
-    ('OTHER', 'Other renal, ureteral, bladder, urethral abnormality, specify'),
 )
 
 RENAL_ANOMALY = (

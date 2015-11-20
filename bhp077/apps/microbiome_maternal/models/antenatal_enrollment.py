@@ -15,6 +15,14 @@ class AntenatalEnrollment(BaseEnrollment):
         verbose_name="How many weeks pregnant?",
         help_text=" (weeks of gestation). Eligible if >=32 weeks", )
 
+    antenatal_eligible = models.NullBooleanField(
+        default=False,
+        editable=False)
+
+    def save(self, *args, **kwargs):
+        self.antenatal_eligible = self.eligible_for_postnatal
+        super(AntenatalEnrollment, self).save(*args, **kwargs)
+
     @property
     def eligible_for_postnatal(self):
         """return true if a mother is eligible for postnatalenrollment."""

@@ -17,15 +17,23 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
                 raise forms.ValidationError("Live infants were born. How many?")
             if cleaned_data.get('live_infants', None) <= 0:
                 raise forms.ValidationError("Live infants were born. Number cannot be zero or less")
-        ant = AntenatalEnrollment.objects.filter(registered_subject__subject_identifier=cleaned_data.get('registered_subject').subject_identifier)
+        try:
+            ant = AntenatalEnrollment.objects.get(
+                registered_subject__subject_identifier=cleaned_data.get('registered_subject').subject_identifier)
+        except AntenatalEnrollment.DoesNotExist:
+            ant = None
         if ant:
-            if ant[0].verbal_hiv_status == POS and ant[0].evidence_hiv_status == YES:
+            if ant.verbal_hiv_status == POS and ant.evidence_hiv_status == YES:
                 if not cleaned_data.get('verbal_hiv_status') == POS or not cleaned_data.get('evidence_hiv_status') == YES:
                     raise forms.ValidationError("Antenatal Enrollment shows participant is {} and {} evidence ."
-                                                " Please Correct {} and {} evidence".format(ant[0].verbal_hiv_status,
-                                                                                            ant[0].evidence_hiv_status,
+                                                " Please Correct {} and {} evidence".format(ant.verbal_hiv_status,
+                                                                                            ant.evidence_hiv_status,
                                                                                             cleaned_data.get('verbal_hiv_status'),
                                                                                             cleaned_data.get('evidence_hiv_status')))
+        if ant:
+            if not ant.antenatal_eligible:
+                raise forms.ValidationError("This mother is not eligible for postnatal enrollment. Failed antenatal enrollment.")
+
         return cleaned_data
 
     class Meta:

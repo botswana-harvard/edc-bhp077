@@ -15,7 +15,8 @@ class MaternalArvPregAdmin(BaseModelAdmin):
     inlines = [MaternalArvInlineAdmin, ]
     list_display = ('took_arv',)
     list_filter = ('took_arv',)
-    radio_fields = {'took_arv': admin.VERTICAL}
+    radio_fields = {'took_arv': admin.VERTICAL,
+                    'interrupt': admin.VERTICAL, }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":

@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 
 from edc_base.model.fields import OtherCharField
 from edc_constants.choices import YES_NO
+from edc.subject.code_lists.models import WcsDxAdult
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from bhp077.apps.microbiome_list.models import ChronicConditions
@@ -37,6 +38,9 @@ class MaternalMedicalHistory(MaternalScheduledVisitModel):
         verbose_name=("Prior to the current pregnancy, was the participant ever diagnosed with"
                       " a WHO Stage III or IV illness?"),
         help_text="Please use the WHO Staging Guidelines. ONLY for HIV infected mothers")
+    wcs_dx_adult = models.ManyToManyField(
+        WcsDxAdult,
+        verbose_name="List any new WHO Stage III/IV diagnoses that are not reported")
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_maternalmedicalhistory_change', args=(self.id,))

@@ -17,5 +17,11 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
                 leading=cleaned_data.get('has_chronic_cond'),
                 m2m=cleaned_data.get('chronic_cond'),
                 other=cleaned_data.get('chronic_cond_other'))
+        # WHO validations
+        if 'wcs_dx_adult' in cleaned_data.keys():
+            self.validate_m2m_wcs_dx(
+                label='who diagnoses',
+                leading=cleaned_data.get('who_clinical_stage'),
+                m2m=cleaned_data.get('wcs_dx_adult'))
 
         return cleaned_data

@@ -14,14 +14,12 @@ class MaternalPostFuAdmin(BaseModelAdmin):
         "enter_weight",
         "systolic_bp",
         "diastolic_bp",
-        "had_mastitis",
         "has_chronic_cond",
         "chronic_cond",
         "chronic_cond_other",
         "comment")
     radio_fields = {
         "mother_weight": admin.VERTICAL,
-        "had_mastitis": admin.VERTICAL,
         "has_chronic_cond": admin.VERTICAL}
     filter_horizontal = ('chronic_cond',)
 
