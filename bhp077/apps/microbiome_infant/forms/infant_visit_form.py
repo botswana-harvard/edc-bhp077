@@ -60,8 +60,8 @@ class InfantVisitForm(BaseInfantModelForm):
         if cleaned_data.get('reason') == 'missed':
             if not cleaned_data.get('reason_missed'):
                 raise forms.ValidationError("Provide reason scheduled visit was missed.")
-            if cleaned_data.get('info_source'):
-                raise forms.ValidationError("Do not provide source of information.")
+            # if cleaned_data.get('info_source'):
+            #     raise forms.ValidationError("Do not provide source of information.")
 
     def validate_survival_status(self, cleaned_data):
         if cleaned_data.get('survival_status') in ['ALIVE', 'DEAD']:
