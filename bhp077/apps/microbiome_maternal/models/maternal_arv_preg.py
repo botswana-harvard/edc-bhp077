@@ -1,8 +1,11 @@
 from django.db import models
 
+from edc_constants.choices import YES_NO
+
+from bhp077.apps.microbiome.choices import ARV_INTERRUPTION_REASON
+
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
-from edc_constants.choices import YES_NO
 
 
 class MaternalArvPreg(MaternalScheduledVisitModel):
@@ -29,6 +32,7 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
         verbose_name="Please give reason for interruption",
         max_length=50,
         help_text="",
+        choices=ARV_INTERRUPTION_REASON,
         default='N/A')
 
     interrupt_other = models.TextField(

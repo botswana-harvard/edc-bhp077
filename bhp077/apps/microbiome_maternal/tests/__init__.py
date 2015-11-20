@@ -10,3 +10,11 @@ from .test_offstudy import TestOffStudy
 from .test_rule_group import TestRuleGroup
 from .test_sample_consent import TestSampleConsent
 from .test_viral_load_requisition import TestViralLoadRequisition
+from .test_maternal_consent import TestMaternalConsent
+from .test_maternal_eligibility import TestMaternalEligibility
+from .test_maternal_locator import TestMaternalLocator
+from .test_maternal_medical_history import TestMaternalMedicalHistoryForm
+from .test_maternal_obsterical_history import TestMaternalObstericalHistoryForm
+from .test_rapid_test_form import TestRapidTestForm
+from .test_srh_services_utilization_form import TestSrhServiceUtilizationForm
+from .test_viral_load_requisition import TestViralLoadRequisition

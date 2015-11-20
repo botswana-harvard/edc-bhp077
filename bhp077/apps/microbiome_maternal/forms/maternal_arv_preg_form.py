@@ -18,10 +18,10 @@ class MaternalArvPregForm(BaseMaternalModelForm):
             raise forms.ValidationError('You indicated that ARVs were NOT interrupted during pregnancy. '
                                         'You cannot provide a reason. Please correct.')
         check_arvs = self.data.get('maternalarv_set-0-arv_code')
-        if cleaned_data('took_arv') == 'Yes' and not check_arvs:
+        if cleaned_data.get('took_arv') == 'Yes' and not check_arvs:
             raise forms.ValidationError("You indicated that participant started ARV(s) during this pregnancy on 'Maternal ARV in This Preg'. Please list them or correct 'Maternal ARV in This Preg'.")
         # if no is indicated for any arv's started in Maternal ARV in This Preg then list must be provided
-        if cleaned_data('took_arv') == 'No' and check_arvs:
+        if cleaned_data.get('took_arv') == 'No' and check_arvs:
             raise forms.ValidationError("You indicated that ARV(s) were NOT started during this pregnancy on 'Maternal ARV in This Preg'. You cannot provide a list or correct 'Maternal ARV in This Preg'.")
 
             return cleaned_data

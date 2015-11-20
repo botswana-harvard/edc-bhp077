@@ -124,7 +124,7 @@ class TestMaternalArvPreg(TestCase):
 
     def test_tooke_arv_2(self):
         """Assert that ARV indicated as not interrupted, then reason not expected"""
-        self.data['interrupt'] = 'forgot'
+        self.data['interrupt'] = 'FORGOT'
         form = MaternalArvPregForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn(u'You indicated that ARVs were NOT interrupted during pregnancy. '
@@ -133,7 +133,7 @@ class TestMaternalArvPreg(TestCase):
     def test_tooke_arv_3(self):
         """Assert that ARV indicated as interrupted, and reason provided, then valid"""
         self.data['is_interrupt'] = YES
-        self.data['interrupt'] = 'forgot'
+        self.data['interrupt'] = 'NO_REFILL'
         form = MaternalArvPregForm(data=self.data)
         self.assertTrue(form.is_valid())
 
