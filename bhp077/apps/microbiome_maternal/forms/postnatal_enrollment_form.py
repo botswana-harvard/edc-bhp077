@@ -12,6 +12,8 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
     def clean(self):
 
         cleaned_data = super(PostnatalEnrollmentForm, self).clean()
+        if cleaned_data.get('gestation_before_birth') > 45:
+            raise forms.ValidationError('Gestational age cannot exceed 45 weeks. Please correct.')
         if cleaned_data.get("live_or_still_birth") == LIVE:
             if not cleaned_data.get('live_infants'):
                 raise forms.ValidationError("Live infants were born. How many?")
