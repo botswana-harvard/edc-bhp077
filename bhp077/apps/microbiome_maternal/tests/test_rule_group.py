@@ -12,15 +12,16 @@ from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
 
 from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import \
-    (MaternalEligibilityFactory, AntenatalEnrollmentFactory,
-    MaternalVisitFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory,
+                                                             AntenatalEnrollmentFactory,
+                                                             MaternalVisitFactory)
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
 from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory, SexualReproductiveHealthFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+
 
 class TestRuleGroup(TestCase):
 
@@ -54,16 +55,16 @@ class TestRuleGroup(TestCase):
             registered_subject=self.registered_subject,
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
-            valid_regimen = YES,
+            valid_regimen=YES,
         )
         visit_codes = [
             ['1000M', ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg']],
-            ['2000M', ['maternalarvpreg', 'maternallabdelclinic',]],
-            ['2010M', ['maternalarvpost',]],
-            ['2030M', ['maternalarvpost',]],
-            ['2060M', ['maternalarvpost',]],
-            ['2090M', ['maternalarvpost',]],
-            ['2120M', ['maternalarvpost',]],
+            ['2000M', ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']],
+            ['2010M', ['maternalarvpost', 'maternalarvpostadh']],
+            ['2030M', ['maternalarvpost', 'maternalarvpostadh']],
+            ['2060M', ['maternalarvpost', 'maternalarvpostadh']],
+            ['2090M', ['maternalarvpost', 'maternalarvpostadh']],
+            ['2120M', ['maternalarvpost', 'maternalarvpostadh']],
         ]
         for visit in visit_codes:
             code, model_names = visit
@@ -86,12 +87,12 @@ class TestRuleGroup(TestCase):
         )
         visit_codes = [
             ['1000M', ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg']],
-            ['2000M', ['maternalarvpreg', 'maternallabdelclinic',]],
-            ['2010M', ['maternalarvpost',]],
-            ['2030M', ['maternalarvpost',]],
-            ['2060M', ['maternalarvpost',]],
-            ['2090M', ['maternalarvpost',]],
-            ['2120M', ['maternalarvpost',]],
+            ['2000M', ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']],
+            ['2010M', ['maternalarvpost', 'maternalarvpostadh']],
+            ['2030M', ['maternalarvpost', 'maternalarvpostadh']],
+            ['2060M', ['maternalarvpost', 'maternalarvpostadh']],
+            ['2090M', ['maternalarvpost', 'maternalarvpostadh']],
+            ['2120M', ['maternalarvpost', 'maternalarvpostadh']],
         ]
         for visit in visit_codes:
             code, model_names = visit
@@ -104,14 +105,13 @@ class TestRuleGroup(TestCase):
                     app_label='microbiome_maternal', model_name=model_name, appointment=appointment
                 )).count(), 1)
 
-
     def test_srh_referral_yes_on_srhservicesutilization(self):
         """
         """
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject, process_rapid_test=YES, rapid_test_result=POS
         )
-        for code in  ['2010M', '2030M', '2090M', '2120M']:
+        for code in ['2010M', '2030M', '2090M', '2120M']:
             appointment = Appointment.objects.get(
                 registered_subject=self.registered_subject, visit_definition__code=code
             )
