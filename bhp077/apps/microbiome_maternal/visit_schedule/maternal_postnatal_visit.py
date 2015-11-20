@@ -46,7 +46,6 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(70L, u'microbiome_maternal', u'maternalarvpreg', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(80L, u'microbiome_maternal', u'maternalinfected', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(90L, u'microbiome_maternal', u'maternaluninfected', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(100L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(200L, u'microbiome_maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'microbiome_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
@@ -83,7 +82,6 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(40L, u'microbiome_maternal', u'maternallabdeldx', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(50L, u'microbiome_maternal', u'maternalarvpreg', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(60L, u'microbiome_maternal', u'maternalarv', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(100L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(200L, u'microbiome_maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'microbiome_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
