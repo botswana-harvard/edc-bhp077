@@ -32,14 +32,14 @@ class MaternalBreastHealth(MaternalScheduledVisitModel):
     )
 
     has_mastitis = models.CharField(
-        max_length=3,
+        max_length=15,
         choices=YES_NO_NA,
         verbose_name="Is there evidence of mastitis?",
         help_text="",
     )
 
     mastitis = models.CharField(
-        max_length=3,
+        max_length=20,
         choices=BREAST_CHOICE,
         verbose_name="Where is mastitis evident?",
         help_text="",
@@ -47,14 +47,14 @@ class MaternalBreastHealth(MaternalScheduledVisitModel):
     )
 
     has_lesions = models.CharField(
-        max_length=3,
+        max_length=15,
         choices=YES_NO_NA,
         verbose_name="Are there any lesions such as ulcers, vesicles or sores on the breasts?",
         help_text="",
     )
 
     lesions = models.CharField(
-        max_length=3,
+        max_length=20,
         choices=BREAST_CHOICE,
         verbose_name="Where are the lesions evident?",
         help_text="",
@@ -62,7 +62,7 @@ class MaternalBreastHealth(MaternalScheduledVisitModel):
     )
 
     stop_breastfeeding = models.CharField(
-        max_length=3,
+        max_length=15,
         choices=YES_NO_NA,
         verbose_name="Was the mother advised to discontonue breastfeeding?",
         help_text="",
