@@ -56,7 +56,6 @@ class BaseMother(MaternalScheduledVisitModel):
         help_text="in hg e.g. 80, should be between 35 and 130.",
     )
 
-
     history = AuditTrail()
 
     class Meta:

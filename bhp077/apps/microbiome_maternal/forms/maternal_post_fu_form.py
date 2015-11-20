@@ -23,7 +23,6 @@ class MaternalPostFuForm(BaseMaternalModelForm):
                 m2m=cleaned_data.get('chronic_cond'),
                 other=cleaned_data.get('chronic_cond_other'))
 
-
     class Meta:
         model = MaternalPostFu
         fields = '__all__'

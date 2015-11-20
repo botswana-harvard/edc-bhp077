@@ -401,10 +401,9 @@ MEDICATIONS = (
     ('Terbinafine', 'Terbinafine'),
     ('Tetracycline', 'Tetracycline'),
     ('Theophylline', 'Theophylline'),
-    ('Traditional medicines', 'Traditional medicines'),
     ('Vancomycin', 'Vancomycin'),
     ('Vitamins(iron,B12,Folate)', 'Vitamins(iron,B12,Folate)'),
-    ('Traditional', 'Traditional Medications'),
+    ('Traditional medication', 'Traditional Medications'),
 )
 
 MOUTH_UP_GASTROINT_DISORDER = (
