@@ -7,20 +7,34 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.choices import YES
+from edc.subject.code_lists.models import WcsDxAdult
+from edc_constants.choices import YES, NO
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.forms import MaternalVisitForm
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
+from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
+from bhp077.apps.microbiome_maternal.forms import (BaseMotherForm)
+from bhp077.apps.microbiome_maternal.models import BaseMother
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
-from .factories import PostnatalEnrollmentFactory
+from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
+                        MaternalEligibilityFactory, MaternalConsentFactory)
 
 
-class TestMaternalVisit(TestCase):
-    """Test eligibility of a mother for maternal visit."""
+class BaseMotherTestModel(BaseMother):
+    class Meta:
+        app_label = 'microbiome_maternal'
+
+
+class BaseMotherForm(BaseMotherForm):
+
+    class Meta:
+        model = BaseMotherTestModel
+        fields = '__all__'
+
+
+class TestMaternalFollowup(TestCase):
+    """Test eligibility of a mother for postnatal followup."""
 
     def setUp(self):
         try:
@@ -42,26 +56,25 @@ class TestMaternalVisit(TestCase):
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        self.chronic_cond = ChronicConditions.objects.create(name='N/A', short_name='N/A', display_index=10,
+                                                             field_name='chronic_cond')
         self.data = {
-            'appointment': self.appointment.id,
+            'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
-            'info_source': 'participant',
-            'info_source_other': '',
-            'reason': '',
-            'reason_missed': '',
-            'comments': '',
+            'recruit_source': 'ANC clinic staff',
+            'recruit_source_other': '',
+            'recruitment_clinic': 'PMH',
+            'recruitment_clinic_other': '',
+            'weight': 50.0,
+            'height': 160.0,
+            'systolic_bp': 120,
+            'diastolic_bp': 80,
         }
 
-    def test_missed_visit_no_reason(self):
-        self.data['reason'] = 'missed'
-        form = MaternalVisitForm(data=self.data)
+    def test_bp(self):
+        self.data['systolic_bp'] = 120
+        self.data['diastolic_bp'] = 80
+        form = BaseMotherForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn(u'You indicated that the visit was missed. Please provide a reason why '
-                      'it was missed.', errors)
-
-    def test_attended_visit_reason_missed_given(self):
-        self.data['reason_missed'] = 'Shopping'
-        form = MaternalVisitForm(data=self.data)
-        errors = ''.join(form.errors.get('__all__'))
-        self.assertIn(u'You indicated that the visit was NOT missed, yet you provided a reason '
-                      'why it was missed. Please correct.', errors)
+        self.assertIn("Systolic blood pressure cannot be lower than the diastolic blood preassure.", errors)

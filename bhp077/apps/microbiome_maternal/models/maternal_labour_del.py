@@ -52,11 +52,20 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         verbose_name="Was uterine tenderness recorded? ",
         help_text="")
 
+    has_temp = models.CharField(
+        verbose_name="Is the maximum temparature known?",
+        max_length=3,
+        choices=YES_NO,
+        help_text="")
+
     labr_max_temp = models.DecimalField(
         max_digits=3,
         decimal_places=1,
         verbose_name="Indicate the maximum temperature of mother during labour",
-        help_text="In degrees Celcius. -1 = unknown")
+        help_text="",
+        blank=True,
+        null=True,
+    )
 
     has_chorioamnionitis = models.CharField(
         max_length=3,

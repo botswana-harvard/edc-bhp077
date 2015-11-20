@@ -12,7 +12,7 @@ from ..models import (MaternalLabourDel, MaternalLabDelMed,
 class MaternalLabourDelForm(BaseMaternalModelForm):
 
     def clean(self):
-        cleaned_data = self.cleaned_data
+        cleaned_data = super(MaternalLabourDelForm, self).clean()
         if cleaned_data.get('live_infants_to_register') > 1:
             raise forms.ValidationError("For this study we can only register ONE infant")
         # Validate that number of live_infants_to_register cannot be 0 or less
@@ -21,7 +21,15 @@ class MaternalLabourDelForm(BaseMaternalModelForm):
         if cleaned_data.get('delivery_datetime') > cleaned_data.get('report_datetime'):
                 raise forms.ValidationError('Maternal Labour Delivery date cannot be greater than report date. '
                                             'Please correct.')
-        return super(MaternalLabourDelForm, self).clean()
+        if cleaned_data.get('has_temp') == YES:
+            if not cleaned_data.get('labr_max_temp'):
+                raise forms.ValidationError('You have indicated that maximum temperature at delivery is known. '
+                                            'Please provide the maximum temperature.')
+        else:
+            if cleaned_data.get('labr_max_temp'):
+                raise forms.ValidationError('You have indicated that maximum temperature is not known. '
+                                            'You CANNOT provide the maximum temperature')
+        return cleaned_data
 
     class Meta:
         model = MaternalLabourDel

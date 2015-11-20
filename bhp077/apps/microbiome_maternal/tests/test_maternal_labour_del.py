@@ -52,7 +52,8 @@ class TestMaternalLabourDel(TestCase):
             'labour_hrs': 6,
             'del_hosp': 'PMH',
             'has_uterine_tender': NO,
-            'labr_max_temp': -1,
+            'has_temp': NO,
+            'labr_max_temp': '',
             'has_chorioamnionitis': NO,
             'has_del_comp': NO,
             'live_infants_to_register': 1,
@@ -84,6 +85,18 @@ class TestMaternalLabourDel(TestCase):
         form = MaternalLabourDelForm(data=self.data)
         self.assertIn(u'Maternal Labour Delivery date cannot be greater than report date. '
                       'Please correct.', form.errors.get('__all__'))
+
+    def test_temp_1(self):
+        self.data['has_temp'] = YES
+        form = MaternalLabourDelForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn("You have indicated that maximum temperature at delivery is known.", errors)
+
+    def test_temp_2(self):
+        self.data['labr_max_temp'] = 37
+        form = MaternalLabourDelForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn("You have indicated that maximum temperature is not known.", errors)
 
 
 class TestMaternalLabourDelClinic(TestCase):
@@ -161,13 +174,11 @@ class TestMaternalLabourDelClinic(TestCase):
         self.data['cd4_date'] = timezone.now() - timezone.timedelta(days=2)
         self.data['cd4_result'] = 600
         form = MaternalLabDelClinicForm(data=self.data)
-        print form.errors
         self.assertTrue(form.is_valid())
 
     def test_has_cd4_6(self):
         """If has CD4 is indicated as NO, then CD4 count date and result should be  NOT provided."""
         form = MaternalLabDelClinicForm(data=self.data)
-        print form.errors
         self.assertTrue(form.is_valid())
 
     def test_has_vl_1(self):

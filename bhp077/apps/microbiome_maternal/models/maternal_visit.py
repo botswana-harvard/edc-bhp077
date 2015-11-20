@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from edc.entry_meta_data.models import ScheduledEntryMetaData
+from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
 from edc.subject.entry.models import Entry
 from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
@@ -56,9 +56,7 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         dct = {}
         for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
             dct.update({item: item})
-            dct.update({'vital status': 'Vital Status'})
         del dct['death']
-        del dct['lost']
         return dct
 
     @property
@@ -94,13 +92,15 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
     def update_scheduled_entry_meta_data(self):
         if self.hiv_status_pos_and_evidence_yes:
             if self.appointment.visit_definition.code == '1000M':
-                for model_name in ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg', 'maternalclinicalhistory']:
+                for model_name in ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg',
+                                   'maternalinfected']:
                     self.scheduled_entry_meta_data(model_name)
             elif self.appointment.visit_definition.code == '2000M':
-                for model_name in ['maternalarvpreg', 'maternallabdelclinic']:
+                for model_name in ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']:
                     self.scheduled_entry_meta_data(model_name)
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
-                self.scheduled_entry_meta_data('maternalarvpost')
+                for model_name in ['maternalarvpost', 'maternalarvpostadh']:
+                    self.scheduled_entry_meta_data(model_name)
         else:
             pass
 
