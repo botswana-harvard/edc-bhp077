@@ -105,3 +105,10 @@ class TestMaternalFollowup(TestCase):
         form = MaternalPostFuForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn(u'You stated there are NO chronic conditionss. Please correct', errors)
+
+    def test_bp(self):
+        self.data['systolic_bp'] = 80
+        self.data['diastolic_bp'] = 120
+        form = MaternalPostFuForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('Systolic blood pressure cannot be lower than the diastolic blood preassure', errors)

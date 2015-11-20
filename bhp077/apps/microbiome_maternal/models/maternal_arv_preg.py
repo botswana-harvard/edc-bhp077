@@ -41,12 +41,6 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
-    comment = models.TextField(
-        max_length=250,
-        verbose_name="Comments on pregnancy regimen: ",
-        blank=True,
-        null=True)
-
     class Meta:
         app_label = "microbiome_maternal"
         verbose_name = 'Maternal ARV In This Preg: Pregnancy'
