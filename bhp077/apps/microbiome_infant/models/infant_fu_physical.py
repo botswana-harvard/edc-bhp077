@@ -4,15 +4,12 @@ from django.core.urlresolvers import reverse
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc_constants.choices import YES_NO
 
-from .infant_fu import InfantFu
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantFuPhysical(InfantScheduledVisitModel):
 
     """Infant follow up physical assessment."""
-
-    infant_fu = models.OneToOneField(InfantFu)
 
     weight = models.DecimalField(
         max_digits=6,

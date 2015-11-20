@@ -3,7 +3,7 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
 
 from ..forms import InfantFuImmunizationsForm
-from ..models import InfantFuImmunizations, VaccinesReceived, VaccinesMissed, InfantVisit, InfantFu
+from ..models import InfantFuImmunizations, VaccinesReceived, VaccinesMissed
 
 
 class VaccinesReceivedInlineAdmin(BaseTabularInline):
@@ -21,10 +21,5 @@ class InfantFuImmunizationsAdmin(BaseModelAdmin):
     inlines = [VaccinesReceivedInlineAdmin, VaccinesMissedInlineAdmin, ]
     radio_fields = {'vaccines_received': admin.VERTICAL,
                     'vaccines_missed': admin.VERTICAL}
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "infant_fu":
-                kwargs["queryset"] = InfantFu.objects.filter(infant_visit=request.GET.get('infant_visit'))
-        return super(InfantFuImmunizationsAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(InfantFuImmunizations, InfantFuImmunizationsAdmin)

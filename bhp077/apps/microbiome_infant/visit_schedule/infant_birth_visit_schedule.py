@@ -49,7 +49,6 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(50L, u'microbiome_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(100L, u'microbiome_infant', u'infantcongenitalanomalies', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'microbiome_infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
-            # EntryTuple(210L, u'infant', u'infantverbalautopsy', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(230L, u'microbiome_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
     visit_definitions['2010'] = {
         'title': 'Infant 1 Month Visit',

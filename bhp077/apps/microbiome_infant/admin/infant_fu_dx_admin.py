@@ -1,18 +1,25 @@
 from django.contrib import admin
 
-from edc.base.modeladmin.admin import BaseModelAdmin
+from edc.base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
 
-from ..models import InfantFuDx, InfantVisit, InfantFu
+from ..models import InfantFuDx, InfantVisit, InfantFuDxItems
+from ..forms import InfantFuDxItemsForm
+
+
+class InfantFuDxItemsInline(BaseTabularInline):
+
+    model = InfantFuDxItems
+    form = InfantFuDxItemsForm
+    extra = 0
 
 
 class InfantFuDxAdmin(BaseModelAdmin):
 
+    inlines = [InfantFuDxItemsInline, ]
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "infant_visit":
                 kwargs["queryset"] = InfantVisit.objects.filter(id=request.GET.get('infant_visit'))
-        if db_field.name == "infant_fu":
-                infant_subject_identifier = InfantVisit.objects.get(id=request.GET.get('infant_visit')).appointment.registered_subject.subject_identifier
-                kwargs["queryset"] = InfantFu.objects.filter(infant_visit__appointment__registered_subject__subject_identifier=infant_subject_identifier)
         return super(InfantFuDxAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(InfantFuDx, InfantFuDxAdmin)
