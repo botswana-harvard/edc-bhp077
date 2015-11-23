@@ -1,3 +1,5 @@
+from datetime import date
+from dateutil.relativedelta import relativedelta
 from django import forms
 
 from edc_constants.constants import YES
@@ -6,7 +8,7 @@ from base_maternal_model_form import BaseMaternalModelForm
 
 from ..models import (MaternalLabourDel, MaternalLabDelMed,
                       MaternalLabDelClinic, MaternalLabDelDx,
-                      MaternalLabDelDxT)
+                      MaternalLabDelDxT, PostnatalEnrollment)
 
 
 class MaternalLabourDelForm(BaseMaternalModelForm):
@@ -21,6 +23,11 @@ class MaternalLabourDelForm(BaseMaternalModelForm):
         if cleaned_data.get('delivery_datetime') > cleaned_data.get('report_datetime'):
                 raise forms.ValidationError('Maternal Labour Delivery date cannot be greater than report date. '
                                             'Please correct.')
+        postnatal = PostnatalEnrollment.objects.get(registered_subject__subject_identifier=cleaned_data.get('maternal_visit').appointment.registered_subject.subject_identifier)
+        if postnatal:
+            expected_delivery_date = cleaned_data.get('report_datetime').date() - relativedelta(days=postnatal.postpartum_days)
+            if cleaned_data.get('delivery_datetime').date() != expected_delivery_date:
+                raise forms.ValidationError('Delivery date is incorrect. Postpartum days is {} ago'.format(postnatal.postpartum_days))
         if cleaned_data.get('has_temp') == YES:
             if not cleaned_data.get('labr_max_temp'):
                 raise forms.ValidationError('You have indicated that maximum temperature at delivery is known. '
