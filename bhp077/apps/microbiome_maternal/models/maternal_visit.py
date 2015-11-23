@@ -104,6 +104,28 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         else:
             pass
 
+    @property
+    def is_off_study(self):
+        visit_codes = ['1000M', '2000M', '2010M', '2030M', '2060M', '2090M', '2120M']
+        is_off = False
+        for i, code in enumerate(visit_codes):
+            if self.appointment.visit_definition.code == "1000M":
+                break;
+            else:
+                if code == self.appointment.visit_definition.code:
+                    MaternalVisit = models.get_model('microbiome_maternal', 'maternalvisit')
+                    try:
+                        MaternalVisit.objects.get(
+                            appointment__registered_subject=self.appointment.registered_subject,
+                            appointment__visit_definition__code = visit_codes[i-1],
+                            reason='off study'
+                        )
+                        is_off = True
+                        break;
+                    except MaternalVisit.DoesNotExist:
+                        return False
+        return is_off
+
     def create_additional_maternal_forms_meta(self):
         self.reason = 'off study' if not self.postnatal_enrollment.postnatal_eligible else self.reason
         if self.reason == 'off study':
