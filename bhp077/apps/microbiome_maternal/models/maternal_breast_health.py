@@ -1,19 +1,10 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 
-from edc.subject.adverse_event.choices import GRADING_SCALE
-from edc.subject.code_lists.models import WcsDxAdult
-from edc_base.audit_trail import AuditTrail
-from edc_base.model.fields.custom_fields import OtherCharField
-from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import YES_NO, YES_NO_NA
 from edc_constants.constants import NOT_APPLICABLE
 
-from bhp077.apps.microbiome_list.models import ChronicConditions
 from bhp077.apps.microbiome.choices import BREAST_CHOICE
 
-from ..managers import MaternalPostFuDxTManager
-from ..maternal_choices import DX
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
 

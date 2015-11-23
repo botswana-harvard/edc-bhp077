@@ -1,11 +1,24 @@
+from edc_constants.constants import NOT_APPLICABLE
+
+
+NAPPY_TYPE = (
+    ('cloth nappy', 'Cloth nappy'),
+    ('commercial nappy', 'Commercial Nappy'),
+    ('other', 'Other, specify'),
+    (NOT_APPLICABLE, 'Not applicable'),
+)
+
+
 STOOL_COLLECTION_TIME = (
     ('real-time', 'Real Time'),
     ('brought', 'Brought by mother'),
+    (NOT_APPLICABLE, 'Not applicable')
 )
 
 STOOL_STORED = (
     ('room temp', 'At room temperature (unrefrigerated)'),
     ('refrigerated', 'Refrigerated'),
+    (NOT_APPLICABLE, 'Not applicable'),
 )
 
 OFF_STUDY_REASON = [

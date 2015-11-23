@@ -1,3 +1,4 @@
+from dateutil.relativedelta import relativedelta
 from django.test import TestCase
 from django.utils import timezone
 
@@ -47,7 +48,8 @@ class TestMaternalLabourDel(TestCase):
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
-            'delivery_datetime': timezone.now() - timezone.timedelta(days=1),
+            'delivery_datetime': timezone.now() - relativedelta(days=self.postnatal_enrollment.postpartum_days),
+            # 'delivery_datetime': timezone.now() - timezone.timedelta(days=1),
             'del_time_is_est': NO,
             'labour_hrs': 6,
             'del_hosp': 'PMH',
@@ -62,14 +64,14 @@ class TestMaternalLabourDel(TestCase):
         }
 
     def test_infants_to_register_1(self):
+        form = MaternalLabourDelForm(data=self.data)
+        self.assertTrue(form.is_valid())
+
+    def test_infants_to_register_2(self):
         '''Cannot register more than 1 infant.'''
         self.data['live_infants_to_register'] = 3
         form = MaternalLabourDelForm(data=self.data)
         self.assertIn(u'For this study we can only register ONE infant', form.errors.get('__all__'))
-
-    def test_infants_to_register_2(self):
-        form = MaternalLabourDelForm(data=self.data)
-        self.assertTrue(form.is_valid())
 
     def test_infants_to_register_3(self):
         '''Infant to register cannot be zero or less'''
@@ -88,15 +90,18 @@ class TestMaternalLabourDel(TestCase):
 
     def test_temp_1(self):
         self.data['has_temp'] = YES
+        # self.data['delivery_datetime'] = timezone.now() - relativedelta(days=self.postnatal_enrollment.postpartum_days)
         form = MaternalLabourDelForm(data=self.data)
-        errors = ''.join(form.errors.get('__all__'))
-        self.assertIn("You have indicated that maximum temperature at delivery is known.", errors)
+        self.assertIn("You have indicated that maximum temperature at delivery is known. "
+                      "Please provide the maximum temperature.", form.errors.get('__all__'))
 
     def test_temp_2(self):
         self.data['labr_max_temp'] = 37
         form = MaternalLabourDelForm(data=self.data)
+        # self.data['delivery_datetime'] = timezone.now() - relativedelta(days=self.postnatal_enrollment.postpartum_days)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn("You have indicated that maximum temperature is not known.", errors)
+        self.assertIn("You have indicated that maximum temperature is not known. "
+                      "You CANNOT provide the maximum temperature", errors)
 
     def test_temp_3(self):
         """Temperature cannot be above 37.2"""
@@ -114,6 +119,11 @@ class TestMaternalLabourDel(TestCase):
         self.data['labr_max_temp'] = 36.8
         form = MaternalLabourDelForm(data=self.data)
         self.assertTrue(form.is_valid())
+
+    def test_deliverydate_vs_postpartum_days(self):
+        self.data['delivery_datetime'] = timezone.now() - timezone.timedelta(days=1)
+        form = MaternalLabourDelForm(data=self.data)
+        self.assertIn(u'Delivery date is incorrect. Postpartum days is {} ago'.format(self.postnatal_enrollment.postpartum_days), form.errors.get('__all__'))
 
 
 class TestMaternalLabourDelClinic(TestCase):
