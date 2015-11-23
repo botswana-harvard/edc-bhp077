@@ -50,7 +50,7 @@ class InfantVaccines(BaseUuidModel):
     )
 
     vaccine_date = models.DateField(
-        verbose_name='Date Vaccine was given'
+        verbose_name='Date Vaccine was given',
         null=True,
         blank=True,
     )

@@ -36,6 +36,18 @@ IMMUNIZATIONS = (
     ('Measles', 'Measles'),
     ('Pentavalent', 'Pentavalent Vaccine (Contains DPT, Hepatitis B and Haemophilus Influenza B Vaccine)'))
 
+INFANT_VACCINATIONS = (
+    ('Vitamin A', 'Vitamin A'),
+    ('BCG', 'BCG'),
+    ('Hepatitis B', 'Hepatitis B'),
+    ('DPT', 'DPT (Diphtheria, Pertussis and Tetanus)'),
+    ('Influenza B', 'Haemophilus Influenza B Vaccine'),
+    ('PCV Vaccine', 'PCV Vaccine (Pneumonia Conjugated Vaccine)'),
+    ('Polio', 'Polio'),
+    ('Rotavirus', 'Rotavirus'),
+    ('Measles', 'Measles'),
+    ('Pentavalent', 'Pentavalent Vaccine (Contains DPT, Hepatitis B and Haemophilus Influenza B Vaccine)'))
+
 INFANT_AGE_VACCINE_GIVEN = (
     ('After Birth', 'After Birth'),
     ('2', '2 months'),
