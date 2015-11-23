@@ -83,7 +83,8 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(40L, u'microbiome_maternal', u'maternallabdeldx', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(50L, u'microbiome_maternal', u'maternalarvpreg', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(60L, u'microbiome_maternal', u'maternalarv', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(65L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(70L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(80L, u'microbiome_maternal', u'maternalpostfumed', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(200L, u'microbiome_maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'microbiome_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
@@ -113,8 +114,9 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(40L, u'microbiome_maternal', u'srhservicesutilization', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(50L, u'microbiome_maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(60L, u'microbiome_maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(65L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(70L, u'microbiome_maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(70L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(80L, u'microbiome_maternal', u'maternalpostfumed', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(90L, u'microbiome_maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'microbiome_maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'microbiome_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
@@ -144,8 +146,9 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(40L, u'microbiome_maternal', u'srhservicesutilization', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(50L, u'microbiome_maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(60L, u'microbiome_maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(65L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(70L, u'microbiome_maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(70L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(80L, u'microbiome_maternal', u'maternalpostfumed', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(90L, u'microbiome_maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'microbiome_maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'microbiome_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
@@ -175,8 +178,9 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(40L, u'microbiome_maternal', u'srhservicesutilization', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(50L, u'microbiome_maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(60L, u'microbiome_maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(65L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(70L, u'microbiome_maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(70L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(80L, u'microbiome_maternal', u'maternalpostfumed', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(90L, u'microbiome_maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'microbiome_maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'microbiome_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
@@ -206,8 +210,9 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(40L, u'microbiome_maternal', u'srhservicesutilization', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(50L, u'microbiome_maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(60L, u'microbiome_maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(65L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(70L, u'microbiome_maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(70L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(80L, u'microbiome_maternal', u'maternalpostfumed', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(90L, u'microbiome_maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'microbiome_maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'microbiome_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 
@@ -237,8 +242,9 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(40L, u'microbiome_maternal', u'srhservicesutilization', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(50L, u'microbiome_maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(60L, u'microbiome_maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(65L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(70L, u'microbiome_maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
+            EntryTuple(70L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(80L, u'microbiome_maternal', u'maternalpostfumed', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(90L, u'microbiome_maternal', u'rapidtestresult', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'microbiome_maternal', u'maternaldeath', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(210L, u'microbiome_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL), )}
 site_visit_schedules.register(PostnatalEnrollmentVisitSchedule)
