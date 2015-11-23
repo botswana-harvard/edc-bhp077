@@ -1,4 +1,5 @@
 from django import forms
+from django.db import models
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
 from ..models import MaternalVisit, MaternalConsent
@@ -22,7 +23,7 @@ class MaternalVisitForm (BaseModelForm):
 
     def clean(self):
         cleaned_data = super(MaternalVisitForm, self).clean()
-        self.validate_cleaned_data(cleaned_data)
+        self.validate_reason_missed(cleaned_data)
         try:
             maternal_consent = MaternalConsent.objects.get(
                 registered_subject__subject_identifier=cleaned_data.get('appointment').registered_subject.subject_identifier)
@@ -33,6 +34,17 @@ class MaternalVisitForm (BaseModelForm):
         except MaternalConsent.DoesNotExist:
             raise forms.ValidationError('Maternal Consent does not exist.')
 
+        instance = None
+        if self.instance.id:
+            instance = self.instance
+        else:
+            instance = MaternalVisit(**self.cleaned_data)
+        if instance.is_off_study:
+            raise forms.ValidationError('Data capturing is not allowed, there is an off study visit report.')
+
+        if not instance.postnatal_enrollment.postnatal_eligible:
+            if not instance.appointment.visit_definition.code == "1000M":
+                raise forms.ValidationError('Data capturing is not allowed, the participant is not eligible.')
         return cleaned_data
 
     def validate_reason_missed(self, cleaned_data):

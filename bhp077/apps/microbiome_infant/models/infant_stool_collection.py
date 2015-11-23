@@ -1,10 +1,13 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.fields import OtherCharField
 from edc_constants.choices import YES_NO, YES_NO_NA
+from edc_constants.constants import NOT_APPLICABLE
 
-from ..infant_choices import STOOL_COLLECTION_TIME, STOOL_STORED
+from ..infant_choices import STOOL_COLLECTION_TIME, STOOL_STORED, NAPPY_TYPE
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
@@ -21,10 +24,25 @@ class InfantStoolCollection(InfantScheduledVisitModel):
                    " remainder of this form"),
     )
 
+    nappy_type = models.CharField(
+        verbose_name="What type of nappy was used?",
+        choices=NAPPY_TYPE,
+        default=NOT_APPLICABLE,
+        max_length=20,
+    )
+
+    other_nappy = OtherCharField(
+        verbose_name='',
+        max_length=25,
+        blank=True,
+        null=True,
+    )
+
     stool_colection = models.CharField(
         verbose_name="Was the stool sample from the nappy collected in real-time "
                      "(stool produced at study visit) or brought by the mother?",
         choices=STOOL_COLLECTION_TIME,
+        default=NOT_APPLICABLE,
         max_length=20,
         help_text=(""),
     )
@@ -32,11 +50,15 @@ class InfantStoolCollection(InfantScheduledVisitModel):
     stool_colection_time = models.IntegerField(
         verbose_name="Approximately how many hours ago did the mother/caregiver collect the stool in the nappy?",
         help_text=("Cannot exceed 24 hours"),
+        validators=[MinValueValidator(0), MaxValueValidator(24)],
+        blank=True,
+        null=True,
     )
 
     stool_stored = models.CharField(
         verbose_name="Was the sample stored?",
         choices=STOOL_STORED,
+        default=NOT_APPLICABLE,
         max_length=40,
         help_text=("")
     )
@@ -45,8 +67,6 @@ class InfantStoolCollection(InfantScheduledVisitModel):
         verbose_name="Has this infant/child had diarrhea in the past 7 days?",
         choices=YES_NO,
         max_length=3,
-        null=True,
-        blank=True,
         help_text=("Diarrhea is defined as 3 or more loose or watery stools with or without blood"
                    " over a 24 hour period and the stool pattern is a change from the"
                    " infant's/child's normal stool pattern"),
@@ -57,28 +77,22 @@ class InfantStoolCollection(InfantScheduledVisitModel):
                       " diarrhea continued in the last 24 hours?"),
         max_length=15,
         choices=YES_NO_NA,
-        null=True,
-        blank=True,
         help_text="",
     )
 
     antibiotics_7days = models.CharField(
-        verbose_name="Has this infant/child taken antibiotics in the past 7 days, other than CTX/Placebo?",
+        verbose_name="Has this infant/child taken antibiotics in the past 7 days?",
         choices=YES_NO,
         max_length=3,
-        null=True,
-        blank=True,
         help_text=("If the answer to this question is yes, please ensure that antibiotic"
                    " information is recorded on NEW MEDICATIONS EDC form"),
     )
 
     antibiotic_dose_24hrs = models.CharField(
         verbose_name=("If this infant/child has taken antibiotics in the past 7 days, have they"
-                      " taken a dose in the last 24 hours, other than CTX/Placebo?"),
+                      " taken a dose in the last 24 hours?"),
         max_length=15,
         choices=YES_NO_NA,
-        null=True,
-        blank=True,
         help_text="",
     )
 
