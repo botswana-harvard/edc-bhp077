@@ -56,6 +56,10 @@ class MaternalConsentAdmin(BaseModelAdmin):
                     'modified',
                     'user_created',
                     'user_modified')
+    list_filter = ('language',
+                   'is_verified',
+                   'is_literate',
+                   'identity_type')
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "registered_subject":
