@@ -4,7 +4,7 @@ from .infant_birth import InfantBirth
 from .infant_birth_arv import InfantBirthArv
 from .infant_birth_exam import InfantBirthExam
 from .infant_birth_data import InfantBirthData
-from .infant_birth_feeding import InfantBirthFeedVaccine
+from .infant_birth_feeding import InfantBirthFeedVaccine, InfantVaccines
 from .infant_circumcision import InfantCircumcision
 from .infant_death import InfantDeath
 from .infant_fu import InfantFu
