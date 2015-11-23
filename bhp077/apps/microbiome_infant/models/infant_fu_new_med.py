@@ -3,15 +3,15 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 
 from edc_base.model.fields.custom_fields import OtherCharField
+from edc_base.model.models import BaseUuidModel
+from edc_constants.choices import DRUG_ROUTE
 from edc_constants.choices import YES_NO
 
-from .infant_fu import InfantFu
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from bhp077.apps.microbiome.choices import MEDICATIONS
 
 
 class InfantFuNewMed(InfantScheduledVisitModel):
-
-    infant_fu = models.OneToOneField(InfantFu)
 
     new_medications = models.CharField(
         max_length=25,
@@ -50,3 +50,45 @@ class InfantFuNewMed(InfantScheduledVisitModel):
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant FollowUp: New Medication"
+        verbose_name_plural = "Infant FollowUp: New Medication"
+
+
+class InfantFuNewMedItems(BaseUuidModel):
+
+    infant_fu_med = models.ForeignKey(InfantFuNewMed)
+
+    medication = models.CharField(
+        max_length=100,
+        choices=MEDICATIONS,
+        verbose_name="Medication",
+        blank=True,
+        null=True,
+    )
+
+    drug_route = models.CharField(
+        max_length=20,
+        choices=DRUG_ROUTE,
+        verbose_name="Drug route",
+        blank=True,
+        null=True,
+    )
+
+    def get_visit(self):
+        return self.infant_fu_med.get_visit()
+
+    def get_report_datetime(self):
+        return self.infant_fu_med.get_report_datetime()
+
+    def get_subject_identifier(self):
+        return self.infant_fu_med.get_subject_identifier()
+
+    def __unicode__(self):
+        return unicode(self.get_visit())
+
+    def get_absolute_url(self):
+        return reverse('admin:microbiome_infant_infantfunewmeditems_change', args=(self.id,))
+
+    class Meta:
+        app_label = "microbiome_infant"
+        verbose_name = "Infant FollowUp: New Med Items"
+        verbose_name_plural = "Infant FollowUp: New Med Items"

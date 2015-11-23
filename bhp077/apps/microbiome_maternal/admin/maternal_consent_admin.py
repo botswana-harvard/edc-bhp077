@@ -17,6 +17,10 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'initials',
               'language',
               'study_site',
+              'recruit_source',
+              'recruit_source_other',
+              'recruitment_clinic',
+              'recruitment_clinic_other',
               'is_literate',
               'witness_name',
               'consent_datetime',
@@ -35,6 +39,8 @@ class MaternalConsentAdmin(BaseModelAdmin):
     radio_fields = {'citizen': admin.VERTICAL,
                     'language': admin.VERTICAL,
                     'study_site': admin.VERTICAL,
+                    'recruit_source': admin.VERTICAL,
+                    'recruitment_clinic': admin.VERTICAL,
                     'is_literate': admin.VERTICAL,
                     'is_dob_estimated': admin.VERTICAL,
                     'identity_type': admin.VERTICAL,
@@ -52,10 +58,16 @@ class MaternalConsentAdmin(BaseModelAdmin):
                     'gender',
                     'dob',
                     'consent_datetime',
+                    'recruit_source',
+                    'recruitment_clinic',
                     'created',
                     'modified',
                     'user_created',
                     'user_modified')
+    list_filter = ('language',
+                   'is_verified',
+                   'is_literate',
+                   'identity_type')
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "registered_subject":

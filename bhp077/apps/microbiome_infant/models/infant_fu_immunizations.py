@@ -14,8 +14,6 @@ from ..infant_choices import IMMUNIZATIONS, INFANT_AGE_VACCINE_GIVEN
 
 class InfantFuImmunizations(InfantScheduledVisitModel):
 
-    infant_fu = models.OneToOneField(InfantFu)
-
     vaccines_received = models.CharField(
         max_length=25,
         choices=YES_NO_UNKNOWN,
@@ -25,7 +23,7 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
     vaccines_missed = models.CharField(
         max_length=25,
         choices=YES_NO_UNKNOWN,
-        verbose_name="Is the child missing any vacations?",
+        verbose_name="Is the child missing any vaccinations?",
         help_text="")
 
     history = AuditTrail()

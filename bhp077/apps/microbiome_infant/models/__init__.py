@@ -8,11 +8,9 @@ from .infant_birth_feeding import InfantBirthFeedVaccine
 from .infant_circumcision import InfantCircumcision
 from .infant_death import InfantDeath
 from .infant_fu import InfantFu
-from .infant_fu_dx import InfantFuDx
-from .infant_fu_dx_items import InfantFuDxItems
+from .infant_fu_dx import InfantFuDx, InfantFuDxItems
 from .infant_fu_immunizations import InfantFuImmunizations, VaccinesReceived, VaccinesMissed
-from .infant_fu_new_med import InfantFuNewMed
-from .infant_fu_new_med_items import InfantFuNewMedItems
+from .infant_fu_new_med import InfantFuNewMed, InfantFuNewMedItems
 from .infant_fu_physical import InfantFuPhysical
 from .infant_feeding import InfantFeeding
 from .infant_off_study import InfantOffStudy
