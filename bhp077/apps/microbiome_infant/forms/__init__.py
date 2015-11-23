@@ -3,7 +3,7 @@ from .infant_arv_proph_form import InfantArvProphForm
 from .infant_birth_form import InfantBirthForm
 from .infant_birth_arv_form import InfantBirthArvForm
 from .infant_birth_exam_form import InfantBirthExamForm
-from .infant_birth_feeding_form import InfantBirthFeedVaccineForm
+from .infant_birth_feeding_form import InfantBirthFeedVaccineForm, InfantVaccinesForm
 from .infant_birth_data_form import InfantBirthDataForm
 from .infant_circumcision_form import InfantCircumcisionForm
 from .infant_death_form import InfantDeathForm

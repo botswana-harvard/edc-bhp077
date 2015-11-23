@@ -151,3 +151,9 @@ class TestBaseEnroll(TestCase):
         if not sample_consent:
             # self.assertIn(u'Please ensure to save the SAMPLE CONSENT before completing Enrollment')
             self.assertRaises(forms.ValidationError)
+
+    def test_pos_with_evidence_and_do_rapid_test(self):
+        self.data['evidence_hiv_status'] = YES
+        self.data['process_rapid_test'] = YES
+        form = BaseEnrollTestForm(data=self.data)
+        self.assertIn(u'DO NOT PROCESS RAPID TEST. PARTICIPANT IS POS and HAS EVIDENCE.', form.errors.get('__all__'))

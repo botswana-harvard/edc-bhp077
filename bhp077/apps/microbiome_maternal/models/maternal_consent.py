@@ -4,6 +4,7 @@ from edc.core.bhp_variables.models import StudySite
 from edc.core.identifier.classes import SubjectIdentifier
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.fields import OtherCharField
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_consent.models.base_consent import BaseConsent
 from edc_consent.models.fields import (PersonalFieldsMixin, CitizenFieldsMixin, ReviewFieldsMixin,
@@ -11,6 +12,7 @@ from edc_consent.models.fields import (PersonalFieldsMixin, CitizenFieldsMixin, 
 from edc_consent.models.fields.bw import IdentityFieldsMixin
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
+from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 
 
 class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
@@ -24,6 +26,26 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
         verbose_name='Site',
         null=True,
         help_text="")
+
+    recruit_source = models.CharField(
+        max_length=75,
+        choices=RECRUIT_SOURCE,
+        verbose_name="The mother first learned about the Microbiome study from ",
+        help_text="", )
+    recruit_source_other = OtherCharField(
+        max_length=35,
+        verbose_name="if other recruitment source, specify...",
+        blank=True,
+        null=True, )
+    recruitment_clinic = models.CharField(
+        max_length=100,
+        verbose_name="The mother was recruited from",
+        choices=RECRUIT_CLINIC, )
+    recruitment_clinic_other = models.CharField(
+        max_length=100,
+        verbose_name="if other recruitment clinic, specify...",
+        blank=True,
+        null=True, )
 
     def __unicode__(self):
         return '{0} {1} {2} ({3})'.format(self.subject_identifier, self.first_name,
