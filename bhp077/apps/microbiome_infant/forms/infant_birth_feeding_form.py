@@ -10,7 +10,6 @@ class InfantBirthFeedVaccineForm(BaseInfantModelForm):
         fields = '__all__'
 
 
-
 class InfantVaccinesForm(BaseInfantModelForm):
 
     class Meta:

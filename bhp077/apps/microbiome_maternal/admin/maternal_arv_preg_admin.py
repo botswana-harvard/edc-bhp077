@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
-from ..forms import MaternalArvPregForm
+from ..forms import MaternalArvPregForm, MaternalArvForm
 from ..models import MaternalArvPreg, MaternalArv, MaternalVisit
 
 
@@ -25,3 +25,14 @@ class MaternalArvPregAdmin(BaseModelAdmin):
         return super(MaternalArvPregAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalArvPreg, MaternalArvPregAdmin)
+
+
+class MaternalArvAdmin(BaseModelAdmin):
+    form = MaternalArvForm
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "maternal_visit":
+                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
+        return super(MaternalArvAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+admin.site.register(MaternalArv, MaternalArvAdmin)

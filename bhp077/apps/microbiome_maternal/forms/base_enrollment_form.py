@@ -25,6 +25,10 @@ class BaseEnrollmentForm(BaseModelForm):
                 raise forms.ValidationError(
                     'The current HIV status is {}. Rapid test cannot be NOT APPLICABLE.'
                     .format(cleaned_data.get('verbal_hiv_status')))
+            if cleaned_data.get('process_rapid_test') == NO:
+                raise forms.ValidationError("Participant verbal HIV status is {}. You must "
+                                            "conduct HIV rapid testing today to continue with "
+                                            "the eligibility screen".format(cleaned_data.get('verbal_hiv_status')))
         if cleaned_data.get('verbal_hiv_status') == NEG:
             if cleaned_data.get('evidence_hiv_status') == NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that the participant is Negative, Evidence of HIV '

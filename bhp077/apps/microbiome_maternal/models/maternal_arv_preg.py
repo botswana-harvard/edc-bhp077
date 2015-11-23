@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from edc_constants.choices import YES_NO
 
@@ -68,6 +69,9 @@ class MaternalArv(MaternalScheduledVisitModel):
         verbose_name="Date Stopped",
         null=True,
         blank=True)
+
+    def get_absolute_url(self):
+        return reverse('admin:microbiome_maternal_maternalarv_change', args=(self.id,))
 
     class Meta:
         app_label = 'microbiome_maternal'
