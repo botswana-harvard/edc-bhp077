@@ -157,3 +157,11 @@ class TestBaseEnroll(TestCase):
         self.data['process_rapid_test'] = YES
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'DO NOT PROCESS RAPID TEST. PARTICIPANT IS POS and HAS EVIDENCE.', form.errors.get('__all__'))
+
+    def test_participant_never_tested(self):
+        self.data['verbal_hiv_status'] = 'NEVER'
+        self.data['evidence_hiv_status'] = NOT_APPLICABLE
+        self.data['valid_regimen'] = NOT_APPLICABLE
+        form = BaseEnrollTestForm(data=self.data)
+        self.assertIn(u'Participant verbal HIV status is {}. You must conduct HIV rapid testing '
+                      'today to continue with the eligibility screen'.format(self.data['verbal_hiv_status']), form.errors.get('__all__'))
