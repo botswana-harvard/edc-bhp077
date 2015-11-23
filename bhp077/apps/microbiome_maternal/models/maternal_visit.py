@@ -24,7 +24,7 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
     history = AuditTrail(True)
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalvisit_add', args=(self.id,))
+        return reverse('admin:microbiome_maternal_maternalvisit_change', args=(self.id,))
 
     def __unicode__(self):
         return '{} {} {}'.format(self.appointment.registered_subject.subject_identifier,

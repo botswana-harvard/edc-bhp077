@@ -11,6 +11,7 @@ class InfantStoolCollectionAdmin(BaseModelAdmin):
     form = InfantStoolCollectionForm
     radio_fields = {
         "sample_obtained": admin.VERTICAL,
+        "nappy_type": admin.VERTICAL,
         "stool_colection": admin.VERTICAL,
         "stool_stored": admin.VERTICAL,
         "past_diarrhea": admin.VERTICAL,
