@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc.core.identifier.classes import InfantIdentifier
 from edc_base.audit_trail import AuditTrail
@@ -63,6 +64,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         decimal_places=1,
         verbose_name="Indicate the maximum temperature of mother during labour",
         help_text="",
+        validators=[MinValueValidator(36.5), MaxValueValidator(37.2), ],
         blank=True,
         null=True,
     )

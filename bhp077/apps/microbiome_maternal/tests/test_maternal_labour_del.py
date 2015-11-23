@@ -98,6 +98,23 @@ class TestMaternalLabourDel(TestCase):
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn("You have indicated that maximum temperature is not known.", errors)
 
+    def test_temp_3(self):
+        """Temperature cannot be above 37.2"""
+        self.data['has_temp'] = YES
+        self.data['labr_max_temp'] = 40
+        form = MaternalLabourDelForm(data=self.data)
+        self.assertFalse(form.is_valid())
+
+    def test_temp_4(self):
+        form = MaternalLabourDelForm(data=self.data)
+        self.assertTrue(form.is_valid())
+
+    def test_temp_5(self):
+        self.data['has_temp'] = YES
+        self.data['labr_max_temp'] = 36.8
+        form = MaternalLabourDelForm(data=self.data)
+        self.assertTrue(form.is_valid())
+
 
 class TestMaternalLabourDelClinic(TestCase):
     """Test eligibility of a mother for postnatal enrollment."""
