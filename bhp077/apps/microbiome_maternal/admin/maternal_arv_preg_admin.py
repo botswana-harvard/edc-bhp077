@@ -33,6 +33,6 @@ class MaternalArvAdmin(BaseModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
-        return super(MaternalArvPregAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+        return super(MaternalArvAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalArv, MaternalArvAdmin)
