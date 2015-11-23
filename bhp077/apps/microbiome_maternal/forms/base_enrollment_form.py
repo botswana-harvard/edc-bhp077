@@ -46,6 +46,9 @@ class BaseEnrollmentForm(BaseModelForm):
             if cleaned_data.get('valid_regimen') == NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that the participant is Positive, "do records show that'
                                             ' participant takes ARVs" cannot be Not Applicable.')
+            if cleaned_data.get('evidence_hiv_status') == YES:
+                if cleaned_data.get('process_rapid_test') == YES:
+                    raise forms.ValidationError('DO NOT PROCESS RAPID TEST. PARTICIPANT IS POS and HAS EVIDENCE.')
         if cleaned_data.get('valid_regimen') == YES:
             if cleaned_data.get('valid_regimen_duration') == NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that the participant is on ARV. Regimen validity period'
