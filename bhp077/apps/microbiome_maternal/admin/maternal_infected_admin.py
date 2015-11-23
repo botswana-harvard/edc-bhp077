@@ -18,7 +18,8 @@ class MaternalInfectedAdmin(BaseModelAdmin):
               'know_hiv_status',
               'weight',
               'height',
-              'bp')
+              'systolic_bp',
+              'diastolic_bp')
     list_display = ('recruit_source',
                     'recruitment_clinic',
                     'prev_pregnancies',

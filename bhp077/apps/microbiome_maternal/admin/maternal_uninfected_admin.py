@@ -15,7 +15,8 @@ class MaternalUninfectedAdmin(BaseModelAdmin):
               'prev_pregnancies',
               'weight',
               'height',
-              'bp')
+              'systolic_bp',
+              'diastolic_bp')
     list_display = ('recruit_source',
                     'recruitment_clinic',
                     'prev_pregnancies', )
