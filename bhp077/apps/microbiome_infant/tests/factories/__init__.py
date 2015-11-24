@@ -4,6 +4,7 @@ from .infant_birth_arv_factory import InfantBirthArvFactory
 from .infant_visit_factory import InfantVisitFactory
 from .infant_birth_data_factory import  InfantBirthDataFactory
 from .infant_cns_abn_item_factory import InfantBirthCnsAbnItemFactory
+from .infant_offstudy_factory import InfantOffStudyFactory
 from bhp077.apps.microbiome_maternal.tests.factories.maternal_labour_del_factory import MaternalLabourDelFactory
 from bhp077.apps.microbiome_maternal.tests.factories.antenatal_enrollment_factory import AntenatalEnrollmentFactory
 from bhp077.apps.microbiome_infant.tests.factories.infant_birth_feed_vaccine_factory import InfantBirthFeedVaccineFactory

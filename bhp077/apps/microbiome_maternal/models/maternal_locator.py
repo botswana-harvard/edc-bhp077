@@ -59,6 +59,9 @@ class MaternalLocator(BaseLocator, BaseUuidModel):
     def get_subject_identifier(self):
         return self.maternal_visit.appointment.registered_subject.subject_identifier
 
+    def __unicode__(self):
+        return unicode(self.maternal_visit)
+
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = 'Maternal Locator'

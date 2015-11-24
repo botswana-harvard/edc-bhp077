@@ -5,6 +5,7 @@ from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 
 from bhp077.apps.microbiome_infant.models import InfantVisit, InfantBirth
+from bhp077.apps.microbiome_maternal.models import MaternalVisit
 from bhp077.apps.microbiome_lab.models import InfantRequisition
 from bhp077.apps.microbiome_maternal.models import MaternalLocator, MaternalConsent, MaternalEligibility
 
@@ -37,6 +38,7 @@ class InfantDashboard(RegisteredSubjectDashboard):
         self._locator_model = None
         self._maternal_identifier = None
         self._infant_birth = None
+        #self._visit_model = None
 
     def get_context_data(self, **kwargs):
         super(InfantDashboard, self).get_context_data(**kwargs)
@@ -50,12 +52,13 @@ class InfantDashboard(RegisteredSubjectDashboard):
             infant_birth=self.infant_birth, )
         return self.context
 
-    def get_locator_model(self):
-        return MaternalLocator
-
-    @RegisteredSubjectDashboard.locator_model.getter
-    def locator_model(self):
-        return self.get_locator_model()
+    # @property
+    # def visit_model(self):
+    #     self._visit_model = MaternalVisit
+    #     return self._visit_model
+    #
+    # def get_locator_model():
+    #     return MaternalLocator
 
     @property
     def maternal_consent(self):
@@ -69,17 +72,33 @@ class InfantDashboard(RegisteredSubjectDashboard):
     def maternal_identifier(self):
         return self.registered_subject.relative_identifier
 
+    @RegisteredSubjectDashboard.locator_model.getter
+    def locator_model(self):
+        return MaternalLocator
+
+    @property
+    def locator_registered_subject(self):
+        return RegisteredSubject.objects.get(
+            subject_identifier=self.maternal_identifier)
+
+    # @property
+    # def maternal_locator(self):
+    #     return MaternalLocator.objects.get(
+    #         registered_subject__subject_identifier=self.subject_identifier)
+
     @property
     def maternal_eligibility(self):
         try:
-            return MaternalEligibility.objects.get(registered_subject__subject_identifier=self.maternal_identifier)
+            return MaternalEligibility.objects.get(
+                registered_subject__subject_identifier=self.maternal_identifier)
         except MaternalEligibility.DoesNotExist:
             pass
 
     @property
     def infant_birth(self):
         try:
-            self._infant_birth = InfantBirth.objects.get(registered_subject__subject_identifier=self.subject_identifier)
+            self._infant_birth = InfantBirth.objects.get(
+                registered_subject__subject_identifier=self.subject_identifier)
         except InfantBirth.DoesNotExist:
             self._infant_birth = None
         return self._infant_birth

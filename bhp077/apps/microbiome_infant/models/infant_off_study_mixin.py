@@ -7,5 +7,11 @@ class InfantOffStudyMixin(OffStudyMixin):
         from .infant_off_study import InfantOffStudy
         return InfantOffStudy
 
+    @property
+    def OFF_STUDY_MODEL(self):
+        from .infant_off_study import InfantOffStudy
+        return InfantOffStudy
+
+
     class Meta:
         abstract = True

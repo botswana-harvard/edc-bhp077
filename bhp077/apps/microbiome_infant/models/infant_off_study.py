@@ -20,6 +20,15 @@ class InfantOffStudy(BaseOffStudy, BaseUuidModel):
     def get_visit(self):
         return self.infant_visit
 
+    def get_visit_model_cls(self):
+        return InfantVisit
+
+    def get_subject_identifier(self):
+        return self.infant_visit.appointment.registered_subject.subject_identifier
+
+    def get_visit(self):
+        return self.infant_visit
+
     def get_absolute_url(self):
         return reverse('admin:microbiome_infant_infantoffstudy_change', args=(self.id,))
 
