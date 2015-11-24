@@ -52,7 +52,8 @@ class MaternalDashboard(RegisteredSubjectDashboard):
             antenatal_enrollment=self.antenatal_enrollment(),
             postnatal_enrollment=self.postnatal_enrollment(),
             antenatal_hiv_status=self.antenatal_maternal_hiv_status(),
-            postnatal_hiv_status=self.postnatal_maternal_hiv_status())
+            postnatal_hiv_status=self.postnatal_maternal_hiv_status(),
+            locator=self.maternal_locator)
         return self.context
 
     @property
@@ -104,8 +105,9 @@ class MaternalDashboard(RegisteredSubjectDashboard):
                 self._maternal_hiv_status = 'IND PNT rapid test'
             return self._maternal_hiv_status
 
-    def get_locator_model(self):
-        return MaternalLocator
+    @property
+    def maternal_locator(self):
+        return MaternalLocator.objects.get(registered_subject__subject_identifier=self.subject_identifier)
 
     @property
     def subject_identifier(self):
@@ -113,7 +115,7 @@ class MaternalDashboard(RegisteredSubjectDashboard):
 
     @RegisteredSubjectDashboard.locator_model.getter
     def locator_model(self):
-        return self.get_locator_model()
+        return MaternalLocator
 
     def get_registered_infant_identifier(self):
         """Returns an infant identifier associated with the maternal identifier"""

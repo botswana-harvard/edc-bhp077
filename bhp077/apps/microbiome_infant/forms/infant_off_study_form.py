@@ -1,5 +1,6 @@
 from django import forms
-from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
+from django.contrib.admin.widgets import (AdminRadioSelect,
+                                          AdminRadioFieldRenderer)
 
 from bhp077.apps.microbiome_maternal.models import MaternalConsent
 from bhp077.apps.microbiome_infant.infant_choices import OFF_STUDY_REASON
@@ -27,14 +28,20 @@ class InfantOffStudyForm(BaseInfantModelForm):
 
     def validate_offstudy_date(self, cleaned_data, field):
         try:
-            subject_identifier = cleaned_data.get('infant_visit').appointment.registered_subject.relative_identifier
+            subject_identifier = cleaned_data.get('infant_visit').\
+                appointment.registered_subject.relative_identifier
             maternal_consent = MaternalConsent.objects.get(
                 registered_subject__subject_identifier=subject_identifier)
             try:
-                if cleaned_data.get(field) < maternal_consent.consent_datetime.date():
-                    raise forms.ValidationError("{} CANNOT be before consent datetime".format(field.title()))
+                if (cleaned_data.get(field) <
+                        maternal_consent.consent_datetime.date()):
+                    raise forms.ValidationError("{} CANNOT be befor"
+                                                "e consent datetime"
+                                                "".format(field.title()))
                 if cleaned_data.get(field) < maternal_consent.dob:
-                    raise forms.ValidationError("{} CANNOT be before dob".format(field.title()))
+                    raise forms.ValidationError("{} "
+                                                "CANNOT be before dob"
+                                                "".format(field.title()))
             except AttributeError as err:
                 print err
         except MaternalConsent.DoesNotExist:
