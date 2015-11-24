@@ -53,7 +53,7 @@ class MaternalDashboard(RegisteredSubjectDashboard):
             postnatal_enrollment=self.postnatal_enrollment(),
             antenatal_hiv_status=self.antenatal_maternal_hiv_status(),
             postnatal_hiv_status=self.postnatal_maternal_hiv_status(),
-            locator=self.maternal_locator)
+        )
         return self.context
 
     @property
