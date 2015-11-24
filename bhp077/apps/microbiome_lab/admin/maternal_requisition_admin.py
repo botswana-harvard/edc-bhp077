@@ -15,6 +15,22 @@ class MaternalRequisitionAdmin(BaseRequisitionModelAdmin):
     visit_model = MaternalVisit
     visit_attr = 'maternal_visit'
 
+    fields = (
+        'maternal_visit',
+        'requisition_datetime',
+        'is_drawn',
+        'reason_not_drawn',
+        'drawn_datetime',
+        'site',
+        'panel',
+        'aliquot_type',
+        'item_type',
+        'item_count_total',
+        'estimated_volume',
+        'priority',
+        'comments',
+    )
+
     def __init__(self, *args, **kwargs):
         super(MaternalRequisitionAdmin, self).__init__(*args, **kwargs)
         self.list_filter = list(self.list_filter)
