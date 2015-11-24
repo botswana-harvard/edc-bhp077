@@ -56,6 +56,9 @@ class InfantDashboard(RegisteredSubjectDashboard):
     # def visit_model(self):
     #     self._visit_model = MaternalVisit
     #     return self._visit_model
+    #
+    # def get_locator_model():
+    #     return MaternalLocator
 
     @property
     def maternal_consent(self):
@@ -78,10 +81,10 @@ class InfantDashboard(RegisteredSubjectDashboard):
         return RegisteredSubject.objects.get(
             subject_identifier=self.maternal_identifier)
 
-    @property
-    def maternal_locator(self):
-        return MaternalLocator.objects.get(
-            registered_subject__subject_identifier=self.subject_identifier)
+    # @property
+    # def maternal_locator(self):
+    #     return MaternalLocator.objects.get(
+    #         registered_subject__subject_identifier=self.subject_identifier)
 
     @property
     def maternal_eligibility(self):

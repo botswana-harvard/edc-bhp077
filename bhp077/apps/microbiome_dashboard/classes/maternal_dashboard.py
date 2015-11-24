@@ -105,6 +105,10 @@ class MaternalDashboard(RegisteredSubjectDashboard):
                 self._maternal_hiv_status = 'IND PNT rapid test'
             return self._maternal_hiv_status
 
+    def get_locator_scheduled_visit_code(self):
+        """ Returns visit where the locator is scheduled, TODO: maybe search visit definition for this?."""
+        return '1000M'
+
     @property
     def maternal_locator(self):
         return MaternalLocator.objects.get(registered_subject__subject_identifier=self.subject_identifier)
