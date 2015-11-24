@@ -1,12 +1,15 @@
 from django import forms
 from django.test import TestCase
+from django.utils import timezone
 
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc_constants.choices import POS, YES, NO, NEG
+from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE
 
+from bhp077.apps.microbiome_maternal.models import AntenatalEnrollment
+from bhp077.apps.microbiome_maternal.forms import AntenatalEnrollmentForm
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (AntenatalEnrollmentFactory, MaternalEligibilityFactory, PostnatalEnrollmentFactory)
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
@@ -29,6 +32,8 @@ class TestAntenatalEnroll(TestCase):
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
+        self.data = {
+            'registered_subject': self.registered_subject}
 
     def test_weeks_of_gestation_below_32(self):
         """Test for a positive mother on a valid regimen but weeks of gestation below 32."""
@@ -178,4 +183,19 @@ class TestAntenatalEnroll(TestCase):
         """Test that antenatal fails if filled after postnatal is completed."""
         PostnatalEnrollmentFactory(registered_subject=self.registered_subject)
         AntenatalEnrollmentFactory(registered_subject=self.registered_subject)
+        self.assertRaises(forms.ValidationError)
+
+    def test_cannot_change_rapid_test_date(self):
+        antenatal = AntenatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            verbal_hiv_status=NEG,
+            evidence_hiv_status=NO,
+            valid_regimen=NOT_APPLICABLE,
+            valid_regimen_duration=NOT_APPLICABLE,
+            process_rapid_test=YES,
+            date_of_rapid_test=timezone.now().date() - timezone.timedelta(days=1),
+            rapid_test_result=POS)
+        self.assertTrue(AntenatalEnrollment.objects.count(), 1)
+        antenatal.date_of_rapid_test = timezone.now().date()
+        antenatal.save()
         self.assertRaises(forms.ValidationError)
