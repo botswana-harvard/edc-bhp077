@@ -92,8 +92,8 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
     def update_scheduled_entry_meta_data(self):
         if self.hiv_status_pos_and_evidence_yes:
             if self.appointment.visit_definition.code == '1000M':
-                for model_name in ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg',
-                                   'maternalinfected']:
+                for model_name in ['maternalclinicalhistory', 'maternalarvhistory',
+                                   'maternalarvpreg', 'maternalinfected']:
                     self.scheduled_entry_meta_data(model_name)
             elif self.appointment.visit_definition.code == '2000M':
                 for model_name in ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']:
@@ -106,22 +106,23 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
 
     @property
     def is_off_study(self):
-        visit_codes = ['1000M', '2000M', '2010M', '2030M', '2060M', '2090M', '2120M']
+        visit_codes = ['1000M', '2000M', '2010M',
+                       '2030M', '2060M', '2090M', '2120M']
         is_off = False
         for i, code in enumerate(visit_codes):
             if self.appointment.visit_definition.code == "1000M":
-                break;
+                break
             else:
                 if code == self.appointment.visit_definition.code:
                     MaternalVisit = models.get_model('microbiome_maternal', 'maternalvisit')
                     try:
                         MaternalVisit.objects.get(
                             appointment__registered_subject=self.appointment.registered_subject,
-                            appointment__visit_definition__code = visit_codes[i-1],
+                            appointment__visit_definition__code=visit_codes[i-1],
                             reason='off study'
                         )
                         is_off = True
-                        break;
+                        break
                     except MaternalVisit.DoesNotExist:
                         return False
         return is_off
