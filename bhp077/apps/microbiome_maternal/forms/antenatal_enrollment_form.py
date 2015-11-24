@@ -13,9 +13,18 @@ class AntenatalEnrollmentForm(BaseEnrollmentForm):
             registered_subject = cleaned_data.get('registered_subject')
             try:
                 PostnatalEnrollment.objects.get(registered_subject=registered_subject)
-                raise forms.ValidationError("Antenatal enrollment Not required, it can not be done when postnatal enrollment has been done already.")
+                raise forms.ValidationError("Antenatal enrollment is NOT REQUIRED. Postnatal Enrollment already completed")
             except PostnatalEnrollment.DoesNotExist:
                 pass
+
+        try:
+            initial = AntenatalEnrollment.objects.get(registered_subject=self.instance.registered_subject)
+            if initial:
+                if cleaned_data.get('date_of_rapid_test') != initial.date_of_rapid_test:
+                    raise forms.ValidationError('The rapid test result cannot be changed')
+        except AntenatalEnrollment.DoesNotExist:
+            pass
+
         return cleaned_data
 
     class Meta:
