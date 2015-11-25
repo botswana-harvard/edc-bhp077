@@ -84,10 +84,13 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         return True
 
     def scheduled_entry_meta_data(self, model_name):
-        sd = ScheduledEntryMetaData.objects.filter(**self.model_options(
-            'microbiome_maternal', model_name)).first()
-        sd.entry_status = NEW
-        sd.save()
+        try:
+            sd = ScheduledEntryMetaData.objects.filter(**self.model_options(
+                'microbiome_maternal', model_name)).first()
+            sd.entry_status = NEW
+            sd.save()
+        except AttributeError:
+            pass
 
     def update_scheduled_entry_meta_data(self):
         if self.hiv_status_pos_and_evidence_yes:

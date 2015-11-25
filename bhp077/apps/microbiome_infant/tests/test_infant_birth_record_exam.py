@@ -98,8 +98,8 @@ class TestInfantBirthRecordExam(TestCase):
             'neuro_exam_other': 'NA',
             'other_exam_info': 'NA',
         }
+
     def test_clean_gender(self):
-        #infant_birth = InfantBirth.objects.get(registered_subject=self.registered_subject_infant)
         print timezone.now().date()
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         self.assertIn(u'Gender mismatch you specified F for infant birth and infant birth exam M', self.infant_birth_record_arv_form.errors.get('__all__'))
@@ -112,7 +112,6 @@ class TestInfantBirthRecordExam(TestCase):
         self.assertIn(u'If abnormal, please specify.', self.infant_birth_record_arv_form.errors.get('__all__'))
 
     def test_validate_general_activity2(self):
-        #infant_birth = InfantBirth.objects.get(infant_visit=cleaned_data.get('infant_visit'))
         del self.data['abnormal_activity']
         self.data['general_activity'] = 'ABNORMAL'
         self.data['gender'] = 'F'
@@ -132,7 +131,6 @@ class TestInfantBirthRecordExam(TestCase):
         del self.data['heent_no_other']
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         self.assertIn(u'Provide answer to Q10.', self.infant_birth_record_arv_form.errors.get('__all__'))
-
 
     def test_validate_resp_exam1(self):
         self.data['resp_exam'] = YES
@@ -189,4 +187,3 @@ class TestInfantBirthRecordExam(TestCase):
         del self.data['heent_no_other']
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         self.assertTrue(self.infant_birth_record_arv_form.is_valid())
-
