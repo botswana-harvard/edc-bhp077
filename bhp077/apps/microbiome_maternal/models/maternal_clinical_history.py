@@ -1,11 +1,12 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.model.fields.custom_fields import IsDateEstimatedField
+from edc_constants.choices import YES_NO
+
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
-from edc_constants.choices import YES_NO
 
 
 class MaternalClinicalHistory(MaternalScheduledVisitModel):
@@ -42,6 +43,7 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
     cd4_count = models.IntegerField(
         verbose_name=("What was the mother's lowest known (nadir) CD4 cell count(cells/mm3)"
                       " at any time in the past?"),
+        validators=[MinValueValidator(0), MaxValueValidator(3000), ],
         null=True,
         blank=True,
         help_text=""
