@@ -59,6 +59,18 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         default=NO,
         max_length=3)
 
+    week32_test = models.CharField(
+        verbose_name="Did you test for HIV at 32 weeks gestational age?",
+        choices=YES_NO,
+        default=NO,
+        max_length=3)
+    week32_result = models.CharField(
+        verbose_name="What was your rest result?",
+        choices=POS_NEG,
+        max_length=15,
+        null=True,
+        blank=True)
+
     verbal_hiv_status = models.CharField(
         verbose_name="What is your current HIV status?",
         choices=POS_NEG_UNTESTED_REFUSAL,
