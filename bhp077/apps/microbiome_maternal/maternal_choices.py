@@ -46,7 +46,7 @@ DELIVERY_HEALTH_FACILITY = (
 PRIOR_PREG_HAART_STATUS = (
     ('Received continuos HAART from the time she started',
      'Received continuos HAART from the time she started'),
-    ('Had treatment interruption but restarted ',
+    ('Had treatment interruption but restarted',
      'Had treatment interruption but restarted HAART prior to this pregnancy'),
     ('interruption never restarted',
      'Had treatment interruption and never restarted HAART prior to this pregnancy'),
