@@ -30,6 +30,9 @@ class MaternalRequisition(BaseRequisition, BaseUuidModel):
 
     entry_meta_data_manager = RequisitionMetaDataManager(MaternalVisit)
 
+    def __unicode__(self):
+        return '{0} {1}'.format(unicode(self.panel), self.requisition_identifier)
+
     def get_visit(self):
         return self.maternal_visit
 
@@ -38,8 +41,18 @@ class MaternalRequisition(BaseRequisition, BaseUuidModel):
 
     def aliquot(self):
         url = reverse('admin:microbiome_lab_aliquot_changelist')
-        return """<a href="{url}?q={requisition_identifier}" />aliquot</a>""".format(url=url, requisition_identifier=self.requisition_identifier)
+        return """<a href="{url}?q={requisition_identifier}" />aliquot</a>""".format(
+            url=url, requisition_identifier=self.requisition_identifier)
     aliquot.allow_tags = True
+
+    def dashboard(self):
+        url = reverse('subject_dashboard_url',
+                      kwargs={'dashboard_type': self.maternal_visit.appointment.registered_subject.subject_type.lower(),
+                              'dashboard_model': 'appointment',
+                              'dashboard_id': self.maternal_visit.appointment.pk,
+                              'show': 'appointments'})
+        return """<a href="{url}" />dashboard</a>""".format(url=url)
+    dashboard.allow_tags = True
 
     class Meta:
         app_label = 'microbiome_lab'
