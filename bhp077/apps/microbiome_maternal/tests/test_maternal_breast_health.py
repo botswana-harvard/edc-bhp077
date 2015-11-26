@@ -73,13 +73,6 @@ class TestMaternalBreastHealth(TestCase):
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('Has mastitis should be Not Applicable.', errors)
 
-    def test_breastfeeding_3(self):
-        """Assert that if mother has been breastfeeding, then expected to anser questions on mastitis"""
-        self.data['has_mastitis'] = NO
-        form = MaternalBreastHealthForm(data=self.data)
-        errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('Has mastitis should be Not Applicable.', errors)
-
     def test_mastitis_1(self):
         """Assert that if mother has mastitis, then expected to indicate where"""
         self.data['breast_feeding'] = YES
