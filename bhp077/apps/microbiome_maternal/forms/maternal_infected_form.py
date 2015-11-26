@@ -1,11 +1,9 @@
-from django import forms
-
 from ..models import MaternalInfected
 
-from .base_mother_form import BaseMotherForm
+from base_maternal_model_form import BaseMaternalModelForm
 
 
-class MaternalInfectedForm(BaseMotherForm):
+class MaternalInfectedForm(BaseMaternalModelForm):
 
     def clean(self):
         cleaned_data = super(MaternalInfectedForm, self).clean()
