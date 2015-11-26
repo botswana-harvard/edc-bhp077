@@ -8,15 +8,12 @@ from ..models import MaternalInfected
 class MaternalInfectedAdmin(BaseModelAdmin):
 
     form = MaternalInfectedForm
-    fields = ('prev_pregnancies',
-              'prior_health_haart',
+    fields = ('prior_health_haart',
               'prev_pregnancy_arv',
               'know_hiv_status')
-    list_display = ('prev_pregnancies',
-                    'prior_health_haart',
+    list_display = ('prior_health_haart',
                     'prev_pregnancy_arv')
-    list_filter = ('prev_pregnancies',
-                   'prior_health_haart',
+    list_filter = ('prior_health_haart',
                    'prev_pregnancy_arv')
     radio_fields = {'prior_health_haart': admin.VERTICAL,
                     'prev_pregnancy_arv': admin.VERTICAL,
