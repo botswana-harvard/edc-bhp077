@@ -31,10 +31,9 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
         help_text=('If reporting today, use today\'s date/time, otherwise use '
                    'the date/time this information was reported.'))
 
-    consent_benefits = models.CharField(
-        verbose_name=("I have explained the purpose of the sample storage"
-                      " to the participant. To the best of my knowledge, she understands"
-                      " the purpose, procedures, risks and benefits to her and her baby."),
+    purpose_explained = models.CharField(
+        verbose_name=("I have explained the purpose of the sample storage consent"
+                      " to the participant."),
         max_length=15,
         choices=YES_NO_NA,
         null=True,
@@ -42,15 +41,24 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
         default=NOT_APPLICABLE,
         help_text="answer is N/A if participant declines sample storage")
 
-    consent_copy = models.CharField(
-        verbose_name=("I have provided the client with a copy of their signed informed consent"),
+    purpose_understood = models.CharField(
+        verbose_name=("To the best of my knowledge, the client understands"
+                      " the purpose, procedures, risks and benefits of the sample storage consent"),
+        max_length=15,
+        choices=YES_NO_NA,
+        null=True,
+        blank=False,
+        default=NOT_APPLICABLE,
+        help_text="answer is N/A if participant declines sample storage")
+
+    sample_consent_copy = models.CharField(
+        verbose_name=("I have provided the client with a copy of their signed sample storage consent"),
         max_length=20,
         choices=YES_NO_DECLINED,
         validators=[eligible_if_yes_or_declined, ],
         null=True,
         blank=False,
-        help_text="If declined, return copy to the clinic with the consent",
-    )
+        help_text="If declined, return copy to the clinic with the consent")
 
     def get_subject_identifier(self):
         return self.registered_subject.subject_identifier

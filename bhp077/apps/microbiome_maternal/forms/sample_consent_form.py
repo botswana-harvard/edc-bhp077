@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from edc_constants.constants import YES, NO
+from edc_constants.constants import YES, NO, NOT_APPLICABLE
 
 from ..models import SampleConsent, MaternalConsent
 
@@ -20,10 +20,15 @@ class SampleConsentForm(ModelForm):
                 if cleaned_data.get('witness_name') != primary_consent[0].witness_name:
                     raise forms.ValidationError("Sample Consent and Maternal Consent witness names"
                                                 "do not match. Please Correct!")
-                if cleaned_data.get("consent_benefits") != YES:
-                    raise forms.ValidationError("If may_store_samples is YES, ensure that sample"
-                                                " storage benefits is explained to and understood by"
-                                                " participant.")
+                if cleaned_data.get("purpose_explained") != YES:
+                    raise forms.ValidationError("If may_store_samples is YES, ensure that purpose of sample storage is explained.")
+                if cleaned_data.get("purpose_understood") != YES:
+                    raise forms.ValidationError("If may_store_samples is YES, ensure that client understands purpose|procedures|benefits.")
+            else:
+                if cleaned_data.get("purpose_explained") != NOT_APPLICABLE:
+                    raise forms.ValidationError("storing samples rejected. Answer for explaining purpose should be N/A")
+                if cleaned_data.get("purpose_understood") != NOT_APPLICABLE:
+                    raise forms.ValidationError("storing samples rejected. Answer for understanding benefits should be N/A")
         if cleaned_data.get('is_literate', None) == NO and not cleaned_data.get('witness_name', None):
             raise forms.ValidationError('You wrote subject is illiterate. Please provide the name of a witness here and with signature on the paper document.')
         if cleaned_data.get('is_literate') == YES and cleaned_data.get('witness_name', None):

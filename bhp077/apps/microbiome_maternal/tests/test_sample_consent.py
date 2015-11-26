@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
+from django import forms
 
 from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -15,6 +16,7 @@ from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, SampleConsent
+from bhp077.apps.microbiome_maternal.forms.sample_consent_form import SampleConsentForm
 
 
 class TestSampleConsent(TestCase):
@@ -36,6 +38,8 @@ class TestSampleConsent(TestCase):
                                                  study_site=self.study_site)
 
         sample_consent = SampleConsentFactory(registered_subject=primary_consent.registered_subject)
+        self.data = {
+            'registered_subject': primary_consent.registered_subject}
 
         def test_one_consent_one_sample(self):
             self.assertEqual(MaternalConsent.objects.all().count(), 1)
@@ -58,3 +62,10 @@ class TestSampleConsent(TestCase):
             consent2 = SampleConsentFactory(registered_subject=consent1.registered_subject,
                                             is_literate=NO, witness_name='DIDI, JAYDEN')
             self.assertEqual(consent1.witness_name, consent2.witness_name)
+
+        def test_purpose_unexplained(self):
+            sample_consent.purpose_explained = NO
+            sample_consent.save()
+            form = SampleConsentForm
+            self.assertIn(u'If may_store_samples is YES, ensure that purpose of sample storage is explained.', form.errors.get('__all__'))
+            self.assertRaises(forms.ValidationError)
