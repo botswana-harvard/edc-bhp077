@@ -8,8 +8,10 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
+from bhp077.apps.microbiome_maternal.forms import MaternalConsentForm
 
 from .factories import MaternalEligibilityFactory, MaternalConsentFactory
+from django.core.exceptions import ValidationError
 
 
 class TestMaternalConsent(TestCase):
@@ -27,7 +29,8 @@ class TestMaternalConsent(TestCase):
 
     def test_identity_wrong_gender(self):
         """Test that Omang number reflects the correct gender digit."""
-        with self.assertRaises(forms.ValidationError):
-            MaternalConsentFactory(identity='123411234', confirm_identity='123411234',
-                                   registered_subject=self.maternal_eligibility.registered_subject,
-                                   )
+        consent = MaternalConsentFactory(identity='123411234', confirm_identity='123411234',
+                                         registered_subject=self.maternal_eligibility.registered_subject)
+        consent_form = MaternalConsentForm(data=consent.__dict__)
+        errors = ''.join(consent_form.errors.get('__all__'))
+        self.assertIn('Identity provided indicates participant is Male.', errors)
