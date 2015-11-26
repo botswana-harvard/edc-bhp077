@@ -9,12 +9,14 @@ class MaternalObstericalHistoryAdmin(BaseModelAdmin):
 
     form = MaternalObstericalHistoryForm
     fields = ('maternal_visit',
+              'prev_pregnancies',
               'pregs_24wks_or_more',
               'lost_before_24wks',
               'lost_after_24wks',
               'live_children',
               'children_died_b4_5yrs')
     list_display = ('maternal_visit',
+                    'prev_pregnancies',
                     'pregs_24wks_or_more',
                     'lost_before_24wks',
                     'lost_after_24wks',

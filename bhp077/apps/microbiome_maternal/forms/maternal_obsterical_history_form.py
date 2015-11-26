@@ -9,6 +9,8 @@ class MaternalObstericalHistoryForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = self.cleaned_data
 
+        if cleaned_data.get('prev_pregnancies') < 0:
+            raise forms.ValidationError('Number of previous pregnancies, should be greater than zero.')
         if cleaned_data.get('pregs_24wks_or_more') < 0:
             raise forms.ValidationError('Number of pregnancies at least 24 weeks, should be greater than zero.')
         else:
