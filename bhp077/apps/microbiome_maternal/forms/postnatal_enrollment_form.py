@@ -2,9 +2,11 @@ from django import forms
 
 from edc_constants.constants import POS, YES
 
-from .base_enrollment_form import BaseEnrollmentForm
 from bhp077.apps.microbiome.constants import LIVE
-from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment, AntenatalEnrollment
+from bhp077.apps.microbiome_maternal.models import (
+        PostnatalEnrollment, AntenatalEnrollment, MaternalEligibility)
+
+from .base_enrollment_form import BaseEnrollmentForm
 
 
 class PostnatalEnrollmentForm(BaseEnrollmentForm):
@@ -35,9 +37,22 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
                                                                                             cleaned_data.get('evidence_hiv_status')))
         if ant:
             if not ant.antenatal_eligible:
-                raise forms.ValidationError("This mother is not eligible for postnatal enrollment. Failed antenatal enrollment.")
+                raise forms.ValidationError(
+                    "This mother is not eligible for postnatal enrollment. Failed antenatal enrollment.")
+        instance = None
+        if self.instance.id:
+            instance = self.instance
+        else:
+            instance = PostnatalEnrollment(**cleaned_data)
+
+        self.validate_create_postnatal_enrollment(cleaned_data, ant, instance)
 
         return cleaned_data
+
+    def validate_create_postnatal_enrollment(self, cleaned_data, ant, instance):
+        if instance.maternal_eligibility_pregnant_yes():
+            if not ant:
+                raise forms.ValidationError("Participant is pregnant, please fill in antenatal instead.")
 
     class Meta:
         model = PostnatalEnrollment
