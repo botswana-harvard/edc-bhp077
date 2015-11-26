@@ -147,7 +147,7 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         try:
             return MaternalEligibility.objects.get(
                 registered_subject__subject_identifier=self.get_subject_identifier(),
-                currently_delivered=YES,
+                recently_delivered=YES,
             )
         except MaternalEligibility.DoesNotExist:
             return False
