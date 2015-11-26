@@ -4,6 +4,7 @@ from edc_constants.constants import POS, NEG, NOT_APPLICABLE, YES, NO
 
 from ..models import BaseEnrollment, MaternalConsent, SampleConsent
 from bhp077.apps.microbiome.base_model_form import BaseModelForm
+from inspect import cleandoc
 
 
 class BaseEnrollmentForm(BaseModelForm):
@@ -29,6 +30,12 @@ class BaseEnrollmentForm(BaseModelForm):
                 raise forms.ValidationError("Participant verbal HIV status is {}. You must "
                                             "conduct HIV rapid testing today to continue with "
                                             "the eligibility screen".format(cleaned_data.get('verbal_hiv_status')))
+        if cleaned_data.get("week32_test") == YES:
+            if not cleaned_data.get("week32_result"):
+                raise forms.ValidationError('Please provide test result at week 32.')
+        else:
+            if cleaned_data.get("week32_result"):
+                raise forms.ValidationError('You mentioned testing was not done at 32weeks yet provided a test result.')
         if cleaned_data.get('verbal_hiv_status') == NEG:
             if cleaned_data.get('evidence_hiv_status') == NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that the participant is Negative, Evidence of HIV '
@@ -61,6 +68,10 @@ class BaseEnrollmentForm(BaseModelForm):
             if cleaned_data.get('valid_regimen_duration') != NOT_APPLICABLE:
                 raise forms.ValidationError('You have indicated that there are no records of Participant taking ARVs. '
                                             'Regimen validity period should be Not Applicable. Please correct.')
+        # week32 result and verbal status comparison
+        if cleaned_data.get("week32_result") == POS and cleaned_data.get("verbal_hiv_status") != POS or cleaned_data.get("week32_result") == NEG and cleaned_data.get("verbal_hiv_status") != NEG:
+            raise forms.ValidationError('The verbal_hiv_status and result at 32weeks should be the same!')
+
         if cleaned_data.get('process_rapid_test') == YES:
             # date of rapid test is required if rapid test processed is indicated as Yes
             if not cleaned_data.get('date_of_rapid_test'):
