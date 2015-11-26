@@ -130,14 +130,14 @@ class TestMaternalArvPreg(TestCase):
         self.assertIn(u'You indicated that ARVs were NOT interrupted during pregnancy. '
                       'You cannot provide a reason.', errors)
 
-    def test_tooke_arv_3(self):
-        """Assert that ARV indicated as interrupted, and reason provided, then valid"""
-        self.data['is_interrupt'] = YES
-        self.data['interrupt'] = 'NO_REFILL'
-        form = MaternalArvPregForm(data=self.data)
-        self.assertTrue(form.is_valid())
-
-    def test_tooke_arv_4(self):
-        """Assert that ARV indicated as uninterrupted, and reason not provided, then valid"""
-        form = MaternalArvPregForm(data=self.data)
-        self.assertTrue(form.is_valid())
+#     def test_tooke_arv_3(self):
+#         """Assert that ARV indicated as interrupted, and reason provided, then valid"""
+#         self.data['is_interrupt'] = YES
+#         self.data['interrupt'] = 'NO_REFILL'
+#         form = MaternalArvPregForm(data=self.data)
+#         self.assertTrue(form.is_valid())
+# 
+#     def test_tooke_arv_4(self):
+#         """Assert that ARV indicated as uninterrupted, and reason not provided, then valid"""
+#         form = MaternalArvPregForm(data=self.data)
+#         self.assertTrue(form.is_valid())

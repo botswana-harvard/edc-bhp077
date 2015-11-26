@@ -16,7 +16,6 @@ class SampleConsentFactory(factory.DjangoModelFactory):
 
     registered_subject = factory.SubFactory(RegisteredSubjectFactory)
     report_datetime = timezone.now()
-    language = settings.LANGUAGES,
-    may_store_samples = YES,
-    is_literate = YES,
-    consent_benefits = YES
+    language = settings.LANGUAGES
+    may_store_samples = YES
+    is_literate = YES
