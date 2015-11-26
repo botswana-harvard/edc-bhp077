@@ -57,6 +57,7 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.data = {
             'report_datetime': timezone.now(),
             'maternal_visit': self.maternal_visit.id,
+            'prev_pregnancies': 1,
             'pregs_24wks_or_more': 1,
             'lost_before_24wks': 2,
             'lost_after_24wks': 2,
@@ -72,6 +73,7 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.data = {
             'report_datetime': timezone.now(),
             'maternal_visit': self.maternal_visit.id,
+            'prev_pregnancies': 1,
             'pregs_24wks_or_more': 1,
             'lost_before_24wks': 0,
             'lost_after_24wks': 0,
@@ -81,7 +83,6 @@ class TestMaternalObstericalHistoryForm(TestCase):
         mob = MaternalObstericalHistoryForm(data=self.data)
         print mob.errors
         self.assertTrue(mob.is_valid())
-
 
     def test_maternal_obsterical_history_children_died_b4_5yrs_invalid(self):
         self.data['children_died_b4_5yrs'] = -1
@@ -103,8 +104,7 @@ class TestMaternalObstericalHistoryForm(TestCase):
         mob = MaternalObstericalHistoryForm(data=self.data)
         self.assertIn(
             u"How many other living children does the participant currently have (excluding baby to be enrolled in the "
-            u"study.) Provide value greater than zero.", mob.errors.get('__all__')
-        )
+            u"study.) Provide value greater than zero.", mob.errors.get('__all__'))
 
     def test_maternal_obsterical_history_live_children_valid(self):
         self.data['live_children'] = 2
@@ -124,3 +124,9 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.data['children_died_b4_5yrs'] = 2
         mob = MaternalObstericalHistoryForm(data=self.data)
         self.assertTrue(mob.is_valid())
+
+    def test_zero_previous_pregnancies(self):
+        self.data['prev_pregnancies'] = -1
+        self.data['pregs_24wks_or_more'] = 1
+        mob = MaternalObstericalHistoryForm(data=self.data)
+        self.assertIn(u"Number of previous pregnancies, should be greater than zero.", mob.errors.get('__all__'))

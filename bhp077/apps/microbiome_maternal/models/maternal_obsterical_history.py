@@ -11,6 +11,9 @@ class MaternalObstericalHistory(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
+    prev_pregnancies = models.IntegerField(
+        verbose_name="Not including this pregnancy, how many previous pregnancies for this participant?",
+        help_text="")
     pregs_24wks_or_more = models.IntegerField(
         verbose_name="Number of pregnancies at least 24 weeks.?",
         help_text="")
