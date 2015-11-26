@@ -60,6 +60,10 @@ urlpatterns += patterns(
     url(r'^databrowse/(.*)', login_required(django_databrowse.site.root)),
 )
 
+urlpatterns += patterns('',
+                        url(r'^{app_name}/dashboard/visit/add_requisition/'.format(app_name=APP_NAME), additional_requisition, name="add_requisition"),
+                        )
+
 urlpatterns += patterns(
     '',
     url(r'^/dashboard/'.format(app_name=APP_NAME),
