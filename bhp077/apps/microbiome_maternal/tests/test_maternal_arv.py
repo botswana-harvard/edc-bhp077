@@ -79,6 +79,17 @@ class TestMaternalArvPost(TestCase):
         form = MaternalArvPostForm(data=self.data)
         self.assertTrue(form.is_valid())
 
+    def test_tooke_arv_5(self):
+        """Assert that ARV indicated as not interrupted, then reason not expected"""
+        self.data['interrupt'] = 'FORGOT'
+        self.data['took_arv'] = NO
+        self.postnatal_enrollment.valid_regimen_duration = YES
+        self.postnatal_enrollment.save()
+        form = MaternalArvPregForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn(u'You indicated that the participant has been on regimen for period of time. The answer should '
+                      u'be (YES)to question 3.(ARVs during pregnancy?).', errors)
+
 
 class TestMaternalArvPreg(TestCase):
     """Test eligibility of a mother for ARV Preg."""
@@ -99,7 +110,7 @@ class TestMaternalArvPreg(TestCase):
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            breastfeed_for_a_year=YES
+            breastfeed_for_a_year=YES,
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
