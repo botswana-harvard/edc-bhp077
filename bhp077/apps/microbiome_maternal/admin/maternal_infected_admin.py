@@ -11,11 +11,7 @@ class MaternalInfectedAdmin(BaseModelAdmin):
     fields = ('prev_pregnancies',
               'prior_health_haart',
               'prev_pregnancy_arv',
-              'know_hiv_status',
-              'weight',
-              'height',
-              'systolic_bp',
-              'diastolic_bp')
+              'know_hiv_status')
     list_display = ('prev_pregnancies',
                     'prior_health_haart',
                     'prev_pregnancy_arv')

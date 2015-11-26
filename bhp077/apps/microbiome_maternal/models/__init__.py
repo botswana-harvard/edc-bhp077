@@ -7,7 +7,7 @@ from .antenatal_enrollment import AntenatalEnrollment
 from .postnatal_enrollment import PostnatalEnrollment
 from .maternal_visit import MaternalVisit
 from .maternal_locator import MaternalLocator
-from .maternal_uninfected import MaternalUninfected
+from .maternal_height_weight import MaternalHeightWeight
 from .maternal_infected import MaternalInfected
 from .maternal_demographics import MaternalDemographics
 from .maternal_medical_history import MaternalMedicalHistory
@@ -33,4 +33,3 @@ from .signals import (criteria_passed_create_registered_subject,
                       maternal_consent_on_post_save,
                       maternal_visit_on_post_save,
                       )
-from .base_mother import BaseMother

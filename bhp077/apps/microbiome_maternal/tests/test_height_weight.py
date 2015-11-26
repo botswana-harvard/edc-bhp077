@@ -12,29 +12,27 @@ from edc_constants.choices import YES, NO
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
-from bhp077.apps.microbiome_maternal.forms import (BaseMotherForm)
-from bhp077.apps.microbiome_maternal.models import BaseMother
+from bhp077.apps.microbiome_maternal.forms import MaternalHeightWeightForm
+from bhp077.apps.microbiome_maternal.models import MaternalHeightWeight
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
 
 
-class BaseMotherTestModel(BaseMother):
+class BaseHeightTestModel(MaternalHeightWeight):
     class Meta:
         app_label = 'microbiome_maternal'
 
 
-class BaseMotherForm(BaseMotherForm):
+class BaseHeightForm(MaternalHeightWeightForm):
 
     class Meta:
-        model = BaseMotherTestModel
+        model = BaseHeightTestModel
         fields = '__all__'
 
 
-class TestMaternalFollowup(TestCase):
-    """Test eligibility of a mother for postnatal followup."""
+class TestHeightWeight(TestCase):
 
     def setUp(self):
         try:
@@ -55,17 +53,11 @@ class TestMaternalFollowup(TestCase):
             breastfeed_for_a_year=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='2000M')
+                                                   visit_definition__code='1000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.chronic_cond = ChronicConditions.objects.create(name='N/A', short_name='N/A', display_index=10,
-                                                             field_name='chronic_cond')
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
-            'recruit_source': 'ANC clinic staff',
-            'recruit_source_other': '',
-            'recruitment_clinic': 'PMH',
-            'recruitment_clinic_other': '',
             'weight': 50.0,
             'height': 160.0,
             'systolic_bp': 120,
@@ -75,6 +67,6 @@ class TestMaternalFollowup(TestCase):
     def test_bp(self):
         self.data['systolic_bp'] = 120
         self.data['diastolic_bp'] = 80
-        form = BaseMotherForm(data=self.data)
+        form = BaseHeightForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn("Systolic blood pressure cannot be lower than the diastolic blood preassure.", errors)
+        self.assertIn("Systolic blood pressure cannot be lower than the diastolic blood pressure.", errors)

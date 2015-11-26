@@ -3,12 +3,12 @@ from django.db import models
 
 from edc_constants.choices import YES_NO, YES_NO_NA
 
-from .base_mother import BaseMother
 from .maternal_consent import MaternalConsent
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from bhp077.apps.microbiome_maternal.maternal_choices import KNOW_HIV_STATUS
 
 
-class MaternalInfected(BaseMother):
+class MaternalInfected(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
