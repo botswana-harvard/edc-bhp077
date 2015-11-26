@@ -1,7 +1,9 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
+from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_constants.choices import YES_NO
+from edc.subject.haart.choices import ARV_DRUG_LIST
 
 from bhp077.apps.microbiome.choices import ARV_INTERRUPTION_REASON
 
@@ -48,7 +50,7 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
         verbose_name_plural = 'Maternal ARV In This Preg: Pregnancy'
 
 
-class MaternalArv(MaternalScheduledVisitModel):
+class MaternalArv(BaseUuidModel):
 
     """ ARV table to indicate ARV medication taken by mother """
 
@@ -58,7 +60,8 @@ class MaternalArv(MaternalScheduledVisitModel):
         verbose_name="ARV code",
         null=True,
         blank=True,
-        max_length=25)
+        max_length=25,
+        choices=ARV_DRUG_LIST,)
 
     date_started = models.DateField(
         verbose_name="Date Started",

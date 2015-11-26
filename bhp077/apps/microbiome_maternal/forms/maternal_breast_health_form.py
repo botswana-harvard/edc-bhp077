@@ -14,9 +14,9 @@ class MaternalBreastHealthForm(BaseMaternalModelForm):
                 raise forms.ValidationError('You indicated that the mother has been breastfeeding. '
                                             'Has mastitis CANNOT be Not Applicable.')
         else:
-            if cleaned_data.get('has_mastitis') == YES or cleaned_data.get('has_mastitis') == NO:
-                raise forms.ValidationError('You indicated {} for has mother been breastfeeding. Has mastitis should '
-                                            'be Not Applicable.'.format(cleaned_data.get('has_mastitis')))
+            if cleaned_data.get('has_mastitis') == YES:
+                raise forms.ValidationError('You indicated YES for has mother been breastfeeding. Has mastitis should '
+                                            'be Not Applicable.')
         if cleaned_data.get('has_mastitis') == YES:
             if cleaned_data.get('mastitis') == NOT_APPLICABLE:
                 raise forms.ValidationError('You indicated the mother has mastitis. You cannot answer Not applicable'

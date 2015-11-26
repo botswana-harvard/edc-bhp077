@@ -18,7 +18,7 @@ class MaternalMedicalHistoryAdmin(BaseModelAdmin):
     list_filter = ('has_chronic_cond', )
     radio_fields = {'has_chronic_cond': admin.VERTICAL,
                     'who_diagnosis': admin.VERTICAL}
-    filter_horizontal = ('chronic_cond',)
+    filter_horizontal = ('chronic_cond', 'wcs_dx_adult',)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
