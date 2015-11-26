@@ -26,10 +26,6 @@ class InfantScheduledVisitModel(InfantOffStudyMixin, BaseUuidModel,
         default=datetime.today()
     )
 
-    def save(self, *args, **kwargs):
-        self.OFF_STUDY_MODEL = get_model('microbiome_infant', 'InfantOffStudy')
-        super(InfantScheduledVisitModel, self).save(*args, **kwargs)
-
     def get_consenting_subject_identifier(self):
         """Returns mother's identifier."""
         return self.get_visit().appointment.registered_subject.relative_identifier
