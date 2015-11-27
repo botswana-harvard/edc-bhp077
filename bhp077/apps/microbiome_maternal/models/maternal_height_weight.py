@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.audit_trail import AuditTrail
 
@@ -23,13 +24,18 @@ class MaternalHeightWeight(MaternalScheduledVisitModel):
         decimal_places=2,
         verbose_name="Mother's height? ",
         help_text="Measured in Centimeters (cm)")
+
     systolic_bp = models.IntegerField(
         max_length=3,
         verbose_name="Mother's systolic blood pressure?",
-        help_text="in mm e.g. 120, should be between 75 and 175.")
+        validators=[MinValueValidator(75), MaxValueValidator(175), ],
+        help_text="in mm e.g. 120, should be between 75 and 175."
+    )
+
     diastolic_bp = models.IntegerField(
         max_length=3,
         verbose_name="Mother's diastolic blood pressure?",
+        validators=[MinValueValidator(35), MaxValueValidator(130), ],
         help_text="in hg e.g. 80, should be between 35 and 130.")
 
     history = AuditTrail()
