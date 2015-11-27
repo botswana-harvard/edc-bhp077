@@ -250,9 +250,9 @@ class TestAntenatalEnroll(TestCase):
             week32_test=NO,
             week32_result='',
             evidence_hiv_status=NOT_APPLICABLE,
-            valid_regimen = NOT_APPLICABLE,
-            valid_regimen_duration = NOT_APPLICABLE,
-            verbal_hiv_status = 'UNK',
+            valid_regimen=NOT_APPLICABLE,
+            valid_regimen_duration=NOT_APPLICABLE,
+            verbal_hiv_status='UNK',
             process_rapid_test=YES,
             registered_subject=self.registered_subject,
             weeks_of_gestation=37
