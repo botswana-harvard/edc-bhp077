@@ -8,6 +8,17 @@ class MaternalObstericalHistoryForm(BaseMaternalModelForm):
 
     def clean(self):
         cleaned_data = super(MaternalObstericalHistoryForm, self).clean()
+        if cleaned_data.get('prev_pregnancies') == 0:
+            if (
+                cleaned_data.get('pregs_24wks_or_more') != 0 or
+                cleaned_data.get('lost_before_24wks') != 0 or
+                cleaned_data.get('lost_after_24wks') != 0
+            ):
+                raise forms.ValidationError('You indicated previous pregancies were 0. '
+                                            'Number of pregnancies at or after 24 weeks,'
+                                            'number of living children,'
+                                            'number of children died after 5 year be greater than all be zero.'
+                                            .format(cleaned_data.get('prev_pregnancies')))
 
         if cleaned_data.get('pregs_24wks_or_more') > 0:
             if (
