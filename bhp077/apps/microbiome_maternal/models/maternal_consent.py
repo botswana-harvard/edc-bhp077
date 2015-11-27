@@ -12,7 +12,8 @@ from edc_consent.models.fields import (PersonalFieldsMixin, CitizenFieldsMixin, 
 from edc_consent.models.fields.bw import IdentityFieldsMixin
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
-from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
+from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC, SITE
+from django.template.defaultfilters import default
 
 
 class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
@@ -21,9 +22,18 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
-    study_site = models.ForeignKey(
-        StudySite,
+    study_site = models.CharField(
         verbose_name='Site',
+        choices=SITE,
+        default='Gaborone',
+        max_length=10,
+        null=True,
+        help_text="")
+
+    site_code = models.IntegerField(
+        verbose_name='Site',
+        default=40,
+        max_length=10,
         null=True,
         help_text="")
 
@@ -52,7 +62,7 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
                                           self.last_name, self.initials)
 
     def save(self, *args, **kwargs):
-        self.subject_identifier = SubjectIdentifier(site_code=self.study_site.site_code).get_identifier()
+        self.subject_identifier = SubjectIdentifier(site_code=self.site_code).get_identifier()
         self.gender = self.maternal_eligibility.registered_subject.gender
         super(MaternalConsent, self).save(*args, **kwargs)
 
