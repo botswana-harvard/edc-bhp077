@@ -1,4 +1,6 @@
 from django.db import models
+from dateutil import rrule
+import datetime
 
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
@@ -58,6 +60,12 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         choices=YES_NO,
         default=NO,
         max_length=3)
+
+    date_of_test = models.DateField(
+        verbose_name="Date of Test",
+        null=True,
+        blank=True)
+
     week32_result = models.CharField(
         verbose_name="What was your rest result?",
         choices=POS_NEG,
@@ -125,6 +133,10 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         max_length=15,
         null=True,
         blank=True,)
+
+    def weeks_between(self, start_date, end_date):
+        weeks = rrule.rrule(rrule.WEEKLY, dtstart=start_date, until=end_date)
+        return weeks.count()
 
     def maternal_eligibility_pregnant_yes(self):
         try:

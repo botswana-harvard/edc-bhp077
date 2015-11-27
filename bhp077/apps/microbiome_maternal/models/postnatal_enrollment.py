@@ -59,6 +59,13 @@ class PostnatalEnrollment(BaseEnrollment):
     def get_registration_datetime(self):
         return self.report_datetime
 
+    def number_of_weeks_after_tests(self):
+        value = self.gestation_before_birth - self.weeks_between(self.date_of_test, self.report_datetime.date())
+        return value
+
+    def validate_rapid_test_required_or_not_required(self):
+        return self.number_of_weeks_after_tests >= 32
+
     @property
     def postnatal_eligible(self):
         """Returns true if the participant is eligible."""

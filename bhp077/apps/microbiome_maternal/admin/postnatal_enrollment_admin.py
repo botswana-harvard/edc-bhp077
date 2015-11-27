@@ -26,6 +26,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
               'breastfeed_for_a_year',
               'instudy_for_a_year',
               'week32_test',
+              'date_of_test',
               'week32_result',
               'verbal_hiv_status',
               'evidence_hiv_status',

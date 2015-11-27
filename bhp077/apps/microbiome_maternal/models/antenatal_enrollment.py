@@ -6,6 +6,7 @@ from edc_base.model.validators import (datetime_not_before_study_start, datetime
 
 from .base_enrollment import BaseEnrollment
 from .maternal_consent import MaternalConsent
+from dateutil.relativedelta import relativedelta
 
 
 class AntenatalEnrollment(BaseEnrollment):
@@ -25,6 +26,14 @@ class AntenatalEnrollment(BaseEnrollment):
 
     antenatal_eligible = models.NullBooleanField(
         editable=False)
+
+    @property
+    def number_of_weeks_after_tests(self):
+        value = self.weeks_of_gestation - self.weeks_between(self.date_of_test, self.report_datetime.date())
+        return value
+
+    def validate_rapid_test_required_or_not_required(self):
+        return self.number_of_weeks_after_tests >= 32
 
     def save(self, *args, **kwargs):
         self.antenatal_eligible = self.eligible_for_postnatal
