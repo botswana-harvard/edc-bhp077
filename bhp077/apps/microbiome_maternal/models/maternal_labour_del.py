@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from edc.core.identifier.classes import InfantIdentifier
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
 from edc_base.model.validators import datetime_not_future
@@ -11,7 +10,7 @@ from edc.subject.code_lists.models import WcsDxAdult
 from bhp077.apps.microbiome.choices import DX_MATERNAL
 from bhp077.apps.microbiome_list.models import Suppliments
 from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond, ObComp
-from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
+from bhp077.apps.microbiome_maternal.models import MaternalConsent
 
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
@@ -98,22 +97,6 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         null=True)
 
     history = AuditTrail()
-
-    def post_save_create_infant_identifier(self, created):
-        """Creates an identifier for registered infants"""
-        maternal_consent = MaternalConsent.objects.get(registered_subject=self.maternal_visit.appointment.registered_subject)
-        postnatal_enrol = PostnatalEnrollment.objects.get(registered_subject=maternal_consent.registered_subject)
-        if created:
-            if self.live_infants_to_register > 0:
-                for infant_order in range(0, self.live_infants_to_register):
-                    infant_identifier = InfantIdentifier(
-                        maternal_identifier=self.maternal_visit.appointment.registered_subject.subject_identifier,
-                        study_site=maternal_consent.study_site,
-                        birth_order=infant_order,
-                        live_infants=postnatal_enrol.live_infants,
-                        live_infants_to_register=self.live_infants_to_register,
-                        user=self.user_created)
-                    infant_identifier.get_identifier()
 
     class Meta:
         app_label = 'microbiome_maternal'
