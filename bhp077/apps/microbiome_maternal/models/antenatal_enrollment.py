@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from edc_constants.constants import NO, YES, POS, NEG
+from edc_constants.constants import NO, YES, POS, NEG, NOT_APPLICABLE
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 
 from .base_enrollment import BaseEnrollment
@@ -40,14 +40,15 @@ class AntenatalEnrollment(BaseEnrollment):
                 return True
             if (self.week32_test == NO and self.process_rapid_test == YES and self.evidence_hiv_status == NO and not self.week32_result):
                 return True
+            if self.week32_test == NO and self.process_rapid_test == YES and self.evidence_hiv_status == NOT_APPLICABLE and not self.week32_result:
+                return True
             if self.verbal_hiv_status == POS and self.evidence_hiv_status == YES and self.valid_regimen == YES and self.valid_regimen_duration == YES:
                 return True
             elif self.verbal_hiv_status == NEG and self.evidence_hiv_status == YES:
                 return True
             elif self.evidence_hiv_status == NO and self.rapid_test_result != POS and self.process_rapid_test == YES:
                 return True
-        else:
-            return False
+        return False
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_antenatalenrollment_change', args=(self.id,))

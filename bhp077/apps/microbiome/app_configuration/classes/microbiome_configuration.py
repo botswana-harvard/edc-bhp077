@@ -32,7 +32,7 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
         'dashboard':
             {'show_not_required': True,
              'allow_additional_requisitions': False,
-             'show_drop_down_requisitions': False},
+             'show_drop_down_requisitions': True},
         'appointment':
             {'allowed_iso_weekdays': '12345',
              'use_same_weekday': True,

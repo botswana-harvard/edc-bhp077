@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from microbiome.maternal.models import SexualReproductiveHealth
-from microbiome.maternal.forms import SexualReproductiveHealthForm
+from ..models import SexualReproductiveHealth
+from ..forms import SexualReproductiveHealthForm
 
 
 class SexualReproductiveHealthAdmin(BaseModelAdmin):
@@ -19,6 +19,7 @@ class SexualReproductiveHealthAdmin(BaseModelAdmin):
     radio_fields = {'more_children': admin.VERTICAL,
                     'next_child': admin.VERTICAL,
                     'contraceptive_measure': admin.VERTICAL,
+                    'uses_contraceptive': admin.VERTICAL,
                     'srh_referral': admin.VERTICAL}
     filter_horizontal = ('contraceptives_used',)
 
