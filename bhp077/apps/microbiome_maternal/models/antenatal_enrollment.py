@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 from edc_constants.constants import NO, YES, POS, NEG, NOT_APPLICABLE
+from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 
 from .base_enrollment import BaseEnrollment
 from .maternal_consent import MaternalConsent
@@ -10,6 +11,13 @@ from .maternal_consent import MaternalConsent
 class AntenatalEnrollment(BaseEnrollment):
 
     CONSENT_MODEL = MaternalConsent
+
+    report_datetime = models.DateTimeField(
+        verbose_name="Date and Time of  Antenatal Enrollment",
+        validators=[
+            datetime_not_before_study_start,
+            datetime_not_future, ],
+        help_text='')
 
     weeks_of_gestation = models.IntegerField(
         verbose_name="How many weeks pregnant?",
@@ -30,7 +38,7 @@ class AntenatalEnrollment(BaseEnrollment):
                 return True
             if self.week32_test == YES and self.week32_result == NEG and self.evidence_hiv_status == YES:
                 return True
-            if self.week32_test == NO and self.process_rapid_test == YES and self.evidence_hiv_status == NO and not self.week32_result:
+            if (self.week32_test == NO and self.process_rapid_test == YES and self.evidence_hiv_status == NO and not self.week32_result):
                 return True
             if self.week32_test == NO and self.process_rapid_test == YES and self.evidence_hiv_status == NOT_APPLICABLE and not self.week32_result:
                 return True

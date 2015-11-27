@@ -22,13 +22,6 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
-    report_datetime = models.DateTimeField(
-        verbose_name="Date and Time of Enrollment",
-        validators=[
-            datetime_not_before_study_start,
-            datetime_not_future, ],
-        help_text='')
-
     is_diabetic = models.CharField(
         verbose_name='Are you diabetic?',
         default=NO,
