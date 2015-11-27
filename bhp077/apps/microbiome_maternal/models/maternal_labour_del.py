@@ -64,7 +64,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         decimal_places=1,
         verbose_name="Indicate the maximum temperature of mother during labour",
         help_text="",
-        validators=[MinValueValidator(36.5), MaxValueValidator(37.2), ],
+        validators=[MinValueValidator(36.5), MaxValueValidator(39), ],
         blank=True,
         null=True,
     )
