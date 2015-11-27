@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 from edc_constants.choices import YES_NO, YES, NO, POS, NEG
+from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 
 from ..maternal_choices import LIVE_STILL_BIRTH, LIVE
 from .base_enrollment import BaseEnrollment
@@ -12,6 +13,13 @@ from .antenatal_enrollment import AntenatalEnrollment
 class PostnatalEnrollment(BaseEnrollment):
 
     CONSENT_MODEL = MaternalConsent
+
+    report_datetime = models.DateTimeField(
+        verbose_name="Date and Time of  Postnatal Enrollment",
+        validators=[
+            datetime_not_before_study_start,
+            datetime_not_future, ],
+        help_text='')
 
     postpartum_days = models.IntegerField(
         verbose_name="How many days postpartum?",
