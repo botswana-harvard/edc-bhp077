@@ -77,6 +77,10 @@ class InfantDashboard(RegisteredSubjectDashboard):
         return MaternalLocator
 
     @property
+    def locator_visit_model(self):
+        return MaternalVisit
+
+    @property
     def locator_registered_subject(self):
         return RegisteredSubject.objects.get(
             subject_identifier=self.maternal_identifier)
