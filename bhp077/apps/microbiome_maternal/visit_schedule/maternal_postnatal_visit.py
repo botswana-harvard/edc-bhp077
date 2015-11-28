@@ -73,9 +73,9 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             RequisitionPanelTuple(40L, u'microbiome_lab', u'maternalrequisition',
                                   'Rectal swab (Storage)', 'STORAGE', 'RS', REQUIRED, NOT_ADDITIONAL),
             RequisitionPanelTuple(50L, u'microbiome_lab', u'maternalrequisition',
-                                  'Skin Flora (Storage)', 'STORAGE', 'SF', REQUIRED, NOT_ADDITIONAL),
+                                  'Skin Swab (Storage)', 'STORAGE', 'SW', REQUIRED, NOT_ADDITIONAL),
             RequisitionPanelTuple(60L, u'microbiome_lab', u'maternalrequisition',
-                                  'Vaginal Swab (multiplex PCR)', 'TEST', 'VM', REQUIRED, NOT_ADDITIONAL)),
+                                  'Vaginal Swab (multiplex PCR)', 'TEST', 'VS', REQUIRED, NOT_ADDITIONAL)),
         'entries': (
             EntryTuple(10L, u'microbiome_maternal', u'maternallabourdel', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(20L, u'microbiome_maternal', u'maternallabdelmed', REQUIRED, NOT_ADDITIONAL),

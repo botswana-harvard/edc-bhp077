@@ -279,3 +279,7 @@ REASON_CONTRACEPTIVE_NOT_INITIATED = (
     ('was not attended by a clinician', 'I was not attended by a clinician when I went to the SRH clinic'),
     ('OTHER', 'Other'),
 )
+
+SITE = (
+    ('Gaborone', 'Gaborone'),
+)

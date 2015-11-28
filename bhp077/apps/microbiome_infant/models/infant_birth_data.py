@@ -13,7 +13,6 @@ from .infant_birth import InfantBirth
 
 
 class InfantBirthData(InfantScheduledVisitModel):
-
     infant_birth = models.OneToOneField(InfantBirth)
 
     infant_birth_weight = models.DecimalField(
@@ -41,27 +40,27 @@ class InfantBirthData(InfantScheduledVisitModel):
     apgar_score_min_1 = models.IntegerField(
         max_length=2,
         verbose_name="At 1 minute: ",
-        help_text="-1 if unknown",
+        help_text="",
         blank=True,
         null=True,
         validators=[MaxValueValidator(10),
-                    MinValueValidator(-1)])
+                    MinValueValidator(0)])
     apgar_score_min_5 = models.IntegerField(
         max_length=2,
         verbose_name="At 5 minutes: ",
-        help_text="-1 if unknown",
+        help_text="",
         blank=True,
         null=True,
         validators=[MaxValueValidator(10),
-                    MinValueValidator(-1)])
+                    MinValueValidator(0)])
     apgar_score_min_10 = models.IntegerField(
         max_length=2,
         verbose_name="At 10 minutes: ",
-        help_text="-1 if unknown",
+        help_text="",
         blank=True,
         null=True,
         validators=[MaxValueValidator(10),
-                    MinValueValidator(-1)])
+                    MinValueValidator(0)])
     congenital_anomalities = models.CharField(
         max_length=3,
         choices=YES_NO,
