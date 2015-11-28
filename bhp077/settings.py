@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 """
 Django settings for x project.
 
@@ -11,7 +13,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import os
-import socket
 from unipath import Path
 from django.utils import timezone
 
@@ -21,13 +22,13 @@ INSTITUTION = 'Botswana-Harvard AIDS Institute'
 PROTOCOL_REVISION = '0.1dev'
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOURCE_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2)
-print 'SOURCE_ROOT', SOURCE_ROOT
+print('SOURCE_ROOT', SOURCE_ROOT)
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
 MEDIA_ROOT = BASE_DIR.child('media')
 PROJECT_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
-print 'PROJECT DIR', PROJECT_DIR
+print('PROJECT DIR', PROJECT_DIR)
 PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
-print 'PROJECT_ROOT', PROJECT_ROOT
+print('PROJECT_ROOT', PROJECT_ROOT)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -49,7 +50,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dajaxice',
     'django_revision',
     #'django-extensions',
     # EDC
@@ -230,7 +230,6 @@ LOGOUT_URL = '/{app_name}/logout/'.format(app_name=APP_NAME)
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'dajaxice.finders.DajaxiceFinder',
 )
 
 # edc.crytpo_fields encryption keys
