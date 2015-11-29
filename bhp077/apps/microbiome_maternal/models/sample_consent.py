@@ -55,7 +55,6 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
         verbose_name=("I have provided the client with a copy of their signed sample storage consent"),
         max_length=20,
         choices=YES_NO_DECLINED,
-        validators=[eligible_if_yes_or_declined, ],
         null=True,
         blank=False,
         help_text="If declined, return copy to the clinic with the consent")
