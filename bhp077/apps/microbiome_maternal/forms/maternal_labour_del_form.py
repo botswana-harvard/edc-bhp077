@@ -103,6 +103,9 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
             if cleaned_data.get('vl_result'):
                 raise forms.ValidationError('You indicated that a VL count was NOT performed, yet provided a VL result'
                                             ' Please correct.')
+        if cleaned_data.get('vl_detectable') == YES:
+            if not cleaned_data.get('vl_result'):
+                raise forms.ValidationError('You indicated that the VL was detectable. Provide provide VL result.')
         return cleaned_data
 
     class Meta:

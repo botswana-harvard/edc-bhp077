@@ -225,6 +225,12 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
+    vl_detectable = models.CharField(
+        max_length=3,
+        choices=YES_NO,
+        verbose_name="Was the viral load detectable?",
+        help_text="")
+
     vl_result = models.CharField(
         max_length=35,
         verbose_name="Result of most recent VL test",
