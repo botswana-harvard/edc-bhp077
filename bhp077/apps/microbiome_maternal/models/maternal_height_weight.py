@@ -28,8 +28,8 @@ class MaternalHeightWeight(MaternalScheduledVisitModel):
     systolic_bp = models.IntegerField(
         max_length=3,
         verbose_name="Mother's systolic blood pressure?",
-        validators=[MinValueValidator(75), MaxValueValidator(175), ],
-        help_text="in mm e.g. 120, should be between 75 and 175."
+        validators=[MinValueValidator(75), MaxValueValidator(220), ],
+        help_text="in mm e.g. 120, should be between 75 and 220."
     )
 
     diastolic_bp = models.IntegerField(
