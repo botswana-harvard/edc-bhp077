@@ -48,8 +48,7 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
         choices=YES_NO_NA,
         null=True,
         blank=False,
-        default=NOT_APPLICABLE,
-        help_text="answer is N/A if participant declines sample storage")
+        default=NOT_APPLICABLE,)
 
     sample_consent_copy = models.CharField(
         verbose_name=("I have provided the client with a copy of their signed sample storage consent"),
