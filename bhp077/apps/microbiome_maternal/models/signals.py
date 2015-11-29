@@ -85,13 +85,8 @@ def update_registered_subject_on_post_save(sender, instance, raw, created, using
             instance.registered_subject.first_name = instance.first_name
             instance.registered_subject.last_name = instance.last_name
             instance.registered_subject.subject_identifier = instance.subject_identifier
+            instance.registered_subject.study_site = instance.study_site
             instance.registered_subject.save(using=using)
-
-
-# @receiver(post_save, weak=False, dispatch_uid='post_save_create_infant_identifier')
-# def post_save_create_infant_identifier(sender, instance, raw, created, using, **kwarg):
-#     if isinstance(instance, MaternalLabourDel):
-#         instance.post_save_create_infant_identifier(created)
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_visit_on_post_save")

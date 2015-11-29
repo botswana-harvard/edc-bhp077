@@ -22,20 +22,24 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
-    study_site = models.CharField(
-        verbose_name='Site',
-        choices=SITE,
-        default='Gaborone',
-        max_length=10,
-        null=True,
-        help_text="")
+    study_site = models.ForeignKey(
+        StudySite,
+    )
 
-    site_code = models.IntegerField(
-        verbose_name='Site',
-        default=40,
-        max_length=10,
-        null=True,
-        help_text="")
+#     study_site = models.CharField(
+#         verbose_name='Site',
+#         choices=SITE,
+#         default='Gaborone',
+#         max_length=10,
+#         null=True,
+#         help_text="")
+#
+#     site_code = models.IntegerField(
+#         verbose_name='Site',
+#         default=40,
+#         max_length=10,
+#         null=True,
+#         help_text="")
 
     recruit_source = models.CharField(
         max_length=75,
@@ -62,7 +66,7 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
                                           self.last_name, self.initials)
 
     def save(self, *args, **kwargs):
-        self.subject_identifier = SubjectIdentifier(site_code=self.site_code).get_identifier()
+        self.subject_identifier = SubjectIdentifier(site_code=self.study_site.site_code).get_identifier()
         self.gender = self.maternal_eligibility.registered_subject.gender
         super(MaternalConsent, self).save(*args, **kwargs)
 
