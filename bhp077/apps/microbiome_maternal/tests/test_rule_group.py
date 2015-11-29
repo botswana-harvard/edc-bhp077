@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.utils import timezone
 
 from edc.subject.registration.models import RegisteredSubject
-from edc.entry_meta_data.models import ScheduledEntryMetaData
+from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
@@ -47,6 +47,15 @@ class TestRuleGroup(TestCase):
         model_options.update(
             entry__app_label=app_label,
             entry__model_name=model_name,
+            appointment=appointment)
+        return model_options
+
+    def lab_entry_model_options(self, app_label, model_name, appointment, panel_name):
+        model_options = {}
+        model_options.update(
+            lab_entry__app_label=app_label,
+            lab_entry__model_name=model_name,
+            lab_entry__requisition_panel__name=panel_name,
             appointment=appointment)
         return model_options
 
@@ -132,6 +141,32 @@ class TestRuleGroup(TestCase):
             for model_name in model_names:
                 self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
                     app_label='microbiome_maternal', model_name=model_name, appointment=appointment
+                )).count(), 1)
+
+    def test_hiv_pos_vl(self):
+        """
+        """
+        PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            verbal_hiv_status=POS,
+            evidence_hiv_status=YES,
+        )
+        visit_codes = [
+            ['2010M', ['maternalrequisition']],
+            ['2030M', ['maternalrequisition']],
+            ['2060M', ['maternalrequisition']],
+            ['2090M', ['maternalrequisition']],
+            ['2120M', ['maternalrequisition']]
+        ]
+        for visit in visit_codes:
+            code, model_names = visit
+            appointment = Appointment.objects.get(
+                registered_subject=self.registered_subject, visit_definition__code=code
+            )
+            MaternalVisitFactory(appointment=appointment)
+            for model_name in model_names:
+                self.assertEqual(RequisitionMetaData.objects.filter(entry_status=NEW, **self.lab_entry_model_options(
+                    app_label='microbiome_lab', model_name=model_name, appointment=appointment, panel_name='Viral Load'
                 )).count(), 1)
 
     def test_srh_referral_yes_on_srhservicesutilization(self):
