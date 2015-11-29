@@ -9,7 +9,6 @@ class InfantBirthExamAdmin(BaseModelAdmin):
 
     list_display = (
         'infant_visit',
-        'infant_birth',
         'gender',
         'general_activity',
         'physical_exam_result',

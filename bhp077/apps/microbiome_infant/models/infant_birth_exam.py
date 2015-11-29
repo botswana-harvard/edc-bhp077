@@ -1,18 +1,16 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+
 from edc_constants.constants import NOT_APPLICABLE
 from edc_constants.choices import (GENDER_UNDETERMINED, NORMAL_ABNORMAL,
                                    YES_NO_NOT_EVALUATED_NA, NORMAL_ABNORMAL_NOEXAM)
 
-from .infant_birth import InfantBirth
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantBirthExam(InfantScheduledVisitModel):
 
     """A model completed by the user to record details of the infant's birth."""
-
-    infant_birth = models.OneToOneField(InfantBirth)
 
     infant_exam_date = models.DateField(
         verbose_name="Date of infant examination",
