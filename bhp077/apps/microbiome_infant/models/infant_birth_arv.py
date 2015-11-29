@@ -47,8 +47,7 @@ class InfantBirthArv(InfantScheduledVisitModel):
     additional_nvp_doses = models.CharField(
         max_length=15,
         choices=YES_NO_UNKNOWN_NA,
-        verbose_name="Was the infant given additional doses of NVP before discharge from the hospital? ",
-        help_text="Only applicable to breastfed infants of mothers not on HAART or on HAART < 6 weeks")
+        verbose_name="Was the infant given additional doses of NVP before discharge from the hospital? ")
 
     azt_discharge_supply = models.CharField(
         max_length=15,
@@ -59,9 +58,7 @@ class InfantBirthArv(InfantScheduledVisitModel):
     nvp_discharge_supply = models.CharField(
         max_length=15,
         choices=YES_NO_UNKNOWN_NA,
-        verbose_name="Was the infant discharged with a supply of NVP? ",
-        help_text=("only applicable to breastfed infants of mothers either not on HAART "
-                   "or on HAART <6 weeks"))
+        verbose_name="Was the infant discharged with a supply of NVP? ")
 
     infant_arv_comments = models.TextField(
         max_length=250,
