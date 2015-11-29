@@ -30,8 +30,7 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
     prev_preg_haart = models.CharField(
         max_length=25,
         choices=YES_NO_NA,
-        verbose_name=("Did she ever receive triple ARVs (for PMTCT purposes only) during a "
-                      "previous pregnancy? "),
+        verbose_name=("Did she ever receive triple antiretrovirals during a prior pregnancy?"),
         help_text="")
 
     lowest_cd4_known = models.CharField(
@@ -72,5 +71,5 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = 'Maternal Clinical History'
-        verbose_name_plural = 'Maternal Clinical History'
+        verbose_name = 'Maternal use of ARVs in Prior Pregnancy'
+        verbose_name_plural = 'Maternal use of ARVs in Prior Pregnancy'
