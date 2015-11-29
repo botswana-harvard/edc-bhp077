@@ -20,7 +20,6 @@ class InfantBirthAdmin(BaseModelAdmin):
         'report_datetime',
         'first_name',
         'initials',
-        'birth_order',
         'dob',
         'gender',
     )

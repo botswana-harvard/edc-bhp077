@@ -37,12 +37,6 @@ class InfantBirth(InfantOffStudyMixin, BaseUuidModel, BaseAppointmentMixin):
     initials = models.CharField(
         max_length=2)
 
-    birth_order = models.IntegerField(
-        verbose_name='Birth Order',
-        help_text="",
-        default=1,
-        validators=[MinValueValidator(1), MaxValueValidator(4), ])
-
     dob = models.DateField(
         verbose_name='Date of Birth',
         help_text="Must match labour and delivery report.",
