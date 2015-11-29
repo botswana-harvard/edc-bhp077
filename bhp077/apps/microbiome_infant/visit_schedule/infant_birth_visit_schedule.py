@@ -211,6 +211,6 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(110L, u'microbiome_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(110L, u'microbiome_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(200L, u'microbiome_infant', u'infantdeath', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(240L, u'microbiome_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
+            EntryTuple(240L, u'microbiome_infant', u'infantoffstudy', REQUIRED, ADDITIONAL))}
 
 site_visit_schedules.register(InfantBirthVisitSchedule)
