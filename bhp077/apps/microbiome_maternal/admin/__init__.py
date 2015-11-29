@@ -14,7 +14,6 @@ from .maternal_clinical_history_admin import MaternalClinicalHistoryAdmin
 from .maternal_labour_del_admin import (MaternalLabourDelAdmin, MaternalLabDelMedAdmin,
                                         MaternalLabDelClinicAdmin, MaternalLabDelDxAdmin,
                                         MaternalLabDelDxTInlineAdmin, MaternalLabDelDxTAdmin)
-from .maternal_infected_admin import MaternalInfectedAdmin
 from .maternal_height_weight_admin import MaternalHeightWeightAdmin
 from .maternal_arv_history_admin import MaternalArvHistoryAdmin
 from .maternal_arv_preg_admin import MaternalArvPregAdmin

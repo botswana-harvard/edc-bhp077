@@ -16,7 +16,11 @@ class MaternalClinicalHistoryAdmin(BaseModelAdmin):
               'cd4_count',
               'cd4_date',
               'is_date_estimated',
-              'comment')
+              'comment',
+              'prior_health_haart',
+              'prev_pregnancy_arv',
+              'know_hiv_status',)
+
     list_display = ('maternal_visit',
                     'prev_preg_azt',
                     'prev_sdnvp_labour',
@@ -24,14 +28,21 @@ class MaternalClinicalHistoryAdmin(BaseModelAdmin):
                     'lowest_cd4_known',
                     'cd4_count',
                     'cd4_date')
+
     list_filter = ('prev_preg_azt',
                    'prev_sdnvp_labour',
-                   'prev_preg_haart')
+                   'prev_preg_haart',
+                   'prior_health_haart',
+                   'prev_pregnancy_arv',)
+
     radio_fields = {'prev_preg_azt': admin.VERTICAL,
                     'prev_sdnvp_labour': admin.VERTICAL,
                     'prev_preg_haart': admin.VERTICAL,
                     'lowest_cd4_known': admin.VERTICAL,
-                    'is_date_estimated': admin.VERTICAL}
+                    'is_date_estimated': admin.VERTICAL,
+                    'prior_health_haart': admin.VERTICAL,
+                    'prev_pregnancy_arv': admin.VERTICAL,
+                    'know_hiv_status': admin.VERTICAL}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
