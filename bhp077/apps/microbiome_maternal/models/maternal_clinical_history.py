@@ -30,7 +30,7 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
     prev_preg_haart = models.CharField(
         max_length=25,
         choices=YES_NO_NA,
-        verbose_name=("Did she ever receive HAART (for PMTCT purposes only) during a "
+        verbose_name=("Did she ever receive triple ARVs (for PMTCT purposes only) during a "
                       "previous pregnancy? "),
         help_text="")
 

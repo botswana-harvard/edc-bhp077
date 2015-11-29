@@ -46,7 +46,7 @@ class MaternalClinicalHistoryForm(BaseMaternalModelForm):
                                                 'be NOT APPLICABLE')
                 if cleaned_data.get('prev_preg_haart') != NOT_APPLICABLE:
                     raise forms.ValidationError('In Maternal Obsterical History form you indicated there were no previous '
-                                                'pregnancies. HAART during a prev pregnancy should '
+                                                'pregnancies. triple ARVs during a prev pregnancy should '
                                                 'be NOT APPLICABLE')
 
     class Meta:

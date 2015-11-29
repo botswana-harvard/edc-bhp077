@@ -20,7 +20,7 @@ class MaternalArvPostForm(BaseMaternalModelForm):
             raise forms.ValidationError('You indicated that participant was not on HAART.'
                                         ' You CANNOT provide a reason. Please correct.')
         if cleaned_data.get('haart_last_visit') == YES and cleaned_data.get('haart_reason') == 'N/A':
-            raise forms.ValidationError("You indicated that participant was on HAART. "
+            raise forms.ValidationError("You indicated that participant was on triple ARVs. "
                                         "Reason CANNOT be 'Not Applicable'. Please correct.")
 
         return cleaned_data

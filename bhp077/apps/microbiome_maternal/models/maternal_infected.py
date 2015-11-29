@@ -15,7 +15,7 @@ class MaternalInfected(MaternalScheduledVisitModel):
     prior_health_haart = models.CharField(
         max_length=25,
         choices=YES_NO,
-        verbose_name="Before this pregnancy, was the mother on HAART for her own health",
+        verbose_name="Before this pregnancy, was the mother on triple ARVs for her own health",
         help_text=("For her own health and not just PMTCT for an earlier pregnancy or "
                    "breastfeeding.",))
     prev_pregnancy_arv = models.CharField(
