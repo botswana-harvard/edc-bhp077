@@ -56,7 +56,7 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         max_length=3)
 
     week32_test = models.CharField(
-        verbose_name="Did you test for HIV at 32 weeks gestational age?",
+        verbose_name="Have you tested for HIV on OR after 32 weeks gestational age?",
         choices=YES_NO,
         default=NO,
         max_length=3)
