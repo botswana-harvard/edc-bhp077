@@ -16,7 +16,7 @@ class InfantVaccinesInline(BaseTabularInline):
 
 class InfantBirthFeedVaccineAdmin(BaseModelAdmin):
 
-    list_display = ('infant_birth', 'feeding_after_delivery',)
+    list_display = ('feeding_after_delivery',)
 
     list_filter = ('feeding_after_delivery',)
 

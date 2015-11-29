@@ -14,8 +14,6 @@ class InfantBirthFeedVaccine(InfantScheduledVisitModel):
 
     """infant feeding & vaccination/ immunization"""
 
-    infant_birth = models.ForeignKey(InfantBirth)
-
     feeding_after_delivery = models.CharField(
         max_length=50,
         choices=FEEDING_CHOICES,
