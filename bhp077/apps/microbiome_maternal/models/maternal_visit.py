@@ -7,7 +7,7 @@ from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
-from edc_constants.constants import NEW, YES, POS
+from edc_constants.constants import NEW, YES, POS, NEG
 from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
@@ -83,6 +83,18 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
             return False
         return True
 
+    @property
+    def hiv_status_rapid_test_neg(self):
+        try:
+            PostnatalEnrollment.objects.get(
+                registered_subject=self.appointment.registered_subject,
+                process_rapid_test=YES,
+                rapid_test_result=NEG,
+            )
+        except PostnatalEnrollment.DoesNotExist:
+            return False
+        return True
+
     def scheduled_entry_meta_data(self, model_name):
         try:
             sd = ScheduledEntryMetaData.objects.filter(**self.model_options(
@@ -104,8 +116,10 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
                 for model_name in ['maternalarvpost', 'maternalarvpostadh']:
                     self.scheduled_entry_meta_data(model_name)
-        else:
-            pass
+
+        if self.hiv_status_rapid_test_neg:
+            if self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
+                self.scheduled_entry_meta_data('rapidtestresult')
 
     @property
     def is_off_study(self):

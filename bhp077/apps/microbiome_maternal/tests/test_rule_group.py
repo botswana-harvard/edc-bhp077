@@ -61,7 +61,7 @@ class TestRuleGroup(TestCase):
             valid_regimen=YES,
         )
         visit_codes = [
-            ['1000M', ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg']],
+            ['1000M', ['maternalarvhistory', 'maternalarvpreg']],
 #             ['2000M', ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']],
 #             ['2010M', ['maternalarvpost', 'maternalarvpostadh']],
 #             ['2030M', ['maternalarvpost', 'maternalarvpostadh']],
@@ -85,17 +85,43 @@ class TestRuleGroup(TestCase):
         """
         post = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            process_rapid_test=YES,
-            rapid_test_result=POS,
+            verbal_hiv_status=POS,
+            evidence_hiv_status=YES,
         )
         visit_codes = [
-            ['1000M', ['maternalinfected', 'maternalarvhistory', 'maternalarvpreg']],
+            ['1000M', ['maternalarvhistory', 'maternalarvpreg']],
 #             ['2000M', ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']],
 #             ['2010M', ['maternalarvpost', 'maternalarvpostadh']],
 #             ['2030M', ['maternalarvpost', 'maternalarvpostadh']],
 #             ['2060M', ['maternalarvpost', 'maternalarvpostadh']],
 #             ['2090M', ['maternalarvpost', 'maternalarvpostadh']],
 #             ['2120M', ['maternalarvpost', 'maternalarvpostadh']],
+        ]
+        for visit in visit_codes:
+            code, model_names = visit
+            appointment = Appointment.objects.get(
+                registered_subject=self.registered_subject, visit_definition__code=code
+            )
+            MaternalVisitFactory(appointment=appointment)
+            for model_name in model_names:
+                self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
+                    app_label='microbiome_maternal', model_name=model_name, appointment=appointment
+                )).count(), 1)
+
+    def test_hiv_rapid_test_neg(self):
+        """
+        """
+        PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            process_rapid_test=YES,
+            rapid_test_result=NEG,
+        )
+        visit_codes = [
+            ['2010M', ['rapidtestresult']],
+            ['2030M', ['rapidtestresult']],
+            ['2060M', ['rapidtestresult']],
+            ['2090M', ['rapidtestresult']],
+            ['2120M', ['rapidtestresult']]
         ]
         for visit in visit_codes:
             code, model_names = visit
