@@ -26,21 +26,21 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         verbose_name='Are you diabetic?',
         default=NO,
         choices=YES_NO,
-        help_text='Eligible if NO',
+        help_text='INELIGIBLE if YES',
         max_length=3)
 
     on_tb_treatment = models.CharField(
         verbose_name="Are you being treated for tubercolosis?",
         choices=YES_NO,
         default=NO,
-        help_text='Eligible if NO',
+        help_text='INELIGIBLE if YES',
         max_length=3)
 
     on_hypertension_treatment = models.CharField(
         verbose_name='Are you being treated for hypertension?',
         choices=YES_NO,
         default=NO,
-        help_text='Eligible if NO',
+        help_text='INELIGIBLE if YES',
         max_length=3
     )
 
@@ -48,14 +48,14 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         verbose_name='Are you willing to breast-feed your child for a whole year?',
         choices=YES_NO,
         default=NO,
-        help_text='Eligible if YES',
+        help_text='INELIGIBLE if NO',
         max_length=3)
 
     instudy_for_a_year = models.CharField(
         verbose_name="Are you willing to remain in the study during the infants first year of life",
         choices=YES_NO,
         default=NO,
-        help_text='Eligible if YES',
+        help_text='INELIGIBLE if NO',
         max_length=3)
 
     week32_test = models.CharField(
