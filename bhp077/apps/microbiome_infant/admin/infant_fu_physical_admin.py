@@ -1,13 +1,13 @@
 from django.contrib import admin
 
-from ..models import InfantFuPhysical
-
 from edc.base.modeladmin.admin import BaseModelAdmin
 
-from ..models import InfantVisit
+from ..forms import InfantFuPhysicalForm
+from ..models import InfantVisit, InfantFuPhysical
 
 
 class InfantFuPhysicalAdmin(BaseModelAdmin):
+    form = InfantFuPhysicalForm
 
     list_display = ('has_abnormalities', )
 

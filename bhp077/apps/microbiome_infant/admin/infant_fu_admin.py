@@ -1,13 +1,13 @@
 from django.contrib import admin
 
-from ..models import InfantFu
-
 from edc.base.modeladmin.admin import BaseModelAdmin
 
-from ..models import InfantVisit
+from ..forms import InfantFuForm
+from ..models import InfantVisit, InfantFu
 
 
 class InfantFuAdmin(BaseModelAdmin):
+    form = InfantFuForm
 
     list_display = (
         'physical_assessment',

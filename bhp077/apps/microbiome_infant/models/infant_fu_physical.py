@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc_constants.choices import YES_NO
@@ -16,6 +17,7 @@ class InfantFuPhysical(InfantScheduledVisitModel):
         decimal_places=2,
         verbose_name="Weight ",
         help_text="Measured in kg.",
+        validators=[MinValueValidator(0), MaxValueValidator(20.0), ],
     )
 
     height = models.DecimalField(
@@ -23,6 +25,7 @@ class InfantFuPhysical(InfantScheduledVisitModel):
         decimal_places=2,
         verbose_name="Height ",
         help_text="",
+        validators=[MinValueValidator(0), MaxValueValidator(90), ],
     )
 
     head_circumference = models.DecimalField(
@@ -30,6 +33,7 @@ class InfantFuPhysical(InfantScheduledVisitModel):
         decimal_places=2,
         verbose_name="What was the head circumference in centimeters? ",
         help_text="Measured in centimeters, (cm)",
+        validators=[MinValueValidator(0), MaxValueValidator(50.0), ],
     )
 
     has_abnormalities = models.CharField(

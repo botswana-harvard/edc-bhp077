@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_constants.choices import YES_NO
 
@@ -45,6 +46,7 @@ class InfantFu(InfantScheduledVisitModel):
         help_text="",
         blank=True,
         null=True,
+        validators=[MinValueValidator(0), MaxValueValidator(90), ],
     )
 
     def __str__(self):
