@@ -26,12 +26,6 @@ class InfantOffStudy(BaseOffStudy, BaseUuidModel):
     def get_subject_identifier(self):
         return self.infant_visit.appointment.registered_subject.subject_identifier
 
-    def get_visit(self):
-        return self.infant_visit
-
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantoffstudy_change', args=(self.id,))
-
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Off-Study"

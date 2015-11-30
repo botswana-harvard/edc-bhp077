@@ -53,9 +53,6 @@ class PostnatalEnrollment(BaseEnrollment):
         self.postnatal_enrollemet_eligible = self.postnatal_eligible
         super(PostnatalEnrollment, self).save(*args, **kwargs)
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_postnatalenrollment_change', args=(self.id,))
-
     def get_registration_datetime(self):
         return self.report_datetime
 

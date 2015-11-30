@@ -179,9 +179,6 @@ class MaternalPostFuDxT(BaseUuidModel):
     def __unicode__(self):
         return unicode(self.get_visit())
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalpostfudxt_change', args=(self.id,))
-
     class Meta:
         app_label = "microbiome_maternal"
         verbose_name = "Maternal Postnatal Follow-Up: DxT"

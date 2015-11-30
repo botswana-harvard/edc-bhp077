@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator
 
 from edc_base.model.fields import IsDateEstimatedField, OtherCharField
@@ -54,9 +53,6 @@ class MaternalArvHistory(MaternalScheduledVisitModel):
         blank=True,
         null=True,
     )
-
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalarvhistory_change', args=(self.id, ))
 
     class Meta:
         app_label = 'microbiome_maternal'

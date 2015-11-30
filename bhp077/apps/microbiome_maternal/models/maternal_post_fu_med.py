@@ -27,9 +27,6 @@ class MaternalPostFuMed(MaternalScheduledVisitModel):
 
     history = AuditTrail()
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalpostfumed_change', args=(self.id,))
-
     def get_report_datetime(self):
         return self.maternal_post_fu.get_report_datetime()
 
@@ -71,9 +68,6 @@ class MaternalPostFuMedItems(BaseUuidModel):
 
     def __str__(self):
         return str(self.maternal_post_fu.maternal_visit)
-
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_matrenal_maternalpostfumeditems_change', args=(self.id,))
 
     class Meta:
         app_label = "microbiome_maternal"

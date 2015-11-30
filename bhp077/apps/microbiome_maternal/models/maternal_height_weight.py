@@ -42,9 +42,6 @@ class MaternalHeightWeight(MaternalScheduledVisitModel):
 
     history = AuditTrail()
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalheightweight_change', args=(self.id,))
-
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = 'Maternal Height & Weight'

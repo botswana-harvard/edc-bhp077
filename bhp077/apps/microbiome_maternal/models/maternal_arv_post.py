@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 
 from .base_haart_modification import BaseHaartModification
 from edc.subject.haart.choices import ARV_STATUS_WITH_NEVER
@@ -86,9 +85,6 @@ class MaternalArvPostMod(MaternalOffStudyMixin, BaseHaartModification):
     def get_subject_identifier(self):
         return self.get_visit().get_subject_identifier()
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalarvpostmod_change', args=(self.id,))
-
     def natural_key(self):
         return super(MaternalArvPostMod, self).natural_key() + self.maternal_arv_post.natural_key()
 
@@ -129,9 +125,6 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
 
     def __unicode__(self):
         return "%s" % (self.maternal_arv_post)
-
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalarvspostadherence_change', args=(self.id,))
 
     def get_report_datetime(self):
         return self.maternal_arv_post.get_report_datetime()

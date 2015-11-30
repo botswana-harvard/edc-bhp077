@@ -113,9 +113,6 @@ class MaternalEligibility (BaseUuidModel):
             mothers_consent = None
         return mothers_consent
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternaleligibility_change', args=(self.id,))
-
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = "Maternal Eligibility"
