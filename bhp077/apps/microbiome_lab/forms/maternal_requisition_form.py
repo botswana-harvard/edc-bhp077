@@ -26,6 +26,10 @@ class MaternalRequisitionForm(BaseRequisitionForm):
         ):
             if cleaned_data.get('item_type') != 'swab':
                 raise forms.ValidationError('Panel is a swab therefore collection type is swab. Please correct.')
+        else:
+            if cleaned_data.get('item_type') != 'tube':
+                raise forms.ValidationError('Panel {} can only be tube therefore collection type is swab. '
+                                            'Please correct.'.format(cleaned_data.get('panel').name))
         return cleaned_data
 
     class Meta:
