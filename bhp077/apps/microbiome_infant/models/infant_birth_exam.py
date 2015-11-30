@@ -16,12 +16,6 @@ class InfantBirthExam(InfantScheduledVisitModel):
         verbose_name="Date of infant examination",
         help_text="")
 
-    gender = models.CharField(
-        max_length=15,
-        choices=GENDER_UNDETERMINED,
-        verbose_name="Gender? ",
-        help_text="")
-
     general_activity = models.CharField(
         max_length=15,
         choices=NORMAL_ABNORMAL,

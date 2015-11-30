@@ -2,32 +2,25 @@ from django.test import TestCase
 from django.utils import timezone
 from datetime import datetime
 
-from bhp077.apps.microbiome_infant.models import InfantVisit
 from bhp077.apps.microbiome_infant.forms import InfantBirthExamForm
 
 from edc.subject.registration.models import RegisteredSubject
-from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
+from edc_constants.constants import YES, NO, POS, NOT_APPLICABLE
 
-from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory, AntenatalEnrollmentFactory,
-    MaternalVisitFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory, SexualReproductiveHealthFactory
+from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
-from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 
 from bhp077.apps.microbiome_maternal.visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
 from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
-from bhp077.apps.microbiome_infant.tests.factories import \
-    (InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
-from bhp077.apps.microbiome_infant.models import InfantBirth
+from bhp077.apps.microbiome_infant.tests.factories import (InfantBirthFactory, InfantVisitFactory)
 
 
 class TestInfantBirthRecordExam(TestCase):
@@ -49,7 +42,7 @@ class TestInfantBirthRecordExam(TestCase):
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
-        post = PostnatalEnrollmentFactory(
+        PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
@@ -78,7 +71,6 @@ class TestInfantBirthRecordExam(TestCase):
             'infant_birth': self.infant_birth.id,
             'infant_visit': self.infant_visit.id,
             'infant_exam_date': timezone.now().date(),
-            'gender': 'M',
             'general_activity': 'NORMAL',
             'abnormal_activity': 'SETSENO',
             'physical_exam_result': 'NORMAL',
@@ -99,11 +91,6 @@ class TestInfantBirthRecordExam(TestCase):
             'other_exam_info': 'NA',
         }
 
-    def test_clean_gender(self):
-        print timezone.now().date()
-        self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
-        self.assertIn(u'Gender mismatch you specified F for infant birth and infant birth exam M', self.infant_birth_record_arv_form.errors.get('__all__'))
-
     def test_validate_general_activity1(self):
         del self.data['abnormal_activity']
         self.data['general_activity'] = 'ABNORMAL'
@@ -122,7 +109,7 @@ class TestInfantBirthRecordExam(TestCase):
         self.data['heent_exam'] = YES
         self.data['gender'] = 'F'
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
-        self.assertIn(u'If HEENT Exam is normal or not evaluated, Do not answer the following Question (Q10).',
+        self.assertIn(u'If HEENT Exam is normal, Do not answer the following Question (Q10).',
                       self.infant_birth_record_arv_form.errors.get('__all__'))
 
     def test_validate_heent_exam2(self):
@@ -134,7 +121,7 @@ class TestInfantBirthRecordExam(TestCase):
 
     def test_validate_resp_exam1(self):
         self.data['resp_exam'] = YES
-        self.data['resp_exam_other'] = 'NA'
+        self.data['resp_exam_other'] = NOT_APPLICABLE
         self.data['gender'] = 'F'
         del self.data['heent_no_other']
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)

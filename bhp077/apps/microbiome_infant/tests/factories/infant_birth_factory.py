@@ -16,6 +16,5 @@ class InfantBirthFactory(factory.DjangoModelFactory):
     maternal_labour_del = factory.SubFactory(MaternalLabourDelFactory)
     first_name = factory.Sequence(lambda n: 'RANGO{0}'.format(n))
     initials = factory.Sequence(lambda n: 'R{0}'.format(n))
-    birth_order = 1
     dob = timezone.now().date()
     gender = 'F'

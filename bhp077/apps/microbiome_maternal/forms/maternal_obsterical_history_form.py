@@ -14,7 +14,7 @@ class MaternalObstericalHistoryForm(BaseMaternalModelForm):
         if cleaned_data.get('pregs_24wks_or_more') < 0:
             raise forms.ValidationError('Number of pregnancies at least 24 weeks, should be greater than zero.')
         else:
-            if cleaned_data.get('live_children')  < 0:
+            if cleaned_data.get('live_children') < 0:
                 raise forms.ValidationError('How many other living children does the participant currently'
                 ' have (excluding baby to be enrolled in the study.)'
                 ' Provide value greater than zero.')

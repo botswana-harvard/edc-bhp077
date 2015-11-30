@@ -3,7 +3,7 @@ from django import forms
 from base_maternal_model_form import BaseMaternalModelForm
 
 from ..models import MaternalBreastHealth
-from edc_constants.constants import NO, YES, NOT_APPLICABLE
+from edc_constants.constants import YES, NOT_APPLICABLE
 
 
 class MaternalBreastHealthForm(BaseMaternalModelForm):
