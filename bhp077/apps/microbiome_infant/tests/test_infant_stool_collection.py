@@ -53,7 +53,7 @@ class TestInfantStoolCollection(TestCase):
             maternal_labour_del=maternal_labour_del)
         self.appointment = Appointment.objects.get(
             registered_subject=infant_registered_subject,
-            visit_definition__code='2010')
+            visit_definition__code='2000')
         self.infant_visit = InfantVisitFactory(appointment=self.appointment)
         self.data = {
             'report_datetime': timezone.now(),
