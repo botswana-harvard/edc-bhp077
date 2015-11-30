@@ -24,7 +24,7 @@ class InfantFuPhysical(InfantScheduledVisitModel):
         max_digits=6,
         decimal_places=2,
         verbose_name="Height ",
-        help_text="",
+        help_text="Measured in centimeters, (cm)",
         validators=[MinValueValidator(0), MaxValueValidator(90), ],
     )
 
