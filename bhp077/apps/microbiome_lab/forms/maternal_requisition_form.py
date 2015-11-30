@@ -18,10 +18,12 @@ class MaternalRequisitionForm(BaseRequisitionForm):
                                         'indicated as {}, whilst requisition is indicated as{}. Please correct'
                                         .format(cleaned_data.get('drawn_datetime').date(),
                                                 cleaned_data.get('requisition_datetime').date()))
-        if (cleaned_data.get('panel').name == 'Vaginal swab (Storage)' or
+        if (
+            cleaned_data.get('panel').name == 'Vaginal swab (Storage)' or
             cleaned_data.get('panel').name == 'Rectal swab (Storage)' or
-            cleaned_data.get('panel').name == 'Skin Flora (Storage)' or
-            cleaned_data.get('panel').name == 'Vaginal Swab (multiplex PCR)'):
+            cleaned_data.get('panel').name == 'Skin Swab (Storage)' or
+            cleaned_data.get('panel').name == 'Vaginal Swab (multiplex PCR)'
+        ):
             if cleaned_data.get('item_type') != 'swab':
                 raise forms.ValidationError('Panel is a swab therefore collection type is swab. Please correct.')
         return cleaned_data
