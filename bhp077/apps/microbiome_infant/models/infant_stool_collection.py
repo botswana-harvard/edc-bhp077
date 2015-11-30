@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.audit_trail import AuditTrail
@@ -102,9 +101,6 @@ class InfantStoolCollection(InfantScheduledVisitModel):
 
     def __unicode__(self):
         return "%s" % (self.infant_visit)
-
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantstoolcollection_change', args=(self.id,))
 
     class Meta:
         app_label = "microbiome_infant"
