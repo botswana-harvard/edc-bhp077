@@ -38,6 +38,9 @@ class AntenatalEnrollment(BaseEnrollment):
         self.antenatal_eligible = self.eligible_for_postnatal
         super(AntenatalEnrollment, self).save(*args, **kwargs)
 
+    def get_registration_datetime(self):
+        return self.report_datetime
+
     @property
     def eligible_for_postnatal(self):
         """return true if a mother is eligible for postnatalenrollment."""

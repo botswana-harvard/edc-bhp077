@@ -23,7 +23,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
     visit_definitions = OrderedDict()
 
     visit_definitions['1000M'] = {
-        'title': 'Maternal Postnatal Enrollment',
+        'title': 'Maternal Patient History',
         'time_point': 0,
         'base_interval': 0,
         'base_interval_unit': 'D',
@@ -56,7 +56,6 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'entries': (
             EntryTuple(10L, u'microbiome_maternal', u'maternallocator', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(20L, u'microbiome_maternal', u'maternaldemographics', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(30L, u'microbiome_maternal', u'maternalheightweight', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(40L, u'microbiome_maternal', u'maternalmedicalhistory', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(50L, u'microbiome_maternal', u'maternalobstericalhistory', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(60L, u'microbiome_maternal', u'maternalclinicalhistory', NOT_REQUIRED, NOT_ADDITIONAL),
@@ -68,7 +67,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
 
     visit_definitions['2000M'] = {
         'title': 'Maternal Delivery',
-        'time_point': 0,
+        'time_point': 1,
         'base_interval': 0,
         'base_interval_unit': 'D',
         'window_lower_bound': 0,
@@ -102,6 +101,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             EntryTuple(20L, u'microbiome_maternal', u'maternallabdelmed', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(30L, u'microbiome_maternal', u'maternallabdelclinic', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(40L, u'microbiome_maternal', u'maternallabdeldx', REQUIRED, NOT_ADDITIONAL),
+            EntryTuple(45L, u'microbiome_maternal', u'maternalheightweight', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(50L, u'microbiome_maternal', u'maternalarvpreg', NOT_REQUIRED, ADDITIONAL),
             EntryTuple(70L, u'microbiome_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
             EntryTuple(80L, u'microbiome_maternal', u'maternalpostfumed', REQUIRED, NOT_ADDITIONAL),
