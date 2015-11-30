@@ -1,4 +1,4 @@
-from edc_constants.constants import NOT_APPLICABLE, UNKNOWN
+from edc_constants.constants import NOT_APPLICABLE, UNKNOWN, OTHER
 from bhp077.apps.microbiome.constants import LIVE
 
 VISIT_INFO_SOURCE = [
@@ -359,7 +359,6 @@ BREAST_CHOICE = (
 )
 
 MEDICATIONS = (
-    ('None', 'None'),
     ('Acyclovir', 'Acyclovir'),
     ('Albuterol', 'Albuterol'),
     ('Albendazol', 'Albendazol'),
@@ -413,6 +412,7 @@ MEDICATIONS = (
     ('Vancomycin', 'Vancomycin'),
     ('Vitamins(iron,B12,Folate)', 'Vitamins(iron,B12,Folate)'),
     ('Traditional medication', 'Traditional Medications'),
+    (OTHER, 'Other, specify ...')
 )
 
 MOUTH_UP_GASTROINT_DISORDER = (

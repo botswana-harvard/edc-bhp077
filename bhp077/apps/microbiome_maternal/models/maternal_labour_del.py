@@ -1,11 +1,12 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+from edc.subject.code_lists.models import WcsDxAdult
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
+from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_base.model.validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
-from edc.subject.code_lists.models import WcsDxAdult
 
 from bhp077.apps.microbiome.choices import DX_MATERNAL
 from bhp077.apps.microbiome_list.models import Suppliments
@@ -230,8 +231,8 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = "Maternal LAB-DEL: Clinical History"
-        verbose_name_plural = "Maternal LAB-DEL: Clinical History"
+        verbose_name = "Maternal Labour & Delivery: Clinical History"
+        verbose_name_plural = "Maternal Labour & Delivery: Clinical History"
 
 
 class MaternalLabDelDx(MaternalScheduledVisitModel):
@@ -264,11 +265,11 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = "Maternal LAB-DEL: Preg Dx"
-        verbose_name_plural = "Maternal LAB-DEL: Preg Dx"
+        verbose_name = "Maternal Labour & Delivery: Preg Dx"
+        verbose_name_plural = "Maternal Labour & Delivery: Preg Dx"
 
 
-class MaternalLabDelDxT (MaternalScheduledVisitModel):
+class MaternalLabDelDxT (BaseUuidModel):
 
     """ Diagnosis during pregnancy collected during labor and delivery (transactions). """
 
@@ -317,5 +318,5 @@ class MaternalLabDelDxT (MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = "Maternal LAB-DEL: Preg DxT"
-        verbose_name_plural = "Maternal LAB-DEL: Preg DxT"
+        verbose_name = "Maternal Labour & Delivery: Preg DxT"
+        verbose_name_plural = "Maternal Labour & Delivery: Preg DxT"

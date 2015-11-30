@@ -3,7 +3,7 @@ from django.contrib import admin
 from edc.base.modeladmin.admin import BaseModelAdmin
 from edc.base.modeladmin.admin import BaseTabularInline
 
-from bhp077.apps.microbiome_infant.forms import InfantFuNewMedItemsForm
+from bhp077.apps.microbiome_infant.forms import InfantFuNewMedItemsForm, InfantFuNewMedForm
 from bhp077.apps.microbiome_infant.models import InfantFuNewMedItems
 
 from ..models import InfantFuNewMed, InfantVisit
@@ -20,6 +20,7 @@ class InfantFuNewMedAdmin(BaseModelAdmin):
 
     radio_fields = {'new_medications': admin.VERTICAL, }
     inlines = [InfantFuNewMedItemsInline, ]
+    form = InfantFuNewMedForm
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "infant_visit":
