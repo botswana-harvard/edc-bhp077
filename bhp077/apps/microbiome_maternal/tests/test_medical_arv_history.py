@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
+from datetime import date, datetime
 
 from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -58,13 +59,30 @@ class TestMaternalArvHistory(TestCase):
         }
 
     def test_arv_interrupt_1(self):
-        self.data['preg_on_haart'] = NO
+        self.data['prior_preg'] = 'interruption never restarted'
+        self.data['haart_start_date'] = date(2015, 04, 10)
+        self.data['preg_on_haart'] = YES
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You indicated that the mother was NOT still on tripple ARV when she got pregnant.', errors)
+        self.assertIn("You indicated that the mother was still on tripple ARV when "
+                      "she got pregnant, yet you indicated that ARVs were interrupted "
+                      "and never restarted.", errors)
 
     def test_arv_interrupt_2(self):
         self.data['prior_preg'] = 'interruption never restarted'
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You indicated that the mother was still on tripple ARV when she got pregnant', errors)
+
+    def test_haart_start_date(self):
+        self.data['haart_start_date'] = timezone.now()
+        form = MaternalArvHistoryForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn("ARV start date (question 3) must be six weeks prior to today's date or greater.", errors)
+
+    def test_haart_start_date_2(self):
+        self.data['haart_start_date'] = date(1987, 10, 10)
+        self.data['report_datetime'] = datetime.today()
+        form = MaternalArvHistoryForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn("Date of triple antiretrovirals first started CANNOT be before DOB.", errors)
