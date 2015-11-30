@@ -123,6 +123,8 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         help_text="",
     )
 
+    health_cond_other = OtherCharField()
+
     has_ob_comp = models.CharField(
         max_length=3,
         choices=YES_NO,
@@ -136,11 +138,7 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         help_text="",
     )
 
-    ob_comp_other = models.TextField(
-        max_length=250,
-        blank=True,
-        null=True,
-    )
+    ob_comp_other = OtherCharField()
 
     took_suppliments = models.CharField(
         max_length=3,
@@ -152,6 +150,8 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         Suppliments,
         verbose_name="Please select relevant medications taken:",
         help_text="Select all that apply")
+
+    suppliments_other = OtherCharField()
 
     comment = models.TextField(
         max_length=250,
