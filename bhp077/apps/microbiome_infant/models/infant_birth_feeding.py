@@ -26,9 +26,6 @@ class InfantBirthFeedVaccine(InfantScheduledVisitModel):
         blank=True,
         null=True)
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantbirthfeedvaccine_change', args=(self.id,))
-
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Birth Feeding & Vaccination"

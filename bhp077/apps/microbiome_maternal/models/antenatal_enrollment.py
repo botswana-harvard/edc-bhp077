@@ -6,7 +6,6 @@ from edc_base.model.validators import (datetime_not_before_study_start, datetime
 
 from .base_enrollment import BaseEnrollment
 from .maternal_consent import MaternalConsent
-from dateutil.relativedelta import relativedelta
 
 
 class AntenatalEnrollment(BaseEnrollment):
@@ -58,9 +57,6 @@ class AntenatalEnrollment(BaseEnrollment):
             elif self.evidence_hiv_status == NO and self.rapid_test_result != POS and self.process_rapid_test == YES:
                 return True
         return False
-
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_antenatalenrollment_change', args=(self.id,))
 
     class Meta:
         app_label = 'microbiome_maternal'

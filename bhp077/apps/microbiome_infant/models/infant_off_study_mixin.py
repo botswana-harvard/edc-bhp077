@@ -12,6 +12,5 @@ class InfantOffStudyMixin(OffStudyMixin):
         from .infant_off_study import InfantOffStudy
         return InfantOffStudy
 
-
     class Meta:
         abstract = True

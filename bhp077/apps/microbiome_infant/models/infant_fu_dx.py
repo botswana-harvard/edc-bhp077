@@ -66,9 +66,6 @@ class InfantFuDxItems(BaseUuidModel):
     def __unicode__(self):
         return unicode(self.get_visit())
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantfudxitems_change', args=(self.id,))
-
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant FollowUp: Dx Items"

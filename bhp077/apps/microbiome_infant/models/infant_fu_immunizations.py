@@ -1,12 +1,10 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 
 from edc_base.model.fields import OtherCharField
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_UNKNOWN
 from edc_base.model.models import BaseUuidModel
 
-from .infant_fu import InfantFu
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 from bhp077.apps.microbiome.choices import REASONS_VACCINES_MISSED
 from ..infant_choices import IMMUNIZATIONS, INFANT_AGE_VACCINE_GIVEN
@@ -30,9 +28,6 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
 
     def __str__(self):
         return "%s" % (self.infant_visit)
-
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantfuimmunization_change', args=(self.id,))
 
     class Meta:
         app_label = "microbiome_infant"
@@ -77,9 +72,6 @@ class VaccinesReceived(BaseUuidModel):
     def get_subject_identifier(self):
         return self.get_visit().get_subject_identifier()
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_vaccinesreceived_change', args=(self.id,))
-
     class Meta:
         app_label = 'microbiome_infant'
         verbose_name = 'Received Vaccines'
@@ -119,9 +111,6 @@ class VaccinesMissed(BaseUuidModel):
 
     def get_subject_identifier(self):
         return self.get_visit().get_subject_identifier()
-
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_vaccinesmissed_change', args=(self.id,))
 
     class Meta:
         app_label = 'microbiome_infant'

@@ -46,9 +46,6 @@ class InfantBirth(InfantOffStudyMixin, BaseUuidModel, BaseAppointmentMixin):
         max_length=10,
         choices=GENDER_UNDETERMINED)
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantbirth_change', args=(self.id,))
-
     def __unicode__(self):
         return "{} ({}) {}".format(self.first_name, self.initials, self.gender)
 

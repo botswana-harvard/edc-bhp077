@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 
 from edc.audit.audit_trail import AuditTrail
 from edc.base.model.fields.custom.custom_fields import OtherCharField
@@ -27,8 +26,8 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
         validators=[
             datetime_not_before_study_start,
             datetime_not_future,
-            ],
-        )
+        ]
+    )
 
     source = models.ManyToManyField(
         AutopsyInfoSource,
@@ -61,9 +60,6 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
     def __unicode__(self):
         return self.registered_subject.subject_identifier
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantverbalautopsy_change', args=(self.id,))
-
     def get_consenting_subject_identifier(self):
         """Returns mother's identifier."""
         return self.registered_subject.relative_identifier
@@ -85,31 +81,28 @@ class InfantVerbalAutopsyItems(InfantBaseUuidModel):
         verbose_name="Sign or Symptom",
         blank=True,
         null=True,
-        )
+    )
     onset_date = models.DateField(
         verbose_name="Date of Onset",
         blank=True,
         null=True,
-        )
+    )
     duration = OtherCharField(
         max_length=25,
         verbose_name="Duration (days/hours)",
         blank=True,
         null=True,
-        )
+    )
     severity = models.CharField(
         max_length=20,
         choices=SEVERITY_LEVEL,
         verbose_name="Severity",
         blank=True,
         null=True,
-        )
+    )
 
     def get_report_datetime(self):
         return self.verbal_autopsy.report_datetime
-
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantverbalautopsy_change', args=(self.id,))
 
     def get_consenting_subject_identifier(self):
         """Returns mother's identifier."""

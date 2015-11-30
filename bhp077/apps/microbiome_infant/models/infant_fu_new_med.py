@@ -44,9 +44,6 @@ class InfantFuNewMed(InfantScheduledVisitModel):
     def __str__(self):
         return "%s" % (self.infant_visit)
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantfunewmed_change', args=(self.id,))
-
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant FollowUp: New Medication"
@@ -84,9 +81,6 @@ class InfantFuNewMedItems(BaseUuidModel):
 
     def __unicode__(self):
         return unicode(self.get_visit())
-
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantfunewmeditems_change', args=(self.id,))
 
     class Meta:
         app_label = "microbiome_infant"

@@ -86,9 +86,6 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
         choices=KNOW_HIV_STATUS,
         help_text="",)
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalclinicalhistory_change', args=(self.id,))
-
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = 'Maternal use of ARVs in Prior Pregnancy'

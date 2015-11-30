@@ -143,9 +143,6 @@ class MaternalDemographics(MaternalScheduledVisitModel):
         choices=HOUSE_TYPE,
         help_text="Indicate the primary type of housing used over the past 30 days",)
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternaldemographics_change', args=(self.id,))
-
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = "Maternal Demographics"
