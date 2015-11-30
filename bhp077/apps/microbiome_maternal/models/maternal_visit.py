@@ -13,6 +13,7 @@ from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICE
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 from bhp077.apps.microbiome.choices import VISIT_REASON
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
+from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
 
 
 class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
@@ -37,7 +38,7 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
-        self.create_additional_maternal_forms_meta()
+        self.check_if_eligible()
         super(MaternalVisit, self).save(*args, **kwargs)
 
     def entry_model_options(self, app_label, model_name):
@@ -159,6 +160,13 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
                     except MaternalVisit.DoesNotExist:
                         return False
         return is_off
+
+    def check_if_eligible(self):
+        if not PostnatalEnrollment.objects.filter(registered_subject=self.appointment.registered_subject).exists():
+            antenatal = AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+            self.reason = 'off study' if not antenatal.antenatal_eligible else self.reason
+        else:
+            self.create_additional_maternal_forms_meta()
 
     def create_additional_maternal_forms_meta(self):
         self.reason = 'off study' if not self.postnatal_enrollment.postnatal_eligible else self.reason
