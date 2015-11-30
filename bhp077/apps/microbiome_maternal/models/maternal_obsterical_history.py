@@ -43,9 +43,6 @@ class MaternalObstericalHistory(MaternalScheduledVisitModel):
         validators=[MinValueValidator(0), MaxValueValidator(20), ],
         help_text="")
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalobstericalhistory_change', args=(self.id,))
-
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = "Maternal Obsterical History"

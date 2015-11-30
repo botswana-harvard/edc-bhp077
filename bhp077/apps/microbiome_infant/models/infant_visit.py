@@ -158,9 +158,6 @@ class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
     def get_visit_reason_choices(self):
         return VISIT_REASON
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantvisit_add', args=(self.id,))
-
     def __unicode__(self):
         return '{} {} {}'.format(self.appointment.registered_subject.subject_identifier,
                                  self.appointment.registered_subject.first_name,

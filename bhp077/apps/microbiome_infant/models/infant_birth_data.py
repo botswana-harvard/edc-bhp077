@@ -96,9 +96,6 @@ class InfantBirthData(InfantScheduledVisitModel):
             scheduled_meta_data.save()
             return scheduled_meta_data
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantbirthdata_change', args=(self.id,))
-
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Birth Record: Data"

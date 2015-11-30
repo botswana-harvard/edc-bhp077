@@ -73,9 +73,6 @@ class MaternalArv(BaseUuidModel):
         null=True,
         blank=True)
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalarv_change', args=(self.id,))
-
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = 'Maternal ARV'

@@ -219,9 +219,6 @@ class InfantFeeding(InfantScheduledVisitModel):
     def __st__(self):
         return "%s" % (self.infant_visit)
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantfeeding_change', args=(self.id,))
-
     def save(self, *args, **kwargs):
         if self.previous_infant_feeding:
             self.formula_intro_occur = self.previous_infant_feeding
