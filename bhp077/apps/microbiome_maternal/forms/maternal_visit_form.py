@@ -42,9 +42,9 @@ class MaternalVisitForm (BaseModelForm):
         if instance.is_off_study:
             raise forms.ValidationError('Data capturing is not allowed, there is an off study visit report.')
 
-        if not instance.postnatal_enrollment.postnatal_eligible:
-            if not instance.appointment.visit_definition.code == "1000M":
-                raise forms.ValidationError('Data capturing is not allowed, the participant is not eligible.')
+#         if not instance.postnatal_enrollment.postnatal_eligible:
+#             if not instance.appointment.visit_definition.code == "1000M":
+#                 raise forms.ValidationError('Data capturing is not allowed, the participant is not eligible.')
         return cleaned_data
 
     def validate_reason_missed(self, cleaned_data):

@@ -4,9 +4,22 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 
 from ..forms import InfantStoolCollectionForm
 from ..models import InfantStoolCollection, InfantVisit
+from ..mixin import InfantStoolExcludeFieldsMixin
 
 
-class InfantStoolCollectionAdmin(BaseModelAdmin):
+class InfantStoolCollectionAdmin(InfantStoolExcludeFieldsMixin, BaseModelAdmin):
+    fields = ('infant_visit',
+              'report_datetime',
+              'sample_obtained',
+              'nappy_type',
+              'other_nappy',
+              'stool_colection',
+              'stool_colection_time',
+              'stool_stored',
+              'past_diarrhea',
+              'diarrhea_past_24hrs',
+              'antibiotics_7days',
+              'antibiotic_dose_24hrs',)
 
     form = InfantStoolCollectionForm
     radio_fields = {
@@ -18,6 +31,8 @@ class InfantStoolCollectionAdmin(BaseModelAdmin):
         "diarrhea_past_24hrs": admin.VERTICAL,
         "antibiotics_7days": admin.VERTICAL,
         "antibiotic_dose_24hrs": admin.VERTICAL}
+
+    custom_exclude = {'visit': ['diarrhea_past_24hrs', 'antibiotics_7days', 'antibiotic_dose_24hrs']}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "infant_visit":

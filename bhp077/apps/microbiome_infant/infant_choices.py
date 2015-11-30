@@ -65,7 +65,7 @@ INFANT_AGE_VACCINE_GIVEN = (
     ('After Birth', 'After Birth'),
     ('2', '2 months'),
     ('3', '3 months'),
-    ('4', '3 months'),
+    ('4', '4 months'),
     ('6-11', '6-11 months'),
     ('9', '9 months'),
     ('12-17', '12-17 months'),

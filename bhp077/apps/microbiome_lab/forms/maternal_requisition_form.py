@@ -18,12 +18,18 @@ class MaternalRequisitionForm(BaseRequisitionForm):
                                         'indicated as {}, whilst requisition is indicated as{}. Please correct'
                                         .format(cleaned_data.get('drawn_datetime').date(),
                                                 cleaned_data.get('requisition_datetime').date()))
-        if (cleaned_data.get('panel').name == 'Vaginal swab (Storage)' or
+        if (
+            cleaned_data.get('panel').name == 'Vaginal swab (Storage)' or
             cleaned_data.get('panel').name == 'Rectal swab (Storage)' or
-            cleaned_data.get('panel').name == 'Skin Flora (Storage)' or
-            cleaned_data.get('panel').name == 'Vaginal Swab (multiplex PCR)'):
+            cleaned_data.get('panel').name == 'Skin Swab (Storage)' or
+            cleaned_data.get('panel').name == 'Vaginal Swab (multiplex PCR)'
+        ):
             if cleaned_data.get('item_type') != 'swab':
                 raise forms.ValidationError('Panel is a swab therefore collection type is swab. Please correct.')
+        else:
+            if cleaned_data.get('item_type') != 'tube':
+                raise forms.ValidationError('Panel {} can only be tube therefore collection type is swab. '
+                                            'Please correct.'.format(cleaned_data.get('panel').name))
         return cleaned_data
 
     class Meta:

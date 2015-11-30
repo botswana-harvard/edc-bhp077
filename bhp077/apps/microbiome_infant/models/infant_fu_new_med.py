@@ -22,25 +22,6 @@ class InfantFuNewMed(InfantScheduledVisitModel):
                   "only report oral and intravenous meds",
     )
 
-    other_medications = OtherCharField(
-        max_length=35,
-        verbose_name="Other medication that is important to report,in the view of the investigator(either because "
-                     "of potential overlapping toxicity with study CTX/placebo or NVP,or for some other "
-                     "reason(specify medication)",
-        help_text="",
-    )
-
-    date_first_medication = models.DateField(
-        verbose_name="Date of first medication use",
-        default=timezone.now().date()
-    )
-
-    date_stoped = models.DateField(
-        verbose_name="Date medication was stopped",
-        blank=True,
-        null=True,
-    )
-
     def __str__(self):
         return "%s" % (self.infant_visit)
 
@@ -62,12 +43,22 @@ class InfantFuNewMedItems(BaseUuidModel):
         null=True,
     )
 
+    other_medication = OtherCharField()
+
+    date_first_medication = models.DateField(
+        verbose_name="Date of first medication use",
+    )
+
+    date_stopped = models.DateField(
+        verbose_name="Date medication was stopped",
+        blank=True,
+        null=True,
+    )
+
     drug_route = models.CharField(
         max_length=20,
         choices=DRUG_ROUTE,
         verbose_name="Drug route",
-        blank=True,
-        null=True,
     )
 
     def get_visit(self):

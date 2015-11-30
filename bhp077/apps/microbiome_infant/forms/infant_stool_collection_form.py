@@ -24,8 +24,8 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
             if cleaned_data.get('stool_colection') == NOT_APPLICABLE:
                 raise forms.ValidationError('Sample is indicated to have been obtained today, collection time CANNOT '
                                             'be not Applicable.')
-            if cleaned_data.get('stool_stored') == NOT_APPLICABLE:
-                raise forms.ValidationError('Sample is stated to have been obtained today, please indicate if the '
+            if cleaned_data.get('stool_stored') == NOT_APPLICABLE and cleaned_data.get('stool_colection') != 'real-time':
+                raise forms.ValidationError('Sample is stated to have been obtained today, please indicate how the '
                                             'sample was stored.')
         else:
             if cleaned_data.get('nappy_type') != NOT_APPLICABLE:
@@ -35,7 +35,7 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
                 raise forms.ValidationError('Sample is indicated to have NOT been obtained today, you cannot specify '
                                             'the collection time. Please correct.')
             if cleaned_data.get('stool_stored') != NOT_APPLICABLE:
-                raise forms.ValidationError('Sample is stated to have been NOT obtained today, you cannot specify if '
+                raise forms.ValidationError('Sample is stated to have been NOT obtained today, you cannot specify how '
                                             'the sample was stored.')
 
     def validate_collection_time(self, cleaned_data):
@@ -46,6 +46,9 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
             if cleaned_data.get('stool_colection_time'):
                 raise forms.ValidationError('You have stated that stool was collected real-time. You cannot indicate '
                                             'the number of hour ago the stool was collected.')
+            if cleaned_data.get('stool_stored') != NOT_APPLICABLE:
+                raise forms.ValidationError('You have indicated that stool was collected real-time. How ttool was stored '
+                                            'should be NOT APPLICABLE.')
 
     def validate_diarrhea(self, cleaned_data):
         if cleaned_data.get('past_diarrhea') == YES:

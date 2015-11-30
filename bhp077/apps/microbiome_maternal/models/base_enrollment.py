@@ -1,13 +1,11 @@
 from django.db import models
 from dateutil import rrule
-import datetime
 
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
 
 from edc_base.model.models import BaseUuidModel
-from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,
-                                       date_not_before_study_start, date_not_future)
+from edc_base.model.validators import date_not_before_study_start, date_not_future
 
 from edc_consent.models import RequiresConsentMixin
 
