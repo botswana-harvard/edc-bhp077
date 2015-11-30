@@ -50,7 +50,6 @@ class AntenatalEnrollmentForm(BaseEnrollmentForm):
                         "Rapid test is required. You have tested {} weeks ago.".format(
                             instance.number_of_weeks_after_tests))
 
-
     class Meta:
         model = AntenatalEnrollment
         fields = '__all__'

@@ -75,7 +75,7 @@ class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
 
     @property
     def postnatal_enrollment(self):
-        return  PostnatalEnrollment.objects.get(registered_subject=self.maternal_registered_subject)
+        return PostnatalEnrollment.objects.get(registered_subject=self.maternal_registered_subject)
 
     @property
     def hiv_status_pos_and_evidence_yes(self):
