@@ -12,3 +12,14 @@
     </ul>
 
 {% endblock admin_sections %}
+{% block device_sync %}
+  {% comment %}if you don't want to see this section, override it in the child template {% endcomment %}
+   {% comment %}<H5>Device Synchronization</H5>
+  <ul>
+  <li><A href="{% url 'sync_index_url' %}">Synchronize devices with Community Server (Return)</A></li>
+  {% block device_sync_export %}
+      <li><A href="{% url 'sync_export_outgoing_url' %}">Export outgoing transactions to file</A></li>
+  {% endblock device_sync_export %}
+  {% block device_inspector %}{% endblock device_inspector %}
+  </ul> {% endcomment %}
+{% endblock device_sync %}
