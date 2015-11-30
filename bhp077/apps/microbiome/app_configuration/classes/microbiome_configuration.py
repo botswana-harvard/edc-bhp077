@@ -131,9 +131,12 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
                                   AliquotTypeTuple('Rectal swab', 'RS', '62'),
                                   AliquotTypeTuple('Skin Swab', 'SW', '63'),
                                   AliquotTypeTuple('Stool', 'ST', '01')],
-                 'profile': [ProfileTuple('Viral Load', 'WB')],
+                 'profile': [ProfileTuple('Viral Load', 'WB'),
+                             ProfileTuple('Stool','ST'),
+                            ],
                  'profile_item': [ProfileItemTuple('Viral Load', 'PL', 1.0, 3),
-                                  ProfileItemTuple('Viral Load', 'BC', 0.5, 1)]}}
+                                  ProfileItemTuple('Viral Load', 'BC', 0.5, 1),
+                                  ProfileItemTuple('Stool', 'ST', 1, 1),]}}
 
     labeling_setup = {'label_printer': [LabelPrinterTuple('Zebra_Technologies_ZTC_GK420t', 'localhost', '127.0.0.1', True)],
                       'client': [ClientTuple(hostname='localhost',

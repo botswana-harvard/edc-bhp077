@@ -5,10 +5,17 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 from lis.labeling.actions import print_aliquot_label
 
 from ..models import Aliquot
+from ..actions import create_order
 
 
 class AliquotAdmin(BaseModelAdmin):
     date_hierarchy = 'created'
+
+    actions = [print_aliquot_label, create_order,
+               export_as_csv_action(
+                   "Export as csv", fields=[], delimiter=',',
+                   exclude=['id', 'revision', 'hostname_created',
+                            'hostname_modified', 'user_created', 'user_modified'],)]
 
     list_display = ("aliquot_identifier", 'subject_identifier',
                     'processing', 'related',
