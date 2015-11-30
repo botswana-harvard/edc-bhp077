@@ -19,9 +19,6 @@ class InfantArvProphMod(InfantScheduledVisitModel):
     def __str__(self):
         return str(self.infant_arv_proph.infant_visit)
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_infant_infantarvprophmod_change', args=(self.id,))
-
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = 'Infant NVP or AZT Proph: Mods'
