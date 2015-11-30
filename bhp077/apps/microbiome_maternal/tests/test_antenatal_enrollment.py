@@ -9,7 +9,6 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE
 
 from bhp077.apps.microbiome_maternal.models import AntenatalEnrollment
-from bhp077.apps.microbiome_maternal.forms import AntenatalEnrollmentForm
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (AntenatalEnrollmentFactory, MaternalEligibilityFactory, PostnatalEnrollmentFactory)
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
@@ -250,9 +249,9 @@ class TestAntenatalEnroll(TestCase):
             week32_test=NO,
             week32_result='',
             evidence_hiv_status=NOT_APPLICABLE,
-            valid_regimen = NOT_APPLICABLE,
-            valid_regimen_duration = NOT_APPLICABLE,
-            verbal_hiv_status = 'UNK',
+            valid_regimen=NOT_APPLICABLE,
+            valid_regimen_duration=NOT_APPLICABLE,
+            verbal_hiv_status='UNK',
             process_rapid_test=YES,
             registered_subject=self.registered_subject,
             weeks_of_gestation=37

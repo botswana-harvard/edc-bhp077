@@ -18,7 +18,7 @@ class MaternalArvHistoryForm(BaseMaternalModelForm):
 
     def validate_arv_interrupt(self, cleaned_data):
         if cleaned_data.get(' preg_on_haart') == NO:
-            if cleaned_data.get('prior_preg') == 'Received continuos HAART from the time she started':
+            if cleaned_data.get('prior_preg') == 'Received continuos triple ARVs from the time she started':
                 raise forms.ValidationError('You indicated that the mother was NOT still on tripple ARV when she '
                                             'got pregnant. There ARVs could not have been interrupted. Please correct.')
         else:

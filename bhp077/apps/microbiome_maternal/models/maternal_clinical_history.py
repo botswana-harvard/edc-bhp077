@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.model.fields.custom_fields import IsDateEstimatedField
-from edc_constants.choices import YES_NO, YES_NO_NA
+from edc_constants.choices import YES_NO_NA, YES_NO
 
 from .maternal_consent import MaternalConsent
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
@@ -18,21 +18,20 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
 
     prev_preg_azt = models.CharField(
         max_length=25,
-        choices=YES_NO,
+        choices=YES_NO_NA,
         verbose_name="Did she ever receive AZT monotherapy in a previous pregnancy?  ",
         help_text="")
 
     prev_sdnvp_labour = models.CharField(
         max_length=25,
-        choices=YES_NO,
+        choices=YES_NO_NA,
         verbose_name="Did she ever receive single-dose NVP in labour during a previous pregnancy?",
         help_text="")
 
     prev_preg_haart = models.CharField(
         max_length=25,
-        choices=YES_NO,
-        verbose_name=("Did she ever receive HAART (for PMTCT purposes only) during a "
-                      "previous pregnancy? "),
+        choices=YES_NO_NA,
+        verbose_name=("Did she ever receive triple antiretrovirals during a prior pregnancy?"),
         help_text="")
 
     lowest_cd4_known = models.CharField(
@@ -92,5 +91,5 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = 'Maternal Clinical History'
-        verbose_name_plural = 'Maternal Clinical History'
+        verbose_name = 'Maternal use of ARVs in Prior Pregnancy'
+        verbose_name_plural = 'Maternal use of ARVs in Prior Pregnancy'

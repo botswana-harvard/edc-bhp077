@@ -3,11 +3,13 @@ from django.dispatch import receiver
 
 from edc.subject.registration.models import RegisteredSubject
 from edc_constants.constants import NO, YES
+from edc.core.identifier.classes import InfantIdentifier
+
 from .maternal_eligibility import MaternalEligibility
 from .maternal_eligibility_loss import MaternalEligibilityLoss
-from .maternal_labour_del import MaternalLabourDel
-from bhp077.apps.microbiome_maternal.models import (MaternalConsent, MaternalVisit,
-                                                    AntenatalEnrollment, PostnatalEnrollment)
+from .maternal_consent import MaternalConsent
+from .maternal_visit import MaternalVisit
+from .postnatal_enrollment import PostnatalEnrollment
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")
@@ -82,13 +84,8 @@ def update_registered_subject_on_post_save(sender, instance, raw, created, using
             instance.registered_subject.first_name = instance.first_name
             instance.registered_subject.last_name = instance.last_name
             instance.registered_subject.subject_identifier = instance.subject_identifier
+            instance.registered_subject.study_site = instance.study_site
             instance.registered_subject.save(using=using)
-
-
-@receiver(post_save, weak=False, dispatch_uid='post_save_create_infant_identifier')
-def post_save_create_infant_identifier(sender, instance, raw, created, using, **kwarg):
-    if isinstance(instance, MaternalLabourDel):
-        instance.post_save_create_infant_identifier(created)
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_visit_on_post_save")
@@ -97,3 +94,27 @@ def maternal_visit_on_post_save(sender, instance, raw, created, using, **kwargs)
     if not raw:
         if isinstance(instance, MaternalVisit):
             instance.update_scheduled_entry_meta_data()
+
+
+@receiver(post_save, weak=False, dispatch_uid='create_infant_identifier_on_labour_delivery')
+def create_infant_identifier_on_labour_delivery(sender, instance, raw, created, using, **kwargs):
+    """Creates an identifier for registered infants"""
+    if not raw and created:
+        try:
+            if instance.live_infants_to_register > 0:
+                registered_subject = instance.maternal_visit.appointment.registered_subject
+                consent = instance.CONSENT_MODEL.objects.get(
+                    registered_subject=registered_subject)
+                postnatal_enrol = PostnatalEnrollment.objects.get(
+                    registered_subject=consent.registered_subject)
+                for infant_order in range(0, instance.live_infants_to_register):
+                    infant_identifier = InfantIdentifier(
+                        maternal_identifier=registered_subject.subject_identifier,
+                        study_site=consent.study_site,
+                        birth_order=infant_order,
+                        live_infants=postnatal_enrol.live_infants,
+                        live_infants_to_register=instance.live_infants_to_register,
+                        user=instance.user_created)
+                    infant_identifier.get_identifier()
+        except AttributeError:
+            pass

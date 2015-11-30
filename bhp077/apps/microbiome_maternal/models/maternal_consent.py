@@ -12,7 +12,8 @@ from edc_consent.models.fields import (PersonalFieldsMixin, CitizenFieldsMixin, 
 from edc_consent.models.fields.bw import IdentityFieldsMixin
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
-from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
+from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC, SITE
+from django.template.defaultfilters import default
 
 
 class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
@@ -23,9 +24,22 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
 
     study_site = models.ForeignKey(
         StudySite,
-        verbose_name='Site',
-        null=True,
-        help_text="")
+    )
+
+#     study_site = models.CharField(
+#         verbose_name='Site',
+#         choices=SITE,
+#         default='Gaborone',
+#         max_length=10,
+#         null=True,
+#         help_text="")
+#
+#     site_code = models.IntegerField(
+#         verbose_name='Site',
+#         default=40,
+#         max_length=10,
+#         null=True,
+#         help_text="")
 
     recruit_source = models.CharField(
         max_length=75,

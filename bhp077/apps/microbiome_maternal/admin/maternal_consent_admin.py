@@ -37,6 +37,7 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'consent_signature',
               'consent_copy')
     radio_fields = {'citizen': admin.VERTICAL,
+                    'study_site': admin.VERTICAL,
                     'language': admin.VERTICAL,
                     'study_site': admin.VERTICAL,
                     'recruit_source': admin.VERTICAL,
