@@ -21,10 +21,12 @@ class MaternalDeathAdmin(BaseModelAdmin):
         "death_cause_category",
         "death_cause_other",
         "dx_code",
+        "dx_code_other",
         "illness_duration",
         "death_medical_responsibility",
         "participant_hospitalized",
         "death_reason_hospitalized",
+        "death_reason_hospital_other",
         "days_hospitalized",
         "comment")
     radio_fields = {
