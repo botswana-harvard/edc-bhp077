@@ -10,10 +10,6 @@ from .base_maternal_model_form import BaseMaternalModelForm
 
 class MaternalArvHistoryForm(BaseMaternalModelForm):
 
-    def weeks_between(self, start_date, end_date):
-        weeks = rrule.rrule(rrule.WEEKLY, dtstart=start_date, until=end_date)
-        return weeks.count()
-
     def clean(self):
         cleaned_data = super(MaternalArvHistoryForm, self).clean()
         self.validate_arv_interrupt(cleaned_data)

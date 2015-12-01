@@ -36,7 +36,10 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
 
     @property
     def postnatal_enrollment(self):
-        return PostnatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+        try:
+            return PostnatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+        except PostnatalEnrollment.DoesNotExist:
+            return None
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
@@ -44,7 +47,11 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
         super(MaternalVisit, self).save(*args, **kwargs)
 
     def rehash_meta_data(self):
-        self.meta_data_visit_failed_enroll(self.appointment) if not self.postnatal_enrollment.postnatal_eligible else self.reason
+        if PostnatalEnrollment.objects.filter(registered_subject=self.appointment.registered_subject).exists():
+            self.meta_data_visit_failed_enroll(self.appointment) if not self.postnatal_enrollment.postnatal_eligible else self.reason
+        else:
+            antenatal = AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+            self.meta_data_visit_failed_enroll(self.appointment) if not antenatal.antenatal_eligible else self.reason
         if self.reason == 'unscheduled':
             self.meta_data_visit_unshceduled(self.appointment)
 
@@ -103,8 +110,11 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
                 evidence_hiv_status=YES
             )
         except PostnatalEnrollment.DoesNotExist:
-            return False
-        return True
+            AntenatalEnrollment.objects.get(
+                registered_subject=self.appointment.registered_subject,
+                verbal_hiv_status=POS,
+                evidence_hiv_status=YES
+            )
 
     @property
     def hiv_status_rapid_test_neg(self):
