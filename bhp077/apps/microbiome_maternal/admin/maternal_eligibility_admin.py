@@ -13,6 +13,7 @@ class MaternalEligibilityAdmin(BaseModelAdmin):
     fields = ('eligibility_id',
               'report_datetime',
               'age_in_years',
+              'has_omang',
               'currently_pregnant',
               'recently_delivered')
     radio_fields = {'currently_pregnant': admin.VERTICAL,

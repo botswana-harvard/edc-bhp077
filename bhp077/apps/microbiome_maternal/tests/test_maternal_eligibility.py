@@ -4,7 +4,7 @@ from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityF
 
 
 class TestMaternalEligibility(TestCase):
-    """Test eligibility of a mother by age."""
+    """Test eligibility of a mother."""
 
     def test_eligibility_for_correct_age(self):
         """Test eligibility of a mother with the right age."""
@@ -21,5 +21,17 @@ class TestMaternalEligibility(TestCase):
     def test_eligibility_for_over_age(self):
         """Test eligibility of a mother with over age."""
         options = {'age_in_years': 51}
+        pre_eligibility = MaternalEligibilityFactory(**options)
+        self.assertFalse(pre_eligibility.is_eligible)
+
+    def test_eligibility_who_has_omang(self):
+        """Test eligibility of a mother with an Omang."""
+        options = {'has_omang': 'Yes'}
+        pre_eligibility = MaternalEligibilityFactory(**options)
+        self.assertTrue(pre_eligibility.is_eligible)
+
+    def test_eligibility_who_has_no_omang(self):
+        """Test eligibility of a mother with no Omang."""
+        options = {'has_omang': 'No'}
         pre_eligibility = MaternalEligibilityFactory(**options)
         self.assertFalse(pre_eligibility.is_eligible)

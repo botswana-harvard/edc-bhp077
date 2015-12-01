@@ -35,6 +35,12 @@ class MaternalEligibility (BaseUuidModel):
     age_in_years = models.IntegerField(
         verbose_name='What is the age of the participant?')
 
+    has_omang = models.CharField(
+        verbose_name="Do you have an OMANG?",
+        max_length=3,
+        choices=YES_NO,
+        help_text='')
+
     ineligibility = models.TextField(
         verbose_name="Reason not eligible",
         max_length=150,
@@ -81,6 +87,8 @@ class MaternalEligibility (BaseUuidModel):
             ineligibility.append('Mother is under 18')
         if self.age_in_years > 50:
             ineligibility.append('Mother is too old (>50)')
+        if self.has_omang == 'No':
+            ineligibility.append('Not a citizen')
         return (False if ineligibility else True, ineligibility)
 
     def __unicode__(self):
@@ -93,6 +101,8 @@ class MaternalEligibility (BaseUuidModel):
             reason_ineligible.append('Under age')
         if self.age_in_years > 50:
             reason_ineligible.append('Over age')
+        if self.has_omang == 'No':
+            reason_ineligible.append('Not a citizen')
         return reason_ineligible
 
     @property
