@@ -14,9 +14,10 @@ from .infant_birth import InfantBirth
 from bhp077.apps.microbiome.choices import (VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS,
                                             ALIVE_DEAD_UNKNOWN)
 from .infant_off_study_mixin import InfantOffStudyMixin
+from bhp077.apps.microbiome.classes.meta_data_mixin import MetaDataMixin
 
 
-class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
+class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
 
     information_provider = models.CharField(
         verbose_name="Please indicate who provided most of the information for this child's visit",
@@ -57,6 +58,10 @@ class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
             appointment=self.appointment)
         return model_options
 
+    def rehash_meta_data(self):
+        if self.reason == 'unscheduled':
+            self.meta_data_visit_unshceduled(self.appointment)
+
     @property
     def infant_birth_male(self):
         try:
@@ -90,10 +95,13 @@ class InfantVisit(InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
         return True
 
     def scheduled_entry_meta_data(self, model_name):
-        sd = ScheduledEntryMetaData.objects.filter(**self.model_options(
-            'microbiome_infant', model_name)).first()
-        sd.entry_status = NEW
-        sd.save()
+        try:
+            sd = ScheduledEntryMetaData.objects.filter(**self.model_options(
+                'microbiome_infant', model_name)).first()
+            sd.entry_status = NEW
+            sd.save()
+        except AttributeError:
+            pass
 
     def requistion_entry_meta_data(self, model_name):
         rq = RequisitionMetaData.objects.filter(

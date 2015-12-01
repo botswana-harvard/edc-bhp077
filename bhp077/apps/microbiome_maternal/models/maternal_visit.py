@@ -10,13 +10,15 @@ from edc_consent.models import RequiresConsentMixin
 from edc_constants.constants import NEW, YES, POS, NEG
 from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 
-from .maternal_off_study_mixin import MaternalOffStudyMixin
 from bhp077.apps.microbiome.choices import VISIT_REASON
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
 from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
+from bhp077.apps.microbiome.classes.meta_data_mixin import MetaDataMixin
+
+from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
-class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
+class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 
@@ -40,6 +42,10 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
         self.check_if_eligible()
         super(MaternalVisit, self).save(*args, **kwargs)
+
+    def rehash_meta_data(self):
+        if self.reason == 'unscheduled':
+            self.meta_data_visit_unshceduled(self.appointment)
 
     def entry_model_options(self, app_label, model_name):
         model_options = {}
