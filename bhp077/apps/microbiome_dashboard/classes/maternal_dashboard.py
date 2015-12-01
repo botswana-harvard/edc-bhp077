@@ -67,9 +67,9 @@ class MaternalDashboard(RegisteredSubjectDashboard):
         antenatal = AntenatalEnrollment.objects.filter(registered_subject=self.registered_subject)
         if antenatal:
             if antenatal[0].verbal_hiv_status == POS and antenatal[0].evidence_hiv_status == YES:
-                self._maternal_hiv_status = 'HIV Infected'
+                self._maternal_hiv_status = 'POS'
             elif antenatal[0].verbal_hiv_status == NEG and antenatal[0].evidence_hiv_status == YES:
-                self._maternal_hiv_status = 'HIV uninfected'
+                self._maternal_hiv_status = 'NEG'
             elif antenatal[0].verbal_hiv_status == 'NEVER':
                 self._maternal_hiv_status = 'Never Tested'
             elif antenatal[0].verbal_hiv_status == 'UNK':

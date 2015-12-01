@@ -31,7 +31,7 @@ class InfantStoolCollection(InfantScheduledVisitModel):
     )
 
     other_nappy = OtherCharField(
-        verbose_name='',
+        verbose_name='If other, specify...',
         max_length=25,
         blank=True,
         null=True,
@@ -64,8 +64,9 @@ class InfantStoolCollection(InfantScheduledVisitModel):
 
     past_diarrhea = models.CharField(
         verbose_name="Has this infant/child had diarrhea in the past 7 days?",
-        choices=YES_NO,
-        max_length=3,
+        choices=YES_NO_NA,
+        max_length=15,
+        default=NOT_APPLICABLE,
         help_text=("Diarrhea is defined as 3 or more loose or watery stools with or without blood"
                    " over a 24 hour period and the stool pattern is a change from the"
                    " infant's/child's normal stool pattern"),
@@ -76,13 +77,15 @@ class InfantStoolCollection(InfantScheduledVisitModel):
                       " diarrhea continued in the last 24 hours?"),
         max_length=15,
         choices=YES_NO_NA,
+        default=NOT_APPLICABLE,
         help_text="",
     )
 
     antibiotics_7days = models.CharField(
         verbose_name="Has this infant/child taken antibiotics in the past 7 days?",
-        choices=YES_NO,
-        max_length=3,
+        choices=YES_NO_NA,
+        default=NOT_APPLICABLE,
+        max_length=15,
         help_text=("If the answer to this question is yes, please ensure that antibiotic"
                    " information is recorded on NEW MEDICATIONS EDC form"),
     )
@@ -92,6 +95,7 @@ class InfantStoolCollection(InfantScheduledVisitModel):
                       " taken a dose in the last 24 hours?"),
         max_length=15,
         choices=YES_NO_NA,
+        default=NOT_APPLICABLE,
         help_text="",
     )
 
