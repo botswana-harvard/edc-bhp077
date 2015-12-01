@@ -111,7 +111,7 @@ class PostnatalCallLogEntryAdmin(BaseModelAdmin):
     }
 
     list_display = (
-        'call_log',
+        'postnatal_call_log',
         'call_datetime',
         'appt',
         'appt_date',
@@ -132,8 +132,8 @@ class PostnatalCallLogEntryAdmin(BaseModelAdmin):
     search_fields = ('antenatal_call_log__antenatal_call_list__first_name', 'id')
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "antenatal_call_log":
-            kwargs["queryset"] = PostnatalCallLog.objects.filter(id__exact=request.GET.get('call_log', 0))
+        if db_field.name == "postnatal_call_log":
+            kwargs["queryset"] = PostnatalCallLog.objects.filter(id__exact=request.GET.get('postnatal_call_log', 0))
         return super(PostnatalCallLogEntryAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(PostnatalCallLogEntry, PostnatalCallLogEntryAdmin)

@@ -6,11 +6,11 @@ from edc_base.encrypted_fields import FirstnameField
 from edc_base.model.validators import datetime_not_future, datetime_not_before_study_start
 from edc_constants.constants import CLOSED, OPEN, NEW
 
-from ..managers import AntenatalCallListManager
-from ...maternal.models import AntenatalEnrollment
+# from ..managers import AntenatalCallListManager
+from ...microbiome_maternal.models import AntenatalEnrollment
 
 
-class AntenatalCallList (BaseSyncUuidModel):
+class AntenatalCallList(BaseSyncUuidModel):
 
     antenatal_enrollment = models.ForeignKey(AntenatalEnrollment)
 
@@ -63,7 +63,7 @@ class AntenatalCallList (BaseSyncUuidModel):
 
     history = AuditTrail()
 
-    objects = AntenatalCallListManager()
+#     objects = AntenatalCallListManager()
 
     def __unicode__(self):
         return '{} {} {}'.format(
@@ -74,3 +74,4 @@ class AntenatalCallList (BaseSyncUuidModel):
 
     class Meta:
         app_label = 'microbiome_call'
+        unique_together = ['antenatal_enrollment', 'first_name', 'initials']

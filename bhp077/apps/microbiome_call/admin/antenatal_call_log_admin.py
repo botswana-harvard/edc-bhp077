@@ -111,7 +111,7 @@ class AntenatalCallLogEntryAdmin(BaseModelAdmin):
     }
 
     list_display = (
-        'call_log',
+        'antenatal_call_log',
         'call_datetime',
         'appt',
         'appt_date',

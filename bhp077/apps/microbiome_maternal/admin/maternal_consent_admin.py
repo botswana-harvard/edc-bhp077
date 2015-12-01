@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.subject.registration.models import RegisteredSubject
+from edc_consent.actions import flag_as_verified_against_paper, unflag_as_verified_against_paper
 
 from bhp077.apps.microbiome_maternal.forms import MaternalConsentForm
 from bhp077.apps.microbiome_maternal.models import MaternalConsent
@@ -36,6 +37,7 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'assessment_score',
               'consent_signature',
               'consent_copy')
+    actions = [flag_as_verified_against_paper, unflag_as_verified_against_paper]
     radio_fields = {'citizen': admin.VERTICAL,
                     'study_site': admin.VERTICAL,
                     'language': admin.VERTICAL,

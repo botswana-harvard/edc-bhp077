@@ -4,7 +4,7 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 
 from ..forms import AntenatalCallListForm
 from ..models import AntenatalCallList
-from ...maternal.models import AntenatalEnrollment
+from ...microbiome_maternal.models import AntenatalEnrollment
 
 
 class AntenatalCallListAdmin(BaseModelAdmin):
