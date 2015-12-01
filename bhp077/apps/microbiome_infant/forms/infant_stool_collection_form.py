@@ -51,7 +51,7 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
                 raise forms.ValidationError('You have stated that stool was collected real-time. You cannot indicate '
                                             'the number of hour ago the stool was collected.')
             if cleaned_data.get('stool_stored') != NOT_APPLICABLE:
-                raise forms.ValidationError('You have indicated that stool was collected real-time. How ttool was stored '
+                raise forms.ValidationError('You have indicated that stool was collected real-time. How tool was stored '
                                             'should be NOT APPLICABLE.')
 
     def validate_diarrhea(self, cleaned_data):

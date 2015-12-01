@@ -31,7 +31,11 @@ class InfantStoolCollection(InfantScheduledVisitModel):
     )
 
     other_nappy = OtherCharField(
+<<<<<<< HEAD
         verbose_name='If other, specify...',
+=======
+        verbose_name='If other specify.',
+>>>>>>> c62aafcb0db2945c7f47b065f841ed5052663f28
         max_length=25,
         blank=True,
         null=True,
@@ -55,7 +59,7 @@ class InfantStoolCollection(InfantScheduledVisitModel):
     )
 
     stool_stored = models.CharField(
-        verbose_name="Was the sample stored?",
+        verbose_name="How was the sample stored?",
         choices=STOOL_STORED,
         default=NOT_APPLICABLE,
         max_length=40,
