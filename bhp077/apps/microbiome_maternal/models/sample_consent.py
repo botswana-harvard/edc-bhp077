@@ -39,7 +39,7 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
         null=True,
         blank=False,
         default=NOT_APPLICABLE,
-        help_text="answer is N/A if participant declines sample storage")
+        help_text="")
 
     purpose_understood = models.CharField(
         verbose_name=("To the best of my knowledge, the client understands"

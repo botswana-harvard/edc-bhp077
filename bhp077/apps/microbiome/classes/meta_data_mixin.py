@@ -1,18 +1,46 @@
 from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
 from edc.subject.entry.models import Entry, LabEntry
 from edc.subject.appointment.models import Appointment
+from django.core.exceptions import MultipleObjectsReturned
 
 
 class MetaDataMixin(object):
+    def meta_data_visit_unshceduled(self, appointment):
+        meta_data = self.query_scheduled_meta_data(appointment, appointment.registered_subject)
+        self.remove_scheduled_forms(meta_data)
+
+    def remove_scheduled_forms(self, scheduled_meta_data):
+        # Ensure there are no keyed forms
+        for meta_data in scheduled_meta_data:
+            if meta_data.entry_status == 'KEYED':
+                return False
+        scheduled_meta_data.delete()
+        return True
+
+    def remove_scheduled_requisition(self, lab_meta_data):
+        # Ensure there are no keyed forms
+        for meta_data in lab_meta_data:
+            if meta_data.entry_status == 'KEYED':
+                return False
+        lab_meta_data.delete()
+        return True
 
     def query_entry(self, model_name, visit_definition):
         return Entry.objects.get(model_name=model_name, visit_definition=visit_definition)
 
-    def query_scheduled_meta_data(self, appointment, entry, registered_subject):
-        scheduled_meta_data = ScheduledEntryMetaData.objects.filter(appointment=appointment, entry=entry, registered_subject=registered_subject)
-        if scheduled_meta_data.count() == 1:
-            return scheduled_meta_data[0]
-        return scheduled_meta_data
+    def query_scheduled_meta_data(self, appointment, registered_subject, entry=None):
+        try:
+            return ScheduledEntryMetaData.objects.get(
+                appointment=appointment, registered_subject=registered_subject, entry=entry)
+        except ScheduledEntryMetaData.DoesNotExist, MultipleObjectsReturned:
+            return ScheduledEntryMetaData.objects.filter(appointment=appointment, registered_subject=registered_subject)
+
+    def query_requisition_meta_data(self, appointment, registered_subject, lab_entry=None):
+        try:
+            return RequisitionMetaData.objects.get(
+                appointment=appointment, lab_entry=lab_entry, registered_subject=registered_subject)
+        except RequisitionMetaData.DoesNotExist, MultipleObjectsReturned:
+            return RequisitionMetaData.objects.filter(appointment=appointment, registered_subject=registered_subject)
 
     def create_scheduled_meta_data(self, appointment, entry, registered_subject):
         appointment = self.check_instance(appointment)
@@ -26,11 +54,7 @@ class MetaDataMixin(object):
     def query_lab_entry(self, model_name, panel, visit_definition):
         return LabEntry.objects.get(model_name=model_name, requisition_panel=panel, visit_definition=visit_definition)
 
-    def query_requisition_meta_data(self, appointment, lab_entry, registered_subject):
-        requisition_meta_data = RequisitionMetaData.objects.filter(appointment=appointment, lab_entry=lab_entry, registered_subject=registered_subject)
-        if requisition_meta_data.count() == 1:
-            return requisition_meta_data[0]
-        return requisition_meta_data
+    
 
     def create_requisition_meta_data(self, appointment, lab_entry, registered_subject):
         requisition_meta_data = self.query_requisition_meta_data(appointment, lab_entry, registered_subject)

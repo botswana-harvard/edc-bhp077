@@ -10,13 +10,16 @@ from edc_consent.models import RequiresConsentMixin
 from edc_constants.constants import NEW, YES, POS, NEG
 from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 
-from .maternal_off_study_mixin import MaternalOffStudyMixin
 from bhp077.apps.microbiome.choices import VISIT_REASON
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
 from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
+from bhp077.apps.microbiome.classes.meta_data_mixin import MetaDataMixin
+
+from .maternal_off_study_mixin import MaternalOffStudyMixin
+from edc.subject.appointment.models.appointment import Appointment
 
 
-class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
+class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 
@@ -40,6 +43,20 @@ class MaternalVisit(MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracki
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
         self.check_if_eligible()
         super(MaternalVisit, self).save(*args, **kwargs)
+
+    def rehash_meta_data(self):
+        self.meta_data_visit_failed_enroll(self.appointment) if not self.postnatal_enrollment.postnatal_eligible else self.reason
+        if self.reason == 'unscheduled':
+            self.meta_data_visit_unshceduled(self.appointment)
+
+    def meta_data_visit_failed_enroll(self, appointment):
+        meta_data = self.query_scheduled_meta_data(appointment, appointment.registered_subject)
+        [meta.delete() if not meta.entry.model_name == 'maternaloffstudy' else meta for meta in meta_data]
+        self.remove_scheduled_requisition(
+            self.query_requisition_meta_data(
+                self.appointment, self.appointment.registered_subject
+            )
+        )
 
     def entry_model_options(self, app_label, model_name):
         model_options = {}
