@@ -17,6 +17,14 @@ class MetaDataMixin(object):
         scheduled_meta_data.delete()
         return True
 
+    def remove_scheduled_requisition(self, lab_meta_data):
+        # Ensure there are no keyed forms
+        for meta_data in lab_meta_data:
+            if meta_data.entry_status == 'KEYED':
+                return False
+        lab_meta_data.delete()
+        return True
+
     def query_entry(self, model_name, visit_definition):
         return Entry.objects.get(model_name=model_name, visit_definition=visit_definition)
 
