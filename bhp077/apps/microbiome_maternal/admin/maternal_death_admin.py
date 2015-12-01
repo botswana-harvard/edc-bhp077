@@ -28,8 +28,14 @@ class MaternalDeathAdmin(BaseModelAdmin):
         "days_hospitalized",
         "comment")
     radio_fields = {
+        "death_cause_info": admin.VERTICAL,
         "perform_autopsy": admin.VERTICAL,
-        "participant_hospitalized": admin.VERTICAL}
+        "participant_hospitalized": admin.VERTICAL,
+        "death_cause_category": admin.VERTICAL,
+        "death_cause_category": admin.VERTICAL,
+        "dx_code": admin.VERTICAL,
+        "death_medical_responsibility": admin.VERTICAL,
+        "death_reason_hospitalized": admin.VERTICAL}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
