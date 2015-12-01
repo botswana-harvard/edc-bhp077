@@ -31,11 +31,7 @@ class InfantStoolCollection(InfantScheduledVisitModel):
     )
 
     other_nappy = OtherCharField(
-<<<<<<< HEAD
         verbose_name='If other, specify...',
-=======
-        verbose_name='If other specify.',
->>>>>>> c62aafcb0db2945c7f47b065f841ed5052663f28
         max_length=25,
         blank=True,
         null=True,
