@@ -11,16 +11,16 @@ from bhp077.apps.microbiome.choices import MEDICATIONS
 
 from .maternal_post_fu import MaternalPostFu
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_consent import MaternalConsent
 
 
 class MaternalPostFuMed(MaternalScheduledVisitModel):
 
     """ Post-partum follow up of medications. """
-
-    maternal_post_fu = models.OneToOneField(MaternalPostFu)
+    CONSENT_MODEL = MaternalConsent
 
     has_taken_meds = models.CharField(
-        max_length=3,
+        max_length=10,
         choices=YES_NO_UNKNOWN,
         verbose_name=("Since the last scheduled visit, has the mother taken any of the following medications?"),
         help_text="",)
@@ -28,10 +28,10 @@ class MaternalPostFuMed(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     def get_report_datetime(self):
-        return self.maternal_post_fu.get_report_datetime()
+        return self.maternal_visit.get_report_datetime()
 
     def get_subject_identifier(self):
-        return self.maternal_post_fu.get_subject_identifier()
+        return self.maternal_visit.get_subject_identifier()
 
     class Meta:
         app_label = "microbiome_maternal"
@@ -67,7 +67,7 @@ class MaternalPostFuMedItems(BaseUuidModel):
     )
 
     def __str__(self):
-        return str(self.maternal_post_fu.maternal_visit)
+        return str(self.maternal_post_fu_med.maternal_visit)
 
     class Meta:
         app_label = "microbiome_maternal"

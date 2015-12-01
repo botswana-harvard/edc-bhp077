@@ -16,7 +16,6 @@ from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import Antenata
 from bhp077.apps.microbiome.classes.meta_data_mixin import MetaDataMixin
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
-from edc.subject.appointment.models.appointment import Appointment
 
 
 class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
