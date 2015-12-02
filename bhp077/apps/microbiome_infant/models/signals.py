@@ -17,9 +17,11 @@ def update_infant_registered_subject_on_post_save(sender, instance, raw, created
             instance.registered_subject.gender = instance.gender
             instance.registered_subject.save(using=using)
 
+
 @receiver(post_save, weak=False, dispatch_uid="infant_visit_on_post_save")
 def infant_visit_on_post_save(sender, instance, raw, created, using, **kwargs):
     """Updates maternal scheduled meta data."""
     if not raw:
         if isinstance(instance, InfantVisit):
+            instance.rehash_meta_data()
             instance.update_scheduled_entry_meta_data()

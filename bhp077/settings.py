@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 """
 Django settings for x project.
 
@@ -13,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import os
+import socket
 from unipath import Path
 from django.utils import timezone
 
@@ -20,22 +19,30 @@ APP_NAME = 'microbiome'
 PROJECT_TITLE = 'Gut Microbiome Evolution'
 INSTITUTION = 'Botswana-Harvard AIDS Institute'
 PROTOCOL_REVISION = '0.1dev'
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 SOURCE_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2)
-print('SOURCE_ROOT', SOURCE_ROOT)
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
 MEDIA_ROOT = BASE_DIR.child('media')
 PROJECT_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
-print('PROJECT DIR', PROJECT_DIR)
 PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
-print('PROJECT_ROOT', PROJECT_ROOT)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 ALLOW_MODEL_SERIALIZATION = True
 SECRET_KEY = 'sdfsdfsdfsdf'
-KEY_PATH = ''
+if socket.gethostname() == 'mac2.local':
+    KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
+elif socket.gethostname() == 'ckgathi':
+    KEY_PATH = '/Users/ckgathi/source/microbiome/bhp077/keys'
+elif socket.gethostname() == 'one-2.local' or socket.gethostname() == 'One-2.local':
+    KEY_PATH = '/Users/sirone/Documents/workspace/git_projects/bhp066_git/bhp066/keys'
+elif socket.gethostname() == 'silverapple':
+    KEY_PATH = '/Users/melissa/Documents/git/source/bhp066_project/bhp066/keys'
+elif socket.gethostname() == 'bcpp-tsetsiba':
+    KEY_PATH = '/Users/tsetsiba/source/bhp066_project/bhp066/keys'
+else:
+    KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -144,6 +151,7 @@ INSTALLED_APPS = (
     'lis.exim.lab_import_dmis',
     # LOCAL_APPS
     'bhp077.apps.microbiome',
+    'bhp077.apps.microbiome_call',
     'bhp077.apps.microbiome_list',
     'bhp077.apps.microbiome_dashboard',
     'bhp077.apps.microbiome_infant',

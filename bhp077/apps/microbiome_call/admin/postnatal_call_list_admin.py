@@ -4,7 +4,7 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 
 from ..forms import PostnatalCallListForm
 from ..models import PostnatalCallList
-from ...maternal.models import PostnatalEnrollment
+from ...microbiome_maternal.models import PostnatalEnrollment
 
 
 class PostnatalCallListAdmin(BaseModelAdmin):
@@ -41,16 +41,16 @@ class PostnatalCallListAdmin(BaseModelAdmin):
 
     readonly_fields = (
         'call_attempts',
-        'antenatal_enrollment',
+        'postnatal_enrollment',
     )
 
-    search_fields = ('antenatal_enrollment',
+    search_fields = ('postnatal_enrollment',
                      'first_name',
                      'initials')
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "antenatal_enrollment":
-            kwargs["queryset"] = PostnatalEnrollment.objects.filter(id__exact=request.GET.get('antenatal_enrollment', 0))
+        if db_field.name == "postnatal_enrollment":
+            kwargs["queryset"] = PostnatalEnrollment.objects.filter(id__exact=request.GET.get('postnatal_enrollment', 0))
         return super(PostnatalCallListAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(PostnatalCallList, PostnatalCallListAdmin)

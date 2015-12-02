@@ -76,8 +76,11 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
     @property
     def maternal_eligibility(self):
         from bhp077.apps.microbiome_maternal.models import MaternalEligibility
-        maternal_eligibility = MaternalEligibility.objects.get(registered_subject=self.registered_subject)
-        return maternal_eligibility
+        try:
+            maternal_eligibility = MaternalEligibility.objects.get(registered_subject=self.registered_subject)
+            return maternal_eligibility
+        except MaternalEligibility.DoesNotExist:
+            return None
 
     history = AuditTrail()
 

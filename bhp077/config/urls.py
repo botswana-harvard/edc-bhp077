@@ -72,6 +72,18 @@ urlpatterns += patterns(
 
 urlpatterns += patterns(
     '',
+    (r'^bhp_sync/', include('edc.device.sync.urls')),
+)
+
+
+urlpatterns += patterns(
+    '',
+    url(r'^/microbiome_call/'.format(app_name=APP_NAME),
+        include('bhp077.apps.{app_name}_call.urls'.format(app_name=APP_NAME))),
+)
+
+urlpatterns += patterns(
+    '',
     url(r'^{app_name}/login/'.format(app_name=APP_NAME),
         'django.contrib.auth.views.login',
         name='{app_name}_login'.format(app_name=APP_NAME)),

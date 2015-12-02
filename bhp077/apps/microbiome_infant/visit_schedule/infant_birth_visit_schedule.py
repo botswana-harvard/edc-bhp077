@@ -51,6 +51,8 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Viral Load', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
             RequisitionPanelTuple(80L, u'microbiome_lab', u'infantrequisition',
                                   'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
+            RequisitionPanelTuple(90L, u'microbiome_lab', u'infantrequisition',
+                                  'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
             EntryTuple(10L, u'microbiome_infant', u'infantbirthdata', REQUIRED, NOT_ADDITIONAL),
@@ -91,6 +93,8 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Viral Load', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
             RequisitionPanelTuple(80L, u'microbiome_lab', u'infantrequisition',
                                   'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
+            RequisitionPanelTuple(90L, u'microbiome_lab', u'infantrequisition',
+                                  'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
             EntryTuple(30L, u'microbiome_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
@@ -133,6 +137,8 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Viral Load', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
             RequisitionPanelTuple(80L, u'microbiome_lab', u'infantrequisition',
                                   'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
+            RequisitionPanelTuple(90L, u'microbiome_lab', u'infantrequisition',
+                                  'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
             EntryTuple(30L, u'microbiome_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
@@ -177,6 +183,8 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Viral Load', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
             RequisitionPanelTuple(80L, u'microbiome_lab', u'infantrequisition',
                                   'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
+            RequisitionPanelTuple(90L, u'microbiome_lab', u'infantrequisition',
+                                  'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
             EntryTuple(30L, u'microbiome_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
@@ -221,6 +229,8 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Viral Load', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
             RequisitionPanelTuple(80L, u'microbiome_lab', u'infantrequisition',
                                   'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
+            RequisitionPanelTuple(90L, u'microbiome_lab', u'infantrequisition',
+                                  'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
             EntryTuple(30L, u'microbiome_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
@@ -265,6 +275,8 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Viral Load', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
             RequisitionPanelTuple(80L, u'microbiome_lab', u'infantrequisition',
                                   'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
+            RequisitionPanelTuple(90L, u'microbiome_lab', u'infantrequisition',
+                                  'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
             EntryTuple(30L, u'microbiome_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),

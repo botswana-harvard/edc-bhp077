@@ -47,6 +47,7 @@ class InfantDashboard(RegisteredSubjectDashboard):
             search_name='infant',
             title='Infant Dashboard',
             subject_dashboard_url=self.subject_dashboard_url,
+            infant_hiv_status=self.infant_hiv_status,
             maternal_consent=self.maternal_consent,
             maternal_eligibility=self.maternal_eligibility,
             infant_birth=self.infant_birth, )
@@ -125,3 +126,7 @@ class InfantDashboard(RegisteredSubjectDashboard):
                         except InfantBirth.DoesNotExist:
                             pass
         return self._registered_subject
+
+    @property
+    def infant_hiv_status(self):
+        return None

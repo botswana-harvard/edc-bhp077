@@ -10,16 +10,16 @@ from edc_constants.choices import YES_NO_UNKNOWN, TIME_OF_DAY, TIME_OF_WEEK, YES
 from edc_constants.constants import YES
 
 
-from ..managers import AntenatalCallLogManager
+# from ..managers import AntenatalCallLogManager
 
 from ..choices import CONTACT_TYPE, APPT_GRADING, APPT_LOCATIONS
 
 
 from .antenatal_call_list import AntenatalCallList
-from microbiome.call.managers.antenatal_call_log_manager import AntenatalCallLogEntryManager
+# from ..managers.antenatal_call_log_manager import AntenatalCallLogEntryManager
 
 
-class AntenatalCallLog (BaseSyncUuidModel):
+class AntenatalCallLog(BaseSyncUuidModel):
 
     antenatal_call_list = models.ForeignKey(AntenatalCallList)
 
@@ -33,7 +33,7 @@ class AntenatalCallLog (BaseSyncUuidModel):
 
     history = AuditTrail()
 
-    objects = AntenatalCallLogManager()
+#     objects = AntenatalCallLogManager()
 
     def __unicode__(self):
         return '{} {}'.format(
@@ -47,10 +47,10 @@ class AntenatalCallLog (BaseSyncUuidModel):
         return self.antenatal_call_list.natural_key()
 
     class Meta:
-        app_label = 'call'
+        app_label = 'microbiome_call'
 
 
-class AntenatalCallLogEntry (BaseSyncUuidModel):
+class AntenatalCallLogEntry(BaseSyncUuidModel):
 
     antenatal_call_log = models.ForeignKey(AntenatalCallLog)
 
@@ -148,7 +148,7 @@ class AntenatalCallLogEntry (BaseSyncUuidModel):
 
     history = AuditTrail()
 
-    objects = AntenatalCallLogEntryManager()
+#     objects = AntenatalCallLogEntryManager()
 
     def save(self, *args, **kwargs):
         super(AntenatalCallLogEntry, self).save(*args, **kwargs)

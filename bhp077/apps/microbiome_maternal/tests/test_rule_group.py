@@ -85,9 +85,8 @@ class TestRuleGroup(TestCase):
                 )).count(), 1)
 
     def test_hiv_rapid_test_pos(self):
-        """
-        """
-        post = PostnatalEnrollmentFactory(
+
+        PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,

@@ -12,6 +12,7 @@ from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICE
 from bhp077.apps.microbiome.choices import VISIT_REASON
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
 from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
+
 from bhp077.apps.microbiome.classes import MetaDataMixin
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
@@ -36,12 +37,33 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
 
     @property
     def postnatal_enrollment(self):
-        return PostnatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+        try:
+            return PostnatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+        except PostnatalEnrollment.DoesNotExist:
+            return None
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
         self.check_if_eligible()
         super(MaternalVisit, self).save(*args, **kwargs)
+
+    def rehash_meta_data(self):
+        if PostnatalEnrollment.objects.filter(registered_subject=self.appointment.registered_subject).exists():
+            self.meta_data_visit_failed_enroll(self.appointment) if not self.postnatal_enrollment.postnatal_eligible else self.reason
+        else:
+            antenatal = AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+            self.meta_data_visit_failed_enroll(self.appointment) if not antenatal.antenatal_eligible else self.reason
+        if self.reason == 'unscheduled':
+            self.meta_data_visit_unshceduled(self.appointment)
+
+    def meta_data_visit_failed_enroll(self, appointment):
+        meta_data = self.query_scheduled_meta_data(appointment, appointment.registered_subject)
+        [meta.delete() if not meta.entry.model_name == 'maternaloffstudy' else meta for meta in meta_data]
+        self.remove_scheduled_requisition(
+            self.query_requisition_meta_data(
+                self.appointment, self.appointment.registered_subject
+            )
+        )
 
     def get_visit_reason_no_follow_up_choices(self):
         """Returns the visit reasons that do not imply any data collection; that is, the subject is not available."""
@@ -66,14 +88,18 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
     @property
     def hiv_status_pos_and_evidence_yes(self):
         try:
-            PostnatalEnrollment.objects.get(
+            return PostnatalEnrollment.objects.get(
                 registered_subject=self.appointment.registered_subject,
                 verbal_hiv_status=POS,
                 evidence_hiv_status=YES
             )
         except PostnatalEnrollment.DoesNotExist:
-            return False
-        return True
+            return AntenatalEnrollment.objects.get(
+                registered_subject=self.appointment.registered_subject,
+                verbal_hiv_status=POS,
+                evidence_hiv_status=YES
+            )
+        return False
 
     @property
     def hiv_status_rapid_test_neg(self):

@@ -1,15 +1,15 @@
-from django import forms
+from bhp077.apps.microbiome.base_model_form import BaseModelForm
 
 from ..models import AntenatalCallLog, AntenatalCallLogEntry
 
 
-class AntenatalCallLogForm (forms.BaseForm):
+class AntenatalCallLogForm (BaseModelForm):
 
     class Meta:
         model = AntenatalCallLog
 
 
-class AntenatalCallLogEntryForm (forms.BaseForm):
+class AntenatalCallLogEntryForm (BaseModelForm):
 
     def clean(self):
         return self.cleaned_data
