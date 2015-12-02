@@ -1,8 +1,8 @@
 from django.db import models
 
 from edc.base.model.fields import OtherCharField
-from edc_base.model.validators import (
-    datetime_not_before_study_start, datetime_not_future)
+from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_constants.choices import CONFIRMED_SUSPECTED
 
 from bhp077.apps.microbiome.choices import (
@@ -21,15 +21,26 @@ class InfantCongenitalAnomalies(InfantScheduledVisitModel):
         verbose_name = "Infant Congenital Anomalies"
 
 
-class BaseCnsItem(InfantScheduledVisitModel):
+class BaseCnsItem(BaseUuidModel):
+    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
+
+    def get_visit(self):
+        return self.congenital_anomalies.get_visit()
+
+    def get_report_datetime(self):
+        return self.congenital_anomalies.get_report_datetime()
+
+    def get_subject_identifier(self):
+        return self.congenital_anomalies.get_subject_identifier()
+
+    def __unicode__(self):
+        return unicode(self.get_visit())
 
     class Meta:
         abstract = True
 
 
 class InfantCnsAbnormalityItems(BaseCnsItem):
-
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
 
     cns_abnormality = models.CharField(
         max_length=250,
@@ -61,8 +72,6 @@ class InfantCnsAbnormalityItems(BaseCnsItem):
 
 class InfantFacialDefectItems(BaseCnsItem):
 
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
-
     facial_defect = models.CharField(
         max_length=250,
         choices=FACIAL_DEFECT,
@@ -92,8 +101,6 @@ class InfantFacialDefectItems(BaseCnsItem):
 
 
 class InfantCleftDisorderItems(BaseCnsItem):
-
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
 
     cleft_disorder = models.CharField(
         max_length=250,
@@ -125,8 +132,6 @@ class InfantCleftDisorderItems(BaseCnsItem):
 
 class InfantMouthUpGastrointestinalItems(BaseCnsItem):
 
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
-
     mouth_up_gastrointest = models.CharField(
         max_length=250,
         choices=MOUTH_UP_GASTROINT_DISORDER,
@@ -156,8 +161,6 @@ class InfantMouthUpGastrointestinalItems(BaseCnsItem):
 
 
 class InfantCardiovascularDisorderItems(BaseCnsItem):
-
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
 
     cardiovascular_disorder = models.CharField(
         max_length=250,
@@ -189,8 +192,6 @@ class InfantCardiovascularDisorderItems(BaseCnsItem):
 
 class InfantRespiratoryDefectItems(BaseCnsItem):
 
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
-
     respiratory_defect = models.CharField(
         max_length=250,
         choices=RESPIRATORY_DEFECT,
@@ -220,8 +221,6 @@ class InfantRespiratoryDefectItems(BaseCnsItem):
 
 
 class InfantLowerGastrointestinalItems(BaseCnsItem):
-
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
 
     lower_gastrointestinal = models.CharField(
         max_length=250,
@@ -253,8 +252,6 @@ class InfantLowerGastrointestinalItems(BaseCnsItem):
 
 class InfantFemaleGenitalAnomalyItems(BaseCnsItem):
 
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
-
     female_genital_anomal = models.CharField(
         max_length=250,
         choices=FEM_GENITAL_ANOMALY,
@@ -284,8 +281,6 @@ class InfantFemaleGenitalAnomalyItems(BaseCnsItem):
 
 
 class InfantMaleGenitalAnomalyItems(BaseCnsItem):
-
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
 
     male_genital_anomal = models.CharField(
         max_length=250,
@@ -317,8 +312,6 @@ class InfantMaleGenitalAnomalyItems(BaseCnsItem):
 
 class InfantRenalAnomalyItems(BaseCnsItem):
 
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
-
     renal_amomalies = models.CharField(
         max_length=250,
         choices=RENAL_ANOMALY,
@@ -349,8 +342,6 @@ class InfantRenalAnomalyItems(BaseCnsItem):
 
 class InfantMusculoskeletalAbnormalItems(BaseCnsItem):
 
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
-
     musculo_skeletal = models.CharField(
         max_length=250,
         choices=MUSCULOSKELETAL_ABNORMALITY,
@@ -380,8 +371,6 @@ class InfantMusculoskeletalAbnormalItems(BaseCnsItem):
 
 
 class InfantSkinAbnormalItems(BaseCnsItem):
-
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
 
     skin_abnormality = models.CharField(
         max_length=250,
@@ -415,8 +404,6 @@ class InfantSkinAbnormalItems(BaseCnsItem):
 
 class InfantTrisomiesChromosomeItems(BaseCnsItem):
 
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
-
     triso_chromo_abnormal = models.CharField(
         max_length=250,
         choices=TRISOME_CHROSOMESOME_ABNORMALITY,
@@ -446,8 +433,6 @@ class InfantTrisomiesChromosomeItems(BaseCnsItem):
 
 
 class InfantOtherAbnormalityItems(BaseCnsItem):
-
-    congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
 
     other_abnormalities = models.CharField(
         max_length=250,
