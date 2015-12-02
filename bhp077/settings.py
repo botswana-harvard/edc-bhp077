@@ -31,18 +31,8 @@ PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 # SECURITY WARNING: keep the secret key used in production secret!
 ALLOW_MODEL_SERIALIZATION = True
 SECRET_KEY = 'sdfsdfsdfsdf'
-if socket.gethostname() == 'mac2.local':
-    KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
-elif socket.gethostname() == 'ckgathi':
-    KEY_PATH = '/Users/ckgathi/source/microbiome/bhp077/keys'
-elif socket.gethostname() == 'one-2.local' or socket.gethostname() == 'One-2.local':
-    KEY_PATH = '/Users/sirone/Documents/workspace/git_projects/bhp066_git/bhp066/keys'
-elif socket.gethostname() == 'silverapple':
-    KEY_PATH = '/Users/melissa/Documents/git/source/bhp066_project/bhp066/keys'
-elif socket.gethostname() == 'bcpp-tsetsiba':
-    KEY_PATH = '/Users/tsetsiba/source/bhp066_project/bhp066/keys'
-else:
-    KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
+
+KEY_PATH = ''  # DONT DELETE ME!!, just comment out
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
