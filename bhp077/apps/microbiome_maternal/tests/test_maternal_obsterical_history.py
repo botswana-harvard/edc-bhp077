@@ -130,3 +130,43 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.data['pregs_24wks_or_more'] = 1
         mob = MaternalObstericalHistoryForm(data=self.data)
         self.assertIn(u"Number of previous pregnancies, should be greater than zero.", mob.errors.get('__all__'))
+
+    def test_preg24wks_grt_prev_preg(self):
+        self.data['prev_pregnancies'] = 2
+        self.data['pregs_24wks_or_more'] = 3
+        mob = MaternalObstericalHistoryForm(data=self.data)
+        self.assertIn(u"Number of pregnancies least 24 weeks cannot be greater than previous pregnancies.", mob.errors.get('__all__'))
+
+    def test_lost_before_24wks_grt_prev_preg(self):
+        self.data['prev_pregnancies'] = 2
+        self.data['lost_before_24wks'] = 3
+        mob = MaternalObstericalHistoryForm(data=self.data)
+        self.assertIn(u"Number of pregnancies lost before 24 weeks cannot be greater than previous pregnancies.", mob.errors.get('__all__'))
+
+    def test_lost_after_24wks_grt_prev_preg(self):
+        self.data['prev_pregnancies'] = 2
+        self.data['pregs_24wks_or_more'] = 1
+        self.data['lost_before_24wks'] = 1
+        self.data['lost_after_24wks'] = 3
+        mob = MaternalObstericalHistoryForm(data=self.data)
+        self.assertIn(u"Number of pregnancies lost at or after 24 weeks gestation cannot be greater "
+                      "than number of previous pregnancies or number of pregnancies at least 24 weeks.", mob.errors.get('__all__'))
+
+    def test_pregs_24wks_or_more_plus_lost_before_24wks_grt_prev_pregnancies(self):
+        self.data['prev_pregnancies'] = 3
+        self.data['pregs_24wks_or_more'] = 1
+        self.data['lost_before_24wks'] = 1
+        self.data['lost_after_24wks'] = 1
+        mob = MaternalObstericalHistoryForm(data=self.data)
+        self.assertIn(u"The sum of Number of pregnancies at least 24 weeks and "
+                      "number of pregnancies lost before 24 weeks gestation. must be equal to "
+                      "number of previous pregnancies for this participant.", mob.errors.get('__all__'))
+
+    def test_live_children_grt_prev_pregnancies(self):
+        self.data['prev_pregnancies'] = 2
+        self.data['pregs_24wks_or_more'] = 1
+        self.data['lost_before_24wks'] = 1
+        self.data['lost_after_24wks'] = 1
+        self.data['live_children'] = 4
+        mob = MaternalObstericalHistoryForm(data=self.data)
+        self.assertIn(u"Number of living children cannot exceed number of previous pregnancies.", mob.errors.get('__all__'))
