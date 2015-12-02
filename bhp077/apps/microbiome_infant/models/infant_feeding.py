@@ -14,6 +14,8 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantFeeding(InfantScheduledVisitModel):
 
+    """ A model completed by the user on the infant's feeding. """
+
     last_att_sche_visit = models.DateField(
         verbose_name=("When was the last attended scheduled visit where an infant feeding form"
                       " was completed? "),
@@ -221,18 +223,19 @@ class InfantFeeding(InfantScheduledVisitModel):
 
     def save(self, *args, **kwargs):
         if self.previous_infant_feeding:
-            self.formula_intro_occur = self.previous_infant_feeding
+            self.last_att_sche_visit = self.previous_infant_feeding
         super(InfantFeeding, self).save(*args, **kwargs)
 
-    def previous_infant_instance(self):
+    def previous_infant_instance(self, infant_visit):
         """ Returns previous infant visit. """
         from .infant_visit import InfantVisit
         from edc.subject.appointment.models import Appointment
+        visit = ['2000', '2010', '2030', '2060', '2090', '2120']
         try:
-            registered_subject = self.infant_visit.appointment.registered_subject
-            previous_time_point = self.infant_visit.appointment.visit_definition.time_point - 1
+            registered_subject = infant_visit.appointment.registered_subject
+            previous_visit_code = visit[visit.index(self.infant_visit.appointment.visit_definition.code) - 1]
             previous_appointment = Appointment.objects.get(registered_subject=registered_subject,
-                                                           visit_definition__time_point=previous_time_point)
+                                                           visit_definition__code=previous_visit_code)
             return InfantVisit.objects.get(appointment=previous_appointment)
         except Appointment.DoesNotExist:
             return None
@@ -243,12 +246,21 @@ class InfantFeeding(InfantScheduledVisitModel):
 
     @property
     def previous_infant_feeding(self):
-        """ Return previous infant feeding form. """
-        from .infant_visit import InfantVisit
-        try:
-            return self._meta.model.objects.get(infant_visit=self.previous_infant_instance)
-        except InfantVisit.DoesNotExist:
-            return None
+        """ Return previous infant feeding from. """
+        visit = ['2000', '2010', '2030', '2060', '2090', '2120']
+
+        if (
+            not self.infant_visit.appointment.visit_definition.code == '2000' and
+            not self.infant_visit.appointment.visit_definition.code == '2010'
+        ):
+            prev_visit_index = visit.index(self.infant_visit.appointment.visit_definition.code) - 1
+            while prev_visit_index > 0:
+                try:
+                    return InfantFeeding.objects.get(
+                        infant_visit__appointment__visit_definition__code=visit[prev_visit_index]).report_datetime.date()
+                except InfantFeeding.DoesNotExist:
+                    prev_visit_index = prev_visit_index -1
+        return None
 
     class Meta:
         app_label = "microbiome_infant"

@@ -16,7 +16,7 @@ from bhp077.apps.microbiome_list.models import HouseholdGoods
 
 class MaternalDemographics(MaternalScheduledVisitModel):
 
-    """Demographics form for all mothers"""
+    """ A model completed by the user on Demographics form for all mothers. """
 
     CONSENT_MODEL = MaternalConsent
 

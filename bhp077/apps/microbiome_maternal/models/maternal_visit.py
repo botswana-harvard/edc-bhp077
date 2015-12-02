@@ -1,7 +1,6 @@
-from django.core.urlresolvers import reverse
 from django.db import models
 
-from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
+from edc.entry_meta_data.models import ScheduledEntryMetaData
 from edc.subject.entry.models import Entry
 from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
@@ -13,10 +12,11 @@ from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICE
 from bhp077.apps.microbiome.choices import VISIT_REASON
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
 from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
-from bhp077.apps.microbiome.classes.meta_data_mixin import MetaDataMixin
+
+from bhp077.apps.microbiome.classes import MetaDataMixin
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
-from edc.subject.appointment.models.appointment import Appointment
+from ..classes import EnrollmentStatusHelper
 
 
 class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
@@ -37,7 +37,10 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
 
     @property
     def postnatal_enrollment(self):
-        return PostnatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+        try:
+            return PostnatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+        except PostnatalEnrollment.DoesNotExist:
+            return None
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
@@ -45,7 +48,11 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
         super(MaternalVisit, self).save(*args, **kwargs)
 
     def rehash_meta_data(self):
-        self.meta_data_visit_failed_enroll(self.appointment) if not self.postnatal_enrollment.postnatal_eligible else self.reason
+        if PostnatalEnrollment.objects.filter(registered_subject=self.appointment.registered_subject).exists():
+            self.meta_data_visit_failed_enroll(self.appointment) if not self.postnatal_enrollment.postnatal_eligible else self.reason
+        else:
+            antenatal = AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
+            self.meta_data_visit_failed_enroll(self.appointment) if not antenatal.antenatal_eligible else self.reason
         if self.reason == 'unscheduled':
             self.meta_data_visit_unshceduled(self.appointment)
 
@@ -58,25 +65,8 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
             )
         )
 
-    def entry_model_options(self, app_label, model_name):
-        model_options = {}
-        model_options.update(
-            entry__app_label=app_label,
-            entry__model_name=model_name,
-            appointment=self.appointment)
-        return model_options
-
-    def lab_entry_model_options(self, app_label, model_name, panel_name):
-        model_options = {}
-        model_options.update(
-            lab_entry__app_label=app_label,
-            lab_entry__model_name=model_name,
-            appointment=self.appointment,
-            lab_entry__requisition_panel__name=panel_name)
-        return model_options
-
     def get_visit_reason_no_follow_up_choices(self):
-        """Returns the visit reasons that do not imply any data collection; that is, the subject is not available."""
+        """ Returns the visit reasons that do not imply any data collection; that is, the subject is not available. """
         dct = {}
         for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
             dct.update({item: item})
@@ -98,14 +88,18 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
     @property
     def hiv_status_pos_and_evidence_yes(self):
         try:
-            PostnatalEnrollment.objects.get(
+            return PostnatalEnrollment.objects.get(
                 registered_subject=self.appointment.registered_subject,
                 verbal_hiv_status=POS,
                 evidence_hiv_status=YES
             )
         except PostnatalEnrollment.DoesNotExist:
-            return False
-        return True
+            return AntenatalEnrollment.objects.get(
+                registered_subject=self.appointment.registered_subject,
+                verbal_hiv_status=POS,
+                evidence_hiv_status=YES
+            )
+        return False
 
     @property
     def hiv_status_rapid_test_neg(self):
@@ -119,44 +113,25 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
             return False
         return True
 
-    def requistion_entry_meta_data(self, model_name, panel_name):
-        try:
-            rq = RequisitionMetaData.objects.filter(**self.lab_entry_model_options(
-                'microbiome_lab', model_name, panel_name)).first()
-            rq.entry_status = NEW
-            rq.save()
-        except AttributeError:
-            pass
-
-    def scheduled_entry_meta_data(self, model_name):
-        try:
-            sd = ScheduledEntryMetaData.objects.filter(**self.entry_model_options(
-                'microbiome_maternal', model_name)).first()
-            sd.entry_status = NEW
-            sd.save()
-        except AttributeError:
-            pass
-
-    def update_scheduled_entry_meta_data(self):
+    def update_maternal_scheduled_entry_meta_data(self):
         if self.hiv_status_pos_and_evidence_yes:
             if self.appointment.visit_definition.code == '1000M':
-                for model_name in ['maternalclinicalhistory', 'maternalarvhistory',
-                                   'maternalarvpreg', 'maternalinfected']:
-                    self.scheduled_entry_meta_data(model_name)
+                for model_name in ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg', 'maternalinfected']:
+                    self.update_scheduled_entry_meta_data('microbiome_maternal', model_name)
             elif self.appointment.visit_definition.code == '2000M':
                 for model_name in ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']:
-                    self.scheduled_entry_meta_data(model_name)
+                    self.update_scheduled_entry_meta_data('microbiome_maternal', model_name)
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
                 for model_name in ['maternalarvpost', 'maternalarvpostadh']:
-                    self.scheduled_entry_meta_data(model_name)
-                self.requistion_entry_meta_data('maternalrequisition', 'Viral Load')
+                    self.update_scheduled_entry_meta_data('microbiome_maternal', model_name)
+                self.update_requistion_entry_meta_data('microbiome_lab', 'maternalrequisition', 'Viral Load')
 
         if self.hiv_status_rapid_test_neg:
             if self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
-                self.scheduled_entry_meta_data('rapidtestresult')
+                self.update_scheduled_entry_meta_data('microbiome_maternal', 'rapidtestresult')
 
     @property
-    def is_off_study(self):
+    def is_participant_off_study(self):
         visit_codes = ['1000M', '2000M', '2010M',
                        '2030M', '2060M', '2090M', '2120M']
         is_off = False
@@ -178,7 +153,13 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
                         return False
         return is_off
 
+    @property
+    def is_eligible(self):
+        enrollment = EnrollmentStatusHelper(registered_subject=self.appointment.registered_subject)
+        return enrollment.is_eligible
+
     def check_if_eligible(self):
+
         if not PostnatalEnrollment.objects.filter(registered_subject=self.appointment.registered_subject).exists():
             antenatal = AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
             self.reason = 'off study' if not antenatal.antenatal_eligible else self.reason

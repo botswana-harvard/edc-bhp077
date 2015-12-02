@@ -14,6 +14,8 @@ from .infant_off_study_mixin import InfantOffStudyMixin
 class InfantScheduledVisitModel(InfantOffStudyMixin, BaseUuidModel,
                                 TimePointStatusMixin):
 
+    """ A model completed by the user on the infant's scheduled visit. """
+
     infant_visit = models.OneToOneField(InfantVisit)
 
     objects = models.Manager()

@@ -18,6 +18,8 @@ from .infant_visit import InfantVisit
 
 class InfantDeath (InfantScheduledVisitModel, BaseDeathReport):
 
+    """ A model completed by the user after an infant's death. """
+
     death_reason_hospitalized_other = models.TextField(
         verbose_name="if other illness or pathogen specify or non infectious reason, please specify below:",
         max_length=250,

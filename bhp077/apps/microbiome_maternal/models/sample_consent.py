@@ -18,6 +18,8 @@ from .maternal_consent import MaternalConsent
 class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, VulnerabilityFieldsMixin,
                     BaseUuidModel, BaseAppointmentMixin):
 
+    """ A model completed by the user when a mother gives consent for sample storage. """
+
     CONSENT_MODEL = MaternalConsent
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)

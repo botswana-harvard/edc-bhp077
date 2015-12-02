@@ -10,6 +10,8 @@ from bhp077.apps.microbiome.choices import DX_INFANT
 
 class InfantFuDx(InfantScheduledVisitModel):
 
+    """ A model completed by the user on the infant's follow up dx. """
+
     def __str__(self):
         return str(self.infant_visit)
 

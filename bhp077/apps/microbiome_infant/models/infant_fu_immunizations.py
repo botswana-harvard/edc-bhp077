@@ -12,6 +12,8 @@ from ..infant_choices import IMMUNIZATIONS, INFANT_AGE_VACCINE_GIVEN
 
 class InfantFuImmunizations(InfantScheduledVisitModel):
 
+    """ A model completed by the user on the infant's follow up immunizations. """
+
     vaccines_received = models.CharField(
         max_length=25,
         choices=YES_NO_UNKNOWN,

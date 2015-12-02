@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 
 from base_maternal_model_form import BaseMaternalModelForm
 
@@ -51,7 +52,14 @@ class MaternalArvPregForm(BaseMaternalModelForm):
 
 class MaternalArvForm(BaseMaternalModelForm):
     def clean(self):
-        return super(MaternalArvForm, self).clean()
+        cleaned_data = super(MaternalArvForm, self).clean()
+        if self.weeks_between(cleaned_data.get('date_started'), timezone.now()) < 6:
+            raise forms.ValidationError("ARV start date must be six weeks prior to today's date or greater.")
+        if cleaned_data.get('date_stopped'):
+            if cleaned_data.get('date_stopped') < cleaned_data.get('date_started'):
+                raise forms.ValidationError('You have indicated that the stop date of {} is prior to start date of {}. '
+                                            'Please correct'.format(cleaned_data.get('date_stopped') ,cleaned_data.get('date_started')))
+        return cleaned_data
 
     class Meta:
         model = MaternalArv

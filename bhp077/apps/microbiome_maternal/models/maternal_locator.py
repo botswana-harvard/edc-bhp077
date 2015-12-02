@@ -13,6 +13,8 @@ from .maternal_visit import MaternalVisit
 
 class MaternalLocator(BaseLocator, BaseUuidModel):
 
+    """ A model completed by the user on the details on infant caretaker. """
+
     maternal_visit = models.ForeignKey(MaternalVisit)
 
     care_clinic = OtherCharField(

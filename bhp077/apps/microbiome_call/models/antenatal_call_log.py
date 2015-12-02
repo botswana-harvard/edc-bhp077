@@ -21,6 +21,7 @@ from .antenatal_call_list import AntenatalCallList
 
 class AntenatalCallLog(BaseSyncUuidModel):
 
+    """A system model completed by the user on the after contacting an antenatal participant"""
     antenatal_call_list = models.ForeignKey(AntenatalCallList)
 
     locator_information = EncryptedTextField(

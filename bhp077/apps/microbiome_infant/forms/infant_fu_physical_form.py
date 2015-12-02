@@ -19,7 +19,7 @@ class InfantFuPhysicalForm(BaseInfantModelForm):
 
         if (
             not cleaned_data.get('infant_visit').appointment.visit_definition.code == '2000' and
-            not cleaned_data.get('infant_visit').appointment.visit_definition.code == '2000'
+            not cleaned_data.get('infant_visit').appointment.visit_definition.code == '2010'
         ):
             prev_visit = visit.index(cleaned_data.get('infant_visit').appointment.visit_definition.code) - 1
             while prev_visit > 0:

@@ -8,7 +8,7 @@ from .maternal_consent import MaternalConsent
 
 class MaternalObstericalHistory(MaternalScheduledVisitModel):
 
-    """Obsterical History for all mothers"""
+    """ A model completed by the user on Obsterical History for all mothers. """
 
     CONSENT_MODEL = MaternalConsent
 

@@ -1,55 +1,17 @@
-from django.core.urlresolvers import reverse
-from django.db import models
+from edc_constants.choices import YES, NO, POS, NEG
 
-from edc_constants.choices import YES_NO, YES, NO, POS, NEG
-from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
-
-from ..maternal_choices import LIVE_STILL_BIRTH, LIVE
-from .base_enrollment import BaseEnrollment
-from .maternal_consent import MaternalConsent
+from ..maternal_choices import LIVE
+from .base_enrollment import Enrollment
 from .antenatal_enrollment import AntenatalEnrollment
+from ..managers import PostnatalEnrollmentManager
 
 
-class PostnatalEnrollment(BaseEnrollment):
+class PostnatalEnrollment(Enrollment):
 
-    CONSENT_MODEL = MaternalConsent
-
-    report_datetime = models.DateTimeField(
-        verbose_name="Date and Time of  Postnatal Enrollment",
-        validators=[
-            datetime_not_before_study_start,
-            datetime_not_future, ],
-        help_text='')
-
-    postpartum_days = models.IntegerField(
-        verbose_name="How many days postpartum?",
-        help_text="If more than 3days, not eligible")
-
-    delivery_type = models.CharField(
-        verbose_name="Was this a vaginal delivery?",
-        choices=YES_NO,
-        max_length=3,
-        help_text="INELIGIBLE if NO")
-
-    gestation_before_birth = models.IntegerField(
-        verbose_name="How many weeks after gestation was the child born?",
-        help_text="ineligible if premature or born before 37weeks")
-
-    live_or_still_birth = models.CharField(
-        verbose_name="Was this a live or still birth?",
-        choices=LIVE_STILL_BIRTH,
-        max_length=15,
-        help_text='if still birth, not eligible')
-
-    postnatal_enrollemet_eligible = models.NullBooleanField(
-        editable=False)
-
-    live_infants = models.IntegerField(
-        verbose_name="How many live infants?",
-        null=True,
-        blank=True)
+    objects = PostnatalEnrollmentManager()
 
     def save(self, *args, **kwargs):
+        self.enrollment_type = 'postnatal'
         self.postnatal_enrollemet_eligible = self.postnatal_eligible
         super(PostnatalEnrollment, self).save(*args, **kwargs)
 
@@ -97,3 +59,4 @@ class PostnatalEnrollment(BaseEnrollment):
         app_label = 'microbiome_maternal'
         verbose_name = 'Postnatal Enrollment'
         verbose_name_plural = 'Postnatal Enrollment'
+        proxy = True

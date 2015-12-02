@@ -20,6 +20,11 @@ class MaternalPostFuMedItemsAdmin(BaseModelAdmin):
         "drug_route": admin.VERTICAL,
     }
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "maternal_post_fu_med":
+                kwargs["queryset"] = MaternalPostFuMed.objects.filter(id=request.GET.get('maternal_post_fu_med'))
+        return super(MaternalPostFuMedAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 admin.site.register(MaternalPostFuMedItems, MaternalPostFuMedItemsAdmin)
 
 
@@ -30,7 +35,6 @@ class MaternalPostFuMedAdmin(BaseModelAdmin):
 
     fields = (
         "maternal_visit",
-        "maternal_post_fu",
         "report_datetime",
         "has_taken_meds",
     )
@@ -41,10 +45,6 @@ class MaternalPostFuMedAdmin(BaseModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
-        if db_field.name == "maternal_post_fu":
-            if request.GET.get('maternal_visit'):
-                infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
-                kwargs["queryset"] = MaternalPostFuMed.objects.filter(registered_subject=infant_visit.appointment.registered_subject)
         return super(MaternalPostFuMedAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalPostFuMed, MaternalPostFuMedAdmin)

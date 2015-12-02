@@ -2,3 +2,5 @@ from .scheduled_model_manager import ScheduledModelManager
 from .maternal_post_fu_dxt_manager import MaternalPostFuDxTManager
 from .maternal_arv_post_mod_manager import MaternalArvPostModManager
 from .maternal_lab_del_dxt_manager import MaternalLabDelDxTManager
+from .antenatal_enrollment_manager import AntenatalEnrollmentManager
+from .postnatal_enrollment_manager import PostnatalEnrollmentManager

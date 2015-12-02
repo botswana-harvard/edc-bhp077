@@ -11,7 +11,7 @@ from .maternal_consent import MaternalConsent
 
 class MaternalBreastHealth(MaternalScheduledVisitModel):
 
-    """ General post-partum follow-up. """
+    """ A model completed by the user on the mother's General post-partum follow-up. """
 
     CONSENT_MODEL = MaternalConsent
 

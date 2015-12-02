@@ -7,6 +7,8 @@ from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 class MaternalDeath (MaternalScheduledVisitModel, BaseDeathReport):
 
+    """ A model completed by the user on the mother's death. """
+
     def get_report_datetime(self):
         return datetime.combine(self.death_date, time(0, 0))
 
