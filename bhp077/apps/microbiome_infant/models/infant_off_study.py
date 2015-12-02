@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from datetime import datetime
 
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.off_study.models import BaseOffStudy
@@ -14,6 +15,11 @@ class InfantOffStudy(BaseOffStudy, BaseUuidModel):
     history = AuditTrail()
 
     infant_visit = models.OneToOneField(InfantVisit)
+
+    report_datetime = models.DateTimeField(
+        verbose_name="Visit Date and Time",
+        default=datetime.today()
+    )
 
     entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 

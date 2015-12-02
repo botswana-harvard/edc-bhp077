@@ -14,6 +14,8 @@ class InfantOffStudyAdmin(BaseOffStudyModelAdmin):
     fields = (
         'registered_subject',
         'infant_visit',
+        'report_datetime',
+        'offstudy_date',
         'reason',
         'reason_other',
         'has_scheduled_data',
