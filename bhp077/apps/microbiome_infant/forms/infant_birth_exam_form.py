@@ -18,6 +18,10 @@ class InfantBirthExamForm(BaseInfantModelForm):
         self.validate_heent_exam(cleaned_data)
         self.validate_resp_exam(cleaned_data)
         self.validate_cardiac_exam(cleaned_data)
+        self.validate_abdominal_exam(cleaned_data)
+        self.validate_skin_exam(cleaned_data)
+        self.validate_rash_exam(cleaned_data)
+        self.validate_neuro_exam(cleaned_data)
         return cleaned_data
 
     def validate_report_datetime(self, cleaned_data, field):
@@ -36,41 +40,93 @@ class InfantBirthExamForm(BaseInfantModelForm):
         if cleaned_data.get('general_activity') == 'ABNORMAL':
             if not cleaned_data.get('abnormal_activity'):
                 raise forms.ValidationError('If abnormal, please specify.')
+        else:
+            if cleaned_data.get('abnormal_activity'):
+                raise forms.ValidationError('You indicated that there was NO abnormality in general activity, yet '
+                                            'specified abnormality. Please correct')
 
     def validate_heent_exam(self, cleaned_data):
         if cleaned_data.get('heent_exam') == YES:
             if cleaned_data.get('heent_no_other'):
                 raise forms.ValidationError(
-                    'If HEENT Exam is normal, Do not answer the following Question (Q10).'
+                    'If HEENT Exam is normal, Do not answer the following Question (Q8).'
                 )
         elif cleaned_data.get('heent_exam') in [NO, NOT_EVALUATED]:
             if not cleaned_data.get('heent_no_other'):
                 raise forms.ValidationError(
-                    'Provide answer to Q10.'
+                    'You indicated that HEENT exam was not normal. Provide answer to Q8.'
                 )
 
     def validate_resp_exam(self, cleaned_data):
         if cleaned_data.get('resp_exam') == YES:
             if cleaned_data.get('resp_exam_other'):
                 raise forms.ValidationError(
-                    'If Respiratory Exam is normal, Do not answer the following Question (Q12).'
+                    'If Respiratory Exam is normal, Do not answer the following Question (Q10).'
                 )
         elif cleaned_data.get('resp_exam') in [NO, NOT_EVALUATED]:
             if not cleaned_data.get('resp_exam_other'):
                 raise forms.ValidationError(
-                    'Provide answer to Q12.'
+                    'You indicated that Respiratory exam was not normal. Provide answer to Q10.'
                 )
 
     def validate_cardiac_exam(self, cleaned_data):
         if cleaned_data.get('cardiac_exam') == YES:
             if cleaned_data.get('cardiac_exam_other'):
                 raise forms.ValidationError(
-                    'If Cardiac Exam is normal, Do not answer the following Question (Q14).'
+                    'If Cardiac Exam is normal, Do not answer the following Question (Q12).'
                 )
         elif cleaned_data.get('cardiac_exam') in [NO, NOT_EVALUATED]:
             if not cleaned_data.get('cardiac_exam_other'):
                 raise forms.ValidationError(
-                    'Provide answer to Q14.'
+                    'You indicated that Cardiac exam was not normal. Provide answer to Q12.'
+                )
+
+    def validate_abdominal_exam(self, cleaned_data):
+        if cleaned_data.get('abdominal_exam') == YES:
+            if cleaned_data.get('abdominal_exam_other'):
+                raise forms.ValidationError(
+                    'If Abdominal Exam is normal, Do not answer the following Question (Q14).'
+                )
+        elif cleaned_data.get('abdominal_exam') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('abdominal_exam_other'):
+                raise forms.ValidationError(
+                    'You indicated that Abdominal exam was not normal. Provide answer to Q14.'
+                )
+
+    def validate_skin_exam(self, cleaned_data):
+        if cleaned_data.get('skin_exam') == YES:
+            if cleaned_data.get('skin_exam_other'):
+                raise forms.ValidationError(
+                    'If Skin Exam is normal, Do not answer the following Question (Q16).'
+                )
+        elif cleaned_data.get('skin_exam') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('skin_exam_other'):
+                raise forms.ValidationError(
+                    'You indicated that Skin exam was not normal. Provide answer to Q16.'
+                )
+
+    def validate_rash_exam(self, cleaned_data):
+        if cleaned_data.get('macular_papular_rash') == YES:
+            if cleaned_data.get('macular_papular_rash_other'):
+                raise forms.ValidationError(
+                    'If macular / papular rash Exam is normal, Do not answer the following Question (Q18).'
+                )
+        elif cleaned_data.get('macular_papular_rash') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('macular_papular_rash_other'):
+                raise forms.ValidationError(
+                    'You indicated that macular / papular rash exam was not normal. Provide answer to Q18.'
+                )
+
+    def validate_neuro_exam(self, cleaned_data):
+        if cleaned_data.get('neurologic_exam') == YES:
+            if cleaned_data.get('neuro_exam_other'):
+                raise forms.ValidationError(
+                    'If Neurological Exam is normal, Do not answer the following Question (Q20).'
+                )
+        elif cleaned_data.get('neurologic_exam') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('neuro_exam_other'):
+                raise forms.ValidationError(
+                    'You indicated that Neurological exam was not normal. Provide answer to Q20.'
                 )
 
     class Meta:
