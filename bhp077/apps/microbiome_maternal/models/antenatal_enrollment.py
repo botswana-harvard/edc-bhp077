@@ -1,13 +1,29 @@
+from django.db import models
 
 from edc_constants.constants import NO, YES, POS, NEG, NOT_APPLICABLE
+from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 
-from .base_enrollment import Enrollment
-from ..managers import AntenatalEnrollmentManager
+from .enrollment_mixin import EnrollmentMixin
+from .maternal_consent import MaternalConsent
 
 
-class AntenatalEnrollment(Enrollment):
+class AntenatalEnrollment(EnrollmentMixin):
 
-    objects = AntenatalEnrollmentManager()
+    CONSENT_MODEL = MaternalConsent
+
+    report_datetime = models.DateTimeField(
+        verbose_name="Date and Time of  Antenatal Enrollment",
+        validators=[
+            datetime_not_before_study_start,
+            datetime_not_future, ],
+        help_text='')
+
+    weeks_of_gestation = models.IntegerField(
+        verbose_name="How many weeks pregnant?",
+        help_text=" (weeks of gestation). Eligible if >=36 weeks", )
+
+    antenatal_eligible = models.NullBooleanField(
+        editable=False)
 
     @property
     def number_of_weeks_after_tests(self):
@@ -18,7 +34,6 @@ class AntenatalEnrollment(Enrollment):
         return self.number_of_weeks_after_tests >= 32
 
     def save(self, *args, **kwargs):
-        self.enrollment_type = 'antenatal'
         self.antenatal_eligible = self.eligible_for_postnatal
         super(AntenatalEnrollment, self).save(*args, **kwargs)
 
@@ -27,7 +42,7 @@ class AntenatalEnrollment(Enrollment):
 
     @property
     def eligible_for_postnatal(self):
-        """return true if a mother is eligible for antenatal enrollment"""
+        """return true if a mother is eligible for postnatalenrollment."""
         if self.weeks_of_gestation >= 36 and self.is_diabetic == NO and self.on_tb_treatment == NO and self.on_hypertension_treatment == NO and self.breastfeed_for_a_year == YES and self.instudy_for_a_year == YES:
             if self.week32_test == YES and self.week32_result == POS and self.evidence_hiv_status == YES:
                 return True
@@ -49,4 +64,3 @@ class AntenatalEnrollment(Enrollment):
         app_label = 'microbiome_maternal'
         verbose_name = 'Antenatal Enrollment'
         verbose_name_plural = 'Antenatal Enrollment'
-        proxy = True
