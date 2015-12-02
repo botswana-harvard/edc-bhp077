@@ -49,6 +49,7 @@ class MaternalDashboard(RegisteredSubjectDashboard):
             subject_dashboard_url=self.subject_dashboard_url,
             infants=self.get_registered_infant_identifier(),
             maternal_consent=self.consent,
+            local_results=self.render_labs(),
             antenatal_enrollment=self.antenatal_enrollment(),
             postnatal_enrollment=self.postnatal_enrollment(),
             antenatal_hiv_status=self.antenatal_maternal_hiv_status(),

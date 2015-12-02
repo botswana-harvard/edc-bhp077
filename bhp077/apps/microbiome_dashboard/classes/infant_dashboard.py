@@ -50,16 +50,9 @@ class InfantDashboard(RegisteredSubjectDashboard):
             infant_hiv_status=self.infant_hiv_status,
             maternal_consent=self.maternal_consent,
             maternal_eligibility=self.maternal_eligibility,
+            local_results=self.render_labs(),
             infant_birth=self.infant_birth, )
         return self.context
-
-    # @property
-    # def visit_model(self):
-    #     self._visit_model = MaternalVisit
-    #     return self._visit_model
-    #
-    # def get_locator_model():
-    #     return MaternalLocator
 
     @property
     def maternal_consent(self):
@@ -85,11 +78,6 @@ class InfantDashboard(RegisteredSubjectDashboard):
     def locator_registered_subject(self):
         return RegisteredSubject.objects.get(
             subject_identifier=self.maternal_identifier)
-
-    # @property
-    # def maternal_locator(self):
-    #     return MaternalLocator.objects.get(
-    #         registered_subject__subject_identifier=self.subject_identifier)
 
     @property
     def maternal_eligibility(self):
