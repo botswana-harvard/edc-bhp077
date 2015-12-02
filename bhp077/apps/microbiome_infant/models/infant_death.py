@@ -20,13 +20,6 @@ class InfantDeath (InfantScheduledVisitModel, BaseDeathReport):
 
     """ A model completed by the user after an infant's death. """
 
-    death_reason_hospitalized_other = models.TextField(
-        verbose_name="if other illness or pathogen specify or non infectious reason, please specify below:",
-        max_length=250,
-        blank=True,
-        null=True,
-    )
-
     study_drug_relate = models.CharField(
         verbose_name="Relationship between the participant death and study drug (CTX vs Placebo)",
         max_length=25,
