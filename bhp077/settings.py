@@ -39,8 +39,8 @@ elif socket.gethostname() == 'one-2.local' or socket.gethostname() == 'One-2.loc
     KEY_PATH = '/Users/sirone/Documents/workspace/git_projects/bhp066_git/bhp066/keys'
 elif socket.gethostname() == 'silverapple':
     KEY_PATH = '/Users/melissa/Documents/git/source/bhp066_project/bhp066/keys'
-elif socket.gethostname() == 'bcpp-tsetsiba':
-    KEY_PATH = '/Users/tsetsiba/source/bhp066_project/bhp066/keys'
+elif socket.gethostname() == 'tsetsiba':
+    KEY_PATH = '/Users/tsetsiba/source/microbiome/keys'
 else:
     KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
 # SECURITY WARNING: don't run with debug turned on in production!
