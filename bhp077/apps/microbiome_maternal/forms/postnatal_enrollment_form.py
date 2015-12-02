@@ -3,8 +3,7 @@ from django import forms
 from edc_constants.constants import POS, YES, NO, NEG
 
 from bhp077.apps.microbiome.constants import LIVE
-from bhp077.apps.microbiome_maternal.models import (
-        PostnatalEnrollment, AntenatalEnrollment, MaternalEligibility)
+from bhp077.apps.microbiome_maternal.models import (PostnatalEnrollment, AntenatalEnrollment)
 
 from .base_enrollment_form import BaseEnrollmentForm
 

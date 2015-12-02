@@ -11,6 +11,8 @@ from bhp077.apps.microbiome_list.models import Contraceptives
 
 class SexualReproductiveHealth(MaternalScheduledVisitModel):
 
+    """ A model completed by the user on the mother's sexual reproductive health. """
+
     CONSENT_MODEL = MaternalConsent
 
     more_children = models.CharField(

@@ -9,6 +9,8 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantFu(InfantScheduledVisitModel):
 
+    """ A model completed by the user on the infant's follow up. """
+
     physical_assessment = models.CharField(
         max_length=3,
         choices=YES_NO,

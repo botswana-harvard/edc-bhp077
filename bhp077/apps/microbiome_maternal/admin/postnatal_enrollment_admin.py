@@ -4,37 +4,48 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.subject.registration.models import RegisteredSubject
 
 from ..forms import PostnatalEnrollmentForm
-from ..models import PostnatalEnrollment
+from ..models import PostnatalEnrollment, AntenatalEnrollment
 
 
 class PostnatalEnrollmentAdmin(BaseModelAdmin):
 
+    form = PostnatalEnrollmentForm
     dashboard_type = 'maternal'
 
-    form = PostnatalEnrollmentForm
+    def required_fields(self):
+        fields = [
+            'registered_subject', 'report_datetime', 'postpartum_days', 'delivery_type', 'gestation_before_birth',
+            'live_or_still_birth', 'live_infants', 'on_tb_treatment', 'on_hypertension_treatment', 'valid_regimen',
+            'valid_regimen_duration', 'process_rapid_test', 'date_of_rapid_test', 'rapid_test_result'
+        ]
+        return fields
 
-    fields = ('registered_subject',
-              'report_datetime',
-              'postpartum_days',
-              'delivery_type',
-              'gestation_before_birth',
-              'live_or_still_birth',
-              'live_infants',
-              'is_diabetic',
-              'on_tb_treatment',
-              'on_hypertension_treatment',
-              'breastfeed_for_a_year',
-              'instudy_for_a_year',
-              'week32_test',
-              'date_of_test',
-              'week32_result',
-              'verbal_hiv_status',
-              'evidence_hiv_status',
-              'valid_regimen',
-              'valid_regimen_duration',
-              'process_rapid_test',
-              'date_of_rapid_test',
-              'rapid_test_result')
+    def all_required_fields(self):
+        fields = [
+            'registered_subject', 'report_datetime', 'postpartum_days', 'delivery_type', 'gestation_before_birth',
+            'live_or_still_birth', 'live_infants', 'is_diabetic', 'on_tb_treatment', 'on_hypertension_treatment',
+            'breastfeed_for_a_year', 'instudy_for_a_year', 'week32_test', 'date_of_test', 'week32_result',
+            'verbal_hiv_status', 'evidence_hiv_status', 'valid_regimen', 'valid_regimen_duration', 'process_rapid_test',
+            'date_of_rapid_test', 'rapid_test_result',
+        ]
+        return fields
+
+    def antenatal_enrollment(self, registered_subject):
+        try:
+            return AntenatalEnrollment.objects.get(
+                registered_subject=registered_subject)
+        except AntenatalEnrollment.DoesNotExist:
+            return False
+
+    def get_fieldsets(self, request, obj=None):
+        fields = self.all_required_fields()
+        try:
+            registered_subject = RegisteredSubject.objects.get(id=request.GET.get('registered_subject', None))
+            fields = self.required_fields() if self.antenatal_enrollment(registered_subject) else fields
+        except RegisteredSubject.DoesNotExist:
+            pass
+        return [(None, {'fields': fields})]
+
     radio_fields = {'delivery_type': admin.VERTICAL,
                     'live_or_still_birth': admin.VERTICAL,
                     'is_diabetic': admin.VERTICAL,

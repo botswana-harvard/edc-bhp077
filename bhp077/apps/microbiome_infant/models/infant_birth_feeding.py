@@ -12,7 +12,7 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantBirthFeedVaccine(InfantScheduledVisitModel):
 
-    """infant feeding & vaccination/ immunization"""
+    """ A model completed by the user on the infant's feeding & vaccination/ immunization. """
 
     feeding_after_delivery = models.CharField(
         max_length=50,

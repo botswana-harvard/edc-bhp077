@@ -13,6 +13,8 @@ from bhp077.apps.microbiome.choices import MEDICATIONS
 
 class InfantFuNewMed(InfantScheduledVisitModel):
 
+    """ A model completed by the user on the infant's follow up medications. """
+
     new_medications = models.CharField(
         max_length=25,
         choices=YES_NO,
@@ -32,6 +34,8 @@ class InfantFuNewMed(InfantScheduledVisitModel):
 
 
 class InfantFuNewMedItems(BaseUuidModel):
+
+    """A model completed by the user on the infant's follow up medication items."""
 
     infant_fu_med = models.ForeignKey(InfantFuNewMed)
 

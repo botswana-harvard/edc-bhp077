@@ -10,7 +10,7 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantBirthArv(InfantScheduledVisitModel):
 
-    """infant arv information"""
+    """ A model completed by the user on the infant's arv information. """
 
     infant_birth = models.ForeignKey(InfantBirth)
 

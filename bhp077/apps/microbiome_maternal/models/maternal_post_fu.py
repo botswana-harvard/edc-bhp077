@@ -18,7 +18,7 @@ from .maternal_consent import MaternalConsent
 
 class MaternalPostFu(MaternalScheduledVisitModel):
 
-    """ General post-partum follow-up. """
+    """ A model completed by the user on the mother's General post-partum follow-up. """
 
     CONSENT_MODEL = MaternalConsent
 
@@ -46,6 +46,20 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         max_length=3,
         verbose_name="Mother's diastolic blood pressure?",
         help_text="in hg e.g. 80, should be between 35 and 130.",
+    )
+
+    has_mother_breastfed = models.CharField(
+        max_length=3,
+        verbose_name="Has the mother breastfed since the last attended visit?",
+        choices=YES_NO,
+        help_text="",
+    )
+
+    had_mastitis = models.CharField(
+        max_length=3,
+        verbose_name="If yes,since the last attended scheduled visit,has the mother had mastitis at any time?",
+        choices=YES_NO,
+        help_text="",
     )
 
     has_chronic_cond = models.CharField(

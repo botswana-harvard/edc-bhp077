@@ -11,7 +11,7 @@ from .maternal_visit import MaternalVisit
 
 class MaternalOffStudy(BaseOffStudy, BaseUuidModel):
 
-    """A model completed by the user that completed when the subject is taken off-study."""
+    """ A model completed by the user that completed when the subject is taken off-study. """
 
     history = AuditTrail()
 

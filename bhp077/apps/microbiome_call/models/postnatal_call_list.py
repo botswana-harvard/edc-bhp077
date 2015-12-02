@@ -5,36 +5,36 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.encrypted_fields import FirstnameField
 from edc_base.model.validators import datetime_not_future, datetime_not_before_study_start
 from edc_constants.constants import CLOSED, OPEN, NEW
- 
+
 from ..managers import AntenatalCallListManager
 from ...microbiome_maternal.models import PostnatalEnrollment
- 
- 
+
+
 class PostnatalCallList (BaseSyncUuidModel):
- 
+
     postnatal_enrollment = models.ForeignKey(PostnatalEnrollment)
- 
+
     call_datetime = models.DateTimeField(
         null=True,
         editable=False,
         help_text='last call datetime updated by postnatal call log entry',
     )
- 
+
     app_label = models.CharField(
         max_length=25,
         editable=False)
- 
+
     first_name = FirstnameField(
         verbose_name='First name',
         editable=False,
     )
- 
+
     initials = models.CharField(
         verbose_name='Initials',
         max_length=3,
         editable=False,
     )
- 
+
     consent_datetime = models.DateTimeField(
         verbose_name="Consent date and time",
         validators=[
@@ -42,15 +42,15 @@ class PostnatalCallList (BaseSyncUuidModel):
             datetime_not_future, ],
         help_text="From Subject Consent."
     )
- 
+
     call_attempts = models.IntegerField(
         default=0)
- 
+
     call_outcome = models.TextField(
         max_length=150,
         null=True,
     )
- 
+
     call_status = models.CharField(
         max_length=15,
         choices=(
@@ -60,11 +60,11 @@ class PostnatalCallList (BaseSyncUuidModel):
         ),
         default=NEW,
     )
- 
+
     history = AuditTrail()
- 
+
     objects = AntenatalCallListManager()
- 
+
     def __unicode__(self):
         return '{} {} {}'.format(
             self.antenatal_enrollment,

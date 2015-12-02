@@ -12,7 +12,7 @@ from bhp077.apps.microbiome_list.models import PriorArv
 
 class MaternalArvHistory(MaternalScheduledVisitModel):
 
-    """ARV history for infected mothers only"""
+    """ A model completed by the user on ARV history for infected mothers only. """
 
     CONSENT_MODEL = MaternalConsent
 

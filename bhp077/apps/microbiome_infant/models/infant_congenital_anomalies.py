@@ -16,6 +16,8 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantCongenitalAnomalies(InfantScheduledVisitModel):
 
+    """ A model completed by the user on the infant's congenital anomalies. """
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies"

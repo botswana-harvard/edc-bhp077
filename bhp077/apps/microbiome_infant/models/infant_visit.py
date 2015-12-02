@@ -1,4 +1,3 @@
-from django.core.urlresolvers import reverse
 from django.db import models
 
 from edc.subject.visit_tracking.models import BaseVisitTracking
@@ -10,14 +9,17 @@ from edc.subject.registration.models import RegisteredSubject
 from edc_constants.constants import POS, YES, NEW
 
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
-from .infant_birth import InfantBirth
 from bhp077.apps.microbiome.choices import (VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS,
                                             ALIVE_DEAD_UNKNOWN)
+
+from .infant_birth import InfantBirth
 from .infant_off_study_mixin import InfantOffStudyMixin
 from bhp077.apps.microbiome.classes.meta_data_mixin import MetaDataMixin
 
 
 class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
+
+    """ A model completed by the user on the infant visits. """
 
     information_provider = models.CharField(
         verbose_name="Please indicate who provided most of the information for this child's visit",
@@ -105,11 +107,11 @@ class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUui
 
     def requistion_entry_meta_data(self, model_name):
         rq = RequisitionMetaData.objects.filter(
-                lab_entry__requisition_panel__name='DNA PCR',
-                lab_entry__app_label='microbiome_lab',
-                lab_entry__model_name=model_name,
-                appointment=self.appointment
-            )
+            lab_entry__requisition_panel__name='DNA PCR',
+            lab_entry__app_label='microbiome_lab',
+            lab_entry__model_name=model_name,
+            appointment=self.appointment
+        )
         if rq:
             rq = rq.first()
             rq.entry_status = NEW
@@ -157,7 +159,7 @@ class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUui
         if self.hiv_status_pos_and_evidence_yes:
             if self.appointment.visit_definition.code == '2000':
                 self.scheduled_entry_meta_data('infantbirtharv')
-#            if self.appointment.visit_definition.code in ['2000', '2030', '2060', '2090', '2120']:
+            if self.appointment.visit_definition.code in ['2010']:
                 self.requistion_entry_meta_data('infantrequisition')
         if self.appointment.visit_definition.code in ['2030', '2060', '2090', '2120']:
             if self.infant_birth_male:

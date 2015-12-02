@@ -12,6 +12,8 @@ from .infant_visit import InfantVisit
 
 class InfantOffStudy(BaseOffStudy, BaseUuidModel):
 
+    """ A model completed by the user when the infant is taken off study. """
+
     history = AuditTrail()
 
     infant_visit = models.OneToOneField(InfantVisit)

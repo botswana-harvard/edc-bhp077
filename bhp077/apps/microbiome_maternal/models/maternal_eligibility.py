@@ -11,8 +11,8 @@ from .maternal_consent import MaternalConsent
 
 
 class MaternalEligibility (BaseUuidModel):
-    """This is the eligibility entry point for all mothers.
-    If age eligible or not, an eligibility identifier is created for each mother"""
+    """ This is the eligibility entry point for all mothers.
+    If age eligible or not, an eligibility identifier is created for each mother. """
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 

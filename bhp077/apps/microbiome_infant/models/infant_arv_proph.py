@@ -8,7 +8,7 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantArvProph(InfantScheduledVisitModel):
-
+    """ A model completed by the user on the infant's nvp or azt prophylaxis. """
     prophylatic_nvp = models.CharField(
         max_length=3,
         choices=YES_NO,
