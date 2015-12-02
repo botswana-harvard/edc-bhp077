@@ -8,6 +8,8 @@ from .maternal_consent import MaternalConsent
 
 class RapidTestResult(MaternalScheduledVisitModel):
 
+    """ A model completed by the user on the mother's rapid test result. """
+
     CONSENT_MODEL = MaternalConsent
 
     process_rapid_test = models.CharField(

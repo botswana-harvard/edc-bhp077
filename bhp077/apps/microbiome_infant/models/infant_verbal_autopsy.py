@@ -17,7 +17,7 @@ from edc.entry_meta_data.managers import EntryMetaDataManager
 
 class InfantVerbalAutopsy(InfantScheduledVisitModel):
 
-    """Verbal Autopsy"""
+    """ A model completed by the user on the infant's Verbal Autopsy. """
 
     report_datetime = models.DateTimeField(
         verbose_name="Today's date",

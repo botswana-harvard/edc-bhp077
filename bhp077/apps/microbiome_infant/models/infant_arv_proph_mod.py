@@ -6,7 +6,7 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantArvProphMod(InfantScheduledVisitModel):
-
+    """ A model completed by the user on the infant's nvp or azt prophylaxis mods. """
     infant_arv_proph = models.ForeignKey(InfantArvProph)
 
     other_reason = models.CharField(

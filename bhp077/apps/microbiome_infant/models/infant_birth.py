@@ -15,6 +15,7 @@ from bhp077.apps.microbiome_infant.models.infant_off_study_mixin import InfantOf
 
 
 class InfantBirth(InfantOffStudyMixin, BaseUuidModel, BaseAppointmentMixin):
+    """ A model completed by the user on the infant's birth. """
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 

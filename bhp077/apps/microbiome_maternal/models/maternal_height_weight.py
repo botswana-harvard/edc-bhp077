@@ -10,7 +10,7 @@ from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 class MaternalHeightWeight(MaternalScheduledVisitModel):
 
-    """Height, Weight details for all mothers"""
+    """ A model completed by the user on Height, Weight details for all mothers. """
 
     CONSENT_MODEL = MaternalConsent
 

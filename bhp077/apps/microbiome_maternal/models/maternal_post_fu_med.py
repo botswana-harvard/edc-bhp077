@@ -16,7 +16,8 @@ from .maternal_consent import MaternalConsent
 
 class MaternalPostFuMed(MaternalScheduledVisitModel):
 
-    """ Post-partum follow up of medications. """
+    """ A model completed by the user on the mother's Post-partum follow up of medications. """
+
     CONSENT_MODEL = MaternalConsent
 
     has_taken_meds = models.CharField(

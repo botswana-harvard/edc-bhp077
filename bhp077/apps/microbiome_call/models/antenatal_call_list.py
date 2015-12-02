@@ -12,6 +12,8 @@ from ...microbiome_maternal.models import AntenatalEnrollment
 
 class AntenatalCallList(BaseSyncUuidModel):
 
+    """A system model that lists all eligible participant's contants for updates on pregnancy status"""
+
     antenatal_enrollment = models.ForeignKey(AntenatalEnrollment)
 
     call_datetime = models.DateTimeField(

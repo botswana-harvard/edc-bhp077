@@ -20,6 +20,7 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
                       IdentityFieldsMixin, PersonalFieldsMixin,
                       CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
 
+    """ A model completed by the user on the mother's consent. """
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
     study_site = models.ForeignKey(

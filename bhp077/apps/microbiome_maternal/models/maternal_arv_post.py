@@ -15,7 +15,7 @@ from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 class MaternalArvPost (MaternalScheduledVisitModel):
 
-    """ Maternal ARV post-partum"""
+    """ A model completed by the user on Maternal ARV post-partum. """
 
     CONSENT_MODEL = MaternalConsent
 
