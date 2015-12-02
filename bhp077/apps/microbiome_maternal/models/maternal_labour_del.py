@@ -6,7 +6,8 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_base.model.validators import datetime_not_future
-from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
+from edc_constants.choices import YES_NO, YES_NO_UNKNOWN, YES_NO_NA
+from edc_constants.constants import NOT_APPLICABLE
 
 from bhp077.apps.microbiome.choices import DX_MATERNAL
 from bhp077.apps.microbiome_list.models import Suppliments
@@ -211,7 +212,8 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
 
     vl_detectable = models.CharField(
         max_length=3,
-        choices=YES_NO,
+        choices=YES_NO_NA,
+        default=NOT_APPLICABLE,
         verbose_name="Was the viral load detectable?",
         help_text="")
 

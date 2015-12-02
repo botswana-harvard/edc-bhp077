@@ -31,7 +31,9 @@ PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 # SECURITY WARNING: keep the secret key used in production secret!
 ALLOW_MODEL_SERIALIZATION = True
 SECRET_KEY = 'sdfsdfsdfsdf'
-if socket.gethostname() == 'mac2.local':
+
+KEY_PATH = '/Users/fchilisa/source/microbiome/keys'  # DONT DELETE ME!!, just comment out
+if socket.gethostname() == 'mac2-2.local':
     KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
 elif socket.gethostname() == 'ckgathi':
     KEY_PATH = '/Users/ckgathi/source/microbiome/bhp077/keys'
@@ -149,9 +151,9 @@ INSTALLED_APPS = (
     'lis.exim.lab_import',
     'lis.exim.lab_import_lis',
     'lis.exim.lab_import_dmis',
+    'edc_call_manager',
     # LOCAL_APPS
     'bhp077.apps.microbiome',
-    'bhp077.apps.microbiome_call',
     'bhp077.apps.microbiome_list',
     'bhp077.apps.microbiome_dashboard',
     'bhp077.apps.microbiome_infant',

@@ -23,5 +23,13 @@ class InfantBirthDataForm(BaseInfantModelForm):
                 raise forms.ValidationError('If Apgar scored performed, then you should answer At 1 minute(Q7).')
             if not cleaned_data.get('apgar_score_min_5'):
                 raise forms.ValidationError('If Apgar scored performed, then you should answer At 5 minute(Q8).')
-            if not cleaned_data.get('apgar_score_min_10'):
-                raise forms.ValidationError('If Apgar scored performed, then you should answer At 10 minute(Q9).')
+        else:
+            if cleaned_data.get('apgar_score_min_1'):
+                raise forms.ValidationError('If Apgar scored was NOT performed, then you should NOT answer at '
+                                            '1 minute(Q7).')
+            if cleaned_data.get('apgar_score_min_5'):
+                raise forms.ValidationError('If Apgar scored was NOT performed, then you should NOT answer at 5 '
+                                            'minute(Q8).')
+            if cleaned_data.get('apgar_score_min_10'):
+                raise forms.ValidationError('If Apgar scored was NOT performed, then you should NOT answer at 10 '
+                                            'minute(Q9).')

@@ -10,4 +10,6 @@ class SectionInfantView(BaseSectionView):
     section_template = 'section_infant.html'
     dashboard_url_name = 'subject_dashboard_url'
     search = {'word': InfantSearchByWord}
+    show_most_recent = True
+
 site_sections.register(SectionInfantView)

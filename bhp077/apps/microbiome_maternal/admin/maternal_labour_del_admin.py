@@ -51,7 +51,8 @@ class MaternalLabDelClinicAdmin(BaseModelAdmin):
 
     form = MaternalLabDelClinicForm
     radio_fields = {'has_cd4': admin.VERTICAL,
-                    'has_vl': admin.VERTICAL}
+                    'has_vl': admin.VERTICAL,
+                    'vl_detectable': admin.VERTICAL}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":

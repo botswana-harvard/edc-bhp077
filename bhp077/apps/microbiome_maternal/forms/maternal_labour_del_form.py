@@ -2,7 +2,7 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 from django import forms
 
-from edc_constants.constants import YES
+from edc_constants.constants import YES, NO, NOT_APPLICABLE
 
 from base_maternal_model_form import BaseMaternalModelForm
 
@@ -39,6 +39,8 @@ class MaternalLabourDelForm(BaseMaternalModelForm):
             if cleaned_data.get('labr_max_temp'):
                 raise forms.ValidationError('You have indicated that maximum temperature is not known. '
                                             'You CANNOT provide the maximum temperature')
+        if cleaned_data.get('has_vl') == NO and cleaned_data.get('vl_detectable') != NOT_APPLICABLE:
+            raise forms.ValidationError('If Viral Load was not performed then Viral Load detectable is Not Applicable.')
         return cleaned_data
 
     class Meta:
@@ -99,6 +101,9 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
                 raise forms.ValidationError('You indicated that a VL count was performed. Please provide the date.')
             if not cleaned_data.get('vl_result'):
                 raise forms.ValidationError('You indicated that a VL count was performed. Please provide the result.')
+            if cleaned_data.get('vl_detectable') == NOT_APPLICABLE:
+                raise forms.ValidationError('You stated that a VL count was performed. Please indicate if it '
+                                            'was detectable.')
         else:
             # If VL was not performed, no VL date nor result should be supplied
             if cleaned_data.get('vl_date'):
@@ -107,6 +112,9 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
             if cleaned_data.get('vl_result'):
                 raise forms.ValidationError('You indicated that a VL count was NOT performed, yet provided a VL result'
                                             ' Please correct.')
+            if cleaned_data.get('vl_detectable') != NOT_APPLICABLE:
+                raise forms.ValidationError('You stated that a VL count was NOT performed, you CANNOT indicate if VL '
+                                            'was detectable.')
         if cleaned_data.get('vl_detectable') == YES:
             if not cleaned_data.get('vl_result'):
                 raise forms.ValidationError('You indicated that the VL was detectable. Provide provide VL result.')

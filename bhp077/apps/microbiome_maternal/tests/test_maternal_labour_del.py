@@ -8,7 +8,7 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.choices import YES, NO
+from edc_constants.choices import YES, NO, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -49,7 +49,6 @@ class TestMaternalLabourDel(TestCase):
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
             'delivery_datetime': timezone.now() - relativedelta(days=self.postnatal_enrollment.postpartum_days),
-            # 'delivery_datetime': timezone.now() - timezone.timedelta(days=1),
             'del_time_is_est': NO,
             'labour_hrs': 6,
             'del_hosp': 'PMH',
@@ -123,7 +122,9 @@ class TestMaternalLabourDel(TestCase):
     def test_deliverydate_vs_postpartum_days(self):
         self.data['delivery_datetime'] = timezone.now() - timezone.timedelta(days=1)
         form = MaternalLabourDelForm(data=self.data)
-        self.assertIn(u'Delivery date is incorrect. Postpartum days is {} ago'.format(self.postnatal_enrollment.postpartum_days), form.errors.get('__all__'))
+        self.assertIn(u'Maternal Delivery date does not match the number of days post delivery as '
+                      'indicated on Postpartum Enrollment of {} days ago. Please correct'
+                      .format(self.postnatal_enrollment.postpartum_days), form.errors.get('__all__'))
 
 
 class TestMaternalLabourDelClinic(TestCase):
@@ -160,6 +161,7 @@ class TestMaternalLabourDelClinic(TestCase):
             'cd4_result': '',
             'has_vl': NO,
             'vl_date': '',
+            'vl_detectable': NOT_APPLICABLE,
             'vl_result': '',
             'comment': ''
         }
@@ -245,9 +247,26 @@ class TestMaternalLabourDelClinic(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_has_vl_6(self):
-        """If has VL  is YES, the both VL date and result should be provided"""
         self.data['has_vl'] = YES
         self.data['vl_date'] = timezone.now() - timezone.timedelta(days=2)
         self.data['vl_result'] = 1389
         form = MaternalLabDelClinicForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('You stated that a VL count was performed. Please indicate if it was detectable.', errors)
+
+    def test_has_vl_7(self):
+        """If has VL  is YES, the both VL date and result should be provided"""
+        self.data['has_vl'] = YES
+        self.data['vl_date'] = timezone.now() - timezone.timedelta(days=2)
+        self.data['vl_detectable'] = YES
+        self.data['vl_result'] = 1389
+        form = MaternalLabDelClinicForm(data=self.data)
         self.assertTrue(form.is_valid())
+
+    def test_has_vl_8(self):
+        self.data['has_vl'] = NO
+        self.data['vl_detectable'] = YES
+        form = MaternalLabDelClinicForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('You stated that a VL count was NOT performed, you CANNOT indicate if VL was detectable.',
+                      errors)
