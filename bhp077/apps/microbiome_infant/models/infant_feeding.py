@@ -14,6 +14,8 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantFeeding(InfantScheduledVisitModel):
 
+    """ A model completed by the user on the infant's feeding. """
+
     last_att_sche_visit = models.DateField(
         verbose_name=("When was the last attended scheduled visit where an infant feeding form"
                       " was completed? "),

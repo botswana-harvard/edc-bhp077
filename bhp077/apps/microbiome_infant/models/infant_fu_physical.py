@@ -10,7 +10,7 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantFuPhysical(InfantScheduledVisitModel):
 
-    """Infant follow up physical assessment."""
+    """ A model completed by the user on the infant's Infant follow up physical assessment. """
 
     weight = models.DecimalField(
         max_digits=6,

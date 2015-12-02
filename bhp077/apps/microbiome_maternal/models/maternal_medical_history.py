@@ -12,7 +12,7 @@ from .maternal_consent import MaternalConsent
 
 class MaternalMedicalHistory(MaternalScheduledVisitModel):
 
-    """Medical History for all mothers"""
+    """ A model completed by the user on Medical History for all mothers. """
 
     CONSENT_MODEL = MaternalConsent
 

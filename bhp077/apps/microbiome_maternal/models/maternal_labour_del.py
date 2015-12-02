@@ -19,7 +19,7 @@ from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 class MaternalLabourDel(MaternalScheduledVisitModel):
 
-    """ Maternal Labor and Delivery which triggers registration of infants"""
+    """ A model completed by the user on Maternal Labor and Delivery which triggers registration of infants. """
 
     CONSENT_MODEL = MaternalConsent
 

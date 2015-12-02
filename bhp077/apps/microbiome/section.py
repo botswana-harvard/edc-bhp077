@@ -11,4 +11,11 @@ class SectionAdministrationView(BaseSectionView):
     section_display_index = 140
     section_template = 'microbiome_section_administration.html'
 
+    def contribute_to_context(self, context, request, *args, **kwargs):
+        context.update({
+            'maternal_meta': ModelMeta('microbiome_maternal', 'maternal_eligibility'),
+            'aliquot_type_meta': ModelMeta('microbiome_lab', 'aliquot_type'),
+            'aliquot_meta': ModelMeta('microbiome_lab', 'aliquot'),
+        })
+
 site_sections.register(SectionAdministrationView, replaces='administration')

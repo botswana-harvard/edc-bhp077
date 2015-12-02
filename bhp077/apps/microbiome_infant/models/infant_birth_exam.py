@@ -10,7 +10,7 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantBirthExam(InfantScheduledVisitModel):
 
-    """A model completed by the user to record details of the infant's birth."""
+    """ A model completed by the user to record details of the infant's birth. """
 
     infant_exam_date = models.DateField(
         verbose_name="Date of infant examination",

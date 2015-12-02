@@ -13,7 +13,7 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 class InfantStoolCollection(InfantScheduledVisitModel):
 
-    """Infant stool collection. Used in every visit from birth to 12 months"""
+    """ Infant stool collection. Used in every visit from birth to 12 months. """
 
     sample_obtained = models.CharField(
         verbose_name="A stool sample/specimen can be obtained from the nappy of this child today ",

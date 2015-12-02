@@ -15,7 +15,7 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
-    """ This form is for all HIV positive mothers who are pregnant (whom we hope to enroll their infant)
+    """ This model is for all HIV positive mothers who are pregnant (whom we hope to enroll their infant)
      and/or for mothers who have just delivered """
 
     took_arv = models.CharField(

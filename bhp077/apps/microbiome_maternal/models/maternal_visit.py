@@ -82,7 +82,7 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
         return model_options
 
     def get_visit_reason_no_follow_up_choices(self):
-        """Returns the visit reasons that do not imply any data collection; that is, the subject is not available."""
+        """ Returns the visit reasons that do not imply any data collection; that is, the subject is not available. """
         dct = {}
         for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
             dct.update({item: item})

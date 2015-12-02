@@ -19,6 +19,8 @@ from bhp077.apps.microbiome.classes.meta_data_mixin import MetaDataMixin
 
 class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
 
+    """ A model completed by the user on the infant visits. """
+
     information_provider = models.CharField(
         verbose_name="Please indicate who provided most of the information for this child's visit",
         choices=INFO_PROVIDER,

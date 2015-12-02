@@ -10,6 +10,8 @@ from .maternal_consent import MaternalConsent
 
 class AntenatalEnrollment(BaseEnrollment):
 
+    """ A model completed by the user on the mother's antenatal enrollment. """
+
     CONSENT_MODEL = MaternalConsent
 
     report_datetime = models.DateTimeField(

@@ -13,6 +13,7 @@ from .infant_birth import InfantBirth
 
 
 class InfantBirthData(InfantScheduledVisitModel):
+    """ A model completed by the user on the infant's birth exam. """
     infant_birth = models.OneToOneField(InfantBirth)
 
     infant_birth_weight = models.DecimalField(

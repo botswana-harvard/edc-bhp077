@@ -14,7 +14,7 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
-    """Clinical History for infected mothers only."""
+    """ A model completed by the user on Clinical History for infected mothers only. """
 
     prev_preg_azt = models.CharField(
         max_length=25,

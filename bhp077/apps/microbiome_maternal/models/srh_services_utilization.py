@@ -11,6 +11,8 @@ from .maternal_consent import MaternalConsent
 
 class SrhServicesUtilization(MaternalScheduledVisitModel):
 
+    """ A model completed by the user on the mother's use of sexual reproductive health services. """
+
     CONSENT_MODEL = MaternalConsent
 
     seen_at_clinic = models.CharField(
