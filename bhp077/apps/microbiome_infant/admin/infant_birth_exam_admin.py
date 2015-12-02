@@ -3,9 +3,11 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 
 from ..models import InfantBirthExam
+from ..forms import InfantBirthExamForm
 
 
 class InfantBirthExamAdmin(BaseModelAdmin):
+    form = InfantBirthExamForm
 
     list_display = (
         'infant_visit',
