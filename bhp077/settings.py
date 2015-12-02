@@ -33,6 +33,8 @@ ALLOW_MODEL_SERIALIZATION = True
 SECRET_KEY = 'sdfsdfsdfsdf'
 
 KEY_PATH = '/Users/fchilisa/source/microbiome/keys'  # DONT DELETE ME!!, just comment out
+if socket.gethostname() == 'mac2-2.local':
+    KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -139,9 +141,9 @@ INSTALLED_APPS = (
     'lis.exim.lab_import',
     'lis.exim.lab_import_lis',
     'lis.exim.lab_import_dmis',
+    'edc_call_manager',
     # LOCAL_APPS
     'bhp077.apps.microbiome',
-    'bhp077.apps.microbiome_call',
     'bhp077.apps.microbiome_list',
     'bhp077.apps.microbiome_dashboard',
     'bhp077.apps.microbiome_infant',

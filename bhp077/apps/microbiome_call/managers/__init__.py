@@ -1,4 +1,0 @@
-from .antenatal_call_list_manager import AntenatalCallListManager
-from .antenatal_call_log_manager import AntenatalCallLogManager, AntenatalCallLogEntryManager
-from .postnatal_call_list_manager import PostnatalCallListManager
-from .postnatal_call_log_manager import PostnatalCallLogManager, PostnatalCallLogEntryManager
