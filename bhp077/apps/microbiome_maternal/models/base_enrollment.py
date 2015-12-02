@@ -5,6 +5,7 @@ from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
 
 from edc_base.model.models import BaseUuidModel
+from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 from edc_base.model.validators import date_not_before_study_start, date_not_future
 
 from edc_consent.models import RequiresConsentMixin
@@ -13,14 +14,15 @@ from edc_constants.choices import (POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG,
 from edc_constants.constants import NOT_APPLICABLE, NO, YES
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
-from .maternal_eligibility import MaternalEligibility
+from .maternal_eligibility import MaternalEligibility, MaternalConsent
+from ..maternal_choices import LIVE_STILL_BIRTH
 
 
 class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsentMixin, BaseUuidModel):
 
     """Base Model for antenal and postnatal enrollment"""
 
-    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
+    registered_subject = models.ForeignKey(RegisteredSubject, null=True)
 
     is_diabetic = models.CharField(
         verbose_name='Are you diabetic?',
@@ -137,6 +139,59 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         null=True,
         blank=True,)
 
+    weeks_of_gestation = models.IntegerField(
+        verbose_name="How many weeks pregnant?",
+        help_text=" (weeks of gestation). Eligible if >=36 weeks",
+        null=True,
+        blank=True,)
+
+    antenatal_eligible = models.NullBooleanField(
+        editable=False)
+
+    report_datetime = models.DateTimeField(
+        verbose_name="Date and Time",
+        validators=[
+            datetime_not_before_study_start,
+            datetime_not_future, ],
+        help_text='')
+
+    postpartum_days = models.IntegerField(
+        verbose_name="How many days postpartum?",
+        help_text="If more than 3days, not eligible",
+        null=True,
+        blank=True,)
+
+    delivery_type = models.CharField(
+        verbose_name="Was this a vaginal delivery?",
+        choices=YES_NO,
+        max_length=3,
+        help_text="INELIGIBLE if NO")
+
+    gestation_before_birth = models.IntegerField(
+        verbose_name="How many weeks after gestation was the child born?",
+        help_text="ineligible if premature or born before 37weeks",
+        null=True,
+        blank=True,)
+
+    live_or_still_birth = models.CharField(
+        verbose_name="Was this a live or still birth?",
+        choices=LIVE_STILL_BIRTH,
+        max_length=15,
+        help_text='if still birth, not eligible')
+
+    antenatal_enrollemet_eligible = models.NullBooleanField(
+        editable=False)
+
+    postnatal_enrollemet_eligible = models.NullBooleanField(
+        editable=False)
+
+    live_infants = models.IntegerField(
+        verbose_name="How many live infants?",
+        null=True,
+        blank=True)
+
+    enrollment_type = models.CharField(max_length=20)
+
     def weeks_between(self, start_date, end_date):
         weeks = rrule.rrule(rrule.WEEKLY, dtstart=start_date, until=end_date)
         return weeks.count()
@@ -170,3 +225,13 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
 
     class Meta:
         abstract = True
+
+
+class Enrollment(BaseEnrollment):
+
+    CONSENT_MODEL = MaternalConsent
+
+    class Meta:
+        app_label = 'microbiome_maternal'
+        verbose_name = 'Enrollment'
+        verbose_name_plural = 'Enrollment'

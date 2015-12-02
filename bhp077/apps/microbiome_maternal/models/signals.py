@@ -93,7 +93,7 @@ def maternal_visit_on_post_save(sender, instance, raw, created, using, **kwargs)
     """Updates maternal scheduled meta data."""
     if not raw:
         if isinstance(instance, MaternalVisit):
-            instance.update_scheduled_entry_meta_data()
+            instance.update_maternal_scheduled_entry_meta_data()
 
 
 @receiver(post_save, weak=False, dispatch_uid='create_infant_identifier_on_labour_delivery')

@@ -1,15 +1,12 @@
 from django import forms
-from ..models import InfantFeeding
+
+from edc_constants.constants import YES
 
 from .base_infant_model_form import BaseInfantModelForm
-from edc_constants.constants import YES, NO, NOT_APPLICABLE
+from ..models import InfantFeeding
 
 
 class InfantFeedingForm(BaseInfantModelForm):
-
-    class Meta:
-        model = InfantFeeding
-        fields = '__all__'
 
     def clean(self):
         cleaned_data = super(InfantFeedingForm, self).clean()
@@ -67,3 +64,7 @@ class InfantFeedingForm(BaseInfantModelForm):
                                                                                            cleaned_data.get('fruits_veg'),
                                                                                            cleaned_data.get('cereal_porridge'),
                                                                                            cleaned_data.get('solid_liquid')))
+
+    class Meta:
+        model = InfantFeeding
+        fields = '__all__'

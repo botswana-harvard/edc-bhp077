@@ -1,5 +1,4 @@
 from django import forms
-from django.db import models
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
 from ..models import MaternalVisit, MaternalConsent
@@ -39,7 +38,7 @@ class MaternalVisitForm (BaseModelForm):
             instance = self.instance
         else:
             instance = MaternalVisit(**self.cleaned_data)
-        if instance.is_off_study:
+        if instance.is_participant_off_study:
             raise forms.ValidationError('Data capturing is not allowed, there is an off study visit report.')
 
 #         if not instance.postnatal_enrollment.postnatal_eligible:
