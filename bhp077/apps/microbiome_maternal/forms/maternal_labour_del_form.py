@@ -101,6 +101,9 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
                 raise forms.ValidationError('You indicated that a VL count was performed. Please provide the date.')
             if not cleaned_data.get('vl_result'):
                 raise forms.ValidationError('You indicated that a VL count was performed. Please provide the result.')
+            if cleaned_data.get('vl_detectable') == NOT_APPLICABLE:
+                raise forms.ValidationError('You stated that a VL count was performed. Please indicate if it '
+                                            'was detectable.')
         else:
             # If VL was not performed, no VL date nor result should be supplied
             if cleaned_data.get('vl_date'):
@@ -109,6 +112,9 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
             if cleaned_data.get('vl_result'):
                 raise forms.ValidationError('You indicated that a VL count was NOT performed, yet provided a VL result'
                                             ' Please correct.')
+            if cleaned_data.get('vl_detectable') != NOT_APPLICABLE:
+                raise forms.ValidationError('You stated that a VL count was NOT performed, you CANNOT indicate if VL '
+                                            'was detectable.')
         if cleaned_data.get('vl_detectable') == YES:
             if not cleaned_data.get('vl_result'):
                 raise forms.ValidationError('You indicated that the VL was detectable. Provide provide VL result.')
