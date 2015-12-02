@@ -2,14 +2,13 @@ from django import forms
 from django.utils import timezone
 
 from edc_consent.forms.base_consent_form import BaseConsentForm
-from edc_consent.forms import BaseSubjectConsentForm
 
 from ..models import MaternalConsent, MaternalEligibility 
 from edc.subject.registration.models import registered_subject
 from dateutil.relativedelta import relativedelta
 
 
-class MaternalConsentForm(BaseConsentForm, BaseSubjectConsentForm):
+class MaternalConsentForm(BaseConsentForm):
 
     def clean(self):
         self.cleaned_data['gender'] = 'F'
