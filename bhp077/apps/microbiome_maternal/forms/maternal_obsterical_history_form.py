@@ -54,8 +54,6 @@ class MaternalObstericalHistoryForm(BaseMaternalModelForm):
             raise forms.ValidationError('The sum of Number of pregnancies at least 24 weeks and '
                                         'number of pregnancies lost before 24 weeks gestation. must be equal to '
                                         'number of previous pregnancies for this participant.')
-        if cleaned_data.get('live_children') > cleaned_data.get('prev_pregnancies'):
-            raise forms.ValidationError('Number of living children cannot exceed number of previous pregnancies.')
         return cleaned_data
 
     class Meta:

@@ -57,11 +57,11 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.data = {
             'report_datetime': timezone.now(),
             'maternal_visit': self.maternal_visit.id,
-            'prev_pregnancies': 1,
+            'prev_pregnancies': 2,
             'pregs_24wks_or_more': 1,
-            'lost_before_24wks': 2,
-            'lost_after_24wks': 2,
-            'live_children': 2,
+            'lost_before_24wks': 1,
+            'lost_after_24wks': 1,
+            'live_children': 1,
             'children_died_b4_5yrs': 1
         }
 
@@ -87,24 +87,26 @@ class TestMaternalObstericalHistoryForm(TestCase):
     def test_maternal_obsterical_history_children_died_b4_5yrs_invalid(self):
         self.data['children_died_b4_5yrs'] = -1
         mob = MaternalObstericalHistoryForm(data=self.data)
-        self.assertIn(
-            u"How many of the participant's children died after birth before 5 years of age?. Provide value greater than zero.",
-            mob.errors.get('__all__')
-        )
+        self.assertFalse(mob.is_valid())
 
     def test_maternal_obsterical_history_children_died_b4_5yrs_valid(self):
-        self.data['pregs_24wks_or_more'] = 2
-        self.data['lost_after_24wks'] = 2
-        self.data['children_died_b4_5yrs'] = 2
+        self.data = {
+            'report_datetime': timezone.now(),
+            'maternal_visit': self.maternal_visit.id,
+            'prev_pregnancies': 1,
+            'pregs_24wks_or_more': 1,
+            'lost_before_24wks': 0,
+            'lost_after_24wks': 0,
+            'live_children': 1,
+            'children_died_b4_5yrs': 1
+        }
         mob = MaternalObstericalHistoryForm(data=self.data)
         self.assertTrue(mob.is_valid())
 
     def test_maternal_obsterical_history_live_children_invalid(self):
         self.data['live_children'] = -1
         mob = MaternalObstericalHistoryForm(data=self.data)
-        self.assertIn(
-            u"How many other living children does the participant currently have (excluding baby to be enrolled in the "
-            u"study.) Provide value greater than zero.", mob.errors.get('__all__'))
+        self.assertFalse(mob.is_valid())
 
     def test_maternal_obsterical_history_live_children_valid(self):
         self.data['live_children'] = 2
@@ -116,12 +118,12 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.data['lost_after_24wks'] = 2
         self.data['children_died_b4_5yrs'] = 2
         mob = MaternalObstericalHistoryForm(data=self.data)
-        self.assertIn(u"Number of pregnancies at least 24 weeks, should be greater than zero.", mob.errors.get('__all__'))
+        self.assertFalse(mob.is_valid())
 
     def test_maternal_obsterical_history_pregs_24wks_or_more_valid(self):
-        self.data['pregs_24wks_or_more'] = 2
-        self.data['lost_after_24wks'] = 2
-        self.data['children_died_b4_5yrs'] = 2
+        self.data['pregs_24wks_or_more'] = 1
+        self.data['lost_after_24wks'] = 1
+        self.data['children_died_b4_5yrs'] = 1
         mob = MaternalObstericalHistoryForm(data=self.data)
         self.assertTrue(mob.is_valid())
 
@@ -129,20 +131,40 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.data['prev_pregnancies'] = -1
         self.data['pregs_24wks_or_more'] = 1
         mob = MaternalObstericalHistoryForm(data=self.data)
-        self.assertIn(u"Number of previous pregnancies, should be greater than zero.", mob.errors.get('__all__'))
+        self.assertFalse(mob.is_valid())
+
+    def test_prev_pregnancies_zero(self):
+        self.data['prev_pregnancies'] = 0
+        self.data['pregs_24wks_or_more'] = 1
+        self.data['lost_before_24wks'] = 1
+        self.data['lost_after_24wks'] = 3
+        mob = MaternalObstericalHistoryForm(data=self.data)
+        self.assertIn(u"You indicated previous pregancies were 0. Number of pregnancies at or after 24 weeks,number "
+                      "of living children,number of children died after 5 year be greater than all be zero.",
+                      mob.errors.get('__all__'))
+
+    def test_prev_pregnancies_zero_1(self):
+        self.data['prev_pregnancies'] = 1
+        self.data['pregs_24wks_or_more'] = 0
+        self.data['lost_before_24wks'] = 0
+        self.data['lost_after_24wks'] = 0
+        mob = MaternalObstericalHistoryForm(data=self.data)
+        self.assertIn(u"You indicated previous pregancies were 1. Number of pregnancies at or after 24 weeks,"
+                      "number of living children,number of children died after 5 year CANNOT all be zero.",
+                      mob.errors.get('__all__'))
 
     def test_preg24wks_grt_prev_preg(self):
         self.data['prev_pregnancies'] = 2
         self.data['pregs_24wks_or_more'] = 3
         mob = MaternalObstericalHistoryForm(data=self.data)
         self.assertIn(u"Number of pregnancies least 24 weeks cannot be greater than previous pregnancies.", mob.errors.get('__all__'))
-
+ 
     def test_lost_before_24wks_grt_prev_preg(self):
         self.data['prev_pregnancies'] = 2
         self.data['lost_before_24wks'] = 3
         mob = MaternalObstericalHistoryForm(data=self.data)
         self.assertIn(u"Number of pregnancies lost before 24 weeks cannot be greater than previous pregnancies.", mob.errors.get('__all__'))
-
+ 
     def test_lost_after_24wks_grt_prev_preg(self):
         self.data['prev_pregnancies'] = 2
         self.data['pregs_24wks_or_more'] = 1
@@ -151,7 +173,7 @@ class TestMaternalObstericalHistoryForm(TestCase):
         mob = MaternalObstericalHistoryForm(data=self.data)
         self.assertIn(u"Number of pregnancies lost at or after 24 weeks gestation cannot be greater "
                       "than number of previous pregnancies or number of pregnancies at least 24 weeks.", mob.errors.get('__all__'))
-
+ 
     def test_pregs_24wks_or_more_plus_lost_before_24wks_grt_prev_pregnancies(self):
         self.data['prev_pregnancies'] = 3
         self.data['pregs_24wks_or_more'] = 1
@@ -161,12 +183,3 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.assertIn(u"The sum of Number of pregnancies at least 24 weeks and "
                       "number of pregnancies lost before 24 weeks gestation. must be equal to "
                       "number of previous pregnancies for this participant.", mob.errors.get('__all__'))
-
-    def test_live_children_grt_prev_pregnancies(self):
-        self.data['prev_pregnancies'] = 2
-        self.data['pregs_24wks_or_more'] = 1
-        self.data['lost_before_24wks'] = 1
-        self.data['lost_after_24wks'] = 1
-        self.data['live_children'] = 4
-        mob = MaternalObstericalHistoryForm(data=self.data)
-        self.assertIn(u"Number of living children cannot exceed number of previous pregnancies.", mob.errors.get('__all__'))
