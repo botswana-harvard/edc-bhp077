@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'edc_consent',
     'edc_audit',
     'edc_constants',
+    'edc_call_manager',
     # LIS
     'lis.base.model',
     'lis.labeling',
@@ -152,7 +153,6 @@ INSTALLED_APPS = (
     'lis.exim.lab_import',
     'lis.exim.lab_import_lis',
     'lis.exim.lab_import_dmis',
-    'edc_call_manager',
     # LOCAL_APPS
     'bhp077.apps.microbiome',
     'bhp077.apps.microbiome_list',
