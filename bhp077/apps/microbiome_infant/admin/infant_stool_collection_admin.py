@@ -32,7 +32,7 @@ class InfantStoolCollectionAdmin(InfantStoolExcludeFieldsMixin, BaseModelAdmin):
         "antibiotics_7days": admin.VERTICAL,
         "antibiotic_dose_24hrs": admin.VERTICAL}
 
-    custom_exclude = {'visit': ['diarrhea_past_24hrs', 'antibiotics_7days', 'antibiotic_dose_24hrs']}
+    custom_exclude = {'visit': ['past_diarrhea', 'diarrhea_past_24hrs', 'antibiotics_7days', 'antibiotic_dose_24hrs']}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "infant_visit":
