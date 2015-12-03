@@ -11,12 +11,6 @@
     <li><A href="{% url 'admin:microbiome_maternal_maternaleligibilityloss_changelist' %}">Maternal Eligibility Loss</A>
     </ul>
 
-	<H5>Call Lists</H5>
-	<ul>
-	<li><A href="{% url 'antenatal_call_list_url' %}">Antenatal call lists</A></li>
-	<li><A href="#">Postnatal call lists</A></li>
-	</ul>
-
 {% endblock admin_sections %}
 {% block device_sync %}
   {% comment %}if you don't want to see this section, override it in the child template {% endcomment %}
