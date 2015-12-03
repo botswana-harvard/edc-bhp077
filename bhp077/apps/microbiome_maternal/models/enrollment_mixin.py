@@ -1,26 +1,17 @@
 from django.db import models
 from dateutil import rrule
 
-from edc.subject.registration.models import RegisteredSubject
-
-from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import date_not_before_study_start, date_not_future
-
-from edc.subject.appointment_helper.models import BaseAppointmentMixin
-from edc_consent.models import RequiresConsentMixin
 
 from edc_constants.choices import (POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES, YES_NO, NO)
 from edc_constants.constants import NOT_APPLICABLE
 
-from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .maternal_eligibility import MaternalEligibility
 
 
-class EnrollmentMixin(BaseUuidModel, MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsentMixin):
+class EnrollmentMixin(models.Model):
 
     """Base Model for antenal and postnatal enrollment"""
-
-    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
     is_diabetic = models.CharField(
         verbose_name='Are you diabetic?',
@@ -65,7 +56,7 @@ class EnrollmentMixin(BaseUuidModel, MaternalOffStudyMixin, BaseAppointmentMixin
         max_length=3)
 
     date_of_test = models.DateField(
-        verbose_name="Date of Test",
+        verbose_name="Date of HIV Test",
         null=True,
         blank=True)
 
@@ -119,8 +110,8 @@ class EnrollmentMixin(BaseUuidModel, MaternalOffStudyMixin, BaseAppointmentMixin
         blank=False,
         default=NOT_APPLICABLE,
         max_length=15,
-        help_text=('Remember, rapid test is for HIV -VE, UNTESTED, UNKNOWN, REFUSED-to-ANSWER'
-                   'verbal responses'))
+        help_text=(
+            'Remember, rapid test is for HIV -VE, UNTESTED, UNKNOWN, REFUSED-to-ANSWER verbal responses'))
 
     date_of_rapid_test = models.DateField(
         verbose_name="Date of rapid test",
@@ -135,11 +126,17 @@ class EnrollmentMixin(BaseUuidModel, MaternalOffStudyMixin, BaseAppointmentMixin
         choices=POS_NEG,
         max_length=15,
         null=True,
-        blank=True,)
+        blank=True)
 
-    def weeks_between(self, start_date, end_date):
-        weeks = rrule.rrule(rrule.WEEKLY, dtstart=start_date, until=end_date)
-        return weeks.count()
+    def get_registration_datetime(self):
+        return self.report_datetime
+
+    @property
+    def requires_rapid_test(self):
+        weeks_since_test = rrule.rrule(
+            rrule.WEEKLY, dtstart=self.date_of_test, until=self.report_datetime.date()).count()
+        value = self.weeks_base - weeks_since_test
+        return value >= 32
 
     def maternal_eligibility_pregnant_yes(self):
         try:
@@ -165,8 +162,9 @@ class EnrollmentMixin(BaseUuidModel, MaternalOffStudyMixin, BaseAppointmentMixin
         return self.registered_subject.subject_identifier
 
     def __unicode__(self):
-        return "{0} {1}".format(self.registered_subject.subject_identifier,
-                                self.registered_subject.first_name)
+        return "{0} {1}".format(
+            self.registered_subject.subject_identifier,
+            self.registered_subject.first_name)
 
     class Meta:
         abstract = True

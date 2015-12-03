@@ -32,9 +32,8 @@ PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 ALLOW_MODEL_SERIALIZATION = True
 SECRET_KEY = 'sdfsdfsdfsdf'
 
-KEY_PATH = '/Users/fchilisa/source/microbiome/keys'  # DONT DELETE ME!!, just comment out
 if socket.gethostname() == 'mac2-2.local':
-    KEY_PATH = '/Volumes/live_keys'  # DONT DELETE ME!!, just comment out
+    KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
 elif socket.gethostname() == 'ckgathi':
     KEY_PATH = '/Users/ckgathi/source/microbiome/bhp077/keys'
 elif socket.gethostname() == 'one-2.local' or socket.gethostname() == 'One-2.local':
@@ -129,6 +128,7 @@ INSTALLED_APPS = (
     'edc_consent',
     'edc_audit',
     'edc_constants',
+    'edc_call_manager',
     # LIS
     'lis.base.model',
     'lis.labeling',
@@ -153,7 +153,6 @@ INSTALLED_APPS = (
     'lis.exim.lab_import',
     'lis.exim.lab_import_lis',
     'lis.exim.lab_import_dmis',
-    'edc_call_manager',
     # LOCAL_APPS
     'bhp077.apps.microbiome',
     'bhp077.apps.microbiome_list',
