@@ -10,6 +10,7 @@ from .maternal_eligibility_loss import MaternalEligibilityLoss
 from .maternal_consent import MaternalConsent
 from .maternal_visit import MaternalVisit
 from .postnatal_enrollment import PostnatalEnrollment
+from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")
@@ -95,6 +96,14 @@ def maternal_visit_on_post_save(sender, instance, raw, created, using, **kwargs)
         if isinstance(instance, MaternalVisit):
             instance.update_maternal_scheduled_entry_meta_data()
             instance.rehash_meta_data()
+
+
+@receiver(post_save, weak=False, dispatch_uid="update_postnatal_on_antenatal_post_save")
+def update_postnatal_on_antenatal_post_save(sender, instance, raw, created, using, **kwargs):
+    """Updates maternal scheduled meta data."""
+    if not raw:
+        if isinstance(instance, AntenatalEnrollment):
+            instance.update_postnatal(instance.postnatal_enrollment)
 
 
 @receiver(post_save, weak=False, dispatch_uid='create_infant_identifier_on_labour_delivery')

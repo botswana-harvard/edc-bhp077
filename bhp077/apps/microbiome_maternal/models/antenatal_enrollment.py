@@ -46,6 +46,32 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         return self.weeks_of_gestation
 
     @property
+    def postnatal_enrollment(self):
+        try:
+            PostnatalEnrollment = models.get_model('microbiome_maternal', 'postnatalenrollment')
+            return PostnatalEnrollment.objects.get(registered_subject=self.registered_subject)
+        except PostnatalEnrollment.DoesNotExist:
+            return False
+
+    def update_postnatal(self, postnatal_enrollment):
+
+        if postnatal_enrollment:
+            postnatal_enrollment.is_diabetic = self.is_diabetic
+            postnatal_enrollment.on_tb_treatment = self.on_tb_treatment
+            postnatal_enrollment.on_hypertension_treatment = self.on_hypertension_treatment
+            postnatal_enrollment.breastfeed_for_a_year = self.breastfeed_for_a_year
+            postnatal_enrollment.instudy_for_a_year = self.instudy_for_a_year
+            postnatal_enrollment.week32_result = self.week32_result
+            postnatal_enrollment.verbal_hiv_status = self.verbal_hiv_status
+            postnatal_enrollment.valid_regimen = self.valid_regimen
+            postnatal_enrollment.evidence_hiv_status = self.evidence_hiv_status
+            postnatal_enrollment.process_rapid_test = self.process_rapid_test
+            postnatal_enrollment.date_of_rapid_test = self.date_of_rapid_test
+            postnatal_enrollment.rapid_test_result = self.rapid_test_result
+            postnatal_enrollment.valid_regimen = self.valid_regimen
+            postnatal_enrollment.save()
+
+    @property
     def eligible_for_postnatal(self):
         """Returns True if a mother is eligible for postnatalenrollment."""
         if (self.weeks_of_gestation >= 36 and self.is_diabetic == NO and

@@ -12,7 +12,7 @@ class BaseEnrollmentForm(BaseModelForm):
 
     def validate_create_rapid_tests(self, cleaned_data, instance):
         if instance.verbal_hiv_status == NEG:
-            if instance.requires_rapid_test():
+            if instance.requires_rapid_test:
                 if cleaned_data.get('process_rapid_test') == NO:
                     raise forms.ValidationError(
                         "Rapid test is required. Participant tested >=32 weeks ago.")
