@@ -1,9 +1,13 @@
 from django import forms
 
+from edc.subject.registration.models import registered_subject
+from edc_constants.constants import NO, NOT_EVALUATED, YES
+
+from bhp077.apps.microbiome_maternal.models import MaternalConsent
+
 from ..models import InfantFuPhysical
 
 from .base_infant_model_form import BaseInfantModelForm
-from edc.subject.registration.models import registered_subject
 
 
 class InfantFuPhysicalForm(BaseInfantModelForm):
@@ -12,6 +16,15 @@ class InfantFuPhysicalForm(BaseInfantModelForm):
         cleaned_data = super(InfantFuPhysicalForm, self).clean()
         self.validate_height(cleaned_data)
         self.validate_head_circum(cleaned_data)
+        self.validate_report_datetime(cleaned_data)
+        self.validate_general_activity(cleaned_data)
+        self.validate_heent_exam(cleaned_data)
+        self.validate_resp_exam(cleaned_data)
+        self.validate_cardiac_exam(cleaned_data)
+        self.validate_abdominal_exam(cleaned_data)
+        self.validate_skin_exam(cleaned_data)
+        self.validate_rash_exam(cleaned_data)
+        self.validate_neuro_exam(cleaned_data)
         return cleaned_data
 
     def validate_height(self, cleaned_data):
@@ -58,6 +71,113 @@ class InfantFuPhysicalForm(BaseInfantModelForm):
                     break
                 except InfantFuPhysical.DoesNotExist:
                     prev_visit = prev_visit - 1
+
+    def validate_report_datetime(self, cleaned_data):
+        try:
+            if cleaned_data.get('report_datetime').date() < cleaned_data.get('infant_visit').appointment.registered_subject.dob:
+                raise forms.ValidationError('Report date {} cannot be before infant DOB of {}'
+                                            .format(cleaned_data.get('report_datetime').date(),
+                                                    cleaned_data.get('infant_visit').appointment.registered_subject.dob))
+            relative_identifier = cleaned_data.get('infant_visit').appointment.registered_subject.relative_identifier
+            maternal_consent = MaternalConsent.objects.get(
+                registered_subject__subject_identifier=relative_identifier)
+            if cleaned_data.get('report_datetime') < maternal_consent.consent_datetime:
+                raise forms.ValidationError("Report date of {} CANNOT be before consent datetime".format(cleaned_data.get('report_datetime')))
+        except MaternalConsent.DoesNotExist:
+            raise forms.ValidationError('Maternal Consent does not exist.')
+
+    def validate_general_activity(self, cleaned_data):
+        if cleaned_data.get('general_activity') == 'ABNORMAL':
+            if not cleaned_data.get('abnormal_activity'):
+                raise forms.ValidationError('If abnormal, please specify.')
+        else:
+            if cleaned_data.get('abnormal_activity'):
+                raise forms.ValidationError('You indicated that there was NO abnormality in general activity, yet '
+                                            'specified abnormality. Please correct')
+
+    def validate_heent_exam(self, cleaned_data):
+        if cleaned_data.get('heent_exam') == YES:
+            if cleaned_data.get('heent_no_other'):
+                raise forms.ValidationError(
+                    'If HEENT Exam is normal, Do not answer the following Question (Q10).'
+                )
+        elif cleaned_data.get('heent_exam') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('heent_no_other'):
+                raise forms.ValidationError(
+                    'You indicated that HEENT exam was not normal. Provide answer to Q10.'
+                )
+
+    def validate_resp_exam(self, cleaned_data):
+        if cleaned_data.get('resp_exam') == YES:
+            if cleaned_data.get('resp_exam_other'):
+                raise forms.ValidationError(
+                    'If Respiratory Exam is normal, Do not answer the following Question (Q12).'
+                )
+        elif cleaned_data.get('resp_exam') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('resp_exam_other'):
+                raise forms.ValidationError(
+                    'You indicated that Respiratory exam was not normal. Provide answer to Q12.'
+                )
+
+    def validate_cardiac_exam(self, cleaned_data):
+        if cleaned_data.get('cardiac_exam') == YES:
+            if cleaned_data.get('cardiac_exam_other'):
+                raise forms.ValidationError(
+                    'If Cardiac Exam is normal, Do not answer the following Question (Q14).'
+                )
+        elif cleaned_data.get('cardiac_exam') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('cardiac_exam_other'):
+                raise forms.ValidationError(
+                    'You indicated that Cardiac exam was not normal. Provide answer to Q14.'
+                )
+
+    def validate_abdominal_exam(self, cleaned_data):
+        if cleaned_data.get('abdominal_exam') == YES:
+            if cleaned_data.get('abdominal_exam_other'):
+                raise forms.ValidationError(
+                    'If Abdominal Exam is normal, Do not answer the following Question (Q16).'
+                )
+        elif cleaned_data.get('abdominal_exam') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('abdominal_exam_other'):
+                raise forms.ValidationError(
+                    'You indicated that Abdominal exam was not normal. Provide answer to Q16.'
+                )
+
+    def validate_skin_exam(self, cleaned_data):
+        if cleaned_data.get('skin_exam') == YES:
+            if cleaned_data.get('skin_exam_other'):
+                raise forms.ValidationError(
+                    'If Skin Exam is normal, Do not answer the following Question (Q18).'
+                )
+        elif cleaned_data.get('skin_exam') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('skin_exam_other'):
+                raise forms.ValidationError(
+                    'You indicated that Skin exam was not normal. Provide answer to Q18.'
+                )
+
+    def validate_rash_exam(self, cleaned_data):
+        if cleaned_data.get('macular_papular_rash') == YES:
+            if cleaned_data.get('macular_papular_rash_other'):
+                raise forms.ValidationError(
+                    'If macular / papular rash Exam is normal, Do not answer the following Question (Q20).'
+                )
+        elif cleaned_data.get('macular_papular_rash') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('macular_papular_rash_other'):
+                raise forms.ValidationError(
+                    'You indicated that macular / papular rash exam was not normal. Provide answer to Q20.'
+                )
+
+    def validate_neuro_exam(self, cleaned_data):
+        if cleaned_data.get('neurologic_exam') == YES:
+            if cleaned_data.get('neuro_exam_other'):
+                raise forms.ValidationError(
+                    'If Neurological Exam is normal, Do not answer the following Question (Q22).'
+                )
+        elif cleaned_data.get('neurologic_exam') in [NO, NOT_EVALUATED]:
+            if not cleaned_data.get('neuro_exam_other'):
+                raise forms.ValidationError(
+                    'You indicated that Neurological exam was not normal. Provide answer to Q22.'
+                )
 
     class Meta:
         model = InfantFuPhysical

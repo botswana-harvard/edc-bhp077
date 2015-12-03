@@ -9,9 +9,17 @@ from ..models import InfantVisit, InfantFuPhysical
 class InfantFuPhysicalAdmin(BaseModelAdmin):
     form = InfantFuPhysicalForm
 
-    list_display = ('has_abnormalities', )
-
-    radio_fields = {'has_abnormalities': admin.VERTICAL, }
+    radio_fields = {
+        'general_activity': admin.VERTICAL,
+        'physical_exam_result': admin.VERTICAL,
+        'heent_exam': admin.VERTICAL,
+        'resp_exam': admin.VERTICAL,
+        'cardiac_exam': admin.VERTICAL,
+        'abdominal_exam': admin.VERTICAL,
+        'skin_exam': admin.VERTICAL,
+        'macular_papular_rash': admin.VERTICAL,
+        'neurologic_exam': admin.VERTICAL
+    }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "infant_visit":
