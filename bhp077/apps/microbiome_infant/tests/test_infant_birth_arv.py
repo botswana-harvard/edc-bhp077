@@ -1,32 +1,26 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from bhp077.apps.microbiome_infant.models import InfantVisit
 from bhp077.apps.microbiome_infant.forms import InfantBirthArvForm
 
 from edc.subject.registration.models import RegisteredSubject
-from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
+from edc_constants.constants import YES, POS
 
-from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory, AntenatalEnrollmentFactory,
-    MaternalVisitFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory, SexualReproductiveHealthFactory
+from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
-from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 
 from bhp077.apps.microbiome_maternal.visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
 from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
 from bhp077.apps.microbiome_infant.tests.factories import \
-    (InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
-from bhp077.apps.microbiome_infant.models import InfantBirth
+    (InfantBirthFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
 
 
 class TestInfantBirthArv(TestCase):
@@ -48,7 +42,7 @@ class TestInfantBirthArv(TestCase):
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
-        post = PostnatalEnrollmentFactory(
+        PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
@@ -100,11 +94,7 @@ class TestInfantBirthArv(TestCase):
         self.assertIn(u'If infant has received single dose NVP then provide NVP date.', infant_birth_arv.errors.get('__all__'))
 
     def test_validate_sdnvp_after_birth_breastfeeding(self):
-        InfantBirthFeedVaccineFactory(
-            infant_visit=self.infant_visit,
-            infant_birth=self.infant_birth,
-            feeding_after_delivery = 'Breastfeeding only',
-        )
+        InfantBirthFeedVaccineFactory(infant_visit=self.infant_visit, feeding_after_delivery='Breastfeeding only')
         self.data['nvp_discharge_supply'] = 'N/A'
         infant_birth_arv = InfantBirthArvForm(data=self.data)
         self.assertIn(u'If the infant is breast feeding then do not select not applicaticable for Q11.', infant_birth_arv.errors.get('__all__'))

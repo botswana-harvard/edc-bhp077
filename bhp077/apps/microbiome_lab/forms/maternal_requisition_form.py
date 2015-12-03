@@ -3,6 +3,7 @@ from django import forms
 from edc.lab.lab_requisition.forms import BaseRequisitionForm
 
 from ..models import MaternalRequisition
+from bhp077.apps.microbiome_maternal.models import MaternalVisit
 
 
 class MaternalRequisitionForm(BaseRequisitionForm):
@@ -13,11 +14,12 @@ class MaternalRequisitionForm(BaseRequisitionForm):
 
     def clean(self):
         cleaned_data = super(MaternalRequisitionForm, self).clean()
-        if cleaned_data.get('drawn_datetime').date() < cleaned_data.get('requisition_datetime').date():
-            raise forms.ValidationError('Requisition date cannot be in future of specimen date. Specimen draw date is '
-                                        'indicated as {}, whilst requisition is indicated as{}. Please correct'
-                                        .format(cleaned_data.get('drawn_datetime').date(),
-                                                cleaned_data.get('requisition_datetime').date()))
+        if cleaned_data.get('drawn_datetime'):
+            if cleaned_data.get('drawn_datetime').date() < cleaned_data.get('requisition_datetime').date():
+                raise forms.ValidationError('Requisition date cannot be in future of specimen date. Specimen draw date is '
+                                            'indicated as {}, whilst requisition is indicated as{}. Please correct'
+                                            .format(cleaned_data.get('drawn_datetime').date(),
+                                                    cleaned_data.get('requisition_datetime').date()))
         if (
             cleaned_data.get('panel').name == 'Vaginal swab (Storage)' or
             cleaned_data.get('panel').name == 'Rectal swab (Storage)' or
@@ -30,6 +32,11 @@ class MaternalRequisitionForm(BaseRequisitionForm):
             if cleaned_data.get('item_type') != 'tube':
                 raise forms.ValidationError('Panel {} can only be tube therefore collection type is swab. '
                                             'Please correct.'.format(cleaned_data.get('panel').name))
+        maternal_visit = MaternalVisit.objects.get(appointment__registered_subject=cleaned_data.get('maternal_visit').appointment.registered_subject)
+        if maternal_visit:
+            if (maternal_visit.reason == 'scheduled' or maternal_visit.reason == 'unscheduled') and cleaned_data.get('reason_not_drawn') == 'absent':
+                raise forms.ValidationError('Reason not drawn cannot be {}. Visit report reason is {}'.format(cleaned_data.get('reason_not_drawn'),
+                                                                                                              maternal_visit.reason))
         return cleaned_data
 
     class Meta:

@@ -1,1 +1,1 @@
-from .infant_requistion_factory import InfantRequisition
+from .infant_requistion_factory import InfantRequistionFactory

@@ -4,8 +4,18 @@ from edc_constants.constants import POS, YES, NO, NEG
 
 from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome_maternal.models import (PostnatalEnrollment, AntenatalEnrollment)
-
+from bhp077.apps.microbiome.base_model_form import BaseModelForm
 from .base_enrollment_form import BaseEnrollmentForm
+
+
+class BaseEnrollmentForm(BaseModelForm):
+
+    def validate_create_rapid_tests(self, cleaned_data, instance):
+        if instance.verbal_hiv_status == NEG:
+            if instance.requires_rapid_test:
+                if cleaned_data.get('process_rapid_test') == NO:
+                    raise forms.ValidationError(
+                        "Rapid test is required. Participant tested >=32 weeks ago.")
 
 
 class PostnatalEnrollmentForm(BaseEnrollmentForm):
@@ -53,14 +63,6 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
         if instance.maternal_eligibility_pregnant_yes():
             if not ant:
                 raise forms.ValidationError("Participant is pregnant, please fill in antenatal instead.")
-
-    def validate_create_rapid_tests(self, cleaned_data, instance):
-        if instance.verbal_hiv_status == NEG:
-            if instance.validate_rapid_test_required_or_not_required():
-                if cleaned_data.get('process_rapid_test') == NO:
-                    raise forms.ValidationError(
-                        "Rapid test is required. You have tested {} weeks ago.".format(
-                            instance.number_of_weeks_after_tests))
 
     class Meta:
         model = PostnatalEnrollment

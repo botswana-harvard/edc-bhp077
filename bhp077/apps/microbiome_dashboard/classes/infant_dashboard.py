@@ -21,7 +21,7 @@ class InfantDashboard(RegisteredSubjectDashboard):
         RegisteredSubjectDashboard.urlpatterns[0][:-1] + '(?P<appointment_code>{appointment_code})/$'] + RegisteredSubjectDashboard.urlpatterns
     urlpattern_options = dict(
         RegisteredSubjectDashboard.urlpattern_options,
-        dashboard_model=RegisteredSubjectDashboard.urlpattern_options['dashboard_model'] + '|infant_enrollment',
+        dashboard_model=RegisteredSubjectDashboard.urlpattern_options['dashboard_model'] + '|infant_birth',
         dashboard_type='infant',
         appointment_code='2000|2010|2030|2060|2090|2120')
 
