@@ -33,17 +33,19 @@ ALLOW_MODEL_SERIALIZATION = True
 SECRET_KEY = 'sdfsdfsdfsdf'
 
 if socket.gethostname() == 'mac2-2.local':
-    KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
+    KEY_PATH = '/Volumes/bhp077/live_keys'  # DONT DELETE ME!!, just comment out
 elif socket.gethostname() == 'ckgathi':
     KEY_PATH = '/Users/ckgathi/source/microbiome/bhp077/keys'
 elif socket.gethostname() == 'one-2.local' or socket.gethostname() == 'One-2.local':
-    KEY_PATH = '/Users/sirone/Documents/workspace/git_projects/bhp066_git/bhp066/keys'
+    KEY_PATH = '/Users/sirone/Documents/workspace/git_projects/microbiome/bhp077/keys'
 elif socket.gethostname() == 'silverapple':
-    KEY_PATH = '/Users/melissa/Documents/git/source/bhp066_project/bhp066/keys'
+    KEY_PATH = '/Users/melissa/Documents/git/source/microbiome/bhp077/keys'
 elif socket.gethostname() == 'tsetsiba':
     KEY_PATH = '/Users/tsetsiba/source/microbiome/keys'
 elif socket.gethostname() == 'fchilisa':
-    KEY_PATH = '/Users/fchilisa/source/microbiom/keys'
+    KEY_PATH = '/Users/fchilisa/source/microbiome/keys'
+elif socket.gethostname() == 'leslie':
+    KEY_PATH = '/Users/lesliek/keys'
 else:
     KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
 
