@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import get_model
 
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
@@ -10,7 +11,6 @@ from edc_constants.choices import YES_NO, YES, NO, POS, NEG
 
 from ..maternal_choices import LIVE_STILL_BIRTH, LIVE
 
-from .antenatal_enrollment import AntenatalEnrollment
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
 from .maternal_off_study_mixin import MaternalOffStudyMixin
@@ -96,6 +96,7 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
 
     @property
     def antenatal_enrollment(self):
+        AntenatalEnrollment = get_model('microbiome_maternal', 'antenatalenrollment')
         try:
             return AntenatalEnrollment.objects.get(registered_subject=self.registered_subject)
         except AntenatalEnrollment.DoesNotExist:
