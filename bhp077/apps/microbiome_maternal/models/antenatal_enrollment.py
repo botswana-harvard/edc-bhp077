@@ -31,7 +31,8 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         verbose_name="How many weeks pregnant?",
         help_text=" (weeks of gestation). Eligible if >=36 weeks", )
 
-    antenatal_eligible = models.NullBooleanField(
+    antenatal_eligible = models.BooleanField(
+        default=False,
         editable=False)
 
     history = AuditTrail()
@@ -41,15 +42,8 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         super(AntenatalEnrollment, self).save(*args, **kwargs)
 
     @property
-    def number_of_weeks_after_tests(self):
-        value = self.weeks_of_gestation - self.weeks_between(self.date_of_test, self.report_datetime.date())
-        return value
-
-    def validate_rapid_test_required_or_not_required(self):
-        return self.number_of_weeks_after_tests >= 32
-
-    def get_registration_datetime(self):
-        return self.report_datetime
+    def weeks_base(self):
+        return self.weeks_of_gestation
 
     @property
     def eligible_for_postnatal(self):

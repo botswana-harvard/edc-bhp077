@@ -67,12 +67,9 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
     def get_registration_datetime(self):
         return self.report_datetime
 
-    def number_of_weeks_after_tests(self):
-        value = self.gestation_before_birth - self.weeks_between(self.date_of_test, self.report_datetime.date())
-        return value
-
-    def validate_rapid_test_required_or_not_required(self):
-        return self.number_of_weeks_after_tests >= 32
+    @property
+    def weeks_base(self):
+        return self.gestation_before_birth
 
     @property
     def postnatal_eligible(self):
@@ -85,7 +82,8 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
                     self.valid_regimen_duration == YES):
                 return True
             elif (self.verbal_hiv_status == POS and self.evidence_hiv_status == NO and
-                    self.rapid_test_result == POS and self.valid_regimen == YES and self.valid_regimen_duration == YES):
+                    self.rapid_test_result == POS and self.valid_regimen == YES and
+                    self.valid_regimen_duration == YES):
                 return True
             elif self.verbal_hiv_status == NEG and self.evidence_hiv_status == NO and self.rapid_test_result == NEG:
                 return True

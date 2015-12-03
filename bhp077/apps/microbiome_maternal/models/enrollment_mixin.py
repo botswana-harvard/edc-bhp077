@@ -56,7 +56,7 @@ class EnrollmentMixin(models.Model):
         max_length=3)
 
     date_of_test = models.DateField(
-        verbose_name="Date of Test",
+        verbose_name="Date of HIV Test",
         null=True,
         blank=True)
 
@@ -128,9 +128,15 @@ class EnrollmentMixin(models.Model):
         null=True,
         blank=True)
 
-    def weeks_between(self, start_date, end_date):
-        weeks = rrule.rrule(rrule.WEEKLY, dtstart=start_date, until=end_date)
-        return weeks.count()
+    def get_registration_datetime(self):
+        return self.report_datetime
+
+    @property
+    def requires_rapid_test(self):
+        weeks_since_test = rrule.rrule(
+            rrule.WEEKLY, dtstart=self.date_of_test, until=self.report_datetime.date()).count()
+        value = self.weeks_base - weeks_since_test
+        return value >= 32
 
     def maternal_eligibility_pregnant_yes(self):
         try:
