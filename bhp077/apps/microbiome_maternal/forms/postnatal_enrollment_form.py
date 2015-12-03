@@ -4,12 +4,12 @@ from edc_constants.constants import POS, YES, NO, NEG
 
 from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome_maternal.models import (PostnatalEnrollment, AntenatalEnrollment)
-
+from bhp077.apps.microbiome.base_model_form import BaseModelForm
 from .base_enrollment_form import BaseEnrollmentForm
 
 
-class BaseEnrollmentForm(object):
-    
+class BaseEnrollmentForm(BaseModelForm):
+
     def validate_create_rapid_tests(self, cleaned_data, instance):
         if instance.verbal_hiv_status == NEG:
             if instance.requires_rapid_test():
@@ -63,7 +63,6 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
         if instance.maternal_eligibility_pregnant_yes():
             if not ant:
                 raise forms.ValidationError("Participant is pregnant, please fill in antenatal instead.")
-
 
     class Meta:
         model = PostnatalEnrollment
