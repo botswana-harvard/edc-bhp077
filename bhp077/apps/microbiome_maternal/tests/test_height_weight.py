@@ -65,7 +65,7 @@ class TestHeightWeight(TestCase):
         }
 
     def test_bp(self):
-        self.data['systolic_bp'] = 120
+        self.data['systolic_bp'] = 60
         self.data['diastolic_bp'] = 80
         form = BaseHeightForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
