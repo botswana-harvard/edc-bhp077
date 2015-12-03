@@ -1,17 +1,27 @@
 from django.db import models
 
-from edc_constants.choices import YES_NO, YES, NO, POS, NEG
+from edc.subject.appointment_helper.models import BaseAppointmentMixin
+from edc.subject.registration.models import RegisteredSubject
+from edc_base.audit_trail import AuditTrail
+from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
+from edc_consent.models import RequiresConsentMixin
+from edc_constants.choices import YES_NO, YES, NO, POS, NEG
 
 from ..maternal_choices import LIVE_STILL_BIRTH, LIVE
+
+from .antenatal_enrollment import AntenatalEnrollment
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
-from .antenatal_enrollment import AntenatalEnrollment
+from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
-class PostnatalEnrollment(EnrollmentMixin):
+class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmentMixin,
+                          RequiresConsentMixin, BaseUuidModel):
 
     CONSENT_MODEL = MaternalConsent
+
+    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
     report_datetime = models.DateTimeField(
         verbose_name="Date and Time of  Postnatal Enrollment",
@@ -47,6 +57,8 @@ class PostnatalEnrollment(EnrollmentMixin):
         verbose_name="How many live infants?",
         null=True,
         blank=True)
+
+    history = AuditTrail()
 
     def save(self, *args, **kwargs):
         self.postnatal_enrollemet_eligible = self.postnatal_eligible
