@@ -100,11 +100,7 @@ class TestInfantBirthArv(TestCase):
         self.assertIn(u'If infant has received single dose NVP then provide NVP date.', infant_birth_arv.errors.get('__all__'))
 
     def test_validate_sdnvp_after_birth_breastfeeding(self):
-        InfantBirthFeedVaccineFactory(
-            infant_visit=self.infant_visit,
-            infant_birth=self.infant_birth,
-            feeding_after_delivery = 'Breastfeeding only',
-        )
+        InfantBirthFeedVaccineFactory(infant_visit=self.infant_visit, feeding_after_delivery='Breastfeeding only')
         self.data['nvp_discharge_supply'] = 'N/A'
         infant_birth_arv = InfantBirthArvForm(data=self.data)
         self.assertIn(u'If the infant is breast feeding then do not select not applicaticable for Q11.', infant_birth_arv.errors.get('__all__'))
