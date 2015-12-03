@@ -32,7 +32,7 @@ PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 ALLOW_MODEL_SERIALIZATION = True
 SECRET_KEY = 'sdfsdfsdfsdf'
 
-KEY_PATH = '/Users/fchilisa/source/microbiome/keys'  # DONT DELETE ME!!, just comment out
+KEY_PATH = ''  # DONT DELETE ME!!, just comment out
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
