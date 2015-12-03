@@ -32,8 +32,22 @@ PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 ALLOW_MODEL_SERIALIZATION = True
 SECRET_KEY = 'sdfsdfsdfsdf'
 
-KEY_PATH = ''  # DONT DELETE ME!!, just comment out
-# SECURITY WARNING: don't run with debug turned on in production!
+KEY_PATH = '/Users/fchilisa/source/microbiome/keys'  # DONT DELETE ME!!, just comment out
+if socket.gethostname() == 'mac2-2.local':
+    KEY_PATH = '/Volumes/live_keys'  # DONT DELETE ME!!, just comment out
+elif socket.gethostname() == 'ckgathi':
+    KEY_PATH = '/Users/ckgathi/source/microbiome/bhp077/keys'
+elif socket.gethostname() == 'one-2.local' or socket.gethostname() == 'One-2.local':
+    KEY_PATH = '/Users/sirone/Documents/workspace/git_projects/bhp066_git/bhp066/keys'
+elif socket.gethostname() == 'silverapple':
+    KEY_PATH = '/Users/melissa/Documents/git/source/bhp066_project/bhp066/keys'
+elif socket.gethostname() == 'tsetsiba':
+    KEY_PATH = '/Users/tsetsiba/source/microbiome/keys'
+elif socket.gethostname() == 'fchilisa':
+    KEY_PATH = '/Users/fchilisa/source/microbiom/keys'
+else:
+    KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -139,9 +153,9 @@ INSTALLED_APPS = (
     'lis.exim.lab_import',
     'lis.exim.lab_import_lis',
     'lis.exim.lab_import_dmis',
+    'edc_call_manager',
     # LOCAL_APPS
     'bhp077.apps.microbiome',
-    'bhp077.apps.microbiome_call',
     'bhp077.apps.microbiome_list',
     'bhp077.apps.microbiome_dashboard',
     'bhp077.apps.microbiome_infant',

@@ -19,6 +19,7 @@ from edc.subject.rule_groups.classes import site_rule_groups
 from edc.subject.visit_schedule.classes import site_visit_schedules
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
+from edc_call_manager.caller_site import site_model_callers
 
 site_lab_profiles.autodiscover()
 dajaxice_autodiscover()
@@ -30,6 +31,7 @@ site_lab_tracker.autodiscover()
 data_manager.prepare()
 site_sections.autodiscover()
 site_sections.update_section_lists()
+site_model_callers.autodiscover()
 admin.autodiscover()
 # admin.site.site_header = 'Microbiome Administration'
 
@@ -75,12 +77,6 @@ urlpatterns += patterns(
     (r'^bhp_sync/', include('edc.device.sync.urls')),
 )
 
-
-urlpatterns += patterns(
-    '',
-    url(r'^/microbiome_call/'.format(app_name=APP_NAME),
-        include('bhp077.apps.{app_name}_call.urls'.format(app_name=APP_NAME))),
-)
 
 urlpatterns += patterns(
     '',
