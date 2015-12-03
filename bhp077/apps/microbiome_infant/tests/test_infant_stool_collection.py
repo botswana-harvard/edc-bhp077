@@ -11,7 +11,8 @@ from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_infant.forms import InfantStoolCollectionForm
-from bhp077.apps.microbiome_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
+from bhp077.apps.microbiome_infant.tests.factories import (InfantBirthFactory, InfantVisitFactory,
+                                                           InfantRequistionFactory)
 from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalConsentFactory, MaternalLabourDelFactory,
@@ -163,3 +164,12 @@ class TestInfantStoolCollection(TestCase):
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You have stated the infant did NOT take antibiotics in the past 7 days, '
                       'you cannot indicate antibiotics were taken in the past 24 hours.', errors)
+
+    def test_stool_requisition_and_no_stool_obtained(self):
+        self.infant_requisition = InfantRequistionFactory(
+            requisition_datetime=timezone.now(), infant_visit=self.infant_visit,
+            panel__name='Stool storage', is_drawn=YES, drawn_datetime=timezone.now())
+        self.data['sample_obtained'] = NO
+        form = InfantStoolCollectionForm(data=self.data)
+        self.assertIn('Stool requisition is drawn with id {}. Sample obtained cannot be {}'.format(self.infant_requisition.requisition_identifier,
+                                                                                                   self.data['sample_obtained']), form.errors.get('__all__'))

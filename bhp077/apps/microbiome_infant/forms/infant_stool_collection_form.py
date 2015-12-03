@@ -1,9 +1,10 @@
 from django import forms
 
-from edc_constants.constants import YES, NOT_APPLICABLE
+from edc_constants.constants import YES, NOT_APPLICABLE, NO
 
 from ..models import InfantStoolCollection
 from .base_infant_model_form import BaseInfantModelForm
+from bhp077.apps.microbiome_lab.models import InfantRequisition
 
 
 class InfantStoolCollectionForm(BaseInfantModelForm):
@@ -17,6 +18,11 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
         return cleaned_data
 
     def validate_sample_obtained(self, cleaned_data):
+        requisition = InfantRequisition.objects.get(infant_visit=cleaned_data.get('infant_visit'))
+        if requisition.panel.name == 'Stool storage':
+            if requisition.is_drawn == YES and cleaned_data.get('sample_obtained') == NO:
+                raise forms.ValidationError("Stool requisition is drawn with id {}. Sample obtained cannot be {}".format(requisition.requisition_identifier,
+                                                                                                                         cleaned_data.get('sample_obtained')))
         if cleaned_data.get('sample_obtained') == YES:
             if cleaned_data.get('nappy_type') == NOT_APPLICABLE:
                 raise forms.ValidationError('Sample is indicated to have been obtained today, Nappy type CANNOT '
