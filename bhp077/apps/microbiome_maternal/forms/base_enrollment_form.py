@@ -17,12 +17,8 @@ class BaseEnrollmentForm(BaseModelForm):
         self.neg_current_hiv_status_and_test_and_regimen()
         self.pos_current_hiv_status_and_test_and_regimen()
         self.valid_regimen_and_duration()
-
-        # week32 result and current status comparison
-        if ((cleaned_data.get("week32_result") == POS and cleaned_data.get("current_hiv_status") != POS) or
-                (cleaned_data.get("week32_result") == NEG and cleaned_data.get("current_hiv_status") != NEG)):
-            raise forms.ValidationError('The current hiv status and result at 32weeks should be the same!')
-        self.rapid_test_date_and_result(self)
+        self.week32_test_matches_current()
+        self.rapid_test_date_and_result()
         return cleaned_data
 
     def clean_report_datetime(self):
@@ -61,6 +57,12 @@ class BaseEnrollmentForm(BaseModelForm):
             if cleaned_data.get("week32_result"):
                 raise forms.ValidationError(
                     'You mentioned testing was not done at 32weeks yet provided a test result.')
+
+    def week32_test_matches_current(self):
+        cleaned_data = self.cleaned_data
+        if ((cleaned_data.get("week32_result") == POS and cleaned_data.get("current_hiv_status") != POS) or
+                (cleaned_data.get("week32_result") == NEG and cleaned_data.get("current_hiv_status") != NEG)):
+            raise forms.ValidationError('The current hiv status and result at 32weeks should be the same!')
 
     def neg_current_hiv_status_and_test_and_regimen(self):
         cleaned_data = self.cleaned_data

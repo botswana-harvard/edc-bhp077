@@ -45,6 +45,7 @@ class TestBaseEnroll(TestCase):
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
+        self.specimen_consent = SpecimenConsentFactory(registered_subject=self.registered_subject)
         self.data = {
             'registered_subject': self.registered_subject.id,
             'report_datetime': timezone.datetime.today(),
@@ -115,45 +116,46 @@ class TestBaseEnroll(TestCase):
         self.data['valid_regimen_duration'] = NOT_APPLICABLE
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('You have indicated that the participant is on ARV. Regimen validity period'
-                      ' CANNOT be Not Applicable. Please correct.', form.errors.get('__all__'))
+                      ' CANNOT be \'Not Applicable\'. Please correct.', form.errors.get('__all__'))
 
     def test_regimen_duration_yes(self):
         self.data['valid_regimen'] = NO
         self.data['valid_regimen_duration'] = YES
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('You have indicated that there are no records of Participant taking ARVs. '
-                      'Regimen validity period should be Not Applicable. Please correct.', form.errors.get('__all__'))
+                      'Regimen validity period should be \'Not Applicable\'. Please correct.', form.errors.get('__all__'))
 
     def test_regimen_duration_no(self):
         self.data['valid_regimen'] = NO
         self.data['valid_regimen_duration'] = NO
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('You have indicated that there are no records of Participant taking ARVs. '
-                      'Regimen validity period should be Not Applicable. Please correct.', form.errors.get('__all__'))
+                      'Regimen validity period should be \'Not Applicable\'. Please correct.', form.errors.get('__all__'))
 
     def test_hiv_evidence_pos(self):
         self.data['evidence_hiv_status'] = NOT_APPLICABLE
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('You have indicated that the participant is Positive, Evidence of HIV '
-                      'result CANNOT be Not Applicable. Please correct.', form.errors.get('__all__'))
+                      'result CANNOT be \'Not Applicable\'. Please correct.', form.errors.get('__all__'))
 
     def test_hiv_evidence_pos_reg_na(self):
         self.data['valid_regimen'] = NOT_APPLICABLE
         form = BaseEnrollTestForm(data=self.data)
-        self.assertIn('You have indicated that the participant is Positive, "do records show that'
-                      ' participant takes ARVs" cannot be Not Applicable.', form.errors.get('__all__'))
+        self.assertIn('You have indicated that the participant is Positive, \'do records show that'
+                      ' participant takes ARVs\' cannot be \'Not Applicable\'.', form.errors.get('__all__'))
 
     def test_hiv_evidence_neg(self):
         self.data['current_hiv_status'] = NEG
         self.data['evidence_hiv_status'] = NOT_APPLICABLE
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('You have indicated that the participant is Negative, Evidence of HIV '
-                      'result CANNOT be Not Applicable. Please correct.', form.errors.get('__all__'))
+                      'result CANNOT be \'Not Applicable\'. Please correct.', form.errors.get('__all__'))
 
     def test_sample_filled_before_enrollment(self):
-        specimen_consent = SpecimenConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
-        if not specimen_consent:
-            self.assertRaises(forms.ValidationError)
+        self.specimen_consent.delete()
+        form = BaseEnrollTestForm(data=self.data)
+        self.assertIn('Please ensure to save the Specimen Consent before completing Enrollment',
+                      form.errors.get('__all__'))
 
     def test_pos_with_evidence_and_do_rapid_test(self):
         self.data['evidence_hiv_status'] = YES
@@ -178,14 +180,12 @@ class TestBaseEnroll(TestCase):
             'The current hiv status and result at 32weeks should be the same!', form.errors.get('__all__'))
 
     def test_tested_at_32weeks_no_result(self):
-        SpecimenConsentFactory(registered_subject=self.registered_subject)
         self.data['week32_test'] = YES
         self.data['week32_result'] = None
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('Please provide test result at week 32.', form.errors.get('__all__'))
 
     def test_not_tested_at_32weeks_results_given(self):
-        SpecimenConsentFactory(registered_subject=self.registered_subject)
         self.data['week32_result'] = POS
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(
