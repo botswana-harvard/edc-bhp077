@@ -43,7 +43,7 @@ class TestMaternalFollowup(TestCase):
             will_breastfeed=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='2000M')
+                                                   visit_definition__code='2010M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         self.chronic_cond = ChronicConditions.objects.create(name=NOT_APPLICABLE, short_name=NOT_APPLICABLE,
                                                              display_index=10, field_name='chronic_cond')
