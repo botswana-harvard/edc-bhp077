@@ -1,6 +1,6 @@
-from base_maternal_model_form import BaseMaternalModelForm
-
 from ..models import MaternalDemographics
+
+from .base_maternal_model_form import BaseMaternalModelForm
 
 
 class MaternalDemographicsForm(BaseMaternalModelForm):

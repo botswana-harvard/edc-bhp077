@@ -31,23 +31,27 @@ class MaternalClinicalHistoryForm(BaseMaternalModelForm):
 
     def validate_prev_preg(self, cleaned_data):
         ob_history = MaternalObstericalHistory.objects.filter(
-            maternal_visit__appointment__registered_subject=cleaned_data.get('maternal_visit').appointment.registered_subject)
+            maternal_visit__appointment__registered_subject=cleaned_data.get(
+                'maternal_visit').appointment.registered_subject)
         if not ob_history:
             raise forms.ValidationError('Please fill in the Maternal Obsterical History form first.')
         else:
             if ob_history[0].prev_pregnancies == 0:
                 if cleaned_data.get('prev_preg_azt') != NOT_APPLICABLE:
-                    raise forms.ValidationError('In Maternal Obsterical History form you indicated there were no previous '
-                                                'pregnancies. Receive AZT monotherapy in previous pregancy should be '
-                                                'NOT APPLICABLE')
+                    raise forms.ValidationError(
+                        'In Maternal Obsterical History form you indicated there were no previous '
+                        'pregnancies. Receive AZT monotherapy in previous pregancy should be '
+                        'NOT APPLICABLE')
                 if cleaned_data.get('prev_sdnvp_labour') != NOT_APPLICABLE:
-                    raise forms.ValidationError('In Maternal Obsterical History form you indicated there were no previous '
-                                                'pregnancies. Single sd-NVP in labour during a prev pregnancy should '
-                                                'be NOT APPLICABLE')
+                    raise forms.ValidationError(
+                        'In Maternal Obsterical History form you indicated there were no previous '
+                        'pregnancies. Single sd-NVP in labour during a prev pregnancy should '
+                        'be NOT APPLICABLE')
                 if cleaned_data.get('prev_preg_haart') != NOT_APPLICABLE:
-                    raise forms.ValidationError('In Maternal Obsterical History form you indicated there were no previous '
-                                                'pregnancies. triple ARVs during a prev pregnancy should '
-                                                'be NOT APPLICABLE')
+                    raise forms.ValidationError(
+                        'In Maternal Obsterical History form you indicated there were no previous '
+                        'pregnancies. triple ARVs during a prev pregnancy should '
+                        'be NOT APPLICABLE')
 
     class Meta:
         model = MaternalClinicalHistory

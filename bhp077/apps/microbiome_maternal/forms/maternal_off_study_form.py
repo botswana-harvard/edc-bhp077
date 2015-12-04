@@ -25,7 +25,8 @@ class MaternalOffStudyForm (BaseMaternalModelForm):
 
     def validate_offstudy_date(self, cleaned_data, field):
         try:
-            subject_identifier = cleaned_data.get('maternal_visit').appointment.registered_subject.subject_identifier
+            subject_identifier = cleaned_data.get(
+                'maternal_visit').appointment.registered_subject.subject_identifier
             maternal_consent = MaternalConsent.objects.get(
                 registered_subject__subject_identifier=subject_identifier)
             try:

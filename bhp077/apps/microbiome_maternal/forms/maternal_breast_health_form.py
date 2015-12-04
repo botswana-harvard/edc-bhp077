@@ -15,12 +15,14 @@ class MaternalBreastHealthForm(BaseMaternalModelForm):
                                             'Has mastitis CANNOT be Not Applicable.')
         else:
             if cleaned_data.get('has_mastitis') == YES:
-                raise forms.ValidationError('You indicated YES for has mother been breastfeeding. Has mastitis should '
-                                            'be Not Applicable.')
+                raise forms.ValidationError(
+                    'You indicated YES for has mother been breastfeeding. Has mastitis should '
+                    'be Not Applicable.')
         if cleaned_data.get('has_mastitis') == YES:
             if cleaned_data.get('mastitis') == NOT_APPLICABLE:
-                raise forms.ValidationError('You indicated the mother has mastitis. You cannot answer Not applicable'
-                                            ' to indicate where.')
+                raise forms.ValidationError(
+                    'You indicated the mother has mastitis. You cannot answer Not applicable'
+                    ' to indicate where.')
         else:
             if cleaned_data.get('mastitis') != NOT_APPLICABLE:
                 raise forms.ValidationError('You stated that mother did not have mastitis, yet indicated '
@@ -30,8 +32,9 @@ class MaternalBreastHealthForm(BaseMaternalModelForm):
                 raise forms.ValidationError('You stated that mother has lesions. Please indicate where.')
         else:
                 if cleaned_data.get('lesions') != NOT_APPLICABLE:
-                    raise forms.ValidationError('You stated that mother does not have lesions, yet indicated where she '
-                                                'has lesions. Please correct')
+                    raise forms.ValidationError(
+                        'You stated that mother does not have lesions, yet indicated where she '
+                        'has lesions. Please correct')
         return cleaned_data
 
     class Meta:
