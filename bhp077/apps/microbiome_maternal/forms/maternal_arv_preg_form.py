@@ -4,6 +4,7 @@ from django.utils import timezone
 from base_maternal_model_form import BaseMaternalModelForm
 
 from edc_constants.constants import YES, NO
+from bhp077.apps.microbiome.utils import weeks_between
 
 from ..models import MaternalArvPreg, MaternalArv
 
@@ -53,12 +54,13 @@ class MaternalArvPregForm(BaseMaternalModelForm):
 class MaternalArvForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(MaternalArvForm, self).clean()
-        if self.weeks_between(cleaned_data.get('start_date'), timezone.now()) < 6:
+        if weeks_between(cleaned_data.get('start_date'), timezone.now()) < 6:
             raise forms.ValidationError("ARV start date must be six weeks prior to today's date or greater.")
         if cleaned_data.get('stop_date'):
             if cleaned_data.get('stop_date') < cleaned_data.get('start_date'):
-                raise forms.ValidationError('You have indicated that the stop date of {} is prior to start date of {}. '
-                                            'Please correct'.format(cleaned_data.get('stop_date') ,cleaned_data.get('start_date')))
+                raise forms.ValidationError(
+                    'You have indicated that the stop date of {} is prior to start date of {}. '
+                    'Please correct'.format(cleaned_data.get('stop_date'), cleaned_data.get('start_date')))
         return cleaned_data
 
     class Meta:
