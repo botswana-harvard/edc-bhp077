@@ -1,11 +1,11 @@
 from django import forms
+from django.forms.util import ErrorList
 
-from base_maternal_model_form import BaseMaternalModelForm
-
-from edc_constants.constants import NEW, YES, NO
+from edc_constants.constants import NO
 
 from ..models import SrhServicesUtilization
-from django.forms.util import ErrorList
+
+from .base_maternal_model_form import BaseMaternalModelForm
 
 
 class SrhServicesUtilizationForm(BaseMaternalModelForm):
@@ -28,14 +28,13 @@ class SrhServicesUtilizationForm(BaseMaternalModelForm):
             )
         if cleaned_data.get('is_contraceptive_initiated') == NO:
             if not cleaned_data.get('reason_not_initiated'):
-                self._errors["reason_not_initiated"] = \
-                    ErrorList([u"This field is required."])
+                self._errors["reason_not_initiated"] = ErrorList(["This field is required."])
                 raise forms.ValidationError(
                     'If have not initiated contraceptive method, please provide reason.')
         else:
             if cleaned_data.get('reason_not_initiated'):
-                self._errors["reason_not_initiated"] = \
-                    ErrorList([u"Don't answer this question, since you have initiated contraceptive."])
+                self._errors["reason_not_initiated"] = ErrorList(
+                    ["Don't answer this question, since you have initiated contraceptive."])
                 raise forms.ValidationError(
                     "Don't answer this question, since you have initiated contraceptive.")
         return cleaned_data
