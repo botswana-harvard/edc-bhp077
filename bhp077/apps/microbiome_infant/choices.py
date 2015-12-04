@@ -1,12 +1,12 @@
-from edc_constants.constants import NOT_APPLICABLE
+from edc_constants.constants import NOT_APPLICABLE, OTHER
 
-from .constants import BROUGHT, REALTIME
+from .constants import BROUGHT, REALTIME, CLOTH_NAPPY
 
 
 NAPPY_TYPE = (
-    ('cloth nappy', 'Cloth nappy'),
+    (CLOTH_NAPPY, 'Cloth nappy'),
     ('commercial nappy', 'Commercial Nappy'),
-    ('other', 'Other, specify'),
+    (OTHER, 'Other, specify'),
     (NOT_APPLICABLE, 'Not applicable'),
 )
 
@@ -43,7 +43,7 @@ OFF_STUDY_REASON = [
     ('death',
      (' Participant death (complete the DEATH REPORT FORM AF005) (For '
       'EAE Reporting requirements see EAE Reporting Manual)')),
-    ('OTHER', ' Other'),
+    (OTHER, ' Other'),
 ]
 
 IMMUNIZATIONS = (
