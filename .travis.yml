@@ -11,10 +11,12 @@ env:
 #  - DJANGO_VERSION=1.8
 
 
-# addons:
-#  apt_packages:
-#    - swig
-#    - python-m2crypto
+addons:
+  apt_packages:
+     - swig
+     # - python-m2crypto
+     - libssl-dev
+     - libssl0.9.8
 
 before_install:
     - "export DISPLAY=:99.0"
@@ -22,11 +24,12 @@ before_install:
     - sleep 3 # give xvfb some time to start
 
 install:
-  - sudo apt-get install swig libssl-dev libssl0.9.8
+  # - sudo apt-get install swig libssl-dev libssl0.9.8
   - pip install --upgrade pip
   - pip install -q Django==$DJANGO_VERSION
   - pip install flake8
   - pip install coveralls
+  - pip install M2Crypto
   - pip install -q -r requirements.txt
 
 before_script:
