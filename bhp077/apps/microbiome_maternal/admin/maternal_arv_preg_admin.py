@@ -14,11 +14,12 @@ class MaternalArvInlineAdmin(BaseTabularInline):
 class MaternalArvPregAdmin(BaseModelAdmin):
     form = MaternalArvPregForm
     inlines = [MaternalArvInlineAdmin, ]
-    list_display = ('arv_exposed',)
-    list_filter = ('arv_exposed',)
-    radio_fields = {'arv_exposed': admin.VERTICAL,
-                    'interrupt': admin.VERTICAL,
-                    'is_interrupt': admin.VERTICAL, }
+    list_display = ('maternal_visit', 'took_arv',)
+    list_filter = ('took_arv',)
+    radio_fields = {'took_arv': admin.VERTICAL,
+                    'is_interrupt': admin.VERTICAL,
+                    'interrupt': admin.VERTICAL
+                    }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
