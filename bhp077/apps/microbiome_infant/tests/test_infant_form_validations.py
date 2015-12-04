@@ -9,5 +9,5 @@ from ..models import InfantStoolCollection
 class TestInfantStoolCollectionForm(TestCase):
 
     def test_stool_collection_time(self):
-        form = InfantStoolCollectionForm(data={'stool_colection_time': 25})
+        form = InfantStoolCollectionForm(data={'stool_collection_time': 25})
         self.assertFalse(form.is_valid())

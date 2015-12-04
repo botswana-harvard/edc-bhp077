@@ -7,7 +7,7 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.choices import YES, NO
+from edc_constants.choices import YES
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -33,8 +33,9 @@ class TestMaternalVisit(TestCase):
         site_rule_groups.autodiscover()
         self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject,
-                                                       study_site=self.study_site)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject,
+            study_site=self.study_site)
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
@@ -57,16 +58,16 @@ class TestMaternalVisit(TestCase):
         self.data['reason_missed'] = None
         form = MaternalVisitForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn(u'You indicated that the visit was missed. Please provide a reason why '
-                      u'it was missed.', errors)
+        self.assertIn('You indicated that the visit was missed. Please provide a reason why '
+                      'it was missed.', errors)
 
     def test_attended_visit_reason_missed_given(self):
         self.data['reason'] = 'scheduled'
         self.data['reason_missed'] = 'At work.'
         form = MaternalVisitForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn(u'You indicated that the visit was NOT missed, yet you provided a reason '
-                      u'why it was missed. Please correct.', errors)
+        self.assertIn('You indicated that the visit was NOT missed, yet you provided a reason '
+                      'why it was missed. Please correct.', errors)
 
     def test_block_new_visit_off_study_participant(self):
         self.data['reason'] = 'off study'
@@ -77,14 +78,4 @@ class TestMaternalVisit(TestCase):
         self.data['appointment'] = self.appointment.id
         form = MaternalVisitForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        print errors
-        self.assertIn(u'Data capturing is not allowed, there is an off study visit report.', errors)
-
-#     def test_block_new_visit_off_study_participant1(self):
-#         self.data['reason'] = 'scheduled'
-#         self.postnatal_enrollment.will_breastfeed = NO
-#         self.postnatal_enrollment.is_diabetic = YES
-#         self.postnatal_enrollment.save()
-#         form = MaternalVisitForm(data=self.data)
-#         errors = ''.join(form.errors.get('__all__'))
-#         self.assertIn(u'Data capturing is not allowed, the participant is not eligible.', errors)
+        self.assertIn('Data capturing is not allowed, Subject is Off-study.', errors)

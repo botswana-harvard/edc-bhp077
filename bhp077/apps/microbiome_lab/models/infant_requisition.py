@@ -21,8 +21,6 @@ class InfantRequisition(BaseRequisition, BaseUuidModel):
 
     infant_visit = models.ForeignKey(InfantVisit)
 
-    entry_meta_data_manager = RequisitionMetaDataManager(InfantVisit)
-
     packing_list = models.ForeignKey(PackingList, null=True, blank=True)
 
     aliquot_type = models.ForeignKey(AliquotType)
@@ -32,6 +30,8 @@ class InfantRequisition(BaseRequisition, BaseUuidModel):
     objects = RequisitionManager()
 
     history = AuditTrail()
+
+    entry_meta_data_manager = RequisitionMetaDataManager(InfantVisit)
 
     def get_visit(self):
         return self.infant_visit
