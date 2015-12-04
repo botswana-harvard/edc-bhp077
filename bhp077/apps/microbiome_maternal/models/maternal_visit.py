@@ -6,7 +6,7 @@ from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
-from edc_constants.constants import NEW, YES, POS, NEG
+from edc_constants.constants import NEW, YES, POS, NEG, UNSCHEDULED
 from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 
 from bhp077.apps.microbiome.choices import VISIT_REASON
@@ -24,7 +24,7 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 
     CONSENT_MODEL = MaternalConsent
-    
+
     objects = models.Manager()
 
     history = AuditTrail(True)
@@ -49,23 +49,27 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
         self.check_if_eligible()
         super(MaternalVisit, self).save(*args, **kwargs)
 
-    def rehash_meta_data(self):
+    def update_entry_meta_data(self):
+        """Updates entry meta data if subject is ineligible for Ante/Post natal enrollment."""
         if PostnatalEnrollment.objects.filter(registered_subject=self.appointment.registered_subject).exists():
-            self.meta_data_visit_failed_enroll(self.appointment) if not self.postnatal_enrollment.postnatal_eligible else self.reason
+            if not self.postnatal_enrollment.postnatal_eligible:
+                self.remove_scheduled_forms(self.appointment)
         else:
             antenatal = AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
-            self.meta_data_visit_failed_enroll(self.appointment) if not antenatal.antenatal_eligible else self.reason
-        if self.reason == 'unscheduled':
+            if not antenatal.antenatal_eligible:
+                self.remove_scheduled_forms(self.appointment)
+        if self.reason == UNSCHEDULED:
             self.meta_data_visit_unshceduled(self.appointment)
 
-    def meta_data_visit_failed_enroll(self, appointment):
+    def remove_scheduled_forms(self, appointment):
+        """Removes meta data for scheduled forms except for off study."""
         meta_data = self.query_scheduled_meta_data(appointment, appointment.registered_subject)
-        [meta.delete() if not meta.entry.model_name == 'maternaloffstudy' else meta for meta in meta_data]
+        for meta in meta_data:
+            if not meta.entry.model_name == 'maternaloffstudy':
+                meta.delete()
         self.remove_scheduled_requisition(
             self.query_requisition_meta_data(
-                self.appointment, self.appointment.registered_subject
-            )
-        )
+                self.appointment, self.appointment.registered_subject))
 
     def get_visit_reason_no_follow_up_choices(self):
         """ Returns the visit reasons that do not imply any data collection; that is, the subject is not available. """
@@ -147,7 +151,7 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
                     try:
                         MaternalVisit.objects.get(
                             appointment__registered_subject=self.appointment.registered_subject,
-                            appointment__visit_definition__code=visit_codes[i-1],
+                            appointment__visit_definition__code=visit_codes[i - 1],
                             reason='off study'
                         )
                         is_off = True
