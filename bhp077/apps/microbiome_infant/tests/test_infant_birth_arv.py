@@ -50,8 +50,8 @@ class TestInfantBirthArv(TestCase):
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M'
         )
-        maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        maternal_labour_del = MaternalLabourDelFactory(maternal_visit=self.maternal_visit)
 
         registered_subject_infant = RegisteredSubject.objects.get(
             subject_type='infant', relative_identifier=self.registered_subject.subject_identifier
@@ -79,7 +79,7 @@ class TestInfantBirthArv(TestCase):
         }
 
     def test_validate_azt_after_birth_azt_dose_date_empty(self):
-        del self.data['azt_dose_date']
+        self.data['azt_dose_date'] = ''
         infant_birth_arv = InfantBirthArvForm(data=self.data)
         self.assertIn(u'Provide date of the first dose for AZT.', infant_birth_arv.errors.get('__all__'))
 
@@ -89,7 +89,7 @@ class TestInfantBirthArv(TestCase):
         self.assertIn(u'Do not select Not applicatable for Q6 if Q4 answer was yes.', infant_birth_arv.errors.get('__all__'))
 
     def test_validate_sdnvp_after_birth(self):
-        del self.data['nvp_dose_date']
+        self.data['nvp_dose_date'] = ''
         infant_birth_arv = InfantBirthArvForm(data=self.data)
         self.assertIn(u'If infant has received single dose NVP then provide NVP date.', infant_birth_arv.errors.get('__all__'))
 
