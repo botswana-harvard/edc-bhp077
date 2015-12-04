@@ -1,5 +1,7 @@
 from edc_constants.constants import NOT_APPLICABLE
 
+from .constants import BROUGHT, REALTIME
+
 
 NAPPY_TYPE = (
     ('cloth nappy', 'Cloth nappy'),
@@ -10,8 +12,8 @@ NAPPY_TYPE = (
 
 
 STOOL_COLLECTION_TIME = (
-    ('real-time', 'Real Time'),
-    ('brought', 'Brought by mother'),
+    (REALTIME, 'Real Time'),
+    (BROUGHT, 'Brought by mother'),
     (NOT_APPLICABLE, 'Not applicable')
 )
 

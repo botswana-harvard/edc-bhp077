@@ -2,9 +2,13 @@ from django import forms
 
 from edc_constants.constants import YES, NOT_APPLICABLE, NO
 
-from ..models import InfantStoolCollection
-from .base_infant_model_form import BaseInfantModelForm
 from bhp077.apps.microbiome_lab.models import InfantRequisition
+
+from ..constants import BROUGHT
+from ..models import InfantStoolCollection
+
+from .base_infant_model_form import BaseInfantModelForm
+from bhp077.apps.microbiome_infant.constants import REALTIME
 
 
 class InfantStoolCollectionForm(BaseInfantModelForm):
@@ -17,28 +21,29 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
         self.validate_antibiotics()
         return cleaned_data
 
-    def validate_sample_obtained(self):
-        cleaned_data = self.cleaned_data
+    def validate_sample_obtained(self, cleaned_data):
         try:
-            requisition = InfantRequisition.objects.get(infant_visit=cleaned_data.get('infant_visit'))
-        except InfantRequisition.DoesNotExist:
-            raise forms.ValidationError('Specimen requisition not found')
-        if requisition.panel.name == 'Stool storage':
+            requisition = InfantRequisition.objects.get(infant_visit=cleaned_data.get('infant_visit'),
+                                                        panel__name='Stool storage')
             if requisition.is_drawn == YES and cleaned_data.get('sample_obtained') == NO:
                 raise forms.ValidationError(
-                    "Stool requisition is drawn with id {}. Sample obtained cannot "
-                    "be {}".format(requisition.requisition_identifier,
-                                   cleaned_data.get('sample_obtained')))
+                    "Stool requisition is drawn with id {}. Sample obtained cannot be {}".format(
+                        requisition.requisition_identifier, cleaned_data.get('sample_obtained')))
+        except InfantRequisition.DoesNotExist:
+            raise forms.ValidationError(
+                'Stool storage specimen requisition not found. Complete the requisition first.')
+
         if cleaned_data.get('sample_obtained') == YES:
             if cleaned_data.get('nappy_type') == NOT_APPLICABLE:
-                raise forms.ValidationError('Sample is indicated to have been obtained today, Nappy type CANNOT '
-                                            'be Not Applicable. Please correct.')
+                raise forms.ValidationError(
+                    'Sample is indicated to have been obtained today, Nappy type CANNOT '
+                    'be Not Applicable. Please correct.')
             if cleaned_data.get('stool_colection') == NOT_APPLICABLE:
                 raise forms.ValidationError(
                     'Sample is indicated to have been obtained today, collection time CANNOT '
                     'be not Applicable.')
             if (cleaned_data.get('stool_stored') == NOT_APPLICABLE and
-                    cleaned_data.get('stool_colection') != 'real-time'):
+                    cleaned_data.get('stool_colection') != REALTIME):
                 raise forms.ValidationError(
                     'Sample is stated to have been obtained today, please indicate how the '
                     'sample was stored.')
@@ -63,7 +68,7 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
 
     def validate_collection_time(self):
         cleaned_data = self.cleaned_data
-        if cleaned_data.get('stool_colection') == 'brought':
+        if cleaned_data.get('stool_colection') == BROUGHT:
             if not cleaned_data.get('stool_colection_time'):
                 raise forms.ValidationError('Please specify the number of hours that stool was collected.')
         else:

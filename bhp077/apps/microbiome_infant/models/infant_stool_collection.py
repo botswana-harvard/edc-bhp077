@@ -6,7 +6,7 @@ from edc_base.model.fields import OtherCharField
 from edc_constants.choices import YES_NO, YES_NO_NA
 from edc_constants.constants import NOT_APPLICABLE
 
-from ..infant_choices import STOOL_COLLECTION_TIME, STOOL_STORED, NAPPY_TYPE
+from ..choices import STOOL_COLLECTION_TIME, STOOL_STORED, NAPPY_TYPE
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
