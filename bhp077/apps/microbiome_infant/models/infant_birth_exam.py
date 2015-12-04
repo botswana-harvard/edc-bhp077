@@ -12,10 +12,6 @@ class InfantBirthExam(InfantScheduledVisitModel):
 
     """ A model completed by the user to record details of the infant's birth. """
 
-    infant_exam_date = models.DateField(
-        verbose_name="Date of infant examination",
-        help_text="")
-
     general_activity = models.CharField(
         max_length=15,
         choices=NORMAL_ABNORMAL,

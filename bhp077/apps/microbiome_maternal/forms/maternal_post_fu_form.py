@@ -22,7 +22,7 @@ class MaternalPostFuForm(BaseMaternalModelForm):
                 leading=cleaned_data.get('has_chronic_cond'),
                 m2m=cleaned_data.get('chronic_cond'),
                 other=cleaned_data.get('chronic_cond_other'))
-        if cleaned_data.get('systolic_bp ') < cleaned_data.get('diastolic_bp'):
+        if cleaned_data.get('systolic_bp') < cleaned_data.get('diastolic_bp'):
             raise forms.ValidationError('Systolic blood pressure cannot be lower than the diastolic blood preassure.'
                                         ' Please correct.')
 

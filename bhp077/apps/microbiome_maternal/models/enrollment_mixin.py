@@ -158,6 +158,10 @@ class EnrollmentMixin(models.Model):
             return False
         return True
 
+    @property
+    def subject_identifier(self):
+        return self.registered_subject.subject_identifier
+
     def get_subject_identifier(self):
         return self.registered_subject.subject_identifier
 

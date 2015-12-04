@@ -33,7 +33,7 @@ ALLOW_MODEL_SERIALIZATION = True
 SECRET_KEY = 'sdfsdfsdfsdf'
 
 if socket.gethostname() == 'mac2-2.local':
-    KEY_PATH = '/Volumes/bhp077/live_keys'  # DONT DELETE ME!!, just comment out
+    KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
 elif socket.gethostname() == 'ckgathi':
     KEY_PATH = '/Users/ckgathi/source/microbiome/bhp077/keys'
 elif socket.gethostname() == 'one-2.local' or socket.gethostname() == 'One-2.local':

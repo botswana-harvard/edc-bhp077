@@ -20,8 +20,8 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
         # WHO validations
         if 'wcs_dx_adult' in cleaned_data.keys():
             self.validate_m2m_wcs_dx(
-                label='who diagnoses',
-                leading=cleaned_data.get('who_clinical_stage'),
+                label='WHO diagnoses',
+                leading=cleaned_data.get('who_diagnosis'),
                 m2m=cleaned_data.get('wcs_dx_adult'))
 
         return cleaned_data

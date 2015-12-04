@@ -110,39 +110,39 @@ class TestInfantBirthRecordExam(TestCase):
         self.data['heent_no_other'] = 'HEENT problems'
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(self.infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'If HEENT Exam is normal, Do not answer the following Question (Q8).', errors)
+        self.assertIn(u'If HEENT Exam is normal, Do not answer the following Question (Q7).', errors)
 
     def test_validate_heent_exam2(self):
         self.data['heent_exam'] = NO
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(self.infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'Provide answer to Q8.', errors)
+        self.assertIn(u'Provide answer to Q7.', errors)
 
     def test_validate_resp_exam1(self):
         self.data['resp_exam'] = YES
         self.data['resp_exam_other'] = 'Asthma'
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(self.infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'If Respiratory Exam is normal, Do not answer the following Question (Q10).', errors)
+        self.assertIn(u'If Respiratory Exam is normal, Do not answer the following Question (Q9).', errors)
 
     def test_validate_resp_exam2(self):
         self.data['resp_exam'] = NO
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(self.infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'Provide answer to Q10.', errors)
+        self.assertIn(u'Provide answer to Q9.', errors)
 
     def test_validate_cardiac_exam1(self):
         self.data['cardiac_exam'] = YES
         self.data['cardiac_exam_other'] = 'Palpitations'
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(self.infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'If Cardiac Exam is normal, Do not answer the following Question (Q12).', errors)
+        self.assertIn(u'If Cardiac Exam is normal, Do not answer the following Question (Q11).', errors)
 
     def test_validate_cardiac_exam2(self):
         self.data['cardiac_exam'] = NO
         self.infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(self.infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'Provide answer to Q12.', errors)
+        self.assertIn(u'Provide answer to Q11.', errors)
 
     def test_validate_report_datetime_invalid(self):
         self.data['cardiac_exam'] = NO
@@ -155,7 +155,7 @@ class TestInfantBirthRecordExam(TestCase):
         self.data['abdominal_exam'] = NO
         infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'Provide answer to Q14.', errors)
+        self.assertIn(u'Provide answer to Q13.', errors)
 
     def test_abdominal_exam_2(self):
         self.data['abdominal_exam'] = YES
@@ -168,7 +168,7 @@ class TestInfantBirthRecordExam(TestCase):
         self.data['skin_exam'] = NO
         infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'Provide answer to Q16.', errors)
+        self.assertIn(u'Provide answer to Q15.', errors)
 
     def test_skin_exam_2(self):
         self.data['skin_exam'] = YES
@@ -188,7 +188,7 @@ class TestInfantBirthRecordExam(TestCase):
         self.data['macular_papular_rash'] = NO
         infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'Provide answer to Q18.', errors)
+        self.assertIn(u'Provide answer to Q17.', errors)
 
     def test_neuro_exam_1(self):
         self.data['neurologic_exam'] = YES
@@ -201,4 +201,4 @@ class TestInfantBirthRecordExam(TestCase):
         self.data['neurologic_exam'] = NO
         infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'Provide answer to Q20.', errors)
+        self.assertIn(u'Provide answer to Q19.', errors)

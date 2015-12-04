@@ -9,19 +9,16 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
+from edc_constants.constants import YES, NO, NOT_APPLICABLE
+from edc.subject.code_lists.models import WcsDxAdult
 
-from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import \
-    (MaternalEligibilityFactory, AntenatalEnrollmentFactory,
+from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory, AntenatalEnrollmentFactory,
     MaternalVisitFactory)
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
 from bhp077.apps.microbiome_list.models import ChronicConditions
-from bhp077.apps.microbiome_maternal.tests.factories import\
-    (PostnatalEnrollmentFactory, SexualReproductiveHealthFactory, MaternalOffStudyFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 from bhp077.apps.microbiome_maternal.forms import MaternalMedicalHistoryForm
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
@@ -43,60 +40,52 @@ class TestMaternalMedicalHistoryForm(TestCase):
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
-        c = ChronicConditions.objects.create(
-            name = 'Chrome chronic',
-            short_name = 'Chrome'
+        self.postnatal_enrollment = PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            breastfeed_for_a_year=YES
         )
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='2000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        c = ChronicConditions.objects.create(name=NOT_APPLICABLE, short_name=NOT_APPLICABLE, field_name='chronic_cond')
+        who = WcsDxAdult.objects.create(code=NOT_APPLICABLE, short_name=NOT_APPLICABLE, long_name=NOT_APPLICABLE)
         self.data = {
             'report_datetime': timezone.now(),
-            'maternal_visit': None,
-            'has_chronic_cond': YES,
+            'maternal_visit': self.maternal_visit.id,
+            'has_chronic_cond': NO,
             'chronic_cond': [c.id],
+            'who_diagnosis': NO,
+            'wcs_dx_adult': [who.id],
         }
 
-    def model_options(self, app_label, model_name, appointment):
-        model_options = {}
-        model_options.update(
-            entry__app_label=app_label,
-            entry__model_name=model_name,
-            appointment=appointment)
-        return model_options
-
-    def test_chronic_cond_valid(self):
-
-        PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
-            evidence_hiv_status=YES,
-        )
-        appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='1000M'
-        )
-        maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
-
-        self.data['maternal_visit'] = maternal_visit.id
-
+    def test_valid(self):
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-
         self.assertTrue(maternal_medicalHistory_form.is_valid())
 
-    def test_chronic_cond_valid1(self):
-        c = ChronicConditions.objects.create(
-            name =  "N/A",
-            short_name = "N/A"
-        )
-        PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
-            evidence_hiv_status=YES,
-        )
-        appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='1000M'
-        )
-        maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
-        self.data['has_chronic_cond'] = NO
-        self.data['maternal_visit'] = maternal_visit.id
-        self.data['chronic_cond'] = [c.id]
+    def test_chronic_cond_1(self):
+        """If indicated has chronic condition and no conditions supplied."""
+        self.data['has_chronic_cond'] = YES
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        print maternal_medicalHistory_form.errors
-        self.assertTrue(maternal_medicalHistory_form.is_valid())
+        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+        self.assertIn('You stated there ARE chronic condition', errors)
+
+    def test_chronic_cond_2(self):
+        """If indicated has NO chronic condition and conditions supplied"""
+        chronic = ChronicConditions.objects.create(name='Diabetes', short_name='Diabetes', field_name='chronic_cond')
+        self.data['chronic_cond'] = [chronic.id]
+        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
+        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+        self.assertIn('You stated there are NO chronic conditions.', errors)
+
+    def test_who_diagnosis_1(self):
+        self.data['who_diagnosis'] = YES
+        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
+        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+        self.assertIn('You stated there ARE WHO diagnoses', errors)
+
+    def test_who_diagnosis_2(self):
+        who_dx = WcsDxAdult.objects.create(code='Meningitis', short_name='Meningitis', long_name='Meningitis')
+        self.data['wcs_dx_adult'] = [who_dx.id]
+        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
+        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+        self.assertIn('You stated there are NO WHO diagnoses', errors)
