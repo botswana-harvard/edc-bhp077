@@ -17,7 +17,8 @@ from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFacto
 from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
 
-from bhp077.apps.microbiome_maternal.visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+from bhp077.apps.microbiome_maternal.visit_schedule import (AntenatalEnrollmentVisitSchedule,
+                                                            PostnatalEnrollmentVisitSchedule)
 from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
 from bhp077.apps.microbiome_infant.tests.factories import \
     (InfantBirthFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
@@ -86,15 +87,18 @@ class TestInfantBirthArv(TestCase):
     def test_validate_azt_additional_dose(self):
         self.data['azt_additional_dose'] = 'N/A'
         infant_birth_arv = InfantBirthArvForm(data=self.data)
-        self.assertIn(u'Do not select Not applicatable for Q6 if Q4 answer was yes.', infant_birth_arv.errors.get('__all__'))
+        self.assertIn(u'Do not select Not applicatable for Q6 if Q4 answer was yes.',
+                      infant_birth_arv.errors.get('__all__'))
 
     def test_validate_sdnvp_after_birth(self):
         self.data['nvp_dose_date'] = ''
         infant_birth_arv = InfantBirthArvForm(data=self.data)
-        self.assertIn(u'If infant has received single dose NVP then provide NVP date.', infant_birth_arv.errors.get('__all__'))
+        self.assertIn(u'If infant has received single dose NVP then provide NVP date.',
+                      infant_birth_arv.errors.get('__all__'))
 
     def test_validate_sdnvp_after_birth_breastfeeding(self):
         InfantBirthFeedVaccineFactory(infant_visit=self.infant_visit, feeding_after_delivery='Breastfeeding only')
         self.data['nvp_discharge_supply'] = 'N/A'
         infant_birth_arv = InfantBirthArvForm(data=self.data)
-        self.assertIn(u'If the infant is breast feeding then do not select not applicaticable for Q11.', infant_birth_arv.errors.get('__all__'))
+        self.assertIn(u'If the infant is breast feeding then do not select not applicaticable for Q11.',
+                      infant_birth_arv.errors.get('__all__'))

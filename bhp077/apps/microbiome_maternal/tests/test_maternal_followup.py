@@ -7,13 +7,12 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc.subject.code_lists.models import WcsDxAdult
-from edc_constants.choices import YES, NO
+from edc_constants.choices import YES, NO, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
-from bhp077.apps.microbiome_maternal.forms import (MaternalPostFuForm, MaternalPostFuDxForm)
+from bhp077.apps.microbiome_maternal.forms import (MaternalPostFuForm)
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
@@ -44,8 +43,8 @@ class TestMaternalFollowup(TestCase):
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.chronic_cond = ChronicConditions.objects.create(name='N/A', short_name='N/A', display_index=10,
-                                                             field_name='chronic_cond')
+        self.chronic_cond = ChronicConditions.objects.create(name=NOT_APPLICABLE, short_name=NOT_APPLICABLE,
+                                                             display_index=10, field_name='chronic_cond')
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
@@ -63,27 +62,29 @@ class TestMaternalFollowup(TestCase):
         """Assert that if mother indicated to be weighed, then weight cannot be empty"""
         self.data['mother_weight'] = YES
         form = MaternalPostFuForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You indicated that participant was weighed. Please provide the weight.',
-                      form.errors.get('__all__'))
+                      errors)
 
     def test_weight_2(self):
         """Assert that if mother was not weighed CANNOT provide the weight."""
         self.data['enter_weight'] = 50
         form = MaternalPostFuForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You indicated that participant was NOT weighed, yet provided the weight. Please correct.',
-                      form.errors.get('__all__'))
+                      errors)
 
     def test_weight_3(self):
-        """Assert that if mother was not weighed CANNOT provide the weight."""
+        """Assert that if mother was not weighed and you dont provide the weight, form is valid."""
         form = MaternalPostFuForm(data=self.data)
-        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid)
 
     def test_weight_4(self):
         """Assert that if mother was weighed, weight should be provided."""
         self.data['mother_weight'] = YES
         self.data['enter_weight'] = 50
         form = MaternalPostFuForm(data=self.data)
-        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid)
 
     def test_chronic_cond_1(self):
         """Assert that if has chronic conditions is indicated as YES, then chronic conditions cannot be N/A"""
