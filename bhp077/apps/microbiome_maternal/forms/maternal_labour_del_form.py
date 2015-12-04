@@ -1,14 +1,13 @@
-from datetime import date
 from dateutil.relativedelta import relativedelta
 from django import forms
 
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
 
-from base_maternal_model_form import BaseMaternalModelForm
-
 from ..models import (MaternalLabourDel, MaternalLabDelMed,
                       MaternalLabDelClinic, MaternalLabDelDx,
                       MaternalLabDelDxT, PostnatalEnrollment)
+
+from .base_maternal_model_form import BaseMaternalModelForm
 
 
 class MaternalLabourDelForm(BaseMaternalModelForm):
@@ -24,23 +23,28 @@ class MaternalLabourDelForm(BaseMaternalModelForm):
                 raise forms.ValidationError('Maternal Labour Delivery date cannot be greater than report date. '
                                             'Please correct.')
         postnatal = PostnatalEnrollment.objects.get(
-            registered_subject__subject_identifier=cleaned_data.get('maternal_visit').appointment.registered_subject.subject_identifier)
+            registered_subject__subject_identifier=cleaned_data.get(
+                'maternal_visit').appointment.registered_subject.subject_identifier)
         if postnatal:
-            expected_delivery_date = cleaned_data.get('report_datetime').date() - relativedelta(days=postnatal.postpartum_days)
+            expected_delivery_date = cleaned_data.get(
+                'report_datetime').date() - relativedelta(days=postnatal.postpartum_days)
             if cleaned_data.get('delivery_datetime').date() != expected_delivery_date:
-                raise forms.ValidationError('Maternal Delivery date does not match the number of days post delivery as '
-                                            'indicated on Postpartum Enrollment of {} days ago. Please correct'
-                                            .format(postnatal.postpartum_days))
+                raise forms.ValidationError(
+                    'Maternal Delivery date does not match the number of days post delivery as '
+                    'indicated on Postpartum Enrollment of {} days ago. Please correct'.format(
+                        postnatal.postpartum_days))
         if cleaned_data.get('has_temp') == YES:
             if not cleaned_data.get('labour_max_temp'):
-                raise forms.ValidationError('You have indicated that maximum temperature at delivery is known. '
-                                            'Please provide the maximum temperature.')
+                raise forms.ValidationError(
+                    'You have indicated that maximum temperature at delivery is known. '
+                    'Please provide the maximum temperature.')
         else:
             if cleaned_data.get('labour_max_temp'):
                 raise forms.ValidationError('You have indicated that maximum temperature is not known. '
                                             'You CANNOT provide the maximum temperature')
         if cleaned_data.get('has_vl') == NO and cleaned_data.get('vl_detectable') != NOT_APPLICABLE:
-            raise forms.ValidationError('If Viral Load was not performed then Viral Load detectable is Not Applicable.')
+            raise forms.ValidationError(
+                'If Viral Load was not performed then Viral Load detectable is Not Applicable.')
         return cleaned_data
 
     class Meta:
@@ -84,40 +88,51 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
         # If CD4 performed, date and result should be supplied
         if cleaned_data.get('has_cd4') == YES:
             if not cleaned_data.get('cd4_date'):
-                raise forms.ValidationError('You indicated that a CD4 count was performed. Please provide the date.')
+                raise forms.ValidationError(
+                    'You indicated that a CD4 count was performed. Please provide the date.')
             if not cleaned_data.get('cd4_result'):
-                raise forms.ValidationError('You indicated that a CD4 count was performed. Please provide the result.')
+                raise forms.ValidationError(
+                    'You indicated that a CD4 count was performed. Please provide the result.')
         else:
             # If cd4 was not performed no date nor result should be provided
             if cleaned_data.get('cd4_date'):
-                raise forms.ValidationError('You indicated that a CD4 count was NOT performed, yet provided a date '
-                                            'CD4 was performed. Please correct.')
+                raise forms.ValidationError(
+                    'You indicated that a CD4 count was NOT performed, yet provided a date '
+                    'CD4 was performed. Please correct.')
             if cleaned_data.get('cd4_result'):
-                raise forms.ValidationError('You indicated that a CD4 count was NOT performed, yet provided a CD4 '
-                                            'result. Please correct.')
+                raise forms.ValidationError(
+                    'You indicated that a CD4 count was NOT performed, yet provided a CD4 '
+                    'result. Please correct.')
         # If VL performed, date and result should be supplied
         if cleaned_data.get('has_vl') == YES:
             if not cleaned_data.get('vl_date'):
-                raise forms.ValidationError('You indicated that a VL count was performed. Please provide the date.')
+                raise forms.ValidationError(
+                    'You indicated that a VL count was performed. Please provide the date.')
             if not cleaned_data.get('vl_result'):
-                raise forms.ValidationError('You indicated that a VL count was performed. Please provide the result.')
+                raise forms.ValidationError(
+                    'You indicated that a VL count was performed. Please provide the result.')
             if cleaned_data.get('vl_detectable') == NOT_APPLICABLE:
-                raise forms.ValidationError('You stated that a VL count was performed. Please indicate if it '
-                                            'was detectable.')
+                raise forms.ValidationError(
+                    'You stated that a VL count was performed. Please indicate if it '
+                    'was detectable.')
         else:
             # If VL was not performed, no VL date nor result should be supplied
             if cleaned_data.get('vl_date'):
-                raise forms.ValidationError('You indicated that a VL count was NOT performed, yet provided a date VL '
-                                            'was performed. Please correct.')
+                raise forms.ValidationError(
+                    'You indicated that a VL count was NOT performed, yet provided a date VL '
+                    'was performed. Please correct.')
             if cleaned_data.get('vl_result'):
-                raise forms.ValidationError('You indicated that a VL count was NOT performed, yet provided a VL result'
-                                            ' Please correct.')
+                raise forms.ValidationError(
+                    'You indicated that a VL count was NOT performed, yet provided a VL result'
+                    ' Please correct.')
             if cleaned_data.get('vl_detectable') != NOT_APPLICABLE:
-                raise forms.ValidationError('You stated that a VL count was NOT performed, you CANNOT indicate if VL '
-                                            'was detectable.')
+                raise forms.ValidationError(
+                    'You stated that a VL count was NOT performed, you CANNOT indicate if VL '
+                    'was detectable.')
         if cleaned_data.get('vl_detectable') == YES:
             if not cleaned_data.get('vl_result'):
-                raise forms.ValidationError('You indicated that the VL was detectable. Provide provide VL result.')
+                raise forms.ValidationError(
+                    'You indicated that the VL was detectable. Provide provide VL result.')
         return cleaned_data
 
     class Meta:

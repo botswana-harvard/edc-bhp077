@@ -1,5 +1,4 @@
 from django.db import models
-from dateutil import rrule
 
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
@@ -191,10 +190,6 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         blank=True)
 
     enrollment_type = models.CharField(max_length=20)
-
-    def weeks_between(self, start_date, end_date):
-        weeks = rrule.rrule(rrule.WEEKLY, dtstart=start_date, until=end_date)
-        return weeks.count()
 
     def maternal_eligibility_pregnant_yes(self):
         try:

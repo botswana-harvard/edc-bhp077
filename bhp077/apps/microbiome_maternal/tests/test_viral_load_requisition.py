@@ -1,6 +1,4 @@
 from django.test import TestCase
-from django import forms
-from django.utils import timezone
 
 from edc.entry_meta_data.models import RequisitionMetaData
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -8,13 +6,11 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.entry.models.lab_entry import LabEntry
 from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.registration.models import RegisteredSubject
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
+from edc_constants.constants import YES, POS
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
+from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
@@ -36,7 +32,7 @@ class TestViralLoadRequisition(TestCase):
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_eligibility.registered_subject
-        postnatal = PostnatalEnrollmentFactory(
+        PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             verbal_hiv_status=POS,
             evidence_hiv_status=YES)

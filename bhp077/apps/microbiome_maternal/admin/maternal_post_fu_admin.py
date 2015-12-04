@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
+
 from ..forms import MaternalPostFuForm, MaternalPostFuDxForm, MaternalPostFuDxTForm
 from ..models import MaternalPostFu, MaternalPostFuDx, MaternalPostFuDxT, MaternalVisit
 
@@ -57,7 +58,8 @@ class MaternalPostFuDxTAdmin(BaseModelAdmin):
         if db_field.name == "post_fu_dx":
             if request.GET.get('maternal_visit'):
                 infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
-                kwargs["queryset"] = MaternalPostFuDxT.objects.filter(registered_subject=infant_visit.appointment.registered_subject)
+                kwargs["queryset"] = MaternalPostFuDxT.objects.filter(
+                    registered_subject=infant_visit.appointment.registered_subject)
         return super(MaternalPostFuDxTAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalPostFuDxT, MaternalPostFuDxTAdmin)
@@ -86,7 +88,8 @@ class MaternalPostFuDxAdmin(BaseModelAdmin):
         if db_field.name == "maternal_post_fu":
             if request.GET.get('maternal_visit'):
                 infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
-                kwargs["queryset"] = MaternalPostFuDx.objects.filter(registered_subject=infant_visit.appointment.registered_subject)
+                kwargs["queryset"] = MaternalPostFuDx.objects.filter(
+                    registered_subject=infant_visit.appointment.registered_subject)
         return super(MaternalPostFuDxAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalPostFuDx, MaternalPostFuDxAdmin)

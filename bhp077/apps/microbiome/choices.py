@@ -1,5 +1,4 @@
-from edc_constants.constants import NOT_APPLICABLE, UNKNOWN, OTHER
-from bhp077.apps.microbiome.constants import LIVE
+from edc_constants.constants import NOT_APPLICABLE, UNKNOWN, OTHER, UNSCHEDULED, SCHEDULED
 
 VISIT_INFO_SOURCE = [
     ('participant', 'Clinic visit with participant'),
@@ -7,13 +6,13 @@ VISIT_INFO_SOURCE = [
     ('other_doctor', 'Contact with external health care provider/medical doctor'),
     ('family', 'Contact with family or designated person who can provide information'),
     ('chart', 'Hospital chart or other medical record'),
-    ('OTHER', 'Other')]
+    (OTHER, 'Other')]
 
 # DONT CHANGE THESE !!
 VISIT_REASON = [
-    ('scheduled', 'Scheduled visit/contact'),
+    (SCHEDULED, 'Scheduled visit/contact'),
     ('missed', 'Missed Scheduled visit'),
-    ('unscheduled', 'Unscheduled visit at which lab samples or data are being submitted'),
+    (UNSCHEDULED, 'Unscheduled visit at which lab samples or data are being submitted'),
     ('lost', 'Lost to follow-up (use only when taking subject off study)'),
     ('death', 'Death'),
     ('off study', 'Subject has completed the study')]
@@ -22,7 +21,7 @@ VISIT_UNSCHEDULED_REASON = (
     ('Routine oncology', 'Routine oncology clinic visit'),
     ('Ill oncology', 'Ill oncology clinic visit'),
     ('Patient called', 'Patient called to come for visit'),
-    ('OTHER', 'Other, specify:'),
+    (OTHER, 'Other, specify:'),
 )
 
 HAART_DURING_PREG = (
@@ -48,8 +47,8 @@ ARV_INTERRUPTION_REASON = (
     ('NO_DRUGS', 'No drugs available'),
     ('NO_REFILL', 'Didn\'t get to clinic for refill'),
     ('FORGOT', 'Mother forgot to take the ARVs'),
-    ('OTHER', 'Other'),
-    ('N/A', 'Not Applicable'),
+    (OTHER, 'Other'),
+    (NOT_APPLICABLE, 'Not Applicable'),
 )
 
 AUTOPSY_SOURCE = (
@@ -57,7 +56,7 @@ AUTOPSY_SOURCE = (
     ('family_mem', 'Other family member'),
     ('hlth_prof', 'Health Professional who cared for the infant'),
     ('med_rec', 'Medical records'),
-    ('OTHER', 'Other'),
+    (OTHER, 'Other'),
 )
 
 AUTOPSY_SIGNS = (
@@ -113,7 +112,7 @@ CARDIOVASCULAR_DISORDER = (
     ('Arteriovenous malformation, specify site', 'Arteriovenous malformation, specify site'),
     ('Patent ductous arteriosus (persisting >6 weeks of age)',
      'Patent ductous arteriosus (persisting >6 weeks of age)'),
-    ('OTHER', 'Other cardiovascular malformation, specify'),
+    (OTHER, 'Other cardiovascular malformation, specify'),
 )
 
 CLEFT_DISORDER = (
@@ -140,7 +139,7 @@ COWS_MILK = (
     ('boiled', '1. Boiled from cow'),
     ('unboiled', '2. Unboiled from cow'),
     ('store', '3. From store'),
-    ('N/A', 'Not Applicable'),
+    (NOT_APPLICABLE, 'Not Applicable'),
 )
 
 CTX_PLACEBO_STATUS = (
@@ -278,7 +277,7 @@ FEM_GENITAL_ANOMALY = (
     ('Vaginal agenesis', 'Vaginal agenesis'),
     ('Absent or streak ovary', 'Absent or streak ovary'),
     ('Uterine anomaly', 'Uterine anomaly'),
-    ('OTHER', 'Other ovarian, fallopian, uterine, cervical, vaginal, or vulvar abnormality'),
+    (OTHER, 'Other ovarian, fallopian, uterine, cervical, vaginal, or vulvar abnormality'),
 )
 
 INFO_PROVIDER = (
@@ -287,7 +286,7 @@ INFO_PROVIDER = (
     ('FATHER', 'Father'),
     ('GRANDFATHER', 'Grandfather'),
     ('SIBLING', 'Sibling'),
-    ('OTHER', 'Other'),
+    (OTHER, 'Other'),
 )
 
 INFANT_OFF_DRUG_REASON = (
@@ -299,7 +298,7 @@ INFANT_OFF_DRUG_REASON = (
          '(confirmed or suspected to be possibly related to study drug)')),
     ('caregiver', '4. Participant\'s mother/caregiver no longer wants child to receive study drug'),
     ('hiv infected', '5. Child is HIV- infected (Open-label CTX indicated)'),
-    ('OTHER', '9. Other'),
+    (OTHER, '9. Other'),
 )
 
 INFANT_VISIT_STUDY_STATUS = (
@@ -326,7 +325,7 @@ OFF_STUDY_REASON = [
         (' Participant death (complete the DEATH REPORT FORM AF005) '
          '(For EAE Reporting requirements see EAE Reporting Manual)')
     ),
-    ('OTHER', ' Other'),
+    (OTHER, ' Other'),
 ]
 
 LOWER_GASTROINTESTINAL_ABNORMALITY = (
@@ -348,7 +347,7 @@ MALE_GENITAL_ANOMALY = (
     ('Chordee', 'Chordee'),
     ('Ambiguous genitalia, male', 'Ambiguous genitalia, male'),
     ('Undescended testis', 'Undescended testis'),
-    ('OTHER', 'Other male genital abnormality, specify'),
+    (OTHER, 'Other male genital abnormality, specify'),
 )
 
 BREAST_CHOICE = (
@@ -452,12 +451,12 @@ MUSCULOSKELETAL_ABNORMALITY = (
     ('Congenital diaphramatic hernia', 'Congenital diaphramatic hernia'),
     ('Omphalocele', 'Omphalocele'),
     ('Gastroschisis', 'Gastroschisis'),
-    ('OTHER', 'Other muscular or skeletal abnormality or syndrome, specify'),
+    (OTHER, 'Other muscular or skeletal abnormality or syndrome, specify'),
 )
 
 OTHER_DEFECT = (
     ('None', 'None'),
-    ('OTHER', 'Other defect/syndrome not already reported, specify'),
+    (OTHER, 'Other defect/syndrome not already reported, specify'),
 )
 
 RANDOMIZATION_MATERNAL_ART_STATUS = (
@@ -488,8 +487,8 @@ REASON_RCV_FORMULA = (
                           '(for babies <= 6 months old)')),
     ('complete per protocol', ('7. <Per breastfeeding randomisation, infant is >5 months or >11 '
                                'months of age and completed breastfeeding per protocol')),
-    ('OTHER', '9. Other'),
-    ('N/A', 'Not Applicable'),
+    (OTHER, '9. Other'),
+    (NOT_APPLICABLE, 'Not Applicable'),
 )
 
 REASON_MISSED_CTX_PLACEBO = (
@@ -500,8 +499,8 @@ REASON_MISSED_CTX_PLACEBO = (
     ('infant away', 'Infant was away from home and the CTX/Placebo bottle was not at the other location'),
     ('caregiver decision/sick',
      'Caregiver chose not to give the CTX/Placebo because baby was sick or for other reasons'),
-    ('OTHER', 'Other'),
-    ('N/A', 'Not Applicable'),
+    (OTHER, 'Other'),
+    (NOT_APPLICABLE, 'Not Applicable'),
 )
 
 REASONS_VACCINES_MISSED = (
@@ -509,7 +508,7 @@ REASONS_VACCINES_MISSED = (
         'to clinic for this scheduled vaccination'),
     ('caregiver declines vaccination', 'Mother or Caregiver declines this vaccicnation'),
     ('no stock', 'Stock out at clinic'),
-    ('OTHER', 'Other, specify'),
+    (OTHER, 'Other, specify'),
 )
 
 REASON_MISSED_PROPHYLAXIS = (
@@ -518,7 +517,7 @@ REASON_MISSED_PROPHYLAXIS = (
     ('caregiver away', 'Primary caregiver was away from home and did not have another person give the NVP'),
     ('infant away', 'Infant was away from home and the NVP bottle was not at the other location'),
     ('caregiver decision/sick', 'Caregiver chose not to give the NVP because baby was sick or for other reasons'),
-    ('OTHER', 'Other'),
+    (OTHER, 'Other'),
 )
 
 RENAL_ANOMALY = (
@@ -532,7 +531,7 @@ RENAL_ANOMALY = (
     ('Horseshoe kidney', 'Horseshoe kidney'),
     ('Exstrophy of bladder', 'Exstrophy of bladder'),
     ('Posterior urethral valves', 'Posterior urethral valves'),
-    ('OTHER', 'Other renal, ureteral, bladder, urethral abnormality, specify'),
+    (OTHER, 'Other renal, ureteral, bladder, urethral abnormality, specify'),
 )
 
 RESPIRATORY_DEFECT = (
@@ -547,7 +546,7 @@ RESPIRATORY_DEFECT = (
     ('OTHER laryngeal, tracheal or bronchial anomalies', 'Other laryngeal, tracheal or bronchial anomalies'),
     ('Single lung cyst', 'Single lung cyst'),
     ('Polycystic lung', 'Polycystic lung'),
-    ('OTHER', 'Other respiratory anomaly, specify'),
+    (OTHER, 'Other respiratory anomaly, specify'),
 )
 
 STUDY_STATUS = (
@@ -559,7 +558,7 @@ SKIN_ABNORMALITY = (
     ('None', 'None'),
     ('Icthyosis', 'Icthyosis'),
     ('Ectodermal dysplasia', 'Ectodermal dysplasia'),
-    ('OTHER', 'Other skin abnormality, specify'),
+    (OTHER, 'Other skin abnormality, specify'),
 )
 
 TIMES_BREASTFED = (
@@ -568,7 +567,7 @@ TIMES_BREASTFED = (
     ('about 1 per day on most days', '3. About once per day on most days'),
     ('>1 per day, but not for all feedings', '4. More than once per day, but not for all feedings'),
     ('For all feedings', '5. For all feedings (i.e no formula or other foods or liquids)'),
-    ('N/A', 'Not Applicable'),
+    (NOT_APPLICABLE, 'Not Applicable'),
 )
 
 TRISOME_CHROSOMESOME_ABNORMALITY = (
@@ -598,8 +597,8 @@ WATER_USED = (
     ('Water boiled immediately before use', 'Water boiled immediately before use'),
     ('Water boiled earlier and then stored', 'Water boiled earlier and then stored'),
     ('Specifically treated water', 'Specifically treated water'),
-    ('OTHER', 'Other (specify)'),
-    ('N/A', 'Not Applicable'),
+    (OTHER, 'Other (specify)'),
+    (NOT_APPLICABLE, 'Not Applicable'),
 )
 
 ALIVE_DEAD_UNKNOWN = (
@@ -618,10 +617,10 @@ STOOL_TEXTURE_DESC = (
 )
 
 ILLNESS_CLASSIFICATION = (
-    ('N/A', 'Not applicable'),
+    (NOT_APPLICABLE, 'Not applicable'),
     ('respi_illness', 'Respiratory Illness'),
     ('gastro_illness', 'Gastrointestinal illness (examples including vomiting, diarrhea or both)'),
-    ('OTHER', 'Other'),
+    (OTHER, 'Other'),
 )
 
 STOOLS_PAST_24HOURS = (
@@ -654,7 +653,7 @@ ARV_STATUS_WITH_NEVER = (
     ('discontinued', '3. Permanently discontinued at or before the last attended scheduled visit'),
     ('never started', '4. Never started'),
     ('modified', '5. Change in at least one medication since the last attended scheduled visit or today'),
-    ('N/A', 'Not applicable'),
+    (NOT_APPLICABLE, 'Not applicable'),
 )
 
 CIRCUMCISION = (

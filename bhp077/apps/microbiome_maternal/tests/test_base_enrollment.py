@@ -15,7 +15,6 @@ from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibility
                                                              SpecimenConsentFactory)
 from bhp077.apps.microbiome_maternal.models import BaseEnrollment
 from bhp077.apps.microbiome_maternal.forms import BaseEnrollmentForm
-from operator import neg
 
 
 class BaseEnrollTestModel(BaseEnrollment):
@@ -175,14 +174,14 @@ class TestBaseEnroll(TestCase):
         self.assertIn(u'The verbal_hiv_status and result at 32weeks should be the same!', form.errors.get('__all__'))
 
     def test_tested_at_32weeks_no_result(self):
-        ss = SpecimenConsentFactory(registered_subject=self.registered_subject)
+        SpecimenConsentFactory(registered_subject=self.registered_subject)
         self.data['week32_test'] = YES
         self.data['week32_result'] = None
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'Please provide test result at week 32.', form.errors.get('__all__'))
 
     def test_not_tested_at_32weeks_results_given(self):
-        ss = SpecimenConsentFactory(registered_subject=self.registered_subject)
+        SpecimenConsentFactory(registered_subject=self.registered_subject)
         self.data['week32_result'] = POS
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'You mentioned testing was not done at 32weeks yet provided a test result.', form.errors.get('__all__'))

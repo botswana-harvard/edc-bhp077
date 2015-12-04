@@ -11,14 +11,15 @@ from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_infant.forms import InfantStoolCollectionForm
-from bhp077.apps.microbiome_infant.tests.factories import (InfantBirthFactory, InfantVisitFactory,
-                                                           InfantRequistionFactory)
+from bhp077.apps.microbiome_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
+from bhp077.apps.microbiome_lab.tests.factories import InfantRequistionFactory
 from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
-from bhp077.apps.microbiome_maternal.tests.factories import (MaternalConsentFactory, MaternalLabourDelFactory,
-                                                             MaternalEligibilityFactory, MaternalVisitFactory,
-                                                             PostnatalEnrollmentFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import (
+    MaternalConsentFactory, MaternalLabourDelFactory, MaternalEligibilityFactory,
+    MaternalVisitFactory, PostnatalEnrollmentFactory)
 from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
+from bhp077.apps.microbiome_infant.constants import REALTIME
 
 
 class TestInfantStoolCollection(TestCase):
@@ -39,7 +40,7 @@ class TestInfantStoolCollection(TestCase):
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_eligibility.registered_subject
 
-        postnatal = PostnatalEnrollmentFactory(
+        PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             verbal_hiv_status=NEG,
             evidence_hiv_status=YES)
@@ -129,7 +130,7 @@ class TestInfantStoolCollection(TestCase):
     def test_collection_time_2(self):
         self.data['sample_obtained'] = YES
         self.data['nappy_type'] = 'cloth nappy'
-        self.data['stool_colection'] = 'real-time'
+        self.data['stool_colection'] = REALTIME
         self.data['stool_colection_time'] = 5
         self.data['stool_stored'] = YES
         form = InfantStoolCollectionForm(data=self.data)

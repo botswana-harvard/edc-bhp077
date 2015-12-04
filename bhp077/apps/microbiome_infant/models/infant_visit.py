@@ -65,7 +65,7 @@ class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUui
             appointment=self.appointment)
         return model_options
 
-    def rehash_meta_data(self):
+    def update_entry_meta_data(self):
         if self.reason == 'unscheduled':
             self.meta_data_visit_unshceduled(self.appointment)
 

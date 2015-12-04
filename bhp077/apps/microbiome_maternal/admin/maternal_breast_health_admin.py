@@ -1,11 +1,12 @@
 from django.contrib import admin
 
-from edc_base.modeladmin.admin import BaseModelAdmin
 from ..forms import MaternalBreastHealthForm
-from ..models import MaternalBreastHealth, MaternalVisit
+from ..models import MaternalBreastHealth
+
+from .base_maternal_model_admin import BaseMaternalModelAdmin
 
 
-class MaternalBreastHealthAdmin(BaseModelAdmin):
+class MaternalBreastHealthAdmin(BaseMaternalModelAdmin):
 
     form = MaternalBreastHealthForm
 
@@ -17,10 +18,4 @@ class MaternalBreastHealthAdmin(BaseModelAdmin):
         "lesions": admin.VERTICAL,
         "told_stop_bf": admin.VERTICAL,
     }
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "maternal_visit":
-                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
-        return super(MaternalBreastHealthAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
 admin.site.register(MaternalBreastHealth, MaternalBreastHealthAdmin)

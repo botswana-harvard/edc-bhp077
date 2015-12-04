@@ -15,9 +15,9 @@ from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFacto
 from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.forms import RapidTestResultForm
+from bhp077.apps.microbiome_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 
 
 class TestRapidTestForm(TestCase):
@@ -34,7 +34,8 @@ class TestRapidTestForm(TestCase):
         site_rule_groups.autodiscover()
 
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
         self.data = {
@@ -71,7 +72,8 @@ class TestRapidTestForm(TestCase):
 
         rapid_form = RapidTestResultForm(data=self.data)
 
-        self.assertIn(u"If a rapid test was processed, what is the test result?", rapid_form.errors.get("__all__"))
+        self.assertIn("If a rapid test was processed, what is the test result?",
+                      rapid_form.errors.get("__all__"))
 
     def test_validate_rapid_test_done_result(self):
         self.maternal_consent.dob = date(2015, 12, 7)
@@ -117,7 +119,9 @@ class TestRapidTestForm(TestCase):
 
         rapid_form = RapidTestResultForm(data=self.data)
 
-        self.assertIn(u"If a rapid test was processed, what is the date of the rapid test?", rapid_form.errors.get("__all__"))
+        self.assertIn(
+            "If a rapid test was processed, what is the date of the rapid test?",
+            rapid_form.errors.get("__all__"))
 
     def test_validate_rapid_test_done_processed(self):
         self.maternal_consent.dob = date(2015, 12, 7)
@@ -126,11 +130,11 @@ class TestRapidTestForm(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             verbal_hiv_status=NEG,
-            evidence_hiv_status=YES,
-        )
+            evidence_hiv_status=YES)
+
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='1000M'
-        )
+            registered_subject=self.registered_subject, visit_definition__code='1000M')
+
         maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
 
         self.data['maternal_visit'] = maternal_visit.id
@@ -150,11 +154,11 @@ class TestRapidTestForm(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             verbal_hiv_status=NEG,
-            evidence_hiv_status=YES,
-        )
+            evidence_hiv_status=YES)
+
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='1000M'
-        )
+            registered_subject=self.registered_subject, visit_definition__code='1000M')
+
         maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
 
         self.data['maternal_visit'] = maternal_visit.id
@@ -165,4 +169,6 @@ class TestRapidTestForm(TestCase):
 
         rapid_form = RapidTestResultForm(data=self.data)
 
-        self.assertIn(u"If a rapid test was not processed, please do not provide rapid test date and result.", rapid_form.errors.get("__all__"))
+        self.assertIn(
+            "If a rapid test was not processed, please do not provide rapid test date and result.",
+            rapid_form.errors.get("__all__"))

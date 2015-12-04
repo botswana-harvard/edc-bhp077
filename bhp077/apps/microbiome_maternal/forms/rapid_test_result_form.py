@@ -3,7 +3,7 @@ from base_maternal_model_form import BaseMaternalModelForm
 
 from ..models import RapidTestResult
 
-from edc_constants.constants import YES, NO, POS, NEG, IND
+from edc_constants.constants import YES, POS, NEG, IND
 
 
 class RapidTestResultForm(BaseMaternalModelForm):
@@ -19,8 +19,9 @@ class RapidTestResultForm(BaseMaternalModelForm):
                                             ' result?')
         else:
             if cleaned_data.get('rapid_test_date') or cleaned_data.get('rapid_test_result'):
-                raise forms.ValidationError('If a rapid test was not processed, please do not provide rapid test date '
-                                            'and result.')
+                raise forms.ValidationError(
+                    'If a rapid test was not processed, please do not provide rapid test date '
+                    'and result.')
         cleaned_data = super(RapidTestResultForm, self).clean()
         return cleaned_data
 

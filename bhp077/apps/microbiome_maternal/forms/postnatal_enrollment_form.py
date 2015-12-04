@@ -4,11 +4,10 @@ from edc_constants.constants import POS, YES, NO, NEG
 
 from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome_maternal.models import (PostnatalEnrollment, AntenatalEnrollment)
-from bhp077.apps.microbiome.base_model_form import BaseModelForm
 from .base_enrollment_form import BaseEnrollmentForm
 
 
-class BaseEnrollmentForm(BaseModelForm):
+class MyBaseEnrollmentForm(BaseEnrollmentForm):
 
     def validate_create_rapid_tests(self, cleaned_data, instance):
         if instance.verbal_hiv_status == NEG:
@@ -38,12 +37,14 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
             ant = None
         if ant:
             if ant.verbal_hiv_status == POS and ant.evidence_hiv_status == YES:
-                if not cleaned_data.get('verbal_hiv_status') == POS or not cleaned_data.get('evidence_hiv_status') == YES:
-                    raise forms.ValidationError("Antenatal Enrollment shows participant is {} and {} evidence ."
-                                                " Please Correct {} and {} evidence".format(ant.verbal_hiv_status,
-                                                                                            ant.evidence_hiv_status,
-                                                                                            cleaned_data.get('verbal_hiv_status'),
-                                                                                            cleaned_data.get('evidence_hiv_status')))
+                if (cleaned_data.get('verbal_hiv_status') != POS or cleaned_data.get('evidence_hiv_status') != YES):
+                    raise forms.ValidationError(
+                        "Antenatal Enrollment shows participant is {} and {} evidence ."
+                        " Please Correct {} and {} evidence".format(
+                            ant.verbal_hiv_status,
+                            ant.evidence_hiv_status,
+                            cleaned_data.get('verbal_hiv_status'),
+                            cleaned_data.get('evidence_hiv_status')))
         if ant:
             if not ant.antenatal_eligible:
                 raise forms.ValidationError(

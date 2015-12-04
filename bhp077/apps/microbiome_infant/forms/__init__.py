@@ -10,7 +10,7 @@ from .infant_death_form import InfantDeathForm
 from .infant_off_study_form import InfantOffStudyForm
 from .infant_visit_form import InfantVisitForm
 from .infant_congenital_anomalies_form import (
-    InfantCongenitalAnomaliesForm, InfantCnsAbnormalityItemsForm, InfantFacialDefectItemsForm,
+    InfantCongenitalAnomaliesForm, InfantFacialDefectItemsForm,
     InfantCleftDisorderItemsForm, InfantMouthUpGastrointestinalItemsForm, InfantCardiovascularDisorderItemsForm,
     InfantRespiratoryDefectItemsForm, InfantLowerGastrointestinalItemsForm, InfantFemaleGenitalAnomalyItemsForm,
     InfantMaleGenitalAnomalyItemsForm, InfantRenalAnomalyItemsForm, InfantMusculoskeletalAbnormalItemsForm,

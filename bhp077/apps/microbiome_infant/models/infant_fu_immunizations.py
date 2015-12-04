@@ -7,7 +7,7 @@ from edc_base.model.models import BaseUuidModel
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 from bhp077.apps.microbiome.choices import REASONS_VACCINES_MISSED
-from ..infant_choices import IMMUNIZATIONS, INFANT_AGE_VACCINE_GIVEN
+from ..choices import IMMUNIZATIONS, INFANT_AGE_VACCINE_GIVEN
 
 
 class InfantFuImmunizations(InfantScheduledVisitModel):

@@ -1,15 +1,14 @@
 from django.db import models
 
 from edc.lab.lab_packing.models import BasePackingListItem
-from edc_base.model.models import BaseUuidModel
 from edc.subject.registration.models import RegisteredSubject
+from edc_base.model.models import BaseUuidModel
 
 from .aliquot import Aliquot
+from .infant_requisition import InfantRequisition
+from .maternal_requisition import MaternalRequisition
 from .packing_list import PackingList
 from .panel import Panel
-from .maternal_requisition import MaternalRequisition
-from .infant_requisition import InfantRequisition
-from .receive import Receive
 
 from ..managers import PackingListItemManager
 
@@ -21,8 +20,7 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
     panel = models.ForeignKey(
         Panel,
         null=True,
-        blank=True,
-    )
+        blank=True)
 
     objects = PackingListItemManager()
 
@@ -36,12 +34,10 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
             if self.get_subject_type() == 'infant':
                 requisition = InfantRequisition.objects.get(
-                    requisition_identifier=aliquot.receive.requisition_identifier
-                    )
+                    requisition_identifier=aliquot.receive.requisition_identifier)
             else:
                 requisition = MaternalRequisition.objects.get(
-                    requisition_identifier=aliquot.receive.requisition_identifier
-                    )
+                    requisition_identifier=aliquot.receive.requisition_identifier)
             self.panel = requisition.panel
             self.item_priority = requisition.priority
         super(PackingListItem, self).save(*args, **kwargs)
@@ -52,12 +48,10 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
             if self.get_subject_type() == 'infant':
                 requisition = InfantRequisition.objects.get(
-                    requisition_identifier=aliquot.receive.requisition_identifier
-                    )
+                    requisition_identifier=aliquot.receive.requisition_identifier)
             else:
                 requisition = MaternalRequisition.objects.get(
-                    requisition_identifier=aliquot.receive.requisition_identifier
-                    )
+                    requisition_identifier=aliquot.receive.requisition_identifier)
             retval = requisition.drawn_datetime
         return retval
 
@@ -67,12 +61,10 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
             if self.get_subject_type() == 'infant':
                 requisition = InfantRequisition.objects.get(
-                    requisition_identifier=aliquot.receive.requisition_identifier
-                    )
+                    requisition_identifier=aliquot.receive.requisition_identifier)
             else:
                 requisition = MaternalRequisition.objects.get(
-                    requisition_identifier=aliquot.receive.requisition_identifier
-                    )
+                    requisition_identifier=aliquot.receive.requisition_identifier)
             retval = requisition.user_created
         return retval
 

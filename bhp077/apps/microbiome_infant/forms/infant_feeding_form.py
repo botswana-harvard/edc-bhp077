@@ -23,7 +23,8 @@ class InfantFeedingForm(BaseInfantModelForm):
 
         if cleaned_data.get('took_formula') == YES:
             if not cleaned_data.get('is_first_formula'):
-                raise forms.ValidationError('Infant took formula, is this the first reporting of infant formula use?')
+                raise forms.ValidationError(
+                    'Infant took formula, is this the first reporting of infant formula use?')
         else:
             if cleaned_data.get('is_first_formula'):
                 raise forms.ValidationError('You mentioned that infant did not take formula,'
@@ -58,12 +59,13 @@ class InfantFeedingForm(BaseInfantModelForm):
                         break
                 if not answer:
                     raise forms.ValidationError(
-                        'You should answer YES either on {}, {}, {}, {}, {} or {}.'.format(cleaned_data.get('juice'),
-                                                                                           cleaned_data.get('cow_milk'),
-                                                                                           cleaned_data.get('other_milk'),
-                                                                                           cleaned_data.get('fruits_veg'),
-                                                                                           cleaned_data.get('cereal_porridge'),
-                                                                                           cleaned_data.get('solid_liquid')))
+                        'You should answer YES either on {}, {}, {}, {}, {} or {}.'.format(
+                            cleaned_data.get('juice'),
+                            cleaned_data.get('cow_milk'),
+                            cleaned_data.get('other_milk'),
+                            cleaned_data.get('fruits_veg'),
+                            cleaned_data.get('cereal_porridge'),
+                            cleaned_data.get('solid_liquid')))
 
     class Meta:
         model = InfantFeeding

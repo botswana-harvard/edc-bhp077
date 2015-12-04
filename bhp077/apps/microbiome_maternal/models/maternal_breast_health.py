@@ -54,7 +54,7 @@ class MaternalBreastHealth(MaternalScheduledVisitModel):
         default=NOT_APPLICABLE,
     )
 
-    told_stop_bf = models.CharField(
+    advised_stop_bf = models.CharField(
         max_length=15,
         choices=YES_NO_NA,
         verbose_name="Was the mother advised to discontinue breastfeeding?",
@@ -64,7 +64,7 @@ class MaternalBreastHealth(MaternalScheduledVisitModel):
 
     why_not_advised = models.CharField(
         max_length=100,
-        verbose_name="Please provide a reason why breastfeeding cessation not advised?",
+        verbose_name="Please provide a reason why breastfeeding cessation was not advised?",
         help_text="",
         blank=True,
         null=True,
