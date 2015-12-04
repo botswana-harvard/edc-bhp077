@@ -17,18 +17,17 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
         self.validate_antibiotics(cleaned_data)
         return cleaned_data
 
-    def validate_sample_obtained(self):
-        cleaned_data = self.cleaned_data
+    def validate_sample_obtained(self, cleaned_data):
         try:
-            requisition = InfantRequisition.objects.get(infant_visit=cleaned_data.get('infant_visit'))
-        except InfantRequisition.DoesNotExist:
-            raise forms.ValidationError('Specimen requisition not found')
-        if requisition.panel.name == 'Stool storage':
+            requisition = InfantRequisition.objects.get(infant_visit=cleaned_data.get('infant_visit'),
+                                                        panel__name='Stool storage')
             if requisition.is_drawn == YES and cleaned_data.get('sample_obtained') == NO:
                 raise forms.ValidationError(
-                    "Stool requisition is drawn with id {}. Sample obtained cannot "
-                    "be {}".format(requisition.requisition_identifier,
-                                   cleaned_data.get('sample_obtained')))
+                    "Stool requisition is drawn with id {}. Sample obtained cannot be {}".format(
+                        requisition.requisition_identifier, cleaned_data.get('sample_obtained')))
+        except InfantRequisition.DoesNotExist:
+            raise forms.ValidationError('Stool storage specimen requisition not found. Complete the requisition first.')
+
         if cleaned_data.get('sample_obtained') == YES:
             if cleaned_data.get('nappy_type') == NOT_APPLICABLE:
                 raise forms.ValidationError('Sample is indicated to have been obtained today, Nappy type CANNOT '
