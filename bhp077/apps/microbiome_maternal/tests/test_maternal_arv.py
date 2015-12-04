@@ -1,3 +1,4 @@
+from __future__ import print_function
 from django.test import TestCase
 from django.utils import timezone
 
@@ -58,7 +59,8 @@ class TestMaternalArvPost(TestCase):
         self.data['haart_last_visit'] = YES
         form = MaternalArvPostForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn(u"You indicated that participant was on HAART. Reason CANNOT be 'Not Applicable'. ", errors)
+        print("errors ******", errors, "*******")
+        self.assertIn(u"You indicated that participant was on triple ARVs. Reason CANNOT be 'Not Applicable'. Please correct.", errors)
 
     def test_on_haart_2(self):
         """Assert that if mother was not supposed to take HAART, then cannot provide a reason for taking HAART"""
