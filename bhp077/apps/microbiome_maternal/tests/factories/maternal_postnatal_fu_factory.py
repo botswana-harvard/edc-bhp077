@@ -2,7 +2,7 @@ import factory
 
 from django.utils import timezone
 
-from edc_constants.constants import NO
+from edc_constants.constants import NO, YES
 
 from bhp077.apps.microbiome_maternal.models import MaternalPostFu, MaternalPostFuMed
 
@@ -17,12 +17,11 @@ class MaternalPostFuFactory(factory.DjangoModelFactory):
 
     maternal_visit = factory.SubFactory(MaternalVisitFactory)
     report_datetime = timezone.now()
-    weight_measured = NO
-    weight_kg = ''
+    weight_measured = YES
+    weight_kg = 60.0
     systolic_bp = 120
     diastolic_bp = 80
     chronic_cond_since = NO
-#     chronic_cond = [factory.SubFactory(ChronicConditionsFactory)]
 
 
 class MaternalPostFuMedFactory(factory.DjangoModelFactory):
@@ -32,5 +31,4 @@ class MaternalPostFuMedFactory(factory.DjangoModelFactory):
 
     maternal_visit = factory.SubFactory(MaternalVisitFactory)
     report_datetime = timezone.now()
-    maternal_post_fu = factory.SubFactory(MaternalPostFuFactory)
     has_taken_meds = NO

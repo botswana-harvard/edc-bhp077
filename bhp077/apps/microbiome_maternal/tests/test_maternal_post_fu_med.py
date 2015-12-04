@@ -43,23 +43,29 @@ class TestMaternalPostFuMedItems(TestCase):
             will_breastfeed=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='2000M')
+                                                   visit_definition__code='2010M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-#         self.chronic_cond = ChronicConditions.objects.create(name='N/A', short_name='N/A', display_index=10,
-#                                                              field_name='chronic_cond')
         self.post_fu = MaternalPostFuFactory(maternal_visit=self.maternal_visit)
-        self.post_fu_med = MaternalPostFuMedFactory(maternal_post_fu=self.post_fu, has_taken_meds=YES)
+        self.post_fu_med = MaternalPostFuMedFactory(maternal_visit=self.maternal_visit, has_taken_meds=YES)
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
             'maternal_post_fu_med': self.post_fu_med.id,
-            'date_first_medication': timezone.now() - timezone.timedelta(days=1),
+            'date_first_medication': timezone.now() - timezone.timedelta(days=2),
             'medication': 'Amoxicillin',
             'drug_route': "1",
             'date_stoped': timezone.now()
         }
 
-    def test_date(self):
+    def test_medications(self):
+        self.post_fu_med.has_taken_meds = NO
+        self.post_fu_med.save()
         form = MaternalPostFuMedItemsForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn("Date stopped medication is before date started medications. Please correct", errors)
+        self.assertIn('therefore you cannot provide medication', errors)
+
+    def test_date(self):
+        self.data['date_stoped'] = timezone.now() - timezone.timedelta(days=5)
+        form = MaternalPostFuMedItemsForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('Date stopped medication is before date started medications.', errors)
