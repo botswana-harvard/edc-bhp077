@@ -1,13 +1,12 @@
-from edc.subject.rule_groups.classes import (RuleGroup, site_rule_groups, Logic,
-                                             ScheduledDataRule, RequisitionRule)
+from edc.subject.registration.models import RegisteredSubject
+from edc.subject.rule_groups.classes import RuleGroup, site_rule_groups, Logic, ScheduledDataRule
+from edc_constants.constants import POS, YES, NEW, NOT_REQUIRED
 
 from .models import PostnatalEnrollment, MaternalVisit, SexualReproductiveHealth
 
-from edc_constants.constants import POS, YES, NEW, NOT_REQUIRED
-from edc.subject.registration.models import RegisteredSubject
-
 
 _targe_list = []
+
 
 def hiv_status_pos_and_evidence_yes(visit_instance):
     try:
@@ -20,6 +19,7 @@ def hiv_status_pos_and_evidence_yes(visit_instance):
         return False
     return True
 
+
 def has_rapid_test_is_pos(visit_instance):
     try:
         PostnatalEnrollment.objects.get(
@@ -30,6 +30,7 @@ def has_rapid_test_is_pos(visit_instance):
     except PostnatalEnrollment.DoesNotExist:
         return False
     return True
+
 
 def hiv_pos_verbal_or_rapid_test_pos(visit_instance):
     print "hiv_pos_verbal_or_rapid_test_pos(visit_instance):"

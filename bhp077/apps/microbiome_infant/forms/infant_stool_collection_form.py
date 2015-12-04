@@ -12,9 +12,9 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
     def clean(self):
         cleaned_data = super(InfantStoolCollectionForm, self).clean()
         self.validate_sample_obtained()
-        self.validate_collection_time(cleaned_data)
-        self.validate_diarrhea(cleaned_data)
-        self.validate_antibiotics(cleaned_data)
+        self.validate_collection_time()
+        self.validate_diarrhea()
+        self.validate_antibiotics()
         return cleaned_data
 
     def validate_sample_obtained(self):
@@ -61,7 +61,8 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
                     'Sample is stated to have been NOT obtained today, you cannot specify how '
                     'the sample was stored.')
 
-    def validate_collection_time(self, cleaned_data):
+    def validate_collection_time(self):
+        cleaned_data = self.cleaned_data
         if cleaned_data.get('stool_colection') == 'brought':
             if not cleaned_data.get('stool_colection_time'):
                 raise forms.ValidationError('Please specify the number of hours that stool was collected.')
@@ -75,7 +76,8 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
                     'You have indicated that stool was collected real-time. How tool was stored '
                     'should be NOT APPLICABLE.')
 
-    def validate_diarrhea(self, cleaned_data):
+    def validate_diarrhea(self):
+        cleaned_data = self.cleaned_data
         if cleaned_data.get('past_diarrhea') == YES:
             if cleaned_data.get('diarrhea_past_24hrs') == NOT_APPLICABLE:
                 raise forms.ValidationError(
@@ -87,7 +89,8 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
                     'You have stated the infant did NOT have diarrhea in the past 7 days, '
                     'you cannot indicate if it occurred in the past 24 hours.')
 
-    def validate_antibiotics(self, cleaned_data):
+    def validate_antibiotics(self):
+        cleaned_data = self.cleaned_data
         if cleaned_data.get('antibiotics_7days') == YES:
             if cleaned_data.get('antibiotic_dose_24hrs') == NOT_APPLICABLE:
                 raise forms.ValidationError(
