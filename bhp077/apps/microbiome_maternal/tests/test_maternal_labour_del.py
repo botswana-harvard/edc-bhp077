@@ -40,7 +40,7 @@ class TestMaternalLabourDel(TestCase):
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            breastfeed_for_a_year=YES
+            will_breastfeed=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
@@ -49,16 +49,16 @@ class TestMaternalLabourDel(TestCase):
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
             'delivery_datetime': timezone.now() - relativedelta(days=self.postnatal_enrollment.postpartum_days),
-            'del_time_is_est': NO,
+            'delivery_time_estimated': NO,
             'labour_hrs': 6,
-            'del_hosp': 'PMH',
+            'delivery_hospital': 'PMH',
             'has_uterine_tender': NO,
             'has_temp': NO,
-            'labr_max_temp': '',
+            'labour_max_temp': '',
             'has_chorioamnionitis': NO,
-            'has_del_comp': NO,
+            'delivery_complications': NO,
             'live_infants_to_register': 1,
-            'del_comment': '',
+            'delivery_comment': '',
             'comment': ''
         }
 
@@ -95,7 +95,7 @@ class TestMaternalLabourDel(TestCase):
                       "Please provide the maximum temperature.", form.errors.get('__all__'))
 
     def test_temp_2(self):
-        self.data['labr_max_temp'] = 37
+        self.data['labour_max_temp'] = 37
         form = MaternalLabourDelForm(data=self.data)
         # self.data['delivery_datetime'] = timezone.now() - relativedelta(days=self.postnatal_enrollment.postpartum_days)
         errors = ''.join(form.errors.get('__all__'))
@@ -105,7 +105,7 @@ class TestMaternalLabourDel(TestCase):
     def test_temp_3(self):
         """Temperature cannot be above 37.2"""
         self.data['has_temp'] = YES
-        self.data['labr_max_temp'] = 40
+        self.data['labour_max_temp'] = 40
         form = MaternalLabourDelForm(data=self.data)
         self.assertFalse(form.is_valid())
 
@@ -115,7 +115,7 @@ class TestMaternalLabourDel(TestCase):
 
     def test_temp_5(self):
         self.data['has_temp'] = YES
-        self.data['labr_max_temp'] = 36.8
+        self.data['labour_max_temp'] = 36.8
         form = MaternalLabourDelForm(data=self.data)
         self.assertTrue(form.is_valid())
 
@@ -146,7 +146,7 @@ class TestMaternalLabourDelClinic(TestCase):
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            breastfeed_for_a_year=YES
+            will_breastfeed=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')

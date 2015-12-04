@@ -1,12 +1,11 @@
-from datetime import datetime
-
 from django.db import models
+from django.utils import timezone
 
-from edc_base.audit_trail import AuditTrail
-from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc.data_manager.models import TimePointStatusMixin
-from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.entry_meta_data.managers import EntryMetaDataManager
+from edc_base.audit_trail import AuditTrail
+from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_consent.models import RequiresConsentMixin
 
 from ..managers import ScheduledModelManager
@@ -27,7 +26,7 @@ class MaternalScheduledVisitModel(MaternalOffStudyMixin, RequiresConsentMixin,
         validators=[
             datetime_not_before_study_start,
             datetime_not_future, ],
-        default=datetime.now,
+        default=timezone.now,
         help_text=('If reporting today, use today\'s date/time, otherwise use '
                    'the date/time this information was reported.'))
 

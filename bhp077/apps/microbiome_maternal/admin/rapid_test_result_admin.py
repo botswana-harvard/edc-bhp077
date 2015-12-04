@@ -6,16 +6,16 @@ from ..models import RapidTestResult, MaternalVisit
 
 class RapidTestResultAdmin(BaseModelAdmin):
     fields = ('maternal_visit',
-              'process_rapid_test',
-              'date_of_rapid_test',
+              'rapid_test_done',
+              'rapid_test_date',
               'rapid_test_result',
               'comments')
     list_display = ('maternal_visit',
-                    'process_rapid_test',
+                    'rapid_test_done',
                     'rapid_test_result')
-    list_filter = ('process_rapid_test', 'rapid_test_result')
-    search_fields = ('date_of_rapid_test', )
-    radio_fields = {"process_rapid_test": admin.VERTICAL,
+    list_filter = ('rapid_test_done', 'rapid_test_result')
+    search_fields = ('rapid_test_date', )
+    radio_fields = {"rapid_test_done": admin.VERTICAL,
                     "rapid_test_result": admin.VERTICAL, }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):

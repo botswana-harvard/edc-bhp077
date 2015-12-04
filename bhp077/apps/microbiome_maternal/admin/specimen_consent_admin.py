@@ -3,14 +3,14 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.subject.registration.models import RegisteredSubject
 
-from bhp077.apps.microbiome_maternal.models import SampleConsent
-from bhp077.apps.microbiome_maternal.forms import SampleConsentForm
+from bhp077.apps.microbiome_maternal.models import SpecimenConsent
+from bhp077.apps.microbiome_maternal.forms import SpecimenConsentForm
 
 
-class SampleConsentAdmin(BaseModelAdmin):
+class SpecimenConsentAdmin(BaseModelAdmin):
 
     dashboard_type = 'maternal'
-    form = SampleConsentForm
+    form = SpecimenConsentForm
 
     fields = ('registered_subject',
               'report_datetime',
@@ -20,13 +20,13 @@ class SampleConsentAdmin(BaseModelAdmin):
               'witness_name',
               'purpose_explained',
               'purpose_understood',
-              'sample_consent_copy')
+              'specimen_consent_copy')
     radio_fields = {'language': admin.VERTICAL,
                     'may_store_samples': admin.VERTICAL,
                     'is_literate': admin.VERTICAL,
                     'purpose_explained': admin.VERTICAL,
                     'purpose_understood': admin.VERTICAL,
-                    'sample_consent_copy': admin.VERTICAL, }
+                    'specimen_consent_copy': admin.VERTICAL, }
     list_dispay = ('registered_subject', 'may_store_samples')
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -40,6 +40,6 @@ class SampleConsentAdmin(BaseModelAdmin):
                     self.readonly_fields.index('registered_subject')
                 except ValueError:
                     self.readonly_fields.append('registered_subject')
-        return super(SampleConsentAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+        return super(SpecimenConsentAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
-admin.site.register(SampleConsent, SampleConsentAdmin)
+admin.site.register(SpecimenConsent, SpecimenConsentAdmin)

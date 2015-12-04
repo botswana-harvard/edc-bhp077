@@ -24,7 +24,7 @@ def has_rapid_test_is_pos(visit_instance):
     try:
         PostnatalEnrollment.objects.get(
             registered_subject=visit_instance.appointment.registered_subject,
-            process_rapid_test=YES,
+            rapid_test_done=YES,
             rapid_test_result=POS
         )
     except PostnatalEnrollment.DoesNotExist:

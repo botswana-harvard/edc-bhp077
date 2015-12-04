@@ -3,13 +3,13 @@ from django.forms import ModelForm
 
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
 
-from ..models import SampleConsent, MaternalConsent
+from ..models import SpecimenConsent, MaternalConsent
 
 
-class SampleConsentForm(ModelForm):
+class SpecimenConsentForm(ModelForm):
 
     def clean(self):
-        cleaned_data = super(SampleConsentForm, self).clean()
+        cleaned_data = super(SpecimenConsentForm, self).clean()
         primary_consent = MaternalConsent.objects.filter(
             registered_subject__subject_identifier=cleaned_data.get('registered_subject').subject_identifier)
         if primary_consent:
@@ -37,5 +37,5 @@ class SampleConsentForm(ModelForm):
         return cleaned_data
 
     class Meta:
-        model = SampleConsent
+        model = SpecimenConsent
         fields = '__all__'

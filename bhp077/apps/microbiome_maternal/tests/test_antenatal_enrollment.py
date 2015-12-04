@@ -34,18 +34,18 @@ class TestAntenatalEnroll(TestCase):
         self.data = {
             'registered_subject': self.registered_subject}
 
-    def test_weeks_of_gestation_below_36(self):
+    def test_gestation_wks_below_36(self):
         """Test for a positive mother on a valid regimen but weeks of gestation below 36."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=35
+            gestation_wks=35
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
-    def test_weeks_of_gestation_above_36_and_no_regimen(self):
+    def test_gestation_wks_above_36_and_no_regimen(self):
         """Test for a positive mother not on a valid regimen but weeks of gestation above 36."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
@@ -53,7 +53,7 @@ class TestAntenatalEnroll(TestCase):
             evidence_hiv_status=YES,
             valid_regimen=NO,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=37
+            gestation_wks=37
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
@@ -86,7 +86,7 @@ class TestAntenatalEnroll(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            on_hypertension_treatment=YES
+            on_hypertension_tx=YES
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
@@ -97,51 +97,51 @@ class TestAntenatalEnroll(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            on_hypertension_treatment=NO
+            on_hypertension_tx=NO
         )
         self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
 
-    def test_breastfeed_for_a_year(self):
+    def test_will_breastfeed(self):
         """Test for a negative mother who agrees to breastfeed for a year."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
             verbal_hiv_status=NEG,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            breastfeed_for_a_year=YES
+            will_breastfeed=YES
         )
         self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
 
-    def test_no_breastfeed_for_a_year(self):
+    def test_no_will_breastfeed(self):
         """Test for a negative mother who does not agree to breastfeed for a year."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
             verbal_hiv_status=NEG,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            breastfeed_for_a_year=NO
+            will_breastfeed=NO
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
-    def test_instudy_for_a_year(self):
+    def test_will_remain_onstudy(self):
         """Test for a negative mother who does agrees to stay in study a year."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
             verbal_hiv_status=NEG,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            instudy_for_a_year=YES
+            will_remain_onstudy=YES
         )
         self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
 
-    def test_not_instudy_for_a_year(self):
+    def test_not_will_remain_onstudy(self):
         """Test for a negative mother who does not agree to stay in study for a year."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
             verbal_hiv_status=NEG,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            instudy_for_a_year=NO
+            will_remain_onstudy=NO
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
@@ -162,7 +162,7 @@ class TestAntenatalEnroll(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=NO,
             registered_subject=self.registered_subject,
-            process_rapid_test=NO,
+            rapid_test_done=NO,
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
@@ -173,8 +173,8 @@ class TestAntenatalEnroll(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=NO,
             registered_subject=self.registered_subject,
-            process_rapid_test=NO,
-            weeks_of_gestation=37,
+            rapid_test_done=NO,
+            gestation_wks=37,
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
@@ -191,11 +191,11 @@ class TestAntenatalEnroll(TestCase):
             evidence_hiv_status=NO,
             valid_regimen=NOT_APPLICABLE,
             valid_regimen_duration=NOT_APPLICABLE,
-            process_rapid_test=YES,
-            date_of_rapid_test=timezone.now().date() - timezone.timedelta(days=1),
+            rapid_test_done=YES,
+            rapid_test_date=timezone.now().date() - timezone.timedelta(days=1),
             rapid_test_result=POS)
         self.assertTrue(AntenatalEnrollment.objects.count(), 1)
-        antenatal.date_of_rapid_test = timezone.now().date()
+        antenatal.rapid_test_date = timezone.now().date()
         antenatal.save()
         self.assertRaises(forms.ValidationError)
 
@@ -206,7 +206,7 @@ class TestAntenatalEnroll(TestCase):
             week32_test=YES,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=37
+            gestation_wks=37
         )
         self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
 
@@ -217,7 +217,7 @@ class TestAntenatalEnroll(TestCase):
             week32_test=YES,
             evidence_hiv_status=NO,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=37
+            gestation_wks=37
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
@@ -227,9 +227,9 @@ class TestAntenatalEnroll(TestCase):
             week32_test=NO,
             week32_result=None,
             evidence_hiv_status=NO,
-            process_rapid_test=NO,
+            rapid_test_done=NO,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=37
+            gestation_wks=37
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
@@ -238,9 +238,9 @@ class TestAntenatalEnroll(TestCase):
         antenatal_enrollment = AntenatalEnrollmentFactory(
             week32_test=NO,
             week32_result='',
-            process_rapid_test=YES,
+            rapid_test_done=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=37
+            gestation_wks=37
         )
         self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
 
@@ -252,8 +252,8 @@ class TestAntenatalEnroll(TestCase):
             valid_regimen=NOT_APPLICABLE,
             valid_regimen_duration=NOT_APPLICABLE,
             verbal_hiv_status='UNK',
-            process_rapid_test=YES,
+            rapid_test_done=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=37
+            gestation_wks=37
         )
         self.assertTrue(antenatal_enrollment.eligible_for_postnatal)

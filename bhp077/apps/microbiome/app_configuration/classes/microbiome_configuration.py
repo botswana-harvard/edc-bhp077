@@ -1,5 +1,4 @@
 from datetime import datetime, date
-from django.conf import settings
 
 from edc.core.bhp_variables.models import StudySpecific, StudySite
 

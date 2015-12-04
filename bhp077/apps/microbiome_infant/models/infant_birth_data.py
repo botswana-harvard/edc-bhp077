@@ -1,4 +1,3 @@
-from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
@@ -8,15 +7,15 @@ from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 from edc_constants.constants import YES
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
 from .infant_birth import InfantBirth
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantBirthData(InfantScheduledVisitModel):
     """ A model completed by the user on the infant's birth exam. """
     infant_birth = models.OneToOneField(InfantBirth)
 
-    infant_birth_weight = models.DecimalField(
+    weight_kg = models.DecimalField(
         max_digits=3,
         decimal_places=2,
         verbose_name="What was the infant's birth weight? ",

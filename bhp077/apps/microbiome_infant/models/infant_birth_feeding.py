@@ -50,7 +50,7 @@ class InfantVaccines(BaseUuidModel):
         blank=True,
     )
 
-    objects = objects = models.Manager()()
+    objects = objects = models.Manager()
 
     history = AuditTrail()
 

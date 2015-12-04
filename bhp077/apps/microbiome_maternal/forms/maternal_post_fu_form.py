@@ -9,17 +9,17 @@ from edc_constants.constants import NO, YES
 class MaternalPostFuForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(MaternalPostFuForm, self).clean()
-        if cleaned_data.get('mother_weight') == YES:
-            if not cleaned_data.get('enter_weight'):
+        if cleaned_data.get('weight_measured') == YES:
+            if not cleaned_data.get('weight_kg'):
                 raise forms.ValidationError('You indicated that participant was weighed. Please provide the weight.')
         else:
-            if cleaned_data.get('enter_weight'):
+            if cleaned_data.get('weight_kg'):
                 raise forms.ValidationError('You indicated that participant was NOT weighed, yet provided the weight. '
                                             'Please correct.')
         if 'chronic_cond' in cleaned_data.keys():
             self.validate_m2m(
                 label='chronic conditions',
-                leading=cleaned_data.get('has_chronic_cond'),
+                leading=cleaned_data.get('chronic_cond_since'),
                 m2m=cleaned_data.get('chronic_cond'),
                 other=cleaned_data.get('chronic_cond_other'))
         if cleaned_data.get('systolic_bp') < cleaned_data.get('diastolic_bp'):

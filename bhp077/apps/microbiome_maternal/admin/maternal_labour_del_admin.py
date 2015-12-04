@@ -13,13 +13,13 @@ class MaternalLabourDelAdmin(BaseModelAdmin):
 
     list_display = ('delivery_datetime',
                     'labour_hrs',
-                    'del_hosp',
+                    'delivery_hospital',
                     'live_infants_to_register')
-    radio_fields = {'del_time_is_est': admin.VERTICAL,
+    radio_fields = {'delivery_time_estimated': admin.VERTICAL,
                     'has_uterine_tender': admin.VERTICAL,
                     'has_chorioamnionitis': admin.VERTICAL,
-                    'del_hosp': admin.VERTICAL,
-                    'has_del_comp': admin.VERTICAL,
+                    'delivery_hospital': admin.VERTICAL,
+                    'delivery_complications': admin.VERTICAL,
                     'has_temp': admin.VERTICAL, }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):

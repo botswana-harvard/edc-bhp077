@@ -52,7 +52,7 @@ class InfantFuNewMedItems(BaseUuidModel):
         verbose_name="Date of first medication use",
     )
 
-    date_stopped = models.DateField(
+    stop_date = models.DateField(
         verbose_name="Date medication was stopped",
         blank=True,
         null=True,

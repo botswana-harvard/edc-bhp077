@@ -27,7 +27,8 @@ class MaternalArvPostModAdmin(BaseModelAdmin):
         if db_field.name == "maternal_arv_post":
             if request.GET.get('maternal_visit'):
                 infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
-                kwargs["queryset"] = MaternalArvPostAdh.objects.filter(registered_subject=infant_visit.appointment.registered_subject)
+                kwargs["queryset"] = MaternalArvPostAdh.objects.filter(
+                    registered_subject=infant_visit.appointment.registered_subject)
         return super(MaternalArvPostAdhAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalArvPostMod, MaternalArvPostModAdmin)
@@ -39,14 +40,14 @@ class MaternalArvPostAdmin(BaseModelAdmin):
 
     fields = (
         "maternal_visit",
-        "haart_last_visit",
-        "haart_reason",
-        "haart_reason_other",
+        "on_arv_since",
+        "on_arv_reason",
+        "on_arv_reason_other",
         "arv_status")
 
     radio_fields = {
-        "haart_last_visit": admin.VERTICAL,
-        "haart_reason": admin.VERTICAL,
+        "on_arv_since": admin.VERTICAL,
+        "on_arv_reason": admin.VERTICAL,
         "arv_status": admin.VERTICAL}
     inlines = [MaternalArvPostModInlineAdmin, ]
 
@@ -76,7 +77,8 @@ class MaternalArvPostAdhAdmin(BaseModelAdmin):
         if db_field.name == "maternal_arv_post":
             if request.GET.get('maternal_visit'):
                 infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
-                kwargs["queryset"] = MaternalArvPostAdh.objects.filter(registered_subject=infant_visit.appointment.registered_subject)
+                kwargs["queryset"] = MaternalArvPostAdh.objects.filter(
+                    registered_subject=infant_visit.appointment.registered_subject)
         return super(MaternalArvPostAdhAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalArvPostAdh, MaternalArvPostAdhAdmin)

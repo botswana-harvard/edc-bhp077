@@ -1,11 +1,8 @@
-from datetime import datetime
-
-from django.db import models
 from django.core.urlresolvers import reverse
+from django.db import models
+from django.utils import timezone
 
-# from edc_base.model.models import BaseUuidModel
 from edc_base.audit_trail import AuditTrail
-
 from edc.device.sync.models import BaseSyncUuidModel
 
 from ..managers import OrderManager
@@ -13,7 +10,7 @@ from ..managers import OrderManager
 
 class Order(BaseSyncUuidModel):
 
-    order_datetime = models.DateTimeField(default=datetime.today())
+    order_datetime = models.DateTimeField(default=timezone.now)
 
     objects = OrderManager()
 

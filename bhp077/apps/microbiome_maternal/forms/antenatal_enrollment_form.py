@@ -28,14 +28,19 @@ class AntenatalEnrollmentForm(BaseEnrollmentForm):
         self.validate_create_antenal_enrollment(instance, cleaned_data, post_natal)
         self.validate_create_rapid_tests(cleaned_data, instance)
 
-        try:
-            initial = AntenatalEnrollment.objects.get(registered_subject=self.instance.registered_subject)
-            if initial:
-                if cleaned_data.get('date_of_rapid_test') != initial.date_of_rapid_test:
-                    raise forms.ValidationError('The rapid test result cannot be changed')
-        except AntenatalEnrollment.DoesNotExist:
-            pass
         return cleaned_data
+
+    def clean_rapid_test_date(self):
+        rapid_test_date = self.cleaned_data['rapid_test_date']
+        if rapid_test_date:
+            try:
+                initial = AntenatalEnrollment.objects.get(registered_subject=self.instance.registered_subject)
+                if initial:
+                    if rapid_test_date != initial.rapid_test_date:
+                        raise forms.ValidationError('The rapid test result cannot be changed')
+            except AntenatalEnrollment.DoesNotExist:
+                pass
+        return rapid_test_date
 
     def validate_create_antenal_enrollment(self, instance, cleaned_data, post_natal):
         if instance.maternal_eligibility_pregnant_currently_delivered_yes():
@@ -44,8 +49,8 @@ class AntenatalEnrollmentForm(BaseEnrollmentForm):
 
     def validate_create_rapid_tests(self, cleaned_data, instance):
         if instance.verbal_hiv_status == NEG:
-            if instance.requires_rapid_test:
-                if cleaned_data.get('process_rapid_test') == NO:
+            if instance.rapid_test_required:
+                if cleaned_data.get('rapid_test_done') == NO:
                     raise forms.ValidationError(
                         "Rapid test is required. Participant tested >=32 weeks ago.")
 

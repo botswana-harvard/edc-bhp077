@@ -59,7 +59,7 @@ class TestRuleGroup(TestCase):
         """
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            breastfeed_for_a_year=YES,
+            will_breastfeed=YES,
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             valid_regimen=YES,
@@ -116,7 +116,7 @@ class TestRuleGroup(TestCase):
         """
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            process_rapid_test=YES,
+            rapid_test_done=YES,
             rapid_test_result=NEG,
         )
         visit_codes = [
@@ -167,8 +167,8 @@ class TestRuleGroup(TestCase):
         """
         """
         PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject, process_rapid_test=YES,
-            breastfeed_for_a_year=YES, rapid_test_result=POS
+            registered_subject=self.registered_subject, rapid_test_done=YES,
+            will_breastfeed=YES, rapid_test_result=POS
         )
         for code in ['2010M', '2030M']: #, '2030M', '2090M', '2120M']: 
             appointment = Appointment.objects.get(

@@ -1,5 +1,5 @@
 # from bhp077.apps.microbiome_maternal.tests.functional_tests.microbiome_base_page import MicrobiomeBasePage
-# from .maternal_finders import MaternalEligibilityFinder, ConsentFinder, SampleConsentFinder
+# from .maternal_finders import MaternalEligibilityFinder, ConsentFinder, SpecimenConsentFinder
 # 
 # 
 # '''Defining functions for each maternal page (class)'''
@@ -98,22 +98,22 @@
 #         self.enter_confirm_omang()
 # 
 # 
-# class SampleConsentPage(MicrobiomeBasePage):
+# class SpecimenConsentPage(MicrobiomeBasePage):
 # 
 #     def click_consent_language(self):
-#         self.find_element(*SampleConsentFinder.SAMPLE_CONSENT_LANGUAGE).click()
+#         self.find_element(*SpecimenConsentFinder.SAMPLE_CONSENT_LANGUAGE).click()
 # 
 #     def click_sample_storage(self):
-#         self.find_element(*SampleConsentFinder.SAMPLE_STORAGE).click()
+#         self.find_element(*SpecimenConsentFinder.SAMPLE_STORAGE).click()
 # 
 #     def click_is_literate(self):
-#         self.find_element(*SampleConsentFinder.IS_LITERATE).click()
+#         self.find_element(*SpecimenConsentFinder.IS_LITERATE).click()
 # 
 #     def click_consent_benefits(self):
-#         self.find_element(*SampleConsentFinder.CONSENT_BENEFITS).click()
+#         self.find_element(*SpecimenConsentFinder.CONSENT_BENEFITS).click()
 # 
 #     def click_sample_save(self):
-#         self.find_element(*SampleConsentFinder.SUBMIT).click()
+#         self.find_element(*SpecimenConsentFinder.SUBMIT).click()
 # 
 #     def fill_sample_storage(self):
 #         self.click_consent_language()

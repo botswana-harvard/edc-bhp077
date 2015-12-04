@@ -1,24 +1,21 @@
 from collections import OrderedDict
 
-from edc_constants.constants import REQUIRED, NOT_ADDITIONAL, ADDITIONAL, NOT_REQUIRED
-from edc.subject.visit_schedule.classes import (VisitScheduleConfiguration, site_visit_schedules,
-                                                EntryTuple, MembershipFormTuple,
-                                                ScheduleGroupTuple, RequisitionPanelTuple)
-from ..models import SampleConsent
+from edc.subject.visit_schedule.classes import (
+    VisitScheduleConfiguration, site_visit_schedules, MembershipFormTuple, ScheduleGroupTuple)
+
+from ..models import SpecimenConsent
 
 
-class SampleConsentVisitSchedule(VisitScheduleConfiguration):
+class SpecimenConsentVisitSchedule(VisitScheduleConfiguration):
 
-    name = 'sample visit schedule'
+    name = 'specimen visit schedule'
+
     app_label = 'microbiome_maternal'
-    membership_forms = OrderedDict({
-        'sample': MembershipFormTuple('sample', SampleConsent, True),
-    })
 
-    schedule_groups = OrderedDict({
-        'Sample Consent': ScheduleGroupTuple('Sample Consent', 'sample', None, None),
-    })
+    membership_forms = OrderedDict({'specimen': MembershipFormTuple('specimen', SpecimenConsent, True)})
+
+    schedule_groups = OrderedDict({'Specimen Consent': ScheduleGroupTuple('Specimen Consent', 'specimen', None, None)})
 
     visit_definitions = OrderedDict()
 
-site_visit_schedules.register(SampleConsentVisitSchedule)
+site_visit_schedules.register(SpecimenConsentVisitSchedule)

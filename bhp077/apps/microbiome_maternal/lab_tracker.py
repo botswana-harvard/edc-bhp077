@@ -6,6 +6,6 @@ from .models import RapidTestResult
 
 class MaternalHivLabTracker(HivLabTracker):
     subject_type = 'maternal'
-    trackers = [(RapidTestResult, 'rapid_test_result', 'date_of_rapid_test', )]
+    trackers = [(RapidTestResult, 'rapid_test_result', 'rapid_test_date', )]
 
 site_lab_tracker.register(MaternalHivLabTracker)

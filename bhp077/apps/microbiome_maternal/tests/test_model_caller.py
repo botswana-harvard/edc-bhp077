@@ -16,6 +16,7 @@ from edc.subject.lab_tracker.classes.controller import site_lab_tracker
 from edc.subject.rule_groups.classes.controller import site_rule_groups
 from edc_constants.constants import POS, NO, YES
 from .factories import AntenatalEnrollmentFactory
+from bhp077.apps.microbiome_maternal.models.maternal_locator import MaternalLocator
 
 
 class TestModelCaller(TestCase):
@@ -44,6 +45,9 @@ class TestModelCaller(TestCase):
             registered_subject=self.registered_subject,
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
-            on_hypertension_treatment=NO)
+            on_hypertension_tx=NO)
         subject_identifier = antenatal_enrollment.get_subject_identifier()
         self.assertEqual(Call.objects.filter(subject_identifier=subject_identifier).count(), 1)
+
+#     def test_updates_log_with_locator_data(self):
+#         MaternalLocator.objects.create(maternal_visit=maternal_visit)

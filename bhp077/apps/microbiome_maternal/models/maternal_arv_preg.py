@@ -63,12 +63,12 @@ class MaternalArv(BaseUuidModel):
         max_length=25,
         choices=ARV_DRUG_LIST,)
 
-    date_started = models.DateField(
+    start_date = models.DateField(
         verbose_name="Date Started",
         null=True,
         blank=True)
 
-    date_stopped = models.DateField(
+    stop_date = models.DateField(
         verbose_name="Date Stopped",
         null=True,
         blank=True)

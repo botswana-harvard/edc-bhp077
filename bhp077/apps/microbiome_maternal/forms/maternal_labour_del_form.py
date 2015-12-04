@@ -32,11 +32,11 @@ class MaternalLabourDelForm(BaseMaternalModelForm):
                                             'indicated on Postpartum Enrollment of {} days ago. Please correct'
                                             .format(postnatal.postpartum_days))
         if cleaned_data.get('has_temp') == YES:
-            if not cleaned_data.get('labr_max_temp'):
+            if not cleaned_data.get('labour_max_temp'):
                 raise forms.ValidationError('You have indicated that maximum temperature at delivery is known. '
                                             'Please provide the maximum temperature.')
         else:
-            if cleaned_data.get('labr_max_temp'):
+            if cleaned_data.get('labour_max_temp'):
                 raise forms.ValidationError('You have indicated that maximum temperature is not known. '
                                             'You CANNOT provide the maximum temperature')
         if cleaned_data.get('has_vl') == NO and cleaned_data.get('vl_detectable') != NOT_APPLICABLE:

@@ -1,39 +1,39 @@
 from django.db import models
 
-from .base_haart_modification import BaseHaartModification
 from edc.subject.haart.choices import ARV_STATUS_WITH_NEVER
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 
+from ..managers import MaternalArvPostModManager
 from ..maternal_choices import REASON_FOR_HAART
 
-from ..managers import MaternalArvPostModManager
-from .maternal_off_study_mixin import MaternalOffStudyMixin
+from .base_haart_modification import BaseHaartModification
 from .maternal_consent import MaternalConsent
+from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalArvPost (MaternalScheduledVisitModel):
 
-    """ A model completed by the user on Maternal ARV post-partum. """
+    """ A model completed by the user on the mother's ARVs administered post-partum. """
 
     CONSENT_MODEL = MaternalConsent
 
-    haart_last_visit = models.CharField(
+    on_arv_since = models.CharField(
         max_length=25,
         choices=YES_NO,
         verbose_name=("Was the mother supposed to be on triple ARVs any time since the last"
                       " attended scheduled visit?"),
         help_text="If 'NO' End. Otherwise continue go to section one",)
 
-    haart_reason = models.CharField(
+    on_arv_reason = models.CharField(
         verbose_name="Reason for triple ARVs ",
         max_length=25,
         choices=REASON_FOR_HAART,
         default='N/A',
         help_text="",)
 
-    haart_reason_other = models.TextField(
+    on_arv_reason_other = models.TextField(
         max_length=35,
         verbose_name="if other, specify",
         blank=True,
@@ -47,11 +47,15 @@ class MaternalArvPost (MaternalScheduledVisitModel):
         help_text="",
         default='N/A',)
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     def visit(self):
         return self.maternal_visit
 
     def __unicode__(self):
-        return "%s" % (self.maternal_visit)
+        return unicode(self.maternal_visit)
 
     class Meta:
         app_label = "microbiome_maternal"
@@ -75,7 +79,7 @@ class MaternalArvPostMod(MaternalOffStudyMixin, BaseHaartModification):
         return self.maternal_arv_post.maternal_visit
 
     def __unicode__(self):
-        return "%s" % (self.maternal_arv_post)
+        return unicode(self.maternal_arv_post)
 
     def get_report_datetime(self):
         return self.get_visit().get_report_datetime()
@@ -119,8 +123,12 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     def __unicode__(self):
-        return "%s" % (self.maternal_arv_post)
+        return unicode(self.maternal_arv_post)
 
     def get_report_datetime(self):
         return self.maternal_arv_post.get_report_datetime()

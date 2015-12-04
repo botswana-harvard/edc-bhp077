@@ -27,7 +27,7 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
             datetime_not_future, ],
         help_text='')
 
-    weeks_of_gestation = models.IntegerField(
+    gestation_wks = models.IntegerField(
         verbose_name="How many weeks pregnant?",
         help_text=" (weeks of gestation). Eligible if >=36 weeks", )
 
@@ -45,7 +45,7 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
 
     @property
     def weeks_base(self):
-        return self.weeks_of_gestation
+        return self.gestation_wks
 
     @property
     def postnatal_enrollment(self):
@@ -59,16 +59,16 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
 
         if postnatal_enrollment:
             postnatal_enrollment.is_diabetic = self.is_diabetic
-            postnatal_enrollment.on_tb_treatment = self.on_tb_treatment
-            postnatal_enrollment.on_hypertension_treatment = self.on_hypertension_treatment
-            postnatal_enrollment.breastfeed_for_a_year = self.breastfeed_for_a_year
-            postnatal_enrollment.instudy_for_a_year = self.instudy_for_a_year
+            postnatal_enrollment.on_tb_tx = self.on_tb_tx
+            postnatal_enrollment.on_hypertension_tx = self.on_hypertension_tx
+            postnatal_enrollment.will_breastfeed = self.will_breastfeed
+            postnatal_enrollment.will_remain_onstudy = self.will_remain_onstudy
             postnatal_enrollment.week32_result = self.week32_result
             postnatal_enrollment.verbal_hiv_status = self.verbal_hiv_status
             postnatal_enrollment.valid_regimen = self.valid_regimen
             postnatal_enrollment.evidence_hiv_status = self.evidence_hiv_status
-            postnatal_enrollment.process_rapid_test = self.process_rapid_test
-            postnatal_enrollment.date_of_rapid_test = self.date_of_rapid_test
+            postnatal_enrollment.rapid_test_done = self.rapid_test_done
+            postnatal_enrollment.rapid_test_date = self.rapid_test_date
             postnatal_enrollment.rapid_test_result = self.rapid_test_result
             postnatal_enrollment.valid_regimen = self.valid_regimen
             postnatal_enrollment.save()
@@ -76,15 +76,15 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
     @property
     def eligible_for_postnatal(self):
         """Returns True if a mother is eligible for postnatalenrollment."""
-        if (self.weeks_of_gestation >= 36 and self.is_diabetic == NO and
-                self.on_tb_treatment == NO and self.on_hypertension_treatment == NO and
-                self.breastfeed_for_a_year == YES and self.instudy_for_a_year == YES):
+        if (self.gestation_wks >= 36 and self.is_diabetic == NO and
+                self.on_tb_tx == NO and self.on_hypertension_tx == NO and
+                self.will_breastfeed == YES and self.will_remain_onstudy == YES):
             if self.week32_test == YES and self.week32_result in [POS, NEG] and self.evidence_hiv_status == YES:
                 return True
-            if (self.week32_test == NO and self.process_rapid_test == YES and
+            if (self.week32_test == NO and self.rapid_test_done == YES and
                     self.evidence_hiv_status == NO and not self.week32_result):
                 return True
-            if (self.week32_test == NO and self.process_rapid_test == YES and
+            if (self.week32_test == NO and self.rapid_test_done == YES and
                     self.evidence_hiv_status == NOT_APPLICABLE and not self.week32_result):
                 return True
             if (self.verbal_hiv_status == POS and self.evidence_hiv_status == YES and
@@ -93,7 +93,7 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
             elif self.verbal_hiv_status == NEG and self.evidence_hiv_status == YES:
                 return True
             elif (self.evidence_hiv_status == NO and self.rapid_test_result != POS and
-                    self.process_rapid_test == YES):
+                    self.rapid_test_done == YES):
                 return True
         return False
 

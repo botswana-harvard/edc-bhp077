@@ -201,7 +201,7 @@ class TestSrhServiceUtilizationForm(TestCase):
     #         registered_subject=self.registered_subject, visit_definition__code='1000M'
     #     )
     #     maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
-    #     self.data['has_chronic_cond'] = NO
+    #     self.data['chronic_cond_since'] = NO
     #     self.data['maternal_visit'] = maternal_visit.id
     #     self.data['chronic_cond'] = [c.id]
     #     maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)

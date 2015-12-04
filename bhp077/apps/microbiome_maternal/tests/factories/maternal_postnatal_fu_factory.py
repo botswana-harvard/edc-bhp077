@@ -17,11 +17,11 @@ class MaternalPostFuFactory(factory.DjangoModelFactory):
 
     maternal_visit = factory.SubFactory(MaternalVisitFactory)
     report_datetime = timezone.now()
-    mother_weight = NO
-    enter_weight = ''
+    weight_measured = NO
+    weight_kg = ''
     systolic_bp = 120
     diastolic_bp = 80
-    has_chronic_cond = NO
+    chronic_cond_since = NO
 #     chronic_cond = [factory.SubFactory(ChronicConditionsFactory)]
 
 

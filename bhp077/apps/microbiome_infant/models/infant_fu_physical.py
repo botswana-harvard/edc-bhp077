@@ -12,7 +12,7 @@ class InfantFuPhysical(InfantScheduledVisitModel):
 
     """ A model completed by the user on the infant's Infant follow up physical assessment. """
 
-    weight = models.DecimalField(
+    weight_kg = models.DecimalField(
         max_digits=6,
         decimal_places=2,
         verbose_name="Weight ",

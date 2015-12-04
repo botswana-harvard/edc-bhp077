@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.off_study.models import BaseOffStudy
@@ -12,12 +12,17 @@ from .infant_visit import InfantVisit
 class InfantOffStudy(BaseOffStudy, BaseUuidModel):
 
     """ A model completed by the user when the infant is taken off study. """
+
     infant_visit = models.OneToOneField(InfantVisit)
 
     report_datetime = models.DateTimeField(
         verbose_name="Visit Date and Time",
-        default=datetime.today()
+        default=timezone.now
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 

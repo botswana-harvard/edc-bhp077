@@ -131,7 +131,7 @@ class BaseModelForm(forms.ModelForm):
                 if cleaned_data.has_key('chronic_cond'):
                     self.validate_m2m(
                             label = 'chronic condition',
-                            yesno = cleaned_data['has_chronic_cond'],
+                            yesno = cleaned_data['chronic_cond_since'],
                             m2m = cleaned_data['chronic_cond'],
                             other = cleaned_data['chronic_cond_other'])
         """
@@ -268,7 +268,7 @@ class BaseModelForm(forms.ModelForm):
     def number_from_label(self):
         """Returns the question number from the label, or None."""
         try:
-            number = re.match('^\\d+\\.', self.fields['hiv_test_date'].label).string.split('.')
+            number = re.match('^\\d+\\.', self.fields['week32_test_date'].label).string.split('.')
         except AttributeError:
             number = ['']
         return number[0]

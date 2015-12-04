@@ -14,15 +14,22 @@ from edc_constants.choices import (POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG,
 from edc_constants.constants import NOT_APPLICABLE, NO, YES
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
-from .maternal_eligibility import MaternalEligibility, MaternalConsent
+from .maternal_eligibility import MaternalEligibility
 from ..maternal_choices import LIVE_STILL_BIRTH
 
 
 class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsentMixin, BaseUuidModel):
 
-    """Base Model for antenal and postnatal enrollment"""
+    """Base class for antenatal and postnatal enrollment models"""
 
     registered_subject = models.ForeignKey(RegisteredSubject, null=True)
+
+    report_datetime = models.DateTimeField(
+        verbose_name="Date and Time",
+        validators=[
+            datetime_not_before_study_start,
+            datetime_not_future, ],
+        help_text='')
 
     is_diabetic = models.CharField(
         verbose_name='Are you diabetic?',
@@ -31,14 +38,14 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         help_text='INELIGIBLE if YES',
         max_length=3)
 
-    on_tb_treatment = models.CharField(
+    on_tb_tx = models.CharField(
         verbose_name="Are you being treated for tubercolosis?",
         choices=YES_NO,
         default=NO,
         help_text='INELIGIBLE if YES',
         max_length=3)
 
-    on_hypertension_treatment = models.CharField(
+    on_hypertension_tx = models.CharField(
         verbose_name='Are you being treated for hypertension?',
         choices=YES_NO,
         default=NO,
@@ -46,14 +53,14 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         max_length=3
     )
 
-    breastfeed_for_a_year = models.CharField(
+    will_breastfeed = models.CharField(
         verbose_name='Are you willing to breast-feed your child for a whole year?',
         choices=YES_NO,
         default=NO,
         help_text='INELIGIBLE if NO',
         max_length=3)
 
-    instudy_for_a_year = models.CharField(
+    will_remain_onstudy = models.CharField(
         verbose_name="Are you willing to remain in the study during the infants first year of life",
         choices=YES_NO,
         default=NO,
@@ -66,7 +73,7 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         default=NO,
         max_length=3)
 
-    date_of_test = models.DateField(
+    week32_test_date = models.DateField(
         verbose_name="Date of Test",
         null=True,
         blank=True)
@@ -114,7 +121,7 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         max_length=15,
         help_text=("If not 6 or more weeks then not eligible."))
 
-    process_rapid_test = models.CharField(
+    rapid_test_done = models.CharField(
         verbose_name="Was a rapid test processed?",
         choices=YES_NO_NA,
         null=True,
@@ -124,7 +131,7 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         help_text=('Remember, rapid test is for HIV -VE, UNTESTED, UNKNOWN, REFUSED-to-ANSWER'
                    'verbal responses'))
 
-    date_of_rapid_test = models.DateField(
+    rapid_test_date = models.DateField(
         verbose_name="Date of rapid test",
         null=True,
         validators=[
@@ -139,21 +146,14 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         null=True,
         blank=True,)
 
-    weeks_of_gestation = models.IntegerField(
+    gestation_wks = models.IntegerField(
         verbose_name="How many weeks pregnant?",
         help_text=" (weeks of gestation). Eligible if >=36 weeks",
         null=True,
         blank=True,)
 
-    antenatal_eligible = models.NullBooleanField(
+    antenatal_eligible = models.BooleanField(
         editable=False)
-
-    report_datetime = models.DateTimeField(
-        verbose_name="Date and Time",
-        validators=[
-            datetime_not_before_study_start,
-            datetime_not_future, ],
-        help_text='')
 
     postpartum_days = models.IntegerField(
         verbose_name="How many days postpartum?",
@@ -161,19 +161,19 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         null=True,
         blank=True,)
 
-    delivery_type = models.CharField(
+    vaginal_delivery = models.CharField(
         verbose_name="Was this a vaginal delivery?",
         choices=YES_NO,
         max_length=3,
         help_text="INELIGIBLE if NO")
 
-    gestation_before_birth = models.IntegerField(
+    gestation_to_birth_wks = models.IntegerField(
         verbose_name="How many weeks after gestation was the child born?",
         help_text="ineligible if premature or born before 37weeks",
         null=True,
         blank=True,)
 
-    live_or_still_birth = models.CharField(
+    delivery_status = models.CharField(
         verbose_name="Was this a live or still birth?",
         choices=LIVE_STILL_BIRTH,
         max_length=15,
@@ -220,18 +220,9 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         return self.registered_subject.subject_identifier
 
     def __unicode__(self):
-        return "{0} {1}".format(self.registered_subject.subject_identifier,
-                                self.registered_subject.first_name)
+        return "{0} {1}".format(
+            self.registered_subject.subject_identifier,
+            self.registered_subject.first_name)
 
     class Meta:
         abstract = True
-
-
-class Enrollment(BaseEnrollment):
-
-    CONSENT_MODEL = MaternalConsent
-
-    class Meta:
-        app_label = 'microbiome_maternal'
-        verbose_name = 'Enrollment'
-        verbose_name_plural = 'Enrollment'

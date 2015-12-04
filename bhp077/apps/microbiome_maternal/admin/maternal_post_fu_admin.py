@@ -10,17 +10,17 @@ class MaternalPostFuAdmin(BaseModelAdmin):
     form = MaternalPostFuForm
     fields = (
         "maternal_visit",
-        "mother_weight",
-        "enter_weight",
+        "weight_measured",
+        "weight_kg",
         "systolic_bp",
         "diastolic_bp",
-        "has_chronic_cond",
+        "chronic_cond_since",
         "chronic_cond",
         "chronic_cond_other",
         "comment")
     radio_fields = {
-        "mother_weight": admin.VERTICAL,
-        "has_chronic_cond": admin.VERTICAL}
+        "weight_measured": admin.VERTICAL,
+        "chronic_cond_since": admin.VERTICAL}
     filter_horizontal = ('chronic_cond',)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -69,14 +69,14 @@ class MaternalPostFuDxAdmin(BaseModelAdmin):
     fields = (
         "maternal_visit",
         "maternal_post_fu",
-        "mother_hospitalized",
-        "who_clinical_stage",
+        "hospitalized_since",
+        "new_wcs_dx_since",
         "wcs_dx_adult",
-        "new_diagnoses")
+        "new_dx_since")
     radio_fields = {
-        "mother_hospitalized": admin.VERTICAL,
-        "new_diagnoses": admin.VERTICAL,
-        "who_clinical_stage": admin.VERTICAL}
+        "hospitalized_since": admin.VERTICAL,
+        "new_dx_since": admin.VERTICAL,
+        "new_wcs_dx_since": admin.VERTICAL}
     filter_horizontal = ("wcs_dx_adult",)
     inlines = [MaternalPostFuDxTInlineAdmin, ]
 

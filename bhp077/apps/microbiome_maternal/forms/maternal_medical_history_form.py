@@ -14,7 +14,7 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
         if 'chronic_cond' in cleaned_data.keys():
             self.validate_m2m(
                 label='chronic condition',
-                leading=cleaned_data.get('has_chronic_cond'),
+                leading=cleaned_data.get('chronic_cond_since'),
                 m2m=cleaned_data.get('chronic_cond'),
                 other=cleaned_data.get('chronic_cond_other'))
         # WHO validations

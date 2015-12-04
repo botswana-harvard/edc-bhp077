@@ -30,7 +30,7 @@
 #     SUBMIT = (By.NAME, '_save')
 # 
 # 
-# class SampleConsentFinder(object):
+# class SpecimenConsentFinder(object):
 #     SAMPLE_CONSENT_LANGUAGE = (By.CSS_SELECTOR, "input[id='id_language_1']")
 #     SAMPLE_STORAGE = (By.ID, 'id_may_store_samples_0')
 #     IS_LITERATE = (By.ID, 'id_is_literate_0')

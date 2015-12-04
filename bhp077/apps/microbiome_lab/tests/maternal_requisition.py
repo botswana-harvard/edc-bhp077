@@ -43,7 +43,7 @@
 #         self.registered_subject = self.maternal_consent.registered_subject
 #         self.postnatal_enrollment = PostnatalEnrollmentFactory(
 #             registered_subject=self.registered_subject,
-#             breastfeed_for_a_year=YES
+#             will_breastfeed=YES
 #         )
 #         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
 #                                                    visit_definition__code='2000M')

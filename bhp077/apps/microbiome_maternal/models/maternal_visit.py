@@ -80,7 +80,7 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
         try:
             PostnatalEnrollment.objects.get(
                 registered_subject=self.appointment.registered_subject,
-                process_rapid_test=YES,
+                rapid_test_done=YES,
                 rapid_test_result=POS
             )
         except PostnatalEnrollment.DoesNotExist:
@@ -109,7 +109,7 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
         try:
             PostnatalEnrollment.objects.get(
                 registered_subject=self.appointment.registered_subject,
-                process_rapid_test=YES,
+                rapid_test_done=YES,
                 rapid_test_result=NEG,
             )
         except PostnatalEnrollment.DoesNotExist:

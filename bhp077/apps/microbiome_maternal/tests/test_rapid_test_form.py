@@ -46,8 +46,8 @@ class TestRapidTestForm(TestCase):
         self.data = {
             'report_datetime': timezone.now(),
             'maternal_visit': None,
-            'process_rapid_test': YES,
-            'date_of_rapid_test': timezone.now(),
+            'rapid_test_done': YES,
+            'rapid_test_date': timezone.now(),
             'rapid_test_result': None,
         }
 
@@ -59,7 +59,7 @@ class TestRapidTestForm(TestCase):
             appointment=appointment)
         return model_options
 
-    def test_validate_process_rapid_test_no_result(self):
+    def test_validate_rapid_test_done_no_result(self):
         self.maternal_consent.dob =  date(2015, 12, 7)
         self.maternal_consent.save()
 
@@ -79,7 +79,7 @@ class TestRapidTestForm(TestCase):
 
         self.assertIn(u"If a rapid test was processed, what is the test result?", rapid_form.errors.get("__all__"))
 
-    def test_validate_process_rapid_test_result(self):
+    def test_validate_rapid_test_done_result(self):
         self.maternal_consent.dob =  date(2015, 12, 7)
         self.maternal_consent.save()
 
@@ -101,7 +101,7 @@ class TestRapidTestForm(TestCase):
 
         self.assertTrue(rapid_form.is_valid())
 
-    def test_validate_process_rapid_test_no_date_of_rapid_test(self):
+    def test_validate_rapid_test_done_no_rapid_test_date(self):
         self.maternal_consent.dob =  date(2015, 12, 7)
         self.maternal_consent.save()
 
@@ -117,7 +117,7 @@ class TestRapidTestForm(TestCase):
 
         self.data['maternal_visit'] = maternal_visit.id
 
-        self.data['date_of_rapid_test'] = None
+        self.data['rapid_test_date'] = None
 
         self.data['rapid_test_result'] = POS
 
@@ -125,7 +125,7 @@ class TestRapidTestForm(TestCase):
 
         self.assertIn(u"If a rapid test was processed, what is the date of the rapid test?", rapid_form.errors.get("__all__"))
 
-    def test_validate_process_rapid_test_processed(self):
+    def test_validate_rapid_test_done_processed(self):
         self.maternal_consent.dob =  date(2015, 12, 7)
         self.maternal_consent.save()
 
@@ -141,15 +141,15 @@ class TestRapidTestForm(TestCase):
 
         self.data['maternal_visit'] = maternal_visit.id
 
-        self.data['process_rapid_test'] = NO
-        self.data['date_of_rapid_test'] = None
+        self.data['rapid_test_done'] = NO
+        self.data['rapid_test_date'] = None
         self.data['rapid_test_result'] = None
 
         rapid_form = RapidTestResultForm(data=self.data)
 
         self.assertTrue(rapid_form.is_valid())
 
-    def test_validate_process_rapid_test_processed1(self):
+    def test_validate_rapid_test_done_processed1(self):
         self.maternal_consent.dob =  date(2015, 12, 7)
         self.maternal_consent.save()
 
@@ -165,8 +165,8 @@ class TestRapidTestForm(TestCase):
 
         self.data['maternal_visit'] = maternal_visit.id
 
-        self.data['process_rapid_test'] = NO
-        self.data['date_of_rapid_test'] = timezone.now()
+        self.data['rapid_test_done'] = NO
+        self.data['rapid_test_date'] = timezone.now()
         self.data['rapid_test_result'] = None
 
         rapid_form = RapidTestResultForm(data=self.data)

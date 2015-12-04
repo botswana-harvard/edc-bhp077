@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
@@ -15,10 +15,10 @@ from edc_constants.constants import NOT_APPLICABLE
 from .maternal_consent import MaternalConsent
 
 
-class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, VulnerabilityFieldsMixin,
-                    BaseUuidModel, BaseAppointmentMixin):
+class SpecimenConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, VulnerabilityFieldsMixin,
+                      BaseAppointmentMixin, BaseUuidModel):
 
-    """ A model completed by the user when a mother gives consent for sample storage. """
+    """ A model completed by the user when a mother gives consent for specimen storage. """
 
     CONSENT_MODEL = MaternalConsent
 
@@ -29,12 +29,12 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
         validators=[
             datetime_not_before_study_start,
             datetime_not_future, ],
-        default=datetime.now,
+        default=timezone.now,
         help_text=('If reporting today, use today\'s date/time, otherwise use '
                    'the date/time this information was reported.'))
 
     purpose_explained = models.CharField(
-        verbose_name=("I have explained the purpose of the sample storage consent"
+        verbose_name=("I have explained the purpose of the specimen storage consent"
                       " to the participant."),
         max_length=15,
         choices=YES_NO_NA,
@@ -45,15 +45,15 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
 
     purpose_understood = models.CharField(
         verbose_name=("To the best of my knowledge, the client understands"
-                      " the purpose, procedures, risks and benefits of the sample storage consent"),
+                      " the purpose, procedures, risks and benefits of the specimen storage consent"),
         max_length=15,
         choices=YES_NO_NA,
         null=True,
         blank=False,
         default=NOT_APPLICABLE,)
 
-    sample_consent_copy = models.CharField(
-        verbose_name=("I have provided the client with a copy of their signed sample storage consent"),
+    specimen_consent_copy = models.CharField(
+        verbose_name=("I have provided the client with a copy of their signed specimen storage consent"),
         max_length=20,
         choices=YES_NO_DECLINED,
         null=True,
@@ -75,5 +75,5 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
 
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = 'Sample Consent'
-        verbose_name_plural = 'Sample Consent'
+        verbose_name = 'Specimen Consent'
+        verbose_name_plural = 'Specimen Consent'

@@ -19,12 +19,12 @@ class MaternalArvPregForm(BaseMaternalModelForm):
             raise forms.ValidationError('You indicated that ARVs were NOT interrupted during pregnancy. '
                                         'You cannot provide a reason. Please correct.')
         check_arvs = self.data.get('maternalarv_set-0-arv_code')
-        if cleaned_data.get('took_arv') == 'Yes' and not check_arvs:
+        if cleaned_data.get('arv_exposed') == 'Yes' and not check_arvs:
             raise forms.ValidationError(
                 "You indicated that participant started ARV(s) during this pregnancy on 'Maternal ARV in This Preg'. "
                 "Please list them or correct 'Maternal ARV in This Preg'.")
         # if no is indicated for any arv's started in Maternal ARV in This Preg then list must be provided
-        if cleaned_data.get('took_arv') == 'No' and check_arvs:
+        if cleaned_data.get('arv_exposed') == 'No' and check_arvs:
             raise forms.ValidationError(
                 "You indicated that ARV(s) were NOT started during this pregnancy on 'Maternal ARV in This Preg'."
                 "You cannot provide a list or correct 'Maternal ARV in This Preg'.")
@@ -34,12 +34,12 @@ class MaternalArvPregForm(BaseMaternalModelForm):
             instance = self.instance
         else:
             instance = MaternalArvPreg(**cleaned_data)
-        self.validate_took_arv(cleaned_data, instance)
+        self.validate_arv_exposed(cleaned_data, instance)
 
         return cleaned_data
 
-    def validate_took_arv(self, cleaned_data, instance):
-        if cleaned_data.get('took_arv') == NO:
+    def validate_arv_exposed(self, cleaned_data, instance):
+        if cleaned_data.get('arv_exposed') == NO:
             if instance.maternal_visit.postnatal_enrollment.valid_regimen_duration == YES:
                 raise forms.ValidationError(
                     "You indicated that the participant has been on regimen for period of time. The answer should be (YES)"
@@ -53,12 +53,12 @@ class MaternalArvPregForm(BaseMaternalModelForm):
 class MaternalArvForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(MaternalArvForm, self).clean()
-        if self.weeks_between(cleaned_data.get('date_started'), timezone.now()) < 6:
+        if self.weeks_between(cleaned_data.get('start_date'), timezone.now()) < 6:
             raise forms.ValidationError("ARV start date must be six weeks prior to today's date or greater.")
-        if cleaned_data.get('date_stopped'):
-            if cleaned_data.get('date_stopped') < cleaned_data.get('date_started'):
+        if cleaned_data.get('stop_date'):
+            if cleaned_data.get('stop_date') < cleaned_data.get('start_date'):
                 raise forms.ValidationError('You have indicated that the stop date of {} is prior to start date of {}. '
-                                            'Please correct'.format(cleaned_data.get('date_stopped') ,cleaned_data.get('date_started')))
+                                            'Please correct'.format(cleaned_data.get('stop_date') ,cleaned_data.get('start_date')))
         return cleaned_data
 
     class Meta:
