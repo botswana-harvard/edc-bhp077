@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
+from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 from edc_base.model.models import BaseUuidModel
 
@@ -52,6 +53,10 @@ class InfantFuDxItems(BaseUuidModel):
         max_length=3,
         verbose_name="Hospitalized?",
         help_text="",)
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def __str__(self):
         return str(self.infant_fu_dx.infant_visit)

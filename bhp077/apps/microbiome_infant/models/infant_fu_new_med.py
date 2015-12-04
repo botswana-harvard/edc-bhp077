@@ -1,9 +1,8 @@
 from django.db import models
-from django.core.urlresolvers import reverse
-from django.utils import timezone
 
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc_base.model.models import BaseUuidModel
+from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import DRUG_ROUTE
 from edc_constants.choices import YES_NO
 
@@ -64,6 +63,10 @@ class InfantFuNewMedItems(BaseUuidModel):
         choices=DRUG_ROUTE,
         verbose_name="Drug route",
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def get_visit(self):
         return self.infant_fu_med.get_visit()

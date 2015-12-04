@@ -1,13 +1,11 @@
-from django.core.urlresolvers import reverse
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_base.model.validators.date import date_not_future
-from edc_consent.models import RequiresConsentMixin
 from edc_constants.choices import GENDER_UNDETERMINED
 
 from bhp077.apps.microbiome_maternal.models import MaternalLabourDel
@@ -46,6 +44,10 @@ class InfantBirth(InfantOffStudyMixin, BaseUuidModel, BaseAppointmentMixin):
     gender = models.CharField(
         max_length=10,
         choices=GENDER_UNDETERMINED)
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def __unicode__(self):
         return "{} ({}) {}".format(self.first_name, self.initials, self.gender)

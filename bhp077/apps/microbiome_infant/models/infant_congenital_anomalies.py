@@ -1,8 +1,8 @@
 from django.db import models
 
 from edc.base.model.fields import OtherCharField
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
-from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_constants.choices import CONFIRMED_SUSPECTED
 
 from bhp077.apps.microbiome.choices import (
@@ -25,6 +25,10 @@ class InfantCongenitalAnomalies(InfantScheduledVisitModel):
 
 class BaseCnsItem(BaseUuidModel):
     congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def get_visit(self):
         return self.congenital_anomalies.get_visit()

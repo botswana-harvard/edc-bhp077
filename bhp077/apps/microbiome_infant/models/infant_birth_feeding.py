@@ -1,12 +1,12 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from bhp077.apps.microbiome.choices import FEEDING_CHOICES
 from bhp077.apps.microbiome_infant.infant_choices import INFANT_VACCINATIONS
 
-from .infant_birth import InfantBirth
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
@@ -49,6 +49,10 @@ class InfantVaccines(BaseUuidModel):
         null=True,
         blank=True,
     )
+
+    objects = objects = models.Manager()()
+
+    history = AuditTrail()
 
     def get_visit(self):
         return self.infant_birth_feed_vaccine.get_visit()

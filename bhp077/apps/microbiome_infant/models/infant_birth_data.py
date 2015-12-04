@@ -73,8 +73,6 @@ class InfantBirthData(InfantScheduledVisitModel):
         blank=True,
         null=True)
 
-    history = AuditTrail()
-
     def __unicode__(self):
         return unicode(self.infant_birth)
 

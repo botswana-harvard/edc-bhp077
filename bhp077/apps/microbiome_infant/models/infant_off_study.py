@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from datetime import datetime
 
 from edc.entry_meta_data.managers import EntryMetaDataManager
@@ -13,9 +12,6 @@ from .infant_visit import InfantVisit
 class InfantOffStudy(BaseOffStudy, BaseUuidModel):
 
     """ A model completed by the user when the infant is taken off study. """
-
-    history = AuditTrail()
-
     infant_visit = models.OneToOneField(InfantVisit)
 
     report_datetime = models.DateTimeField(
@@ -24,6 +20,10 @@ class InfantOffStudy(BaseOffStudy, BaseUuidModel):
     )
 
     entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def get_visit(self):
         return self.infant_visit
