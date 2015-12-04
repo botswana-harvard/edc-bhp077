@@ -5,13 +5,14 @@ from edc.lab.lab_requisition.models import BaseRequisition
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.entry_meta_data.managers import RequisitionMetaDataManager
+
 from bhp077.apps.microbiome_maternal.models import MaternalVisit
+
+from ..managers import RequisitionManager
 
 from .aliquot_type import AliquotType
 from .packing_list import PackingList
 from .panel import Panel
-
-from ..managers import RequisitionManager
 
 
 class MaternalRequisition(BaseRequisition, BaseUuidModel):
@@ -46,11 +47,13 @@ class MaternalRequisition(BaseRequisition, BaseUuidModel):
     aliquot.allow_tags = True
 
     def dashboard(self):
-        url = reverse('subject_dashboard_url',
-                      kwargs={'dashboard_type': self.maternal_visit.appointment.registered_subject.subject_type.lower(),
-                              'dashboard_model': 'appointment',
-                              'dashboard_id': self.maternal_visit.appointment.pk,
-                              'show': 'appointments'})
+        url = reverse(
+            'subject_dashboard_url',
+            kwargs={
+                'dashboard_type': self.maternal_visit.appointment.registered_subject.subject_type.lower(),
+                'dashboard_model': 'appointment',
+                'dashboard_id': self.maternal_visit.appointment.pk,
+                'show': 'appointments'})
         return """<a href="{url}" />dashboard</a>""".format(url=url)
     dashboard.allow_tags = True
 
