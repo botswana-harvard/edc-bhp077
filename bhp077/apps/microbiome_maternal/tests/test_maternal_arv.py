@@ -1,6 +1,7 @@
 from __future__ import print_function
 from django.test import TestCase
 from django.utils import timezone
+from django.db.models import get_model
 
 from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -81,13 +82,13 @@ class TestMaternalArvPost(TestCase):
     def test_tooke_arv_5(self):
         """Assert that ARV indicated as not interrupted, then reason not expected"""
         self.data['interrupt'] = 'FORGOT'
-        self.data['arv_exposed'] = NO
+        self.data['took_arv'] = NO
         self.postnatal_enrollment.valid_regimen_duration = YES
         self.postnatal_enrollment.save()
         form = MaternalArvPregForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You indicated that the participant has been on regimen for period of time. The answer should '
-                      'be (YES)to question 3.(ARVs during pregnancy?).', errors)
+        self.assertIn('You indicated that the participant has been on regimen '
+                      'for period of time. But now you indicated that the participant did not take ARVs.', errors)
 
 
 class TestMaternalArvPreg(TestCase):
