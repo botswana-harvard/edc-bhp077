@@ -42,7 +42,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            breastfeed_for_a_year=YES
+            will_breastfeed=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
@@ -52,7 +52,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
         self.data = {
             'report_datetime': timezone.now(),
             'maternal_visit': self.maternal_visit.id,
-            'has_chronic_cond': NO,
+            'chronic_cond_since': NO,
             'chronic_cond': [c.id],
             'who_diagnosis': NO,
             'wcs_dx_adult': [who.id],
@@ -64,7 +64,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
 
     def test_chronic_cond_1(self):
         """If indicated has chronic condition and no conditions supplied."""
-        self.data['has_chronic_cond'] = YES
+        self.data['chronic_cond_since'] = YES
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
         errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
         self.assertIn('You stated there ARE chronic condition', errors)

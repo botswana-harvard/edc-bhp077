@@ -12,13 +12,13 @@ class RapidTestResult(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
-    process_rapid_test = models.CharField(
+    rapid_test_done = models.CharField(
         verbose_name="Was a rapid test processed?",
         choices=YES_NO,
         max_length=3,
         help_text='')
 
-    date_of_rapid_test = models.DateField(
+    rapid_test_date = models.DateField(
         verbose_name="Date of rapid test",
         null=True,
         blank=True,

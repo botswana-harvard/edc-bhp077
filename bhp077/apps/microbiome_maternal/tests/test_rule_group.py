@@ -34,7 +34,8 @@ class TestRuleGroup(TestCase):
         site_rule_groups.autodiscover()
 
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
     def model_options(self, app_label, model_name, appointment):
@@ -59,20 +60,12 @@ class TestRuleGroup(TestCase):
         """
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            breastfeed_for_a_year=YES,
+            will_breastfeed=YES,
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             valid_regimen=YES,
         )
-        visit_codes = [
-            ['1000M', ['maternalarvhistory', 'maternalarvpreg']],
-#             ['2000M', ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']],
-#             ['2010M', ['maternalarvpost', 'maternalarvpostadh']],
-#             ['2030M', ['maternalarvpost', 'maternalarvpostadh']],
-#             ['2060M', ['maternalarvpost', 'maternalarvpostadh']],
-#             ['2090M', ['maternalarvpost', 'maternalarvpostadh']],
-#             ['2120M', ['maternalarvpost', 'maternalarvpostadh']],
-        ]
+        visit_codes = [['1000M', ['maternalarvhistory', 'maternalarvpreg']]]
         for visit in visit_codes:
             code, model_names = visit
             appointment = Appointment.objects.get(
@@ -91,15 +84,7 @@ class TestRuleGroup(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
         )
-        visit_codes = [
-            ['1000M', ['maternalarvhistory', 'maternalarvpreg']],
-#             ['2000M', ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']],
-#             ['2010M', ['maternalarvpost', 'maternalarvpostadh']],
-#             ['2030M', ['maternalarvpost', 'maternalarvpostadh']],
-#             ['2060M', ['maternalarvpost', 'maternalarvpostadh']],
-#             ['2090M', ['maternalarvpost', 'maternalarvpostadh']],
-#             ['2120M', ['maternalarvpost', 'maternalarvpostadh']],
-        ]
+        visit_codes = [['1000M', ['maternalarvhistory', 'maternalarvpreg']]]
         for visit in visit_codes:
             code, model_names = visit
             appointment = Appointment.objects.get(
@@ -116,7 +101,7 @@ class TestRuleGroup(TestCase):
         """
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            process_rapid_test=YES,
+            rapid_test_done=YES,
             rapid_test_result=NEG,
         )
         visit_codes = [
@@ -167,10 +152,9 @@ class TestRuleGroup(TestCase):
         """
         """
         PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject, process_rapid_test=YES,
-            breastfeed_for_a_year=YES, rapid_test_result=POS
-        )
-        for code in ['2010M', '2030M']: #, '2030M', '2090M', '2120M']: 
+            registered_subject=self.registered_subject, rapid_test_done=YES,
+            will_breastfeed=YES, rapid_test_result=POS)
+        for code in ['2010M', '2030M']:
             appointment = Appointment.objects.get(
                 registered_subject=self.registered_subject, visit_definition__code=code
             )

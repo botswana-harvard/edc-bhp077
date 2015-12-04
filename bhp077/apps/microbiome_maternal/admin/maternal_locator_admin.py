@@ -1,12 +1,16 @@
 from django.contrib import admin
 
 from edc.subject.registration.models import RegisteredSubject
-from edc_base.modeladmin.admin import BaseModelAdmin
+from edc_locator.admin import BaseLocatorModelAdmin
 
 from ..models import MaternalLocator, MaternalVisit
+from ..forms.maternal_locator_form import MaternalLocatorForm
 
 
-class MaternalLocatorAdmin(BaseModelAdmin):
+class MaternalLocatorAdmin(BaseLocatorModelAdmin):
+
+    form = MaternalLocatorForm
+
     fields = ('maternal_visit',
               'registered_subject',
               'date_signed',
@@ -28,7 +32,7 @@ class MaternalLocatorAdmin(BaseModelAdmin):
               'contact_physical_address',
               'contact_cell',
               'contact_phone',
-              'has_caretaker_alt',
+              'has_caretaker',
               'caretaker_name',
               'caretaker_cell',
               'caretaker_tel')
@@ -43,7 +47,7 @@ class MaternalLocatorAdmin(BaseModelAdmin):
                     "may_follow_up": admin.VERTICAL,
                     "may_call_work": admin.VERTICAL,
                     "may_contact_someone": admin.VERTICAL,
-                    'has_caretaker_alt': admin.VERTICAL, }
+                    'has_caretaker': admin.VERTICAL, }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":

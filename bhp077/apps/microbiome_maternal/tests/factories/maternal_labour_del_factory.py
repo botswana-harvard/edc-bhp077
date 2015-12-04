@@ -13,13 +13,13 @@ class MaternalLabourDelFactory(factory.DjangoModelFactory):
         model = MaternalLabourDel
 
     delivery_datetime = timezone.now()
-    del_time_is_est = YES
+    delivery_time_estimated = YES
     labour_hrs = '10'
-    del_time_is_est = YES
-    labr_max_temp = 36
-    del_hosp = 'PMH'
+    delivery_time_estimated = YES
+    labour_max_temp = 36
+    delivery_hospital = 'PMH'
     has_uterine_tender = NO
-    labr_max_temp = -1
+    labour_max_temp = -1
     has_chorioamnionitis = NO
-    has_del_comp = NO
+    delivery_complications = NO
     live_infants_to_register = 1

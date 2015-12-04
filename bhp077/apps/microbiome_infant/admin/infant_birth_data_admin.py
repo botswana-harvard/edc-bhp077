@@ -13,7 +13,7 @@ class InfantBirthDataAdmin(BaseModelAdmin):
     fields = (
         "infant_visit",
         "infant_birth",
-        "infant_birth_weight",
+        "weight_kg",
         "infant_length",
         "head_circumference",
         "apgar_score",

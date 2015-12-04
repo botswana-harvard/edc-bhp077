@@ -20,14 +20,14 @@ class EnrollmentMixin(models.Model):
         help_text='INELIGIBLE if YES',
         max_length=3)
 
-    on_tb_treatment = models.CharField(
+    on_tb_tx = models.CharField(
         verbose_name="Are you being treated for tubercolosis?",
         choices=YES_NO,
         default=NO,
         help_text='INELIGIBLE if YES',
         max_length=3)
 
-    on_hypertension_treatment = models.CharField(
+    on_hypertension_tx = models.CharField(
         verbose_name='Are you being treated for hypertension?',
         choices=YES_NO,
         default=NO,
@@ -35,14 +35,14 @@ class EnrollmentMixin(models.Model):
         max_length=3
     )
 
-    breastfeed_for_a_year = models.CharField(
+    will_breastfeed = models.CharField(
         verbose_name='Are you willing to breast-feed your child for a whole year?',
         choices=YES_NO,
         default=NO,
         help_text='INELIGIBLE if NO',
         max_length=3)
 
-    instudy_for_a_year = models.CharField(
+    will_remain_onstudy = models.CharField(
         verbose_name="Are you willing to remain in the study during the infants first year of life",
         choices=YES_NO,
         default=NO,
@@ -55,7 +55,7 @@ class EnrollmentMixin(models.Model):
         default=NO,
         max_length=3)
 
-    date_of_test = models.DateField(
+    week32_test_date = models.DateField(
         verbose_name="Date of HIV Test",
         null=True,
         blank=True)
@@ -103,7 +103,7 @@ class EnrollmentMixin(models.Model):
         max_length=15,
         help_text=("If not 6 or more weeks then not eligible."))
 
-    process_rapid_test = models.CharField(
+    rapid_test_done = models.CharField(
         verbose_name="Was a rapid test processed?",
         choices=YES_NO_NA,
         null=True,
@@ -113,7 +113,7 @@ class EnrollmentMixin(models.Model):
         help_text=(
             'Remember, rapid test is for HIV -VE, UNTESTED, UNKNOWN, REFUSED-to-ANSWER verbal responses'))
 
-    date_of_rapid_test = models.DateField(
+    rapid_test_date = models.DateField(
         verbose_name="Date of rapid test",
         null=True,
         validators=[
@@ -132,9 +132,9 @@ class EnrollmentMixin(models.Model):
         return self.report_datetime
 
     @property
-    def requires_rapid_test(self):
+    def rapid_test_required(self):
         weeks_since_test = rrule.rrule(
-            rrule.WEEKLY, dtstart=self.date_of_test, until=self.report_datetime.date()).count()
+            rrule.WEEKLY, dtstart=self.week32_test_date, until=self.report_datetime.date()).count()
         value = self.weeks_base - weeks_since_test
         return value >= 32
 

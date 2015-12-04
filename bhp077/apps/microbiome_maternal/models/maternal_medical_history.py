@@ -16,7 +16,7 @@ class MaternalMedicalHistory(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
-    has_chronic_cond = models.CharField(
+    chronic_cond_since = models.CharField(
         max_length=25,
         choices=YES_NO,
         verbose_name=("Does the mother have any significant chronic condition(s) that were"

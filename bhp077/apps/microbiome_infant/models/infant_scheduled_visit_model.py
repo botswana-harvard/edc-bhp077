@@ -1,14 +1,13 @@
 from django.db import models
-
-from datetime import datetime
+from django.utils import timezone
 
 from edc_base.model.models.base_uuid_model import BaseUuidModel
-
+from edc_base.audit_trail import AuditTrail
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.data_manager.models import TimePointStatusMixin
 
-from .infant_visit import InfantVisit
 from .infant_off_study_mixin import InfantOffStudyMixin
+from .infant_visit import InfantVisit
 
 
 class InfantScheduledVisitModel(InfantOffStudyMixin, BaseUuidModel,
@@ -18,14 +17,16 @@ class InfantScheduledVisitModel(InfantOffStudyMixin, BaseUuidModel,
 
     infant_visit = models.OneToOneField(InfantVisit)
 
-    objects = models.Manager()
+    report_datetime = models.DateTimeField(
+        verbose_name="Visit Date and Time",
+        default=timezone.now
+    )
 
     entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 
-    report_datetime = models.DateTimeField(
-        verbose_name="Visit Date and Time",
-        default=datetime.today()
-    )
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def get_consenting_subject_identifier(self):
         """Returns mother's identifier."""

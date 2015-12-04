@@ -62,6 +62,10 @@ class VaccinesReceived(BaseUuidModel):
         blank=True,
         max_length=35)
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     def get_visit(self):
         return self.infant_fu_immunizations.infant_visit
 
@@ -101,6 +105,10 @@ class VaccinesMissed(BaseUuidModel):
         blank=True)
 
     reason_missed_other = OtherCharField()
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def get_visit(self):
         return self.infant_fu_immunizations.infant_visit

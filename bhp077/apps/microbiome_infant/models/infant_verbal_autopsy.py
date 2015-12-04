@@ -1,18 +1,16 @@
 from django.db import models
 
 from edc.audit.audit_trail import AuditTrail
-from edc.base.model.fields.custom.custom_fields import OtherCharField
-from edc.choices import YES_NO, SEVERITY_LEVEL
+from edc_base.model.fields.custom_fields import OtherCharField
+from edc_constants.choices import YES_NO, SEVERITY_LEVEL
 from edc.base.model.validators import datetime_not_before_study_start, datetime_not_future
 
 from bhp077.apps.microbiome_list.models import AutopsyInfoSource
+from bhp077.apps.microbiome.choices import AUTOPSY_SIGNS
 
-from ..choices import AUTOPSY_SIGNS
-from .infant_base_uuid_model import InfantBaseUuidModel
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
-from .infant_visit import InfantVisit
-from edc.entry_meta_data.managers import EntryMetaDataManager
+from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 
 class InfantVerbalAutopsy(InfantScheduledVisitModel):
@@ -51,12 +49,6 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
         max_length=3,
         choices=YES_NO)
 
-    history = AuditTrail()
-
-    infant_visit = models.OneToOneField(InfantVisit)
-
-    entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
-
     def __unicode__(self):
         return self.registered_subject.subject_identifier
 
@@ -71,7 +63,7 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
         app_label = "microbiome_infant"
 
 
-class InfantVerbalAutopsyItems(InfantBaseUuidModel):
+class InfantVerbalAutopsyItems(BaseUuidModel):
 
     verbal_autopsy = models.ForeignKey(InfantVerbalAutopsy)
 
@@ -100,6 +92,10 @@ class InfantVerbalAutopsyItems(InfantBaseUuidModel):
         blank=True,
         null=True,
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def get_report_datetime(self):
         return self.verbal_autopsy.report_datetime

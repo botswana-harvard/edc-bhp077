@@ -13,6 +13,7 @@ from bhp077.apps.microbiome_list.models import ChronicConditions
 
 from ..managers import MaternalPostFuDxTManager
 from ..maternal_choices import DX
+
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
 
@@ -23,13 +24,13 @@ class MaternalPostFu(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
-    mother_weight = models.CharField(
+    weight_measured = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name="Was the mother's weight measured at this visit?",
         help_text="",)
 
-    enter_weight = models.DecimalField(
+    weight_kg = models.DecimalField(
         max_digits=4,
         decimal_places=1,
         verbose_name="Enter mother's weight  ",
@@ -51,7 +52,21 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         help_text="in hg e.g. 80, should be between 35 and 130.",
     )
 
-    has_chronic_cond = models.CharField(
+    breastfed_since = models.CharField(
+        max_length=3,
+        verbose_name="Has the mother breastfed since the last attended visit?",
+        choices=YES_NO,
+        help_text="",
+    )
+
+    mastitis_since = models.CharField(
+        max_length=3,
+        verbose_name="If yes,since the last attended scheduled visit,has the mother had mastitis at any time?",
+        choices=YES_NO,
+        help_text="",
+    )
+
+    chronic_cond_since = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name="Since the last attended scheduled visit, has the mother had any of the following chronic health conditions, which were NEW diagnoses (never previously reported)?",
@@ -72,8 +87,6 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         blank=True,
         null=True,)
 
-    history = AuditTrail()
-
     class Meta:
         app_label = "microbiome_maternal"
         verbose_name = "Maternal Postnatal Follow-Up"
@@ -86,7 +99,7 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
 
     maternal_post_fu = models.OneToOneField(MaternalPostFu)
 
-    mother_hospitalized = models.CharField(
+    hospitalized_since = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name=("Has the mother been hospitalized overnight since the last scheduled"
@@ -94,7 +107,7 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
                       " randomization visit)?"),
         help_text="",)
 
-    new_diagnoses = models.CharField(
+    new_dx_since = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name=("Since the last attended scheduled visit, has the mother had any of"
@@ -102,7 +115,7 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
                       " episode of a previously resolved* diagnosis)"),
         help_text="",)
 
-    who_clinical_stage = models.CharField(
+    new_wcs_dx_since = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name=("Since the last attended scheduled visit, has the mother ever had any of"
@@ -112,8 +125,6 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
     wcs_dx_adult = models.ManyToManyField(
         WcsDxAdult,
         verbose_name="List any new WHO Stage III/IV diagnoses that are not reported")
-
-    history = AuditTrail()
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_maternalpostfudx_change', args=(self.id,))

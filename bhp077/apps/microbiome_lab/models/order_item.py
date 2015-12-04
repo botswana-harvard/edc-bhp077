@@ -1,17 +1,14 @@
-from datetime import datetime
-
 from django.db import models
+from django.utils import timezone
 
 from edc_base.audit_trail import AuditTrail
-
 from edc.device.sync.models import BaseSyncUuidModel
 
+from ..managers import OrderItemManager
 
 from .aliquot import Aliquot
 from .order import Order
 from .panel import Panel
-
-from ..managers import OrderItemManager
 
 
 class OrderItem(BaseSyncUuidModel):
@@ -33,7 +30,7 @@ class OrderItem(BaseSyncUuidModel):
     )
 
     order_datetime = models.DateTimeField(
-        default=datetime.today()
+        default=timezone.now
     )
 
     subject_identifier = models.CharField(

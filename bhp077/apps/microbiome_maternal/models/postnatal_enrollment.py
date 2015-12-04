@@ -34,17 +34,17 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         verbose_name="How many days postpartum?",
         help_text="If more than 3days, not eligible")
 
-    delivery_type = models.CharField(
+    vaginal_delivery = models.CharField(
         verbose_name="Was this a vaginal delivery?",
         choices=YES_NO,
         max_length=3,
         help_text="INELIGIBLE if NO")
 
-    gestation_before_birth = models.IntegerField(
+    gestation_to_birth_wks = models.IntegerField(
         verbose_name="How many weeks after gestation was the child born?",
         help_text="ineligible if premature or born before 37weeks")
 
-    live_or_still_birth = models.CharField(
+    delivery_status = models.CharField(
         verbose_name="Was this a live or still birth?",
         choices=LIVE_STILL_BIRTH,
         max_length=15,
@@ -58,6 +58,8 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         null=True,
         blank=True)
 
+    objects = models.Manager()
+
     history = AuditTrail()
 
     def save(self, *args, **kwargs):
@@ -69,15 +71,15 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
 
     @property
     def weeks_base(self):
-        return self.gestation_before_birth
+        return self.gestation_to_birth_wks
 
     @property
     def postnatal_eligible(self):
         """Returns true if the participant is eligible."""
-        if (self.breastfeed_for_a_year == YES and self.on_tb_treatment == NO and
-                self.on_hypertension_treatment == NO and self.is_diabetic == NO and
-                self.instudy_for_a_year == YES and self.postpartum_days <= 3 and self.delivery_type == YES and
-                self.live_or_still_birth == LIVE and self.gestation_before_birth >= 37):
+        if (self.will_breastfeed == YES and self.on_tb_tx == NO and
+                self.on_hypertension_tx == NO and self.is_diabetic == NO and
+                self.will_remain_onstudy == YES and self.postpartum_days <= 3 and self.vaginal_delivery == YES and
+                self.delivery_status == LIVE and self.gestation_to_birth_wks >= 37):
             if (self.verbal_hiv_status == POS and self.evidence_hiv_status == YES and self.valid_regimen == YES and
                     self.valid_regimen_duration == YES):
                 return True

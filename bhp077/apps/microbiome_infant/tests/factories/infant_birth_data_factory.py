@@ -16,6 +16,6 @@ class InfantBirthDataFactory(factory.DjangoModelFactory):
         model = InfantBirthData
 
     congenital_anomalities = YES
-    infant_birth_weight = '3'
+    weight_kg = '3'
     infant_length = '50'
     head_circumference = '10'

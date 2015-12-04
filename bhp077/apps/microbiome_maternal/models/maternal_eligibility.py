@@ -4,6 +4,7 @@ from django.db import models
 
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.model.models import BaseUuidModel
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_constants.choices import YES_NO
 
@@ -73,6 +74,8 @@ class MaternalEligibility (BaseUuidModel):
         editable=False)
 
     objects = models.Manager()
+
+    history = AuditTrail()
 
     def save(self, *args, **kwargs):
         if not self.eligibility_id:

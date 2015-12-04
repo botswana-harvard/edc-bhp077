@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import socket
+# import pytz
 from unipath import Path
 from django.utils import timezone
 
@@ -63,7 +64,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_revision',
-    #'django-extensions',
     # EDC
     'edc_base',
     'edc',
@@ -188,12 +188,10 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_LOADERS = (
-    (#'django.template.loaders.cached.Loader', (
-     'django.template.loaders.filesystem.Loader',
+    # ( 'django.template.loaders.cached.Loader', (
+    ('django.template.loaders.filesystem.Loader',
      'django.template.loaders.app_directories.Loader',
-     'django.template.loaders.eggs.Loader'
-    )
-)
+     'django.template.loaders.eggs.Loader'))
 
 WSGI_APPLICATION = 'bhp077.config.wsgi.application'
 
@@ -271,3 +269,6 @@ elif str(DEVICE_ID) == '99':
     PROJECT_TITLE = 'SERVER: Microbiome'
 elif str(DEVICE_ID) == '98':
     PROJECT_TITLE = 'RESERVED FOR MIDDLE MAN'
+
+CELLPHONE_REGEX = '^[7]{1}[12345678]{1}[0-9]{6}$'
+TELEPHONE_REGEX = '^[2-8]{1}[0-9]{6}$'

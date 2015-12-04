@@ -2,6 +2,7 @@ from django.db import models
 
 from edc.subject.visit_tracking.models import BaseVisitTracking
 
+from edc_base.audit_trail import AuditTrail
 from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
 from edc.subject.entry.models import Entry
 from edc_base.model.models.base_uuid_model import BaseUuidModel
@@ -52,6 +53,10 @@ class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUui
         null=True,
         blank=True)
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     def model_options(self, app_label, model_name):
         model_options = {}
         model_options.update(
@@ -60,7 +65,7 @@ class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUui
             appointment=self.appointment)
         return model_options
 
-    def rehash_meta_data(self):
+    def update_entry_meta_data(self):
         if self.reason == 'unscheduled':
             self.meta_data_visit_unshceduled(self.appointment)
 

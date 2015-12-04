@@ -1,10 +1,8 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from edc_base.model.fields.custom_fields import OtherCharField
 from edc_constants.constants import NOT_APPLICABLE
-from edc_constants.choices import (GENDER_UNDETERMINED, NORMAL_ABNORMAL,
+from edc_constants.choices import (NORMAL_ABNORMAL,
                                    YES_NO_NOT_EVALUATED_NA, NORMAL_ABNORMAL_NOEXAM)
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
@@ -14,7 +12,7 @@ class InfantFuPhysical(InfantScheduledVisitModel):
 
     """ A model completed by the user on the infant's Infant follow up physical assessment. """
 
-    weight = models.DecimalField(
+    weight_kg = models.DecimalField(
         max_digits=6,
         decimal_places=2,
         verbose_name="Weight ",

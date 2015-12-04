@@ -10,7 +10,7 @@ class MaternalHeightWeightAdmin(BaseModelAdmin):
 
     form = MaternalHeightWeightForm
     fields = ('maternal_visit',
-              'weight',
+              'weight_kg',
               'height',
               'systolic_bp',
               'diastolic_bp')

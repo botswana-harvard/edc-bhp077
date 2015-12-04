@@ -30,14 +30,14 @@ class TestEnrollmentStatusHelper(TestCase):
         self.data = {
             'registered_subject': self.registered_subject}
 
-    def test_weeks_of_gestation_below_36(self):
+    def test_gestation_wks_below_36(self):
         """Test for a positive mother on a valid regimen but weeks of gestation below 36."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=35
+            gestation_wks=35
         )
         self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
 
@@ -47,14 +47,14 @@ class TestEnrollmentStatusHelper(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=35
+            gestation_wks=35
         )
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=35
+            gestation_wks=35
         )
 
         self.assertTrue(postnatal_enrollment.is_eligible)
@@ -65,15 +65,15 @@ class TestEnrollmentStatusHelper(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=35
+            gestation_wks=35
         )
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=35,
-            instudy_for_a_year=NO
+            gestation_wks=35,
+            will_remain_onstudy=NO
         )
 
         self.assertTrue(postnatal_enrollment.is_eligible)
@@ -83,8 +83,8 @@ class TestEnrollmentStatusHelper(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=35,
-            instudy_for_a_year=NO,
+            gestation_wks=35,
+            will_remain_onstudy=NO,
             is_diabetic=YES,
         )
         self.assertFalse(antenatal.is_eligible)
@@ -94,7 +94,7 @@ class TestEnrollmentStatusHelper(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=35,
+            gestation_wks=35,
         )
         self.assertTrue(antenatal.is_eligible)
 
@@ -103,8 +103,8 @@ class TestEnrollmentStatusHelper(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=35,
-            instudy_for_a_year=NO
+            gestation_wks=35,
+            will_remain_onstudy=NO
         )
         self.assertFalse(postnatal_enrollment.is_eligible)
 
@@ -113,6 +113,6 @@ class TestEnrollmentStatusHelper(TestCase):
             verbal_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            weeks_of_gestation=35,
+            gestation_wks=35,
         )
         self.assertFalse(postnatal_enrollment.is_eligible)

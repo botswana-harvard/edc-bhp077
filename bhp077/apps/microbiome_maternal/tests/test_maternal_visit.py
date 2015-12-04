@@ -38,7 +38,7 @@ class TestMaternalVisit(TestCase):
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            breastfeed_for_a_year=YES
+            will_breastfeed=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
@@ -82,7 +82,7 @@ class TestMaternalVisit(TestCase):
 
 #     def test_block_new_visit_off_study_participant1(self):
 #         self.data['reason'] = 'scheduled'
-#         self.postnatal_enrollment.breastfeed_for_a_year = NO
+#         self.postnatal_enrollment.will_breastfeed = NO
 #         self.postnatal_enrollment.is_diabetic = YES
 #         self.postnatal_enrollment.save()
 #         form = MaternalVisitForm(data=self.data)

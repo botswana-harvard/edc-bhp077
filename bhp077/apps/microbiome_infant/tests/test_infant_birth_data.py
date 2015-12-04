@@ -75,7 +75,7 @@ class TestInfantBirthData(TestCase):
             'report_datetime': timezone.now(),
             'infant_birth': self.infant_birth.id,
             'infant_visit': self.infant_visit.id,
-            'infant_birth_weight': 3.61,
+            'weight_kg': 3.61,
             'infant_length': 89.97,
             'head_circumference': 39.30,
             'apgar_score': NO,

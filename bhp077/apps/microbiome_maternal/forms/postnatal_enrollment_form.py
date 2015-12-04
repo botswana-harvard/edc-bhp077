@@ -12,8 +12,8 @@ class BaseEnrollmentForm(BaseModelForm):
 
     def validate_create_rapid_tests(self, cleaned_data, instance):
         if instance.verbal_hiv_status == NEG:
-            if instance.requires_rapid_test:
-                if cleaned_data.get('process_rapid_test') == NO:
+            if instance.rapid_test_required:
+                if cleaned_data.get('rapid_test_done') == NO:
                     raise forms.ValidationError(
                         "Rapid test is required. Participant tested >=32 weeks ago.")
 
@@ -23,10 +23,10 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
     def clean(self):
 
         cleaned_data = super(PostnatalEnrollmentForm, self).clean()
-        if cleaned_data.get('gestation_before_birth') > 45:
+        if cleaned_data.get('gestation_to_birth_wks') > 45:
             raise forms.ValidationError('Gestational age of {} exceeds 45 weeks. Please correct.'
-                                        .format(cleaned_data.get('gestation_before_birth')))
-        if cleaned_data.get("live_or_still_birth") == LIVE:
+                                        .format(cleaned_data.get('gestation_to_birth_wks')))
+        if cleaned_data.get("delivery_status") == LIVE:
             if not cleaned_data.get('live_infants'):
                 raise forms.ValidationError("Live infants were born. How many?")
             if cleaned_data.get('live_infants', None) <= 0:
@@ -38,12 +38,14 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
             ant = None
         if ant:
             if ant.verbal_hiv_status == POS and ant.evidence_hiv_status == YES:
-                if not cleaned_data.get('verbal_hiv_status') == POS or not cleaned_data.get('evidence_hiv_status') == YES:
-                    raise forms.ValidationError("Antenatal Enrollment shows participant is {} and {} evidence ."
-                                                " Please Correct {} and {} evidence".format(ant.verbal_hiv_status,
-                                                                                            ant.evidence_hiv_status,
-                                                                                            cleaned_data.get('verbal_hiv_status'),
-                                                                                            cleaned_data.get('evidence_hiv_status')))
+                if (cleaned_data.get('verbal_hiv_status') != POS or cleaned_data.get('evidence_hiv_status') != YES):
+                    raise forms.ValidationError(
+                        "Antenatal Enrollment shows participant is {} and {} evidence ."
+                        " Please Correct {} and {} evidence".format(
+                            ant.verbal_hiv_status,
+                            ant.evidence_hiv_status,
+                            cleaned_data.get('verbal_hiv_status'),
+                            cleaned_data.get('evidence_hiv_status')))
         if ant:
             if not ant.antenatal_eligible:
                 raise forms.ValidationError(

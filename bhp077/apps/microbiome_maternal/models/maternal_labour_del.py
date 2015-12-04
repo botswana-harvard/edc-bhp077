@@ -30,7 +30,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         validators=[
             datetime_not_future, ])
 
-    del_time_is_est = models.CharField(
+    delivery_time_estimated = models.CharField(
         verbose_name="Is the delivery TIME estimated?",
         max_length=3,
         choices=YES_NO,
@@ -41,12 +41,12 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         max_length=10,
         help_text="")
 
-    del_hosp = models.CharField(
+    delivery_hospital = models.CharField(
         verbose_name="Where did the participant deliver? ",
         max_length=65,
         choices=DELIVERY_HEALTH_FACILITY,
         help_text="If 'OTHER', specify below",)
-    del_hosp_other = OtherCharField()
+    delivery_hospital_other = OtherCharField()
 
     has_uterine_tender = models.CharField(
         max_length=10,
@@ -60,7 +60,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         choices=YES_NO,
         help_text="")
 
-    labr_max_temp = models.DecimalField(
+    labour_max_temp = models.DecimalField(
         max_digits=3,
         decimal_places=1,
         verbose_name="Indicate the maximum temperature of mother during labour",
@@ -76,7 +76,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         verbose_name="Was chorio-amnionitis suspected? ",
         help_text="")
 
-    has_del_comp = models.CharField(
+    delivery_complications = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name="Were there other complications at delivery? ",
@@ -86,7 +86,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         verbose_name="How many babies are you registering to the study? ",
         help_text="")
 
-    del_comment = models.TextField(
+    delivery_comment = models.TextField(
         max_length=250,
         verbose_name="List any additional information about the labour and delivery (mother only) ",
         blank=True,
@@ -229,8 +229,6 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
-    history = AuditTrail()
-
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = "Maternal Labour & Delivery: Clinical History"
@@ -303,6 +301,8 @@ class MaternalLabDelDxT (BaseUuidModel):
         choices=YES_NO,
         verbose_name="Hospitalized",
         help_text="")
+
+    objects = models.Manager()
 
     history = AuditTrail()
 

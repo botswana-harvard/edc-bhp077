@@ -1,8 +1,7 @@
-from datetime import datetime
-
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
+from django.utils import timezone
 
 from lis.labeling.exceptions import LabelPrinterError
 
@@ -11,7 +10,7 @@ from .models import Order, OrderItem
 
 
 def create_order(modeladmin, request, queryset):
-    order_datetime = datetime.today()
+    order_datetime = timezone.now()
     order = Order.objects.create(order_datetime=order_datetime)
     for aliquot in queryset:
         OrderItem.objects.create(order=order, aliquot=aliquot, order_datetime=order_datetime)
@@ -32,7 +31,7 @@ def print_requisition_label(modeladmin, request, requisitions):
             else:
                 requisition_label.print_label_for_requisition(request, requisition)
                 requisition.is_labelled = True
-                requisition.is_labelled_datetime = datetime.today()
+                requisition.is_labelled_datetime = timezone.now()
                 requisition.save()
     except LabelPrinterError as label_printer_error:
         messages.add_message(request, messages.ERROR, str(label_printer_error))

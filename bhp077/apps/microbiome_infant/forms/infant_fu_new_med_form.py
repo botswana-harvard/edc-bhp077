@@ -27,8 +27,8 @@ class InfantFuNewMedItemsForm(BaseInfantModelForm):
         if cleaned_data.get('infant_fu_med').new_medications == NO:
             raise forms.ValidationError('You indicated that no medications were taken. You cannot provide the '
                                         'medication. Please correct')
-        if cleaned_data.get('date_stopped'):
-            if cleaned_data.get('date_stopped') < cleaned_data.get('date_first_medication'):
+        if cleaned_data.get('stop_date'):
+            if cleaned_data.get('stop_date') < cleaned_data.get('date_first_medication'):
                 raise forms.ValidationError('You have indicated that medication stop date is before its start date. '
                                             'Please correct.')
         if cleaned_data.get('medication') == OTHER and not cleaned_data.get('other_medication'):

@@ -36,8 +36,8 @@ class EnrollmentStatusHelper(object):
     def antinatal_postnatal_elibigible(self):
         if self.postnatal_enrollment and self.antinatal_enrollment:
             postnatal = self.postnatal_enrollment
-            postnatal.breastfeed_for_a_year = self.antinatal_enrollment.breastfeed_for_a_year
-            postnatal.instudy_for_a_year = self.antinatal_enrollment.instudy_for_a_year
+            postnatal.will_breastfeed = self.antinatal_enrollment.will_breastfeed
+            postnatal.will_remain_onstudy = self.antinatal_enrollment.will_remain_onstudy
             postnatal.verbal_hiv_status = self.antinatal_enrollment.verbal_hiv_status
             postnatal.evidence_hiv_status = self.antinatal_enrollment.verbal_hiv_status
             return postnatal.postnatal_eligible

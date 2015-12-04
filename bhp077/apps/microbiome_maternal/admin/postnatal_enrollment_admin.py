@@ -11,11 +11,11 @@ from ..models import PostnatalEnrollment, AntenatalEnrollment
 class PostnatalEnrollmentAdmin(BaseModelAdmin):
 
     fields = [
-        'registered_subject', 'report_datetime', 'postpartum_days', 'delivery_type', 'gestation_before_birth',
-        'live_or_still_birth', 'live_infants', 'is_diabetic', 'on_tb_treatment', 'on_hypertension_treatment',
-        'breastfeed_for_a_year', 'instudy_for_a_year', 'week32_test', 'date_of_test', 'week32_result',
-        'verbal_hiv_status', 'evidence_hiv_status', 'valid_regimen', 'valid_regimen_duration', 'process_rapid_test',
-        'date_of_rapid_test', 'rapid_test_result'
+        'registered_subject', 'report_datetime', 'postpartum_days', 'vaginal_delivery', 'gestation_to_birth_wks',
+        'delivery_status', 'live_infants', 'is_diabetic', 'on_tb_tx', 'on_hypertension_tx',
+        'will_breastfeed', 'will_remain_onstudy', 'week32_test', 'week32_test_date', 'week32_result',
+        'verbal_hiv_status', 'evidence_hiv_status', 'valid_regimen', 'valid_regimen_duration', 'rapid_test_done',
+        'rapid_test_date', 'rapid_test_result'
     ]
 
     form = PostnatalEnrollmentForm
@@ -29,9 +29,9 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
             return False
 
     def exclude_fields(self):
-        exclude = ['is_diabetic', 'on_tb_treatment', 'on_hypertension_treatment', 'breastfeed_for_a_year',
-                   'instudy_for_a_year', 'week32_test', 'date_of_test', 'week32_result', 'verbal_hiv_status',
-                   'valid_regimen', 'valid_regimen_duration', 'process_rapid_test', 'date_of_rapid_test',
+        exclude = ['is_diabetic', 'on_tb_tx', 'on_hypertension_tx', 'will_breastfeed',
+                   'will_remain_onstudy', 'week32_test', 'date_of_test', 'week32_result', 'verbal_hiv_status',
+                   'valid_regimen', 'valid_regimen_duration', 'rapid_test_done', 'rapid_test_date',
                    'rapid_test_result', 'valid_regimen', 'evidence_hiv_status']
         return exclude
 
@@ -46,10 +46,10 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
     def update_postnatal(self, form, antenatal):
 
         form.base_fields['is_diabetic'].initial = antenatal.is_diabetic
-        form.base_fields['on_tb_treatment'].initial = antenatal.on_tb_treatment
-        form.base_fields['on_hypertension_treatment'].initial = antenatal.on_hypertension_treatment
-        form.base_fields['breastfeed_for_a_year'].initial = antenatal.breastfeed_for_a_year
-        form.base_fields['instudy_for_a_year'].initial = antenatal.instudy_for_a_year
+        form.base_fields['on_tb_tx'].initial = antenatal.on_tb_tx
+        form.base_fields['on_hypertension_tx'].initial = antenatal.on_hypertension_tx
+        form.base_fields['will_breastfeed'].initial = antenatal.will_breastfeed
+        form.base_fields['will_remain_onstudy'].initial = antenatal.will_remain_onstudy
         form.base_fields['week32_test'].initial = antenatal.week32_test
         form.base_fields['date_of_test'].initial = antenatal.date_of_test
         form.base_fields['week32_result'].initial = antenatal.week32_result
@@ -57,8 +57,8 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
         form.base_fields['valid_regimen'].initial = antenatal.valid_regimen
         form.base_fields['evidence_hiv_status'].initial = antenatal.evidence_hiv_status
         form.base_fields['valid_regimen_duration'].initial = antenatal.valid_regimen_duration
-        form.base_fields['process_rapid_test'].initial = antenatal.process_rapid_test
-        form.base_fields['date_of_rapid_test'].initial = antenatal.date_of_rapid_test
+        form.base_fields['rapid_test_done'].initial = antenatal.rapid_test_done
+        form.base_fields['rapid_test_date'].initial = antenatal.rapid_test_date
         form.base_fields['rapid_test_result'].initial = antenatal.rapid_test_result
         form.base_fields['valid_regimen'].initial = antenatal.valid_regimen
         return form
@@ -79,22 +79,22 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
             pass
         return form
 
-    radio_fields = {'delivery_type': admin.VERTICAL,
-                    'live_or_still_birth': admin.VERTICAL,
+    radio_fields = {'vaginal_delivery': admin.VERTICAL,
+                    'delivery_status': admin.VERTICAL,
                     'is_diabetic': admin.VERTICAL,
-                    'on_tb_treatment': admin.VERTICAL,
-                    'on_hypertension_treatment': admin.VERTICAL,
-                    'breastfeed_for_a_year': admin.VERTICAL,
-                    'instudy_for_a_year': admin.VERTICAL,
+                    'on_tb_tx': admin.VERTICAL,
+                    'on_hypertension_tx': admin.VERTICAL,
+                    'will_breastfeed': admin.VERTICAL,
+                    'will_remain_onstudy': admin.VERTICAL,
                     'week32_test': admin.VERTICAL,
                     'week32_result': admin.VERTICAL,
                     'verbal_hiv_status': admin.VERTICAL,
                     'evidence_hiv_status': admin.VERTICAL,
                     'valid_regimen': admin.VERTICAL,
                     'valid_regimen_duration': admin.VERTICAL,
-                    'process_rapid_test': admin.VERTICAL,
+                    'rapid_test_done': admin.VERTICAL,
                     'rapid_test_result': admin.VERTICAL}
-    list_display = ('registered_subject', 'report_datetime', 'delivery_type',
+    list_display = ('registered_subject', 'report_datetime', 'vaginal_delivery',
                     'evidence_hiv_status', 'valid_regimen')
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):

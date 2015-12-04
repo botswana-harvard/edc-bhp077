@@ -6,13 +6,13 @@ from django.utils import timezone
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 from edc_constants.constants import YES
 
-from bhp077.apps.microbiome_maternal.models import SampleConsent
+from bhp077.apps.microbiome_maternal.models import SpecimenConsent
 
 
-class SampleConsentFactory(factory.DjangoModelFactory):
+class SpecimenConsentFactory(factory.DjangoModelFactory):
 
     class Meta:
-        model = SampleConsent
+        model = SpecimenConsent
 
     registered_subject = factory.SubFactory(RegisteredSubjectFactory)
     report_datetime = timezone.now()

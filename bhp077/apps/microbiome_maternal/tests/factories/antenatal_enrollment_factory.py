@@ -14,12 +14,12 @@ class AntenatalEnrollmentFactory(factory.DjangoModelFactory):
     class Meta:
         model = AntenatalEnrollment
 
-    weeks_of_gestation = 36
+    gestation_wks = 36
     registered_subject = factory.SubFactory(RegisteredSubjectFactory)
     is_diabetic = NO
-    on_tb_treatment = NO
-    breastfeed_for_a_year = YES
-    instudy_for_a_year = YES
+    on_tb_tx = NO
+    will_breastfeed = YES
+    will_remain_onstudy = YES
     week32_test = YES
     verbal_hiv_status = POS
     evidence_hiv_status = YES

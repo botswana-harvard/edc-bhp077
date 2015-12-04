@@ -12,10 +12,9 @@ from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfigura
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory,
                                                              MaternalConsentFactory,
-                                                             SampleConsentFactory)
+                                                             SpecimenConsentFactory)
 from bhp077.apps.microbiome_maternal.models import BaseEnrollment
 from bhp077.apps.microbiome_maternal.forms import BaseEnrollmentForm
-from operator import neg
 
 
 class BaseEnrollTestModel(BaseEnrollment):
@@ -48,54 +47,54 @@ class TestBaseEnroll(TestCase):
             'registered_subject': self.registered_subject.id,
             'report_datetime': timezone.datetime.today(),
             'is_diabetic': NO,
-            'on_tb_treatment': NO,
-            'breastfeed_for_a_year': NO,
-            'instudy_for_a_year': NO,
+            'on_tb_tx': NO,
+            'will_breastfeed': NO,
+            'will_remain_onstudy': NO,
             'week32_test': NO,
             'week32_result': '',
             'verbal_hiv_status': POS,
             'evidence_hiv_status': NO,
             'valid_regimen': NO,
             'valid_regimen_duration': NOT_APPLICABLE,
-            'process_rapid_test': NO,
-            'date_of_rapid_test': '',
+            'rapid_test_done': NO,
+            'rapid_test_date': '',
             'rapid_test_result': '',
         }
 
     def test_process_rapid_yes_date_req(self):
         """If rapid test was processed, test date was processed is required"""
-        self.data['process_rapid_test'] = YES
+        self.data['rapid_test_done'] = YES
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'You indicated that a rapid test was processed. Please provide the date.',
                       form.errors.get('__all__'))
 
     def test_process_rapid_no_date_req(self):
         """If rapid test was NOT processed, test date was processed is  NOT required"""
-        self.data['process_rapid_test'] = NO
-        self.data['date_of_rapid_test'] = timezone.now().date()
+        self.data['rapid_test_done'] = NO
+        self.data['rapid_test_date'] = timezone.now().date()
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'You indicated that a rapid test was NOT processed, yet rapid test date was provided. '
                       'Please correct.', form.errors.get('__all__'))
 
     def test_process_rapid_na_date_req(self):
         """If rapid test was NOT processed, test date was processed is  NOT required"""
-        self.data['process_rapid_test'] = NOT_APPLICABLE
-        self.data['date_of_rapid_test'] = timezone.now().date()
+        self.data['rapid_test_done'] = NOT_APPLICABLE
+        self.data['rapid_test_date'] = timezone.now().date()
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'You indicated that a rapid test was NOT processed, yet rapid test date was provided. '
                       'Please correct.', form.errors.get('__all__'))
 
     def test_process_rapid_yes_result_req(self):
         """If rapid test was processed, test result was processed is required"""
-        self.data['process_rapid_test'] = YES
-        self.data['date_of_rapid_test'] = timezone.now().date()
+        self.data['rapid_test_done'] = YES
+        self.data['rapid_test_date'] = timezone.now().date()
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'You indicated that a rapid test was processed. Please provide a result.',
                       form.errors.get('__all__'))
 
     def test_process_rapid_no_result_not_req(self):
         """If rapid test was NOT processed, test result was processed is NOT required"""
-        self.data['process_rapid_test'] = NO
+        self.data['rapid_test_done'] = NO
         self.data['rapid_test_result'] = POS
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'You indicated that a rapid test was NOT processed, yet rapid test result was provided. '
@@ -103,7 +102,7 @@ class TestBaseEnroll(TestCase):
 
     def test_process_rapid_na_result_not_req(self):
         """If rapid test was NOT processed, test result was processed is NOT required"""
-        self.data['process_rapid_test'] = NOT_APPLICABLE
+        self.data['rapid_test_done'] = NOT_APPLICABLE
         self.data['rapid_test_result'] = NEG
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'You indicated that a rapid test was NOT processed, yet rapid test result was provided. '
@@ -150,13 +149,13 @@ class TestBaseEnroll(TestCase):
                       'result CANNOT be Not Applicable. Please correct.', form.errors.get('__all__'))
 
     def test_sample_filled_before_enrollment(self):
-        sample_consent = SampleConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
-        if not sample_consent:
+        specimen_consent = SpecimenConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        if not specimen_consent:
             self.assertRaises(forms.ValidationError)
 
     def test_pos_with_evidence_and_do_rapid_test(self):
         self.data['evidence_hiv_status'] = YES
-        self.data['process_rapid_test'] = YES
+        self.data['rapid_test_done'] = YES
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'DO NOT PROCESS RAPID TEST. PARTICIPANT IS POS and HAS EVIDENCE.', form.errors.get('__all__'))
 
@@ -175,14 +174,14 @@ class TestBaseEnroll(TestCase):
         self.assertIn(u'The verbal_hiv_status and result at 32weeks should be the same!', form.errors.get('__all__'))
 
     def test_tested_at_32weeks_no_result(self):
-        ss = SampleConsentFactory(registered_subject=self.registered_subject)
+        SpecimenConsentFactory(registered_subject=self.registered_subject)
         self.data['week32_test'] = YES
         self.data['week32_result'] = None
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'Please provide test result at week 32.', form.errors.get('__all__'))
 
     def test_not_tested_at_32weeks_results_given(self):
-        ss = SampleConsentFactory(registered_subject=self.registered_subject)
+        SpecimenConsentFactory(registered_subject=self.registered_subject)
         self.data['week32_result'] = POS
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(u'You mentioned testing was not done at 32weeks yet provided a test result.', form.errors.get('__all__'))

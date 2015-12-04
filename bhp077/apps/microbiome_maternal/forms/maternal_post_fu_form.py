@@ -9,17 +9,19 @@ from edc_constants.constants import NO, YES
 class MaternalPostFuForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(MaternalPostFuForm, self).clean()
-        if cleaned_data.get('mother_weight') == YES:
-            if not cleaned_data.get('enter_weight'):
-                raise forms.ValidationError('You indicated that participant was weighed. Please provide the weight.')
+        if cleaned_data.get('weight_measured') == YES:
+            if not cleaned_data.get('weight_kg'):
+                raise forms.ValidationError(
+                    'You indicated that participant was weighed. Please provide the weight.')
         else:
-            if cleaned_data.get('enter_weight'):
-                raise forms.ValidationError('You indicated that participant was NOT weighed, yet provided the weight. '
-                                            'Please correct.')
+            if cleaned_data.get('weight_kg'):
+                raise forms.ValidationError(
+                    'You indicated that participant was NOT weighed, yet provided the weight. '
+                    'Please correct.')
         if 'chronic_cond' in cleaned_data.keys():
             self.validate_m2m(
                 label='chronic conditions',
-                leading=cleaned_data.get('has_chronic_cond'),
+                leading=cleaned_data.get('chronic_cond_since'),
                 m2m=cleaned_data.get('chronic_cond'),
                 other=cleaned_data.get('chronic_cond_other'))
         if cleaned_data.get('systolic_bp') < cleaned_data.get('diastolic_bp'):
@@ -42,8 +44,9 @@ class MaternalPostFuDxForm(BaseMaternalModelForm):
                 m2m=cleaned_data.get('wcs_dx_adult'))
         check_dx = self.data.get('maternalpostfudxt_set-0-post_fu_dx')
         if cleaned_data.get('new_diagnoses') == 'Yes' and not check_dx:
-            raise forms.ValidationError('You indicated that participant had new diagnosis and yet did not provide '
-                                        'them. Please correct.')
+            raise forms.ValidationError(
+                'You indicated that participant had new diagnosis and yet did not provide '
+                'them. Please correct.')
         return cleaned_data
 
     class Meta:
@@ -66,7 +69,8 @@ class MaternalPostFuDxTForm (BaseMaternalModelForm):
                 raise forms.ValidationError('Please fill in all diagnosis information.')
 
         if cleaned_data.get('maternal_post_fu').mother_hospitalized == NO and cleaned_data.get('hospitalized'):
-            raise forms.ValidationError('You indicated that participant was not hospitalized above. Please correct.')
+            raise forms.ValidationError(
+                'You indicated that participant was not hospitalized above. Please correct.')
 
         return cleaned_data
 

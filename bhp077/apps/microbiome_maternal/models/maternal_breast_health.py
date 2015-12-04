@@ -54,10 +54,10 @@ class MaternalBreastHealth(MaternalScheduledVisitModel):
         default=NOT_APPLICABLE,
     )
 
-    stop_breastfeeding = models.CharField(
+    told_stop_bf = models.CharField(
         max_length=15,
         choices=YES_NO_NA,
-        verbose_name="Was the mother advised to discontonue breastfeeding?",
+        verbose_name="Was the mother advised to discontinue breastfeeding?",
         help_text="",
         default=NOT_APPLICABLE,
     )
