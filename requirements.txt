@@ -4,6 +4,7 @@ Unipath
 factory-boy
 -e git+https://github.com/erikvw/django-revision@develop#egg=django-revision
 -e git+https://github.com/botswana-harvard/edc@develop#egg=edc
+-e git+https://github.com/botswana-harvard/lis@develop#egg=lis
 -e git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc_constants
 -e git+https://github.com/botswana-harvard/edc-base@develop#egg=edc_base
 -e git+https://github.com/botswana-harvard/edc-locator.git@develop#egg=edc_locator
