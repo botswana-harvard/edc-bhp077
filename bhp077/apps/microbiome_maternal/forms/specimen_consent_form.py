@@ -26,6 +26,10 @@ class SpecimenConsentForm(ModelForm):
                 if cleaned_data.get("purpose_understood") != YES:
                     raise forms.ValidationError("If may_store_samples is YES, ensure that client understands "
                                                 "purpose|procedures|benefits.")
+            else:
+                if cleaned_data.get('specimen_consent_copy') != NO:
+                    raise forms.ValidationError('You indicated that participant did not consent to store samples. '
+                                                'Therefore you CANNOT provide the participant with a specimen consent.')
         if cleaned_data.get('is_literate', None) == NO and not cleaned_data.get('witness_name', None):
             raise forms.ValidationError('You wrote subject is illiterate. Please provide the name of a witness here '
                                         'and with signature on the paper document.')
