@@ -40,35 +40,13 @@ class BaseModelForm(forms.ModelForm):
     def clean(self):
         """Calls crypto clean methods, OTHER/Specify and some functionality for bhp_dispatch."""
         cleaned_data = self.cleaned_data
-        # check if dispatched
-        try:
-            options = {}
-            for key, value in cleaned_data.iteritems():
-                if not isinstance(value, QuerySet):  # m2m fields
-                    options.update({key: value})
-            model_instance = self._meta.model(pk=self.instance.pk, **options)
-            if not device.is_central_server:
-                if model_instance.is_dispatched():
-                    raise forms.ValidationError(
-                        'Updates not allowed. This form is part of the '
-                        'dataset for a \'{}\' that is currently dispatched to {}.'.format(
-                            model_instance.dispatch_container_lookup()[0]._meta.verbose_name,
-                            model_instance.user_container_instance.dispatched_container_item.producer.name
-                        )
-                    )
-        except AttributeError:
-            pass
-        except TypeError:
-            pass
-        # encrypted fields may have their own validation code to run.
-        # See the custom field objects in edc.core.crypto_fields.
-        try:
-            from edc.core.crypto_fields.fields import BaseEncryptedField
-            for field in self._meta.model._meta.fields:
-                if isinstance(field, BaseEncryptedField):
-                    field.validate_with_cleaned_data(field.attname, cleaned_data)
-        except ImportError:
-            pass
+        self.encrypted_fields_validation()
+        self.other_fields()
+        self.check_for_other_in_m2m(cleaned_data)
+        return super(BaseModelForm, self).clean()
+
+    def other_fields(self):
+        cleaned_data = self.cleaned_data
         # check for OTHER in choices tuples, if selected, should have a value on Other specify.
         other = []
         for fld in cleaned_data.iterkeys():
@@ -80,9 +58,20 @@ class BaseModelForm(forms.ModelForm):
                     raise forms.ValidationError(
                         'If {0} is \'OTHER\', please specify. '
                         'You wrote \'{1}\''.format(fld, cleaned_data['{0}_other'.format(fld)]))
-        # m2m with OTHER
-        self.check_for_other_in_m2m(cleaned_data)
-        return super(BaseModelForm, self).clean()
+
+    def encrypted_fields_validation(self):
+        """Encrypted fields may have their own validation code to run.
+
+        See the custom field objects in edc.core.crypto_fields."""
+        # TODO: is this used??
+        cleaned_data = self.cleaned_data
+        try:
+            from edc.core.crypto_fields.fields import BaseEncryptedField
+            for field in self._meta.model._meta.fields:
+                if isinstance(field, BaseEncryptedField):
+                    field.validate_with_cleaned_data(field.attname, cleaned_data)
+        except ImportError:
+            pass
 
     def check_for_other_in_m2m(self, cleaned_data):
         """Raises ValidtionError for an m2m if it cannot confirm \'Other Specify\'

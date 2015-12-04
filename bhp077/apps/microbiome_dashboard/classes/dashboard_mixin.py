@@ -1,8 +1,4 @@
-import re
-
-from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.lab.lab_clinic_api.classes import EdcLabResults
-from edc.subject.registration.models import RegisteredSubject
 
 
 class DashboardMixin(object):

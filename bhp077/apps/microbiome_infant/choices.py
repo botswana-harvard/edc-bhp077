@@ -1,5 +1,7 @@
 from edc_constants.constants import NOT_APPLICABLE, OTHER
 
+from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT
+
 from .constants import BROUGHT, REALTIME, CLOTH_NAPPY
 
 
@@ -24,7 +26,8 @@ STOOL_STORED = (
 )
 
 OFF_STUDY_REASON = [
-    ('not_18', ' Mother of infant found to be less than 18 years of age'),
+    ('not_18'.format(MIN_AGE_OF_CONSENT),
+     ' Mother of infant found to be less than {} years of age'.format(MIN_AGE_OF_CONSENT)),
     ('not_citizen', ' Mother found not be a citizen of Botswana'),
     ('moved', ' Subject will be moving out of study area or unable to stay in study area'),
     ('lost_no_contact', ' Lost to follow-up, unable to locate'),

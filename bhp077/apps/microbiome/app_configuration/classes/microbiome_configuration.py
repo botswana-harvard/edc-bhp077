@@ -11,7 +11,7 @@ from edc_consent.models import ConsentType
 from lis.labeling.classes import LabelPrinterTuple, ZplTemplateTuple, ClientTuple
 from lis.specimen.lab_aliquot_list.classes import AliquotTypeTuple
 from lis.specimen.lab_panel.classes import PanelTuple
-
+from ...constants import MIN_AGE_OF_CONSENT
 try:
     from config.labels import aliquot_label
 except ImportError:
@@ -46,7 +46,7 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
         'protocol_title': 'BHP077',
         'research_title': 'Gut Microbiome Evolution',
         'study_start_datetime': study_start_datetime,
-        'minimum_age_of_consent': 18,
+        'minimum_age_of_consent': MIN_AGE_OF_CONSENT,
         'maximum_age_of_consent': 130,
         'gender_of_consent': 'F',
         'subject_identifier_seed': '10000',

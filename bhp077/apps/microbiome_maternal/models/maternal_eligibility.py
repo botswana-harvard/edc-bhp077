@@ -1,13 +1,16 @@
 import uuid
 
 from django.db import models
+from django.db.models import get_model
 
 from edc.subject.registration.models import RegisteredSubject
-from edc_base.model.models import BaseUuidModel
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_constants.choices import YES_NO
 from edc_constants.constants import NO
+
+from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
 from .maternal_consent import MaternalConsent
 
@@ -30,8 +33,7 @@ class MaternalEligibility (BaseUuidModel):
         verbose_name="Report Date and Time",
         validators=[
             datetime_not_before_study_start,
-            datetime_not_future,
-        ],
+            datetime_not_future],
         help_text='Date and time of assessing eligibility')
 
     age_in_years = models.IntegerField(
@@ -40,27 +42,23 @@ class MaternalEligibility (BaseUuidModel):
     has_omang = models.CharField(
         verbose_name="Do you have an OMANG?",
         max_length=3,
-        choices=YES_NO,
-        help_text='')
+        choices=YES_NO)
 
     ineligibility = models.TextField(
         verbose_name="Reason not eligible",
         max_length=150,
         null=True,
-        editable=False,
-        help_text='')
+        editable=False)
 
     currently_pregnant = models.CharField(
         verbose_name="Are you currently pregnant?",
         max_length=3,
-        choices=YES_NO,
-        help_text='')
+        choices=YES_NO)
 
     recently_delivered = models.CharField(
         verbose_name="Have you recently delivered or had a baby within the past 72 hours?",
         max_length=3,
-        choices=YES_NO,
-        help_text='')
+        choices=YES_NO)
 
     is_eligible = models.BooleanField(
         default=False,
@@ -85,33 +83,35 @@ class MaternalEligibility (BaseUuidModel):
         super(MaternalEligibility, self).save(*args, **kwargs)
 
     def mother_is_eligible(self):
-        '''If age criteria failed, Enrollment loss form will be created.'''
-        ineligibility = []
-        if self.age_in_years < 18:
-            ineligibility.append('Mother is under 18')
-        if self.age_in_years > 50:
-            ineligibility.append('Mother is too old (>50)')
-        if self.has_omang == 'No':
-            ineligibility.append('Not a citizen')
-        return (False if ineligibility else True, ineligibility)
+        """
+        If age criteria failed, Enrollment loss form will be created.
+        """
+        message = []
+        if self.age_in_years < MIN_AGE_OF_CONSENT:
+            message.append('Mother is under {}'.format(MIN_AGE_OF_CONSENT))
+        if self.age_in_years > MAX_AGE_OF_CONSENT:
+            message.append('Mother is too old (>{})'.format(MAX_AGE_OF_CONSENT))
+        if self.has_omang == NO:
+            message.append('Not a citizen')
+        return (False if message else True, message)
 
     def __unicode__(self):
         return "{0} ({1})".format(self.eligibility_id, self.age_in_years)
 
     @property
     def maternal_ineligibility(self):
-        reason_ineligible = []
-        if self.age_in_years < 18:
-            reason_ineligible.append('Under age')
-        if self.age_in_years > 50:
-            reason_ineligible.append('Over age')
+        message = []
+        if self.age_in_years < MIN_AGE_OF_CONSENT:
+            message.append('Mother is under {}'.format(MIN_AGE_OF_CONSENT))
+        if self.age_in_years > MAX_AGE_OF_CONSENT:
+            message.append('Mother is too old (>{})'.format(MAX_AGE_OF_CONSENT))
         if self.has_omang == NO:
-            reason_ineligible.append('Not a citizen')
-        return reason_ineligible
+            message.append('Not a citizen')
+        return message
 
     @property
     def maternal_eligibility_loss(self):
-        from .maternal_eligibility_loss import MaternalEligibilityLoss
+        MaternalEligibilityLoss = get_model('microbiome_maternal', 'MaternalEligibilityLoss')
         try:
             maternal_eligibility_loss = MaternalEligibilityLoss.objects.get(
                 maternal_eligibility_id=self.id)
@@ -120,12 +120,12 @@ class MaternalEligibility (BaseUuidModel):
         return maternal_eligibility_loss
 
     @property
-    def mothers_consent(self):
+    def maternal_consent(self):
         try:
-            mothers_consent = MaternalConsent.objects.get(registered_subject=self.registered_subject)
+            maternal_consent = MaternalConsent.objects.get(registered_subject=self.registered_subject)
         except MaternalConsent.DoesNotExist:
-            mothers_consent = None
-        return mothers_consent
+            maternal_consent = None
+        return maternal_consent
 
     class Meta:
         app_label = 'microbiome_maternal'

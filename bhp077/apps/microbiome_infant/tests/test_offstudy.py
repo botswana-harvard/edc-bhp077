@@ -29,6 +29,7 @@ from bhp077.apps.microbiome_infant.models import InfantBirth
 from bhp077.apps.microbiome_lab.models import Panel, AliquotType
 
 from ..forms import InfantOffStudyForm
+from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT
 
 
 class TestOffStudy(TestCase):
@@ -68,7 +69,7 @@ class TestOffStudy(TestCase):
 
         self.data = {
             'registered_subject': self.registered_subject.id,
-            'reason': 'not_18',
+            'reason': 'not_{}'.format(MIN_AGE_OF_CONSENT),
             'has_scheduled_data': YES,
             'infant_visit': None,
             'offstudy_date': timezone.now().date(),

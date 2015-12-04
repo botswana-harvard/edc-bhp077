@@ -7,13 +7,15 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_consent.models.base_consent import BaseConsent
-from edc_consent.models.fields import (PersonalFieldsMixin, CitizenFieldsMixin, ReviewFieldsMixin,
-                                       VulnerabilityFieldsMixin)
+from edc_consent.models.fields import (
+    PersonalFieldsMixin, CitizenFieldsMixin, ReviewFieldsMixin, VulnerabilityFieldsMixin)
 from edc_consent.models.fields.bw import IdentityFieldsMixin
 
-from .maternal_off_study_mixin import MaternalOffStudyMixin
 from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
-from django.template.defaultfilters import default
+
+from .maternal_off_study_mixin import MaternalOffStudyMixin
+
+from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
 
 class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
@@ -21,26 +23,30 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
                       CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
 
     """ A model completed by the user on the mother's consent. """
+
+    MIN_AGE_OF_CONSENT = MIN_AGE_OF_CONSENT
+    MAX_AGE_OF_CONSENT = MAX_AGE_OF_CONSENT
+
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
-    study_site = models.ForeignKey(
-        StudySite,
-    )
+    study_site = models.ForeignKey(StudySite)
 
     recruit_source = models.CharField(
         max_length=75,
         choices=RECRUIT_SOURCE,
-        verbose_name="The mother first learned about the Microbiome study from ",
-        help_text="", )
+        verbose_name="The mother first learned about the Microbiome study from ")
+
     recruit_source_other = OtherCharField(
         max_length=35,
         verbose_name="if other recruitment source, specify...",
         blank=True,
-        null=True, )
+        null=True)
+
     recruitment_clinic = models.CharField(
         max_length=100,
         verbose_name="The mother was recruited from",
-        choices=RECRUIT_CLINIC, )
+        choices=RECRUIT_CLINIC)
+
     recruitment_clinic_other = models.CharField(
         max_length=100,
         verbose_name="if other recruitment clinic, specify...",
