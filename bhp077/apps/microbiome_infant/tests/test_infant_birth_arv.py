@@ -22,6 +22,7 @@ from bhp077.apps.microbiome_maternal.visit_schedule import (AntenatalEnrollmentV
 from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
 from bhp077.apps.microbiome_infant.tests.factories import \
     (InfantBirthFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
+from bhp077.apps.microbiome.constants import BREASTFEED_ONLY
 
 
 class TestInfantBirthArv(TestCase):
@@ -97,7 +98,7 @@ class TestInfantBirthArv(TestCase):
                       infant_birth_arv.errors.get('__all__'))
 
     def test_validate_sdnvp_after_birth_breastfeeding(self):
-        InfantBirthFeedVaccineFactory(infant_visit=self.infant_visit, feeding_after_delivery='Breastfeeding only')
+        InfantBirthFeedVaccineFactory(infant_visit=self.infant_visit, feeding_after_delivery=BREASTFEED_ONLY)
         self.data['nvp_discharge_supply'] = 'N/A'
         infant_birth_arv = InfantBirthArvForm(data=self.data)
         self.assertIn(u'If the infant is breast feeding then do not select not applicaticable for Q11.',

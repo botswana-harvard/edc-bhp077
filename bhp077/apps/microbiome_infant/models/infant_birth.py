@@ -62,11 +62,14 @@ class InfantBirth(InfantOffStudyMixin, BaseUuidModel, BaseAppointmentMixin):
             registered_subject = self.registered_subject
         else:
             registered_subject = RegisteredSubject.objects.get(subject_identifier=self.subject_identifier)
-        delivery = MaternalLabourDel.objects.filter(maternal_visit__appointment__registered_subject__subject_identifier=self.registered_subject.relative_identifier)
+        relative_identifier = self.registered_subject.relative_identifier
+        delivery = MaternalLabourDel.objects.filter(
+            maternal_visit__appointment__registered_subject__subject_identifier=relative_identifier)
         if delivery:
-            AppointmentHelper().create_all(registered_subject, self.__class__.__name__.lower(),
-                                           using=using, source='BaseAppointmentMixin',
-                                           base_appt_datetime=delivery[0].delivery_datetime)
+            AppointmentHelper().create_all(
+                registered_subject, self.__class__.__name__.lower(),
+                using=using, source='BaseAppointmentMixin',
+                base_appt_datetime=delivery[0].delivery_datetime)
 
     class Meta:
         app_label = "microbiome_infant"

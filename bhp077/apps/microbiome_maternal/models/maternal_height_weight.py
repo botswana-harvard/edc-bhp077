@@ -1,4 +1,3 @@
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -14,7 +13,7 @@ class MaternalHeightWeight(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
-    weight = models.DecimalField(
+    weight_kg = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         verbose_name="Mother's weight? ",
@@ -39,6 +38,10 @@ class MaternalHeightWeight(MaternalScheduledVisitModel):
         verbose_name="Mother's diastolic blood pressure?",
         validators=[MinValueValidator(35), MaxValueValidator(130), ],
         help_text="in hg e.g. 80, should be between 35 and 130.")
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = 'microbiome_maternal'

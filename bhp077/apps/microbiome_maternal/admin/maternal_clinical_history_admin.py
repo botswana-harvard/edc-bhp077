@@ -1,11 +1,12 @@
 from django.contrib import admin
 
-from edc_base.modeladmin.admin import BaseModelAdmin
 from ..forms import MaternalClinicalHistoryForm
-from ..models import MaternalClinicalHistory, MaternalVisit
+from ..models import MaternalClinicalHistory
+
+from .base_maternal_model_admin import BaseMaternalModelAdmin
 
 
-class MaternalClinicalHistoryAdmin(BaseModelAdmin):
+class MaternalClinicalHistoryAdmin(BaseMaternalModelAdmin):
 
     form = MaternalClinicalHistoryForm
     fields = ('maternal_visit',
@@ -43,10 +44,5 @@ class MaternalClinicalHistoryAdmin(BaseModelAdmin):
                     'prior_health_haart': admin.VERTICAL,
                     'prev_pregnancy_arv': admin.VERTICAL,
                     'know_hiv_status': admin.VERTICAL}
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "maternal_visit":
-                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
-        return super(MaternalClinicalHistoryAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalClinicalHistory, MaternalClinicalHistoryAdmin)

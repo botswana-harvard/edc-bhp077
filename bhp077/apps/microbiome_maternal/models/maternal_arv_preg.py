@@ -44,6 +44,10 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = "microbiome_maternal"
         verbose_name = 'Maternal ARV In This Preg: Pregnancy'

@@ -31,7 +31,8 @@ class InfantBirthDataAdmin(BaseModelAdmin):
         if db_field.name == "infant_birth":
             if request.GET.get('infant_visit'):
                 infant_visit = InfantVisit.objects.get(id=request.GET.get('infant_visit'))
-                kwargs["queryset"] = InfantBirth.objects.filter(registered_subject=infant_visit.appointment.registered_subject)
+                kwargs["queryset"] = InfantBirth.objects.filter(
+                    registered_subject=infant_visit.appointment.registered_subject)
         return super(InfantBirthDataAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(InfantBirthData, InfantBirthDataAdmin)

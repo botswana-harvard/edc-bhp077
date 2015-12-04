@@ -69,7 +69,9 @@ class MaternalPostFu(MaternalScheduledVisitModel):
     chronic_cond_since = models.CharField(
         max_length=3,
         choices=YES_NO,
-        verbose_name="Since the last attended scheduled visit, has the mother had any of the following chronic health conditions, which were NEW diagnoses (never previously reported)?",
+        verbose_name=(
+            "Since the last attended scheduled visit, has the mother had any of the "
+            "following chronic health conditions, which were NEW diagnoses (never previously reported)?"),
         help_text="",
     )
 
@@ -86,6 +88,10 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         verbose_name="Comment if any additional pertinent information: ",
         blank=True,
         null=True,)
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_maternal"
@@ -125,6 +131,10 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
     wcs_dx_adult = models.ManyToManyField(
         WcsDxAdult,
         verbose_name="List any new WHO Stage III/IV diagnoses that are not reported")
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_maternalpostfudx_change', args=(self.id,))
@@ -174,9 +184,9 @@ class MaternalPostFuDxT(BaseUuidModel):
         null=True,
         help_text="",)
 
-    history = AuditTrail()
-
     objects = MaternalPostFuDxTManager()
+
+    history = AuditTrail()
 
     def natural_key(self):
         return (self.post_fu_dx, ) + self.maternal_post_fu.natural_key()

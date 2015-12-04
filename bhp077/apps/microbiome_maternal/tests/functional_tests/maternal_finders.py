@@ -1,8 +1,8 @@
 # from selenium.webdriver.common.by import By
-# 
+#
 # '''This defines web objects by page name'''
-# 
-# 
+#
+#
 # class MaternalEligibilityFinder(object):
 #     HEADING = (By.TAG_NAME, 'body')
 #     DATE = (By.NAME, 'report_datetime_0')
@@ -10,8 +10,8 @@
 #     PARTICIPANT_AGE = (By.ID, 'id_age_in_years')
 #     PREGNANCY = (By.ID, 'id_currently_pregnant_0')
 #     SUBMIT = (By.NAME, '_save')
-# 
-# 
+#
+#
 # class ConsentFinder(object):
 #     FIRST_NAME = (By.NAME, 'first_name')
 #     LAST_NAME = (By.ID, 'id_last_name')
@@ -28,8 +28,8 @@
 #     ID_TYPE = (By.ID, 'id_identity_type_0')
 #     CONFIRM_OMANG_ID = (By.ID, 'id_confirm_identity')
 #     SUBMIT = (By.NAME, '_save')
-# 
-# 
+#
+#
 # class SpecimenConsentFinder(object):
 #     SAMPLE_CONSENT_LANGUAGE = (By.CSS_SELECTOR, "input[id='id_language_1']")
 #     SAMPLE_STORAGE = (By.ID, 'id_may_store_samples_0')

@@ -5,7 +5,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from bhp077.apps.microbiome.choices import FEEDING_CHOICES
-from bhp077.apps.microbiome_infant.infant_choices import INFANT_VACCINATIONS
+from bhp077.apps.microbiome_infant.choices import INFANT_VACCINATIONS
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
