@@ -72,7 +72,8 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
                 self.appointment, self.appointment.registered_subject))
 
     def get_visit_reason_no_follow_up_choices(self):
-        """ Returns the visit reasons that do not imply any data collection; that is, the subject is not available. """
+        """ Returns the visit reasons that do not imply any data
+        collection; that is, the subject is not available. """
         dct = {}
         for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
             dct.update({item: item})
@@ -123,13 +124,17 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
     def update_maternal_scheduled_entry_meta_data(self):
         if self.hiv_status_pos_and_evidence_yes:
             if self.appointment.visit_definition.code == '1000M':
-                for model_name in ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg', 'maternalinfected']:
+                model_names = ['maternalclinicalhistory', 'maternalarvhistory',
+                               'maternalarvpreg', 'maternalinfected']
+                for model_name in model_names:
                     self.update_scheduled_entry_meta_data('microbiome_maternal', model_name)
             elif self.appointment.visit_definition.code == '2000M':
-                for model_name in ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']:
+                model_names = ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']
+                for model_name in model_names:
                     self.update_scheduled_entry_meta_data('microbiome_maternal', model_name)
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
-                for model_name in ['maternalarvpost', 'maternalarvpostadh']:
+                model_names = ['maternalarvpost', 'maternalarvpostadh']
+                for model_name in model_names:
                     self.update_scheduled_entry_meta_data('microbiome_maternal', model_name)
             self.update_requistion_entry_meta_data('microbiome_lab', 'maternalrequisition', 'Viral Load')
 

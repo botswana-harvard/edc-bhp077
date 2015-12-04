@@ -14,7 +14,7 @@ class MaternalArvPostForm(BaseMaternalModelForm):
             if MaternalArvPostAdh.objects.filter(maternal_visit=cleaned_data.get('maternal_visit')):
                 raise forms.ValidationError("ARV history exists. You wrote mother did NOT receive ARVs "
                                             "in this pregnancy. Please correct '{}' first.".format(
-                                                 MaternalArvPostAdh._meta.verbose_name))
+                                                MaternalArvPostAdh._meta.verbose_name))
 
         if cleaned_data.get('on_arv_since') == NO and cleaned_data.get('on_arv_reason') != 'N/A':
             raise forms.ValidationError('You indicated that participant was not on HAART.'

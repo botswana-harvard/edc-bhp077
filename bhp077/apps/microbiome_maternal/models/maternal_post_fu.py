@@ -69,7 +69,9 @@ class MaternalPostFu(MaternalScheduledVisitModel):
     chronic_cond_since = models.CharField(
         max_length=3,
         choices=YES_NO,
-        verbose_name="Since the last attended scheduled visit, has the mother had any of the following chronic health conditions, which were NEW diagnoses (never previously reported)?",
+        verbose_name=(
+            "Since the last attended scheduled visit, has the mother had any of the "
+            "following chronic health conditions, which were NEW diagnoses (never previously reported)?"),
         help_text="",
     )
 
