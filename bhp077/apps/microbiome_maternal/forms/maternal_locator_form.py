@@ -1,8 +1,8 @@
 from edc_locator.forms import LocatorFormMixin
 
-from .base_maternal_model_form import BaseMaternalModelForm
-
 from ..models import MaternalLocator
+
+from .base_maternal_model_form import BaseMaternalModelForm
 
 
 class MaternalLocatorForm(LocatorFormMixin, BaseMaternalModelForm):

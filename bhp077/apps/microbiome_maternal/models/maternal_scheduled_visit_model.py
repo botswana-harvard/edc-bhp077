@@ -30,11 +30,11 @@ class MaternalScheduledVisitModel(MaternalOffStudyMixin, RequiresConsentMixin,
         help_text=('If reporting today, use today\'s date/time, otherwise use '
                    'the date/time this information was reported.'))
 
-    entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
-
     objects = ScheduledModelManager()
 
     history = AuditTrail()
+
+    entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 
     def natural_key(self):
         return self.get_visit().natural_key()
