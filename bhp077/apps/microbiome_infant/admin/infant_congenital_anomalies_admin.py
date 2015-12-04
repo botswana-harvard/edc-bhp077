@@ -13,11 +13,11 @@ from ..models import (
 
 
 from bhp077.apps.microbiome_infant.forms import (
-    InfantCongenitalAnomaliesForm, InfantCnsAbnormalityItemsForm, InfantFacialDefectItemsForm,
+    InfantCongenitalAnomaliesForm, InfantFacialDefectItemsForm,
     InfantCleftDisorderItemsForm, InfantMouthUpGastrointestinalItemsForm, InfantCardiovascularDisorderItemsForm,
     InfantRespiratoryDefectItemsForm, InfantLowerGastrointestinalItemsForm, InfantFemaleGenitalAnomalyItemsForm,
     InfantMaleGenitalAnomalyItemsForm, InfantRenalAnomalyItemsForm, InfantMusculoskeletalAbnormalItemsForm,
-    InfantSkinAbnormalItemsForm, InfantTrisomiesChromosomeItemsForm, InfantOtherAbnormalityItemsForm,
+    InfantSkinAbnormalItemsForm, InfantTrisomiesChromosomeItemsForm,
     InfantCnsAbnormalityItemsForm
 )
 

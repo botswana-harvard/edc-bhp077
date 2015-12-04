@@ -23,7 +23,8 @@ class InfantBirthFeedVaccineForm(BaseInfantModelForm):
                     'Report date {} cannot be before infant DOB of {}'.format(
                         cleaned_data.get('report_datetime').date(),
                         cleaned_data.get('infant_visit').appointment.registered_subject.dob))
-            relative_identifier = cleaned_data.get('infant_visit').appointment.registered_subject.relative_identifier
+            relative_identifier = cleaned_data.get(
+                'infant_visit').appointment.registered_subject.relative_identifier
             maternal_consent = MaternalConsent.objects.get(
                 registered_subject__subject_identifier=relative_identifier)
             if cleaned_data.get('report_datetime') < maternal_consent.consent_datetime:
@@ -47,7 +48,8 @@ class InfantVaccinesForm(BaseInfantModelForm):
                 raise forms.ValidationError(
                     'Vaccine date {} cannot be before infant DOB of {}'.format(
                         cleaned_data.get('vaccine_date'),
-                        cleaned_data.get('infant_birth_feed_vaccine').infant_visit.appointment.registered_subject.dob))
+                        cleaned_data.get(
+                            'infant_birth_feed_vaccine').infant_visit.appointment.registered_subject.dob))
         self.validate_vaccine_date()
         return cleaned_data
 

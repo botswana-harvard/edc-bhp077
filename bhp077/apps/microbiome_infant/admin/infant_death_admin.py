@@ -3,16 +3,12 @@ from django.contrib import admin
 from edc.base.modeladmin.admin import BaseModelAdmin
 
 from ..forms import InfantDeathForm
-from ..models import InfantDeath
+from ..models import InfantDeath, InfantVisit
 
 
 class InfantDeathAdmin(BaseModelAdmin):
 
     form = InfantDeathForm
-
-    #list_display = ('study_drug_relate', 'infant_nvp_relate', 'haart_relate',)
-
-    #list_filter = ('study_drug_relate',)
 
     fields = (
         "infant_visit",

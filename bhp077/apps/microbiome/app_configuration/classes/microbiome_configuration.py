@@ -94,7 +94,7 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
                   PanelTuple('ELISA', 'TEST', 'WB'),
                   PanelTuple('Hematology (ARV)', 'TEST', 'WB'),
                   PanelTuple('CD4 (ARV)', 'TEST', 'WB'),
-                  PanelTuple('Chemistry', 'TEST', 'WB'),],
+                  PanelTuple('Chemistry', 'TEST', 'WB')],
         'aliquot_type': [AliquotTypeTuple('Whole Blood', 'WB', '02'),
                          AliquotTypeTuple('Plasma', 'PL', '32'),
                          AliquotTypeTuple('Serum', 'SERUM', '06'),
@@ -120,7 +120,7 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
                            PanelTuple('ELISA', 'TEST', 'WB'),
                            PanelTuple('Hematology (ARV)', 'TEST', 'WB'),
                            PanelTuple('CD4 (ARV)', 'TEST', 'WB'),
-                           PanelTuple('Chemistry', 'TEST', 'WB'),],
+                           PanelTuple('Chemistry', 'TEST', 'WB')],
                  'aliquot_type': [AliquotTypeTuple('Whole Blood', 'WB', '02'),
                                   AliquotTypeTuple('Plasma', 'PL', '32'),
                                   AliquotTypeTuple('Serum', 'SERUM', '06'),
@@ -131,42 +131,47 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
                                   AliquotTypeTuple('Skin Swab', 'SW', '63'),
                                   AliquotTypeTuple('Stool', 'ST', '01')],
                  'profile': [ProfileTuple('Viral Load', 'WB'),
-                             ProfileTuple('Stool','ST'),
-                            ],
+                             ProfileTuple('Stool', 'ST')],
                  'profile_item': [ProfileItemTuple('Viral Load', 'PL', 1.0, 3),
                                   ProfileItemTuple('Viral Load', 'BC', 0.5, 1),
-                                  ProfileItemTuple('Stool', 'ST', 1, 1),]}}
+                                  ProfileItemTuple('Stool', 'ST', 1, 1)]}}
 
-    labeling_setup = {'label_printer': [LabelPrinterTuple('Zebra_Technologies_ZTC_GK420t', 'localhost', '127.0.0.1', True)],
-                      'client': [ClientTuple(hostname='localhost',
-                                             printer_name='Zebra_Technologies_ZTC_GK420t',
-                                             cups_hostname='localhost',
-                                             ip=None,
-                                             aliases=None), ],
-                      'zpl_template': [
-                          aliquot_label or ZplTemplateTuple(
-                              'aliquot_label', (
-                                  ('^XA\n'
-                                   '^FO300,15^A0N,20,20^FD${protocol} Site ${site} ${clinician_initials}   ${aliquot_type} ${aliquot_count}${primary}^FS\n'
-                                   '^FO300,34^BY1,3.0^BCN,50,N,N,N\n'
-                                   '^BY^FD${aliquot_identifier}^FS\n'
-                                   '^FO300,92^A0N,20,20^FD${aliquot_identifier}^FS\n'
-                                   '^FO300,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
-                                   '^FO300,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
-                                   '^FO300,152^A0N,25,20^FD${drawn_datetime}^FS\n'
-                                   '^XZ')), True),
-                          ZplTemplateTuple(
-                              'requisition_label', (
-                                  ('^XA\n'
-                                   '^FO300,15^A0N,20,20^FD${protocol} Site ${site} ${clinician_initials}   ${aliquot_type} ${aliquot_count}${primary}^FS\n'
-                                   '^FO300,34^BY1,3.0^BCN,50,N,N,N\n'
-                                   '^BY^FD${requisition_identifier}^FS\n'
-                                   '^FO300,92^A0N,20,20^FD${requisition_identifier} ${panel}^FS\n'
-                                   '^FO300,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
-                                   '^FO300,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
-                                   '^FO300,152^A0N,25,20^FD${drawn_datetime}^FS\n'
-                                   '^XZ')), False)]
-                      }
+    labeling_setup = {
+        'label_printer': [LabelPrinterTuple('Zebra_Technologies_ZTC_GK420t',
+                                            'localhost', '127.0.0.1', True)],
+        'client': [
+            ClientTuple(
+                hostname='localhost',
+                printer_name='Zebra_Technologies_ZTC_GK420t',
+                cups_hostname='localhost',
+                ip=None,
+                aliases=None)],
+        'zpl_template': [
+            aliquot_label or ZplTemplateTuple(
+                'aliquot_label', (
+                    ('^XA\n' +
+                     ('^FO300,15^A0N,20,20^FD${protocol} Site ${site} ${clinician_initials}   '
+                      '${aliquot_type} ${aliquot_count}${primary}^FS\n') +
+                     '^FO300,34^BY1,3.0^BCN,50,N,N,N\n'
+                     '^BY^FD${aliquot_identifier}^FS\n'
+                     '^FO300,92^A0N,20,20^FD${aliquot_identifier}^FS\n'
+                     '^FO300,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
+                     '^FO300,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
+                     '^FO300,152^A0N,25,20^FD${drawn_datetime}^FS\n'
+                     '^XZ')), True),
+            ZplTemplateTuple(
+                'requisition_label', (
+                    ('^XA\n' +
+                     ('^FO300,15^A0N,20,20^FD${protocol} Site ${site} ${clinician_initials}   '
+                      '${aliquot_type} ${aliquot_count}${primary}^FS\n') +
+                     '^FO300,34^BY1,3.0^BCN,50,N,N,N\n'
+                     '^BY^FD${requisition_identifier}^FS\n'
+                     '^FO300,92^A0N,20,20^FD${requisition_identifier} ${panel}^FS\n'
+                     '^FO300,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
+                     '^FO300,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
+                     '^FO300,152^A0N,25,20^FD${drawn_datetime}^FS\n'
+                     '^XZ')), False)]
+    }
 
     def update_or_create_consent_type(self):
         for item in self.consent_type_setup:

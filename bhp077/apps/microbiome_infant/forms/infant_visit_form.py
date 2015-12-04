@@ -34,8 +34,9 @@ class InfantVisitForm(BaseInfantModelForm):
                 raise forms.ValidationError("Provide source of information.")
 
         try:
+            relative_identifier = cleaned_data.get('appointment').registered_subject.relative_identifier
             maternal_consent = MaternalConsent.objects.get(
-                registered_subject__subject_identifier=cleaned_data.get('appointment').registered_subject.relative_identifier)
+                registered_subject__subject_identifier=relative_identifier)
             if cleaned_data.get("report_datetime") < maternal_consent.consent_datetime:
                 raise forms.ValidationError("Report datetime CANNOT be before consent datetime")
             if cleaned_data.get("report_datetime").date() < maternal_consent.dob:

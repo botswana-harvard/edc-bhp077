@@ -68,7 +68,8 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
         antenatal = None
         try:
             registered_subject = RegisteredSubject.objects.get(id=request.GET.get('registered_subject', None))
-            antenatal = self.antenatal_enrollment(registered_subject) if self.antenatal_enrollment(registered_subject) else False
+            if self.antenatal_enrollment(registered_subject):
+                antenatal = self.antenatal_enrollment(registered_subject)
             if antenatal:
                 if not obj:
                     form = self.update_postnatal(form, antenatal)

@@ -1,8 +1,12 @@
 from django import forms
 
 from edc_constants.constants import NO, YES, NOT_APPLICABLE
-from base_maternal_model_form import BaseMaternalModelForm
+
+from bhp077.apps.microbiome.constants import NO_MODIFICATIONS
+
 from ..models import MaternalArvPost, MaternalArvPostMod, MaternalArvPostAdh
+
+from .base_maternal_model_form import BaseMaternalModelForm
 
 
 class MaternalArvPostForm(BaseMaternalModelForm):
@@ -36,7 +40,7 @@ class MaternalArvPostModForm(BaseMaternalModelForm):
         cleaned_data = super(MaternalArvPostModForm, self).clean()
 
         if (cleaned_data.get('maternal_arv_post').arv_status == NOT_APPLICABLE or
-                cleaned_data.get('maternal_arv_post').arv_status == 'no_mod'):
+                cleaned_data.get('maternal_arv_post').arv_status == NO_MODIFICATIONS):
             if cleaned_data.get('arv_code'):
                 raise forms.ValidationError("You cannot indicate arv modifaction as you indicated {} above."
                                             .format(cleaned_data.get('maternal_arv_post').arv_status))

@@ -29,13 +29,20 @@ OFF_STUDY_REASON = [
     ('moved', ' Subject will be moving out of study area or unable to stay in study area'),
     ('lost_no_contact', ' Lost to follow-up, unable to locate'),
     ('lost_contacted', ' Lost to follow-up, contacted but did not come to study clinic'),
-    ('withdrew_by_mother', ' Mother changed mind and withdrew consent'),
-    ('withdrew_by_father', ' Father of baby did not want infant to participate and participant withdrew consent'),
-    ('withdrew_by_family', ' Other family member did not want mother/infant to participate and participant withdrew consent'),
+    ('withdrew_by_mother',
+     ' Mother changed mind and withdrew consent'),
+    ('withdrew_by_father',
+     ' Father of baby did not want infant to participate and participant withdrew consent'),
+    ('withdrew_by_family',
+     ' Other family member did not want mother/infant to participate and participant withdrew consent'),
     ('hiv_pos', ' Infant found to be HIV-infected'),
     ('ill', ' Infant diagnosed with medical condition making survival to 12 months unlikely'),
-    ('complete', ' Completion of protocol required period of time for observation (see Study Protocol for definition of Completion.) [skip to end of form]'),
-    ('death', ' Participant death (complete the DEATH REPORT FORM AF005) (For EAE Reporting requirements see EAE Reporting Manual)'),
+    ('complete',
+     (' Completion of protocol required period of time for observation (see Study '
+      'Protocol for definition of Completion.) [skip to end of form]')),
+    ('death',
+     (' Participant death (complete the DEATH REPORT FORM AF005) (For '
+      'EAE Reporting requirements see EAE Reporting Manual)')),
     ('OTHER', ' Other'),
 ]
 

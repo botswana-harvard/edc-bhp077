@@ -21,7 +21,8 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
         self.validate_antibiotics()
         return cleaned_data
 
-    def validate_sample_obtained(self, cleaned_data):
+    def validate_sample_obtained(self):
+        cleaned_data = self.cleaned_data
         try:
             requisition = InfantRequisition.objects.get(infant_visit=cleaned_data.get('infant_visit'),
                                                         panel__name='Stool storage')

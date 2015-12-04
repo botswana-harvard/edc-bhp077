@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc_base.model.validators import date_not_future
@@ -257,9 +256,10 @@ class InfantFeeding(InfantScheduledVisitModel):
             while prev_visit_index > 0:
                 try:
                     return InfantFeeding.objects.get(
-                        infant_visit__appointment__visit_definition__code=visit[prev_visit_index]).report_datetime.date()
+                        infant_visit__appointment__visit_definition__code=visit[prev_visit_index]
+                    ).report_datetime.date()
                 except InfantFeeding.DoesNotExist:
-                    prev_visit_index = prev_visit_index -1
+                    prev_visit_index = prev_visit_index - 1
         return None
 
     class Meta:

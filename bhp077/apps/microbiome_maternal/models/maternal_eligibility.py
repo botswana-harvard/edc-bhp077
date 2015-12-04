@@ -1,5 +1,5 @@
 import uuid
-from django.core.urlresolvers import reverse
+
 from django.db import models
 
 from edc.subject.registration.models import RegisteredSubject
@@ -7,6 +7,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_constants.choices import YES_NO
+from edc_constants.constants import NO
 
 from .maternal_consent import MaternalConsent
 
@@ -104,7 +105,7 @@ class MaternalEligibility (BaseUuidModel):
             reason_ineligible.append('Under age')
         if self.age_in_years > 50:
             reason_ineligible.append('Over age')
-        if self.has_omang == 'No':
+        if self.has_omang == NO:
             reason_ineligible.append('Not a citizen')
         return reason_ineligible
 
