@@ -68,6 +68,7 @@ INSTALLED_APPS = (
     'edc_consent',
     'edc_constants',
     'edc_call_manager',
+    'edc_device',
     # EDC
     'edc',
     'edc.apps.app_configuration',
@@ -92,7 +93,6 @@ INSTALLED_APPS = (
     'edc.device.inspector',
     'edc.device.dispatch',
     'edc.device.netbook',
-    'edc_device',
     'edc.device.sync',
     'edc.dashboard.base',
     'edc.dashboard.search',
