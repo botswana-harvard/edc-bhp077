@@ -38,12 +38,14 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
             ant = None
         if ant:
             if ant.verbal_hiv_status == POS and ant.evidence_hiv_status == YES:
-                if not cleaned_data.get('verbal_hiv_status') == POS or not cleaned_data.get('evidence_hiv_status') == YES:
-                    raise forms.ValidationError("Antenatal Enrollment shows participant is {} and {} evidence ."
-                                                " Please Correct {} and {} evidence".format(ant.verbal_hiv_status,
-                                                                                            ant.evidence_hiv_status,
-                                                                                            cleaned_data.get('verbal_hiv_status'),
-                                                                                            cleaned_data.get('evidence_hiv_status')))
+                if (cleaned_data.get('verbal_hiv_status') != POS or cleaned_data.get('evidence_hiv_status') != YES):
+                    raise forms.ValidationError(
+                        "Antenatal Enrollment shows participant is {} and {} evidence ."
+                        " Please Correct {} and {} evidence".format(
+                            ant.verbal_hiv_status,
+                            ant.evidence_hiv_status,
+                            cleaned_data.get('verbal_hiv_status'),
+                            cleaned_data.get('evidence_hiv_status')))
         if ant:
             if not ant.antenatal_eligible:
                 raise forms.ValidationError(
