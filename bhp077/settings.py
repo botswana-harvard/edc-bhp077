@@ -128,7 +128,6 @@ INSTALLED_APPS = (
     'edc.lab.lab_profile',
     'getresults_identifier',
     'edc_consent',
-    'edc_audit',
     'edc_constants',
     'edc_call_manager',
     # LIS
