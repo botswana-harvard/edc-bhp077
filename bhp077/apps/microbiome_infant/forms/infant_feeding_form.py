@@ -10,8 +10,14 @@ class InfantFeedingForm(BaseInfantModelForm):
 
     def clean(self):
         cleaned_data = super(InfantFeedingForm, self).clean()
+        self.validate_other_feeding()
+        self.validate_took_formula()
+        self.validate_cows_milk()
         self.validate_formula_intro_occur(cleaned_data)
+        return cleaned_data
 
+    def validate_other_feeding(self):
+        cleaned_data = self.cleaned_data
         if cleaned_data.get('other_feeding') == YES:
             if not cleaned_data.get('formula_intro_date'):
                 raise forms.ValidationError('If received formula milk | foods | liquids since last'
@@ -21,6 +27,8 @@ class InfantFeedingForm(BaseInfantModelForm):
                 raise forms.ValidationError('You mentioned no formula milk | foods | liquids received'
                                             ' since last visit. DO NOT PROVIDE DATE')
 
+    def validate_took_formula(self):
+        cleaned_data = self.cleaned_data
         if cleaned_data.get('took_formula') == YES:
             if not cleaned_data.get('is_first_formula'):
                 raise forms.ValidationError(
@@ -39,14 +47,14 @@ class InfantFeedingForm(BaseInfantModelForm):
                 raise forms.ValidationError('You mentioned that is not the first reporting of infant formula'
                                             ' PLEASE DO NOT PROVIDE DATE AND EST DATE')
 
+    def validate_cows_milk(self):
+        cleaned_data = self.cleaned_data
         if cleaned_data.get('cow_milk') == YES:
             if cleaned_data.get('cow_milk_yes') == 'N/A':
                 raise forms.ValidationError('If infant took cows milk. Answer CANNOT be Not Applicable')
         else:
             if not cleaned_data.get('cow_milk_yes') == 'N/A':
                 raise forms.ValidationError('Infant did not take cows milk. Answer is NOT APPLICABLE')
-
-        return cleaned_data
 
     def validate_formula_intro_occur(self, cleaned_data):
         if cleaned_data.get('formula_intro_occur') == YES:

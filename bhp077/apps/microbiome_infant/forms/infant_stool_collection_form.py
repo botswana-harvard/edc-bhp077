@@ -15,13 +15,14 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
 
     def clean(self):
         cleaned_data = super(InfantStoolCollectionForm, self).clean()
+        self.validate_stool_storage_requisition()
         self.validate_sample_obtained()
         self.validate_collection_time()
         self.validate_diarrhea()
         self.validate_antibiotics()
         return cleaned_data
 
-    def validate_sample_obtained(self):
+    def validate_stool_storage_requisition(self):
         cleaned_data = self.cleaned_data
         try:
             requisition = InfantRequisition.objects.get(
@@ -35,6 +36,8 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
             raise forms.ValidationError(
                 'Stool storage specimen requisition not found. Complete the requisition first.')
 
+    def validate_sample_obtained(self):
+        cleaned_data = self.cleaned_data
         if cleaned_data.get('sample_obtained') == YES:
             if cleaned_data.get('nappy_type') == NOT_APPLICABLE:
                 raise forms.ValidationError(

@@ -22,19 +22,31 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
     def clean(self):
 
         cleaned_data = super(PostnatalEnrollmentForm, self).clean()
-        if cleaned_data.get('gestation_to_birth_wks') > 45:
-            raise forms.ValidationError('Gestational age of {} exceeds 45 weeks. Please correct.'
-                                        .format(cleaned_data.get('gestation_to_birth_wks')))
-        if cleaned_data.get("delivery_status") == LIVE:
-            if not cleaned_data.get('live_infants'):
-                raise forms.ValidationError("Live infants were born. How many?")
-            if cleaned_data.get('live_infants', None) <= 0:
-                raise forms.ValidationError("Live infants were born. Number cannot be zero or less")
+        instance = None
+        if self.instance.id:
+            instance = self.instance
+        else:
+            instance = PostnatalEnrollment(**cleaned_data)
         try:
             ant = AntenatalEnrollment.objects.get(
                 registered_subject__subject_identifier=cleaned_data.get('registered_subject').subject_identifier)
         except AntenatalEnrollment.DoesNotExist:
             ant = None
+        self.validate_ante_eligibility(ant)
+        self.validate_delivery()
+        self.validate_hiv_status(ant)
+        self.validate_create_postnatal_enrollment(ant, instance)
+        self.validate_create_rapid_tests(cleaned_data, instance)
+        return cleaned_data
+
+    def validate_ante_eligibility(self, ant):
+        if ant:
+            if not ant.antenatal_eligible:
+                raise forms.ValidationError(
+                    "This mother is not eligible for postnatal enrollment. Failed antenatal enrollment.")
+
+    def validate_hiv_status(self, ant):
+        cleaned_data = self.cleaned_data
         if ant:
             if ant.verbal_hiv_status == POS and ant.evidence_hiv_status == YES:
                 if (cleaned_data.get('verbal_hiv_status') != POS or cleaned_data.get('evidence_hiv_status') != YES):
@@ -45,25 +57,22 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
                             ant.evidence_hiv_status,
                             cleaned_data.get('verbal_hiv_status'),
                             cleaned_data.get('evidence_hiv_status')))
-        if ant:
-            if not ant.antenatal_eligible:
-                raise forms.ValidationError(
-                    "This mother is not eligible for postnatal enrollment. Failed antenatal enrollment.")
-        instance = None
-        if self.instance.id:
-            instance = self.instance
-        else:
-            instance = PostnatalEnrollment(**cleaned_data)
 
-        self.validate_create_postnatal_enrollment(cleaned_data, ant, instance)
-        self.validate_create_rapid_tests(cleaned_data, instance)
-
-        return cleaned_data
-
-    def validate_create_postnatal_enrollment(self, cleaned_data, ant, instance):
+    def validate_create_postnatal_enrollment(self, ant, instance):
         if instance.maternal_eligibility_pregnant_yes():
             if not ant:
                 raise forms.ValidationError("Participant is pregnant, please fill in antenatal instead.")
+
+    def validate_delivery(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('gestation_to_birth_wks') > 45:
+            raise forms.ValidationError('Gestational age of {} exceeds 45 weeks. Please correct.'
+                                        .format(cleaned_data.get('gestation_to_birth_wks')))
+        if cleaned_data.get("delivery_status") == LIVE:
+            if not cleaned_data.get('live_infants'):
+                raise forms.ValidationError("Live infants were born. How many?")
+            if cleaned_data.get('live_infants', None) <= 0:
+                raise forms.ValidationError("Live infants were born. Number cannot be zero or less")
 
     class Meta:
         model = PostnatalEnrollment
