@@ -1,4 +1,4 @@
-Django==1.6.13
+Django==1.6
 python-dateutil
 Unipath
 django-revision
