@@ -24,8 +24,9 @@ class MaternalVisitForm (BaseModelForm):
         cleaned_data = super(MaternalVisitForm, self).clean()
         self.validate_reason_missed(cleaned_data)
         try:
+            subject_identifier = cleaned_data.get('appointment').registered_subject.subject_identifier
             maternal_consent = MaternalConsent.objects.get(
-                registered_subject__subject_identifier=cleaned_data.get('appointment').registered_subject.subject_identifier)
+                registered_subject__subject_identifier=subject_identifier)
             if cleaned_data.get("report_datetime") < maternal_consent.consent_datetime:
                 raise forms.ValidationError("Report datetime CANNOT be before consent datetime")
             if cleaned_data.get("report_datetime").date() < maternal_consent.dob:
@@ -39,22 +40,21 @@ class MaternalVisitForm (BaseModelForm):
         else:
             instance = MaternalVisit(**self.cleaned_data)
         if instance.is_participant_off_study:
-            raise forms.ValidationError('Data capturing is not allowed, there is an off study visit report.')
-
-#         if not instance.postnatal_enrollment.postnatal_eligible:
-#             if not instance.appointment.visit_definition.code == "1000M":
-#                 raise forms.ValidationError('Data capturing is not allowed, the participant is not eligible.')
+            raise forms.ValidationError(
+                'Data capturing is not allowed, there is an off study visit report.')
         return cleaned_data
 
     def validate_reason_missed(self, cleaned_data):
         if cleaned_data.get('reason') == 'missed':
             if not cleaned_data.get('reason_missed'):
-                raise forms.ValidationError('You indicated that the visit was missed. Please provide a reason why '
-                                            'it was missed.')
+                raise forms.ValidationError(
+                    'You indicated that the visit was missed. Please provide a reason why '
+                    'it was missed.')
         else:
             if cleaned_data.get('reason_missed'):
-                raise forms.ValidationError('You indicated that the visit was NOT missed, yet you provided a reason '
-                                            'why it was missed. Please correct.')
+                raise forms.ValidationError(
+                    'You indicated that the visit was NOT missed, yet you provided a reason '
+                    'why it was missed. Please correct.')
 
     class Meta:
         model = MaternalVisit
