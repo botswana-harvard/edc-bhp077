@@ -90,7 +90,7 @@ class TestInfantStoolCollection(TestCase):
     def test_sample_obtained_2(self):
         """If sample was stored, then should indicate when the sample was obtained"""
         self.data['sample_obtained'] = YES
-        self.data['nappy_type'] = 'cloth nappy'
+        self.data['nappy_type'] = CLOTH_NAPPY
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('Sample is indicated to have been obtained today, collection time CANNOT be not Applicable.',
@@ -99,7 +99,7 @@ class TestInfantStoolCollection(TestCase):
     def test_sample_obtained_3(self):
         """If sample was obtained, have to indicate if sample was stored"""
         self.data['sample_obtained'] = YES
-        self.data['nappy_type'] = 'cloth nappy'
+        self.data['nappy_type'] = CLOTH_NAPPY
         self.data['stool_collection'] = 'brought'
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
@@ -107,7 +107,7 @@ class TestInfantStoolCollection(TestCase):
             'Sample is stated to have been obtained today, please indicate how the sample was stored.', errors)
 
     def test_sample_obtained_4(self):
-        self.data['nappy_type'] = 'cloth nappy'
+        self.data['nappy_type'] = CLOTH_NAPPY
         self.infant_requisition.is_drawn = NO
         self.infant_requisition.save()
         form = InfantStoolCollectionForm(data=self.data)
@@ -135,7 +135,7 @@ class TestInfantStoolCollection(TestCase):
 
     def test_collection_time_1(self):
         self.data['sample_obtained'] = YES
-        self.data['nappy_type'] = 'cloth nappy'
+        self.data['nappy_type'] = CLOTH_NAPPY
         self.data['stool_collection'] = 'brought'
         self.data['stool_stored'] = YES
         form = InfantStoolCollectionForm(data=self.data)
@@ -144,7 +144,7 @@ class TestInfantStoolCollection(TestCase):
 
     def test_collection_time_2(self):
         self.data['sample_obtained'] = YES
-        self.data['nappy_type'] = 'cloth nappy'
+        self.data['nappy_type'] = CLOTH_NAPPY
         self.data['stool_collection'] = REALTIME
         self.data['stool_stored'] = NOT_APPLICABLE
         self.data['stool_collection_time'] = 5
@@ -156,7 +156,7 @@ class TestInfantStoolCollection(TestCase):
     def test_diarrhea_1(self):
         self.data['past_diarrhea'] = YES
         self.data['sample_obtained'] = YES
-        self.data['nappy_type'] = 'cloth nappy'
+        self.data['nappy_type'] = CLOTH_NAPPY
         self.data['stool_collection'] = REALTIME
         # self.data['stool_stored'] = YES
         form = InfantStoolCollectionForm(data=self.data)
@@ -167,7 +167,7 @@ class TestInfantStoolCollection(TestCase):
     def test_diarrhea_2(self):
         self.data['diarrhea_past_24hrs'] = YES
         self.data['sample_obtained'] = YES
-        self.data['nappy_type'] = 'cloth nappy'
+        self.data['nappy_type'] = CLOTH_NAPPY
         self.data['stool_collection'] = REALTIME
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
@@ -177,7 +177,7 @@ class TestInfantStoolCollection(TestCase):
     def test_antibiotics_1(self):
         self.data['antibiotics_7days'] = YES
         self.data['sample_obtained'] = YES
-        self.data['nappy_type'] = 'cloth nappy'
+        self.data['nappy_type'] = CLOTH_NAPPY
         self.data['stool_collection'] = REALTIME
         self.data['stool_stored'] = NOT_APPLICABLE
         form = InfantStoolCollectionForm(data=self.data)
@@ -188,7 +188,7 @@ class TestInfantStoolCollection(TestCase):
     def test_antibiotics_2(self):
         self.data['antibiotic_dose_24hrs'] = YES
         self.data['sample_obtained'] = YES
-        self.data['nappy_type'] = 'cloth nappy'
+        self.data['nappy_type'] = CLOTH_NAPPY
         self.data['stool_collection'] = REALTIME
         self.data['stool_stored'] = NOT_APPLICABLE
         form = InfantStoolCollectionForm(data=self.data)
