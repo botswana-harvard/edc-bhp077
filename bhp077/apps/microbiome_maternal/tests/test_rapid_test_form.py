@@ -2,28 +2,22 @@ from django.test import TestCase
 from django.utils import timezone
 from datetime import date
 
-from edc.subject.registration.models import RegisteredSubject
-from edc.entry_meta_data.models import ScheduledEntryMetaData
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
+from edc_constants.constants import YES, NO, POS, NEG
 
-from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import \
-    (MaternalEligibilityFactory, AntenatalEnrollmentFactory,
-    MaternalVisitFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.tests.factories import\
-    (PostnatalEnrollmentFactory, SexualReproductiveHealthFactory, MaternalOffStudyFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 from bhp077.apps.microbiome_maternal.forms import RapidTestResultForm
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+from bhp077.apps.microbiome_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 
 
 class TestRapidTestForm(TestCase):
@@ -60,7 +54,7 @@ class TestRapidTestForm(TestCase):
         return model_options
 
     def test_validate_rapid_test_done_no_result(self):
-        self.maternal_consent.dob =  date(2015, 12, 7)
+        self.maternal_consent.dob = date(2015, 12, 7)
         self.maternal_consent.save()
 
         PostnatalEnrollmentFactory(
@@ -80,7 +74,7 @@ class TestRapidTestForm(TestCase):
         self.assertIn(u"If a rapid test was processed, what is the test result?", rapid_form.errors.get("__all__"))
 
     def test_validate_rapid_test_done_result(self):
-        self.maternal_consent.dob =  date(2015, 12, 7)
+        self.maternal_consent.dob = date(2015, 12, 7)
         self.maternal_consent.save()
 
         PostnatalEnrollmentFactory(
@@ -102,7 +96,7 @@ class TestRapidTestForm(TestCase):
         self.assertTrue(rapid_form.is_valid())
 
     def test_validate_rapid_test_done_no_rapid_test_date(self):
-        self.maternal_consent.dob =  date(2015, 12, 7)
+        self.maternal_consent.dob = date(2015, 12, 7)
         self.maternal_consent.save()
 
         PostnatalEnrollmentFactory(
@@ -126,7 +120,7 @@ class TestRapidTestForm(TestCase):
         self.assertIn(u"If a rapid test was processed, what is the date of the rapid test?", rapid_form.errors.get("__all__"))
 
     def test_validate_rapid_test_done_processed(self):
-        self.maternal_consent.dob =  date(2015, 12, 7)
+        self.maternal_consent.dob = date(2015, 12, 7)
         self.maternal_consent.save()
 
         PostnatalEnrollmentFactory(
@@ -150,7 +144,7 @@ class TestRapidTestForm(TestCase):
         self.assertTrue(rapid_form.is_valid())
 
     def test_validate_rapid_test_done_processed1(self):
-        self.maternal_consent.dob =  date(2015, 12, 7)
+        self.maternal_consent.dob = date(2015, 12, 7)
         self.maternal_consent.save()
 
         PostnatalEnrollmentFactory(
@@ -172,4 +166,3 @@ class TestRapidTestForm(TestCase):
         rapid_form = RapidTestResultForm(data=self.data)
 
         self.assertIn(u"If a rapid test was not processed, please do not provide rapid test date and result.", rapid_form.errors.get("__all__"))
-
