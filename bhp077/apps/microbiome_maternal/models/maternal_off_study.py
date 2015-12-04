@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.off_study.models import BaseOffStudy
@@ -13,11 +12,13 @@ class MaternalOffStudy(BaseOffStudy, BaseUuidModel):
 
     """ A model completed by the user that completed when the subject is taken off-study. """
 
-    history = AuditTrail()
-
     maternal_visit = models.OneToOneField(MaternalVisit)
 
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def get_visit(self):
         return self.maternal_visit

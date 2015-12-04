@@ -40,8 +40,6 @@ class MaternalHeightWeight(MaternalScheduledVisitModel):
         validators=[MinValueValidator(35), MaxValueValidator(130), ],
         help_text="in hg e.g. 80, should be between 35 and 130.")
 
-    history = AuditTrail()
-
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = 'Maternal Height & Weight'

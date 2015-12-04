@@ -229,8 +229,6 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
-    history = AuditTrail()
-
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = "Maternal Labour & Delivery: Clinical History"
@@ -303,6 +301,8 @@ class MaternalLabDelDxT (BaseUuidModel):
         choices=YES_NO,
         verbose_name="Hospitalized",
         help_text="")
+
+    objects = models.Manager()
 
     history = AuditTrail()
 

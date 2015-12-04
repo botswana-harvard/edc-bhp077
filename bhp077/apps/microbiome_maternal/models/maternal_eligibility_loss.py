@@ -1,8 +1,7 @@
-from django.core.urlresolvers import reverse
 from datetime import datetime
-
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 
 from .maternal_eligibility import MaternalEligibility
@@ -22,6 +21,10 @@ class MaternalEligibilityLoss(BaseUuidModel):
         verbose_name='Reason not eligible',
         max_length=500,
         help_text='Gets reasons from Maternal Eligibility.ineligibility')
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def ineligibility(self):
         return self.reason_ineligible or []

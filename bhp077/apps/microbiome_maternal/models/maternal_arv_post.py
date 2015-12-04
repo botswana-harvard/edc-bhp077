@@ -47,8 +47,6 @@ class MaternalArvPost (MaternalScheduledVisitModel):
         help_text="",
         default='N/A',)
 
-    history = AuditTrail()
-
     def visit(self):
         return self.maternal_visit
 
@@ -69,9 +67,9 @@ class MaternalArvPostMod(MaternalOffStudyMixin, BaseHaartModification):
 
     maternal_arv_post = models.ForeignKey(MaternalArvPost)
 
-    history = AuditTrail()
-
     objects = MaternalArvPostModManager()
+
+    history = AuditTrail()
 
     def get_visit(self):
         return self.maternal_arv_post.maternal_visit
@@ -120,8 +118,6 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
         verbose_name="Comment",
         blank=True,
         null=True)
-
-    history = AuditTrail()
 
     def __unicode__(self):
         return "%s" % (self.maternal_arv_post)

@@ -24,6 +24,8 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 
     CONSENT_MODEL = MaternalConsent
+    
+    objects = models.Manager()
 
     history = AuditTrail(True)
 

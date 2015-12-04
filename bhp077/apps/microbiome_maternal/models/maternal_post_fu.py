@@ -72,8 +72,6 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         blank=True,
         null=True,)
 
-    history = AuditTrail()
-
     class Meta:
         app_label = "microbiome_maternal"
         verbose_name = "Maternal Postnatal Follow-Up"
@@ -112,8 +110,6 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
     wcs_dx_adult = models.ManyToManyField(
         WcsDxAdult,
         verbose_name="List any new WHO Stage III/IV diagnoses that are not reported")
-
-    history = AuditTrail()
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_maternal_maternalpostfudx_change', args=(self.id,))

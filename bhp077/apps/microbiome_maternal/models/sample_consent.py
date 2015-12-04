@@ -5,9 +5,9 @@ from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
+from edc_base.audit_trail import AuditTrail
 from edc_consent.models import RequiresConsentMixin
 from edc_consent.models.fields import SampleCollectionFieldsMixin, VulnerabilityFieldsMixin
-from edc_consent.models.validators import eligible_if_yes_or_declined
 from edc_constants.choices import YES_NO_DECLINED
 from edc_constants.choices import YES_NO_NA
 from edc_constants.constants import NOT_APPLICABLE
@@ -59,6 +59,10 @@ class SampleConsent(SampleCollectionFieldsMixin, RequiresConsentMixin, Vulnerabi
         null=True,
         blank=False,
         help_text="If declined, return copy to the clinic with the consent")
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def get_subject_identifier(self):
         return self.registered_subject.subject_identifier

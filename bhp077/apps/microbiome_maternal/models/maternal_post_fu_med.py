@@ -26,8 +26,6 @@ class MaternalPostFuMed(MaternalScheduledVisitModel):
         verbose_name=("Since the last scheduled visit, has the mother taken any of the following medications?"),
         help_text="",)
 
-    history = AuditTrail()
-
     def get_report_datetime(self):
         return self.maternal_visit.get_report_datetime()
 
@@ -66,6 +64,10 @@ class MaternalPostFuMedItems(BaseUuidModel):
         blank=True,
         null=True,
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def __str__(self):
         return str(self.maternal_post_fu_med.maternal_visit)

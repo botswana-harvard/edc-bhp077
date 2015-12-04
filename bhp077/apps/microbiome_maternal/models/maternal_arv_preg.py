@@ -1,6 +1,6 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_constants.choices import YES_NO
 from edc.subject.haart.choices import ARV_DRUG_LIST
@@ -72,6 +72,10 @@ class MaternalArv(BaseUuidModel):
         verbose_name="Date Stopped",
         null=True,
         blank=True)
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = 'microbiome_maternal'

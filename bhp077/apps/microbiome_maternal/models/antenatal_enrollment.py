@@ -35,6 +35,8 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         default=False,
         editable=False)
 
+    objects = models.Manager()
+
     history = AuditTrail()
 
     def save(self, *args, **kwargs):

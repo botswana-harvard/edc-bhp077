@@ -2,6 +2,7 @@ from django.db import models
 
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.locator.models import BaseLocator
+from edc_base.audit_trail import AuditTrail
 from edc_base.encrypted_fields import EncryptedCharField
 from edc_base.model.fields import OtherCharField
 from edc_base.model.models.base_uuid_model import BaseUuidModel
@@ -54,6 +55,10 @@ class MaternalLocator(BaseLocator, BaseUuidModel):
         null=True, )
 
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     def get_visit(self):
         return self.maternal_visit
