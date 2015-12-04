@@ -40,12 +40,12 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
                 raise forms.ValidationError(
                     'Sample is indicated to have been obtained today, Nappy type CANNOT '
                     'be Not Applicable. Please correct.')
-            if cleaned_data.get('stool_colection') == NOT_APPLICABLE:
+            if cleaned_data.get('stool_collection') == NOT_APPLICABLE:
                 raise forms.ValidationError(
                     'Sample is indicated to have been obtained today, collection time CANNOT '
                     'be not Applicable.')
             if (cleaned_data.get('stool_stored') == NOT_APPLICABLE and
-                    cleaned_data.get('stool_colection') != REALTIME):
+                    cleaned_data.get('stool_collection') != REALTIME):
                 raise forms.ValidationError(
                     'Sample is stated to have been obtained today, please indicate how the '
                     'sample was stored.')
@@ -59,7 +59,7 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
             if cleaned_data.get('nappy_type') != NOT_APPLICABLE:
                 raise forms.ValidationError('Sample is indicated to have NOT been collected, you CANNOT '
                                             'specify the nappy type. Please correct.')
-            if cleaned_data.get('stool_colection') != NOT_APPLICABLE:
+            if cleaned_data.get('stool_collection') != NOT_APPLICABLE:
                 raise forms.ValidationError(
                     'Sample is indicated to have NOT been obtained today, you cannot specify '
                     'the collection time. Please correct.')
@@ -70,11 +70,11 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
 
     def validate_collection_time(self):
         cleaned_data = self.cleaned_data
-        if cleaned_data.get('stool_colection') == BROUGHT:
-            if not cleaned_data.get('stool_colection_time'):
+        if cleaned_data.get('stool_collection') == BROUGHT:
+            if not cleaned_data.get('stool_collection_time'):
                 raise forms.ValidationError('Please specify the number of hours that stool was collected.')
         else:
-            if cleaned_data.get('stool_colection_time'):
+            if cleaned_data.get('stool_collection_time'):
                 raise forms.ValidationError(
                     'You have stated that stool was collected real-time. You cannot indicate '
                     'the number of hour ago the stool was collected.')

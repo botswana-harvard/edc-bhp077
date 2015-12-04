@@ -20,6 +20,8 @@ from bhp077.apps.microbiome_maternal.tests.factories import (
     MaternalVisitFactory, PostnatalEnrollmentFactory)
 from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
 from bhp077.apps.microbiome_infant.constants import REALTIME
+from bhp077.apps.microbiome_lab.models.panel import Panel
+from bhp077.apps.microbiome_lab.models.aliquot_type import AliquotType
 
 
 class TestInfantStoolCollection(TestCase):
@@ -57,17 +59,20 @@ class TestInfantStoolCollection(TestCase):
             registered_subject=infant_registered_subject,
             visit_definition__code='2000')
         self.infant_visit = InfantVisitFactory(appointment=self.appointment)
+        panel = Panel.objects.get(name='Stool storage')
+        aliquot_type = AliquotType.objects.get(name='Stool')
         self.infant_requisition = InfantRequistionFactory(
             infant_visit=self.infant_visit,
-            panel='')
+            aliquot_type=aliquot_type,
+            panel=panel)
         self.data = {
             'report_datetime': timezone.now(),
             'infant_visit': self.infant_visit.id,
             'sample_obtained': NO,
             'nappy_type': NOT_APPLICABLE,
             'other_nappy': '',
-            'stool_colection': NOT_APPLICABLE,
-            'stool_colection_time': '',
+            'stool_collection': NOT_APPLICABLE,
+            'stool_collection_time': '',
             'stool_stored': NOT_APPLICABLE,
             'past_diarrhea': NO,
             'diarrhea_past_24hrs': NOT_APPLICABLE,
@@ -95,20 +100,25 @@ class TestInfantStoolCollection(TestCase):
         """If sample was obtained, have to indicate if sample was stored"""
         self.data['sample_obtained'] = YES
         self.data['nappy_type'] = 'cloth nappy'
-        self.data['stool_colection'] = 'brought'
+        self.data['stool_collection'] = 'brought'
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('Sample is stated to have been obtained today, please indicate if the sample was stored.', errors)
+        self.assertIn(
+            'Sample is stated to have been obtained today, please indicate how the sample was stored.', errors)
 
     def test_sample_obtained_4(self):
         self.data['nappy_type'] = 'cloth nappy'
+        self.infant_requisition.is_drawn = NO
+        self.infant_requisition.save()
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('Sample is indicated to have NOT been collected, you CANNOT '
                       'specify the nappy type. Please correct.', errors)
 
     def test_sample_obtained_5(self):
-        self.data['stool_colection'] = 'brought'
+        self.data['stool_collection'] = 'brought'
+        self.infant_requisition.is_drawn = NO
+        self.infant_requisition.save()
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('Sample is indicated to have NOT been obtained today, you cannot specify the '
@@ -116,15 +126,17 @@ class TestInfantStoolCollection(TestCase):
 
     def test_sample_obtained_6(self):
         self.data['stool_stored'] = YES
+        self.infant_requisition.is_drawn = NO
+        self.infant_requisition.save()
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('Sample is stated to have been NOT obtained today, you cannot specify if the '
+        self.assertIn('Sample is stated to have been NOT obtained today, you cannot specify how the '
                       'sample was stored.', errors)
 
     def test_collection_time_1(self):
         self.data['sample_obtained'] = YES
         self.data['nappy_type'] = 'cloth nappy'
-        self.data['stool_colection'] = 'brought'
+        self.data['stool_collection'] = 'brought'
         self.data['stool_stored'] = YES
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
@@ -133,9 +145,9 @@ class TestInfantStoolCollection(TestCase):
     def test_collection_time_2(self):
         self.data['sample_obtained'] = YES
         self.data['nappy_type'] = 'cloth nappy'
-        self.data['stool_colection'] = REALTIME
-        self.data['stool_colection_time'] = 5
-        self.data['stool_stored'] = YES
+        self.data['stool_collection'] = REALTIME
+        self.data['stool_stored'] = NOT_APPLICABLE
+        self.data['stool_collection_time'] = 5
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You have stated that stool was collected real-time. You cannot indicate the number of hour ago '
@@ -143,6 +155,10 @@ class TestInfantStoolCollection(TestCase):
 
     def test_diarrhea_1(self):
         self.data['past_diarrhea'] = YES
+        self.data['sample_obtained'] = YES
+        self.data['nappy_type'] = 'cloth nappy'
+        self.data['stool_collection'] = REALTIME
+        # self.data['stool_stored'] = YES
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You have indicated the infant had diarrhea in the past 7 days, please '
@@ -150,6 +166,9 @@ class TestInfantStoolCollection(TestCase):
 
     def test_diarrhea_2(self):
         self.data['diarrhea_past_24hrs'] = YES
+        self.data['sample_obtained'] = YES
+        self.data['nappy_type'] = 'cloth nappy'
+        self.data['stool_collection'] = REALTIME
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You have stated the infant did NOT have diarrhea in the past 7 days, '
@@ -157,6 +176,10 @@ class TestInfantStoolCollection(TestCase):
 
     def test_antibiotics_1(self):
         self.data['antibiotics_7days'] = YES
+        self.data['sample_obtained'] = YES
+        self.data['nappy_type'] = 'cloth nappy'
+        self.data['stool_collection'] = REALTIME
+        self.data['stool_stored'] = NOT_APPLICABLE
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You have indicated the infant took antibiotics in the past 7 days, please '
@@ -164,16 +187,19 @@ class TestInfantStoolCollection(TestCase):
 
     def test_antibiotics_2(self):
         self.data['antibiotic_dose_24hrs'] = YES
+        self.data['sample_obtained'] = YES
+        self.data['nappy_type'] = 'cloth nappy'
+        self.data['stool_collection'] = REALTIME
+        self.data['stool_stored'] = NOT_APPLICABLE
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You have stated the infant did NOT take antibiotics in the past 7 days, '
                       'you cannot indicate antibiotics were taken in the past 24 hours.', errors)
 
     def test_stool_requisition_and_no_stool_obtained(self):
-        self.infant_requisition = InfantRequistionFactory(
-            requisition_datetime=timezone.now(), infant_visit=self.infant_visit,
-            panel__name='Stool storage', is_drawn=YES, drawn_datetime=timezone.now())
         self.data['sample_obtained'] = NO
         form = InfantStoolCollectionForm(data=self.data)
-        self.assertIn('Stool requisition is drawn with id {}. Sample obtained cannot be {}'.format(self.infant_requisition.requisition_identifier,
-                                                                                                   self.data['sample_obtained']), form.errors.get('__all__'))
+        self.assertIn(
+            'Stool requisition is drawn with id {}. Sample obtained cannot be {}'.format(
+                self.infant_requisition.requisition_identifier,
+                self.data['sample_obtained']), form.errors.get('__all__'))
