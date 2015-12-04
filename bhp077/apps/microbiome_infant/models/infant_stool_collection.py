@@ -37,7 +37,7 @@ class InfantStoolCollection(InfantScheduledVisitModel):
         null=True,
     )
 
-    stool_colection = models.CharField(
+    stool_collection = models.CharField(
         verbose_name="Was the stool sample from the nappy collected in real-time "
                      "(stool produced at study visit) or brought by the mother?",
         choices=STOOL_COLLECTION_TIME,
@@ -45,7 +45,7 @@ class InfantStoolCollection(InfantScheduledVisitModel):
         max_length=20,
     )
 
-    stool_colection_time = models.IntegerField(
+    stool_collection_time = models.IntegerField(
         verbose_name="Approximately how many hours ago did the mother/caregiver collect the stool in the nappy?",
         help_text=("Cannot exceed 24 hours"),
         validators=[MinValueValidator(0), MaxValueValidator(24)],

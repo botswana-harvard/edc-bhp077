@@ -13,3 +13,5 @@ class InfantRequistionFactory(factory.DjangoModelFactory):
 
     report_datetime = timezone.now()
     infant_visit = factory.SubFactory(InfantVisitFactory)
+    requisition_datetime = timezone.now()
+    drawn_datetime = timezone.now()
