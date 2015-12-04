@@ -19,7 +19,7 @@ from bhp077.apps.microbiome_maternal.tests.factories import (
     MaternalConsentFactory, MaternalLabourDelFactory, MaternalEligibilityFactory,
     MaternalVisitFactory, PostnatalEnrollmentFactory)
 from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_infant.constants import REALTIME
+from bhp077.apps.microbiome_infant.constants import REALTIME, CLOTH_NAPPY
 from bhp077.apps.microbiome_lab.models.panel import Panel
 from bhp077.apps.microbiome_lab.models.aliquot_type import AliquotType
 
