@@ -1,5 +1,8 @@
 from edc_constants.constants import NOT_APPLICABLE, UNKNOWN, OTHER, UNSCHEDULED, SCHEDULED
 
+from .constants import NO_MODIFICATIONS, START, BREASTFEED_ONLY
+
+
 VISIT_INFO_SOURCE = [
     ('participant', 'Clinic visit with participant'),
     ('other_contact', 'Other contact with participant (for example telephone call)'),
@@ -83,7 +86,7 @@ AUTOPSY_SIGNS = (
 )
 
 FEEDING_CHOICES = (
-    ('Breastfeeding only', 'Breastfeeding only'),
+    (BREASTFEED_ONLY, 'Breastfeed only'),
     ('Formula feeding only', 'Formula feeding only'),
     ('Both breastfeeding and formula feeding', 'Both breastfeeding and formula feeding'),
     ('Medical complications: Infant did not feed', 'Medical complications: Infant did not feed'),
@@ -148,7 +151,8 @@ CTX_PLACEBO_STATUS = (
     ('Permanently discontinued', 'Permanently discontinued CTX/Placebo at or before last scheduled visit'),
     ('Never started', 'Never started CTX/Placebo'),
     ('Change in CTX/Placebo since the last scheduled visit or today',
-     'Change in CTX/Placebo since the last scheduled visit or today (dose modification, permanent discontinuation, temporary hold, resumption / initiation after temporary hold)'),
+     ('Change in CTX/Placebo since the last scheduled visit or today (dose modification, '
+      'permanent discontinuation, temporary hold, resumption / initiation after temporary hold)')),
 )
 
 DX_INFANT = (
@@ -225,7 +229,8 @@ DX_MATERNAL = (
     ('Acute Hepatitis in this pregnancy: Drug related ', 'Acute Hepatitis in this pregnancy: Drug related '),
     ('Acute Hepatitis in this pregnancy:Traditional medication related',
      'Acute Hepatitis in this pregnancy:Traditional medication related'),
-    ('Acute Hepatitis in this pregnancy:Fatty liver disease', 'Acute Hepatitis in this pregnancy:Fatty liver disease'),
+    ('Acute Hepatitis in this pregnancy:Fatty liver disease',
+     'Acute Hepatitis in this pregnancy:Fatty liver disease'),
     ('Acute Hepatitis in this pregnancy:Hepatitis A', 'Acute Hepatitis in this pregnancy:Hepatitis A'),
     ('Acute Hepatitis in this pregnancy:Hepatitis B ', 'Acute Hepatitis in this pregnancy:Hepatitis B'),
     ('Acute Hepatitis in this pregnancy:Alcoholic', 'Acute Hepatitis in this pregnancy:Alcoholic'),
@@ -237,7 +242,8 @@ DX_MATERNAL = (
     ('Appendicitis', 'Appendicitis'),
     ('Cholecystitis/cholanangitis', 'Cholecystitis/cholanangitis'),
     ('Pancreatitis', 'Pancreatitis'),
-    ('Acute Renal failure', 'Acute Renal failure (Record highest creatinine level if tested outside of the study)'),
+    ('Acute Renal failure',
+     'Acute Renal failure (Record highest creatinine level if tested outside of the study)'),
     ('Anemia', 'Anemia (Only report grade 3 or 4 anemia based on the lab value drawn outside the study)'),
     ('Pregnancy/peripartum cardiomyopathy or CHF ', 'Pregnancy/peripartum cardiomyopathy or CHF '),
     ('Drug rash on HAART', 'Drug rash on HAART'),
@@ -323,8 +329,7 @@ OFF_STUDY_REASON = [
          '(see Study Protocol for definition of Completion.) [skip to end of form]')),
     ('death',
         (' Participant death (complete the DEATH REPORT FORM AF005) '
-         '(For EAE Reporting requirements see EAE Reporting Manual)')
-    ),
+         '(For EAE Reporting requirements see EAE Reporting Manual)')),
     (OTHER, ' Other'),
 ]
 
@@ -333,7 +338,8 @@ LOWER_GASTROINTESTINAL_ABNORMALITY = (
     ('Duodenal atresia, stenosis, or absence', 'Duodenal atresia, stenosis, or absence'),
     ('Jejunal atresis, stenosis, or absence', 'Jejunal atresis, stenosis, or absence'),
     ('Ileal atresia, stenosis, or absence', 'Ileal atresia, stenosis, or absence'),
-    ('Atresia, stenosis, or absence of large intestine, rectum, or anus', 'Atresia, stenosis, or absence of large intestine, rectum, or anus'),
+    ('Atresia, stenosis, or absence of large intestine, rectum, or anus',
+     'Atresia, stenosis, or absence of large intestine, rectum, or anus'),
     ('Hirschsprung disease', 'Hirschsprung disease'),
     ('OTHER megacolon', 'Other megacolon'),
     ('Liver, pancreas, or gall bladder defect, specify', 'Liver, pancreas, or gall bladder defect, specify'),
@@ -648,8 +654,8 @@ CONTINUOUS_LOOSE_STOOLS = (
 )
 
 ARV_STATUS_WITH_NEVER = (
-    ('no_mod', '1. No modifications made since the last attended scheduled visit or today'),
-    ('start', '2. Starting today or has started since last attended scheduled visit'),
+    (NO_MODIFICATIONS, '1. No modifications made since the last attended scheduled visit or today'),
+    (START, '2. Starting today or has started since last attended scheduled visit'),
     ('discontinued', '3. Permanently discontinued at or before the last attended scheduled visit'),
     ('never started', '4. Never started'),
     ('modified', '5. Change in at least one medication since the last attended scheduled visit or today'),

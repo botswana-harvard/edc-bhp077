@@ -1,6 +1,3 @@
-from collections import OrderedDict
-
-from edc.core.bhp_common.utils import convert_from_camel
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 
@@ -18,7 +15,8 @@ class InfantDashboard(RegisteredSubjectDashboard):
     urlpattern_view = 'apps.microbiome_dashboard.views'
     template_name = 'infant_dashboard.html'
     urlpatterns = [
-        RegisteredSubjectDashboard.urlpatterns[0][:-1] + '(?P<appointment_code>{appointment_code})/$'] + RegisteredSubjectDashboard.urlpatterns
+        RegisteredSubjectDashboard.urlpatterns[0][:-1] +
+        '(?P<appointment_code>{appointment_code})/$'] + RegisteredSubjectDashboard.urlpatterns
     urlpattern_options = dict(
         RegisteredSubjectDashboard.urlpattern_options,
         dashboard_model=RegisteredSubjectDashboard.urlpattern_options['dashboard_model'] + '|infant_birth',
@@ -38,7 +36,6 @@ class InfantDashboard(RegisteredSubjectDashboard):
         self._locator_model = None
         self._maternal_identifier = None
         self._infant_birth = None
-        #self._visit_model = None
 
     def get_context_data(self, **kwargs):
         super(InfantDashboard, self).get_context_data(**kwargs)

@@ -59,7 +59,7 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
             if not antenatal.antenatal_eligible:
                 self.remove_scheduled_forms(self.appointment)
         if self.reason == UNSCHEDULED:
-            self.meta_data_visit_unshceduled(self.appointment)
+            self.meta_data_visit_unscheduled(self.appointment)
 
     def remove_scheduled_forms(self, appointment):
         """Removes meta data for scheduled forms except for off study."""

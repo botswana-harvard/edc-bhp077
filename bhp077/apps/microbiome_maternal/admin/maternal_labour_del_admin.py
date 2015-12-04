@@ -90,7 +90,7 @@ class MaternalLabDelDxTAdmin(BaseModelAdmin):
 
     radio_fields = {
         'lab_del_dx': admin.VERTICAL,
-        'hospitalized': admin.VERTICAL,}
+        'hospitalized': admin.VERTICAL}
     radio_fields = {'hospitalized': admin.VERTICAL}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):

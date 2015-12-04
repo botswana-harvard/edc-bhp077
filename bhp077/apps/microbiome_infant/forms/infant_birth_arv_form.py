@@ -2,11 +2,12 @@ from django import forms
 
 from ..models import InfantBirthArv
 
-from edc_constants.constants import NEW, POS, YES, NO, NOT_APPLICABLE
-
-from .base_infant_model_form import BaseInfantModelForm
+from edc_constants.constants import YES, NOT_APPLICABLE
+from bhp077.apps.microbiome.constants import BREASTFEED_ONLY
 
 from ..models import InfantBirthFeedVaccine
+
+from .base_infant_model_form import BaseInfantModelForm
 
 
 class InfantBirthArvForm(BaseInfantModelForm):
@@ -36,6 +37,7 @@ class InfantBirthArvForm(BaseInfantModelForm):
 
     def validate_nvp_discharge_supply(self, cleaned_data):
         infant_birth_feeding = InfantBirthFeedVaccine.objects.get(infant_visit=cleaned_data.get('infant_visit'))
-        if infant_birth_feeding.feeding_after_delivery == 'Breastfeeding only':
-            if cleaned_data.get('nvp_discharge_supply') == 'N/A':
-                raise forms.ValidationError('If the infant is breast feeding then do not select not applicaticable for Q11.')
+        if infant_birth_feeding.feeding_after_delivery == BREASTFEED_ONLY:
+            if cleaned_data.get('nvp_discharge_supply') == NOT_APPLICABLE:
+                raise forms.ValidationError(
+                    'If the infant is breast feeding then do not select not applicaticable for Q11.')

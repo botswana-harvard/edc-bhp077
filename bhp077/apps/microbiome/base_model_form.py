@@ -170,12 +170,16 @@ class BaseModelForm(forms.ModelForm):
         other = kwargs.get('other')
 
         # if leading question is 'Yes', a m2m item cannot be 'Not applicable'
-        if leading == YES and [True for item in m2m if (item.short_name == NOT_APPLICABLE or item.short_name.lower() == 'asymptomatic')]:
+        if (leading == YES and [
+                True for item in m2m if (item.short_name == NOT_APPLICABLE or
+                                         item.short_name.lower() == 'asymptomatic')]):
             raise forms.ValidationError(
                 "You stated there ARE " + label + "s, yet you selected '{0}'".format(item.short_name))
 
         # if leading question is 'No', ensure the m2m item is 'not applicable'
-        if leading == NO and not [True for item in m2m if (item.short_name == NOT_APPLICABLE or item.short_name.lower() == 'asymptomatic')]:
+        if (leading == NO and not [
+                True for item in m2m if (item.short_name == NOT_APPLICABLE or
+                                         item.short_name.lower() == 'asymptomatic')]):
             raise forms.ValidationError("You stated there are NO {0}s. Please correct".format(label))
 
         # if leading question is 'No', ensure only one m2m item is selected.

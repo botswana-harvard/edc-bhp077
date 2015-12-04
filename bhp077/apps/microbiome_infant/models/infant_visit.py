@@ -67,7 +67,7 @@ class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUui
 
     def update_entry_meta_data(self):
         if self.reason == 'unscheduled':
-            self.meta_data_visit_unshceduled(self.appointment)
+            self.meta_data_visit_unscheduled(self.appointment)
 
     @property
     def infant_birth_male(self):

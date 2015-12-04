@@ -5,6 +5,7 @@ from edc_constants.constants import NO, NOT_EVALUATED, YES
 from bhp077.apps.microbiome_maternal.models import MaternalConsent
 
 from .base_infant_model_form import BaseInfantModelForm
+
 from ..models import InfantBirthExam
 
 
@@ -13,7 +14,6 @@ class InfantBirthExamForm(BaseInfantModelForm):
     def clean(self):
         cleaned_data = super(InfantBirthExamForm, self).clean()
         self.validate_report_datetime(cleaned_data, 'report_datetime')
-        #self.validate_report_datetime(cleaned_data, 'infant_exam_date')
         self.validate_general_activity(cleaned_data)
         self.validate_heent_exam(cleaned_data)
         self.validate_resp_exam(cleaned_data)

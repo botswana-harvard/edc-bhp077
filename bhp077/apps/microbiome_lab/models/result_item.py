@@ -6,7 +6,6 @@ from edc.lab.lab_clinic_reference.classes import ClinicReferenceFlag, ClinicGrad
 from lis.specimen.lab_result_item.models import BaseResultItem
 
 from .result import Result
-# from edc_base.model.models import BaseUuidModel
 
 
 class ResultItem(BaseResultItem):
@@ -35,9 +34,11 @@ class ResultItem(BaseResultItem):
 
     def to_result(self):
         reviewed = ''
-        result = '<a href="/admin/lab_clinic_api/result/?q={result_identifier}">result</a>'.format(result_identifier=self.result.result_identifier)
+        result = ('<a href="/admin/lab_clinic_api/result/?q={result_identifier}">'
+                  'result</a>').format(result_identifier=self.result.result_identifier)
         if self.result.reviewed:
-            reviewed = """&nbsp;<img src="/static/admin/img/icon_success.gif" width="10" height="10" alt="Reviewed"/>"""
+            reviewed = (
+                """&nbsp;<img src="/static/admin/img/icon_success.gif" width="10" height="10" alt="Reviewed"/>""")
         return '{result}{reviewed}'.format(result=result, reviewed=reviewed)
     to_result.allow_tags = True
 

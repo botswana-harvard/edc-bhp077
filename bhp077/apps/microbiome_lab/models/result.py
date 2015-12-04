@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 from lis.specimen.lab_result.models import BaseResult
 
 from .order_item import OrderItem
-# from edc_base.model.models import BaseUuidModel
 
 
 class Result(BaseResult):
@@ -37,8 +36,11 @@ class Result(BaseResult):
         if self.review:
             label = 'comment'
             url_review = self.review.get_absolute_url()
-            two = """<a href="{url}" class="add-another" id="add_id_review" onclick="return showAddAnotherPopup(this);"> {label}</a>""".format(url=url_review, label=label)
-        one = """<a href="{url}" class="add-another" id="add_id_report" onclick="return showAddAnotherPopup(this);"> <img src="/static/admin/img/icon_addlink.gif" width="10" height="10" alt="View report"/></a>""".format(url=url)
+            two = ('<a href="{url}" class="add-another" id="add_id_review" '
+                   'onclick="return showAddAnotherPopup(this);"> {label}</a>').format(url=url_review, label=label)
+        one = ('<a href="{url}" class="add-another" id="add_id_report" '
+               'onclick="return showAddAnotherPopup(this);"> <img src="/static/admin/img/icon_addlink.gif" '
+               'width="10" height="10" alt="View report"/></a>').format(url=url)
         return '{one}&nbsp;{two}'.format(one=one, two=two)
     report.allow_tags = True
 

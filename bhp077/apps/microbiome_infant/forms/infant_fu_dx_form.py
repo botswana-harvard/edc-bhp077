@@ -20,8 +20,9 @@ class InfantFuDxItemsForm(BaseInfantModelForm):
         cleaned_data = super(InfantFuDxItemsForm, self).clean()
         if cleaned_data.get('health_facility') == NO:
             if cleaned_data.get('was_hospitalized') == YES:
-                raise forms.ValidationError('You indicated that participant was hospitalized, therefore the participant '
-                                            'was seen at a health facility. Please correct.')
+                raise forms.ValidationError(
+                    'You indicated that participant was hospitalized, therefore the participant '
+                    'was seen at a health facility. Please correct.')
         return cleaned_data
 
     class Meta:
