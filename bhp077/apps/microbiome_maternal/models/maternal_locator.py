@@ -8,7 +8,7 @@ from edc_base.model.fields import OtherCharField
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_base.model.validators import CellNumber, TelephoneNumber
 from edc_constants.choices import YES_NO
-from edc_locator.models import LocatorMixin
+from edc_locator.mixins import LocatorMixin
 
 from .maternal_visit import MaternalVisit
 
