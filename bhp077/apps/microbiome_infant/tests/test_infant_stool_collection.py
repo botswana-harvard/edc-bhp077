@@ -19,7 +19,7 @@ from bhp077.apps.microbiome_maternal.tests.factories import (
     MaternalConsentFactory, MaternalLabourDelFactory, MaternalEligibilityFactory,
     MaternalVisitFactory, PostnatalEnrollmentFactory)
 from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_infant.constants import REALTIME
+from bhp077.apps.microbiome_infant.constants import REALTIME, CLOTH_NAPPY
 from bhp077.apps.microbiome_lab.models.panel import Panel
 from bhp077.apps.microbiome_lab.models.aliquot_type import AliquotType
 
@@ -44,7 +44,7 @@ class TestInfantStoolCollection(TestCase):
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')

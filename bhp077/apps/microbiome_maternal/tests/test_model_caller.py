@@ -43,7 +43,7 @@ class TestModelCaller(TestCase):
     def test_schedules_call(self):
         antenatal_enrollment = AntenatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             on_hypertension_tx=NO)
         subject_identifier = antenatal_enrollment.get_subject_identifier()

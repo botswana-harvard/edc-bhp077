@@ -3,7 +3,7 @@ from collections import OrderedDict
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.utils import convert_from_camel
-from edc_constants.constants import YES, POS, NEG, IND
+from edc_constants.constants import YES, POS, NEG, IND, NEVER, UNKNOWN, DWTA
 
 from bhp077.apps.microbiome_lab.models.maternal_requisition import MaternalRequisition
 from bhp077.apps.microbiome_maternal.models import (MaternalVisit, MaternalEligibility,
@@ -67,15 +67,15 @@ class MaternalDashboard(RegisteredSubjectDashboard):
     def antenatal_maternal_hiv_status(self):
         antenatal = AntenatalEnrollment.objects.filter(registered_subject=self.registered_subject)
         if antenatal:
-            if antenatal[0].verbal_hiv_status == POS and antenatal[0].evidence_hiv_status == YES:
-                self._maternal_hiv_status = 'POS'
-            elif antenatal[0].verbal_hiv_status == NEG and antenatal[0].evidence_hiv_status == YES:
-                self._maternal_hiv_status = 'NEG'
-            elif antenatal[0].verbal_hiv_status == 'NEVER':
+            if antenatal[0].current_hiv_status == POS and antenatal[0].evidence_hiv_status == YES:
+                self._maternal_hiv_status = POS
+            elif antenatal[0].current_hiv_status == NEG and antenatal[0].evidence_hiv_status == YES:
+                self._maternal_hiv_status = NEG
+            elif antenatal[0].current_hiv_status == NEVER:
                 self._maternal_hiv_status = 'Never Tested'
-            elif antenatal[0].verbal_hiv_status == 'UNK':
+            elif antenatal[0].current_hiv_status == UNKNOWN:
                 self._maternal_hiv_status = 'UNK'
-            elif antenatal[0].verbal_hiv_status == 'REFUSED':
+            elif antenatal[0].current_hiv_status == DWTA:
                 self._maternal_hiv_status = 'REFUSED'
             elif antenatal[0].rapid_test_result == POS:
                 self._maternal_hiv_status = 'POS ANT rapid test'
@@ -88,15 +88,15 @@ class MaternalDashboard(RegisteredSubjectDashboard):
     def postnatal_maternal_hiv_status(self):
         postnatal = PostnatalEnrollment.objects.filter(registered_subject=self.registered_subject)
         if postnatal:
-            if postnatal[0].verbal_hiv_status == POS and postnatal[0].evidence_hiv_status == YES:
-                self._maternal_hiv_status = 'POS'
-            elif postnatal[0].verbal_hiv_status == NEG and postnatal[0].evidence_hiv_status == YES:
-                self._maternal_hiv_status = 'NEG'
-            elif postnatal[0].verbal_hiv_status == 'NEVER':
+            if postnatal[0].current_hiv_status == POS and postnatal[0].evidence_hiv_status == YES:
+                self._maternal_hiv_status = POS
+            elif postnatal[0].current_hiv_status == NEG and postnatal[0].evidence_hiv_status == YES:
+                self._maternal_hiv_status = NEG
+            elif postnatal[0].current_hiv_status == NEVER:
                 self._maternal_hiv_status = 'Never Tested'
-            elif postnatal[0].verbal_hiv_status == 'UNK':
+            elif postnatal[0].current_hiv_status == UNKNOWN:
                 self._maternal_hiv_status = 'UNK'
-            elif postnatal[0].verbal_hiv_status == 'REFUSED':
+            elif postnatal[0].current_hiv_status == DWTA:
                 self._maternal_hiv_status = 'REFUSED'
             elif postnatal[0].rapid_test_result == POS:
                 self._maternal_hiv_status = 'POS PNT rapid test'

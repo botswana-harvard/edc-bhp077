@@ -60,7 +60,7 @@ class TestRapidTestForm(TestCase):
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
         )
         appointment = Appointment.objects.get(
@@ -81,7 +81,7 @@ class TestRapidTestForm(TestCase):
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
         )
         appointment = Appointment.objects.get(
@@ -103,7 +103,7 @@ class TestRapidTestForm(TestCase):
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
         )
         appointment = Appointment.objects.get(
@@ -129,7 +129,7 @@ class TestRapidTestForm(TestCase):
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES)
 
         appointment = Appointment.objects.get(
@@ -153,7 +153,7 @@ class TestRapidTestForm(TestCase):
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES)
 
         appointment = Appointment.objects.get(

@@ -14,6 +14,7 @@ from ..maternal_choices import LIVE_STILL_BIRTH, LIVE
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
 from .maternal_off_study_mixin import MaternalOffStudyMixin
+from edc_constants.constants import NEVER, UNKNOWN, DWTA
 
 
 class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmentMixin,
@@ -80,18 +81,18 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
                 self.on_hypertension_tx == NO and self.is_diabetic == NO and
                 self.will_remain_onstudy == YES and self.postpartum_days <= 3 and self.vaginal_delivery == YES and
                 self.delivery_status == LIVE and self.gestation_to_birth_wks >= 37):
-            if (self.verbal_hiv_status == POS and self.evidence_hiv_status == YES and self.valid_regimen == YES and
+            if (self.current_hiv_status == POS and self.evidence_hiv_status == YES and self.valid_regimen == YES and
                     self.valid_regimen_duration == YES):
                 return True
-            elif (self.verbal_hiv_status == POS and self.evidence_hiv_status == NO and
+            elif (self.current_hiv_status == POS and self.evidence_hiv_status == NO and
                     self.rapid_test_result == POS and self.valid_regimen == YES and
                     self.valid_regimen_duration == YES):
                 return True
-            elif self.verbal_hiv_status == NEG and self.evidence_hiv_status == NO and self.rapid_test_result == NEG:
+            elif self.current_hiv_status == NEG and self.evidence_hiv_status == NO and self.rapid_test_result == NEG:
                 return True
-            elif self.verbal_hiv_status == NEG and self.evidence_hiv_status == YES:
+            elif self.current_hiv_status == NEG and self.evidence_hiv_status == YES:
                 return True
-            elif (self.verbal_hiv_status in ['Never tested for HIV', 'Unknown', 'Refused to answer'] and
+            elif (self.current_hiv_status in [NEVER, UNKNOWN, DWTA] and
                     self.rapid_test_result == NEG):
                 return True
         return False

@@ -62,7 +62,7 @@ class TestRuleGroupInfant(TestCase):
         """
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
         )
 
@@ -93,7 +93,7 @@ class TestRuleGroupInfant(TestCase):
     def test_infant_birth_male(self):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
         )
 
@@ -160,7 +160,7 @@ class TestRuleGroupInfant(TestCase):
         """
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
         )
 
@@ -196,7 +196,7 @@ class TestRuleGroupInfant(TestCase):
         """
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
         )
 
@@ -239,7 +239,7 @@ class TestRuleGroupInfant(TestCase):
         """
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
         )
 

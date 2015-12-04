@@ -56,7 +56,7 @@ class TestInfantFeedingForm(TestCase):
 
         postnatal = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')

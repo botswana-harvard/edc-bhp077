@@ -55,7 +55,7 @@ class TestInfantVisitForm(TestCase):
 
         post = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
         )
         appointment = Appointment.objects.get(

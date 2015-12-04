@@ -10,7 +10,7 @@ from .base_enrollment_form import BaseEnrollmentForm
 class MyBaseEnrollmentForm(BaseEnrollmentForm):
 
     def validate_create_rapid_tests(self, cleaned_data, instance):
-        if instance.verbal_hiv_status == NEG:
+        if instance.current_hiv_status == NEG:
             if instance.rapid_test_required:
                 if cleaned_data.get('rapid_test_done') == NO:
                     raise forms.ValidationError(
@@ -48,14 +48,14 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
     def validate_hiv_status(self, ant):
         cleaned_data = self.cleaned_data
         if ant:
-            if ant.verbal_hiv_status == POS and ant.evidence_hiv_status == YES:
-                if (cleaned_data.get('verbal_hiv_status') != POS or cleaned_data.get('evidence_hiv_status') != YES):
+            if ant.current_hiv_status == POS and ant.evidence_hiv_status == YES:
+                if (cleaned_data.get('current_hiv_status') != POS or cleaned_data.get('evidence_hiv_status') != YES):
                     raise forms.ValidationError(
                         "Antenatal Enrollment shows participant is {} and {} evidence ."
                         " Please Correct {} and {} evidence".format(
-                            ant.verbal_hiv_status,
+                            ant.current_hiv_status,
                             ant.evidence_hiv_status,
-                            cleaned_data.get('verbal_hiv_status'),
+                            cleaned_data.get('current_hiv_status'),
                             cleaned_data.get('evidence_hiv_status')))
 
     def validate_create_postnatal_enrollment(self, ant, instance):

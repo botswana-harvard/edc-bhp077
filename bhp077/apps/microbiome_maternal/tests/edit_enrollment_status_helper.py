@@ -34,7 +34,7 @@ class TestEnrollmentStatusHelper(TestCase):
         """Test for a positive mother on a valid regimen but weeks of gestation below 36."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35
@@ -44,14 +44,14 @@ class TestEnrollmentStatusHelper(TestCase):
     def test_if_antenatal_postnatal_eligible(self):
 
         AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35
         )
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35
@@ -62,14 +62,14 @@ class TestEnrollmentStatusHelper(TestCase):
     def test_if_antenatal_postnatal_not_eligible(self):
 
         AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35
         )
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35,
@@ -80,7 +80,7 @@ class TestEnrollmentStatusHelper(TestCase):
 
     def test_if_antenatal_not_eligible(self):
         antenatal = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35,
@@ -91,7 +91,7 @@ class TestEnrollmentStatusHelper(TestCase):
 
     def test_if_antenatal_eligible(self):
         antenatal = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35,
@@ -100,7 +100,7 @@ class TestEnrollmentStatusHelper(TestCase):
 
     def test_if_postnatal_not_eligible(self):
         postnatal_enrollment = PostnatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35,
@@ -110,7 +110,7 @@ class TestEnrollmentStatusHelper(TestCase):
 
     def test_if_postnatal_eligible(self):
         postnatal_enrollment = PostnatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35,

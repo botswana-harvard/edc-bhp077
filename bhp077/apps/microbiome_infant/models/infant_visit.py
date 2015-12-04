@@ -94,7 +94,7 @@ class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUui
         try:
             PostnatalEnrollment.objects.get(
                 registered_subject=self.maternal_registered_subject,
-                verbal_hiv_status=POS,
+                current_hiv_status=POS,
                 evidence_hiv_status=YES
             )
         except PostnatalEnrollment.DoesNotExist:

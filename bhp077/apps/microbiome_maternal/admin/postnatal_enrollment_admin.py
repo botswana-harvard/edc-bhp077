@@ -14,7 +14,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
         'registered_subject', 'report_datetime', 'postpartum_days', 'vaginal_delivery', 'gestation_to_birth_wks',
         'delivery_status', 'live_infants', 'is_diabetic', 'on_tb_tx', 'on_hypertension_tx',
         'will_breastfeed', 'will_remain_onstudy', 'week32_test', 'week32_test_date', 'week32_result',
-        'verbal_hiv_status', 'evidence_hiv_status', 'valid_regimen', 'valid_regimen_duration', 'rapid_test_done',
+        'current_hiv_status', 'evidence_hiv_status', 'valid_regimen', 'valid_regimen_duration', 'rapid_test_done',
         'rapid_test_date', 'rapid_test_result'
     ]
 
@@ -30,7 +30,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
 
     def exclude_fields(self):
         exclude = ['is_diabetic', 'on_tb_tx', 'on_hypertension_tx', 'will_breastfeed',
-                   'will_remain_onstudy', 'week32_test', 'date_of_test', 'week32_result', 'verbal_hiv_status',
+                   'will_remain_onstudy', 'week32_test', 'date_of_test', 'week32_result', 'current_hiv_status',
                    'valid_regimen', 'valid_regimen_duration', 'rapid_test_done', 'rapid_test_date',
                    'rapid_test_result', 'valid_regimen', 'evidence_hiv_status']
         return exclude
@@ -53,7 +53,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
         form.base_fields['week32_test'].initial = antenatal.week32_test
         form.base_fields['date_of_test'].initial = antenatal.date_of_test
         form.base_fields['week32_result'].initial = antenatal.week32_result
-        form.base_fields['verbal_hiv_status'].initial = antenatal.verbal_hiv_status
+        form.base_fields['current_hiv_status'].initial = antenatal.current_hiv_status
         form.base_fields['valid_regimen'].initial = antenatal.valid_regimen
         form.base_fields['evidence_hiv_status'].initial = antenatal.evidence_hiv_status
         form.base_fields['valid_regimen_duration'].initial = antenatal.valid_regimen_duration
@@ -89,7 +89,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
                     'will_remain_onstudy': admin.VERTICAL,
                     'week32_test': admin.VERTICAL,
                     'week32_result': admin.VERTICAL,
-                    'verbal_hiv_status': admin.VERTICAL,
+                    'current_hiv_status': admin.VERTICAL,
                     'evidence_hiv_status': admin.VERTICAL,
                     'valid_regimen': admin.VERTICAL,
                     'valid_regimen_duration': admin.VERTICAL,

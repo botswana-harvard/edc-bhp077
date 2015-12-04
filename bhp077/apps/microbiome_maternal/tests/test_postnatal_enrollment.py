@@ -15,6 +15,7 @@ from bhp077.apps.microbiome_maternal.models import AntenatalEnrollment
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
 from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory, AntenatalEnrollmentFactory
+from edc_constants.constants import UNKNOWN, DWTA, NEVER
 
 
 class TestPostnatalEnroll(TestCase):
@@ -200,7 +201,7 @@ class TestPostnatalEnroll(TestCase):
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             valid_regimen=YES,
             valid_regimen_duration=YES
@@ -212,7 +213,7 @@ class TestPostnatalEnroll(TestCase):
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             valid_regimen=NO,
         )
@@ -223,7 +224,7 @@ class TestPostnatalEnroll(TestCase):
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             valid_regimen=YES,
             valid_regimen_duration=NO
@@ -235,7 +236,7 @@ class TestPostnatalEnroll(TestCase):
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES
         )
         self.assertTrue(postnatal_enrollment.postnatal_eligible)
@@ -245,7 +246,7 @@ class TestPostnatalEnroll(TestCase):
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=NO,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
@@ -253,12 +254,12 @@ class TestPostnatalEnroll(TestCase):
         )
         self.assertTrue(postnatal_enrollment.postnatal_eligible)
 
-    def test_verbal_hiv_status_neg_with_no_evidence(self):
+    def test_current_hiv_status_neg_with_no_evidence(self):
         """Test for a subject whose verbal hiv status is NEG and has no evidence, rapid test result POS."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=NO,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
@@ -266,72 +267,72 @@ class TestPostnatalEnroll(TestCase):
         )
         self.assertFalse(postnatal_enrollment.postnatal_eligible)
 
-    def test_verbal_hiv_status_never_tested_for_HIV_1(self):
+    def test_current_hiv_status_never_tested_for_HIV_1(self):
         """Test for a subject whose verbal hiv status is Never tested for HIV and rapid test result is NEG."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status="Never tested for HIV",
+            current_hiv_status=NEVER,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=NEG
         )
         self.assertTrue(postnatal_enrollment.postnatal_eligible)
 
-    def test_verbal_hiv_status_never_tested_for_HIV_2(self):
+    def test_current_hiv_status_never_tested_for_HIV_2(self):
         """Test for a subject whose verbal hiv status is Never tested for HIV rapid test result POS."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status="Never tested for HIV",
+            current_hiv_status=NEVER,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=POS
         )
         self.assertFalse(postnatal_enrollment.postnatal_eligible)
 
-    def test_verbal_hiv_status_unknown_rapid_test_result_neg(self):
+    def test_current_hiv_status_unknown_rapid_test_result_neg(self):
         """Test for a subject whose verbal hiv status is unknown and rapid test result NEG."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status="Unknown",
+            current_hiv_status=UNKNOWN,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=NEG
         )
         self.assertTrue(postnatal_enrollment.postnatal_eligible)
 
-    def test_verbal_hiv_status_unknown_rapid_test_result_pos(self):
+    def test_current_hiv_status_unknown_rapid_test_result_pos(self):
         """Test for a subject whose verbal hiv status is unknown and rapid test result POS."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status="Unknown",
+            current_hiv_status=UNKNOWN,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=POS
         )
         self.assertFalse(postnatal_enrollment.postnatal_eligible)
 
-    def test_verbal_hiv_status_refused_to_answer_rapid_test_result_pos(self):
+    def test_current_hiv_status_refused_to_answer_rapid_test_result_pos(self):
         """Test for a subject whose verbal hiv status is refused to answer and rapid test result POS."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status="Refused to answer",
+            current_hiv_status=DWTA,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=POS
         )
         self.assertFalse(postnatal_enrollment.postnatal_eligible)
 
-    def test_verbal_hiv_status_refused_to_answer_rapid_test_result_neg(self):
+    def test_current_hiv_status_refused_to_answer_rapid_test_result_neg(self):
         """Test for a subject whose verbal hiv status is refused to answer and rapid test result NEG."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status="Refused to answer",
+            current_hiv_status=DWTA,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=NEG
@@ -343,10 +344,10 @@ class TestPostnatalEnroll(TestCase):
         antenatal = AntenatalEnrollmentFactory(registered_subject=self.registered_subject)
         self.assertEqual(AntenatalEnrollment.objects.count(), 1)
         postnatal = PostnatalEnrollmentFactory(registered_subject=self.registered_subject)
-        self.assertEqual(antenatal.verbal_hiv_status, postnatal.verbal_hiv_status)
+        self.assertEqual(antenatal.current_hiv_status, postnatal.current_hiv_status)
         self.assertEqual(antenatal.evidence_hiv_status, postnatal.evidence_hiv_status)
         pnt = postnatal
-        pnt.verbal_hiv_status = NEG
+        pnt.current_hiv_status = NEG
         pnt.evidence_hiv_status = NO
         self.assertRaises(forms.ValidationError)
 

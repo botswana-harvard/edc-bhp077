@@ -34,7 +34,7 @@ class TestViralLoadRequisition(TestCase):
         self.registered_subject = self.maternal_eligibility.registered_subject
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES)
 
         def test_viral_load_meta_data_for_pos(self):

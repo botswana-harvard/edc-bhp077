@@ -23,7 +23,7 @@ class PostnatalEnrollmentFactory(factory.DjangoModelFactory):
     gestation_to_birth_wks = 38
     will_breastfeed = YES
     will_remain_onstudy = YES
-    verbal_hiv_status = POS
+    current_hiv_status = POS
     evidence_hiv_status = YES
     valid_regimen = YES
     valid_regimen_duration = YES

@@ -10,7 +10,7 @@ def hiv_status_pos_and_evidence_yes(visit_instance):
     try:
         PostnatalEnrollment.objects.get(
             registered_subject=visit_instance.appointment.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES
         )
     except PostnatalEnrollment.DoesNotExist:

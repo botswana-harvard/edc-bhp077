@@ -64,7 +64,7 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
             postnatal_enrollment.will_breastfeed = self.will_breastfeed
             postnatal_enrollment.will_remain_onstudy = self.will_remain_onstudy
             postnatal_enrollment.week32_result = self.week32_result
-            postnatal_enrollment.verbal_hiv_status = self.verbal_hiv_status
+            postnatal_enrollment.current_hiv_status = self.current_hiv_status
             postnatal_enrollment.valid_regimen = self.valid_regimen
             postnatal_enrollment.evidence_hiv_status = self.evidence_hiv_status
             postnatal_enrollment.rapid_test_done = self.rapid_test_done
@@ -87,10 +87,10 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
             if (self.week32_test == NO and self.rapid_test_done == YES and
                     self.evidence_hiv_status == NOT_APPLICABLE and not self.week32_result):
                 return True
-            if (self.verbal_hiv_status == POS and self.evidence_hiv_status == YES and
+            if (self.current_hiv_status == POS and self.evidence_hiv_status == YES and
                     self.valid_regimen == YES and self.valid_regimen_duration == YES):
                 return True
-            elif self.verbal_hiv_status == NEG and self.evidence_hiv_status == YES:
+            elif self.current_hiv_status == NEG and self.evidence_hiv_status == YES:
                 return True
             elif (self.evidence_hiv_status == NO and self.rapid_test_result != POS and
                     self.rapid_test_done == YES):

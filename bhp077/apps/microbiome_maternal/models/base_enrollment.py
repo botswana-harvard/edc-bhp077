@@ -84,7 +84,7 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
         null=True,
         blank=True)
 
-    verbal_hiv_status = models.CharField(
+    current_hiv_status = models.CharField(
         verbose_name="What is your current HIV status?",
         choices=POS_NEG_UNTESTED_REFUSAL,
         max_length=30,

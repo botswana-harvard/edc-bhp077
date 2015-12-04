@@ -38,8 +38,8 @@ class EnrollmentStatusHelper(object):
             postnatal = self.postnatal_enrollment
             postnatal.will_breastfeed = self.antinatal_enrollment.will_breastfeed
             postnatal.will_remain_onstudy = self.antinatal_enrollment.will_remain_onstudy
-            postnatal.verbal_hiv_status = self.antinatal_enrollment.verbal_hiv_status
-            postnatal.evidence_hiv_status = self.antinatal_enrollment.verbal_hiv_status
+            postnatal.current_hiv_status = self.antinatal_enrollment.current_hiv_status
+            postnatal.evidence_hiv_status = self.antinatal_enrollment.current_hiv_status
             return postnatal.postnatal_eligible
         return False
 

@@ -6,7 +6,7 @@ from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE
+from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE, UNKNOWN
 
 from bhp077.apps.microbiome_maternal.models import AntenatalEnrollment
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
@@ -38,7 +38,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a positive mother on a valid regimen but weeks of gestation below 36."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35
@@ -49,7 +49,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a positive mother not on a valid regimen but weeks of gestation above 36."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             valid_regimen=NO,
             registered_subject=self.registered_subject,
@@ -61,7 +61,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a positive mother on a valid regimen and a diabetic subject."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             is_diabetic=YES
@@ -72,7 +72,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a positive mother on a valid regimen and a diabetic subject."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             is_diabetic=NO
@@ -83,7 +83,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a positive mother on a valid regimen and has hypertension."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             on_hypertension_tx=YES
@@ -94,7 +94,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a positive mother on a valid regimen and not hypertensive."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             on_hypertension_tx=NO
@@ -105,7 +105,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a negative mother who agrees to breastfeed for a year."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             will_breastfeed=YES
@@ -116,7 +116,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a negative mother who does not agree to breastfeed for a year."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             will_breastfeed=NO
@@ -127,7 +127,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a negative mother who does agrees to stay in study a year."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             will_remain_onstudy=YES
@@ -138,7 +138,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a negative mother who does not agree to stay in study for a year."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             will_remain_onstudy=NO
@@ -149,7 +149,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a negative mother with evidence."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
         )
@@ -159,7 +159,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a negative mother with no evidence and test not done."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=NO,
             registered_subject=self.registered_subject,
             rapid_test_done=NO,
@@ -170,7 +170,7 @@ class TestAntenatalEnroll(TestCase):
         """Test for a positive mother with no evidence and gestation 37 weeks."""
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=NO,
             registered_subject=self.registered_subject,
             rapid_test_done=NO,
@@ -187,7 +187,7 @@ class TestAntenatalEnroll(TestCase):
     def test_cannot_change_rapid_test_date(self):
         antenatal = AntenatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=NO,
             valid_regimen=NOT_APPLICABLE,
             valid_regimen_duration=NOT_APPLICABLE,
@@ -251,7 +251,7 @@ class TestAntenatalEnroll(TestCase):
             evidence_hiv_status=NOT_APPLICABLE,
             valid_regimen=NOT_APPLICABLE,
             valid_regimen_duration=NOT_APPLICABLE,
-            verbal_hiv_status='UNK',
+            current_hiv_status=UNKNOWN,
             rapid_test_done=YES,
             registered_subject=self.registered_subject,
             gestation_wks=37

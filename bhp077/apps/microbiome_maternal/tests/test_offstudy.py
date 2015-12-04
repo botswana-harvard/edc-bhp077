@@ -62,7 +62,7 @@ class TestOffStudy(TestCase):
     def test_offstudy1(self):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES
         )
         appointment = Appointment.objects.get(
@@ -78,7 +78,7 @@ class TestOffStudy(TestCase):
     def test_offstudy2(self):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES
         )
         appointment = Appointment.objects.get(
@@ -95,7 +95,7 @@ class TestOffStudy(TestCase):
     def test_offstudy3(self):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
         )
         appointment = Appointment.objects.get(
@@ -113,7 +113,7 @@ class TestOffStudy(TestCase):
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
         )
         appointment = Appointment.objects.get(
@@ -134,7 +134,7 @@ class TestOffStudy(TestCase):
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=NEG,
+            current_hiv_status=NEG,
             evidence_hiv_status=YES,
         )
         appointment = Appointment.objects.get(

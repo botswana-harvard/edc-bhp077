@@ -97,13 +97,13 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
         try:
             return PostnatalEnrollment.objects.get(
                 registered_subject=self.appointment.registered_subject,
-                verbal_hiv_status=POS,
+                current_hiv_status=POS,
                 evidence_hiv_status=YES)
         except PostnatalEnrollment.DoesNotExist:
             try:
                 return AntenatalEnrollment.objects.get(
                     registered_subject=self.appointment.registered_subject,
-                    verbal_hiv_status=POS,
+                    current_hiv_status=POS,
                     evidence_hiv_status=YES)
             except AntenatalEnrollment.DoesNotExist:
                 pass

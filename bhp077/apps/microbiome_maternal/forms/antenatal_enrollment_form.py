@@ -48,7 +48,7 @@ class AntenatalEnrollmentForm(BaseEnrollmentForm):
                 raise forms.ValidationError("Participant just delivered, fill postnatal instead.")
 
     def validate_create_rapid_tests(self, cleaned_data, instance):
-        if instance.verbal_hiv_status == NEG:
+        if instance.current_hiv_status == NEG:
             if instance.rapid_test_required:
                 if cleaned_data.get('rapid_test_done') == NO:
                     raise forms.ValidationError(

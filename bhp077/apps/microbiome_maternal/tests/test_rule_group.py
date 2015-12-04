@@ -61,7 +61,7 @@ class TestRuleGroup(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             will_breastfeed=YES,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
             valid_regimen=YES,
         )
@@ -81,7 +81,7 @@ class TestRuleGroup(TestCase):
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
         )
         visit_codes = [['1000M', ['maternalarvhistory', 'maternalarvpreg']]]
@@ -127,7 +127,7 @@ class TestRuleGroup(TestCase):
         """
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            verbal_hiv_status=POS,
+            current_hiv_status=POS,
             evidence_hiv_status=YES,
         )
         visit_codes = [

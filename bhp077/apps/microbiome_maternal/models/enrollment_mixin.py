@@ -67,7 +67,7 @@ class EnrollmentMixin(models.Model):
         null=True,
         blank=True)
 
-    verbal_hiv_status = models.CharField(
+    current_hiv_status = models.CharField(
         verbose_name="What is your current HIV status?",
         choices=POS_NEG_UNTESTED_REFUSAL,
         max_length=30,
@@ -111,7 +111,7 @@ class EnrollmentMixin(models.Model):
         default=NOT_APPLICABLE,
         max_length=15,
         help_text=(
-            'Remember, rapid test is for HIV -VE, UNTESTED, UNKNOWN, REFUSED-to-ANSWER verbal responses'))
+            'Remember, rapid test is for NEG, UNTESTED, UNKNOWN and Don\'t want to answer.'))
 
     rapid_test_date = models.DateField(
         verbose_name="Date of rapid test",
