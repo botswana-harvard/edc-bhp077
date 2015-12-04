@@ -64,8 +64,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_revision',
-    # EDC
     'edc_base',
+    'edc_consent',
+    'edc_constants',
+    'edc_call_manager',
+    # EDC
     'edc',
     'edc.apps.app_configuration',
     'edc.core.identifier',
@@ -126,10 +129,6 @@ INSTALLED_APPS = (
     'edc.map',
     'edc.lab.lab_packing',
     'edc.lab.lab_profile',
-    'getresults_identifier',
-    'edc_consent',
-    'edc_constants',
-    'edc_call_manager',
     # LIS
     'lis.base.model',
     'lis.labeling',
