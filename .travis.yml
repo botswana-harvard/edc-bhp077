@@ -16,6 +16,7 @@ before_install:
     - sleep 3 # give xvfb some time to start
 
 install:
+  - pip install --upgrade pip
   - pip install -q Django==$DJANGO_VERSION --use-mirrors
   - pip install flake8 --use-mirrors
   - pip install coveralls --use-mirrors
