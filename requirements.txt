@@ -7,3 +7,4 @@ factory-boy
 -e git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc_constants
 -e git+https://github.com/botswana-harvard/edc-base@develop#egg=edc_base
 -e git+https://github.com/botswana-harvard/edc-locator.git@develop#egg=edc_locator
+-e git+https://github.com/botswana-harvard/edc-call-manager.git@develop#egg=edc_call_manager

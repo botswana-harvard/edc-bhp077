@@ -1,29 +1,22 @@
 from django.test import TestCase
 from django.utils import timezone
-from datetime import date
 
-from edc.subject.registration.models import RegisteredSubject
-from edc.entry_meta_data.models import ScheduledEntryMetaData
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
+from edc_constants.constants import YES, NEG
 
-from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import \
-    (MaternalEligibilityFactory, AntenatalEnrollmentFactory,
-    MaternalVisitFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.tests.factories import\
-    (PostnatalEnrollmentFactory, SexualReproductiveHealthFactory, MaternalOffStudyFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 from bhp077.apps.microbiome_maternal.forms import MaternalObstericalHistoryForm
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+from bhp077.apps.microbiome_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 
 
 class TestMaternalObstericalHistoryForm(TestCase):
@@ -149,7 +142,7 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.data['lost_before_24wks'] = 0
         self.data['lost_after_24wks'] = 0
         mob = MaternalObstericalHistoryForm(data=self.data)
-        self.assertIn(u"You indicated previous pregancies were 1. Number of pregnancies at or after 24 weeks,"
+        self.assertIn("You indicated previous pregancies were 1. Number of pregnancies at or after 24 weeks,"
                       "number of living children,number of children died after 5 year CANNOT all be zero.",
                       mob.errors.get('__all__'))
 
@@ -157,29 +150,34 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.data['prev_pregnancies'] = 2
         self.data['pregs_24wks_or_more'] = 3
         mob = MaternalObstericalHistoryForm(data=self.data)
-        self.assertIn(u"Number of pregnancies least 24 weeks cannot be greater than previous pregnancies.", mob.errors.get('__all__'))
- 
+        self.assertIn(
+            "Number of pregnancies least 24 weeks cannot be greater than previous pregnancies.",
+            mob.errors.get('__all__'))
+
     def test_lost_before_24wks_grt_prev_preg(self):
         self.data['prev_pregnancies'] = 2
         self.data['lost_before_24wks'] = 3
         mob = MaternalObstericalHistoryForm(data=self.data)
-        self.assertIn(u"Number of pregnancies lost before 24 weeks cannot be greater than previous pregnancies.", mob.errors.get('__all__'))
- 
+        self.assertIn(
+            "Number of pregnancies lost before 24 weeks cannot be greater than previous pregnancies.",
+            mob.errors.get('__all__'))
+
     def test_lost_after_24wks_grt_prev_preg(self):
         self.data['prev_pregnancies'] = 2
         self.data['pregs_24wks_or_more'] = 1
         self.data['lost_before_24wks'] = 1
         self.data['lost_after_24wks'] = 3
         mob = MaternalObstericalHistoryForm(data=self.data)
-        self.assertIn(u"Number of pregnancies lost at or after 24 weeks gestation cannot be greater "
-                      "than number of previous pregnancies or number of pregnancies at least 24 weeks.", mob.errors.get('__all__'))
- 
+        self.assertIn("Number of pregnancies lost at or after 24 weeks gestation cannot be greater "
+                      "than number of previous pregnancies or number of pregnancies at least 24 weeks.",
+                      mob.errors.get('__all__'))
+
     def test_pregs_24wks_or_more_plus_lost_before_24wks_grt_prev_pregnancies(self):
         self.data['prev_pregnancies'] = 3
         self.data['pregs_24wks_or_more'] = 1
         self.data['lost_before_24wks'] = 1
         self.data['lost_after_24wks'] = 1
         mob = MaternalObstericalHistoryForm(data=self.data)
-        self.assertIn(u"The sum of Number of pregnancies at least 24 weeks and "
+        self.assertIn("The sum of Number of pregnancies at least 24 weeks and "
                       "number of pregnancies lost before 24 weeks gestation. must be equal to "
                       "number of previous pregnancies for this participant.", mob.errors.get('__all__'))
