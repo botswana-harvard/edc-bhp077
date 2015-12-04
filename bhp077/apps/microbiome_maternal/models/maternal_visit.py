@@ -131,7 +131,7 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
                 for model_name in ['maternalarvpost', 'maternalarvpostadh']:
                     self.update_scheduled_entry_meta_data('microbiome_maternal', model_name)
-                self.update_requistion_entry_meta_data('microbiome_lab', 'maternalrequisition', 'Viral Load')
+            self.update_requistion_entry_meta_data('microbiome_lab', 'maternalrequisition', 'Viral Load')
 
         if self.hiv_status_rapid_test_neg:
             if self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
