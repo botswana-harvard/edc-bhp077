@@ -57,6 +57,9 @@ class TestInfantStoolCollection(TestCase):
             registered_subject=infant_registered_subject,
             visit_definition__code='2000')
         self.infant_visit = InfantVisitFactory(appointment=self.appointment)
+        self.infant_requisition = InfantRequistionFactory(
+            infant_visit=self.infant_visit,
+            panel='')
         self.data = {
             'report_datetime': timezone.now(),
             'infant_visit': self.infant_visit.id,

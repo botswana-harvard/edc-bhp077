@@ -43,7 +43,6 @@ class InfantStoolCollection(InfantScheduledVisitModel):
         choices=STOOL_COLLECTION_TIME,
         default=NOT_APPLICABLE,
         max_length=20,
-        help_text=(""),
     )
 
     stool_colection_time = models.IntegerField(
@@ -59,7 +58,6 @@ class InfantStoolCollection(InfantScheduledVisitModel):
         choices=STOOL_STORED,
         default=NOT_APPLICABLE,
         max_length=40,
-        help_text=("")
     )
 
     past_diarrhea = models.CharField(
@@ -78,7 +76,6 @@ class InfantStoolCollection(InfantScheduledVisitModel):
         max_length=15,
         choices=YES_NO_NA,
         default=NOT_APPLICABLE,
-        help_text="",
     )
 
     antibiotics_7days = models.CharField(
@@ -96,15 +93,14 @@ class InfantStoolCollection(InfantScheduledVisitModel):
         max_length=15,
         choices=YES_NO_NA,
         default=NOT_APPLICABLE,
-        help_text="",
     )
-
-    history = AuditTrail()
 
     objects = models.Manager()
 
+    history = AuditTrail()
+
     def __unicode__(self):
-        return "%s" % (self.infant_visit)
+        return unicode(self.infant_visit)
 
     class Meta:
         app_label = "microbiome_infant"

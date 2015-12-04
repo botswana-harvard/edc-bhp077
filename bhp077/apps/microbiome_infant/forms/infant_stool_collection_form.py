@@ -3,12 +3,12 @@ from django import forms
 from edc_constants.constants import YES, NOT_APPLICABLE, NO
 
 from bhp077.apps.microbiome_lab.models import InfantRequisition
+from bhp077.apps.microbiome_infant.constants import REALTIME
 
 from ..constants import BROUGHT
 from ..models import InfantStoolCollection
 
 from .base_infant_model_form import BaseInfantModelForm
-from bhp077.apps.microbiome_infant.constants import REALTIME
 
 
 class InfantStoolCollectionForm(BaseInfantModelForm):
@@ -24,8 +24,9 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
     def validate_sample_obtained(self):
         cleaned_data = self.cleaned_data
         try:
-            requisition = InfantRequisition.objects.get(infant_visit=cleaned_data.get('infant_visit'),
-                                                        panel__name='Stool storage')
+            requisition = InfantRequisition.objects.get(
+                infant_visit=cleaned_data.get('infant_visit'),
+                panel__name='Stool storage')
             if requisition.is_drawn == YES and cleaned_data.get('sample_obtained') == NO:
                 raise forms.ValidationError(
                     "Stool requisition is drawn with id {}. Sample obtained cannot be {}".format(
