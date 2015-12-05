@@ -2,11 +2,10 @@ from django import forms
 
 from ..models import AntenatalEnrollment, PostnatalEnrollment
 
-from edc_constants.constants import NEG, NO
-from ..forms import MyBaseEnrollmentForm
+from .base_enrollment_form import BaseEnrollmentForm
 
 
-class AntenatalEnrollmentForm(MyBaseEnrollmentForm):
+class AntenatalEnrollmentForm(BaseEnrollmentForm):
 
     def clean(self):
         cleaned_data = super(AntenatalEnrollmentForm, self).clean()
@@ -46,13 +45,6 @@ class AntenatalEnrollmentForm(MyBaseEnrollmentForm):
         if instance.maternal_eligibility_pregnant_currently_delivered_yes():
             if not post_natal:
                 raise forms.ValidationError("Participant just delivered, fill postnatal instead.")
-
-    def validate_create_rapid_tests(self, cleaned_data, instance):
-        if instance.current_hiv_status == NEG:
-            if instance.rapid_test_required:
-                if cleaned_data.get('rapid_test_done') == NO:
-                    raise forms.ValidationError(
-                        "Rapid test is required. Participant tested >=32 weeks ago.")
 
     class Meta:
         model = AntenatalEnrollment
