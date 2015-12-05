@@ -17,7 +17,7 @@ class MyBaseEnrollmentForm(BaseEnrollmentForm):
                         "Rapid test is required. Participant tested >=32 weeks ago.")
 
 
-class PostnatalEnrollmentForm(BaseEnrollmentForm):
+class PostnatalEnrollmentForm(MyBaseEnrollmentForm):
 
     def clean(self):
 
