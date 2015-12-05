@@ -10,7 +10,7 @@ class SpecimenConsentForm(ModelForm):
 
     def clean(self):
         cleaned_data = super(SpecimenConsentForm, self).clean()
-        self.validate_may_store_sample()
+        self.validate_may_store_specimens()
         if cleaned_data.get('is_literate', None) == NO and not cleaned_data.get('witness_name', None):
             raise forms.ValidationError(
                 'You wrote subject is illiterate. Please provide the name of a witness here '
@@ -23,7 +23,7 @@ class SpecimenConsentForm(ModelForm):
                 'understand the purpose')
         return cleaned_data
 
-    def validate_may_store_samples(self):
+    def validate_may_store_specimens(self):
         cleaned_data = self.cleaned_data
         primary_consent = MaternalConsent.objects.filter(
             registered_subject__subject_identifier=cleaned_data.get('registered_subject').subject_identifier)
