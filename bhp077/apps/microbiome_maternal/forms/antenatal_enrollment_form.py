@@ -26,7 +26,7 @@ class AntenatalEnrollmentForm(MyBaseEnrollmentForm):
         else:
             instance = AntenatalEnrollment(**cleaned_data)
         self.validate_create_antenal_enrollment(instance, cleaned_data, post_natal)
-        self.validate_create_rapid_tests(cleaned_data, instance)
+        self.validate_create_rapid_tests(instance)
 
         return cleaned_data
 

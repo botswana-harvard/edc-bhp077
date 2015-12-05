@@ -8,16 +8,10 @@ from .base_enrollment_form import BaseEnrollmentForm
 
 
 class MyBaseEnrollmentForm(BaseEnrollmentForm):
-
-    def validate_create_rapid_tests(self, cleaned_data, instance):
-        if instance.current_hiv_status == NEG:
-            if instance.rapid_test_required:
-                if cleaned_data.get('rapid_test_done') == NO:
-                    raise forms.ValidationError(
-                        "Rapid test is required. Participant tested >=32 weeks ago.")
+    pass
 
 
-class PostnatalEnrollmentForm(MyBaseEnrollmentForm):
+class PostnatalEnrollmentForm(BaseEnrollmentForm):
 
     def clean(self):
 
@@ -36,7 +30,7 @@ class PostnatalEnrollmentForm(MyBaseEnrollmentForm):
         self.validate_delivery()
         self.validate_hiv_status(ant)
         self.validate_create_postnatal_enrollment(ant, instance)
-        self.validate_create_rapid_tests(cleaned_data, instance)
+        self.validate_create_rapid_tests(instance)
         return cleaned_data
 
     def validate_ante_eligibility(self, ant):

@@ -21,6 +21,14 @@ class BaseEnrollmentForm(BaseModelForm):
         self.rapid_test_date_and_result()
         return cleaned_data
 
+    def validate_create_rapid_tests(self, instance):
+        cleaned_data = self.cleaned_data
+        if instance.current_hiv_status == NEG:
+            if instance.rapid_test_required:
+                if cleaned_data.get('rapid_test_done') == NO:
+                    raise forms.ValidationError(
+                        "Rapid test is required. Participant tested >=32 weeks ago.")
+
     def clean_report_datetime(self):
         report_datetime = self.cleaned_data['report_datetime']
         maternal_consent = self.get_consent_or_raise(MaternalConsent)
