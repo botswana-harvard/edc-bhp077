@@ -2,11 +2,11 @@ from django import forms
 
 from ..models import AntenatalEnrollment, PostnatalEnrollment
 
-from .base_enrollment_form import BaseEnrollmentForm
 from edc_constants.constants import NEG, NO
+from ..forms import MyBaseEnrollmentForm
 
 
-class AntenatalEnrollmentForm(BaseEnrollmentForm):
+class AntenatalEnrollmentForm(MyBaseEnrollmentForm):
 
     def clean(self):
         cleaned_data = super(AntenatalEnrollmentForm, self).clean()
