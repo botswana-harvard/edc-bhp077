@@ -30,7 +30,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
 
     def exclude_fields(self):
         exclude = ['is_diabetic', 'on_tb_tx', 'on_hypertension_tx', 'will_breastfeed',
-                   'will_remain_onstudy', 'week32_test', 'date_of_test', 'week32_result', 'current_hiv_status',
+                   'will_remain_onstudy', 'week32_test', 'week32_test_date', 'week32_result', 'current_hiv_status',
                    'valid_regimen', 'valid_regimen_duration', 'rapid_test_done', 'rapid_test_date',
                    'rapid_test_result', 'valid_regimen', 'evidence_hiv_status']
         return exclude
@@ -51,7 +51,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
         form.base_fields['will_breastfeed'].initial = antenatal.will_breastfeed
         form.base_fields['will_remain_onstudy'].initial = antenatal.will_remain_onstudy
         form.base_fields['week32_test'].initial = antenatal.week32_test
-        form.base_fields['date_of_test'].initial = antenatal.date_of_test
+        form.base_fields['week32_test_date'].initial = antenatal.week32_test_date
         form.base_fields['week32_result'].initial = antenatal.week32_result
         form.base_fields['current_hiv_status'].initial = antenatal.current_hiv_status
         form.base_fields['valid_regimen'].initial = antenatal.valid_regimen

@@ -64,6 +64,7 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
             postnatal_enrollment.will_breastfeed = self.will_breastfeed
             postnatal_enrollment.will_remain_onstudy = self.will_remain_onstudy
             postnatal_enrollment.week32_result = self.week32_result
+            postnatal_enrollment.week32_test_date = self.week32_test_date
             postnatal_enrollment.current_hiv_status = self.current_hiv_status
             postnatal_enrollment.valid_regimen = self.valid_regimen
             postnatal_enrollment.evidence_hiv_status = self.evidence_hiv_status
