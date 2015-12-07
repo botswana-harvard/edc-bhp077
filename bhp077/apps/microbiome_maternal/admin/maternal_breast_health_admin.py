@@ -16,5 +16,6 @@ class MaternalBreastHealthAdmin(BaseMaternalModelAdmin):
         "mastitis": admin.VERTICAL,
         "has_lesions": admin.VERTICAL,
         "lesions": admin.VERTICAL,
+        "advised_stop_bf": admin.VERTICAL,
     }
 admin.site.register(MaternalBreastHealth, MaternalBreastHealthAdmin)

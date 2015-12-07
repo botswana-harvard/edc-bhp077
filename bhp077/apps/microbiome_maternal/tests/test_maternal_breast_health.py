@@ -59,7 +59,7 @@ class TestMaternalBreastHealth(TestCase):
         }
 
     def test_breastfeeding_1(self):
-        """Assert that if mother has been breastfeeding, then expected to anser questions on mastitis"""
+        """Assert that if mother has been breastfeeding, then expected to answer questions on mastitis"""
         self.data['breast_feeding'] = YES
         form = MaternalBreastHealthForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
@@ -67,16 +67,19 @@ class TestMaternalBreastHealth(TestCase):
                       errors)
 
     def test_breastfeeding_2(self):
-        """Assert that if mother has been breastfeeding, then expected to anser questions on mastitis"""
-        self.data['has_mastitis'] = YES
+        """Assert that if mother has been breastfeeding, then expected to answer questions on lesions"""
+        self.data['breast_feeding'] = YES
+        self.data['has_mastitis'] = NO
         form = MaternalBreastHealthForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('Has mastitis should be Not Applicable.', errors)
+        self.assertIn("You indicated that the mother has been breastfeeding. Has lesions CANNOT be Not Applicable",
+                      errors)
 
     def test_mastitis_1(self):
         """Assert that if mother has mastitis, then expected to indicate where"""
         self.data['breast_feeding'] = YES
         self.data['has_mastitis'] = YES
+        self.data['has_lesions'] = NO
         form = MaternalBreastHealthForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You indicated the mother has mastitis. You cannot answer Not applicable'
@@ -87,6 +90,7 @@ class TestMaternalBreastHealth(TestCase):
         self.data['breast_feeding'] = YES
         self.data['has_mastitis'] = NO
         self.data['mastitis'] = 'right breast'
+        self.data['has_lesions'] = NO
         form = MaternalBreastHealthForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You stated that mother did not have mastitis, yet indicated '
@@ -111,3 +115,34 @@ class TestMaternalBreastHealth(TestCase):
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You stated that mother does not have lesions, yet indicated where she '
                       'has lesions. Please correct', errors)
+
+    def test_advised_stop_bf_1(self):
+        """Assert that if has_mastitis is YES then advised_stop_bf CANT be NOT_APPLICABLE"""
+        self.data['breast_feeding'] = YES
+        self.data['has_mastitis'] = YES
+        self.data['has_lesions'] = NO
+        self.data['mastitis'] = 'right breast'
+        form = MaternalBreastHealthForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('You indicated that participant has mastitis or has lesions. Was '
+                      'participant advised to stop breast feeding CANNOT be Not Applicable.', errors)
+
+    def test_advised_stop_bf_2(self):
+        """Assert that if has_lesions is YES then advised_stop_bf CANT be NOT_APPLICABLE"""
+        self.data['breast_feeding'] = YES
+        self.data['has_mastitis'] = NO
+        self.data['has_lesions'] = YES
+        self.data['lesions'] = 'right breast'
+        form = MaternalBreastHealthForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('You indicated that participant has mastitis or has lesions. Was '
+                      'participant advised to stop breast feeding CANNOT be Not Applicable.', errors)
+
+    def test_advised_stop_bf_3(self):
+        """Assert that if mother has not been breast-feeding then advised_stop_bf CANT be YES"""
+        self.data['breast_feeding'] = NO
+        self.data['advised_stop_bf'] = YES
+        form = MaternalBreastHealthForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('You indicated that the mother has not been breast feeding, question on whether'
+                      ' she was advised to stop breast feeding should be Not Applicable.', errors)

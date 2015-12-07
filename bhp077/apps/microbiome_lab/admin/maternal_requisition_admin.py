@@ -11,6 +11,12 @@ from ..forms import MaternalRequisitionForm
 
 
 class MaternalRequisitionAdmin(BaseRequisitionModelAdmin):
+    def __init__(self, *args, **kwargs):
+        super(MaternalRequisitionAdmin, self).__init__(*args, **kwargs)
+        self.list_filter = list(self.list_filter)
+        self.list_filter = tuple(self.list_filter)
+        for field in ['test_code', ]:
+            self.fields.remove(field)
 
     visit_model = MaternalVisit
     visit_attr = 'maternal_visit'
@@ -30,11 +36,6 @@ class MaternalRequisitionAdmin(BaseRequisitionModelAdmin):
         'priority',
         'comments',
     )
-
-    def __init__(self, *args, **kwargs):
-        super(MaternalRequisitionAdmin, self).__init__(*args, **kwargs)
-        self.list_filter = list(self.list_filter)
-        self.list_filter = tuple(self.list_filter)
 
     form = MaternalRequisitionForm
     visit_model = MaternalVisit

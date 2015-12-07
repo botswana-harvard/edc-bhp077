@@ -12,6 +12,7 @@ from .test_maternal_medical_history import TestMaternalMedicalHistoryForm
 from .test_maternal_obsterical_history import TestMaternalObstericalHistoryForm
 from .test_maternal_post_fu_med import TestMaternalPostFuMedItems
 from .test_maternal_visit import TestMaternalVisit
+from .test_maternal_arv_history import TestMaternalArvHistory
 from .test_offstudy import TestOffStudy
 from .test_rapid_test_form import TestRapidTestForm
 from .test_rule_group import TestRuleGroup

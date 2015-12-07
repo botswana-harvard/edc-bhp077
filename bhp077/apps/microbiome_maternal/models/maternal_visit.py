@@ -1,5 +1,6 @@
 from django.db import models
 
+from edc.entry_meta_data.models import RequisitionMetaData
 from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
@@ -48,23 +49,24 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
         """Updates entry meta data if subject is ineligible for Ante/Post natal enrollment."""
         if PostnatalEnrollment.objects.filter(registered_subject=self.appointment.registered_subject).exists():
             if not self.postnatal_enrollment.postnatal_eligible:
-                self.remove_scheduled_forms(self.appointment)
+                self.maternal_visit_reason_offstudy(self.appointment)
         else:
             antenatal = AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
             if not antenatal.antenatal_eligible:
-                self.remove_scheduled_forms(self.appointment)
+                self.maternal_visit_reason_offstudy(self.appointment)
         if self.reason == UNSCHEDULED:
             self.meta_data_visit_unscheduled(self.appointment)
 
-    def remove_scheduled_forms(self, appointment):
+    def maternal_visit_reason_offstudy(self, appointment):
         """Removes meta data for scheduled forms except for off study."""
         meta_data = self.query_scheduled_meta_data(appointment, appointment.registered_subject)
         for meta in meta_data:
             if not meta.entry.model_name == 'maternaloffstudy':
                 meta.delete()
         self.remove_scheduled_requisition(
-            self.query_requisition_meta_data(
-                self.appointment, self.appointment.registered_subject))
+            RequisitionMetaData.objects.filter(appointment=appointment,
+                                               registered_subject=appointment.registered_subject)
+        )
 
     def get_visit_reason_no_follow_up_choices(self):
         """ Returns the visit reasons that do not imply any data

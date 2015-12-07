@@ -8,7 +8,6 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc.subject.code_lists.models import WcsDxAdult
 from edc_constants.choices import YES, NO
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
@@ -50,7 +49,7 @@ class TestMaternalArvHistory(TestCase):
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
-            'haart_start_date': timezone.now(),
+            'haart_start_date': timezone.now() - timezone.timedelta(weeks=7),
             'is_date_estimated': '-',
             'preg_on_haart': YES,
             'haart_changes': 0,
@@ -59,9 +58,10 @@ class TestMaternalArvHistory(TestCase):
         }
 
     def test_arv_interrupt_1(self):
-        self.data['prior_preg'] = 'interruption never restarted'
+        """Assert that if was not still on ARV then 'interruption never restarted' is not a valid option."""
         self.data['haart_start_date'] = date(2015, 04, 10)
         self.data['preg_on_haart'] = YES
+        self.data['prior_preg'] = 'interruption never restarted'
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn("You indicated that the mother was still on tripple ARV when "
@@ -69,18 +69,40 @@ class TestMaternalArvHistory(TestCase):
                       "and never restarted.", errors)
 
     def test_arv_interrupt_2(self):
-        self.data['prior_preg'] = 'interruption never restarted'
+        """Assert that if was not still on ARV then 'Had treatment interruption but restarted' is not a valid option."""
+        self.data['preg_on_haart'] = NO
+        self.data['prior_preg'] = 'Had treatment interruption but restarted'
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You indicated that the mother was still on tripple ARV when she got pregnant', errors)
+        self.assertIn('You indicated that the mother was NOT still on tripple ARV when she got pregnant. Yet stated '
+                      'Had treatment interruption but restarted', errors)
+
+    def test_arv_interrupt_3(self):
+        """Assert that if was not still on ARV then 'Received continuos HAART from the time she started'
+           is not a valid option."""
+        self.data['preg_on_haart'] = NO
+        self.data['prior_preg'] = 'Received continuos HAART from the time she started'
+        form = MaternalArvHistoryForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('You indicated that the mother was NOT still on tripple ARV when she got pregnant. Yet stated '
+                      'Received continuos HAART from the time she started', errors)
+
+    def test_arv_interrupt_4(self):
+        """Assert that if was not still on ARV only valid answer is 'interrrupted and never restarted'"""
+        self.data['preg_on_haart'] = NO
+        self.data['prior_preg'] = 'interruption never restarted'
+        form = MaternalArvHistoryForm(data=self.data)
+        self.assertTrue(form.is_valid())
 
     def test_haart_start_date(self):
+        """ARV start date should be seex weeks prior to today"""
         self.data['haart_start_date'] = timezone.now()
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn("ARV start date (question 3) must be six weeks prior to today's date or greater.", errors)
 
     def test_haart_start_date_2(self):
+        """Start date of ARVs CANNOT be before DOB"""
         self.data['haart_start_date'] = date(1987, 10, 10)
         self.data['report_datetime'] = datetime.today()
         form = MaternalArvHistoryForm(data=self.data)
