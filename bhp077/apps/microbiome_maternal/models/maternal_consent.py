@@ -1,6 +1,8 @@
 from django.db import models
+from django.conf import settings
 
 from edc.core.bhp_variables.models import StudySite
+from edc.core.bhp_variables.utils import default_study_site
 from edc.core.identifier.classes import SubjectIdentifier
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
@@ -14,6 +16,7 @@ from edc_consent.models.fields.bw import IdentityFieldsMixin
 from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
+
 
 from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
@@ -29,7 +32,7 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
-    study_site = models.ForeignKey(StudySite)
+    study_site = models.ForeignKey(StudySite, default=lambda: default_study_site('site_code', settings.SITE_CODE))
 
     recruit_source = models.CharField(
         max_length=75,
