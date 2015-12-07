@@ -35,7 +35,9 @@ class MaternalRequisitionForm(BaseRequisitionForm):
                 raise forms.ValidationError('Panel {} can only be tube therefore collection type is swab. '
                                             'Please correct.'.format(cleaned_data.get('panel').name))
         maternal_visit = MaternalVisit.objects.get(
-            appointment__registered_subject=cleaned_data.get('maternal_visit').appointment.registered_subject)
+            appointment__registered_subject=cleaned_data.get('maternal_visit').appointment.registered_subject,
+            appointment=cleaned_data.get('maternal_visit').appointment,
+            appointment__visit_instance=cleaned_data.get('maternal_visit').appointment.visit_instance)
         if maternal_visit:
             if ((maternal_visit.reason == SCHEDULED or maternal_visit.reason == UNSCHEDULED) and
                     cleaned_data.get('reason_not_drawn') == 'absent'):

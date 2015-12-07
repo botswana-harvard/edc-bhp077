@@ -25,7 +25,7 @@ class MaternalArvHistoryForm(BaseMaternalModelForm):
                     'Please correct.'.format(cleaned_data.get('prior_preg')))
         else:
             if cleaned_data.get('prior_preg') == 'interruption never restarted':
-                raise forms.ValidationError('You indicated thagitt the mother was still on tripple ARV when '
+                raise forms.ValidationError('You indicated that the mother was still on tripple ARV when '
                                             'she got pregnant, yet you indicated that ARVs were interrupted '
                                             'and never restarted.')
 
