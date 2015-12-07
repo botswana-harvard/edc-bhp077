@@ -169,30 +169,30 @@ class TestPostnatalEnroll(TestCase):
         )
         self.assertTrue(postnatal_enrollment.postnatal_eligible)
 
-    def test_gestation_to_birth_wks_below_37(self):
+    def test_gestation_wks_delivered_below_37(self):
         """Test for a subject whose gestation before birth is below 37."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            gestation_to_birth_wks=36
+            gestation_wks_delivered=36
         )
         self.assertFalse(postnatal_enrollment.postnatal_eligible)
 
-    def test_gestation_to_birth_wks_equal_37(self):
+    def test_gestation_wks_delivered_equal_37(self):
         """Test for a subject whose gestation before birth is equals to 37."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            gestation_to_birth_wks=37
+            gestation_wks_delivered=37
         )
         self.assertTrue(postnatal_enrollment.postnatal_eligible)
 
-    def test_gestation_to_birth_wks_above_37(self):
+    def test_gestation_wks_delivered_above_37(self):
         """Test for a subject whose gestation before birth is above 37."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            gestation_to_birth_wks=38
+            gestation_wks_delivered=38
         )
         self.assertTrue(postnatal_enrollment.postnatal_eligible)
 

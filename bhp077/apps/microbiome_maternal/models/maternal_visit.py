@@ -16,7 +16,6 @@ from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import Antenata
 from bhp077.apps.microbiome.classes import MetaDataMixin
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
-from ..classes import EnrollmentStatusHelper
 
 
 class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
@@ -51,13 +50,16 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
 
     def update_entry_meta_data(self):
         """Updates entry meta data if subject is ineligible for Ante/Post natal enrollment."""
-        if PostnatalEnrollment.objects.filter(registered_subject=self.appointment.registered_subject).exists():
-            if not self.postnatal_enrollment.postnatal_eligible:
-                self.maternal_visit_reason_offstudy(self.appointment)
-        else:
-            antenatal = AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
-            if not antenatal.antenatal_eligible:
-                self.maternal_visit_reason_offstudy(self.appointment)
+        try:
+            postnatal_enrollment = PostnatalEnrollment.objects.get(
+                registered_subject=self.appointment.registered_subject)
+            if not postnatal_enrollment.is_eligible:
+                self.remove_scheduled_forms(self.appointment)
+        except PostnatalEnrollment.DoesNotExist:
+            antenatal_enrollment = AntenatalEnrollment.objects.get(
+                registered_subject=self.appointment.registered_subject)
+            if not antenatal_enrollment.is_eligible:
+                self.remove_scheduled_forms(self.appointment)
         if self.reason == UNSCHEDULED:
             self.meta_data_visit_unscheduled(self.appointment)
 
@@ -166,21 +168,20 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
                         return False
         return is_off
 
-    @property
-    def is_eligible(self):
-        enrollment = EnrollmentStatusHelper(registered_subject=self.appointment.registered_subject)
-        return enrollment.is_eligible
-
     def check_if_eligible(self):
 
-        if not PostnatalEnrollment.objects.filter(registered_subject=self.appointment.registered_subject).exists():
-            antenatal = AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
-            self.reason = 'off study' if not antenatal.antenatal_eligible else self.reason
+        if not PostnatalEnrollment.objects.filter(
+                registered_subject=self.appointment.registered_subject).exists():
+            antenatal_enrollment = AntenatalEnrollment.objects.get(
+                registered_subject=self.appointment.registered_subject)
+            self.reason = 'off study' if not antenatal_enrollment.is_eligible else self.reason
         else:
             self.create_additional_maternal_forms_meta()
 
     def create_additional_maternal_forms_meta(self):
-        self.reason = 'off study' if not self.postnatal_enrollment.postnatal_eligible else self.reason
+        postnatal_enrollment = PostnatalEnrollment.objects.get(
+            registered_subject=self.appointment.registered_subject)
+        self.reason = 'off study' if not postnatal_enrollment.is_eligible else self.reason
         if self.reason == 'off study':
             entry = Entry.objects.filter(
                 model_name='maternaloffstudy',
@@ -197,7 +198,7 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
                         registered_subject=self.appointment.registered_subject)
                 else:
                     scheduled_meta_data = scheduled_meta_data[0]
-                scheduled_meta_data.entry_status = 'NEW'
+                scheduled_meta_data.entry_status = NEW
                 scheduled_meta_data.save()
         if self.reason == 'death':
             entries = Entry.objects.filter(

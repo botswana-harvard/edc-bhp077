@@ -23,8 +23,12 @@ class InfantFuNewMed(InfantScheduledVisitModel):
                   "only report oral and intravenous meds",
     )
 
-    def __str__(self):
-        return "%s" % (self.infant_visit)
+    objects = models.Manager()
+
+    history = AuditTrail()
+
+    def __unicode__(self):
+        return unicode(self.infant_visit)
 
     class Meta:
         app_label = "microbiome_infant"
@@ -68,6 +72,9 @@ class InfantFuNewMedItems(BaseUuidModel):
 
     history = AuditTrail()
 
+    def __unicode__(self):
+        return unicode(self.get_visit())
+
     def get_visit(self):
         return self.infant_fu_med.get_visit()
 
@@ -76,9 +83,6 @@ class InfantFuNewMedItems(BaseUuidModel):
 
     def get_subject_identifier(self):
         return self.infant_fu_med.get_subject_identifier()
-
-    def __unicode__(self):
-        return unicode(self.get_visit())
 
     class Meta:
         app_label = "microbiome_infant"

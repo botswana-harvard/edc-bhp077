@@ -49,6 +49,10 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
         max_length=3,
         choices=YES_NO)
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     def __unicode__(self):
         return self.registered_subject.subject_identifier
 

@@ -11,7 +11,7 @@ from ..models import PostnatalEnrollment, AntenatalEnrollment
 class PostnatalEnrollmentAdmin(BaseModelAdmin):
 
     fields = [
-        'registered_subject', 'report_datetime', 'postpartum_days', 'vaginal_delivery', 'gestation_to_birth_wks',
+        'registered_subject', 'report_datetime', 'postpartum_days', 'vaginal_delivery', 'gestation_wks_delivered',
         'delivery_status', 'live_infants', 'is_diabetic', 'on_tb_tx', 'on_hypertension_tx',
         'will_breastfeed', 'will_remain_onstudy', 'week32_test', 'week32_test_date', 'week32_result',
         'current_hiv_status', 'evidence_hiv_status', 'valid_regimen', 'valid_regimen_duration', 'rapid_test_done',

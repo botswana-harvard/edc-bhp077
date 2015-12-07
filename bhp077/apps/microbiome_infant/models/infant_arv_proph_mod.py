@@ -1,11 +1,14 @@
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
+
 from .infant_arv_proph import InfantArvProph
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantArvProphMod(InfantScheduledVisitModel):
-    """ A model completed by the user on the infant's nvp or azt prophylaxis mods. """
+    """ A model completed by the user on the infant's nvp or azt prophylaxis modifications. """
+
     infant_arv_proph = models.ForeignKey(InfantArvProph)
 
     other_reason = models.CharField(
@@ -15,8 +18,12 @@ class InfantArvProphMod(InfantScheduledVisitModel):
         blank=True,
     )
 
-    def __str__(self):
-        return str(self.infant_arv_proph.infant_visit)
+    objects = models.Manager()
+
+    history = AuditTrail()
+
+    def __unicode__(self):
+        return unicode(self.infant_arv_proph.infant_visit)
 
     class Meta:
         app_label = "microbiome_infant"

@@ -10,6 +10,21 @@ from edc_constants.constants import NEW, KEYED
 
 class MetaDataMixin(object):
 
+    def query_scheduled_meta_data(self, appointment, registered_subject, entry=None):
+        try:
+            return ScheduledEntryMetaData.objects.get(
+                appointment=appointment, registered_subject=registered_subject, entry=entry)
+        except (ScheduledEntryMetaData.DoesNotExist, MultipleObjectsReturned):
+            return ScheduledEntryMetaData.objects.filter(
+                appointment=appointment, registered_subject=registered_subject)
+
+    def query_requisition_meta_data(self, appointment, registered_subject, lab_entry=None):
+        try:
+            return RequisitionMetaData.objects.get(
+                appointment=appointment, lab_entry=lab_entry, registered_subject=registered_subject)
+        except (RequisitionMetaData.DoesNotExist, MultipleObjectsReturned):
+            return RequisitionMetaData.objects.filter(appointment=appointment, registered_subject=registered_subject)
+
     def meta_data_visit_unscheduled(self, appointment):
         meta_data = self.query_scheduled_meta_data(appointment, appointment.registered_subject)
         self.remove_scheduled_forms(meta_data)
@@ -74,20 +89,6 @@ class MetaDataMixin(object):
         except Entry.DoesNotExist:
             return False
 
-    def query_scheduled_meta_data(self, appointment, registered_subject, entry=None):
-        try:
-            return ScheduledEntryMetaData.objects.get(
-                appointment=appointment, registered_subject=registered_subject, entry=entry)
-        except (ScheduledEntryMetaData.DoesNotExist, MultipleObjectsReturned):
-            return ScheduledEntryMetaData.objects.filter(
-                appointment=appointment, registered_subject=registered_subject)
-
-    def query_requisition_meta_data(self, appointment, registered_subject, lab_entry=None):
-        try:
-            return RequisitionMetaData.objects.get(
-                appointment=appointment, lab_entry=lab_entry, registered_subject=registered_subject)
-        except (RequisitionMetaData.DoesNotExist, MultipleObjectsReturned):
-            return RequisitionMetaData.objects.filter(appointment=appointment, registered_subject=registered_subject)
 
     def create_scheduled_meta_data(self, appointment, entry, registered_subject):
         appointment = self.check_instance(appointment)

@@ -26,10 +26,12 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         verbose_name="Is the child missing any vaccinations?",
         help_text="")
 
+    objects = models.Manager()
+
     history = AuditTrail()
 
-    def __str__(self):
-        return "%s" % (self.infant_visit)
+    def __unicode__(self):
+        return unicode(self.infant_visit)
 
     class Meta:
         app_label = "microbiome_infant"
@@ -66,11 +68,11 @@ class VaccinesReceived(BaseUuidModel):
 
     history = AuditTrail()
 
+    def __unicode__(self):
+        return unicode(self.infant_fu_immunizations)
+
     def get_visit(self):
         return self.infant_fu_immunizations.infant_visit
-
-    def __unicode__(self):
-        return "%s" % (self.infant_fu_immunizations)
 
     def get_report_datetime(self):
         return self.get_visit().get_report_datetime()
@@ -110,11 +112,11 @@ class VaccinesMissed(BaseUuidModel):
 
     history = AuditTrail()
 
+    def __unicode__(self):
+        return unicode(self.infant_fu_immunizations)
+
     def get_visit(self):
         return self.infant_fu_immunizations.infant_visit
-
-    def __unicode__(self):
-        return "%s" % (self.infant_fu_immunizations)
 
     def get_report_datetime(self):
         return self.get_visit().get_report_datetime()

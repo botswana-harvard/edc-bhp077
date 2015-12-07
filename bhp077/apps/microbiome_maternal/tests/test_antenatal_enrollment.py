@@ -43,7 +43,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             gestation_wks=35
         )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_gestation_wks_above_36_and_no_regimen(self):
         """Test for a positive mother not on a valid regimen but weeks of gestation above 36."""
@@ -55,7 +55,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             gestation_wks=37
         )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_is_diabetic(self):
         """Test for a positive mother on a valid regimen and a diabetic subject."""
@@ -66,7 +66,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             is_diabetic=YES
         )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_is_not_diabetic(self):
         """Test for a positive mother on a valid regimen and a diabetic subject."""
@@ -77,7 +77,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             is_diabetic=NO
         )
-        self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
+        self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_has_hyptertension(self):
         """Test for a positive mother on a valid regimen and has hypertension."""
@@ -88,7 +88,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             on_hypertension_tx=YES
         )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_has_no_hyptertension(self):
         """Test for a positive mother on a valid regimen and not hypertensive."""
@@ -99,7 +99,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             on_hypertension_tx=NO
         )
-        self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
+        self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_will_breastfeed(self):
         """Test for a negative mother who agrees to breastfeed for a year."""
@@ -110,7 +110,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             will_breastfeed=YES
         )
-        self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
+        self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_no_will_breastfeed(self):
         """Test for a negative mother who does not agree to breastfeed for a year."""
@@ -121,7 +121,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             will_breastfeed=NO
         )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_will_remain_onstudy(self):
         """Test for a negative mother who does agrees to stay in study a year."""
@@ -132,7 +132,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             will_remain_onstudy=YES
         )
-        self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
+        self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_not_will_remain_onstudy(self):
         """Test for a negative mother who does not agree to stay in study for a year."""
@@ -143,7 +143,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             will_remain_onstudy=NO
         )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_positive_with_evidence(self):
         """Test for a negative mother with evidence."""
@@ -153,7 +153,7 @@ class TestAntenatalEnroll(TestCase):
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
         )
-        self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
+        self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_positive_with_no_evidence_and_rapid_test_done(self):
         """Test for a negative mother with no evidence and test not done."""
@@ -164,7 +164,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             rapid_test_done=NO,
         )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_positive_with_no_evidence_and_gestation_37(self):
         """Test for a positive mother with no evidence and gestation 37 weeks."""
@@ -176,7 +176,7 @@ class TestAntenatalEnroll(TestCase):
             rapid_test_done=NO,
             gestation_wks=37,
         )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_fail_fill_antenatal_if_postnatal_filled(self):
         """Test that antenatal fails if filled after postnatal is completed."""
@@ -208,7 +208,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             gestation_wks=37
         )
-        self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
+        self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_mother_tested_at_32weeks_without_evidence(self):
         """Test for a mother tested at 32weeks without evidence"""
@@ -219,7 +219,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             gestation_wks=37
         )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_no_week32test_no_rapid_test(self):
         """Test for a mother who did not test at week 32 and does not do rapid test"""
@@ -231,7 +231,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             gestation_wks=37
         )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_no_week32test_does_rapid_test(self):
         """Test for a mother who did not test at week 32 and does a rapid test"""
@@ -242,7 +242,7 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             gestation_wks=37
         )
-        self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
+        self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_no_week32test_evidence_na(self):
         antenatal_enrollment = AntenatalEnrollmentFactory(
@@ -256,4 +256,4 @@ class TestAntenatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             gestation_wks=37
         )
-        self.assertTrue(antenatal_enrollment.eligible_for_postnatal)
+        self.assertTrue(antenatal_enrollment.is_eligible)

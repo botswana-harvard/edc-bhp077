@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from edc.base.modeladmin.admin import BaseModelAdmin
-
 from ..models import InfantBirthArv
 
+from .base_infant_scheduled_modeladmin import BaseInfantScheduleModelAdmin
 
-class InfantBirthArvAdmin(BaseModelAdmin):
+
+class InfantBirthArvAdmin(BaseInfantScheduleModelAdmin):
 
     list_display = ('infant_birth', 'azt_dose_date',)
 

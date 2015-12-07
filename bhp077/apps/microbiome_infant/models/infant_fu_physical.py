@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+from edc_base.audit_trail import AuditTrail
 from edc_constants.constants import NOT_APPLICABLE
 from edc_constants.choices import (NORMAL_ABNORMAL,
                                    YES_NO_NOT_EVALUATED_NA, NORMAL_ABNORMAL_NOEXAM)
@@ -139,8 +140,12 @@ class InfantFuPhysical(InfantScheduledVisitModel):
         blank=True,
         null=True)
 
-    def __str__(self):
-        return str(self.infant_visit)
+    objects = models.Manager()
+
+    history = AuditTrail()
+
+    def __unicode__(self):
+        return unicode(self.infant_visit)
 
     class Meta:
         app_label = "microbiome_infant"

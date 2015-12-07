@@ -5,10 +5,8 @@ from bhp077.apps.microbiome.choices import DRUG_RELATIONSHIP
 from edc_base.audit_trail import AuditTrail
 
 from edc.subject.adverse_event.models import BaseDeathReport
-from edc.entry_meta_data.managers import EntryMetaDataManager
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
-from .infant_visit import InfantVisit
 
 
 class InfantDeath (InfantScheduledVisitModel, BaseDeathReport):
@@ -38,6 +36,10 @@ class InfantDeath (InfantScheduledVisitModel, BaseDeathReport):
         max_length=25,
         choices=DRUG_RELATIONSHIP,
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_infant"

@@ -1,5 +1,4 @@
 from django.db import models
-from dateutil import rrule
 
 from edc_base.model.validators import date_not_before_study_start, date_not_future
 
@@ -128,35 +127,13 @@ class EnrollmentMixin(models.Model):
         null=True,
         blank=True)
 
+    def __unicode__(self):
+        return "{0} {1}".format(
+            self.registered_subject.subject_identifier,
+            self.registered_subject.first_name)
+
     def get_registration_datetime(self):
         return self.report_datetime
-
-    @property
-    def rapid_test_required(self):
-        weeks_since_test = rrule.rrule(
-            rrule.WEEKLY, dtstart=self.week32_test_date, until=self.report_datetime.date()).count()
-        value = self.weeks_base - weeks_since_test
-        return value >= 32
-
-    def maternal_eligibility_pregnant_yes(self):
-        try:
-            return MaternalEligibility.objects.get(
-                registered_subject__subject_identifier=self.get_subject_identifier(),
-                currently_pregnant=YES,
-            )
-        except MaternalEligibility.DoesNotExist:
-            return False
-        return True
-
-    def maternal_eligibility_pregnant_currently_delivered_yes(self):
-        try:
-            return MaternalEligibility.objects.get(
-                registered_subject__subject_identifier=self.get_subject_identifier(),
-                recently_delivered=YES,
-            )
-        except MaternalEligibility.DoesNotExist:
-            return False
-        return True
 
     @property
     def subject_identifier(self):
@@ -164,11 +141,6 @@ class EnrollmentMixin(models.Model):
 
     def get_subject_identifier(self):
         return self.registered_subject.subject_identifier
-
-    def __unicode__(self):
-        return "{0} {1}".format(
-            self.registered_subject.subject_identifier,
-            self.registered_subject.first_name)
 
     class Meta:
         abstract = True

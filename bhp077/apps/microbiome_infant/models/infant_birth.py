@@ -12,7 +12,7 @@ from bhp077.apps.microbiome_maternal.models import MaternalLabourDel
 from bhp077.apps.microbiome_infant.models.infant_off_study_mixin import InfantOffStudyMixin
 
 
-class InfantBirth(InfantOffStudyMixin, BaseUuidModel, BaseAppointmentMixin):
+class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
     """ A model completed by the user on the infant's birth. """
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
@@ -51,9 +51,6 @@ class InfantBirth(InfantOffStudyMixin, BaseUuidModel, BaseAppointmentMixin):
 
     def __unicode__(self):
         return "{} ({}) {}".format(self.first_name, self.initials, self.gender)
-
-    def save(self, *args, **kwargs):
-        super(InfantBirth, self).save(*args, **kwargs)
 
     def prepare_appointments(self, using):
         """To calculate infant appointments from date-of-delivery"""

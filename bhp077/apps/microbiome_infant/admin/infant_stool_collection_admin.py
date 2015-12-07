@@ -1,13 +1,18 @@
 from django.contrib import admin
 
+from edc_admin_exclude import AdminExcludeFieldsMixin
 from edc_base.modeladmin.admin import BaseModelAdmin
 
 from ..forms import InfantStoolCollectionForm
 from ..models import InfantStoolCollection, InfantVisit
-from ..mixin import InfantStoolExcludeFieldsMixin
 
 
-class InfantStoolCollectionAdmin(InfantStoolExcludeFieldsMixin, BaseModelAdmin):
+class InfantStoolCollectionAdmin(AdminExcludeFieldsMixin, BaseModelAdmin):
+
+    visit_model = InfantVisit
+    visit_attr = 'infant_visit'
+    visit_codes = {'visit': ['2000']}
+
     fields = ('infant_visit',
               'report_datetime',
               'sample_obtained',
@@ -32,7 +37,8 @@ class InfantStoolCollectionAdmin(InfantStoolExcludeFieldsMixin, BaseModelAdmin):
         "antibiotics_7days": admin.VERTICAL,
         "antibiotic_dose_24hrs": admin.VERTICAL}
 
-    custom_exclude = {'visit': ['past_diarrhea', 'diarrhea_past_24hrs', 'antibiotics_7days', 'antibiotic_dose_24hrs']}
+    custom_exclude = {'visit': ['past_diarrhea', 'diarrhea_past_24hrs',
+                                'antibiotics_7days', 'antibiotic_dose_24hrs']}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "infant_visit":

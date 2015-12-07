@@ -22,6 +22,8 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
 
     CONSENT_MODEL = MaternalConsent
 
+    weeks_base_field = 'gestation_wks_delivered'  # for rapid test required calc
+
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
     report_datetime = models.DateTimeField(
@@ -41,8 +43,8 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         max_length=3,
         help_text="INELIGIBLE if NO")
 
-    gestation_to_birth_wks = models.IntegerField(
-        verbose_name="Please record the gestational age of this infant?",
+    gestation_wks_delivered = models.IntegerField(
+        verbose_name="How many weeks after gestation was the child born?",
         help_text="ineligible if premature or born before 37weeks")
 
     delivery_status = models.CharField(
@@ -51,7 +53,7 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         max_length=15,
         help_text='if still birth, not eligible')
 
-    postnatal_enrollemet_eligible = models.NullBooleanField(
+    is_eligible = models.BooleanField(
         editable=False)
 
     live_infants = models.IntegerField(
@@ -64,38 +66,46 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
     history = AuditTrail()
 
     def save(self, *args, **kwargs):
-        self.postnatal_enrollemet_eligible = self.postnatal_eligible
+        self.is_eligible = self.check_eligiblity()
         super(PostnatalEnrollment, self).save(*args, **kwargs)
 
     def get_registration_datetime(self):
         return self.report_datetime
 
-    @property
-    def weeks_base(self):
-        return self.gestation_to_birth_wks
-
-    @property
-    def postnatal_eligible(self):
+    def check_eligiblity(self):
         """Returns true if the participant is eligible."""
-        if (self.will_breastfeed == YES and self.on_tb_tx == NO and
-                self.on_hypertension_tx == NO and self.is_diabetic == NO and
-                self.will_remain_onstudy == YES and self.postpartum_days <= 3 and self.vaginal_delivery == YES and
-                self.delivery_status == LIVE and self.gestation_to_birth_wks >= 37):
-            if (self.current_hiv_status == POS and self.evidence_hiv_status == YES and self.valid_regimen == YES and
+        eligible = False
+        if (self.delivery_status == LIVE and
+                self.gestation_wks_delivered >= 37 and
+                self.is_diabetic == NO and
+                self.on_hypertension_tx == NO and
+                self.on_tb_tx == NO and
+                self.postpartum_days <= 3 and
+                self.vaginal_delivery == YES and
+                self.will_breastfeed == YES and
+                self.will_remain_onstudy == YES):
+            if (self.current_hiv_status == POS and
+                    self.evidence_hiv_status == YES and
+                    self.valid_regimen == YES and
                     self.valid_regimen_duration == YES):
-                return True
-            elif (self.current_hiv_status == POS and self.evidence_hiv_status == NO and
-                    self.rapid_test_result == POS and self.valid_regimen == YES and
+                eligible = True
+            elif (self.current_hiv_status == POS and
+                    self.evidence_hiv_status == NO and
+                    self.rapid_test_result == POS and
+                    self.valid_regimen == YES and
                     self.valid_regimen_duration == YES):
-                return True
-            elif self.current_hiv_status == NEG and self.evidence_hiv_status == NO and self.rapid_test_result == NEG:
-                return True
-            elif self.current_hiv_status == NEG and self.evidence_hiv_status == YES:
-                return True
+                eligible = True
+            elif (self.current_hiv_status == NEG and
+                  self.evidence_hiv_status == NO and
+                  self.rapid_test_result == NEG):
+                eligible = True
+            elif (self.current_hiv_status == NEG and
+                  self.evidence_hiv_status == YES):
+                eligible = True
             elif (self.current_hiv_status in [NEVER, UNKNOWN, DWTA] and
                     self.rapid_test_result == NEG):
-                return True
-        return False
+                eligible = True
+        return eligible
 
     @property
     def antenatal_enrollment(self):

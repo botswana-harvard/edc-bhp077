@@ -8,7 +8,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_constants.choices import YES_NO
-from edc_constants.constants import NO
+from edc_constants.constants import YES, NO
 
 from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
@@ -119,13 +119,18 @@ class MaternalEligibility (BaseUuidModel):
             maternal_eligibility_loss = None
         return maternal_eligibility_loss
 
-    @property
-    def maternal_consent(self):
+    def update_is_consented_from_consent(self):
+        """Updates 
         try:
             maternal_consent = MaternalConsent.objects.get(registered_subject=self.registered_subject)
+            self.is_consented = True
+            if maternal_consent.citizen == YES:
+                self.has_passed_consent = True
+            elif maternal_consent.citizen == NO:
+                self.has_passed_consent = False
+            self.save()
         except MaternalConsent.DoesNotExist:
-            maternal_consent = None
-        return maternal_consent
+            pass
 
     class Meta:
         app_label = 'microbiome_maternal'

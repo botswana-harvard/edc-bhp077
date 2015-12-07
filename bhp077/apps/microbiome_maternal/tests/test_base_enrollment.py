@@ -1,6 +1,6 @@
+from datetime import date
 from django.test import TestCase
 from django.utils import timezone
-from django import forms
 
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
@@ -48,7 +48,7 @@ class TestBaseEnroll(TestCase):
         self.specimen_consent = SpecimenConsentFactory(registered_subject=self.registered_subject)
         self.data = {
             'registered_subject': self.registered_subject.id,
-            'report_datetime': timezone.datetime.today(),
+            'report_datetime': timezone.now(),
             'is_diabetic': NO,
             'on_tb_tx': NO,
             'will_breastfeed': NO,
@@ -74,7 +74,7 @@ class TestBaseEnroll(TestCase):
     def test_process_rapid_no_date_req(self):
         """If rapid test was NOT processed, test date was processed is  NOT required"""
         self.data['rapid_test_done'] = NO
-        self.data['rapid_test_date'] = timezone.now().date()
+        self.data['rapid_test_date'] = date.today()
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('You indicated that a rapid test was NOT processed, yet rapid test date was provided. '
                       'Please correct.', form.errors.get('__all__'))
@@ -82,7 +82,7 @@ class TestBaseEnroll(TestCase):
     def test_process_rapid_na_date_req(self):
         """If rapid test was NOT processed, test date was processed is  NOT required"""
         self.data['rapid_test_done'] = NOT_APPLICABLE
-        self.data['rapid_test_date'] = timezone.now().date()
+        self.data['rapid_test_date'] = date.today()
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('You indicated that a rapid test was NOT processed, yet rapid test date was provided. '
                       'Please correct.', form.errors.get('__all__'))
@@ -90,7 +90,7 @@ class TestBaseEnroll(TestCase):
     def test_process_rapid_yes_result_req(self):
         """If rapid test was processed, test result was processed is required"""
         self.data['rapid_test_done'] = YES
-        self.data['rapid_test_date'] = timezone.now().date()
+        self.data['rapid_test_date'] = date.today()
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('You indicated that a rapid test was processed. Please provide a result.',
                       form.errors.get('__all__'))
@@ -123,14 +123,16 @@ class TestBaseEnroll(TestCase):
         self.data['valid_regimen_duration'] = YES
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('You have indicated that there are no records of Participant taking ARVs. '
-                      'Regimen validity period should be \'Not Applicable\'. Please correct.', form.errors.get('__all__'))
+                      'Regimen validity period should be \'Not Applicable\'. '
+                      'Please correct.', form.errors.get('__all__'))
 
     def test_regimen_duration_no(self):
         self.data['valid_regimen'] = NO
         self.data['valid_regimen_duration'] = NO
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn('You have indicated that there are no records of Participant taking ARVs. '
-                      'Regimen validity period should be \'Not Applicable\'. Please correct.', form.errors.get('__all__'))
+                      'Regimen validity period should be \'Not Applicable\'. '
+                      'Please correct.', form.errors.get('__all__'))
 
     def test_hiv_evidence_pos(self):
         self.data['evidence_hiv_status'] = NOT_APPLICABLE
@@ -161,7 +163,8 @@ class TestBaseEnroll(TestCase):
         self.data['evidence_hiv_status'] = YES
         self.data['rapid_test_done'] = YES
         form = BaseEnrollTestForm(data=self.data)
-        self.assertIn('DO NOT PROCESS RAPID TEST. PARTICIPANT IS POS and HAS EVIDENCE.', form.errors.get('__all__'))
+        self.assertIn('DO NOT PROCESS RAPID TEST. PARTICIPANT IS POS and HAS EVIDENCE.',
+                      form.errors.get('__all__'))
 
     def test_participant_never_tested(self):
         self.data['current_hiv_status'] = NEVER
@@ -177,7 +180,8 @@ class TestBaseEnroll(TestCase):
         self.data['week32_result'] = NEG
         form = BaseEnrollTestForm(data=self.data)
         self.assertIn(
-            'The current hiv status and result at 32weeks should be the same!', form.errors.get('__all__'))
+            'The current hiv status and result at 32weeks should be the same!',
+            form.errors.get('__all__'))
 
     def test_tested_at_32weeks_no_result(self):
         self.data['week32_test'] = YES
