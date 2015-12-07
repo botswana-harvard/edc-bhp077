@@ -93,7 +93,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
             RequisitionPanelTuple(70L, u'microbiome_lab', u'maternalrequisition',
                                   'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
             RequisitionPanelTuple(80L, u'microbiome_lab', u'maternalrequisition',
-                                  'CD4 (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
+                                  'CD4 (ARV)', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
         ),
         'entries': (
             EntryTuple(10L, u'microbiome_maternal', u'maternallabourdel', REQUIRED, NOT_ADDITIONAL),
