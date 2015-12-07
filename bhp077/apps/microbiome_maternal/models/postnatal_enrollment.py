@@ -42,7 +42,7 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         help_text="INELIGIBLE if NO")
 
     gestation_to_birth_wks = models.IntegerField(
-        verbose_name="How many weeks after gestation was the child born?",
+        verbose_name="Please record the gestational age of this infant?",
         help_text="ineligible if premature or born before 37weeks")
 
     delivery_status = models.CharField(
