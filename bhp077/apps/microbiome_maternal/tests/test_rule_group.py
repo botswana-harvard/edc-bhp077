@@ -6,7 +6,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, POS, NEG
+from edc_constants.constants import NEW, YES, POS, NEG, UNKEYED
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory,
@@ -55,55 +55,33 @@ class TestRuleGroup(TestCase):
             appointment=appointment)
         return model_options
 
-    def test_hiv_status_pos_on_postnatal_enrollment(self):
-        """
-        """
+    def test_postnatal_enrollment_hiv_status(self):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             will_breastfeed=YES,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
-            valid_regimen=YES,
-        )
-        visit_codes = [['1000M', ['maternalarvhistory', 'maternalarvpreg']]]
+            valid_regimen=YES)
+        visit_codes = [['1000M', ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg']]]
         for visit in visit_codes:
             code, model_names = visit
             appointment = Appointment.objects.get(
-                registered_subject=self.registered_subject, visit_definition__code=code
-            )
+                registered_subject=self.registered_subject, visit_definition__code=code)
             MaternalVisitFactory(appointment=appointment)
             for model_name in model_names:
-                self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
-                    app_label='microbiome_maternal', model_name=model_name, appointment=appointment
-                )).count(), 1)
-
-    def test_hiv_rapid_test_pos(self):
-
-        PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
-            current_hiv_status=POS,
-            evidence_hiv_status=YES,
-        )
-        visit_codes = [['1000M', ['maternalarvhistory', 'maternalarvpreg']]]
-        for visit in visit_codes:
-            code, model_names = visit
-            appointment = Appointment.objects.get(
-                registered_subject=self.registered_subject, visit_definition__code=code
-            )
-            MaternalVisitFactory(appointment=appointment)
-            for model_name in model_names:
-                self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
-                    app_label='microbiome_maternal', model_name=model_name, appointment=appointment
-                )).count(), 1)
+                self.assertEqual(ScheduledEntryMetaData.objects.filter(
+                    entry_status=UNKEYED,
+                    entry__app_label='microbiome_maternal',
+                    entry__model_name=model_name,
+                    appointment=appointment
+                ).count(), 1)
 
     def test_hiv_rapid_test_neg(self):
-        """
-        """
+
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             rapid_test_done=YES,
-            rapid_test_result=NEG,
-        )
+            rapid_test_result=NEG)
         visit_codes = [
             ['2010M', ['rapidtestresult']],
             ['2030M', ['rapidtestresult']],
@@ -114,13 +92,41 @@ class TestRuleGroup(TestCase):
         for visit in visit_codes:
             code, model_names = visit
             appointment = Appointment.objects.get(
-                registered_subject=self.registered_subject, visit_definition__code=code
-            )
+                registered_subject=self.registered_subject, visit_definition__code=code)
             MaternalVisitFactory(appointment=appointment)
             for model_name in model_names:
-                self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
-                    app_label='microbiome_maternal', model_name=model_name, appointment=appointment
-                )).count(), 1)
+                self.assertEqual(ScheduledEntryMetaData.objects.filter(
+                    entry_status=UNKEYED,
+                    entry__app_label='microbiome_maternal',
+                    entry__model_name=model_name,
+                    appointment=appointment
+                ).count(), 1)
+
+    def test_maternal_hiv_status_neg(self):
+
+        PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES)
+        visit_codes = [
+            ['2010M', ['rapidtestresult']],
+            ['2030M', ['rapidtestresult']],
+            ['2060M', ['rapidtestresult']],
+            ['2090M', ['rapidtestresult']],
+            ['2120M', ['rapidtestresult']]
+        ]
+        for visit in visit_codes:
+            code, model_names = visit
+            appointment = Appointment.objects.get(
+                registered_subject=self.registered_subject, visit_definition__code=code)
+            MaternalVisitFactory(appointment=appointment)
+            for model_name in model_names:
+                self.assertEqual(ScheduledEntryMetaData.objects.filter(
+                    entry_status=UNKEYED,
+                    entry__app_label='microbiome_maternal',
+                    entry__model_name=model_name,
+                    appointment=appointment
+                ).count(), 1)
 
     def test_hiv_pos_vl(self):
         """

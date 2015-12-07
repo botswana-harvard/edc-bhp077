@@ -23,5 +23,8 @@ def infant_visit_on_post_save(sender, instance, raw, created, using, **kwargs):
     """Updates maternal scheduled meta data."""
     if not raw:
         if isinstance(instance, InfantVisit):
-            instance.update_entry_meta_data()
-            instance.update_scheduled_entry_meta_data()
+            if instance.postnatal_enrollment.maternal_hiv_status:
+                instance.requisition_is_required('infantrequisition', 'Viral Load')
+                instance.infant_offstudy_required()
+                instance.infant_death_required()
+                instance.update_required_forms_on_post_save()

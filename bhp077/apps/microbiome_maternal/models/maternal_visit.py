@@ -1,22 +1,18 @@
 from django.db import models
 
-from edc.entry_meta_data.models import ScheduledEntryMetaData
-from edc.subject.entry.models import Entry
 from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
-from edc_constants.constants import NEW, YES, POS, NEG, UNSCHEDULED
+from edc_constants.constants import OFF_STUDY, YES, POS, UNSCHEDULED, NEG, DEAD
 from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 
 from bhp077.apps.microbiome.choices import VISIT_REASON
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
 from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
-
 from bhp077.apps.microbiome.classes import MetaDataMixin
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
-from ..classes import EnrollmentStatusHelper
 
 
 class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
@@ -46,7 +42,6 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
-        self.check_if_eligible()
         super(MaternalVisit, self).save(*args, **kwargs)
 
     def update_entry_meta_data(self):
@@ -80,17 +75,26 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
         del dct['death']
         return dct
 
-    @property
-    def hiv_rapid_test_pos(self):
+    def rapidtest_result_pos(self):
+        RapidTestResult = models.get_model('microbiome_maternal', 'rapidtestresult')
         try:
-            PostnatalEnrollment.objects.get(
-                registered_subject=self.appointment.registered_subject,
+            return RapidTestResult.objects.get(
+                maternal_visit__appointment__registered_subject=self.appointment.registered_subject,
                 rapid_test_done=YES,
-                rapid_test_result=POS
-            )
-        except PostnatalEnrollment.DoesNotExist:
-            return False
-        return True
+                rapid_test_result=POS)
+        except AttributeError:
+            return None
+
+    def rapidtest_result_neg(self):
+        RapidTestResult = models.get_model('microbiome_maternal', 'rapidtestresult')
+        try:
+            rapidtest_result_neg = RapidTestResult.objects.filter(
+                maternal_visit__appointment__registered_subject=self.appointment.registered_subject,
+                rapid_test_done=YES,
+                rapid_test_result=NEG).order_by('created').last()
+        except AttributeError:
+            return None
+        return rapidtest_result_neg
 
     @property
     def hiv_status_pos_and_evidence_yes(self):
@@ -109,43 +113,32 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
                 pass
         return False
 
-    @property
-    def hiv_status_rapid_test_neg(self):
-        try:
-            PostnatalEnrollment.objects.get(
-                registered_subject=self.appointment.registered_subject,
-                rapid_test_done=YES,
-                rapid_test_result=NEG,
-            )
-        except PostnatalEnrollment.DoesNotExist:
-            return False
-        return True
-
     def update_maternal_scheduled_entry_meta_data(self):
-        if self.hiv_status_pos_and_evidence_yes:
+        if self.postnatal_enrollment.maternal_hiv_status or self.rapidtest_result_pos:
             if self.appointment.visit_definition.code == '1000M':
-                model_names = ['maternalclinicalhistory', 'maternalarvhistory',
-                               'maternalarvpreg', 'maternalinfected']
+                model_names = ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg']
                 for model_name in model_names:
-                    self.update_scheduled_entry_meta_data('microbiome_maternal', model_name)
+                    self.scheduled_entry_meta_data_required('microbiome_maternal', model_name)
             elif self.appointment.visit_definition.code == '2000M':
                 model_names = ['maternalarvpreg', 'maternalarv', 'maternallabdelclinic']
                 for model_name in model_names:
-                    self.update_scheduled_entry_meta_data('microbiome_maternal', model_name)
+                    self.scheduled_entry_meta_data_required('microbiome_maternal', model_name)
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
                 model_names = ['maternalarvpost', 'maternalarvpostadh']
                 for model_name in model_names:
-                    self.update_scheduled_entry_meta_data('microbiome_maternal', model_name)
-            self.update_requistion_entry_meta_data('microbiome_lab', 'maternalrequisition', 'Viral Load')
+                    self.scheduled_entry_meta_data_required('microbiome_maternal', model_name)
+            self.requisition_is_required('maternalrequisition', 'Viral Load')
 
-        if self.hiv_status_rapid_test_neg:
+        if (
+            self.postnatal_enrollment.maternal_rapid_test_result_neg or
+            not self.postnatal_enrollment.maternal_hiv_status
+        ):
             if self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
-                self.update_scheduled_entry_meta_data('microbiome_maternal', 'rapidtestresult')
+                self.scheduled_entry_meta_data_required('microbiome_maternal', 'rapidtestresult')
 
     @property
     def is_participant_off_study(self):
-        visit_codes = ['1000M', '2000M', '2010M',
-                       '2030M', '2060M', '2090M', '2120M']
+        visit_codes = ['1000M', '2000M', '2010M', '2030M', '2060M', '2090M', '2120M']
         is_off = False
         for i, code in enumerate(visit_codes):
             if self.appointment.visit_definition.code == "1000M":
@@ -157,7 +150,7 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
                         MaternalVisit.objects.get(
                             appointment__registered_subject=self.appointment.registered_subject,
                             appointment__visit_definition__code=visit_codes[i - 1],
-                            reason='off study'
+                            reason=OFF_STUDY
                         )
                         is_off = True
                         break
@@ -165,57 +158,18 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
                         return False
         return is_off
 
-    @property
-    def is_eligible(self):
-        enrollment = EnrollmentStatusHelper(registered_subject=self.appointment.registered_subject)
-        return enrollment.is_eligible
+    def maternal_offstudy_required(self):
+        try:
+            self.reason = OFF_STUDY if not self.postnatal_enrollment.postnatal_eligible else self.reason
+            if self.reason == OFF_STUDY:
+                self.scheduled_entry_meta_data_required('microbiome_maternal', 'maternaloffstudy')
+        except AttributeError:
+            pass
 
-    def check_if_eligible(self):
-
-        if not PostnatalEnrollment.objects.filter(registered_subject=self.appointment.registered_subject).exists():
-            antenatal = AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
-            self.reason = 'off study' if not antenatal.antenatal_eligible else self.reason
-        else:
-            self.create_additional_maternal_forms_meta()
-
-    def create_additional_maternal_forms_meta(self):
-        self.reason = 'off study' if not self.postnatal_enrollment.postnatal_eligible else self.reason
-        if self.reason == 'off study':
-            entry = Entry.objects.filter(
-                model_name='maternaloffstudy',
-                visit_definition_id=self.appointment.visit_definition_id)
-            if entry:
-                scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
-                    appointment=self.appointment,
-                    entry=entry[0],
-                    registered_subject=self.appointment.registered_subject)
-                if not scheduled_meta_data:
-                    scheduled_meta_data = ScheduledEntryMetaData.objects.create(
-                        appointment=self.appointment,
-                        entry=entry[0],
-                        registered_subject=self.appointment.registered_subject)
-                else:
-                    scheduled_meta_data = scheduled_meta_data[0]
-                scheduled_meta_data.entry_status = 'NEW'
-                scheduled_meta_data.save()
-        if self.reason == 'death':
-            entries = Entry.objects.filter(
-                model_name__in=['maternaldeath', 'maternaloffstudy'],
-                visit_definition_id=self.appointment.visit_definition_id)
-            for entry in entries:
-                scheduled_meta_data = ScheduledEntryMetaData.objects.filter(
-                    appointment=self.appointment,
-                    entry=entry,
-                    registered_subject=self.appointment.registered_subject)
-                if not scheduled_meta_data:
-                    scheduled_meta_data = ScheduledEntryMetaData.objects.create(
-                        appointment=self.appointment,
-                        entry=entry,
-                        registered_subject=self.appointment.registered_subject)
-                else:
-                    scheduled_meta_data = scheduled_meta_data[0]
-                scheduled_meta_data.entry_status = NEW
-                scheduled_meta_data.save()
+    def maternal_death_required(self):
+        if self.reason == DEAD:
+            for model_name in ['maternaldeath', 'maternaloffstudy']:
+                self.scheduled_entry_meta_data_required('microbiome_maternal', model_name)
 
     class Meta:
         app_label = 'microbiome_maternal'

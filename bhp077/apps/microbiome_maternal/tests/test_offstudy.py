@@ -8,7 +8,7 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.constants import NEW, YES, POS, NEG
+from edc_constants.constants import YES, POS, NEG, UNKEYED
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT
@@ -66,7 +66,7 @@ class TestOffStudy(TestCase):
         MaternalVisitFactory(appointment=appointment, reason='off study')
 
         self.assertEqual(ScheduledEntryMetaData.objects.filter(
-            entry_status=NEW, **self.model_options(
+            entry_status=UNKEYED, **self.model_options(
                 app_label='microbiome_maternal',
                 model_name='maternaloffstudy',
                 appointment=appointment)).count(), 1)
