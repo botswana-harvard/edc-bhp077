@@ -53,13 +53,11 @@ class MaternalPostFuDxTAdmin(BaseModelAdmin):
     }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "maternal_visit":
-                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
-        if db_field.name == "post_fu_dx":
+        if db_field.name == "maternal_post_fu_dx":
             if request.GET.get('maternal_visit'):
-                infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
-                kwargs["queryset"] = MaternalPostFuDxT.objects.filter(
-                    registered_subject=infant_visit.appointment.registered_subject)
+                maternal_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
+                kwargs["queryset"] = MaternalPostFuDx.objects.filter(
+                    maternal_visit=maternal_visit)
         return super(MaternalPostFuDxTAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalPostFuDxT, MaternalPostFuDxTAdmin)
@@ -87,9 +85,8 @@ class MaternalPostFuDxAdmin(BaseModelAdmin):
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
         if db_field.name == "maternal_post_fu":
             if request.GET.get('maternal_visit'):
-                infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
-                kwargs["queryset"] = MaternalPostFuDx.objects.filter(
-                    registered_subject=infant_visit.appointment.registered_subject)
+                maternal_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
+                kwargs["queryset"] = MaternalPostFu.objects.filter(maternal_visit=maternal_visit)
         return super(MaternalPostFuDxAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalPostFuDx, MaternalPostFuDxAdmin)

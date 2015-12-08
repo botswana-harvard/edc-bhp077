@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc.subject.adverse_event.choices import GRADING_SCALE
@@ -102,6 +101,7 @@ class MaternalPostFu(MaternalScheduledVisitModel):
 class MaternalPostFuDx(MaternalScheduledVisitModel):
 
     """ Post-partum follow up of diagnosis. """
+    CONSENT_MODEL = MaternalConsent
 
     maternal_post_fu = models.OneToOneField(MaternalPostFu)
 
@@ -136,15 +136,6 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
 
     history = AuditTrail()
 
-    def get_absolute_url(self):
-        return reverse('admin:microbiome_maternal_maternalpostfudx_change', args=(self.id,))
-
-    def get_report_datetime(self):
-        return self.maternal_post_fu.get_report_datetime()
-
-    def get_subject_identifier(self):
-        return self.maternal_post_fu.get_subject_identifier()
-
     class Meta:
         app_label = "microbiome_maternal"
         verbose_name = "Maternal Postnatal Follow-Up: Dx"
@@ -155,7 +146,7 @@ class MaternalPostFuDxT(BaseUuidModel):
 
     """ Post-partum follow up of diagnosis (transactions). """
 
-    maternal_post_fu = models.ForeignKey(MaternalPostFuDx)
+    maternal_post_fu_dx = models.ForeignKey(MaternalPostFuDx)
 
     post_fu_dx = models.CharField(
         max_length=100,
@@ -189,16 +180,16 @@ class MaternalPostFuDxT(BaseUuidModel):
     history = AuditTrail()
 
     def natural_key(self):
-        return (self.post_fu_dx, ) + self.maternal_post_fu.natural_key()
+        return (self.post_fu_dx, ) + self.maternal_post_fu_dx.natural_key()
 
     def get_visit(self):
-        return self.maternal_post_fu.get_visit()
+        return self.maternal_post_fu_dx.get_visit()
 
     def get_report_datetime(self):
-        return self.maternal_post_fu.get_report_datetime()
+        return self.maternal_post_fu_dx.get_report_datetime()
 
     def get_subject_identifier(self):
-        return self.maternal_post_fu.get_subject_identifier()
+        return self.maternal_post_fu_dx.get_subject_identifier()
 
     def __unicode__(self):
         return unicode(self.get_visit())
