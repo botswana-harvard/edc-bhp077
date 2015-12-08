@@ -6,7 +6,7 @@ from edc_base.audit_trail import AuditTrail
 from edc.entry_meta_data.models import MetaDataMixin
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.subject.registration.models import RegisteredSubject
-from edc_constants.constants import MALE, OFF_STUDY, DEAD, UNSCHEDULED
+from edc_constants.constants import MALE, OFF_STUDY, DEATH_VISIT, UNSCHEDULED
 
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 from bhp077.apps.microbiome.choices import (VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS,
@@ -78,9 +78,9 @@ class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUui
 
         if self.reason == OFF_STUDY:
             self.change_to_off_study_visit(self.appointment, 'microbiome_infant', 'infantoffstudy')
-        elif self.reason == DEAD:
+        elif self.reason == DEATH_VISIT:
             self.change_to_death_visit(
-                self.appointment, 'microbiome_maternal', 'infantoffstudy', 'infantdeath')
+                self.appointment, 'microbiome_infant', 'infantoffstudy', 'infantdeath')
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
         elif self.postnatal_enrollment.maternal_hiv_status:
