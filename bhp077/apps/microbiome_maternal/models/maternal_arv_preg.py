@@ -64,7 +64,7 @@ class MaternalArv(BaseUuidModel):
         verbose_name="ARV code",
         null=True,
         blank=True,
-        max_length=25,
+        max_length=35,
         choices=ARV_DRUG_LIST,)
 
     start_date = models.DateField(
