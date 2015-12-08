@@ -158,19 +158,19 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
                      '^FO300,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
                      '^FO300,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
                      '^FO300,152^A0N,25,20^FD${drawn_datetime}^FS\n'
-                     '^XZ')), True),
+                     '^XZ')), False),
             ZplTemplateTuple(
                 'requisition_label', (
                     ('^XA\n' +
-                     ('^FO300,15^A0N,20,20^FD${protocol} Site ${site} ${clinician_initials}   '
+                     ('^FO310,15^A0N,20,20^FD${protocol} Site ${site} ${clinician_initials}   '
                       '${aliquot_type} ${aliquot_count}${primary}^FS\n') +
-                     '^FO300,34^BY1,3.0^BCN,50,N,N,N\n'
+                     '^FO310,34^BY1,3.0^BCN,50,N,N,N\n'
                      '^BY^FD${requisition_identifier}^FS\n'
-                     '^FO300,92^A0N,20,20^FD${requisition_identifier} ${panel}^FS\n'
-                     '^FO300,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
-                     '^FO300,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
-                     '^FO300,152^A0N,25,20^FD${drawn_datetime}^FS\n'
-                     '^XZ')), False)]
+                     '^FO310,92^A0N,20,20^FD${requisition_identifier} ${panel}^FS\n'
+                     '^FO310,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
+                     '^FO310,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
+                     '^FO310,152^A0N,25,20^FD${drawn_datetime}^FS\n'
+                     '^XZ')), True)]
     }
 
     def update_or_create_consent_type(self):
