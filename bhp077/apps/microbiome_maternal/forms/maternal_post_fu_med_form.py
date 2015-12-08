@@ -9,7 +9,7 @@ from edc_constants.constants import NO, YES
 class MaternalPostFuMedForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(MaternalPostFuMedForm, self).clean()
-        check_med_items = self.data.get('maternalpostfumeditems_set-0-medication')
+        check_med_items = self.data.get('maternalpostfumeditems-0-medication')
         if cleaned_data.get('has_taken_meds') == YES and not check_med_items:
             raise forms.ValidationError(
                 'You have indicated that medications were taken. Please provide them')
