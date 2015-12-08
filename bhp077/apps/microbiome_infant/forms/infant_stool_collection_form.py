@@ -15,26 +15,11 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
 
     def clean(self):
         cleaned_data = super(InfantStoolCollectionForm, self).clean()
-        self.validate_stool_storage_requisition()
         self.validate_sample_obtained()
         self.validate_collection_time()
         self.validate_diarrhea()
         self.validate_antibiotics()
         return cleaned_data
-
-    def validate_stool_storage_requisition(self):
-        cleaned_data = self.cleaned_data
-        try:
-            requisition = InfantRequisition.objects.get(
-                infant_visit=cleaned_data.get('infant_visit'),
-                panel__name='Stool storage')
-            if requisition.is_drawn == YES and cleaned_data.get('sample_obtained') == NO:
-                raise forms.ValidationError(
-                    "Stool requisition is drawn with id {}. Sample obtained cannot be {}".format(
-                        requisition.requisition_identifier, cleaned_data.get('sample_obtained')))
-        except InfantRequisition.DoesNotExist:
-            raise forms.ValidationError(
-                'Stool storage specimen requisition not found. Complete the requisition first.')
 
     def validate_sample_obtained(self):
         cleaned_data = self.cleaned_data

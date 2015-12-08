@@ -1,9 +1,10 @@
 from __future__ import print_function
 
 from edc.subject.rule_groups.classes import (RuleGroup, site_rule_groups, Logic,
-                                             ScheduledDataRule)
+                                             ScheduledDataRule, RequisitionRule)
 
-from bhp077.apps.microbiome_infant.models import InfantBirthData, InfantVisit, InfantFu
+from bhp077.apps.microbiome_infant.models import (InfantBirthData, InfantVisit, InfantFu,
+                                                  InfantStoolCollection)
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 
 from edc_constants.constants import YES, NOT_REQUIRED, POS, UNKEYED, MALE
@@ -74,3 +75,20 @@ class InfantCircumcisionRuleGroup(RuleGroup):
         source_model = RegisteredSubject
 
 site_rule_groups.register(InfantCircumcisionRuleGroup)
+
+
+class StoolStorageRequisitionRuleGroup(RuleGroup):
+
+    initiation = RequisitionRule(
+        logic=Logic(
+            predicate=('sample_obtained', 'equals', YES),
+            consequence='new',
+            alternative='not_required'),
+        target_model=[('microbiome_lab', 'infantrequisition')],
+        target_requisition_panels=['Stool storage'])
+
+    class Meta:
+        app_label = 'microbiome_infant'
+        source_fk = (InfantVisit, 'infant_visit')
+        source_model = InfantStoolCollection
+site_rule_groups.register(StoolStorageRequisitionRuleGroup)
