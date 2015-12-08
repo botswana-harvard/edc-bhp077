@@ -33,6 +33,7 @@ class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
         verbose_name="Infant's first name",
         help_text="If infant name is unknown or not yet determined, "
                   "use Baby + birth order + mother's last name, e.g. 'Baby1Malane'")
+
     initials = models.CharField(
         max_length=2)
 

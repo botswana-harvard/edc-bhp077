@@ -2,15 +2,16 @@ from django.db import models
 
 from edc_base.model.validators import date_not_before_study_start, date_not_future
 
-from edc_constants.choices import (POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES, YES_NO, NO)
+from edc_constants.choices import POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO, NO
 from edc_constants.constants import NOT_APPLICABLE
-
-from .maternal_eligibility import MaternalEligibility
 
 
 class EnrollmentMixin(models.Model):
 
     """Base Model for antenal and postnatal enrollment"""
+
+    is_eligible = models.BooleanField(
+        editable=False)
 
     is_diabetic = models.CharField(
         verbose_name='Are you diabetic?',

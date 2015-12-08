@@ -12,8 +12,8 @@ class MaternalArvHistoryForm(BaseMaternalModelForm):
 
     def clean(self):
         cleaned_data = super(MaternalArvHistoryForm, self).clean()
-        self.validate_if_not_on_haart(cleaned_data)
-        self.validate_haart_start_date(cleaned_data)
+        self.validate_if_not_on_haart()
+        self.validate_haart_start_date()
         return cleaned_data
 
     def validate_if_not_on_haart(self):

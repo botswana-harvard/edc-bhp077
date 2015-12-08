@@ -120,7 +120,7 @@ class MaternalEligibility (BaseUuidModel):
         return maternal_eligibility_loss
 
     def update_is_consented_from_consent(self):
-        """Updates 
+        """ """
         try:
             maternal_consent = MaternalConsent.objects.get(registered_subject=self.registered_subject)
             self.is_consented = True

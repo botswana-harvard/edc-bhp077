@@ -53,9 +53,6 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         max_length=15,
         help_text='if still birth, not eligible')
 
-    is_eligible = models.BooleanField(
-        editable=False)
-
     live_infants = models.IntegerField(
         verbose_name="How many live infants?",
         null=True,

@@ -1,24 +1,39 @@
 from datetime import date
 from django.test import TestCase
 from django.utils import timezone
+from django.db import models
 
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
+from edc.subject.registration.models import RegisteredSubject
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.choices import POS, YES, NO, NEG, NOT_APPLICABLE
+from edc_constants.constants import NEVER
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory,
                                                              MaternalConsentFactory,
                                                              SpecimenConsentFactory)
-from bhp077.apps.microbiome_maternal.models import BaseEnrollment
 from bhp077.apps.microbiome_maternal.forms import BaseEnrollmentForm
-from edc_constants.constants import NEVER
+from bhp077.apps.microbiome_maternal.models.enrollment_mixin import EnrollmentMixin
 
 
-class BaseEnrollTestModel(BaseEnrollment):
+class EnrollTestModel(EnrollmentMixin):
+
+    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
+
+    report_datetime = models.DateTimeField(
+        default=timezone.now())
+
+    def save_common_fields_to_postnatal_enrollment(self):
+        pass
+
+    def save(self, *args, **kwargs):
+        self.is_eligible = True
+        super(EnrollTestModel, self).save(*args, **kwargs)
+
     class Meta:
         app_label = 'microbiome_maternal'
 
@@ -26,11 +41,11 @@ class BaseEnrollTestModel(BaseEnrollment):
 class BaseEnrollTestForm(BaseEnrollmentForm):
 
     class Meta:
-        model = BaseEnrollTestModel
+        model = EnrollTestModel
         fields = '__all__'
 
 
-class TestBaseEnroll(TestCase):
+class TestEnrollmentMixin(TestCase):
     """Test eligibility of a mother for antenatal enrollment."""
 
     def setUp(self):

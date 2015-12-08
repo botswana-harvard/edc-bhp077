@@ -10,12 +10,12 @@ from edc_constants.constants import OFF_STUDY, YES, POS, UNSCHEDULED, NEG, DEAD,
 
 from bhp077.apps.microbiome.choices import VISIT_REASON
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
-from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
-class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, BaseVisitTracking, BaseUuidModel):
+class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin,
+                    BaseVisitTracking, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 
@@ -150,23 +150,6 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin, 
                     except MaternalVisit.DoesNotExist:
                         return False
         return is_participant_off_study
-
-    @property
-    def hiv_status_pos_and_evidence_yes(self):
-        try:
-            return PostnatalEnrollment.objects.get(
-                registered_subject=self.appointment.registered_subject,
-                current_hiv_status=POS,
-                evidence_hiv_status=YES)
-        except PostnatalEnrollment.DoesNotExist:
-            try:
-                return AntenatalEnrollment.objects.get(
-                    registered_subject=self.appointment.registered_subject,
-                    current_hiv_status=POS,
-                    evidence_hiv_status=YES)
-            except AntenatalEnrollment.DoesNotExist:
-                pass
-        return False
 
     class Meta:
         app_label = 'microbiome_maternal'

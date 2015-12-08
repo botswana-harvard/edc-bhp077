@@ -17,17 +17,11 @@ class AntenatalEnrollmentForm(BaseEnrollmentForm):
         if not self.instance.id:
             registered_subject = cleaned_data.get('registered_subject')
             try:
-                post_natal = PostnatalEnrollment.objects.get(registered_subject=registered_subject)
+                PostnatalEnrollment.objects.get(registered_subject=registered_subject)
                 raise forms.ValidationError(
                     "Antenatal enrollment is NOT REQUIRED. Postnatal Enrollment already completed")
             except PostnatalEnrollment.DoesNotExist:
                 pass
-
-        instance = None
-        if self.instance.id:
-            instance = self.instance
-        else:
-            instance = AntenatalEnrollment(**cleaned_data)
         self.fill_postnatal_enrollment_if_recently_delivered()
         self.raise_if_rapid_test_required()
 
