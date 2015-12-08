@@ -62,8 +62,10 @@ class MaternalDashboard(RegisteredSubjectDashboard):
     @property
     def consent(self):
         self._consent = None
-        if MaternalConsent.objects.filter(subject_identifier=self.subject_identifier):
+        try:
             self._consent = MaternalConsent.objects.get(subject_identifier=self.subject_identifier)
+        except MaternalConsent.DoesNotExist:
+            self._consent = None
         return self._consent
 
     def antenatal_maternal_hiv_status(self, antenatal_enrollment):

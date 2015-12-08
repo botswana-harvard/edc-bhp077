@@ -27,8 +27,7 @@ class SrhServicesUtilization(MaternalScheduledVisitModel):
         max_length=45,
         null=True,
         blank=True,
-        choices=REASON_UNSEEN_AT_CLINIC,
-        help_text='')
+        choices=REASON_UNSEEN_AT_CLINIC)
 
     reason_unseen_clinic_other = OtherCharField(
         verbose_name='If Other, describe')
