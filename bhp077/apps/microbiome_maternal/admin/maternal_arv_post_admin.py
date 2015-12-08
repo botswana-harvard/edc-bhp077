@@ -26,9 +26,8 @@ class MaternalArvPostModAdmin(BaseModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_arv_post":
             if request.GET.get('maternal_visit'):
-                infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
-                kwargs["queryset"] = MaternalArvPostAdh.objects.filter(
-                    registered_subject=infant_visit.appointment.registered_subject)
+                kwargs["queryset"] = MaternalArvPost.objects.filter(
+                    maternal_visit__id=request.GET.get('maternal_visit'))
         return super(MaternalArvPostAdhAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalArvPostMod, MaternalArvPostModAdmin)
@@ -76,9 +75,8 @@ class MaternalArvPostAdhAdmin(BaseModelAdmin):
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
         if db_field.name == "maternal_arv_post":
             if request.GET.get('maternal_visit'):
-                infant_visit = MaternalVisit.objects.get(id=request.GET.get('maternal_visit'))
-                kwargs["queryset"] = MaternalArvPostAdh.objects.filter(
-                    registered_subject=infant_visit.appointment.registered_subject)
+                kwargs["queryset"] = MaternalArvPost.objects.filter(
+                    maternal_visit__id=request.GET.get('maternal_visit'))
         return super(MaternalArvPostAdhAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalArvPostAdh, MaternalArvPostAdhAdmin)
