@@ -45,7 +45,7 @@ class MaternalArvHistoryForm(BaseMaternalModelForm):
             if report_datetime < maternal_consent.consent_datetime:
                 raise forms.ValidationError("Report datetime CANNOT be before consent datetime")
             if haart_start_date < maternal_consent.dob:
-                raise forms.ValidationError("Date of triple ARVS first started CANNOT be before DOB.")
+                raise forms.ValidationError("Date of triple ARVs first started CANNOT be before DOB.")
         except MaternalConsent.DoesNotExist:
             raise forms.ValidationError('Maternal Consent does not exist.')
 

@@ -19,7 +19,7 @@ class SrhServicesUtilizationForm(BaseMaternalModelForm):
         if cleaned_data.get('seen_at_clinic') == NO:
             if not cleaned_data.get('reason_unseen_clinic'):
                 raise forms.ValidationError(
-                    'If have not you been seen in that clinic since your last visit with us. why not?')
+                    'If you have not been seen in that clinic since your last visit with us, why not?')
         if 'is_contraceptive_initiated' in cleaned_data.keys():
             self.validate_m2m(
                 label='chronic condition',

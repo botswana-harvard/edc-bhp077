@@ -68,7 +68,7 @@ class TestMaternalArvHistory(TestCase):
         self.data['preg_on_haart'] = YES
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn("You indicated that the mother was still on tripple ARV when "
+        self.assertIn("You indicated that the mother was still on triple ARV when "
                       "she got pregnant, yet you indicated that ARVs were interrupted "
                       "and never restarted.", errors)
 
@@ -94,7 +94,7 @@ class TestMaternalArvHistory(TestCase):
     def test_arv_interrupt_4(self):
         """Assert that if was not still on ARV only valid answer is 'interrrupted and never restarted'"""
         self.data['preg_on_haart'] = NO
-        self.data['prior_preg'] = 'interruption never restarted'
+        self.data['prior_preg'] = STOPPED
         form = MaternalArvHistoryForm(data=self.data)
         self.assertTrue(form.is_valid())
 
@@ -111,4 +111,4 @@ class TestMaternalArvHistory(TestCase):
         self.data['report_datetime'] = datetime.today()
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn("Date of triple antiretrovirals first started CANNOT be before DOB.", errors)
+        self.assertIn("Date of triple ARVs first started CANNOT be before DOB.", errors)
