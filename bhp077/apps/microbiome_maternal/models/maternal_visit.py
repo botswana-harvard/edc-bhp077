@@ -114,11 +114,11 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin,
                         'microbiome_maternal',
                         model_name,
                         message=self.appointment.visit_definition.code)
-            self.requisition_is_required(
-                self.appointment,
-                'microbiome_lab',
-                'maternalrequisition',
-                'Viral Load')
+                self.requisition_is_required(
+                    self.appointment,
+                    'microbiome_lab',
+                    'maternalrequisition',
+                    'Viral Load')
 
     def required_for_maternal_not_pos(self):
         if self.maternal_hiv_status_neg and self.rapid_test_result_status() in [None, NEG]:

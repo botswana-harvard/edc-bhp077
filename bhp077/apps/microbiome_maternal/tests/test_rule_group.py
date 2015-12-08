@@ -195,8 +195,7 @@ class TestRuleGroup(TestCase):
                 ).count(), 1)
 
     def test_hiv_pos_vl(self):
-        """
-        """
+
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
