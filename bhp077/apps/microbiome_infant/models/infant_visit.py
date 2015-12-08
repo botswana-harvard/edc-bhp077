@@ -114,7 +114,6 @@ class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUui
         for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
             dct.update({item: item})
         del dct[DEATH_VISIT]
-        del dct[LOST_VISIT]
         return dct
 
     class Meta:
