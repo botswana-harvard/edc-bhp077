@@ -74,6 +74,7 @@ class BaseEnrollment(MaternalOffStudyMixin, BaseAppointmentMixin, RequiresConsen
 
     week32_test_date = models.DateField(
         verbose_name="Date of Test",
+        validators=[datetime_not_future, ],
         null=True,
         blank=True)
 
