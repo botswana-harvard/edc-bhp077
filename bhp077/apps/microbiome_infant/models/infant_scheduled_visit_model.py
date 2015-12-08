@@ -22,11 +22,11 @@ class InfantScheduledVisitModel(InfantOffStudyMixin, BaseUuidModel,
         default=timezone.now
     )
 
-    entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
-
     objects = models.Manager()
 
     history = AuditTrail()
+
+    entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 
     def get_consenting_subject_identifier(self):
         """Returns mother's identifier."""

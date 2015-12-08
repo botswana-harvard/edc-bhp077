@@ -20,7 +20,7 @@ class PostnatalEnrollmentFactory(factory.DjangoModelFactory):
     vaginal_delivery = YES
     on_tb_tx = NO
     delivery_status = LIVE
-    gestation_to_birth_wks = 38
+    gestation_wks_delivered = 38
     will_breastfeed = YES
     will_remain_onstudy = YES
     current_hiv_status = POS

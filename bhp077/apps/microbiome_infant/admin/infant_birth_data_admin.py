@@ -5,8 +5,10 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 from ..forms import InfantBirthDataForm
 from ..models import InfantBirthData, InfantVisit, InfantBirth
 
+from .base_infant_scheduled_modeladmin import BaseInfantScheduleModelAdmin
 
-class InfantBirthDataAdmin(BaseModelAdmin):
+
+class InfantBirthDataAdmin(BaseInfantScheduleModelAdmin):
 
     form = InfantBirthDataForm
 
@@ -26,13 +28,5 @@ class InfantBirthDataAdmin(BaseModelAdmin):
     radio_fields = {
         "apgar_score": admin.VERTICAL,
         "congenital_anomalities": admin.VERTICAL}
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "infant_birth":
-            if request.GET.get('infant_visit'):
-                infant_visit = InfantVisit.objects.get(id=request.GET.get('infant_visit'))
-                kwargs["queryset"] = InfantBirth.objects.filter(
-                    registered_subject=infant_visit.appointment.registered_subject)
-        return super(InfantBirthDataAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(InfantBirthData, InfantBirthDataAdmin)

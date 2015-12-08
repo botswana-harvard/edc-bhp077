@@ -1,7 +1,8 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 
+from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
+
 from bhp077.apps.microbiome.choices import ARV_STATUS_WITH_NEVER
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
@@ -23,9 +24,12 @@ class InfantArvProph(InfantScheduledVisitModel):
         help_text="referring to prophylaxis other than single dose NVP",
         default='N/A',
     )
+    objects = models.Manager()
 
-    def __str__(self):
-        return "%s" % (self.infant_visit)
+    history = AuditTrail()
+
+    def __unicode__(self):
+        return unicode(self.infant_visit)
 
     class Meta:
         app_label = "microbiome_infant"

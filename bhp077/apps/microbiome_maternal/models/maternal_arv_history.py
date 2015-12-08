@@ -17,42 +17,36 @@ class MaternalArvHistory(MaternalScheduledVisitModel):
     CONSENT_MODEL = MaternalConsent
 
     haart_start_date = models.DateField(
-        verbose_name="Date of triple antiretrovirals first started",
-        help_text="",
-    )
+        verbose_name="Date of triple antiretrovirals first started")
+
     is_date_estimated = IsDateEstimatedField(
-        verbose_name=("Is the subject's date of triple antiretrovirals estimated?"),
-    )
+        verbose_name=("Is the subject's date of triple antiretrovirals estimated?"))
+
     preg_on_haart = models.CharField(
         max_length=25,
         choices=YES_NO,
         verbose_name=("Was she still on triple antiretrovirals at the time she became pregnant"
-                      " for this pregnancy? "),
-        help_text="",
-    )
+                      " for this pregnancy? "))
+
     haart_changes = models.IntegerField(
         validators=[MinValueValidator(0)],
-        verbose_name="How many times did you change your triple antiretrovirals medicines?",
-        help_text="",
-    )
+        verbose_name="How many times did you change your triple antiretrovirals medicines?")
+
     prior_preg = models.CharField(
         max_length=80,
         verbose_name="Prior to this pregnancy the mother has ",
-        choices=PRIOR_PREG_HAART_STATUS,
-        help_text="",
-    )
+        choices=PRIOR_PREG_HAART_STATUS)
+
     prior_arv = models.ManyToManyField(
         PriorArv,
-        verbose_name="Please list all of the ARVs that the mother "
-        "ever received prior to the current pregnancy:",
-        help_text="",
-    )
+        verbose_name=("Please list all of the ARVs that the mother "
+                      "ever received prior to the current pregnancy:"))
+
     prior_arv_other = OtherCharField(
         max_length=35,
         verbose_name="if other specify...",
         blank=True,
-        null=True,
-    )
+        null=True)
 
     class Meta:
         app_label = 'microbiome_maternal'

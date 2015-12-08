@@ -13,7 +13,7 @@ class SpecimenConsentAdmin(BaseModelAdmin):
     form = SpecimenConsentForm
 
     fields = ('registered_subject',
-              'report_datetime',
+              'consent_datetime',
               'language',
               'may_store_samples',
               'is_literate',

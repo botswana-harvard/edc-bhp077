@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.utils import timezone
 
 from edc_base.audit_trail import AuditTrail
@@ -9,7 +8,6 @@ from edc_constants.choices import YES_NO_UNKNOWN
 
 from bhp077.apps.microbiome.choices import MEDICATIONS
 
-from .maternal_post_fu import MaternalPostFu
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
 
@@ -69,8 +67,8 @@ class MaternalPostFuMedItems(BaseUuidModel):
 
     history = AuditTrail()
 
-    def __str__(self):
-        return str(self.maternal_post_fu_med.maternal_visit)
+    def __unicode__(self):
+        return unicode(self.maternal_post_fu_med.maternal_visit)
 
     class Meta:
         app_label = "microbiome_maternal"

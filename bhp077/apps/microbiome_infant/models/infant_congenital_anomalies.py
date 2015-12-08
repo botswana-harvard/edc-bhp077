@@ -18,6 +18,10 @@ class InfantCongenitalAnomalies(InfantScheduledVisitModel):
 
     """ A model completed by the user on the infant's congenital anomalies. """
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies"
@@ -71,6 +75,10 @@ class InfantCnsAbnormalityItems(BaseCnsItem):
         null=True,
     )
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Cns"
@@ -100,6 +108,10 @@ class InfantFacialDefectItems(BaseCnsItem):
         blank=True,
         null=True,
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_infant"
@@ -131,6 +143,10 @@ class InfantCleftDisorderItems(BaseCnsItem):
         null=True,
     )
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Cleft"
@@ -160,6 +176,10 @@ class InfantMouthUpGastrointestinalItems(BaseCnsItem):
         blank=True,
         null=True
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_infant"
@@ -191,6 +211,10 @@ class InfantCardiovascularDisorderItems(BaseCnsItem):
         null=True,
     )
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Cardio"
@@ -220,6 +244,10 @@ class InfantRespiratoryDefectItems(BaseCnsItem):
         blank=True,
         null=True,
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_infant"
@@ -251,6 +279,10 @@ class InfantLowerGastrointestinalItems(BaseCnsItem):
         null=True,
     )
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:LowerGast"
@@ -280,6 +312,10 @@ class InfantFemaleGenitalAnomalyItems(BaseCnsItem):
         blank=True,
         null=True,
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_infant"
@@ -311,6 +347,10 @@ class InfantMaleGenitalAnomalyItems(BaseCnsItem):
         null=True,
     )
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:MaleGen"
@@ -341,6 +381,10 @@ class InfantRenalAnomalyItems(BaseCnsItem):
         null=True,
     )
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Renal"
@@ -370,6 +414,10 @@ class InfantMusculoskeletalAbnormalItems(BaseCnsItem):
         blank=True,
         null=True,
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_infant"
@@ -403,6 +451,10 @@ class InfantSkinAbnormalItems(BaseCnsItem):
         null=True,
     )
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Skin"
@@ -433,6 +485,10 @@ class InfantTrisomiesChromosomeItems(BaseCnsItem):
         null=True,
     )
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = "microbiome_infant"
         verbose_name = "Infant Congenital Anomalies:Trisomes"
@@ -462,6 +518,10 @@ class InfantOtherAbnormalityItems(BaseCnsItem):
         blank=True,
         null=True,
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_infant"

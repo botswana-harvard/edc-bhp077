@@ -3,7 +3,7 @@ from __future__ import print_function
 from edc.subject.rule_groups.classes import (RuleGroup, site_rule_groups, Logic,
                                              ScheduledDataRule)
 
-from bhp077.apps.microbiome_infant.models import InfantBirthData, InfantVisit, InfantFu, InfantBirthArv
+from bhp077.apps.microbiome_infant.models import InfantBirthData, InfantVisit, InfantFu
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 
 from edc_constants.constants import YES, NOT_REQUIRED, POS, UNKEYED, MALE
@@ -74,20 +74,3 @@ class InfantCircumcisionRuleGroup(RuleGroup):
         source_model = RegisteredSubject
 
 site_rule_groups.register(InfantCircumcisionRuleGroup)
-
-
-# class InfantVisitRuleGroup(RuleGroup):
-# 
-#     infantbirtharv = ScheduledDataRule(
-#         logic=Logic(
-#             predicate=func_maternal_hiv_pos,
-#             consequence=UNKEYED,
-#             alternative=NOT_REQUIRED),
-#         target_model=['infantbirtharv'])
-# 
-#     class Meta:
-#         app_label = 'microbiome_infant'
-#         source_fk = None
-#         source_model = RegisteredSubject
-# 
-# site_rule_groups.register(InfantVisitRuleGroup)

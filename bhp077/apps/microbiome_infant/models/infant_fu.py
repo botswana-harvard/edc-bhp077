@@ -1,7 +1,7 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
@@ -51,8 +51,12 @@ class InfantFu(InfantScheduledVisitModel):
         validators=[MinValueValidator(0), MaxValueValidator(90), ],
     )
 
-    def __str__(self):
-        return "%s" % (self.infant_visit)
+    objects = models.Manager()
+
+    history = AuditTrail()
+
+    def __unicode__(self):
+        return unicode(self.infant_visit)
 
     class Meta:
         app_label = 'microbiome_infant'

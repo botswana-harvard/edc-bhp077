@@ -5,7 +5,8 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from bhp077.apps.microbiome.choices import FEEDING_CHOICES
-from bhp077.apps.microbiome_infant.choices import INFANT_VACCINATIONS
+
+from ..choices import INFANT_VACCINATIONS
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
@@ -25,6 +26,10 @@ class InfantBirthFeedVaccine(InfantScheduledVisitModel):
         verbose_name="Comment if any additional pertinent information: ",
         blank=True,
         null=True)
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_infant"
@@ -50,9 +55,12 @@ class InfantVaccines(BaseUuidModel):
         blank=True,
     )
 
-    objects = objects = models.Manager()
+    objects = models.Manager()
 
     history = AuditTrail()
+
+    def __unicode__(self):
+        return unicode(self.get_visit())
 
     def get_visit(self):
         return self.infant_birth_feed_vaccine.get_visit()
@@ -62,9 +70,6 @@ class InfantVaccines(BaseUuidModel):
 
     def get_subject_identifier(self):
         return self.infant_birth_feed_vaccine.get_subject_identifier()
-
-    def __unicode__(self):
-        return unicode(self.get_visit())
 
     def get_absolute_url(self):
         return reverse('admin:microbiome_infant_infantvaccines_change', args=(self.id,))

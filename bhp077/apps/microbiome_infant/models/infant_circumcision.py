@@ -1,5 +1,7 @@
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
+
 from bhp077.apps.microbiome.choices import CIRCUMCISION
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
@@ -14,6 +16,10 @@ class InfantCircumcision(InfantScheduledVisitModel):
         choices=CIRCUMCISION,
         help_text="",
     )
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_infant"

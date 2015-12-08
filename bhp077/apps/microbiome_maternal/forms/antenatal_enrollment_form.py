@@ -3,29 +3,27 @@ from django import forms
 from ..models import AntenatalEnrollment, PostnatalEnrollment
 
 from .base_enrollment_form import BaseEnrollmentForm
+from edc_constants.constants import YES
+from bhp077.apps.microbiome_maternal.models.maternal_eligibility import MaternalEligibility
 
 
 class AntenatalEnrollmentForm(BaseEnrollmentForm):
 
     def clean(self):
         cleaned_data = super(AntenatalEnrollmentForm, self).clean()
-        post_natal = None
+        registered_subject = cleaned_data.get('registered_subject')
+        if not registered_subject:
+            raise forms.ValidationError('Expected a registered subject. Got None.')
         if not self.instance.id:
             registered_subject = cleaned_data.get('registered_subject')
             try:
-                post_natal = PostnatalEnrollment.objects.get(registered_subject=registered_subject)
+                PostnatalEnrollment.objects.get(registered_subject=registered_subject)
                 raise forms.ValidationError(
                     "Antenatal enrollment is NOT REQUIRED. Postnatal Enrollment already completed")
             except PostnatalEnrollment.DoesNotExist:
                 pass
-
-        instance = None
-        if self.instance.id:
-            instance = self.instance
-        else:
-            instance = AntenatalEnrollment(**cleaned_data)
-        self.validate_create_antenal_enrollment(instance, cleaned_data, post_natal)
-        self.validate_create_rapid_tests(instance)
+        self.fill_postnatal_enrollment_if_recently_delivered()
+        self.raise_if_rapid_test_required()
 
         return cleaned_data
 
@@ -33,7 +31,8 @@ class AntenatalEnrollmentForm(BaseEnrollmentForm):
         rapid_test_date = self.cleaned_data['rapid_test_date']
         if rapid_test_date:
             try:
-                initial = AntenatalEnrollment.objects.get(registered_subject=self.instance.registered_subject)
+                initial = AntenatalEnrollment.objects.get(
+                    registered_subject=self.instance.registered_subject)
                 if initial:
                     if rapid_test_date != initial.rapid_test_date:
                         raise forms.ValidationError('The rapid test result cannot be changed')
@@ -41,10 +40,27 @@ class AntenatalEnrollmentForm(BaseEnrollmentForm):
                 pass
         return rapid_test_date
 
-    def validate_create_antenal_enrollment(self, instance, cleaned_data, post_natal):
-        if instance.maternal_eligibility_pregnant_currently_delivered_yes():
-            if not post_natal:
+    def fill_postnatal_enrollment_if_recently_delivered(self):
+        cleaned_data = self.cleaned_data
+        registered_subject = cleaned_data.get('registered_subject')
+        try:
+            MaternalEligibility.objects.get(
+                registered_subject=registered_subject,
+                recently_delivered=YES)
+            if not self.get_postnatal_enrollment():
                 raise forms.ValidationError("Participant just delivered, fill postnatal instead.")
+        except MaternalEligibility.DoesNotExist:
+            pass
+
+    def get_postnatal_enrollment(self):
+        cleaned_data = self.cleaned_data
+        registered_subject = cleaned_data.get('registered_subject')
+        try:
+            postnatal_enrollment = PostnatalEnrollment.objects.get(
+                registered_subject=registered_subject)
+        except PostnatalEnrollment.DoesNotExist:
+            postnatal_enrollment = None
+        return postnatal_enrollment
 
     class Meta:
         model = AntenatalEnrollment

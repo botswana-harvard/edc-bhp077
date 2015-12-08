@@ -1,6 +1,6 @@
-from django.core.urlresolvers import reverse
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import YES_NO_UNKNOWN, YES_NO_UNKNOWN_NA
 
@@ -65,6 +65,10 @@ class InfantBirthArv(InfantScheduledVisitModel):
         verbose_name="Comment if any additional pertinent information: ",
         blank=True,
         null=True)
+
+    objects = models.Manager()
+
+    history = AuditTrail()
 
     class Meta:
         app_label = "microbiome_infant"

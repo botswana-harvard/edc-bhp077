@@ -13,7 +13,7 @@ from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule
 
 
-class TestEnrollmentStatusHelper(TestCase):
+class TestEnrollmentStatus(TestCase):
 
     def setUp(self):
         try:
@@ -37,9 +37,8 @@ class TestEnrollmentStatusHelper(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35
-        )
-        self.assertFalse(antenatal_enrollment.eligible_for_postnatal)
+            gestation_wks=35)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_if_antenatal_postnatal_eligible(self):
 
@@ -47,15 +46,13 @@ class TestEnrollmentStatusHelper(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35
-        )
+            gestation_wks=35)
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35
-        )
+            gestation_wks_delivered=35)
 
         self.assertTrue(postnatal_enrollment.is_eligible)
 
@@ -65,47 +62,42 @@ class TestEnrollmentStatusHelper(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35
-        )
+            gestation_wks=35)
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35,
-            will_remain_onstudy=NO
-        )
+            gestation_wks_delivered=35,
+            will_remain_onstudy=NO)
 
         self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_if_antenatal_not_eligible(self):
-        antenatal = AntenatalEnrollmentFactory(
+        antenatal_enrollment = AntenatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
             gestation_wks=35,
             will_remain_onstudy=NO,
-            is_diabetic=YES,
-        )
-        self.assertFalse(antenatal.is_eligible)
+            is_diabetic=YES)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_if_antenatal_eligible(self):
-        antenatal = AntenatalEnrollmentFactory(
+        antenatal_enrollment = AntenatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35,
-        )
-        self.assertTrue(antenatal.is_eligible)
+            gestation_wks=35)
+        self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_if_postnatal_not_eligible(self):
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35,
-            will_remain_onstudy=NO
-        )
+            gestation_wks_delivered=35,
+            will_remain_onstudy=NO)
         self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_if_postnatal_eligible(self):
@@ -113,6 +105,6 @@ class TestEnrollmentStatusHelper(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35,
+            gestation_wks_delivered=35,
         )
         self.assertFalse(postnatal_enrollment.is_eligible)

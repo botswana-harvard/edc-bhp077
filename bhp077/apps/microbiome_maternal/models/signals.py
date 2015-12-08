@@ -89,25 +89,6 @@ def update_registered_subject_on_post_save(sender, instance, raw, created, using
             instance.registered_subject.save(using=using)
 
 
-@receiver(post_save, weak=False, dispatch_uid="maternal_visit_on_post_save")
-def maternal_visit_on_post_save(sender, instance, raw, created, using, **kwargs):
-    """Updates maternal scheduled meta data."""
-    if not raw:
-        if isinstance(instance, MaternalVisit):
-            instance.maternal_offstudy_required()
-            instance.maternal_death_required()
-            instance.update_maternal_scheduled_entry_meta_data()
-            instance.update_entry_meta_data()
-
-
-@receiver(post_save, weak=False, dispatch_uid="update_postnatal_on_antenatal_post_save")
-def update_postnatal_on_antenatal_post_save(sender, instance, raw, created, using, **kwargs):
-    """Updates maternal scheduled meta data."""
-    if not raw:
-        if isinstance(instance, AntenatalEnrollment):
-            instance.update_postnatal(instance.postnatal_enrollment)
-
-
 @receiver(post_save, weak=False, dispatch_uid='create_infant_identifier_on_labour_delivery')
 def create_infant_identifier_on_labour_delivery(sender, instance, raw, created, using, **kwargs):
     """Creates an identifier for registered infants"""
@@ -130,3 +111,14 @@ def create_infant_identifier_on_labour_delivery(sender, instance, raw, created, 
                     infant_identifier.get_identifier()
         except AttributeError:
             pass
+
+
+@receiver(post_save, weak=False, dispatch_uid="save_common_fields_to_postnatal_enrollment_post_save")
+def save_common_fields_to_postnatal_enrollment_post_save(sender, instance, raw, created, using, **kwargs):
+    """Updates common fields on postnatal_enrollment with values from antenatal_enrollment."""
+    if not raw:
+        try:
+            instance.save_common_fields_to_postnatal_enrollment()
+        except AttributeError as e:
+            if 'save_common_fields_to_postnatal_enrollment' not in str(e):
+                raise AttributeError(str(e))

@@ -1,4 +1,6 @@
-from edc_constants.constants import NOT_APPLICABLE, UNKNOWN, OTHER, UNSCHEDULED, SCHEDULED
+from edc_constants.constants import (
+    NOT_APPLICABLE, UNKNOWN, OTHER, UNSCHEDULED, SCHEDULED, MISSED_VISIT, LOST_VISIT,
+    OFF_STUDY, DEATH_VISIT)
 
 from .constants import NO_MODIFICATIONS, START, BREASTFEED_ONLY
 
@@ -14,11 +16,11 @@ VISIT_INFO_SOURCE = [
 # DONT CHANGE THESE !!
 VISIT_REASON = [
     (SCHEDULED, 'Scheduled visit/contact'),
-    ('missed', 'Missed Scheduled visit'),
+    (MISSED_VISIT, 'Missed Scheduled visit'),
     (UNSCHEDULED, 'Unscheduled visit at which lab samples or data are being submitted'),
-    ('lost', 'Lost to follow-up (use only when taking subject off study)'),
-    ('death', 'Death'),
-    ('off study', 'Subject has completed the study')]
+    (LOST_VISIT, 'Lost to follow-up (use only when taking subject off study)'),
+    (DEATH_VISIT, 'Death'),
+    (OFF_STUDY, 'Subject has completed the study')]
 
 VISIT_UNSCHEDULED_REASON = (
     ('Routine oncology', 'Routine oncology clinic visit'),

@@ -1,5 +1,6 @@
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc_base.model.validators import date_not_future
 from edc_consent.plain_fields import IsDateEstimatedField
@@ -216,9 +217,9 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name="List any comments about participant's feeding that are not answered above",
         blank=True,
         null=True)
+    objects = models.Manager()
 
-    def __st__(self):
-        return "%s" % (self.infant_visit)
+    history = AuditTrail()
 
     def save(self, *args, **kwargs):
         if self.previous_infant_feeding:

@@ -11,12 +11,15 @@ from edc_constants.constants import NO, YES, POS, NEG, NOT_APPLICABLE
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
 from .maternal_off_study_mixin import MaternalOffStudyMixin
+from .postnatal_enrollment import PostnatalEnrollment
 
 
 class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmentMixin,
                           RequiresConsentMixin, BaseUuidModel):
 
     CONSENT_MODEL = MaternalConsent
+
+    weeks_base_field = 'gestation_wks'  # for rapid test required calc
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
@@ -31,52 +34,44 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         verbose_name="How many weeks pregnant?",
         help_text=" (weeks of gestation). Eligible if >=36 weeks", )
 
-    antenatal_eligible = models.BooleanField(
-        default=False,
-        editable=False)
-
     objects = models.Manager()
 
     history = AuditTrail()
 
     def save(self, *args, **kwargs):
-        self.antenatal_eligible = self.eligible_for_postnatal
+        self.is_eligible = self.check_eligibility()
         super(AntenatalEnrollment, self).save(*args, **kwargs)
 
-    @property
-    def weeks_base(self):
-        return self.gestation_wks
+    def common_fields(self):
+        """Returns a list of field names common to postnatal
+        and antenatal enrollment models."""
+        return [field.name for field in EnrollmentMixin._meta.fields]
 
-    @property
-    def postnatal_enrollment(self):
-        try:
-            PostnatalEnrollment = models.get_model('microbiome_maternal', 'postnatalenrollment')
-            return PostnatalEnrollment.objects.get(registered_subject=self.registered_subject)
-        except PostnatalEnrollment.DoesNotExist:
-            return False
+    def save_common_fields_to_postnatal_enrollment(self):
+        """Saves common field values from Antenatal Enrollment to
+        Postnatal Enrollment if Postnatal Enrollment exists.
 
-    def update_postnatal(self, postnatal_enrollment):
+        Confirms is_eligible does not change value before saving."""
+        if self.is_eligible:
+            try:
+                postnatal_enrollment = PostnatalEnrollment.objects.get(
+                    registered_subject=self.registered_subject)
+                is_eligible = postnatal_enrollment.is_eligible
+                for attrname in self.common_fields():
+                    setattr(postnatal_enrollment, attrname, getattr(self, attrname))
+                if postnatal_enrollment.check_eligiblity() != is_eligible:
+                    raise ValueError(
+                        'Eligiblity calculated for Postnatal Enrollment unexpectedly '
+                        'changed after updating values from Antenatal Enrollment. '
+                        'Got \'is_eligible\' changed from {} to {}.'.format(
+                            is_eligible, postnatal_enrollment.is_eligible))
+                else:
+                    postnatal_enrollment.save()
+            except PostnatalEnrollment.DoesNotExist:
+                pass
 
-        if postnatal_enrollment:
-            postnatal_enrollment.is_diabetic = self.is_diabetic
-            postnatal_enrollment.on_tb_tx = self.on_tb_tx
-            postnatal_enrollment.on_hypertension_tx = self.on_hypertension_tx
-            postnatal_enrollment.will_breastfeed = self.will_breastfeed
-            postnatal_enrollment.will_remain_onstudy = self.will_remain_onstudy
-            postnatal_enrollment.week32_result = self.week32_result
-            postnatal_enrollment.week32_test_date = self.week32_test_date
-            postnatal_enrollment.current_hiv_status = self.current_hiv_status
-            postnatal_enrollment.valid_regimen = self.valid_regimen
-            postnatal_enrollment.evidence_hiv_status = self.evidence_hiv_status
-            postnatal_enrollment.rapid_test_done = self.rapid_test_done
-            postnatal_enrollment.rapid_test_date = self.rapid_test_date
-            postnatal_enrollment.rapid_test_result = self.rapid_test_result
-            postnatal_enrollment.valid_regimen = self.valid_regimen
-            postnatal_enrollment.save()
-
-    @property
-    def eligible_for_postnatal(self):
-        """Returns True if a mother is eligible for postnatalenrollment."""
+    def check_eligibility(self):
+        """Returns True if a mother is eligible."""
         if (self.gestation_wks >= 36 and self.is_diabetic == NO and
                 self.on_tb_tx == NO and self.on_hypertension_tx == NO and
                 self.will_breastfeed == YES and self.will_remain_onstudy == YES):

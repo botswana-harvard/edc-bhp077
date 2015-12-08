@@ -1,5 +1,6 @@
 from bhp077.apps.microbiome.constants import LIVE, STILL_BIRTH
 from edc_constants.choices import YES, NO
+from edc_constants.constants import CONTINUOUS, RESTARTED, OTHER, STOPPED, NOT_APPLICABLE, NEW
 
 LIVE_STILL_BIRTH = (
     (LIVE, 'live birth'),
@@ -23,7 +24,7 @@ RECRUIT_SOURCE = (
     ('ANC clinic staff', 'ANC clinic staff'),
     ('Staff at site of delivery', 'Staff at site of delivery'),
     ('BHP recruiter/clinician', 'BHP recruiter/clinician'),
-    ('OTHER', 'Other, specify'),
+    (OTHER, 'Other, specify'),
 )
 
 RECRUIT_CLINIC = (
@@ -32,7 +33,7 @@ RECRUIT_CLINIC = (
     ('BH3 Clinic', 'BH3 Clinic'),
     ('Nkoyaphiri', 'Nkoyaphiri Clinic'),
     ('Lesirane', 'Lesirane Clinic'),
-    ('OTHER', 'Other health facilities not associated with study site'),
+    (OTHER, 'Other health facilities not associated with study site'),
 )
 
 DELIVERY_HEALTH_FACILITY = (
@@ -40,15 +41,15 @@ DELIVERY_HEALTH_FACILITY = (
     ('G.West Clinic', 'G.West Clinic'),
     ('BH3 Clinic', 'BH3 Clinic'),
     ('Lesirane', 'Lesirane Clinic'),
-    ('OTHER', 'Other health facilities not associated with study site'),
+    (OTHER, 'Other health facilities not associated with study site'),
 )
 
 PRIOR_PREG_HAART_STATUS = (
-    ('Received continuos HAART from the time she started',
-     'Received continuos HAART from the time she started'),
-    ('Had treatment interruption but restarted',
+    (CONTINUOUS,
+     'Received continuous HAART from the time she started'),
+    (RESTARTED,
      'Had treatment interruption but restarted HAART prior to this pregnancy'),
-    ('interruption never restarted',
+    (STOPPED,
      'Had treatment interruption and never restarted HAART prior to this pregnancy'),
 )
 
@@ -58,13 +59,13 @@ MARITAL_STATUS = (
     ('Cohabiting', 'Cohabiting'),
     ('Widowed', 'Widowed'),
     ('Divorced', 'Divorced'),
-    ('OTHER', 'Other, specify'),)
+    (OTHER, 'Other, specify'),)
 
 ETHNICITY = (
     ('Black African', 'Black African'),
     ('Caucasian', 'Caucasian'),
     ('Asian', 'Asian'),
-    ('OTHER', 'Other, specify'),)
+    (OTHER, 'Other, specify'),)
 
 HIGHEST_EDUCATION = (
     ('None', 'None'),
@@ -81,7 +82,7 @@ CURRENT_OCCUPATION = (
     ('Self-employed', 'Self-employed'),
     ('Student', 'Student'),
     ('Unemployed', 'Unemployed'),
-    ('OTHER', 'Other, specify'),)
+    (OTHER, 'Other, specify'),)
 
 MONEY_PROVIDER = (
     ('You', 'You'),
@@ -98,7 +99,7 @@ MONEY_PROVIDER = (
     ('Friend', 'Friend'),
     ('Work collegues', 'Work collegues'),
     ('Unsure', 'Unsure'),
-    ('OTHER', 'Other, specify'),)
+    (OTHER, 'Other, specify'),)
 
 MONEY_EARNED = (
     ('None', 'None'),
@@ -113,7 +114,7 @@ WATER_SOURCE = (
     ('Piped directly into the house', 'Piped directly into the house'),
     ('Tap in the yard', 'Tap in the yard'),
     ('Communal standpipe', 'Communal standpipe'),
-    ('OTHER', 'Other water source (stream, borehole, rainwater, etc)'),)
+    (OTHER, 'Other water source (stream, borehole, rainwater, etc)'),)
 
 COOKING_METHOD = (
     ('Gas or electric stove', 'Gas or electric stove'),
@@ -126,7 +127,7 @@ TOILET_FACILITY = (
     ('Private latrine for your house/compound', 'Private latrine for your house/compound'),
     ('Shared latrine with other compounds', 'Shared latrine with other compounds'),
     ('No latrine facilities', 'No latrine facilities'),
-    ('OTHER', 'Other, specify'),)
+    (OTHER, 'Other, specify'),)
 
 HOUSE_TYPE = (
     ('Formal:Tin-roofed, concrete walls', 'Formal: Tin-roofed, concrete walls'),
@@ -198,8 +199,8 @@ REASON_FOR_HAART = (
     ('pmtct bf', '2. HAART for PMTCT while breastfeeding'),
     ('pp arv tail', '3. Brief postpartum antiretroviral "tail"'),
     ('unsure', '4. Unsure'),
-    ('OTHER', '9. OTHER'),
-    ('N/A', 'Not applicable'))
+    (OTHER, '9. OTHER'),
+    (NOT_APPLICABLE, 'Not applicable'))
 
 # haart modification
 ARV_DRUG_LIST = (
@@ -227,7 +228,7 @@ ARV_DRUG_LIST = (
 )
 
 DOSE_STATUS = (
-    ('New', 'New'),
+    (NEW, 'New'),
     ('Permanently discontinued', 'Permanently discontinued'),
     ('Temporarily held', 'Temporarily held'),
     ('Dose modified', 'Dose modified'),
@@ -271,33 +272,33 @@ ARV_MODIFICATION_REASON = (
     ('Non-adherence with clinic visits', 'Non-adherence with clinic visits'),
     ('Non-adherence with ARVs', 'Non-adherence with ARVs'),
     ('Death', 'Death'),
-    ('OTHER', 'Other'),
+    (OTHER, 'Other'),
 )
 
 REASON_UNSEEN_AT_CLINIC = (
-    ('I have not yet sought the clinic', 'I have not yet sought the clinic'),
-    ('could not get booking at clinic', 'I went to the clinic but could not get a booking'),
-    ('oberving confinement', 'I am observing confinement'),
-    ('not sexually active rigt now', 'I am not sexually active right now'),
-    ('I dont need contraception, breastfeeding', 'I do not need contraception because I am breastfeeding'),
-    ('clinic is far', 'The clinic is too far from my home'),
-    ('partner does not want to me attend', 'My partner does not want me to attend'),
-    ('mother does not want to me attend', 'My mother does not want me to attend'),
-    ('OTHER', 'Other'),
+    ('not_tried', 'I have not yet sought the clinic'),
+    ('no_booking', 'I went to the clinic but could not get a booking'),
+    ('in_confinement', 'I am observing confinement'),
+    ('not_sexually_active', 'I am not sexually active right now'),
+    ('no_contraception_bf', 'I do not need contraception because I am breastfeeding'),
+    ('too_far', 'The clinic is too far from my home'),
+    ('partner_refused', 'My partner does not want me to attend'),
+    ('mother_refused', 'My mother does not want me to attend'),
+    (OTHER, 'Other'),
 )
 
 REASON_CONTRACEPTIVE_NOT_INITIATED = (
-    ('no option i preferred', 'There was not an option I preferred'),
-    ('option of preference out of stock',
+    ('no_options', 'There was not an option I preferred'),
+    ('no_stock_for_preference',
      'The option I preferred was out of stock (state option if this answer is indicated)'),
-    ('i am sexually active', 'I am not currently sexually active'),
-    ('i felt disrespected', 'I felt disrespected by the SRH clinic'),
-    ('i am breastfeeding and was told i dont need contraceptives',
+    ('not_sexually_active', 'I am not currently sexually active'),
+    ('disrespected', 'I felt disrespected by the SRH clinic'),
+    ('no_contraception_bf',
      'I was told that because I am breastfeeding, I do not need a contraceptive metod'),
-    ('partner does not want me to use contraceptive',
+    ('partner_refused',
      'My current partner does not want me to use a contraceptive method'),
     ('was not attended by a clinician', 'I was not attended by a clinician when I went to the SRH clinic'),
-    ('OTHER', 'Other'),
+    (OTHER, 'Other'),
 )
 
 SITE = (

@@ -18,7 +18,7 @@ from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentF
 from edc_constants.constants import UNKNOWN, DWTA, NEVER
 
 
-class TestPostnatalEnroll(TestCase):
+class TestPostnatalEnrollment(TestCase):
     """Test eligibility of a mother for postnatal enrollment."""
 
     def setUp(self):
@@ -41,7 +41,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             will_breastfeed=YES
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_breatfeed_no(self):
         """Test for when breast feeding for a year is no."""
@@ -50,7 +50,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             will_breastfeed=NO
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_on_tb_tx(self):
         """Test for when on tb treatment."""
@@ -59,7 +59,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             on_tb_tx=YES
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_not_on_tb_tx(self):
         """Test for when not on tb treatment."""
@@ -68,7 +68,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             on_tb_tx=NO
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_is_diabetic(self):
         """Test for a subject who is diabetic."""
@@ -77,7 +77,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             is_diabetic=YES
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_is_not_diabetic(self):
         """Test for a subject who is not diabetic."""
@@ -86,7 +86,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             is_diabetic=NO
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_will_remain_onstudy(self):
         """Test for a subject who is in the study for a year."""
@@ -95,7 +95,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             will_remain_onstudy=YES
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_not_will_remain_onstudy(self):
         """Test for a subject who is not in the study for a year."""
@@ -104,7 +104,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             will_remain_onstudy=NO
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_postpartum_days_more_than_3_days(self):
         """Test for a subject whose postpartum days is more than 3 days."""
@@ -113,7 +113,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             postpartum_days=4
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_postpartum_days_less_than_3_days(self):
         """Test for a subject whose postpartum days is less than 3 days."""
@@ -122,7 +122,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             postpartum_days=2
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_postpartum_days_equal_3_days(self):
         """Test for a subject whose postpartum days is equals 3 days."""
@@ -131,7 +131,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             postpartum_days=3
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_vaginal_delivery_viginal(self):
         """Test for a subject whose delivery type is viginal."""
@@ -140,7 +140,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             vaginal_delivery=YES
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_vaginal_delivery_not_viginal(self):
         """Test for a subject whose delivery type is viginal."""
@@ -149,7 +149,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             vaginal_delivery=NO
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_still_birth(self):
         """Test for a subject who had a still birth."""
@@ -158,7 +158,7 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             delivery_status=STILL_BIRTH
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_live_birth(self):
         """Test for a subject who had a live birth."""
@@ -167,34 +167,34 @@ class TestPostnatalEnroll(TestCase):
             registered_subject=self.registered_subject,
             delivery_status=LIVE
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
-    def test_gestation_to_birth_wks_below_37(self):
+    def test_gestation_wks_delivered_below_37(self):
         """Test for a subject whose gestation before birth is below 37."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            gestation_to_birth_wks=36
+            gestation_wks_delivered=36
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
-    def test_gestation_to_birth_wks_equal_37(self):
+    def test_gestation_wks_delivered_equal_37(self):
         """Test for a subject whose gestation before birth is equals to 37."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            gestation_to_birth_wks=37
+            gestation_wks_delivered=37
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
-    def test_gestation_to_birth_wks_above_37(self):
+    def test_gestation_wks_delivered_above_37(self):
         """Test for a subject whose gestation before birth is above 37."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            gestation_to_birth_wks=38
+            gestation_wks_delivered=38
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_pos_has_evidence_valid_regimen_valid_regimen_duration(self):
         """Test for a subject who is positive, has evidence, valid regimen, valid regimen duration."""
@@ -206,7 +206,7 @@ class TestPostnatalEnroll(TestCase):
             valid_regimen=YES,
             valid_regimen_duration=YES
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_pos_has_evidence_no_valid_regimen(self):
         """Test for a subject who is positive, has evidence, no valid regimen."""
@@ -217,7 +217,7 @@ class TestPostnatalEnroll(TestCase):
             evidence_hiv_status=YES,
             valid_regimen=NO,
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_pos_has_evidence_valid_regimen_unvalid_regimen_duration(self):
         """Test for a subject who is positive, has evidence, valid regimen, unvalid regimen duration."""
@@ -229,7 +229,7 @@ class TestPostnatalEnroll(TestCase):
             valid_regimen=YES,
             valid_regimen_duration=NO
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_negative_with_evidence(self):
         """Test for a subject whose verbal hiv status is negative and has evidence."""
@@ -239,7 +239,7 @@ class TestPostnatalEnroll(TestCase):
             current_hiv_status=NEG,
             evidence_hiv_status=YES
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_negative_with_no_evidence(self):
         """Test for a subject whose verbal hiv status is negative and has no evidence."""
@@ -252,7 +252,7 @@ class TestPostnatalEnroll(TestCase):
             rapid_test_done=YES,
             rapid_test_result=NEG
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_neg_with_no_evidence(self):
         """Test for a subject whose verbal hiv status is NEG and has no evidence, rapid test result POS."""
@@ -265,7 +265,7 @@ class TestPostnatalEnroll(TestCase):
             rapid_test_done=YES,
             rapid_test_result=POS
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_never_tested_for_HIV_1(self):
         """Test for a subject whose verbal hiv status is Never tested for HIV and rapid test result is NEG."""
@@ -277,7 +277,7 @@ class TestPostnatalEnroll(TestCase):
             rapid_test_done=YES,
             rapid_test_result=NEG
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_never_tested_for_HIV_2(self):
         """Test for a subject whose verbal hiv status is Never tested for HIV rapid test result POS."""
@@ -289,7 +289,7 @@ class TestPostnatalEnroll(TestCase):
             rapid_test_done=YES,
             rapid_test_result=POS
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_unknown_rapid_test_result_neg(self):
         """Test for a subject whose verbal hiv status is unknown and rapid test result NEG."""
@@ -301,7 +301,7 @@ class TestPostnatalEnroll(TestCase):
             rapid_test_done=YES,
             rapid_test_result=NEG
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_unknown_rapid_test_result_pos(self):
         """Test for a subject whose verbal hiv status is unknown and rapid test result POS."""
@@ -313,7 +313,7 @@ class TestPostnatalEnroll(TestCase):
             rapid_test_done=YES,
             rapid_test_result=POS
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_refused_to_answer_rapid_test_result_pos(self):
         """Test for a subject whose verbal hiv status is refused to answer and rapid test result POS."""
@@ -325,7 +325,7 @@ class TestPostnatalEnroll(TestCase):
             rapid_test_done=YES,
             rapid_test_result=POS
         )
-        self.assertFalse(postnatal_enrollment.postnatal_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_refused_to_answer_rapid_test_result_neg(self):
         """Test for a subject whose verbal hiv status is refused to answer and rapid test result NEG."""
@@ -337,7 +337,7 @@ class TestPostnatalEnroll(TestCase):
             rapid_test_done=YES,
             rapid_test_result=NEG
         )
-        self.assertTrue(postnatal_enrollment.postnatal_eligible)
+        self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_pos_with_evidence(self):
         """Test that pos subject with evidence has unchanging status on postnatal enrollment"""

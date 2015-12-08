@@ -1,33 +1,26 @@
+from dateutil import rrule
 from django import forms
 
 from edc_constants.constants import POS, NEG, NOT_APPLICABLE, YES, NO, DWTA, UNKNOWN, NEVER
 
 from bhp077.apps.microbiome.base_model_form import BaseModelForm
 
-from ..models import BaseEnrollment, MaternalConsent, SpecimenConsent
+from ..models import MaternalConsent, SpecimenConsent
 
 
 class BaseEnrollmentForm(BaseModelForm):
 
     def clean(self):
         cleaned_data = super(BaseEnrollmentForm, self).clean()
-        self.confirm_specimen_consent_exists()
-        self.current_hiv_status_and_rapid_test()
-        self.week32_test_and_result()
+        self.requires_specimen_consent()
+        self.requires_rapid_test_if_current_hiv_status_uknown()
+        self.requires_week32_result_if_tested()
         self.neg_current_hiv_status_and_test_and_regimen()
         self.pos_current_hiv_status_and_test_and_regimen()
         self.valid_regimen_and_duration()
         self.week32_test_matches_current()
         self.rapid_test_date_and_result()
         return cleaned_data
-
-    def validate_create_rapid_tests(self, instance):
-        cleaned_data = self.cleaned_data
-        if instance.current_hiv_status == NEG:
-            if instance.rapid_test_required:
-                if cleaned_data.get('rapid_test_done') == NO:
-                    raise forms.ValidationError(
-                        "Rapid test is required. Participant tested >=32 weeks ago.")
 
     def clean_report_datetime(self):
         report_datetime = self.cleaned_data['report_datetime']
@@ -40,10 +33,35 @@ class BaseEnrollmentForm(BaseModelForm):
                     maternal_consent.consent_datetime))
         return report_datetime
 
-    def confirm_specimen_consent_exists(self):
+    def clean_registered_subject(self):
+        registered_subject = self.cleaned_data['registered_subject']
+        if not registered_subject:
+            raise forms.ValidationError('Expected a registered subject. Got None.')
+        return registered_subject
+
+    def requires_specimen_consent(self):
         self.get_consent_or_raise(SpecimenConsent)
 
-    def current_hiv_status_and_rapid_test(self):
+    def raise_if_rapid_test_required(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('current_hiv_status') == NEG:
+            weeks_since_test = self.weeks_since_test(
+                cleaned_data.get('week32_test_date'), cleaned_data.get('report_datetime'))
+            if weeks_since_test >= 32 and cleaned_data.get('rapid_test_done') == NO:
+                    raise forms.ValidationError(
+                        "Rapid test is required. Participant tested >=32 weeks ago.")
+
+    def weeks_since_test(self, week32_test_date, report_datetime):
+        """Returns the number of weeks since the last HIV test.
+
+        Only relevant for tests with a NEG result."""
+        cleaned_data = self.cleaned_data
+        weeks = rrule.rrule(
+            rrule.WEEKLY, dtstart=self.week32_test_date, until=self.report_datetime.date()).count()
+        weeks_since_test = cleaned_data.get(self.model.weeks_base_field) - weeks
+        return weeks_since_test
+
+    def requires_rapid_test_if_current_hiv_status_uknown(self):
         cleaned_data = self.cleaned_data
         if cleaned_data.get('current_hiv_status') in [NEVER, UNKNOWN, DWTA]:
             if cleaned_data.get('rapid_test_done') == NOT_APPLICABLE:
@@ -56,7 +74,7 @@ class BaseEnrollmentForm(BaseModelForm):
                     "conduct HIV rapid testing today to continue with "
                     "the eligibility screen".format(cleaned_data.get('current_hiv_status')))
 
-    def week32_test_and_result(self):
+    def requires_week32_result_if_tested(self):
         cleaned_data = self.cleaned_data
         if cleaned_data.get("week32_test") == YES:
             if not cleaned_data.get("week32_result"):
@@ -154,7 +172,3 @@ class BaseEnrollmentForm(BaseModelForm):
                 raise forms.ValidationError(
                     'You indicated that a rapid test was NOT processed, yet rapid test result '
                     'was provided. Please correct.')
-
-    class Meta:
-        model = BaseEnrollment
-        fields = '__all__'

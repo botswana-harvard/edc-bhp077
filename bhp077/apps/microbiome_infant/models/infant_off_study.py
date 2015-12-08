@@ -26,10 +26,6 @@ class InfantOffStudy(BaseOffStudy, BaseUuidModel):
 
     entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 
-    objects = models.Manager()
-
-    history = AuditTrail()
-
     def get_visit(self):
         return self.infant_visit
 
