@@ -79,7 +79,7 @@ class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin,
         This method is called in the edc.entry_meta_data signal."""
         if self.reason == OFF_STUDY:
             self.change_to_off_study_visit(self.appointment, 'microbiome_maternal', 'maternaloffstudy')
-        elif self.reason == DEAD:
+        elif self.reason == DEATH_VISIT:
             self.change_to_death_visit(
                 self.appointment, 'microbiome_maternal', 'maternaloffstudy', 'maternaldeath')
         elif self.reason == UNSCHEDULED:
