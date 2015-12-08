@@ -1,6 +1,6 @@
 from django import forms
 
-from edc_constants.constants import NO, STOPPED, CONTINUOUS
+from edc_constants.constants import NO, STOPPED, CONTINUOUS, RESTARTED
 from bhp077.apps.microbiome.utils import weeks_between
 
 from ..models import MaternalArvHistory, MaternalConsent
@@ -20,10 +20,14 @@ class MaternalArvHistoryForm(BaseMaternalModelForm):
         """Confirms that HAART is not continuous or stopped if reported as not on haart."""
         cleaned_data = self.cleaned_data
         if cleaned_data.get('preg_on_haart') == NO:
-            if cleaned_data.get('prior_preg') == CONTINUOUS:
+            if cleaned_data.get('prior_preg') == RESTARTED:
                 raise forms.ValidationError(
                     'You indicated that the mother was NOT on triple ARV when she '
                     'got pregnant. ARVs could not have been interrupted. Please correct.')
+            if cleaned_data.get('prior_preg') == CONTINUOUS:
+                raise forms.ValidationError(
+                    'You indicated that the mother was NOT on triple ARV when she '
+                    'got pregnant. ARVs could not have been uninterrupted. Please correct.')
         else:
             if cleaned_data.get('prior_preg') == STOPPED:
                 raise forms.ValidationError(

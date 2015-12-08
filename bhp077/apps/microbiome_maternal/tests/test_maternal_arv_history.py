@@ -10,7 +10,7 @@ from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.choices import YES, NO
-from edc_constants.constants import CONTINUOUS, STOPPED
+from edc_constants.constants import CONTINUOUS, STOPPED, RESTARTED
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -73,26 +73,29 @@ class TestMaternalArvHistory(TestCase):
                       "and never restarted.", errors)
 
     def test_arv_interrupt_2(self):
-        """Assert that if was not still on ARV then 'Had treatment interruption but restarted' is not a valid option."""
+        """Assert that if was not on ARV then 'Had treatment
+        interruption but restarted' is not a valid option."""
         self.data['preg_on_haart'] = NO
-        self.data['prior_preg'] = STOPPED
+        self.data['prior_preg'] = RESTARTED
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You indicated that the mother was NOT still on tripple ARV when she got pregnant. Yet stated '
-                      'Had treatment interruption but restarted', errors)
+        self.assertIn(
+            'You indicated that the mother was NOT on triple ARV when she got pregnant. '
+            'ARVs could not have been interrupted. Please correct.', errors)
 
     def test_arv_interrupt_3(self):
-        """Assert that if was not still on ARV then 'Received continuos HAART from the time she started'
+        """Assert that if was not still on ARV then 'Received continuous HAART from the time she started'
            is not a valid option."""
         self.data['preg_on_haart'] = NO
-        self.data['prior_preg'] = 'Received continuos HAART from the time she started'
+        self.data['prior_preg'] = CONTINUOUS
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You indicated that the mother was NOT still on tripple ARV when she got pregnant. Yet stated '
-                      'Received continuos HAART from the time she started', errors)
+        self.assertIn(
+            'You indicated that the mother was NOT on triple ARV when she got pregnant. '
+            'ARVs could not have been uninterrupted. Please correct.', errors)
 
     def test_arv_interrupt_4(self):
-        """Assert that if was not still on ARV only valid answer is 'interrrupted and never restarted'"""
+        """Assert that if was not still on ARV only valid answer is 'interrupted and never restarted'"""
         self.data['preg_on_haart'] = NO
         self.data['prior_preg'] = STOPPED
         form = MaternalArvHistoryForm(data=self.data)
