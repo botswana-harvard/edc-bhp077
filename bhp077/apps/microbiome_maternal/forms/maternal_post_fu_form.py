@@ -27,6 +27,7 @@ class MaternalPostFuForm(BaseMaternalModelForm):
         if cleaned_data.get('systolic_bp') < cleaned_data.get('diastolic_bp'):
             raise forms.ValidationError('Systolic blood pressure cannot be lower than the diastolic blood preassure.'
                                         ' Please correct.')
+        return cleaned_data
 
     class Meta:
         model = MaternalPostFu
@@ -58,20 +59,24 @@ class MaternalPostFuDxTForm (BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(MaternalPostFuDxTForm, self).clean()
 
-        if cleaned_data.get('maternal_post_fu').new_diagnoses == NO and cleaned_data.get('post_fu_dx'):
+        if cleaned_data.get('maternal_post_fu_dx').new_dx_since == NO and cleaned_data.get('post_fu_dx'):
             raise forms.ValidationError('You indicated that there was NO new diagnosis'
                                         ' and yet provided a diagnosis. Please correct.')
 
         if cleaned_data.get('post_fu_dx'):
-            if not (cleaned_data.get('post_fu_specify') or
-                    not cleaned_data.get('grade') or
+            if not (
+                    cleaned_data.get('grade') or
                     not cleaned_data.get('hospitalized')):
                 raise forms.ValidationError('Please fill in all diagnosis information.')
 
-        if cleaned_data.get('maternal_post_fu').mother_hospitalized == NO and cleaned_data.get('hospitalized'):
-            raise forms.ValidationError(
-                'You indicated that participant was not hospitalized above. Please correct.')
-
+        if cleaned_data.get('maternal_post_fu_dx').hospitalized_since == NO:
+            if cleaned_data.get('hospitalized') == YES:
+                raise forms.ValidationError(
+                    'You indicated that participant was not hospitalized above. Please correct.')
+        else:
+            if cleaned_data.get('hospitalized') == NO:
+                raise forms.ValidationError(
+                    'You indicated that participant WAS hospitalized above. Please correct.')
         return cleaned_data
 
     class Meta:
