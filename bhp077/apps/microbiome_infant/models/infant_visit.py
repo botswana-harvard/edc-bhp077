@@ -6,7 +6,8 @@ from edc_base.audit_trail import AuditTrail
 from edc.entry_meta_data.models import MetaDataMixin
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.subject.registration.models import RegisteredSubject
-from edc_constants.constants import MALE, OFF_STUDY, DEATH_VISIT, UNSCHEDULED
+from edc_constants.constants import MALE, OFF_STUDY, DEATH_VISIT, UNSCHEDULED, LOST_VISIT
+from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 from bhp077.apps.microbiome.choices import (VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS,
@@ -106,6 +107,15 @@ class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUui
 
     def get_visit_reason_choices(self):
         return VISIT_REASON
+
+    def get_visit_reason_no_follow_up_choices(self):
+        """Returns the visit reasons that do not imply any data collection; that is, the subject is not available."""
+        dct = {}
+        for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
+            dct.update({item: item})
+        del dct[DEATH_VISIT]
+        del dct[LOST_VISIT]
+        return dct
 
     class Meta:
         app_label = "microbiome_infant"
