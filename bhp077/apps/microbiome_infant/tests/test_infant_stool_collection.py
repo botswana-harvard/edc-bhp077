@@ -1,18 +1,17 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from edc.subject.registration.models import RegisteredSubject
 from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
+from edc.subject.lab_tracker.classes import site_lab_tracker
+from edc.subject.registration.models import RegisteredSubject
+from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_infant.forms import InfantStoolCollectionForm
 from bhp077.apps.microbiome_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
-from bhp077.apps.microbiome_lab.tests.factories import InfantRequistionFactory
 from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
 from bhp077.apps.microbiome_maternal.tests.factories import (
@@ -20,8 +19,6 @@ from bhp077.apps.microbiome_maternal.tests.factories import (
     MaternalVisitFactory, PostnatalEnrollmentFactory)
 from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
 from bhp077.apps.microbiome_infant.constants import REALTIME, CLOTH_NAPPY
-from bhp077.apps.microbiome_lab.models.panel import Panel
-from bhp077.apps.microbiome_lab.models.aliquot_type import AliquotType
 
 
 class TestInfantStoolCollection(TestCase):
@@ -59,12 +56,6 @@ class TestInfantStoolCollection(TestCase):
             registered_subject=infant_registered_subject,
             visit_definition__code='2000')
         self.infant_visit = InfantVisitFactory(appointment=self.appointment)
-        panel = Panel.objects.get(name='Stool storage')
-        aliquot_type = AliquotType.objects.get(name='Stool')
-        self.infant_requisition = InfantRequistionFactory(
-            infant_visit=self.infant_visit,
-            aliquot_type=aliquot_type,
-            panel=panel)
         self.data = {
             'report_datetime': timezone.now(),
             'infant_visit': self.infant_visit.id,
@@ -108,8 +99,6 @@ class TestInfantStoolCollection(TestCase):
 
     def test_sample_obtained_4(self):
         self.data['nappy_type'] = CLOTH_NAPPY
-        self.infant_requisition.is_drawn = NO
-        self.infant_requisition.save()
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('Sample is indicated to have NOT been collected, you CANNOT '
@@ -117,8 +106,6 @@ class TestInfantStoolCollection(TestCase):
 
     def test_sample_obtained_5(self):
         self.data['stool_collection'] = 'brought'
-        self.infant_requisition.is_drawn = NO
-        self.infant_requisition.save()
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('Sample is indicated to have NOT been obtained today, you cannot specify the '
@@ -126,8 +113,6 @@ class TestInfantStoolCollection(TestCase):
 
     def test_sample_obtained_6(self):
         self.data['stool_stored'] = YES
-        self.infant_requisition.is_drawn = NO
-        self.infant_requisition.save()
         form = InfantStoolCollectionForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('Sample is stated to have been NOT obtained today, you cannot specify how the '
@@ -195,11 +180,3 @@ class TestInfantStoolCollection(TestCase):
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You have stated the infant did NOT take antibiotics in the past 7 days, '
                       'you cannot indicate antibiotics were taken in the past 24 hours.', errors)
-
-    def test_stool_requisition_and_no_stool_obtained(self):
-        self.data['sample_obtained'] = NO
-        form = InfantStoolCollectionForm(data=self.data)
-        self.assertIn(
-            'Stool requisition is drawn with id {}. Sample obtained cannot be {}'.format(
-                self.infant_requisition.requisition_identifier,
-                self.data['sample_obtained']), form.errors.get('__all__'))
