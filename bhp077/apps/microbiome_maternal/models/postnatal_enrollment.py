@@ -108,6 +108,16 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         return eligible
 
     @property
+    def maternal_hiv_status(self):
+        return (
+            (self.evidence_hiv_status == YES and self.current_hiv_status == POS) or
+            (self.rapid_test_done == YES and self.rapid_test_result == POS))
+
+    @property
+    def maternal_rapid_test_result_neg(self):
+        return self.rapid_test_done == YES and self.rapid_test_result == NEG
+
+    @property
     def antenatal_enrollment(self):
         AntenatalEnrollment = get_model('microbiome_maternal', 'antenatalenrollment')
         try:

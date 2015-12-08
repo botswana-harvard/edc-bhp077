@@ -7,7 +7,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, POS, NEG
+from edc_constants.constants import NEW, YES, POS, MALE, SCHEDULED, NOT_REQUIRED, UNKEYED
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory, MaternalVisitFactory)
@@ -40,6 +40,11 @@ class TestRuleGroupInfant(TestCase):
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
+        self.postnatal_enrollment = PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES)
+
     def lab_entry_model_options(self, app_label, model_name, appointment, panel_name):
         model_options = {}
         model_options.update(
@@ -60,70 +65,35 @@ class TestRuleGroupInfant(TestCase):
     def test_hiv_status_pos_on_postnatal_enrollment(self):
         """
         """
-        PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
-            current_hiv_status=POS,
-            evidence_hiv_status=YES,
-        )
-
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='2000M'
-        )
+            registered_subject=self.registered_subject, visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment)
 
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
 
         registered_subject_infant = RegisteredSubject.objects.get(
-            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier
-        )
+            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier)
         InfantBirthFactory(
             registered_subject=registered_subject_infant,
-            maternal_labour_del=maternal_labour_del,
-        )
-        appointment = Appointment.objects.get(
-            registered_subject=registered_subject_infant,
-            visit_definition__code='2000'
-        )
-        InfantVisitFactory(appointment=appointment)
-
-        self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
-            app_label='microbiome_infant', model_name='infantbirtharv', appointment=appointment
-        )).count(), 1)
-
-    def test_infant_birth_male(self):
-        PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
-            current_hiv_status=POS,
-            evidence_hiv_status=YES,
-        )
+            maternal_labour_del=maternal_labour_del)
 
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='2000M'
-        )
-        maternal_visit = MaternalVisitFactory(appointment=appointment)
-
-        maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
-
-        registered_subject_infant = RegisteredSubject.objects.get(
-            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier
-        )
-        InfantBirthFactory(
             registered_subject=registered_subject_infant,
-            maternal_labour_del=maternal_labour_del,
-            gender='M',
-        )
-        for code in ['2030', '2060', '2090', '2120']:
-            appointment = Appointment.objects.get(
-                registered_subject=registered_subject_infant, visit_definition__code=code
-            )
-            InfantVisitFactory(appointment=appointment)
-            self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
-                app_label='microbiome_infant', model_name='infantcircumcision', appointment=appointment
-            )).count(), 1)
+            visit_definition__code='2000')
+
+        InfantVisitFactory(appointment=appointment, reason=SCHEDULED)
+
+        self.assertEqual(ScheduledEntryMetaData.objects.filter(
+            entry_status=UNKEYED,
+            entry__app_label='microbiome_infant',
+            entry__model_name='infantbirtharv',
+            appointment=appointment).count(), 1)
 
     def test_congentinal_yes(self):
         """
         """
+        self.postnatal_enrollment.delete()
+
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
         )
@@ -155,34 +125,25 @@ class TestRuleGroupInfant(TestCase):
             app_label='microbiome_infant', model_name='infantcongenitalanomalies', appointment=appointment
         )).count(), 1)
 
-    def test_maternal_pos_with_evidence(self):
+    def test_if_maternal_pos_dna_pcr_required(self):
         """
         """
-        PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
-            current_hiv_status=POS,
-            evidence_hiv_status=YES,
-        )
-
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='2000M'
-        )
+            registered_subject=self.registered_subject, visit_definition__code='2000M')
+
         maternal_visit = MaternalVisitFactory(appointment=appointment)
 
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
 
         registered_subject_infant = RegisteredSubject.objects.get(
-            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier
-        )
+            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier)
         InfantBirthFactory(
             registered_subject=registered_subject_infant,
-            maternal_labour_del=maternal_labour_del,
-        )
+            maternal_labour_del=maternal_labour_del)
 
-        for code in ['2010']:  # '2010', '2030', '2060', '2090', '2120'
+        for code in ['2010', '2030', '2060', '2090', '2120']:
             appointment = Appointment.objects.get(
-                registered_subject=registered_subject_infant, visit_definition__code=code
-            )
+                registered_subject=registered_subject_infant, visit_definition__code=code)
             InfantVisitFactory(appointment=appointment)
             self.assertEqual(RequisitionMetaData.objects.filter(
                 entry_status=NEW, lab_entry__requisition_panel__name='DNA PCR',
@@ -194,11 +155,6 @@ class TestRuleGroupInfant(TestCase):
     def test_infant_fu_rules(self):
         """
         """
-        PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
-            current_hiv_status=POS,
-            evidence_hiv_status=YES,
-        )
 
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M'
@@ -208,21 +164,18 @@ class TestRuleGroupInfant(TestCase):
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
 
         registered_subject_infant = RegisteredSubject.objects.get(
-            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier
-        )
+            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier)
 
         InfantBirthFactory(
             registered_subject=registered_subject_infant,
             maternal_labour_del=maternal_labour_del,
         )
         appointment = Appointment.objects.get(
-            visit_definition__code='2010', registered_subject=registered_subject_infant,
-        )
+            visit_definition__code='2010', registered_subject=registered_subject_infant)
 
         infant_visit = InfantVisitFactory(
             appointment=appointment,
-            reason='scheduled'
-        )
+            reason='scheduled')
 
         InfantFuFactory(infant_visit=infant_visit)
 
@@ -234,44 +187,31 @@ class TestRuleGroupInfant(TestCase):
             app_label='microbiome_infant', model_name='infantfudx', appointment=appointment
         )).count(), 1)
 
-    def test_infant_dna_pcr(self):
-        """
-        """
-        PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
-            current_hiv_status=POS,
-            evidence_hiv_status=YES,
-        )
+    def test_infant_visit_circumcision_required(self):
 
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='2000M'
-        )
+            registered_subject=self.registered_subject, visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment)
 
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
 
         registered_subject_infant = RegisteredSubject.objects.get(
-            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier
-        )
+            subject_type='infant',
+            relative_identifier=self.registered_subject.subject_identifier)
 
         InfantBirthFactory(
             registered_subject=registered_subject_infant,
             maternal_labour_del=maternal_labour_del,
-        )
+            gender=MALE)
 
-        visit_codes = [
-            ['2010', ['infantrequisition']]
-        ]
-        for visit in visit_codes:
-            code, model_names = visit
-            appointment = Appointment.objects.get(
-                registered_subject=registered_subject_infant, visit_definition__code=code
-            )
-            InfantVisitFactory(
-                appointment=appointment,
-                reason='scheduled'
-            )
-            for model_name in model_names:
-                self.assertEqual(RequisitionMetaData.objects.filter(entry_status=NEW, **self.lab_entry_model_options(
-                    app_label='microbiome_lab', model_name=model_name, appointment=appointment, panel_name='DNA PCR'
-                )).count(), 1)
+        appointment = Appointment.objects.get(
+            registered_subject=registered_subject_infant, visit_definition__code='2030')
+        InfantVisitFactory(
+            appointment=appointment,
+            reason=SCHEDULED)
+
+        self.assertEqual(ScheduledEntryMetaData.objects.filter(
+            entry_status=UNKEYED,
+            entry__app_label='microbiome_infant',
+            entry__model_name='infantcircumcision',
+            appointment=appointment).count(), 1)

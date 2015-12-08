@@ -24,4 +24,4 @@ from .infant_congenital_anomalies import (
     InfantRespiratoryDefectItems, InfantLowerGastrointestinalItems, InfantFemaleGenitalAnomalyItems,
     InfantMaleGenitalAnomalyItems, InfantRenalAnomalyItems, InfantMusculoskeletalAbnormalItems,
     InfantSkinAbnormalItems, InfantTrisomiesChromosomeItems, InfantOtherAbnormalityItems, )
-from .signals import update_infant_registered_subject_on_post_save
+from .signals import update_infant_registered_subject_on_post_save, infant_visit_on_post_save

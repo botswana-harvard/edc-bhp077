@@ -5,7 +5,7 @@ from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaDa
 from edc.subject.entry.models import Entry, LabEntry
 from edc.subject.appointment.models import Appointment
 
-from edc_constants.constants import NEW, KEYED
+from edc_constants.constants import NEW, KEYED, UNKEYED
 
 
 class MetaDataMixin(object):
@@ -45,27 +45,19 @@ class MetaDataMixin(object):
         lab_meta_data.delete()
         return True
 
-    def entry_model_options(self, app_label, model_name):
+    def lab_entry_model_options(self, model_name, panel_name):
         model_options = {}
-        model_options.update(
-            entry__app_label=app_label,
-            entry__model_name=model_name,
-            appointment=self.appointment)
+        model_options.update()
         return model_options
 
-    def lab_entry_model_options(self, app_label, model_name, panel_name):
-        model_options = {}
-        model_options.update(
-            lab_entry__app_label=app_label,
-            lab_entry__model_name=model_name,
-            appointment=self.appointment,
-            lab_entry__requisition_panel__name=panel_name)
-        return model_options
-
-    def update_requistion_entry_meta_data(self, app_label, model_name, panel_name):
+    def requisition_is_required(self, model_name, panel_name):
         try:
             rq = RequisitionMetaData.objects.get(
-                **self.lab_entry_model_options(app_label, model_name, panel_name))
+                lab_entry__app_label='microbiome_lab',
+                lab_entry__model_name=model_name,
+                appointment=self.appointment,
+                lab_entry__requisition_panel__name=panel_name
+            )
             rq.entry_status = NEW
             rq.save()
         except RequisitionMetaData.DoesNotExist:
@@ -73,10 +65,14 @@ class MetaDataMixin(object):
         except AttributeError:
             pass
 
-    def update_scheduled_entry_meta_data(self, app_label, model_name):
+    def scheduled_entry_meta_data_required(self, app_label, model_name):
         try:
-            sd = ScheduledEntryMetaData.objects.get(**self.entry_model_options(app_label, model_name))
-            sd.entry_status = NEW
+            sd = ScheduledEntryMetaData.objects.get(
+                entry__app_label=app_label,
+                entry__model_name=model_name,
+                appointment=self.appointment
+            )
+            sd.entry_status = UNKEYED
             sd.save()
         except ScheduledEntryMetaData.DoesNotExist:
             pass

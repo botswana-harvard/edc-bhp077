@@ -1,9 +1,21 @@
+from __future__ import print_function
+
 from edc.subject.rule_groups.classes import (RuleGroup, site_rule_groups, Logic,
                                              ScheduledDataRule)
 
-from bhp077.apps.microbiome_infant.models import InfantBirthData, InfantVisit, InfantFu
+from bhp077.apps.microbiome_infant.models import InfantBirthData, InfantVisit, InfantFu, InfantBirthArv
+from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 
-from edc_constants.constants import YES, NEW, NOT_REQUIRED
+from edc_constants.constants import YES, NOT_REQUIRED, POS, UNKEYED, MALE
+from edc.subject.registration.models.registered_subject import RegisteredSubject
+
+
+def func_maternal_hiv_pos(visit_instance):
+    """Returns true if mother is hiv positive."""
+    registered_subject = RegisteredSubject.objects.get(
+        subject_identifier=visit_instance.appointment.registered_subject.relative_identifier)
+    postnatal_enrollment = PostnatalEnrollment.objects.get(registered_subject=registered_subject)
+    return postnatal_enrollment.maternal_hiv_status == POS
 
 
 class InfantBirthDataRuleGroup(RuleGroup):
@@ -11,7 +23,7 @@ class InfantBirthDataRuleGroup(RuleGroup):
     congenital_anomalities_yes = ScheduledDataRule(
         logic=Logic(
             predicate=('congenital_anomalities', 'equals', YES),
-            consequence=NEW,
+            consequence=UNKEYED,
             alternative=NOT_REQUIRED),
         target_model=['infantcongenitalanomalies'])
 
@@ -28,14 +40,14 @@ class InfantFuRuleGroup(RuleGroup):
     physical_assessment_yes = ScheduledDataRule(
         logic=Logic(
             predicate=('physical_assessment', 'equals', YES),
-            consequence=NEW,
+            consequence=UNKEYED,
             alternative=NOT_REQUIRED),
         target_model=['infantfuphysical'])
 
     has_dx_yes = ScheduledDataRule(
         logic=Logic(
             predicate=('has_dx', 'equals', YES),
-            consequence=NEW,
+            consequence=UNKEYED,
             alternative=NOT_REQUIRED),
         target_model=['infantfudx'])
 
@@ -45,3 +57,37 @@ class InfantFuRuleGroup(RuleGroup):
         source_model = InfantFu
 
 site_rule_groups.register(InfantFuRuleGroup)
+
+
+class InfantCircumcisionRuleGroup(RuleGroup):
+
+    circumcision = ScheduledDataRule(
+        logic=Logic(
+            predicate=('gender', 'equals', MALE),
+            consequence=UNKEYED,
+            alternative=NOT_REQUIRED),
+        target_model=['infantcircumcision'])
+
+    class Meta:
+        app_label = 'microbiome_infant'
+        source_fk = None
+        source_model = RegisteredSubject
+
+site_rule_groups.register(InfantCircumcisionRuleGroup)
+
+
+# class InfantVisitRuleGroup(RuleGroup):
+# 
+#     infantbirtharv = ScheduledDataRule(
+#         logic=Logic(
+#             predicate=func_maternal_hiv_pos,
+#             consequence=UNKEYED,
+#             alternative=NOT_REQUIRED),
+#         target_model=['infantbirtharv'])
+# 
+#     class Meta:
+#         app_label = 'microbiome_infant'
+#         source_fk = None
+#         source_model = RegisteredSubject
+# 
+# site_rule_groups.register(InfantVisitRuleGroup)
