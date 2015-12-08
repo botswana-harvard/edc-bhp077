@@ -46,13 +46,13 @@ class TestEnrollmentStatus(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35)
+            gestation_wks=36)
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks_delivered=35)
+            gestation_wks_delivered=38)
 
         self.assertTrue(postnatal_enrollment.is_eligible)
 
@@ -68,10 +68,10 @@ class TestEnrollmentStatus(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks_delivered=35,
+            gestation_wks_delivered=38,
             will_remain_onstudy=NO)
 
-        self.assertTrue(postnatal_enrollment.is_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_if_antenatal_not_eligible(self):
         antenatal_enrollment = AntenatalEnrollmentFactory(
@@ -88,7 +88,7 @@ class TestEnrollmentStatus(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35)
+            gestation_wks=36)
         self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_if_postnatal_not_eligible(self):

@@ -68,14 +68,3 @@ class TestMaternalVisit(TestCase):
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You indicated that the visit was NOT missed, yet you provided a reason '
                       'why it was missed. Please correct.', errors)
-
-    def test_block_new_visit_off_study_participant(self):
-        self.data['reason'] = 'off study'
-        form = MaternalVisitForm(data=self.data)
-        form.save()
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='2010M')
-        self.data['appointment'] = self.appointment.id
-        form = MaternalVisitForm(data=self.data)
-        errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('Data capturing is not allowed, Subject is Off-study.', errors)
