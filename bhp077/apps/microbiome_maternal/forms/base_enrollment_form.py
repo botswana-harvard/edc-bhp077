@@ -57,8 +57,8 @@ class BaseEnrollmentForm(BaseModelForm):
         Only relevant for tests with a NEG result."""
         cleaned_data = self.cleaned_data
         weeks = rrule.rrule(
-            rrule.WEEKLY, dtstart=self.week32_test_date, until=self.report_datetime.date()).count()
-        weeks_since_test = cleaned_data.get(self.model.weeks_base_field) - weeks
+            rrule.WEEKLY, dtstart=week32_test_date, until=report_datetime.date()).count()
+        weeks_since_test = cleaned_data.get(self.Meta.model.weeks_base_field) - weeks
         return weeks_since_test
 
     def requires_rapid_test_if_current_hiv_status_uknown(self):
