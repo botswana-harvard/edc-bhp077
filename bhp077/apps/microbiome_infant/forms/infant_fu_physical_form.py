@@ -165,7 +165,7 @@ class InfantFuPhysicalForm(BaseInfantModelForm):
                 raise forms.ValidationError(
                     'You indicated that macular / papular rash exam was not normal. Provide answer to Q20.')
 
-    def clean_neurologic_exam(self):
+    def validate_neuro_exam(self):
         cleaned_data = self.cleaned_data
         if cleaned_data.get('neurologic_exam') == YES:
             if cleaned_data.get('neuro_exam_other'):

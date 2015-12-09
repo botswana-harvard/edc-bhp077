@@ -4,7 +4,7 @@ from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc_constants.constants import POS, YES, NO
+from edc_constants.constants import POS, YES, NO, NEG
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (AntenatalEnrollmentFactory, MaternalEligibilityFactory, PostnatalEnrollmentFactory)
@@ -46,13 +46,13 @@ class TestEnrollmentStatus(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks=35)
+            gestation_wks=36)
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks_delivered=35)
+            gestation_wks_delivered=38)
 
         self.assertTrue(postnatal_enrollment.is_eligible)
 
@@ -68,10 +68,10 @@ class TestEnrollmentStatus(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            gestation_wks_delivered=35,
+            gestation_wks_delivered=38,
             will_remain_onstudy=NO)
 
-        self.assertTrue(postnatal_enrollment.is_eligible)
+        self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_if_antenatal_not_eligible(self):
         antenatal_enrollment = AntenatalEnrollmentFactory(
@@ -83,12 +83,72 @@ class TestEnrollmentStatus(TestCase):
             is_diabetic=YES)
         self.assertFalse(antenatal_enrollment.is_eligible)
 
-    def test_if_antenatal_eligible(self):
+    def test_antenatal_eligible_if_gestation_not_36_pos(self):
+        """
+            current_hiv_status = ?
+            evidence_hiv_status = ?
+
+            on_hypertension_tx = NO
+            is_diabetic = NO
+            on_tb_tx = NO
+            will_breastfeed = YES
+            will_remain_onstudy = YES
+
+            valid_regimen = YES
+            valid_regimen_duration = YES
+            week32_test = YES
+            week32_result = POS
+        """
+
         antenatal_enrollment = AntenatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            gestation_wks=35,
+            week32_test=YES,
+            week32_result=POS)
+        self.assertTrue(antenatal_enrollment.is_eligible)
+
+    def test_antenatal_eligible_if_gestation_36_pos1(self):
+        """Assert eligible if POS by week32 test, current, evidence."""
+        antenatal_enrollment = AntenatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            gestation_wks=35)
+            gestation_wks=36,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            week32_test=YES,
+            week32_result=POS)
+        self.assertTrue(antenatal_enrollment.is_eligible)
+
+    def test_antenatal_eligible_if_gestation_36_pos2(self):
+        """Assert eligible if POS by week32 test, without current and no evidence."""
+        antenatal_enrollment = AntenatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            current_hiv_status=NO,
+            evidence_hiv_status=NO,
+            gestation_wks=36,
+            week32_test=YES,
+            week32_result=POS)
+        self.assertFalse(antenatal_enrollment.is_eligible)
+
+    def test_antenatal_not_eligible_if_gestation_not_36_neg(self):
+        antenatal_enrollment = AntenatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            gestation_wks=35,
+            week32_test=YES,
+            week32_result=NEG,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES)
+        self.assertFalse(antenatal_enrollment.is_eligible)
+
+    def test_antenatal_eligible_if_gestation_36_neg(self):
+        antenatal_enrollment = AntenatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            gestation_wks=36,
+            week32_test=YES,
+            week32_result=NEG,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES)
         self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_if_postnatal_not_eligible(self):

@@ -159,7 +159,7 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
 class MaternalLabDelDxForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(MaternalLabDelDxForm, self).clean()
-        check_dx = self.data.get('maternallabdeldxt_set-0-lab_del_dx')
+        check_dx = self.data.get('maternallabdeldxt-0-lab_del_dx')
 
         # WHO validations
         if 'wcs_dx_adult' in cleaned_data.keys():

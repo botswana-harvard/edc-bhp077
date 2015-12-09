@@ -1,6 +1,6 @@
 from django import forms
 
-from edc_constants.constants import POS, YES, NO, NEG
+from edc_constants.constants import POS, YES
 
 from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome_maternal.models import (PostnatalEnrollment, AntenatalEnrollment)
@@ -60,11 +60,11 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
                         cleaned_data.get('current_hiv_status'),
                         cleaned_data.get('evidence_hiv_status')))
 
-    def complete_postnatal_enrollment_if_pregnant(self, antenatal_enrollment):
+    def complete_postnatal_enrollment_if_pregnant(self):
         cleaned_data = self.cleaned_data
         try:
             MaternalEligibility.objects.get(
-                registered_subject__subject_identifier=self.get_subject_identifier(),
+                registered_subject__subject_identifier=self.get_subject_identifier(cleaned_data),
                 currently_pregnant=YES,
             )
             if not self.get_antenatal_enrollment(cleaned_data.get('registered_subject')):

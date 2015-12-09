@@ -1,17 +1,18 @@
 from datetime import datetime, date
 
-from edc.core.bhp_variables.models import StudySpecific, StudySite
+from edc.core.bhp_variables.models import StudySpecific
 
 from edc.apps.app_configuration.classes import BaseAppConfiguration
 from edc_device import device
 from edc.lab.lab_packing.models import DestinationTuple
 from edc.lab.lab_profile.classes import ProfileItemTuple, ProfileTuple
-from edc_consent.models import ConsentType
 
 from lis.labeling.classes import LabelPrinterTuple, ZplTemplateTuple, ClientTuple
 from lis.specimen.lab_aliquot_list.classes import AliquotTypeTuple
 from lis.specimen.lab_panel.classes import PanelTuple
+
 from ...constants import MIN_AGE_OF_CONSENT
+
 try:
     from config.labels import aliquot_label
 except ImportError:
@@ -22,10 +23,6 @@ study_end_datetime = datetime(2016, 10, 17, 23, 0, 0)
 
 
 class MicrobiomeConfiguration(BaseAppConfiguration):
-
-    def prepare(self):
-        self.update_or_create_consent_type()
-        super(MicrobiomeConfiguration, self).prepare()
 
     global_configuration = {
         'dashboard':
@@ -158,46 +155,19 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
                      '^FO300,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
                      '^FO300,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
                      '^FO300,152^A0N,25,20^FD${drawn_datetime}^FS\n'
-                     '^XZ')), True),
+                     '^XZ')), False),
             ZplTemplateTuple(
                 'requisition_label', (
                     ('^XA\n' +
-                     ('^FO300,15^A0N,20,20^FD${protocol} Site ${site} ${clinician_initials}   '
+                     ('^FO310,15^A0N,20,20^FD${protocol} Site ${site} ${clinician_initials}   '
                       '${aliquot_type} ${aliquot_count}${primary}^FS\n') +
-                     '^FO300,34^BY1,3.0^BCN,50,N,N,N\n'
+                     '^FO310,34^BY1,3.0^BCN,50,N,N,N\n'
                      '^BY^FD${requisition_identifier}^FS\n'
-                     '^FO300,92^A0N,20,20^FD${requisition_identifier} ${panel}^FS\n'
-                     '^FO300,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
-                     '^FO300,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
-                     '^FO300,152^A0N,25,20^FD${drawn_datetime}^FS\n'
-                     '^XZ')), False)]
+                     '^FO310,92^A0N,20,20^FD${requisition_identifier} ${panel}^FS\n'
+                     '^FO310,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
+                     '^FO310,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
+                     '^FO310,152^A0N,25,20^FD${drawn_datetime}^FS\n'
+                     '^XZ')), True)]
     }
-
-    def update_or_create_consent_type(self):
-        for item in self.consent_type_setup:
-            try:
-                consent_type = ConsentType.objects.get(
-                    version=item.get('version'),
-                    app_label=item.get('app_label'),
-                    model_name=item.get('model_name'))
-                consent_type.start_datetime = item.get('start_datetime')
-                consent_type.end_datetime = item.get('end_datetime')
-                consent_type.save()
-            except ConsentType.DoesNotExist:
-                ConsentType.objects.create(**item)
-
-    def update_or_create_study_variables(self):
-        if StudySpecific.objects.all().count() == 0:
-            StudySpecific.objects.create(**self.study_variables_setup)
-        else:
-            StudySpecific.objects.all().update(**self.study_variables_setup)
-        self._setup_study_sites()
-
-    def _setup_study_sites(self):
-        for site in self.study_site_setup:
-            try:
-                StudySite.objects.get(**site)
-            except StudySite.DoesNotExist:
-                StudySite.objects.create(**site)
 
 microbiome_configuration = MicrobiomeConfiguration()

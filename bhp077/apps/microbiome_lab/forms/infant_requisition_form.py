@@ -1,8 +1,10 @@
 from django import forms
 
 from edc.lab.lab_requisition.forms import BaseRequisitionForm
+from edc_constants.constants import YES, NO
 
 from ..models import InfantRequisition
+from bhp077.apps.microbiome_infant.models import InfantStoolCollection
 
 
 class InfantRequisitionForm(BaseRequisitionForm):
@@ -13,27 +15,44 @@ class InfantRequisitionForm(BaseRequisitionForm):
 
     def clean(self):
         cleaned_data = super(InfantRequisitionForm, self).clean()
-        if cleaned_data.get('drawn_datetime').date() < cleaned_data.get('requisition_datetime').date():
-            raise forms.ValidationError('Requisition date cannot be in future of specimen date. Specimen draw date is '
-                                        'indicated as {}, whilst requisition is indicated as{}. Please correct'
-                                        .format(cleaned_data.get('drawn_datetime').date(),
-                                                cleaned_data.get('requisition_datetime').date()))
+        self.validate_requisition_and_drawn_datetime()
+        self.validate_sample_swabs()
+        self.validate_dna_pcr_and_elisa()
+        self.validate_stool_sample_collection()
+        return cleaned_data
+
+    def validate_requisition_and_drawn_datetime(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('drawn_datetime'):
+            if cleaned_data.get('drawn_datetime').date() < cleaned_data.get('requisition_datetime').date():
+                raise forms.ValidationError('Requisition date cannot be in future of specimen date. Specimen draw date is '
+                                            'indicated as {}, whilst requisition is indicated as{}. Please correct'
+                                            .format(cleaned_data.get('drawn_datetime').date(),
+                                                    cleaned_data.get('requisition_datetime').date()))
+
+    def validate_sample_swabs(self):
+        cleaned_data = self.cleaned_data
         if cleaned_data.get('panel').name == 'Rectal swab (Storage)':
             if cleaned_data.get('item_type') != 'swab':
                 raise forms.ValidationError('Panel {} is a swab therefore collection type is swab. Please correct.'
                                             .format(cleaned_data.get('panel').name))
-        elif (
-            cleaned_data.get('panel').name == 'DNA PCR' or
-            cleaned_data.get('panel').name == 'ELISA'
-        ):
-            if cleaned_data.get('item_type') != 'dbs' or cleaned_data.get('item_type') != 'tube':
-                raise forms.ValidationError('Panel {} can only be dbs or tube therefore collection type is swab. '
+
+    def validate_dna_pcr_and_elisa(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('panel').name in ['DNA PCR', 'ELISA']:
+            if cleaned_data.get('item_type') not in ['dbs', 'tube']:
+                raise forms.ValidationError('Panel {} collection type can only be dbs or tube. '
                                             'Please correct.'.format(cleaned_data.get('panel').name))
-        else:
-            if cleaned_data.get('item_type') != 'tube':
-                raise forms.ValidationError('Panel {} can only be tube therefore collection type is swab. '
-                                            'Please correct.'.format(cleaned_data.get('panel').name))
-        return cleaned_data
+
+    def validate_stool_sample_collection(self):
+        cleaned_data = self.cleaned_data
+        sample_collection = InfantStoolCollection.objects.filter(infant_visit=cleaned_data.get('infant_visit'))
+        if sample_collection:
+            sample_collection = InfantStoolCollection.objects.get(infant_visit=cleaned_data.get('infant_visit'))
+            if sample_collection.sample_obtained == YES:
+                if (cleaned_data.get("panel").name == 'Stool storage' and cleaned_data.get("is_drawn") == NO):
+                    raise forms.ValidationError("Stool Sample Collected. Stool Requisition is_drawn"
+                                                " cannot be NO.")
 
     class Meta:
         model = InfantRequisition

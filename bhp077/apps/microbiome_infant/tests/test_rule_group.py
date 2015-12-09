@@ -7,7 +7,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, POS, MALE, SCHEDULED, NOT_REQUIRED, UNKEYED
+from edc_constants.constants import NEW, YES, POS, MALE, SCHEDULED, UNKEYED
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory, MaternalVisitFactory)
@@ -63,8 +63,6 @@ class TestRuleGroupInfant(TestCase):
         return model_options
 
     def test_hiv_status_pos_on_postnatal_enrollment(self):
-        """
-        """
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment)
@@ -126,8 +124,6 @@ class TestRuleGroupInfant(TestCase):
         )).count(), 1)
 
     def test_if_maternal_pos_dna_pcr_required(self):
-        """
-        """
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')
 
@@ -153,8 +149,6 @@ class TestRuleGroupInfant(TestCase):
             ).count(), 1)
 
     def test_infant_fu_rules(self):
-        """
-        """
 
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M'

@@ -71,11 +71,13 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
                 pass
 
     def check_eligibility(self):
-        """Returns True if a mother is eligible."""
+        """Returns True if a mother is eligible.
+        """
         if (self.gestation_wks >= 36 and self.is_diabetic == NO and
                 self.on_tb_tx == NO and self.on_hypertension_tx == NO and
                 self.will_breastfeed == YES and self.will_remain_onstudy == YES):
-            if self.week32_test == YES and self.week32_result in [POS, NEG] and self.evidence_hiv_status == YES:
+            if (self.week32_test == YES and self.week32_result in [POS, NEG] and
+                    self.evidence_hiv_status == YES):
                 return True
             if (self.week32_test == NO and self.rapid_test_done == YES and
                     self.evidence_hiv_status == NO and not self.week32_result):
