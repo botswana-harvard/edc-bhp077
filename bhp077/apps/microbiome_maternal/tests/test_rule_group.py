@@ -108,6 +108,12 @@ class TestRuleGroup(TestCase):
             evidence_hiv_status=YES,
             rapid_test_done=YES,
             rapid_test_result=NEG)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='1000M')
+        MaternalVisitFactory(appointment=appointment)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='2000M')
+        MaternalVisitFactory(appointment=appointment)
         visit_codes = [
             ['2010M', ['rapidtestresult']],
             ['2030M', ['rapidtestresult']],
@@ -136,6 +142,12 @@ class TestRuleGroup(TestCase):
             evidence_hiv_status=YES,
             rapid_test_done=YES,
             rapid_test_result=NEG)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='1000M')
+        MaternalVisitFactory(appointment=appointment)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='2000M')
+        MaternalVisitFactory(appointment=appointment)
         visit_codes = [
             ['2010M', ['rapidtestresult']],
             ['2030M', ['rapidtestresult']],
@@ -174,6 +186,12 @@ class TestRuleGroup(TestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='1000M')
+        MaternalVisitFactory(appointment=appointment)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='2000M')
+        MaternalVisitFactory(appointment=appointment)
         visit_codes = [
             ['2010M', ['rapidtestresult']],
             ['2030M', ['rapidtestresult']],
@@ -201,6 +219,12 @@ class TestRuleGroup(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
         )
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='1000M')
+        MaternalVisitFactory(appointment=appointment)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='2000M')
+        MaternalVisitFactory(appointment=appointment)
         visit_codes = [
             ['2010M', ['maternalrequisition']],
             ['2030M', ['maternalrequisition']],
@@ -225,6 +249,12 @@ class TestRuleGroup(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject, rapid_test_done=YES,
             will_breastfeed=YES, rapid_test_result=POS)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='1000M')
+        MaternalVisitFactory(appointment=appointment)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='2000M')
+        MaternalVisitFactory(appointment=appointment)
         for code in ['2010M', '2030M']:
             appointment = Appointment.objects.get(
                 registered_subject=self.registered_subject, visit_definition__code=code

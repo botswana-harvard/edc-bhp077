@@ -123,7 +123,7 @@ class TestRuleGroupInfant(TestCase):
 
         infant_visit = InfantVisitFactory(appointment=appointment)
 
-        InfantBirthDataFactory(infant_visit=infant_visit, infant_birth=infant_birth)
+        InfantBirthDataFactory(infant_visit=infant_visit)
 
         self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
             app_label='microbiome_infant', model_name='infantcongenitalanomalies', appointment=appointment
@@ -178,7 +178,7 @@ class TestRuleGroupInfant(TestCase):
             registered_subject=registered_subject_infant,
             maternal_labour_del=maternal_labour_del,
         )
-        Appointment.objects.get(
+        appointment = Appointment.objects.get(
             visit_definition__code='2000', registered_subject=registered_subject_infant)
 
         InfantVisitFactory(appointment=appointment)
@@ -187,7 +187,7 @@ class TestRuleGroupInfant(TestCase):
 
         infant_visit = InfantVisitFactory(
             appointment=appointment,
-            reason='scheduled')
+            reason=SCHEDULED)
 
         InfantFuFactory(infant_visit=infant_visit)
 
