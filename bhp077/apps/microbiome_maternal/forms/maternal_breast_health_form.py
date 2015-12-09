@@ -54,9 +54,14 @@ class MaternalBreastHealthForm(BaseMaternalModelForm):
             if cleaned_data.get('advised_stop_bf') == NOT_APPLICABLE:
                 raise forms.ValidationError('You indicated that participant has mastitis or has lesions. Was '
                                             'participant advised to stop breast feeding CANNOT be Not Applicable.')
-        if cleaned_data.get('breast_feeding') == NO and cleaned_data.get('advised_stop_bf') != NOT_APPLICABLE:
-            raise forms.ValidationError('You indicated that the mother has not been breast feeding, question on whether'
-                                        ' she was advised to stop breast feeding should be Not Applicable.')
+        if cleaned_data.get('breast_feeding') == NO:
+            if cleaned_data.get('advised_stop_bf') != NOT_APPLICABLE:
+                raise forms.ValidationError('You indicated that the mother has not been breast feeding, question on '
+                                            'whether she was advised to stop breast feeding should be Not Applicable.')
+        else:
+            if cleaned_data.get('advised_stop_bf') == NOT_APPLICABLE:
+                raise forms.ValidationError('You indicated that the mother has been breast feeding, question on '
+                                            'whether she was advised to stop breast feeding CANNOT be Not Applicable.')
 
     class Meta:
         model = MaternalBreastHealth

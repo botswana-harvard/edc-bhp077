@@ -54,7 +54,7 @@ class MaternalObstericalHistoryForm(BaseMaternalModelForm):
 
         if cleaned_data.get('pregs_24wks_or_more') > cleaned_data.get('prev_pregnancies'):
             raise forms.ValidationError(
-                'Number of pregnancies least 24 weeks cannot be greater than previous pregnancies.')
+                'Number of pregnancies carried at least 24 weeks cannot be greater than previous pregnancies')
         if cleaned_data.get('lost_before_24wks') > cleaned_data.get('prev_pregnancies'):
             raise forms.ValidationError(
                 'Number of pregnancies lost before 24 weeks cannot be greater than previous pregnancies.')
