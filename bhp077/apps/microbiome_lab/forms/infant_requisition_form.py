@@ -57,17 +57,12 @@ class InfantRequisitionForm(BaseRequisitionForm):
 
     def validate_requisition_and_infant_visit(self):
         cleaned_data = self.cleaned_data
-        infant_visit = InfantVisit.objects.get(
-            appointment__registered_subject=cleaned_data.get('infant_visit').appointment.registered_subject,
-            appointment=cleaned_data.get('infant_visit').appointment,
-            appointment__visit_instance=cleaned_data.get('infant_visit').appointment.visit_instance)
-        if infant_visit:
-            if ((infant_visit.reason == SCHEDULED or infant_visit.reason == UNSCHEDULED) and
-                    cleaned_data.get('reason_not_drawn') == 'absent'):
-                raise forms.ValidationError(
-                    'Reason not drawn cannot be {}. The infant visit report reason is {}'.format(
-                        cleaned_data.get('reason_not_drawn'),
-                        infant_visit.reason))
+        if ((cleaned_data.get('infant_visit').reason in [SCHEDULED, UNSCHEDULED]) and
+                cleaned_data.get('reason_not_drawn') == 'absent'):
+            raise forms.ValidationError(
+                'Reason not drawn cannot be {}. The infant visit report reason is {}'.format(
+                    cleaned_data.get('reason_not_drawn'),
+                    cleaned_data.get('infant_visit').reason))
 
     class Meta:
         model = InfantRequisition
