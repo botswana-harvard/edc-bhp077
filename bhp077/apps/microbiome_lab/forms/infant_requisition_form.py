@@ -1,10 +1,10 @@
 from django import forms
 
 from edc.lab.lab_requisition.forms import BaseRequisitionForm
-from edc_constants.constants import YES, NO
+from edc_constants.constants import YES, NO, SCHEDULED, UNSCHEDULED
 
 from ..models import InfantRequisition
-from bhp077.apps.microbiome_infant.models import InfantStoolCollection
+from bhp077.apps.microbiome_infant.models import InfantStoolCollection, InfantVisit
 
 
 class InfantRequisitionForm(BaseRequisitionForm):
@@ -19,6 +19,7 @@ class InfantRequisitionForm(BaseRequisitionForm):
         self.validate_sample_swabs()
         self.validate_dna_pcr_and_elisa()
         self.validate_stool_sample_collection()
+        self.validate_requisition_and_infant_visit()
         return cleaned_data
 
     def validate_requisition_and_drawn_datetime(self):
@@ -53,6 +54,15 @@ class InfantRequisitionForm(BaseRequisitionForm):
                 if (cleaned_data.get("panel").name == 'Stool storage' and cleaned_data.get("is_drawn") == NO):
                     raise forms.ValidationError("Stool Sample Collected. Stool Requisition is_drawn"
                                                 " cannot be NO.")
+
+    def validate_requisition_and_infant_visit(self):
+        cleaned_data = self.cleaned_data
+        if ((cleaned_data.get('infant_visit').reason in [SCHEDULED, UNSCHEDULED]) and
+                cleaned_data.get('reason_not_drawn') == 'absent'):
+            raise forms.ValidationError(
+                'Reason not drawn cannot be {}. The infant visit report reason is {}'.format(
+                    cleaned_data.get('reason_not_drawn'),
+                    cleaned_data.get('infant_visit').reason))
 
     class Meta:
         model = InfantRequisition

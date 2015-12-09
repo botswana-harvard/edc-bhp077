@@ -1,6 +1,6 @@
 from edc_constants.constants import (
     NOT_APPLICABLE, UNKNOWN, OTHER, UNSCHEDULED, SCHEDULED, MISSED_VISIT, LOST_VISIT,
-    OFF_STUDY, DEATH_VISIT)
+    OFF_STUDY, DEATH_VISIT, ON_STUDY)
 
 from .constants import NO_MODIFICATIONS, START, BREASTFEED_ONLY
 
@@ -310,8 +310,8 @@ INFANT_OFF_DRUG_REASON = (
 )
 
 INFANT_VISIT_STUDY_STATUS = (
-    ('onstudy', 'On study'),
-    ('offstudy', 'Off study-no further follow-up (including death); use only for last study contact'),
+    (ON_STUDY, 'On study'),
+    (OFF_STUDY, 'Off study-no further follow-up (including death); use only for last study contact'),
 )
 
 

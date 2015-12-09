@@ -55,17 +55,18 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
         'device_id': device.device_id}
 
     holidays_setup = {
-        'New Year': date(2015, 1, 1),
-        'New Year Holiday': date(2015, 1, 2),
-        'Good Fiday': date(2015, 4, 3),
-        'Easter Monday': date(2015, 4, 6),
-        'Labour Day': date(2015, 5, 1),
-        'Ascension Day': date(2015, 5, 14),
-        'Sir Seretse Khama Day': date(2015, 7, 1),
-        'President\'s Day': date(2015, 7, 20),
-        'President\'s Day Holiday': date(2015, 7, 21),
-        'Independence Day': date(2015, 9, 30),
-        'Botswana Day Holiday': date(2015, 10, 1),
+        'New Year': date(2016, 1, 1),
+        'New Year Holiday': date(2016, 1, 2),
+        'Good Friday': date(2016, 3, 25),
+        'Easter Monday': date(2016, 3, 28),
+        'Labour Day': date(2016, 5, 1),
+        'Labour Day Holiday': date(2016, 5, 2),
+        'Ascension Day': date(2016, 5, 5),
+        'Sir Seretse Khama Day': date(2016, 7, 1),
+        'President\'s Day': date(2016, 7, 18),
+        'President\'s Day Holiday': date(2016, 7, 19),
+        'Independence Day': date(2016, 9, 30),
+        'Botswana Day Holiday': date(2016, 10, 1),
         'Christmas Day': date(2015, 12, 25),
         'Boxing Day': date(2015, 12, 26)}
 
@@ -76,7 +77,8 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
          'end_datetime': study_end_datetime,
          'version': '1'}]
 
-    study_site_setup = {'site_name': 'Gaborone', 'site_code': '40'}
+    study_site_setup = [{'site_name': 'Gaborone', 'site_code': '40'},
+                        {'site_name': 'Mogoditshane', 'site_code': '50'}]
 
     lab_clinic_api_setup = {
         'panel': [PanelTuple('Viral Load', 'TEST', 'WB'),

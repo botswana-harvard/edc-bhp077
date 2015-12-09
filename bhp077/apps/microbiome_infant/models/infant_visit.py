@@ -2,19 +2,20 @@ from django.db import models
 
 from edc.subject.visit_tracking.models import BaseVisitTracking
 
-from edc_base.audit_trail import AuditTrail
 from edc.entry_meta_data.models import MetaDataMixin
-from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.subject.registration.models import RegisteredSubject
-from edc_constants.constants import MALE, OFF_STUDY, DEATH_VISIT, UNSCHEDULED, LOST_VISIT
 from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 from edc.subject.visit_tracking.models import PreviousVisitMixin
+from edc_base.audit_trail import AuditTrail
+from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_constants.choices import YES_NO
+from edc_constants.constants import OFF_STUDY, DEATH_VISIT, UNSCHEDULED
 
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
-from bhp077.apps.microbiome.choices import (VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS,
-                                            ALIVE_DEAD_UNKNOWN)
+from bhp077.apps.microbiome.choices import (
+    VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS,
+    ALIVE_DEAD_UNKNOWN)
 
-from .infant_birth import InfantBirth
 from .infant_off_study_mixin import InfantOffStudyMixin
 
 
@@ -35,20 +36,25 @@ class InfantVisit(PreviousVisitMixin, MetaDataMixin, InfantOffStudyMixin, BaseVi
         blank=True,
         null=True)
 
+    is_present = models.CharField(
+        max_length=10,
+        verbose_name="Is the infant present at today\'s visit",
+        choices=YES_NO)
+
     study_status = models.CharField(
-        verbose_name="What is the participant's current study status",
+        verbose_name="What is the infant's current study status",
         max_length=50,
         choices=INFANT_VISIT_STUDY_STATUS)
 
     survival_status = models.CharField(
         max_length=10,
-        verbose_name="Survival status",
+        verbose_name="Infant survival status",
         choices=ALIVE_DEAD_UNKNOWN,
         null=True,
         blank=False)
 
     date_last_alive = models.DateField(
-        verbose_name="Date last known alive",
+        verbose_name="Date infant last known alive",
         help_text="",
         null=True,
         blank=True)
