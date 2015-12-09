@@ -20,6 +20,7 @@ class BaseEnrollmentForm(BaseModelForm):
         self.valid_regimen_and_duration()
         self.week32_test_matches_current()
         self.rapid_test_date_and_result()
+        self.raise_if_rapid_test_required()
         return cleaned_data
 
     def clean_report_datetime(self):
@@ -47,9 +48,10 @@ class BaseEnrollmentForm(BaseModelForm):
         if cleaned_data.get('current_hiv_status') == NEG:
             weeks_since_test = self.weeks_since_test(
                 cleaned_data.get('week32_test_date'), cleaned_data.get('report_datetime'))
-            if weeks_since_test > 32 and cleaned_data.get('rapid_test_done') == NO:
+            print "its here", weeks_since_test
+            if weeks_since_test < 32 and cleaned_data.get('rapid_test_done') == NO:
                     raise forms.ValidationError(
-                        "Rapid test is required. Participant tested >=32 weeks ago.")
+                        "Rapid test is required. Participant tested > 32 weeks ago.")
 
     def weeks_since_test(self, week32_test_date, report_datetime):
         """Returns the number of weeks since the last HIV test.

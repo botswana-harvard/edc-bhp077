@@ -4,7 +4,6 @@ from django import forms
 from django.db.models import OneToOneField, ForeignKey
 from django.db.models.query import QuerySet
 
-from edc_device import device
 from edc.subject.visit_tracking.models import BaseVisitTracking
 from edc_base.form.classes import LogicCheck
 from edc_constants.constants import YES, NO, OTHER, NOT_APPLICABLE
