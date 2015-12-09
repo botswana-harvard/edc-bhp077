@@ -39,6 +39,7 @@ class InfantFeedingAdmin(BaseModelAdmin):
         "most_recent_bm",
         "times_breastfed",
         "comments")
+    readonly_fields = ('last_att_sche_visit',)
     radio_fields = {
         "other_feeding": admin.VERTICAL,
         "formula_intro_occur": admin.VERTICAL,
