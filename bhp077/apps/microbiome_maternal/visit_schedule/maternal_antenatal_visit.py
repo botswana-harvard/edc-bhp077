@@ -31,7 +31,7 @@ class AntenatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'window_lower_bound_unit': 'D',
         'window_upper_bound': 0,
         'window_upper_bound_unit': 'D',
-        'grouping': '',
+        'grouping': 'maternal',
         'visit_tracking_model': MaternalVisit,
         'schedule_group': 'Antenatal Enrollment',
         'instructions': '',
