@@ -103,26 +103,32 @@ class TestInfantBirthData(TestCase):
 
     def test_validate_apgar_2(self):
         self.data['apgar_score'] = YES
+        form = InfantBirthDataForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('If Apgar scored performed, then you should answer At 1 minute', errors)
+
+    def test_validate_apgar_3(self):
+        self.data['apgar_score'] = YES
         self.data['apgar_score_min_1'] = 3
         form = InfantBirthDataForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('If Apgar scored performed, then you should answer At 5 minute', errors)
 
-    def test_validate_apgar_3(self):
+    def test_validate_apgar_4(self):
         self.data['apgar_score'] = NO
         self.data['apgar_score_min_1'] = 3
         form = InfantBirthDataForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('If Apgar scored was NOT performed, then you should NOT answer at 1 minute', errors)
 
-    def test_validate_apgar_4(self):
+    def test_validate_apgar_5(self):
         self.data['apgar_score'] = NO
         self.data['apgar_score_min_5'] = 3
         form = InfantBirthDataForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('If Apgar scored was NOT performed, then you should NOT answer at 5 minute', errors)
 
-    def test_validate_apgar_5(self):
+    def test_validate_apgar_6(self):
         self.data['apgar_score'] = NO
         self.data['apgar_score_min_10'] = 3
         form = InfantBirthDataForm(data=self.data)
