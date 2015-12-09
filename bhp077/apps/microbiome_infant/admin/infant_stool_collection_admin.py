@@ -7,10 +7,11 @@ from ..forms import InfantStoolCollectionForm
 from ..models import InfantStoolCollection, InfantVisit
 
 
-class InfantStoolCollectionAdmin(BaseModelAdmin):
+class InfantStoolCollectionAdmin(AdminExcludeFieldsMixin, BaseModelAdmin):
 
     visit_model = InfantVisit
     visit_attr = 'infant_visit'
+    visit_codes = {'visit': ['2000']}
 
     fields = ('infant_visit',
               'report_datetime',
@@ -35,6 +36,9 @@ class InfantStoolCollectionAdmin(BaseModelAdmin):
         "diarrhea_past_24hrs": admin.VERTICAL,
         "antibiotics_7days": admin.VERTICAL,
         "antibiotic_dose_24hrs": admin.VERTICAL}
+
+    custom_exclude = {'visit': ['past_diarrhea', 'diarrhea_past_24hrs',
+                                'antibiotics_7days', 'antibiotic_dose_24hrs']}
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "infant_visit":
