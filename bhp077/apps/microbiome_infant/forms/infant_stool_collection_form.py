@@ -15,10 +15,15 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
 
     def clean(self):
         cleaned_data = super(InfantStoolCollectionForm, self).clean()
-        self.validate_sample_obtained()
-        self.validate_collection_time()
-        self.validate_diarrhea()
-        self.validate_antibiotics()
+        infant_visit = cleaned_data.get('infant_visit')
+        if infant_visit.appointment.visit_definition.code == '2000':
+            self.validate_collection_time()
+            self.validate_sample_obtained()
+        else:
+            self.validate_sample_obtained()
+            self.validate_collection_time()
+            self.validate_diarrhea()
+            self.validate_antibiotics()
         return cleaned_data
 
     def validate_sample_obtained(self):
@@ -37,12 +42,6 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
                 raise forms.ValidationError(
                     'Sample is stated to have been obtained today, please indicate how the '
                     'sample was stored.')
-            if cleaned_data.get('past_diarrhea') == NOT_APPLICABLE:
-                raise forms.ValidationError(
-                    'Sample is indicated to have been obtained. Did the child have diarrhea?')
-            if cleaned_data.get('antibiotics_7days') == NOT_APPLICABLE:
-                raise forms.ValidationError(
-                    'Sample is indicated to have been obtained. Did the child take antibiotics?')
         else:
             if cleaned_data.get('nappy_type') != NOT_APPLICABLE:
                 raise forms.ValidationError('Sample is indicated to have NOT been collected, you CANNOT '
@@ -73,6 +72,10 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
 
     def validate_diarrhea(self):
         cleaned_data = self.cleaned_data
+        if cleaned_data.get('sample_obtained') == YES:
+            if cleaned_data.get('past_diarrhea') == NOT_APPLICABLE:
+                raise forms.ValidationError(
+                    'Sample is indicated to have been obtained. Did the child have diarrhea?')
         if cleaned_data.get('past_diarrhea') == YES:
             if cleaned_data.get('diarrhea_past_24hrs') == NOT_APPLICABLE:
                 raise forms.ValidationError(
@@ -86,6 +89,10 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
 
     def validate_antibiotics(self):
         cleaned_data = self.cleaned_data
+        if cleaned_data.get('sample_obtained') == YES:
+            if cleaned_data.get('antibiotics_7days') == NOT_APPLICABLE:
+                raise forms.ValidationError(
+                    'Sample is indicated to have been obtained. Did the child take antibiotics?')
         if cleaned_data.get('antibiotics_7days') == YES:
             if cleaned_data.get('antibiotic_dose_24hrs') == NOT_APPLICABLE:
                 raise forms.ValidationError(
