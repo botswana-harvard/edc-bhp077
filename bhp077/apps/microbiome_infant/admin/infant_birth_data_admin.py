@@ -14,7 +14,6 @@ class InfantBirthDataAdmin(BaseInfantScheduleModelAdmin):
 
     fields = (
         "infant_visit",
-        "infant_birth",
         "weight_kg",
         "infant_length",
         "head_circumference",

@@ -11,8 +11,6 @@ from .infant_scheduled_visit_model import InfantScheduledVisitModel
 class InfantBirthData(InfantScheduledVisitModel):
     """ A model completed by the user on the infant's birth exam. """
 
-    infant_birth = models.OneToOneField(InfantBirth)
-
     weight_kg = models.DecimalField(
         max_digits=3,
         decimal_places=2,
@@ -83,7 +81,7 @@ class InfantBirthData(InfantScheduledVisitModel):
     history = AuditTrail()
 
     def __unicode__(self):
-        return unicode(self.infant_birth)
+        return unicode(self.infant_visit)
 
     class Meta:
         app_label = "microbiome_infant"
