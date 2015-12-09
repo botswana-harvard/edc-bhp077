@@ -41,6 +41,9 @@ class TestMaternalDeathForm(TestCase):
             current_hiv_status=NEG,
             evidence_hiv_status=YES)
         self.appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=self.maternal_visit)

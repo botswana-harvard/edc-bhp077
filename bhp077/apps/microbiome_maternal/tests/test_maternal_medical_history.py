@@ -43,6 +43,9 @@ class TestMaternalMedicalHistoryForm(TestCase):
             will_breastfeed=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         c = ChronicConditions.objects.create(name=NOT_APPLICABLE, short_name=NOT_APPLICABLE, field_name='chronic_cond')

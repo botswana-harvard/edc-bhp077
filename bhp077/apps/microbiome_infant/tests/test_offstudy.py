@@ -54,6 +54,9 @@ class TestOffStudy(TestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES)
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=self.appointment)

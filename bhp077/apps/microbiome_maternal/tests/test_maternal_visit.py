@@ -16,7 +16,7 @@ from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFacto
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
-from .factories import PostnatalEnrollmentFactory
+from .factories import PostnatalEnrollmentFactory, MaternalVisitFactory
 
 
 class TestMaternalVisit(TestCase):
@@ -41,6 +41,9 @@ class TestMaternalVisit(TestCase):
             registered_subject=self.registered_subject,
             will_breastfeed=YES
         )
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
         self.data = {

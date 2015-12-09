@@ -43,6 +43,12 @@ class TestMaternalPostFuMedItems(TestCase):
             will_breastfeed=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='2000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2010M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         self.post_fu = MaternalPostFuFactory(maternal_visit=self.maternal_visit)
