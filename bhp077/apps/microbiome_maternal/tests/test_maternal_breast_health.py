@@ -18,6 +18,7 @@ from bhp077.apps.microbiome_maternal.forms import (MaternalBreastHealthForm)
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
+from edc_constants.constants import NOT_APPLICABLE
 
 
 class TestMaternalBreastHealth(TestCase):
@@ -146,3 +147,14 @@ class TestMaternalBreastHealth(TestCase):
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You indicated that the mother has not been breast feeding, question on whether'
                       ' she was advised to stop breast feeding should be Not Applicable.', errors)
+
+    def test_advised_stop_bf_4(self):
+        """Assert that if mother has not been breast-feeding then advised_stop_bf CANT be YES"""
+        self.data['breast_feeding'] = YES
+        self.data['has_mastitis'] = NO
+        self.data['has_lesions'] = NO
+        self.data['advised_stop_bf'] = NOT_APPLICABLE
+        form = MaternalBreastHealthForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('You indicated that the mother has been breast feeding, question on '
+                      'whether she was advised to stop breast feeding CANNOT be Not Applicable.', errors)

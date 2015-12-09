@@ -44,7 +44,8 @@ class InfantDeathAdmin(BaseModelAdmin):
         "study_drug_relate": admin.VERTICAL,
         "infant_nvp_relate": admin.VERTICAL,
         "haart_relate": admin.VERTICAL,
-        "trad_med_relate": admin.VERTICAL
+        "trad_med_relate": admin.VERTICAL,
+        "dx_code": admin.VERTICAL
     }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):

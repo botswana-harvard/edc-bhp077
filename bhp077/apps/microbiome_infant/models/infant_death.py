@@ -14,7 +14,7 @@ class InfantDeath (InfantScheduledVisitModel, BaseDeathReport):
     """ A model completed by the user after an infant's death. """
 
     study_drug_relate = models.CharField(
-        verbose_name="Relationship between the participant death and study drug (CTX vs Placebo)",
+        verbose_name="Relationship between the participant death and (CTX vs Placebo)",
         max_length=25,
         choices=DRUG_RELATIONSHIP,
     )
