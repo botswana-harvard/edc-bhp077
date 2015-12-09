@@ -19,10 +19,12 @@ class InfantBirthDataForm(BaseInfantModelForm):
 
     def validate_apgar_score(self, cleaned_data):
         if cleaned_data.get('apgar_score') == YES:
-            if not cleaned_data.get('apgar_score_min_1'):
-                raise forms.ValidationError('If Apgar scored performed, then you should answer At 1 minute(Q7).')
-            if not cleaned_data.get('apgar_score_min_5'):
-                raise forms.ValidationError('If Apgar scored performed, then you should answer At 5 minute(Q8).')
+            if not cleaned_data.get('apgar_score_min_1') == 0:
+                if not cleaned_data.get('apgar_score_min_1'):
+                    raise forms.ValidationError('If Apgar scored performed, then you should answer At 1 minute(Q7).')
+            if not cleaned_data.get('apgar_score_min_5') == 0:
+                if not cleaned_data.get('apgar_score_min_5'):
+                    raise forms.ValidationError('If Apgar scored performed, then you should answer At 5 minute(Q8).')
         else:
             if cleaned_data.get('apgar_score_min_1'):
                 raise forms.ValidationError('If Apgar scored was NOT performed, then you should NOT answer at '
