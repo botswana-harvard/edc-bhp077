@@ -116,7 +116,6 @@ class TestEnrollmentStatus(TestCase):
             gestation_wks=36,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
-            gestation_wks=36,
             week32_test=YES,
             week32_result=POS)
         self.assertTrue(antenatal_enrollment.is_eligible)
