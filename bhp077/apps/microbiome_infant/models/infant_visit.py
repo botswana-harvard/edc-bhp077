@@ -19,7 +19,7 @@ from bhp077.apps.microbiome.choices import (
 from .infant_off_study_mixin import InfantOffStudyMixin
 
 
-class InfantVisit(PreviousVisitMixin, MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
+class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
 
     """ A model completed by the user on the infant visits. """
 
