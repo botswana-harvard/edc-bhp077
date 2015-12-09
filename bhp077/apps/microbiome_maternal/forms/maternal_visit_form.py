@@ -23,7 +23,7 @@ class MaternalVisitForm (BaseModelForm):
     def clean(self):
         cleaned_data = super(MaternalVisitForm, self).clean()
         self.validate_reason_missed(cleaned_data)
-        MaternalVisit(**cleaned_data).check_previous_visit(forms.ValidationError)
+        MaternalVisit(**cleaned_data).has_previous_visit_or_raise(forms.ValidationError)
 
         try:
             subject_identifier = cleaned_data.get('appointment').registered_subject.subject_identifier
