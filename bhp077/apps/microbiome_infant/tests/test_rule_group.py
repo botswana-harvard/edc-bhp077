@@ -63,6 +63,9 @@ class TestRuleGroupInfant(TestCase):
         return model_options
 
     def test_hiv_status_pos_on_postnatal_enrollment(self):
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment)
@@ -95,6 +98,9 @@ class TestRuleGroupInfant(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
         )
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
 
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M'
@@ -124,6 +130,9 @@ class TestRuleGroupInfant(TestCase):
         )).count(), 1)
 
     def test_if_maternal_pos_dna_pcr_required(self):
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')
 
@@ -136,6 +145,9 @@ class TestRuleGroupInfant(TestCase):
         InfantBirthFactory(
             registered_subject=registered_subject_infant,
             maternal_labour_del=maternal_labour_del)
+        appointment = Appointment.objects.get(
+                registered_subject=registered_subject_infant, visit_definition__code='2000')
+        InfantVisitFactory(appointment=appointment)
 
         for code in ['2010', '2030', '2060', '2090', '2120']:
             appointment = Appointment.objects.get(
@@ -149,7 +161,9 @@ class TestRuleGroupInfant(TestCase):
             ).count(), 1)
 
     def test_infant_fu_rules(self):
-
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M'
         )
@@ -164,6 +178,10 @@ class TestRuleGroupInfant(TestCase):
             registered_subject=registered_subject_infant,
             maternal_labour_del=maternal_labour_del,
         )
+        Appointment.objects.get(
+            visit_definition__code='2000', registered_subject=registered_subject_infant)
+
+        InfantVisitFactory(appointment=appointment)
         appointment = Appointment.objects.get(
             visit_definition__code='2010', registered_subject=registered_subject_infant)
 
@@ -182,7 +200,9 @@ class TestRuleGroupInfant(TestCase):
         )).count(), 1)
 
     def test_infant_visit_circumcision_required(self):
-
+        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                                   visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment)
@@ -197,6 +217,16 @@ class TestRuleGroupInfant(TestCase):
             registered_subject=registered_subject_infant,
             maternal_labour_del=maternal_labour_del,
             gender=MALE)
+        appointment = Appointment.objects.get(
+            registered_subject=registered_subject_infant, visit_definition__code='2000')
+        InfantVisitFactory(
+            appointment=appointment,
+            reason=SCHEDULED)
+        appointment = Appointment.objects.get(
+            registered_subject=registered_subject_infant, visit_definition__code='2010')
+        InfantVisitFactory(
+            appointment=appointment,
+            reason=SCHEDULED)
 
         appointment = Appointment.objects.get(
             registered_subject=registered_subject_infant, visit_definition__code='2030')
