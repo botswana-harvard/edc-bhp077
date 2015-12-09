@@ -28,6 +28,7 @@ class InfantVisitForm(BaseInfantModelForm):
         self.validate_reason_lost_and_completed(cleaned_data)
         self.validate_reason_missed(cleaned_data)
         self.validate_survival_status(cleaned_data)
+        self.instance.check_previous_visit(forms.ValidationError)
 
         if not cleaned_data.get('reason') == 'missed':
             if not cleaned_data.get('info_source'):

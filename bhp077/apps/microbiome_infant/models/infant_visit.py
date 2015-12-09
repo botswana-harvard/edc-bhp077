@@ -8,6 +8,7 @@ from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.subject.registration.models import RegisteredSubject
 from edc_constants.constants import MALE, OFF_STUDY, DEATH_VISIT, UNSCHEDULED, LOST_VISIT
 from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
+from edc.subject.visit_tracking.models import PreviousVisitMixin
 
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 from bhp077.apps.microbiome.choices import (VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS,
@@ -17,7 +18,7 @@ from .infant_birth import InfantBirth
 from .infant_off_study_mixin import InfantOffStudyMixin
 
 
-class InfantVisit(MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
+class InfantVisit(PreviousVisitMixin, MetaDataMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
 
     """ A model completed by the user on the infant visits. """
 

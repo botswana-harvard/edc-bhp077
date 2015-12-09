@@ -7,6 +7,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
 from edc_constants.constants import OFF_STUDY, YES, POS, UNSCHEDULED, NEG, DEAD, DEATH_VISIT
+from edc.subject.visit_tracking.models import PreviousVisitMixin
 
 from bhp077.apps.microbiome.choices import VISIT_REASON
 from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
@@ -14,7 +15,7 @@ from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnr
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
-class MaternalVisit(MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin,
+class MaternalVisit(PreviousVisitMixin, MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin,
                     BaseVisitTracking, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
