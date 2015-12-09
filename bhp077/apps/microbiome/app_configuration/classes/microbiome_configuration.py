@@ -76,7 +76,9 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
          'end_datetime': study_end_datetime,
          'version': '1'}]
 
-    study_site_setup = {'site_name': 'Gaborone', 'site_code': '40'}
+    study_site_setup = [{'site_name': 'Gaborone', 'site_code': '40'},
+                        {'site_name': 'Mogoditshane', 'site_code': '50'},
+                        ]
 
     lab_clinic_api_setup = {
         'panel': [PanelTuple('Viral Load', 'TEST', 'WB'),
