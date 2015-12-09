@@ -13,7 +13,7 @@ class InfantDeathForm(BaseInfantModelForm):
 
     def clean(self):
         cleaned_data = super(InfantDeathForm, self).clean()
-        self.validate_report_datetime(cleaned_data, 'death_date')
+        self.validate_report_datetime('death_date')
         self.validate_participant_hospitalized(cleaned_data)
         self.validate_days_hospitalized(cleaned_data)
         return cleaned_data
@@ -36,14 +36,17 @@ class InfantDeathForm(BaseInfantModelForm):
                     'If the participant was hospitalized, please provide '
                     'number of days the participant was hospitalised.')
 
-    def validate_report_datetime(self, cleaned_data, field):
+    def validate_report_datetime(self, field):
+        cleaned_data = self.cleaned_data
         try:
             relative_identifier = cleaned_data.get(
                 'infant_visit').appointment.registered_subject.relative_identifier
             maternal_consent = MaternalConsent.objects.get(
                 registered_subject__subject_identifier=relative_identifier)
-            if cleaned_data.get(field) < maternal_consent.consent_datetime.date():
-                raise forms.ValidationError("{} CANNOT be before consent datetime".format(field.title()))
+            if cleaned_data.get(field) > maternal_consent.consent_datetime.date():
+                raise forms.ValidationError(
+                    "{} CANNOT be before consent date of {}".format(field.title(),
+                                                                    maternal_consent.consent_datetime.date()))
             if cleaned_data.get(field) < maternal_consent.dob:
                 raise forms.ValidationError("{} CANNOT be before dob".format(field.title()))
         except MaternalConsent.DoesNotExist:
