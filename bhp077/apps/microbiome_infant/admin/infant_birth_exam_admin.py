@@ -40,7 +40,7 @@ class InfantBirthExamAdmin(BaseInfantScheduleModelAdmin):
 
     actions = [
         export_as_csv_action(
-            description="CSV Export of Infant Birth Record: EXAM",
+            description="CSV Export of Infant Birth Record: Exam",
             fields=[],
             delimiter=',',
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
