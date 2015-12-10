@@ -50,6 +50,16 @@ class MaternalRequisitionAdmin(BaseRequisitionModelAdmin):
                                                                                         'user_created',
                                                                                         'user_modified'],)]
 
+    def get_fieldsets(self, request, obj=None):
+        panels = [
+            'Vaginal swab (Storage)', 'Rectal swab (Storage)', 'Skin Swab (Storage)', 'Vaginal Swab (multiplex PCR)']
+        panel = Panel.objects.get(id=request.GET.get('panel'))
+        if panel.name in panels:
+            for field in ['estimated_volume']:
+                if field in self.fields:
+                    self.fields.remove(field)
+        return [(None, {'fields': self.fields})]
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         panel_pk = request.GET.get('panel', 0)
         if db_field.name == 'panel':
