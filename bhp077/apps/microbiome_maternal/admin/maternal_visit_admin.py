@@ -1,7 +1,10 @@
+from collections import OrderedDict
+
 from django.contrib import admin
 
 from edc.subject.appointment.admin import BaseAppointmentModelAdmin
 from edc.subject.appointment.models import Appointment
+from edc.export.actions import export_as_csv_action
 
 from ..forms import MaternalVisitForm
 from ..models import MaternalVisit
@@ -40,6 +43,20 @@ class MaternalVisitAdmin(BaseAppointmentModelAdmin):
         'reason',
         'appointment__appt_status',
         'appointment__visit_definition__code')
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Visit",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'appointment__registered_subject__subject_identifier',
+                 'gender': 'appointment__registered_subject__gender',
+                 'dob': 'appointment__registered_subject__dob',
+                 }),
+        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "appointment":

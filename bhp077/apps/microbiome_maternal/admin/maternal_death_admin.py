@@ -1,9 +1,10 @@
+from collections import OrderedDict
+
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from edc.subject.registration.models import RegisteredSubject
+from edc.export.actions import export_as_csv_action
 
-from .registered_subject_model_admin import RegisteredSubjectModelAdmin
 from bhp077.apps.microbiome_maternal.forms import MaternalDeathForm
 from bhp077.apps.microbiome_maternal.models import MaternalDeath, MaternalVisit
 
@@ -38,6 +39,20 @@ class MaternalDeathAdmin(BaseModelAdmin):
         "dx_code": admin.VERTICAL,
         "death_medical_responsibility": admin.VERTICAL,
         "death_reason_hospitalized": admin.VERTICAL}
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Death",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'registered_subject__subject_identifier',
+                 'gender': 'registered_subject__gender',
+                 'dob': 'registered_subject__dob',
+                 }),
+        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
