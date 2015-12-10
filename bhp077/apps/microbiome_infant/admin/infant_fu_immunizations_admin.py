@@ -5,17 +5,19 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
 from edc.export.actions import export_as_csv_action
 
-from ..forms import InfantFuImmunizationsForm
+from ..forms import InfantFuImmunizationsForm, VaccinesReceivedForm, VaccinesMissedForm
 from ..models import InfantFuImmunizations, VaccinesReceived, VaccinesMissed
 
 
 class VaccinesReceivedInlineAdmin(BaseTabularInline):
     model = VaccinesReceived
+    form = VaccinesReceivedForm
     extra = 1
 
 
 class VaccinesMissedInlineAdmin(BaseTabularInline):
     model = VaccinesMissed
+    form = VaccinesMissedForm
     extra = 1
 
 
