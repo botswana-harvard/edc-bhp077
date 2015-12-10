@@ -4,7 +4,7 @@ from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRender
 from edc_constants.constants import MISSED_VISIT, OFF_STUDY, LOST_VISIT, DEATH_VISIT, YES, UNKNOWN
 
 from bhp077.apps.microbiome.choices import VISIT_REASON, VISIT_INFO_SOURCE
-from bhp077.apps.microbiome_maternal.models import MaternalConsent
+from bhp077.apps.microbiome_maternal.models import MaternalConsent, MaternalDeath
 
 from ..models import InfantVisit
 
@@ -32,6 +32,7 @@ class InfantVisitForm(BaseInfantModelForm):
         self.validate_reason_lost_and_completed()
         self.validate_reason_missed()
         self.validate_survival_status()
+        self.validate_information_provider()
         InfantVisit(**cleaned_data).has_previous_visit_or_raise(forms.ValidationError)
 
         if not cleaned_data.get('reason') == MISSED_VISIT:
@@ -83,6 +84,18 @@ class InfantVisitForm(BaseInfantModelForm):
         if cleaned_data.get('survival_status') in ['ALIVE', 'DEAD']:
             if not cleaned_data.get('date_last_alive'):
                 raise forms.ValidationError("Provide Date last known alive.")
+
+    def validate_information_provider(self):
+        cleaned_data = self.cleaned_data
+        if (
+            MaternalDeath.objects.filter(
+                maternal_visit__appointment__registered_subject__subject_identifier=cleaned_data.get(
+                    'appointment').registered_subject.relative_identifier).exists()
+        ):
+            if cleaned_data.get('information_provider') == 'MOTHER':
+                raise forms.ValidationError('The mother is indicated to be dead (MaternalDeathForm is filled). You '
+                                            'therefore CANNOT indicate the information provider for this infant to be '
+                                            'the mother')
 
     class Meta:
         model = InfantVisit

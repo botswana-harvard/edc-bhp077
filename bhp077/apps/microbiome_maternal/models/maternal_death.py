@@ -3,11 +3,13 @@ from datetime import datetime, time
 from edc.subject.adverse_event.models import BaseDeathReport
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_consent import MaternalConsent
 
 
 class MaternalDeath (MaternalScheduledVisitModel, BaseDeathReport):
 
     """ A model completed by the user on the mother's death. """
+    CONSENT_MODEL = MaternalConsent
 
     def get_report_datetime(self):
         return datetime.combine(self.death_date, time(0, 0))
