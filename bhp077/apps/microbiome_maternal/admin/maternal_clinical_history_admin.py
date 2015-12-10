@@ -1,4 +1,8 @@
+from collections import OrderedDict
+
 from django.contrib import admin
+
+from edc.export.actions import export_as_csv_action
 
 from ..forms import MaternalClinicalHistoryForm
 from ..models import MaternalClinicalHistory
@@ -44,5 +48,19 @@ class MaternalClinicalHistoryAdmin(BaseMaternalModelAdmin):
                     'prior_health_haart': admin.VERTICAL,
                     'prev_pregnancy_arv': admin.VERTICAL,
                     'know_hiv_status': admin.VERTICAL}
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal use of ARVs in Prior Pregnancy",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'maternal_visit__appointment__registered_subject__dob',
+                 'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
+        )]
 
 admin.site.register(MaternalClinicalHistory, MaternalClinicalHistoryAdmin)
