@@ -1,9 +1,10 @@
-from django import forms
-from django.utils import timezone
 from dateutil.relativedelta import relativedelta
+from django import forms
+from django.forms.util import ErrorList
+from django.utils import timezone
 
 from edc_consent.forms.base_consent_form import BaseConsentForm
-from edc_constants.constants import FEMALE, OMANG
+from edc_constants.constants import FEMALE, OMANG, OTHER
 
 from ..models import MaternalConsent, MaternalEligibility
 
@@ -21,6 +22,8 @@ class MaternalConsentForm(BaseConsentForm):
                 "In eligibility you said has_omang is {}. Yet you wrote citizen is {}. "
                 "Please correct.".format(eligibility.has_omang, cleaned_data.get('citizen')))
         self.validate_eligibility_age(cleaned_data)
+        self.validate_recruit_source()
+        self.validate_recruitment_clinic()
         return cleaned_data
 
     def validate_eligibility_age(self, cleaned_data):
@@ -31,6 +34,34 @@ class MaternalConsentForm(BaseConsentForm):
             raise forms.ValidationError(
                 'In Maternal Eligibility you indicated the participant is {}, '
                 'but age derived from the DOB is {}.'.format(eligibility_age, consent_age))
+
+    def validate_recruit_source(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('recruit_source') == OTHER:
+            if not cleaned_data.get('recruit_source_other'):
+                self._errors["recruit_source_other"] = ErrorList(["Please specify how you first learnt about the study."
+                                                                  ])
+                raise forms.ValidationError('You indicated that mother first learnt about the study from a source other'
+                                            ' than those in the list provided. Please specify source.')
+        else:
+            if cleaned_data.get('recruit_source_other'):
+                self._errors["recruit_source_other"] = ErrorList(["Please do not specify source you first learnt about"
+                                                                  " the study from."])
+                raise forms.ValidationError('You CANNOT specify other source that mother learnt about the study from '
+                                            'as you already indicated {}'.format(cleaned_data.get('recruit_source')))
+
+    def validate_recruitment_clinic(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('recruitment_clinic') == OTHER:
+            if not cleaned_data.get('recruitment_clinic_other'):
+                self._errors["recruitment_clinic_other"] = ErrorList(["Please specify health facility."])
+                raise forms.ValidationError('You indicated that mother was recruited from a health facility other '
+                                            'than that list provided. Please specify that health facility.')
+        else:
+            if cleaned_data.get('recruitment_clinic_other'):
+                self._errors["recruitment_clinic_other"] = ErrorList(["Please do not specify health facility."])
+                raise forms.ValidationError('You CANNOT specify other facility that mother was recruited from as you '
+                                            'already indicated {}'.format(cleaned_data.get('recruitment_clinic')))
 
     class Meta:
         model = MaternalConsent
