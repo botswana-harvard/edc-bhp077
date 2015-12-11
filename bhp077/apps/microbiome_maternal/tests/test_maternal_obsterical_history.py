@@ -151,7 +151,7 @@ class TestMaternalObstericalHistoryForm(TestCase):
         self.data['pregs_24wks_or_more'] = 3
         mob = MaternalObstericalHistoryForm(data=self.data)
         self.assertIn(
-            "Number of pregnancies least 24 weeks cannot be greater than previous pregnancies.",
+            "Number of pregnancies carried at least 24 weeks cannot be greater than previous pregnancies.",
             mob.errors.get('__all__'))
 
     def test_lost_before_24wks_grt_prev_preg(self):
