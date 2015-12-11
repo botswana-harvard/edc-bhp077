@@ -20,6 +20,8 @@ from bhp077.apps.microbiome_maternal.forms import MaternalMedicalHistoryForm
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
 
 from .factories import MaternalVisitFactory
+from bhp077.apps.microbiome_maternal.models.postnatal_enrollment import PostnatalEnrollment
+from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
 
 
 class TestMaternalMedicalHistoryForm(TestCase):
@@ -79,6 +81,9 @@ class TestMaternalMedicalHistoryForm(TestCase):
             'who_diagnosis': NO,
             'wcs_dx_adult': [who.id],
         }
+        self.error_message_template = (
+            'Participant reported no chronic disease at {enrollment}, '
+            'yet you are reporting the participant has {condition}.')
 
     def test_valid(self):
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
@@ -112,95 +117,40 @@ class TestMaternalMedicalHistoryForm(TestCase):
         errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
         self.assertIn('You stated there are NO WHO diagnoses', errors)
 
-    def test_hypertension_vs_antenatal_enrollment(self):
-        """Test that Chronic Hypertention on antenatal enrollment are the same."""
-        chronic = ChronicConditions.objects.create(
-            name='Chronic Hypertention',
-            short_name='Chronic Hypertention',
-            field_name='chronic_cond'
-        )
-        self.data['chronic_cond'] = [chronic.id]
-        self.data['chronic_cond_since'] = YES
-        self.data['maternal_visit'] = self.maternal_visit_1000.id
-        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
-        error_msg = ('Its indicated that the participant has no chronic disease at antenatal enrollment,'
-                     'yet have indicated the participant has Chronic Hypertention on the medical history')
-        self.assertIn(error_msg, errors)
+    def test_chronic_conditions_vs_antenatal_enrollment(self):
+        """Test any reported chronic conditions matches what was report at antenatal enrollment."""
+        conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertention']
+        for condition in conditions:
+            chronic = ChronicConditions.objects.create(
+                name=condition,
+                short_name=condition,
+                field_name='chronic_cond'
+            )
+            self.data['maternal_visit'] = self.maternal_visit_1000.id
+            self.data['chronic_cond'] = [chronic.id]
+            self.data['chronic_cond_since'] = YES
+            maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
+            errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+            error_msg = self.error_message_template.format(
+                enrollment=AntenatalEnrollment._meta.verbose_name,
+                condition=condition)
+            self.assertIn(error_msg, errors)
 
-    def test_diabities_vs_antenatal_enrollment(self):
-        """Test that Chronic Diabetes on antenatal enrollment are the same."""
-        chronic = ChronicConditions.objects.create(
-            name='Chronic Diabetes',
-            short_name='Chronic Diabetes',
-            field_name='chronic_cond'
-        )
-        self.data['chronic_cond'] = [chronic.id]
-        self.data['chronic_cond_since'] = YES
-        self.data['maternal_visit'] = self.maternal_visit_1000.id
-        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
-        error_msg = ('Its indicated that the participant has no chronic disease at antenatal enrollment,'
-                     'yet have indicated the participant has Chronic Diabetes on the medical history')
-        self.assertIn(error_msg, errors)
-
-    def test_tuberculosis_vs_antenatal_enrollment(self):
-        """Test that Tuberculosis on antenatal enrollment are the same."""
-        chronic = ChronicConditions.objects.create(
-            name='Tuberculosis',
-            short_name='Tuberculosis',
-            field_name='chronic_cond'
-        )
-        self.data['chronic_cond'] = [chronic.id]
-        self.data['chronic_cond_since'] = YES
-        self.data['maternal_visit'] = self.maternal_visit_1000.id
-        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
-        error_msg = ('Its indicated that the participant has no chronic disease at antenatal enrollment,'
-                     'yet have indicated the participant has Chronic Diabetes on the medical history')
-        self.assertIn(error_msg, errors)
-
-    def test_tuberculosis_vs_postnatal_enrollment(self):
-        """Test that Tuberculosis on postnatal enrollment are the same."""
-        chronic = ChronicConditions.objects.create(
-            name='Tuberculosis',
-            short_name='Tuberculosis',
-            field_name='chronic_cond'
-        )
-        self.data['chronic_cond'] = [chronic.id]
-        self.data['chronic_cond_since'] = YES
-        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
-        error_msg = ('Its indicated that the participant has no chronic disease at postnatal enrollment,'
-                     'yet have indicated the participant has Chronic Diabetes on the medical history')
-        self.assertIn(error_msg, errors)
-
-    def test_diabities_vs_postnatal_enrollment(self):
-        """Test that Chronic Diabetes on postnatal enrollment are the same."""
-        chronic = ChronicConditions.objects.create(
-            name='Chronic Diabetes',
-            short_name='Chronic Diabetes',
-            field_name='chronic_cond'
-        )
-        self.data['chronic_cond'] = [chronic.id]
-        self.data['chronic_cond_since'] = YES
-        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
-        error_msg = ('Its indicated that the participant has no chronic disease at postnatal enrollment,'
-                     'yet have indicated the participant has Chronic Diabetes on the medical history')
-        self.assertIn(error_msg, errors)
-
-    def test_hypertension_vs_postnatal_enrollment(self):
-        """Test that Chronic Hypertention on postnatal enrollment are the same."""
-        chronic = ChronicConditions.objects.create(
-            name='Chronic Hypertention',
-            short_name='Chronic Hypertention',
-            field_name='chronic_cond'
-        )
-        self.data['chronic_cond'] = [chronic.id]
-        self.data['chronic_cond_since'] = YES
-        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
-        error_msg = ('Its indicated that the participant has no chronic disease at postnatal enrollment,'
-                     'yet have indicated the participant has Chronic Hypertention on the medical history')
-        self.assertIn(error_msg, errors)
+    def test_chronic_conditions_vs_postnatal_enrollment(self):
+        """Test any reported chronic conditions matches what was report at postnatal enrollment."""
+        conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertention']
+        for condition in conditions:
+            chronic = ChronicConditions.objects.create(
+                name=condition,
+                short_name=condition,
+                field_name='chronic_cond'
+            )
+            self.data['maternal_visit'] = self.maternal_visit_2000.id
+            self.data['chronic_cond'] = [chronic.id]
+            self.data['chronic_cond_since'] = YES
+            maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
+            errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+            error_msg = self.error_message_template.format(
+                enrollment=PostnatalEnrollment._meta.verbose_name,
+                condition=condition)
+            self.assertIn(error_msg, errors)
