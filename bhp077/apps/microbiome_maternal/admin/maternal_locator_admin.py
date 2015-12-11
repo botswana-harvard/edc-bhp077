@@ -1,6 +1,9 @@
+from collections import OrderedDict
+
 from django.contrib import admin
 
 from edc.subject.registration.models import RegisteredSubject
+from edc.export.actions import export_as_csv_action
 from edc_locator.admin import BaseLocatorModelAdmin
 
 from ..models import MaternalLocator, MaternalVisit
@@ -48,6 +51,15 @@ class MaternalLocatorAdmin(BaseLocatorModelAdmin):
                     "may_call_work": admin.VERTICAL,
                     "may_contact_someone": admin.VERTICAL,
                     'has_caretaker': admin.VERTICAL, }
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Locator",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":

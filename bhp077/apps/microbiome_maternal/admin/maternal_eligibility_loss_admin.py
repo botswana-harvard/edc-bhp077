@@ -1,6 +1,9 @@
+from collections import OrderedDict
+
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
+from edc.export.actions import export_as_csv_action
 
 from ..forms import MaternalEligibilityLossForm
 from ..models import MaternalEligibilityLoss, MaternalEligibility
@@ -13,6 +16,20 @@ class MaternalEligibilityLossAdmin(BaseModelAdmin):
     fields = ('maternal_eligibility',
               'report_datetime',
               'reason_ineligible')
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Eligibility",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'maternal_eligibility__registered_subject__subject_identifier',
+                 'gender': 'maternal_eligibility__registered_subject__gender',
+                 'dob': 'maternal_eligibility__registered_subject__dob',
+                 }),
+        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_eligibility":

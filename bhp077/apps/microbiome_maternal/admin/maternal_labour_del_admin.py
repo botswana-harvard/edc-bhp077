@@ -1,6 +1,10 @@
+from collections import OrderedDict
+
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
+from edc.export.actions import export_as_csv_action
+
 from ..models import (MaternalLabourDel, MaternalLabDelMed, MaternalLabDelClinic,
                       MaternalLabDelDx, MaternalLabDelDxT, MaternalVisit)
 from ..forms import (MaternalLabourDelForm, MaternalLabDelMedForm,
@@ -22,6 +26,20 @@ class MaternalLabourDelAdmin(BaseModelAdmin):
                     'delivery_complications': admin.VERTICAL,
                     'has_temp': admin.VERTICAL, }
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Labour and Delivery",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'maternal_visit__appointment__registered_subject__dob',
+                 'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
+        )]
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
@@ -39,6 +57,20 @@ class MaternalLabDelMedAdmin(BaseModelAdmin):
                     'took_suppliments': admin.VERTICAL}
     filter_horizontal = ('suppliments', 'health_cond', 'ob_comp')
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Labour & Delivery: Medical History",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'maternal_visit__appointment__registered_subject__dob',
+                 'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
+        )]
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
@@ -53,6 +85,20 @@ class MaternalLabDelClinicAdmin(BaseModelAdmin):
     radio_fields = {'has_cd4': admin.VERTICAL,
                     'has_vl': admin.VERTICAL,
                     'vl_detectable': admin.VERTICAL}
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Labour & Delivery: Clinical History",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'maternal_visit__appointment__registered_subject__dob',
+                 'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
+        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
@@ -76,6 +122,20 @@ class MaternalLabDelDxAdmin(BaseModelAdmin):
     filter_horizontal = ('wcs_dx_adult',)
     inlines = [MaternalLabDelDxTInlineAdmin, ]
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Labour & Delivery: Preg Dx",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'maternal_visit__appointment__registered_subject__dob',
+                 'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
+        )]
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
@@ -92,6 +152,23 @@ class MaternalLabDelDxTAdmin(BaseModelAdmin):
         'lab_del_dx': admin.VERTICAL,
         'hospitalized': admin.VERTICAL}
     radio_fields = {'hospitalized': admin.VERTICAL}
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Labour & Delivery: Preg Dx with diagnosis",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'maternal_lab_del_dx__maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'maternal_lab_del_dx__maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'maternal_lab_del_dx__maternal_visit__appointment__registered_subject__dob',
+                 'has_who_dx': 'maternal_lab_del_dx__has_who_dx',
+                 'wcs_dx_adult': 'maternal_lab_del_dx__wcs_dx_adult',
+                 'has_preg_dx': 'maternal_lab_del_dx__has_preg_dx',
+                 }),
+        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":

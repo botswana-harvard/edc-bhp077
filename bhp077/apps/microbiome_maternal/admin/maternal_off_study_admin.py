@@ -1,6 +1,9 @@
+from collections import OrderedDict
+
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
+from edc.export.actions import export_as_csv_action
 
 from ..models import MaternalOffStudy, MaternalVisit
 from ..forms import MaternalOffStudyForm
@@ -23,6 +26,20 @@ class MaternalOffStudyAdmin(BaseModelAdmin):
     radio_fields = {
         "has_scheduled_data": admin.VERTICAL,
     }
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Off Study",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'registered_subject__subject_identifier',
+                 'gender': 'registered_subject__gender',
+                 'dob': 'registered_subject__dob',
+                 }),
+        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":

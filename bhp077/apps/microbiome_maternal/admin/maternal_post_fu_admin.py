@@ -1,6 +1,9 @@
+from collections import OrderedDict
+
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
+from edc.export.actions import export_as_csv_action
 
 from ..forms import MaternalPostFuForm, MaternalPostFuDxForm, MaternalPostFuDxTForm
 from ..models import MaternalPostFu, MaternalPostFuDx, MaternalPostFuDxT, MaternalVisit
@@ -23,6 +26,20 @@ class MaternalPostFuAdmin(BaseModelAdmin):
         "weight_measured": admin.VERTICAL,
         "chronic_cond_since": admin.VERTICAL}
     filter_horizontal = ('chronic_cond',)
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Postnatal Follow-Up",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'maternal_visit__appointment__registered_subject__dob',
+                 'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
+        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
@@ -52,6 +69,28 @@ class MaternalPostFuDxTAdmin(BaseModelAdmin):
         "hospitalized": admin.VERTICAL,
     }
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Postnatal Follow-Up: Dx with diagnosis",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'post_fu_dx__maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'post_fu_dx__maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'post_fu_dx__maternal_visit__appointment__registered_subject__dob',
+                 'weight_measured': 'post_fu_dx__weight_measured',
+                 'weight_kg': 'post_fu_dx__weight_kg',
+                 'systolic_bp': 'post_fu_dx__systolic_bp',
+                 'diastolic_bp': 'post_fu_dx__diastolic_bp',
+                 'chronic_cond_since': 'post_fu_dx__chronic_cond_since',
+                 'chronic_cond': 'post_fu_dx__chronic_cond',
+                 'chronic_cond_other': 'post_fu_dx__chronic_cond_other',
+                 'comment': 'post_fu_dx__comment'
+                 }),
+        )]
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_post_fu_dx":
             if request.GET.get('maternal_visit'):
@@ -78,6 +117,20 @@ class MaternalPostFuDxAdmin(BaseModelAdmin):
         "new_wcs_dx_since": admin.VERTICAL}
     filter_horizontal = ("wcs_dx_adult",)
     inlines = [MaternalPostFuDxTInlineAdmin, ]
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Postnatal Follow-Up: Dx",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'maternal_visit__appointment__registered_subject__dob',
+                 }),
+        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":

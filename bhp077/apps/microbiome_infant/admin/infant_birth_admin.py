@@ -1,7 +1,10 @@
+from collections import OrderedDict
+
 from django.contrib import admin
 
 from edc.base.modeladmin.admin import BaseModelAdmin
 from edc.subject.registration.models import RegisteredSubject
+from edc.export.actions import export_as_csv_action
 
 from bhp077.apps.microbiome_maternal.models import MaternalLabourDel
 
@@ -26,6 +29,20 @@ class InfantBirthAdmin(BaseModelAdmin):
     list_display = ('report_datetime', 'first_name', 'maternal_labour_del')
     list_filter = ('gender',)
     radio_fields = {'gender': admin.VERTICAL}
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Birth",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'registered_subject__subject_identifier',
+                 'gender': 'registered_subject__gender',
+                 'dob': 'registered_subject__dob',
+                 }),
+        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "registered_subject":
