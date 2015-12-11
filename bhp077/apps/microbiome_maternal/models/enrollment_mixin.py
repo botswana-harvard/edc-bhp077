@@ -1,9 +1,9 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from edc_base.model.validators import date_not_before_study_start, date_not_future
-
 from edc_constants.choices import POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO, NO
-from edc_constants.constants import NOT_APPLICABLE
+from edc_constants.constants import NOT_APPLICABLE, YES, POS, NEG, NEVER, UNKNOWN, DWTA, SEROCONVERSION, IND
 
 
 class EnrollmentMixin(models.Model):
@@ -15,7 +15,7 @@ class EnrollmentMixin(models.Model):
 
     is_diabetic = models.CharField(
         verbose_name='Are you diabetic?',
-        default=NO,
+        # default=NO,
         choices=YES_NO,
         help_text='INELIGIBLE if YES',
         max_length=3)
@@ -23,29 +23,28 @@ class EnrollmentMixin(models.Model):
     on_tb_tx = models.CharField(
         verbose_name="Are you being treated for tubercolosis?",
         choices=YES_NO,
-        default=NO,
+        # default=NO,
         help_text='INELIGIBLE if YES',
         max_length=3)
 
     on_hypertension_tx = models.CharField(
         verbose_name='Are you being treated for hypertension?',
         choices=YES_NO,
-        default=NO,
+        # default=NO,
         help_text='INELIGIBLE if YES',
-        max_length=3
-    )
+        max_length=3)
 
     will_breastfeed = models.CharField(
         verbose_name='Are you willing to breast-feed your child for a whole year?',
         choices=YES_NO,
-        default=NO,
+        # default=NO,
         help_text='INELIGIBLE if NO',
         max_length=3)
 
     will_remain_onstudy = models.CharField(
         verbose_name="Are you willing to remain in the study during the infants first year of life",
         choices=YES_NO,
-        default=NO,
+        # default=NO,
         help_text='INELIGIBLE if NO',
         max_length=3)
 
@@ -78,7 +77,7 @@ class EnrollmentMixin(models.Model):
         max_length=15,
         null=True,
         blank=False,
-        default=NOT_APPLICABLE,
+        # default=NOT_APPLICABLE,
         choices=YES_NO_NA,
         help_text=("evidence = clinic and/or IDCC records. check regimes/drugs. If NO, participant"
                    "will not be enrolled"))
@@ -88,7 +87,7 @@ class EnrollmentMixin(models.Model):
         choices=YES_NO_NA,
         null=True,
         blank=False,
-        default=NOT_APPLICABLE,
+        # default=NOT_APPLICABLE,
         max_length=15,
         help_text=("Valid regimes include: Atripla, Truvada-Efavirenz or Tenofovir, "
                    "Entricitibine-Efavirenz, Truvad-Lamivudine-Efavirenz. If NO, participant"
@@ -99,7 +98,7 @@ class EnrollmentMixin(models.Model):
         choices=YES_NO_NA,
         null=True,
         blank=False,
-        default=NOT_APPLICABLE,
+        # default=NOT_APPLICABLE,
         max_length=15,
         help_text=("If not 6 or more weeks then not eligible."))
 
@@ -108,7 +107,7 @@ class EnrollmentMixin(models.Model):
         choices=YES_NO_NA,
         null=True,
         blank=False,
-        default=NOT_APPLICABLE,
+        # default=NOT_APPLICABLE,
         max_length=15,
         help_text=(
             'Remember, rapid test is for NEG, UNTESTED, UNKNOWN and Don\'t want to answer.'))
@@ -132,6 +131,77 @@ class EnrollmentMixin(models.Model):
         return "{0} {1}".format(
             self.registered_subject.subject_identifier,
             self.registered_subject.first_name)
+
+    def enrollment_hiv_status(self):
+        """Returns the maternal HIV status at enrollment based on valid combinations
+        expected from the form otherwise raises a ValueError.
+
+        Note: the ValueError should never be excepted!!"""
+
+        enrollment_hiv_status = None
+        if self.evidence_hiv_status == YES:
+            if self.hiv_status_on_or_after_32wk() == POS:
+                enrollment_hiv_status = POS
+            elif self.hiv_status_on_or_after_32wk() == NEG:
+                enrollment_hiv_status = NEG
+            elif self.current_hiv_status == POS and self.rapid_test_done in [NO, NOT_APPLICABLE]:
+                enrollment_hiv_status = POS
+            elif (self.current_hiv_status == POS and self.rapid_test_done == YES and
+                    self.rapid_test_result == POS):
+                enrollment_hiv_status = POS
+            elif (self.current_hiv_status == NEG and
+                    self.rapid_test_done == YES and self.rapid_test_result == NEG):
+                enrollment_hiv_status = NEG
+            elif (self.current_hiv_status == NEG and
+                    self.rapid_test_done == YES and self.rapid_test_result == POS):
+                enrollment_hiv_status = SEROCONVERSION
+            elif (self.current_hiv_status == NEG and
+                    self.rapid_test_done == YES and self.rapid_test_result == IND):
+                enrollment_hiv_status = IND
+        elif self.evidence_hiv_status in [NO, NOT_APPLICABLE]:
+            if (self.current_hiv_status == POS and self.rapid_test_done == YES and
+                    self.rapid_test_result == POS):
+                enrollment_hiv_status = POS
+            elif (self.current_hiv_status == POS and self.rapid_test_done == NO and
+                    self.rapid_test_result is None):
+                enrollment_hiv_status = UNKNOWN
+            elif (self.current_hiv_status in [NEG, NEVER, UNKNOWN, DWTA] and self.rapid_test_done == YES and
+                    self.rapid_test_result == NEG):
+                enrollment_hiv_status = NEG
+            elif (self.current_hiv_status in [NEG, NEVER, UNKNOWN, DWTA] and self.rapid_test_done == YES and
+                    self.rapid_test_result == POS):
+                enrollment_hiv_status = SEROCONVERSION
+            elif (self.current_hiv_status in [NEG, NEVER, UNKNOWN, DWTA] and self.rapid_test_done == NO and
+                    self.rapid_test_result is None):
+                enrollment_hiv_status = UNKNOWN
+        if not enrollment_hiv_status:
+            raise ValueError('Unable to determine maternal hiv status at enrollment. '
+                             'Got current_hiv_status={}, evidence_hiv_status={}, '
+                             'rapid_test_done={}, rapid_test_result={}'.format(
+                                 self.current_hiv_status,
+                                 self.evidence_hiv_status,
+                                 self.rapid_test_done,
+                                 self.rapid_test_result))
+        return enrollment_hiv_status
+
+    def hiv_status_on_or_after_32wk(self, exception_cls=None):
+        """Returns the maternal status on or after week 32 gestational age or None."""
+        exception_cls = exception_cls or ValidationError
+        hiv_status_on_or_after_32wk = None
+        if self.week32_test == YES and self.week32_test_date:
+            if not self.test_date_is_on_or_after_32wks_gestational_age:
+                raise exception_cls(
+                    'Test date is not on or after 32 weeks gestational age.')
+            elif self.week32_result == POS and self.current_hiv_status == POS:
+                hiv_status_on_or_after_32wk = POS
+            elif self.week32_result == NEG and self.current_hiv_status == NEG:
+                hiv_status_on_or_after_32wk = NEG
+        return hiv_status_on_or_after_32wk
+
+    def common_fields(self):
+        """Returns a list of field names common to postnatal
+        and antenatal enrollment models."""
+        return [field.name for field in EnrollmentMixin._meta.fields if field.name not in ['is_eligible']]
 
     def get_registration_datetime(self):
         return self.report_datetime

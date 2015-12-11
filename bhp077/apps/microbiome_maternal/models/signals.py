@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from edc.subject.registration.models import RegisteredSubject
@@ -8,9 +8,7 @@ from edc.core.identifier.classes import InfantIdentifier
 from .maternal_eligibility import MaternalEligibility
 from .maternal_eligibility_loss import MaternalEligibilityLoss
 from .maternal_consent import MaternalConsent
-from .maternal_visit import MaternalVisit
 from .postnatal_enrollment import PostnatalEnrollment
-from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")
@@ -98,14 +96,14 @@ def create_infant_identifier_on_labour_delivery(sender, instance, raw, created, 
                 registered_subject = instance.maternal_visit.appointment.registered_subject
                 consent = instance.CONSENT_MODEL.objects.get(
                     registered_subject=registered_subject)
-                postnatal_enrol = PostnatalEnrollment.objects.get(
+                postnatal_enrollment = PostnatalEnrollment.objects.get(
                     registered_subject=consent.registered_subject)
                 for infant_order in range(0, instance.live_infants_to_register):
                     infant_identifier = InfantIdentifier(
                         maternal_identifier=registered_subject.subject_identifier,
                         study_site=consent.study_site,
                         birth_order=infant_order,
-                        live_infants=postnatal_enrol.live_infants,
+                        live_infants=postnatal_enrollment.live_infants,
                         live_infants_to_register=instance.live_infants_to_register,
                         user=instance.user_created)
                     infant_identifier.get_identifier()
@@ -113,12 +111,12 @@ def create_infant_identifier_on_labour_delivery(sender, instance, raw, created, 
             pass
 
 
-@receiver(post_save, weak=False, dispatch_uid="save_common_fields_to_postnatal_enrollment_post_save")
-def save_common_fields_to_postnatal_enrollment_post_save(sender, instance, raw, created, using, **kwargs):
-    """Updates common fields on postnatal_enrollment with values from antenatal_enrollment."""
-    if not raw:
-        try:
-            instance.save_common_fields_to_postnatal_enrollment()
-        except AttributeError as e:
-            if 'save_common_fields_to_postnatal_enrollment' not in str(e):
-                raise AttributeError(str(e))
+# @receiver(post_save, weak=False, dispatch_uid="save_common_fields_in_enrollment")
+# def save_common_fields_in_enrollment(sender, instance, raw, created, using, **kwargs):
+#     """Updates common fields on postnatal_enrollment with values from antenatal_enrollment."""
+#     if not raw:
+#         try:
+#             instance.save_common_fields_to_postnatal_enrollment()
+#         except AttributeError as e:
+#             if 'save_common_fields_to_postnatal_enrollment' not in str(e):
+#                 raise AttributeError(str(e))

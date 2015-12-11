@@ -1,16 +1,21 @@
 from django.db import models
 
 from edc.entry_meta_data.managers import EntryMetaDataManager
-from edc.subject.off_study.models import BaseOffStudy
+from edc.subject.registration.models.registered_subject import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_offstudy.models import OffStudyModelMixin
 
 from .maternal_visit import MaternalVisit
 
 
-class MaternalOffStudy(BaseOffStudy, BaseUuidModel):
+class MaternalOffStudy(OffStudyModelMixin, BaseUuidModel):
 
     """ A model completed by the user that completed when the subject is taken off-study. """
+
+    VISIT_MODEL = MaternalVisit
+
+    registered_subject = models.OneToOneField(RegisteredSubject)
 
     maternal_visit = models.OneToOneField(MaternalVisit)
 

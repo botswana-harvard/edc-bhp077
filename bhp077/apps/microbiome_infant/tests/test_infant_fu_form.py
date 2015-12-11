@@ -7,10 +7,9 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
+from edc_constants.constants import YES, NO, NEG
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome_infant.forms import InfantFuForm
 from bhp077.apps.microbiome_infant.models import InfantFu
 from bhp077.apps.microbiome_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
@@ -52,10 +51,12 @@ class TestInfantFu(TestCase):
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_eligibility.registered_subject
 
-        postnatal = PostnatalEnrollmentFactory(
+        PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
-            evidence_hiv_status=YES)
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='1000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)

@@ -1,12 +1,12 @@
 from django.contrib import admin
 
-from edc.subject.off_study.admin import BaseOffStudyModelAdmin
+from edc_base.modeladmin.admin import BaseModelAdmin
 
 from ..models import MaternalOffStudy, MaternalVisit
 from ..forms import MaternalOffStudyForm
 
 
-class MaternalOffStudyAdmin(BaseOffStudyModelAdmin):
+class MaternalOffStudyAdmin(BaseModelAdmin):
     form = MaternalOffStudyForm
     dashboard_type = 'maternal'
     visit_model_name = 'maternalvisit'

@@ -30,10 +30,10 @@ class InfantVisitForm(BaseInfantModelForm):
         self.validate_presence()
         self.validate_reason_death()
         self.validate_reason_lost_and_completed()
-        self.validate_reason_missed()
-        self.validate_survival_status()
-        self.validate_information_provider()
-        InfantVisit(**cleaned_data).has_previous_visit_or_raise(forms.ValidationError)
+        self.validate_reason_visit_missed()
+        self.validate_survival_status_if_alive()
+        self.validate_information_provider_is_alive()
+        self._meta.model(**cleaned_data).has_previous_visit_or_raise(forms.ValidationError)
 
         if not cleaned_data.get('reason') == MISSED_VISIT:
             if not cleaned_data.get('info_source'):
@@ -63,7 +63,7 @@ class InfantVisitForm(BaseInfantModelForm):
                 raise forms.ValidationError("You should select \'Deceased\' for survival status.")
             if not cleaned_data.get('study_status') == OFF_STUDY:
                 raise forms.ValidationError(
-                    "This is an Off Study. Select \'off study\' for the infant's current study status.")
+                    "This is an Off Study visit. Select \'off study\' for the infant's current study status.")
 
     def validate_reason_lost_and_completed(self):
         cleaned_data = self.cleaned_data
@@ -73,29 +73,28 @@ class InfantVisitForm(BaseInfantModelForm):
                     "This is an Off Study OR LFU visit. "
                     "Select \'off study\' for the infant's current study status.")
 
-    def validate_reason_missed(self):
+    def validate_reason_visit_missed(self):
         cleaned_data = self.cleaned_data
         if cleaned_data.get('reason') == MISSED_VISIT:
             if not cleaned_data.get('reason_missed'):
                 raise forms.ValidationError("Provide reason scheduled visit was missed.")
 
-    def validate_survival_status(self):
+    def validate_survival_status_if_alive(self):
         cleaned_data = self.cleaned_data
         if cleaned_data.get('survival_status') in ['ALIVE', 'DEAD']:
             if not cleaned_data.get('date_last_alive'):
                 raise forms.ValidationError("Provide Date last known alive.")
 
-    def validate_information_provider(self):
+    def validate_information_provider_is_alive(self):
         cleaned_data = self.cleaned_data
-        if (
-            MaternalDeath.objects.filter(
+        if (MaternalDeath.objects.filter(
                 maternal_visit__appointment__registered_subject__subject_identifier=cleaned_data.get(
-                    'appointment').registered_subject.relative_identifier).exists()
-        ):
+                    'appointment').registered_subject.relative_identifier).exists()):
             if cleaned_data.get('information_provider') == 'MOTHER':
-                raise forms.ValidationError('The mother is indicated to be dead (MaternalDeathForm is filled). You '
-                                            'therefore CANNOT indicate the information provider for this infant to be '
-                                            'the mother')
+                raise forms.ValidationError(
+                    'The mother is indicated to be dead (MaternalDeathForm is filled). You '
+                    'therefore CANNOT indicate the information provider for this infant to be '
+                    'the mother')
 
     class Meta:
         model = InfantVisit

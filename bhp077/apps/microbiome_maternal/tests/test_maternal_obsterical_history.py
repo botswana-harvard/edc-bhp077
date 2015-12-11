@@ -6,7 +6,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import YES, NEG
+from edc_constants.constants import YES, NEG, SCHEDULED
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
@@ -33,19 +33,19 @@ class TestMaternalObstericalHistoryForm(TestCase):
         site_rule_groups.autodiscover()
 
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
-        )
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='1000M'
-        )
-
-        self.maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
+            registered_subject=self.registered_subject, visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=appointment, reason=SCHEDULED)
 
         self.data = {
             'report_datetime': timezone.now(),

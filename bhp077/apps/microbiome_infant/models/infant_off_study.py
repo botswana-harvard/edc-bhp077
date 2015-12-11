@@ -1,30 +1,28 @@
 from django.db import models
-from django.utils import timezone
 
 from edc.entry_meta_data.managers import EntryMetaDataManager
-from edc.subject.off_study.models import BaseOffStudy
+from edc.subject.registration.models.registered_subject import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_offstudy.models import OffStudyModelMixin
 
 from .infant_visit import InfantVisit
 
 
-class InfantOffStudy(BaseOffStudy, BaseUuidModel):
+class InfantOffStudy(OffStudyModelMixin, BaseUuidModel):
 
     """ A model completed by the user when the infant is taken off study. """
+    VISIT_MODEL = InfantVisit
+
+    registered_subject = models.OneToOneField(RegisteredSubject)
 
     infant_visit = models.OneToOneField(InfantVisit)
 
-    report_datetime = models.DateTimeField(
-        verbose_name="Visit Date and Time",
-        default=timezone.now
-    )
+    entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 
     objects = models.Manager()
 
     history = AuditTrail()
-
-    entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 
     def get_visit(self):
         return self.infant_visit

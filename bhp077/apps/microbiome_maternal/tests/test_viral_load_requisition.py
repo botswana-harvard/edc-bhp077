@@ -7,7 +7,7 @@ from edc.subject.appointment.models import Appointment
 from edc.subject.entry.models.lab_entry import LabEntry
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.constants import YES, POS
+from edc_constants.constants import YES, POS, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -35,7 +35,8 @@ class TestViralLoadRequisition(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
-            evidence_hiv_status=YES)
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE)
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='1000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)

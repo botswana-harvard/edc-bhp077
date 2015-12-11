@@ -7,18 +7,16 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc.subject.code_lists.models import WcsDxAdult
-from edc_constants.choices import YES, NO
+from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
-from bhp077.apps.microbiome_maternal.forms import (MaternalPostFuMedForm, MaternalPostFuMedItemsForm)
+from bhp077.apps.microbiome_maternal.forms import MaternalPostFuMedItemsForm
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
-from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
+
+from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory, MaternalPostFuMedFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory, MaternalPostFuFactory)
-from bhp077.apps.microbiome_maternal.tests.factories.maternal_postnatal_fu_factory import MaternalPostFuMedFactory
 
 
 class TestMaternalPostFuMedItems(TestCase):
@@ -40,6 +38,9 @@ class TestMaternalPostFuMedItems(TestCase):
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,

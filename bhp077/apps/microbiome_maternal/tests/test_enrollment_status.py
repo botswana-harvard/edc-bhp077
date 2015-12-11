@@ -4,7 +4,7 @@ from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc_constants.constants import POS, YES, NO, NEG
+from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (AntenatalEnrollmentFactory, MaternalEligibilityFactory, PostnatalEnrollmentFactory)
@@ -36,6 +36,7 @@ class TestEnrollmentStatus(TestCase):
         antenatal_enrollment = AntenatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,            
             registered_subject=self.registered_subject,
             gestation_wks=35)
         self.assertFalse(antenatal_enrollment.is_eligible)
@@ -45,12 +46,14 @@ class TestEnrollmentStatus(TestCase):
         AntenatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             gestation_wks=36)
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             gestation_wks_delivered=38)
 
@@ -61,12 +64,14 @@ class TestEnrollmentStatus(TestCase):
         AntenatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             gestation_wks=35)
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             gestation_wks_delivered=38,
             will_remain_onstudy=NO)
@@ -77,13 +82,14 @@ class TestEnrollmentStatus(TestCase):
         antenatal_enrollment = AntenatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             gestation_wks=35,
             will_remain_onstudy=NO,
             is_diabetic=YES)
         self.assertFalse(antenatal_enrollment.is_eligible)
 
-    def test_antenatal_eligible_if_gestation_not_36_pos(self):
+    def test_antenatal_ineligible_if_gestation_not_36_pos(self):
         """
             current_hiv_status = ?
             evidence_hiv_status = ?
@@ -104,10 +110,11 @@ class TestEnrollmentStatus(TestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             gestation_wks=35,
             week32_test=YES,
             week32_result=POS)
-        self.assertTrue(antenatal_enrollment.is_eligible)
+        self.assertFalse(antenatal_enrollment.is_eligible)
 
     def test_antenatal_eligible_if_gestation_36_pos1(self):
         """Assert eligible if POS by week32 test, current, evidence."""
@@ -116,20 +123,22 @@ class TestEnrollmentStatus(TestCase):
             gestation_wks=36,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             week32_test=YES,
             week32_result=POS)
         self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_antenatal_eligible_if_gestation_36_pos2(self):
-        """Assert eligible if POS by week32 test, without current and no evidence."""
+        """Assert eligible if POS by week32 test."""
         antenatal_enrollment = AntenatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            current_hiv_status=NO,
-            evidence_hiv_status=NO,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
             gestation_wks=36,
+            rapid_test_done=NOT_APPLICABLE,
             week32_test=YES,
             week32_result=POS)
-        self.assertFalse(antenatal_enrollment.is_eligible)
+        self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_antenatal_not_eligible_if_gestation_not_36_neg(self):
         antenatal_enrollment = AntenatalEnrollmentFactory(
@@ -137,6 +146,7 @@ class TestEnrollmentStatus(TestCase):
             gestation_wks=35,
             week32_test=YES,
             week32_result=NEG,
+            rapid_test_done=NOT_APPLICABLE,
             current_hiv_status=POS,
             evidence_hiv_status=YES)
         self.assertFalse(antenatal_enrollment.is_eligible)
@@ -147,14 +157,17 @@ class TestEnrollmentStatus(TestCase):
             gestation_wks=36,
             week32_test=YES,
             week32_result=NEG,
-            current_hiv_status=POS,
-            evidence_hiv_status=YES)
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
         self.assertTrue(antenatal_enrollment.is_eligible)
 
     def test_if_postnatal_not_eligible(self):
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             gestation_wks_delivered=35,
             will_remain_onstudy=NO)
@@ -164,6 +177,7 @@ class TestEnrollmentStatus(TestCase):
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             gestation_wks_delivered=35,
         )

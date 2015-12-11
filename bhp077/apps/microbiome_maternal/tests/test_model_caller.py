@@ -1,7 +1,13 @@
 from django.test import TestCase
 
+from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
+from edc.lab.lab_profile.classes.controller import site_lab_profiles
+from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
+from edc.subject.lab_tracker.classes.controller import site_lab_tracker
+from edc.subject.rule_groups.classes.controller import site_rule_groups
 from edc_call_manager.caller_site import site_model_callers
-from edc_call_manager.models import Call, Log
+from edc_call_manager.models import Call
+from edc_constants.constants import POS, NO, YES, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes.microbiome_configuration import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -9,14 +15,8 @@ from bhp077.apps.microbiome_maternal.model_callers import AnteNatalModelCaller
 from bhp077.apps.microbiome_maternal.models import AntenatalEnrollment
 from bhp077.apps.microbiome_maternal.tests.factories.maternal_consent_factory import MaternalConsentFactory
 from bhp077.apps.microbiome_maternal.tests.factories.maternal_eligibility_factory import MaternalEligibilityFactory
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
-from edc.lab.lab_profile.classes.controller import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc.subject.lab_tracker.classes.controller import site_lab_tracker
-from edc.subject.rule_groups.classes.controller import site_rule_groups
-from edc_constants.constants import POS, NO, YES
+
 from .factories import AntenatalEnrollmentFactory
-from bhp077.apps.microbiome_maternal.models.maternal_locator import MaternalLocator
 
 
 class TestModelCaller(TestCase):
@@ -45,9 +45,7 @@ class TestModelCaller(TestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             on_hypertension_tx=NO)
         subject_identifier = antenatal_enrollment.get_subject_identifier()
         self.assertEqual(Call.objects.filter(subject_identifier=subject_identifier).count(), 1)
-
-#     def test_updates_log_with_locator_data(self):
-#         MaternalLocator.objects.create(maternal_visit=maternal_visit)

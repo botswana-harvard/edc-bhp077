@@ -9,7 +9,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import YES, POS, OFF_STUDY, ON_STUDY
+from edc_constants.constants import YES, POS, OFF_STUDY, ON_STUDY, DEATH_VISIT, LOST_VISIT, MISSED_VISIT, SCHEDULED
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_infant.forms import InfantVisitForm
@@ -66,7 +66,8 @@ class TestInfantVisitForm(TestCase):
 
     def test_validate_reason_death_valid(self):
         data = {
-            'reason': 'death',
+            'is_present': YES,
+            'reason': DEATH_VISIT,
             'survival_status': 'DEAD',
             'study_status': OFF_STUDY,
             'appointment': self.appointment.id,
@@ -79,6 +80,7 @@ class TestInfantVisitForm(TestCase):
 
     def test_validate_reason_death_not_valid(self):
         data = {
+            'is_present': YES,
             'reason': 'death',
             'survival_status': 'ALIVE',
             'study_status': OFF_STUDY,
@@ -87,12 +89,13 @@ class TestInfantVisitForm(TestCase):
             'information_provider': 'MOTHER',
             'report_datetime': timezone.now()}
         visit_form = InfantVisitForm(data=data)
-        self.assertIn('You should select Deceased for survival status.',
+        self.assertIn('You should select \'Deceased\' for survival status.',
                       visit_form.errors.get('__all__'))
 
     def test_validate_reason_death_not_valid1(self):
         data = {
-            'reason': 'death',
+            'is_present': YES,
+            'reason': DEATH_VISIT,
             'survival_status': 'DEAD',
             'study_status': ON_STUDY,
             'appointment': self.appointment.id,
@@ -101,12 +104,13 @@ class TestInfantVisitForm(TestCase):
             'report_datetime': timezone.now()}
         visit_form = InfantVisitForm(data=data)
         self.assertIn(
-            "You should select offstudy for the participant's current study status.",
+            "This is an Off Study visit. Select 'off study' for the infant's current study status.",
             visit_form.errors.get('__all__'))
 
     def test_validate_reason_lost_and_completed(self):
         data = {
-            'reason': 'lost',
+            'is_present': YES,
+            'reason': LOST_VISIT,
             'survival_status': 'DEAD',
             'study_status': ON_STUDY,
             'appointment': self.appointment.id,
@@ -116,12 +120,14 @@ class TestInfantVisitForm(TestCase):
             'date_last_alive': date.today()}
         visit_form = InfantVisitForm(data=data)
         self.assertIn(
-            "You should select offstudy for the participant's current study status.",
+            "This is an Off Study OR LFU visit. Select 'off study' for the infant's current study status.",
             visit_form.errors.get('__all__'))
 
     def test_validate_reason_missed_valid(self):
         data = {
-            'reason': 'missed', 'survival_status': 'DEAD',
+            'is_present': YES,
+            'reason': MISSED_VISIT,
+            'survival_status': 'DEAD',
             'study_status': ON_STUDY,
             'appointment': self.appointment.id,
             'information_provider': 'MOTHER',
@@ -133,7 +139,8 @@ class TestInfantVisitForm(TestCase):
 
     def test_validate_reason_missed_not_valid(self):
         data = {
-            'reason': 'missed',
+            'is_present': YES,
+            'reason': MISSED_VISIT,
             'survival_status': 'DEAD',
             'study_status': ON_STUDY,
             'appointment': self.appointment.id,
@@ -145,7 +152,8 @@ class TestInfantVisitForm(TestCase):
 
     def test_validate_survival_status(self):
         data = {
-            'reason': 'scheduled',
+            'is_present': YES,
+            'reason': SCHEDULED,
             'survival_status': 'ALIVE',
             'study_status': ON_STUDY,
             'appointment': self.appointment.id,

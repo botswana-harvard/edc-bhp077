@@ -36,7 +36,8 @@ class TestMaternalLocator(TestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
-        )
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
 
     def test_maternal_locator(self):
         pass

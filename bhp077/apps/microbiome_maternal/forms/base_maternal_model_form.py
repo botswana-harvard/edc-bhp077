@@ -1,4 +1,4 @@
-from bhp077.apps.microbiome.base_model_form import BaseModelForm
+from edc_base.form.forms import BaseModelForm
 
 from ..models import MaternalVisit
 

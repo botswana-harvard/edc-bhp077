@@ -1,16 +1,14 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from edc.subject.registration.models import RegisteredSubject
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
+from edc_constants.constants import YES, NO, NEG
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome_maternal.forms import MaternalDeathForm
 
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -36,17 +34,19 @@ class TestMaternalDeathForm(TestCase):
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_eligibility.registered_subject
 
-        postnatal = PostnatalEnrollmentFactory(
+        PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
-            evidence_hiv_status=YES)
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        maternal_labour_del = MaternalLabourDelFactory(maternal_visit=self.maternal_visit)
+        MaternalLabourDelFactory(maternal_visit=self.maternal_visit)
 
         self.data = {
             'report_datetime': timezone.now(),

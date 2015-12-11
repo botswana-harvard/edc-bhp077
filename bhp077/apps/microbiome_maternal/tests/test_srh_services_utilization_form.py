@@ -56,9 +56,12 @@ class TestSrhServiceUtilizationForm(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
-            evidence_hiv_status=YES)
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='1000M')
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
 
         self.data['maternal_visit'] = maternal_visit.id
@@ -72,7 +75,9 @@ class TestSrhServiceUtilizationForm(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
-            evidence_hiv_status=YES)
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
@@ -88,7 +93,9 @@ class TestSrhServiceUtilizationForm(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
-            evidence_hiv_status=YES)
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
@@ -108,7 +115,9 @@ class TestSrhServiceUtilizationForm(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
-            evidence_hiv_status=YES)
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment, reason=SCHEDULED)
@@ -130,7 +139,9 @@ class TestSrhServiceUtilizationForm(TestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
-            evidence_hiv_status=YES)
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment, reason=SCHEDULED)

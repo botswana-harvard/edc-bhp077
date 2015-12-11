@@ -56,18 +56,24 @@ class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
     def prepare_appointments(self, using):
         """To calculate infant appointments from date-of-delivery"""
         from edc.subject.appointment_helper.classes import AppointmentHelper
-        if 'registered_subject' in dir(self):
+        try:
             registered_subject = self.registered_subject
-        else:
+        except AttributeError:
             registered_subject = RegisteredSubject.objects.get(subject_identifier=self.subject_identifier)
         relative_identifier = self.registered_subject.relative_identifier
-        delivery = MaternalLabourDel.objects.filter(
-            maternal_visit__appointment__registered_subject__subject_identifier=relative_identifier)
-        if delivery:
+        try:
+            maternal_labour_del = MaternalLabourDel.objects.get(
+                maternal_visit__appointment__registered_subject__subject_identifier=relative_identifier)
             AppointmentHelper().create_all(
                 registered_subject, self.__class__.__name__.lower(),
-                using=using, source='BaseAppointmentMixin',
-                base_appt_datetime=delivery[0].delivery_datetime)
+                using=using,
+                source='BaseAppointmentMixin',
+                base_appt_datetime=maternal_labour_del.delivery_datetime)
+        except MaternalLabourDel.DoesNotExist:
+            pass
+
+    def get_subject_identifier(self):
+        return self.registered_subject.subject_identifier
 
     class Meta:
         app_label = "microbiome_infant"

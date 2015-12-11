@@ -18,9 +18,12 @@ from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibility
                                                              SpecimenConsentFactory)
 from bhp077.apps.microbiome_maternal.forms import BaseEnrollmentForm
 from bhp077.apps.microbiome_maternal.models.enrollment_mixin import EnrollmentMixin
+from collections import namedtuple
+from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
+from dateutil.relativedelta import relativedelta
 
 
-class EnrollTestModel(EnrollmentMixin):
+class EnrollmentTestModel(EnrollmentMixin):
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
@@ -32,7 +35,7 @@ class EnrollTestModel(EnrollmentMixin):
 
     def save(self, *args, **kwargs):
         self.is_eligible = True
-        super(EnrollTestModel, self).save(*args, **kwargs)
+        super(EnrollmentTestModel, self).save(*args, **kwargs)
 
     class Meta:
         app_label = 'microbiome_maternal'
@@ -41,7 +44,7 @@ class EnrollTestModel(EnrollmentMixin):
 class BaseEnrollTestForm(BaseEnrollmentForm):
 
     class Meta:
-        model = EnrollTestModel
+        model = EnrollmentTestModel
         fields = '__all__'
 
 
@@ -210,3 +213,29 @@ class TestEnrollmentMixin(TestCase):
         self.assertIn(
             'You mentioned testing was not done at 32weeks yet provided a '
             'test result.', form.errors.get('__all__'))
+
+    def test_date_at_32wks(self):
+        """Asserts the test date is correctly calculated to be on or after 32 wks."""
+        obj = AntenatalEnrollment(
+            week32_test_date=date.today() - relativedelta(weeks=7),
+            gestation_wks=38,
+            report_datetime=timezone.now())
+        self.assertFalse(obj.test_date_is_on_or_after_32wks())
+
+        obj = AntenatalEnrollment(
+            week32_test_date=date.today() - relativedelta(weeks=6),
+            gestation_wks=38,
+            report_datetime=timezone.now())
+        self.assertTrue(obj.test_date_is_on_or_after_32wks())
+
+        obj = AntenatalEnrollment(
+            week32_test_date=date.today() - relativedelta(weeks=5),
+            gestation_wks=38,
+            report_datetime=timezone.now())
+        self.assertTrue(obj.test_date_is_on_or_after_32wks())
+
+        obj = AntenatalEnrollment(
+            week32_test_date=date.today(),
+            gestation_wks=38,
+            report_datetime=timezone.now())
+        self.assertTrue(obj.test_date_is_on_or_after_32wks())

@@ -6,7 +6,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import YES, NO, NOT_APPLICABLE
+from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS
 from edc.subject.code_lists.models import WcsDxAdult
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
@@ -49,11 +49,17 @@ class TestMaternalMedicalHistoryForm(TestCase):
 
         self.antenatal_enrollment = AntenatalEnrollmentFactory(
             registered_subject=self.registered_subject_1,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES)
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject_2,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES)
-
+        self.assertTrue(self.postnatal_enrollment.is_eligible)
         self.appointment_visit_2000 = Appointment.objects.get(
             registered_subject=self.registered_subject_2,
             visit_definition__code='2000M')
@@ -61,8 +67,8 @@ class TestMaternalMedicalHistoryForm(TestCase):
             registered_subject=self.registered_subject_1,
             visit_definition__code='1000M')
 
-        self.maternal_visit_2000 = MaternalVisitFactory(appointment=self.appointment_visit_2000)
         self.maternal_visit_1000 = MaternalVisitFactory(appointment=self.appointment_visit_1000)
+        self.maternal_visit_2000 = MaternalVisitFactory(appointment=self.appointment_visit_2000)
         c = ChronicConditions.objects.create(name=NOT_APPLICABLE, short_name=NOT_APPLICABLE, field_name='chronic_cond')
         who = WcsDxAdult.objects.create(code=NOT_APPLICABLE, short_name=NOT_APPLICABLE, long_name=NOT_APPLICABLE)
         self.data = {

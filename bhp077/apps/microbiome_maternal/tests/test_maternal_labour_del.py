@@ -8,17 +8,15 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.choices import YES, NO, NOT_APPLICABLE
+from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.forms import (MaternalLabourDelForm, MaternalLabDelClinicForm,
-                                                   MaternalLabDelMedForm)
+from bhp077.apps.microbiome_maternal.forms import (MaternalLabourDelForm, MaternalLabDelClinicForm)
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from .factories import (PostnatalEnrollmentFactory, MaternalLabourDelFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
-from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond
 
 
 class TestMaternalLabourDel(TestCase):
@@ -35,13 +33,16 @@ class TestMaternalLabourDel(TestCase):
         site_rule_groups.autodiscover()
         self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject,
-                                                       study_site=self.study_site)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject,
+            study_site=self.study_site)
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            will_breastfeed=YES
-        )
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
+            will_breastfeed=YES)
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='1000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
@@ -151,8 +152,13 @@ class TestMaternalLabourDelClinic(TestCase):
             registered_subject=self.registered_subject,
             will_breastfeed=YES
         )
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='2000M')
+        self.appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        self.appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         self.labour_del = MaternalLabourDelFactory(maternal_visit=self.maternal_visit)
         self.data = {

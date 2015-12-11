@@ -2,7 +2,7 @@ import factory
 
 from django.utils import timezone
 
-from edc_constants.choices import POS, YES, NO
+from edc_constants.choices import YES, NO
 
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 

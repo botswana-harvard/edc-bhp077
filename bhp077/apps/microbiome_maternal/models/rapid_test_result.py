@@ -18,13 +18,13 @@ class RapidTestResult(MaternalScheduledVisitModel):
         max_length=3,
         help_text='')
 
-    rapid_test_date = models.DateField(
+    result_date = models.DateField(
         verbose_name="Date of rapid test",
         null=True,
         blank=True,
         help_text='If rapid test processed, we need to know the date')
 
-    rapid_test_result = models.CharField(
+    result = models.CharField(
         verbose_name="What is the rapid test result?",
         choices=POS_NEG,
         null=True,

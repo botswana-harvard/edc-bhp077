@@ -2,16 +2,15 @@ from django.test import TestCase
 from django import forms
 from django.utils import timezone
 
-from edc.subject.registration.models import RegisteredSubject
 from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED
+from edc.subject.lab_tracker.classes import site_lab_tracker
+from edc.subject.registration.models import RegisteredSubject
+from edc.subject.rule_groups.classes import site_rule_groups
+from edc_constants.constants import YES, NO, NEG
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome.constants import LIVE
 from bhp077.apps.microbiome_infant.forms import InfantBirthDataForm
 from bhp077.apps.microbiome_infant.models import InfantBirthData
 from bhp077.apps.microbiome_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
@@ -21,7 +20,6 @@ from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFacto
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
 from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
-from edc.choices_old.common import YES_NO
 
 
 class BaseTestInfantBirthDataModel(InfantBirthData):
@@ -49,24 +47,28 @@ class TestInfantBirthData(TestCase):
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
         InfantBirthVisitSchedule().build()
-
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_eligibility.registered_subject
-
-        postnatal = PostnatalEnrollmentFactory(
+        PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
-            evidence_hiv_status=YES)
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='1000M')
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
+        self.appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         self.appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='2000M')
+            registered_subject=self.registered_subject,
+            visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
         infant_registered_subject = RegisteredSubject.objects.get(
-            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier)
+            relative_identifier=self.registered_subject.subject_identifier,
+            subject_type='infant')
         self.infant_birth = InfantBirthFactory(
             registered_subject=infant_registered_subject,
             maternal_labour_del=maternal_labour_del)
@@ -85,8 +87,7 @@ class TestInfantBirthData(TestCase):
             'apgar_score_min_1': '',
             'apgar_score_min_5': '',
             'apgar_score_min_10': '',
-            'congenital_anomalities': NO
-        }
+            'congenital_anomalities': NO}
 
     def test_infant_length(self):
         self.data['infant_birth'] = self.infant_visit.id

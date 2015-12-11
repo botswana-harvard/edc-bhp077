@@ -38,11 +38,11 @@ class BaseModelForm(forms.ModelForm):
 
     def clean(self):
         """Calls crypto clean methods, OTHER/Specify and some functionality for bhp_dispatch."""
-        cleaned_data = self.cleaned_data
+        cleaned_data = super(BaseModelForm, self).clean()
         self.encrypted_fields_validation()
         self.other_fields()
-        self.check_for_other_in_m2m(cleaned_data)
-        return super(BaseModelForm, self).clean()
+        self.check_for_other_in_m2m()
+        return cleaned_data
 
     def other_fields(self):
         cleaned_data = self.cleaned_data
@@ -72,9 +72,10 @@ class BaseModelForm(forms.ModelForm):
         except ImportError:
             pass
 
-    def check_for_other_in_m2m(self, cleaned_data):
+    def check_for_other_in_m2m(self):
         """Raises ValidtionError for an m2m if it cannot confirm \'Other Specify\'
         is paired with a value in a following \'other\' field."""
+        cleaned_data = self.cleaned_data
         for field_name, field_value in cleaned_data.iteritems():
             self.check_for_value_in_m2m(
                 cleaned_data, field_name, field_value,

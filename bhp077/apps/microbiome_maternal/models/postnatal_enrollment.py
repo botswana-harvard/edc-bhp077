@@ -1,3 +1,5 @@
+from dateutil.relativedelta import relativedelta
+
 from django.db import models
 from django.db.models import get_model
 
@@ -14,7 +16,6 @@ from ..maternal_choices import LIVE_STILL_BIRTH, LIVE
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
 from .maternal_off_study_mixin import MaternalOffStudyMixin
-from edc_constants.constants import NEVER, UNKNOWN, DWTA
 
 
 class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmentMixin,
@@ -63,6 +64,7 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
     history = AuditTrail()
 
     def save(self, *args, **kwargs):
+        self.update_with_common_fields_from_antenatal_enrollment()
         self.is_eligible = self.check_eligiblity()
         super(PostnatalEnrollment, self).save(*args, **kwargs)
 
@@ -71,9 +73,7 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
 
     def check_eligiblity(self):
         """Returns true if the participant is eligible."""
-        eligible = False
-        if (self.delivery_status == LIVE and
-                self.gestation_wks_delivered >= 37 and
+        if (self.delivery_status == LIVE and self.gestation_wks_delivered >= 37 and
                 self.is_diabetic == NO and
                 self.on_hypertension_tx == NO and
                 self.on_tb_tx == NO and
@@ -81,38 +81,17 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
                 self.vaginal_delivery == YES and
                 self.will_breastfeed == YES and
                 self.will_remain_onstudy == YES):
-            if (self.current_hiv_status == POS and
-                    self.evidence_hiv_status == YES and
-                    self.valid_regimen == YES and
+            if (self.enrollment_hiv_status() == POS and self.valid_regimen == YES and
                     self.valid_regimen_duration == YES):
-                eligible = True
-            elif (self.current_hiv_status == POS and
-                    self.evidence_hiv_status == NO and
-                    self.rapid_test_result == POS and
-                    self.valid_regimen == YES and
-                    self.valid_regimen_duration == YES):
-                eligible = True
-            elif (self.current_hiv_status == NEG and
-                  self.evidence_hiv_status == NO and
-                  self.rapid_test_result == NEG):
-                eligible = True
-            elif (self.current_hiv_status == NEG and
-                  self.evidence_hiv_status == YES):
-                eligible = True
-            elif (self.current_hiv_status in [NEVER, UNKNOWN, DWTA] and
-                    self.rapid_test_result == NEG):
-                eligible = True
-        return eligible
+                return True
+            elif self.enrollment_hiv_status() == NEG:
+                return True
+        return False
 
-    @property
-    def maternal_hiv_status(self):
-        return (
-            (self.evidence_hiv_status == YES and self.current_hiv_status == POS) or
-            (self.rapid_test_done == YES and self.rapid_test_result == POS))
-
-    @property
-    def maternal_rapid_test_result_neg(self):
-        return self.rapid_test_done == YES and self.rapid_test_result == NEG
+    def test_date_is_on_or_after_32wks(self):
+        """Returns True if the test date is on or after 32 weeks gestational age."""
+        date_at_32wks = self.report_datetime.date() - relativedelta(weeks=self.gestation_wks_delivered - 32)
+        return self.week32_test_date >= date_at_32wks
 
     @property
     def antenatal_enrollment(self):
@@ -122,6 +101,23 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         except AntenatalEnrollment.DoesNotExist:
             return None
         return None
+
+    def update_with_common_fields_from_antenatal_enrollment(self):
+        """Updates common field values from Antenatal Enrollment to
+        this instance if not already set.
+
+        Only updates if ANtenatalEnrollment.is_eligible=True."""
+        AntenatalEnrollment = get_model('microbiome_maternal', 'antenatalenrollment')
+        try:
+            antenatal_enrollment = AntenatalEnrollment.objects.get(
+                registered_subject=self.registered_subject,
+                is_eligible=True)
+            for attrname in self.common_fields():
+                if not getattr(self, attrname):
+                    # print(attrname, getattr(self, attrname), getattr(antenatal_enrollment, attrname))
+                    setattr(self, attrname, getattr(antenatal_enrollment, attrname))
+        except AntenatalEnrollment.DoesNotExist:
+            pass
 
     class Meta:
         app_label = 'microbiome_maternal'

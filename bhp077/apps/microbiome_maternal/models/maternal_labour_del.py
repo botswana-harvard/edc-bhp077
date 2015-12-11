@@ -10,11 +10,11 @@ from edc_constants.choices import YES_NO, YES_NO_UNKNOWN, YES_NO_NA
 from edc_constants.constants import NOT_APPLICABLE
 
 from bhp077.apps.microbiome.choices import DX_MATERNAL
-from bhp077.apps.microbiome_list.models import Suppliments
-from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond, ObComp
+from bhp077.apps.microbiome_list.models import Suppliments, HealthCond, ObComp
 from bhp077.apps.microbiome_maternal.models import MaternalConsent
 
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY
+
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
@@ -98,6 +98,8 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
+    objects = models.Manager()
+
     history = AuditTrail()
 
     class Meta:
@@ -160,6 +162,8 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         verbose_name="Comment if any additional pertinent information ",
         blank=True,
         null=True)
+
+    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -229,6 +233,10 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
+    objects = models.Manager()
+
+    history = AuditTrail()
+
     class Meta:
         app_label = 'microbiome_maternal'
         verbose_name = "Maternal Labour & Delivery: Clinical History"
@@ -260,6 +268,8 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
         choices=YES_NO,
         verbose_name="During this pregnancy, did the mother have any of the following diagnoses? ",
         help_text="If yes, Select all that apply in the table, only report grade 3 or 4 diagnoses")
+
+    objects = models.Manager()
 
     history = AuditTrail()
 

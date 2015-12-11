@@ -29,5 +29,4 @@ from .srh_services_utilization import SrhServicesUtilization
 from .signals import (criteria_passed_create_registered_subject,
                       maternal_eligibility_on_post_save,
                       maternal_consent_on_post_save,
-                      update_registered_subject_on_post_save,
-                      save_common_fields_to_postnatal_enrollment_post_save)
+                      update_registered_subject_on_post_save)

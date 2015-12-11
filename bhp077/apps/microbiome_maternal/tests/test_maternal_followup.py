@@ -7,7 +7,7 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.choices import YES, NO, NOT_APPLICABLE
+from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -40,19 +40,25 @@ class TestMaternalFollowup(TestCase):
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES
         )
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='1000M')
+        for code in ['1000M', '2000M']:
+            appointment = Appointment.objects.get(
+                registered_subject=self.registered_subject,
+                visit_definition__code=code)
+            MaternalVisitFactory(appointment=appointment)
+        self.appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2010M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='2000M')
-        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='2010M')
-        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.chronic_cond = ChronicConditions.objects.create(name=NOT_APPLICABLE, short_name=NOT_APPLICABLE,
-                                                             display_index=10, field_name='chronic_cond')
+        self.chronic_cond = ChronicConditions.objects.create(
+            name=NOT_APPLICABLE,
+            short_name=NOT_APPLICABLE,
+            display_index=10,
+            field_name='chronic_cond')
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
@@ -113,7 +119,7 @@ class TestMaternalFollowup(TestCase):
         self.data['chronic_cond'] = [cond.id]
         form = MaternalPostFuForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn(u'You stated there are NO chronic conditionss. Please correct', errors)
+        self.assertIn('You stated there are NO chronic conditionss. Please correct', errors)
 
     def test_bp(self):
         self.data['systolic_bp'] = 80

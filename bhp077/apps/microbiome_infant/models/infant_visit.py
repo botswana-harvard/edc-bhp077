@@ -91,7 +91,7 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
                 self.appointment, 'microbiome_infant', 'infantoffstudy', 'infantdeath')
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
-        elif self.postnatal_enrollment.maternal_hiv_status:
+        elif self.postnatal_enrollment.enrollment_hiv_status():
             self.requires_infant_birth_arv_on_maternal_pos()
             self.requires_dna_pcr_on_maternal_pos()
 

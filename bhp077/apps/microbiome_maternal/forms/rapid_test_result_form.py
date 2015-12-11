@@ -14,11 +14,11 @@ class RapidTestResultForm(BaseMaternalModelForm):
             if not cleaned_data.get('rapid_test_date'):
                 raise forms.ValidationError('If a rapid test was processed, what is the date'
                                             ' of the rapid test?')
-            if not cleaned_data.get('rapid_test_result') in [POS, NEG, IND]:
+            if not cleaned_data.get('result') in [POS, NEG, IND]:
                 raise forms.ValidationError('If a rapid test was processed, what is the test'
                                             ' result?')
         else:
-            if cleaned_data.get('rapid_test_date') or cleaned_data.get('rapid_test_result'):
+            if cleaned_data.get('rapid_test_date') or cleaned_data.get('result'):
                 raise forms.ValidationError(
                     'If a rapid test was not processed, please do not provide rapid test date '
                     'and result.')

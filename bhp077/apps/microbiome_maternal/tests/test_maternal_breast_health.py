@@ -7,8 +7,7 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc.subject.code_lists.models import WcsDxAdult
-from edc_constants.choices import YES, NO
+from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -18,7 +17,6 @@ from bhp077.apps.microbiome_maternal.forms import (MaternalBreastHealthForm)
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
-from edc_constants.constants import NOT_APPLICABLE
 
 
 class TestMaternalBreastHealth(TestCase):
@@ -35,11 +33,15 @@ class TestMaternalBreastHealth(TestCase):
         site_rule_groups.autodiscover()
         self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject,
-                                                       study_site=self.study_site)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject,
+            study_site=self.study_site)
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES
         )
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
@@ -48,8 +50,8 @@ class TestMaternalBreastHealth(TestCase):
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.chronic_cond = ChronicConditions.objects.create(name='N/A', short_name='N/A', display_index=10,
-                                                             field_name='chronic_cond')
+        self.chronic_cond = ChronicConditions.objects.create(
+            name='N/A', short_name='N/A', display_index=10, field_name='chronic_cond')
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
@@ -67,8 +69,9 @@ class TestMaternalBreastHealth(TestCase):
         self.data['breast_feeding'] = YES
         form = MaternalBreastHealthForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn("You indicated that the mother has been breastfeeding. Has mastitis CANNOT be Not Applicable",
-                      errors)
+        self.assertIn(
+            'You indicated that the mother has been breastfeeding. '
+            'Has mastitis CANNOT be Not Applicable', errors)
 
     def test_breastfeeding_2(self):
         """Assert that if mother has been breastfeeding, then expected to answer questions on lesions"""
@@ -76,8 +79,9 @@ class TestMaternalBreastHealth(TestCase):
         self.data['has_mastitis'] = NO
         form = MaternalBreastHealthForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn("You indicated that the mother has been breastfeeding. Has lesions CANNOT be Not Applicable",
-                      errors)
+        self.assertIn(
+            "You indicated that the mother has been breastfeeding. Has lesions CANNOT be Not Applicable",
+            errors)
 
     def test_mastitis_1(self):
         """Assert that if mother has mastitis, then expected to indicate where"""

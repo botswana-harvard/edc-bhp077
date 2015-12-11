@@ -1,8 +1,7 @@
 from django import forms
 
-from edc_constants.constants import YES, NOT_APPLICABLE, NO
+from edc_constants.constants import YES, NOT_APPLICABLE
 
-from bhp077.apps.microbiome_lab.models import InfantRequisition
 from bhp077.apps.microbiome_infant.constants import REALTIME
 
 from ..constants import BROUGHT
@@ -15,8 +14,7 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
 
     def clean(self):
         cleaned_data = super(InfantStoolCollectionForm, self).clean()
-        infant_visit = cleaned_data.get('infant_visit')
-        if infant_visit.appointment.visit_definition.code == '2000':
+        if cleaned_data.get('infant_visit').appointment.visit_definition.code == '2000':
             self.validate_collection_time()
             self.validate_sample_obtained()
         else:
@@ -25,6 +23,12 @@ class InfantStoolCollectionForm(BaseInfantModelForm):
             self.validate_diarrhea()
             self.validate_antibiotics()
         return cleaned_data
+
+    def clean_infant_visit(self):
+        infant_visit = self.cleaned_data['infant_visit']
+        if not infant_visit:
+            raise forms.ValidationError('Infant visit cannot be blank.')
+        return infant_visit
 
     def validate_sample_obtained(self):
         cleaned_data = self.cleaned_data

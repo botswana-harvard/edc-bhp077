@@ -16,7 +16,7 @@ def func_maternal_hiv_pos(visit_instance):
     registered_subject = RegisteredSubject.objects.get(
         subject_identifier=visit_instance.appointment.registered_subject.relative_identifier)
     postnatal_enrollment = PostnatalEnrollment.objects.get(registered_subject=registered_subject)
-    return postnatal_enrollment.maternal_hiv_status == POS
+    return postnatal_enrollment.enrollment_hiv_status() == POS
 
 
 class InfantBirthDataRuleGroup(RuleGroup):

@@ -69,6 +69,7 @@ INSTALLED_APPS = (
     'edc_constants',
     'edc_call_manager',
     'edc_device',
+    'edc_offstudy',
     # EDC
     'edc',
     'edc.apps.app_configuration',
@@ -114,7 +115,6 @@ INSTALLED_APPS = (
     'edc.subject.locator',
     'edc.subject.subject',
     'edc.subject.subject_summary',
-    'edc.subject.off_study',
     'edc.subject.registration',
     'edc.subject.appointment',
     'edc.subject.appointment_helper',

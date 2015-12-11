@@ -2,8 +2,7 @@ from dateutil import rrule
 from django import forms
 
 from edc_constants.constants import POS, NEG, NOT_APPLICABLE, YES, NO, DWTA, UNKNOWN, NEVER
-
-from bhp077.apps.microbiome.base_model_form import BaseModelForm
+from edc_base.form.forms import BaseModelForm
 
 from ..models import MaternalConsent, SpecimenConsent
 
@@ -21,6 +20,7 @@ class BaseEnrollmentForm(BaseModelForm):
         self.week32_test_matches_current()
         self.rapid_test_date_and_result()
         self.raise_if_rapid_test_required()
+        self.raise_if_rapid_test_date_future()
         return cleaned_data
 
     def clean_report_datetime(self):
@@ -174,3 +174,10 @@ class BaseEnrollmentForm(BaseModelForm):
                 raise forms.ValidationError(
                     'You indicated that a rapid test was NOT processed, yet rapid test result '
                     'was provided. Please correct.')
+
+    def raise_if_rapid_test_date_future(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('rapid_test_date'):
+            if cleaned_data.get('rapid_test_date') > cleaned_data.get('report_datetime').date():
+                raise forms.ValidationError(
+                    'Rapid test date cannot be a future date relative to the report date')

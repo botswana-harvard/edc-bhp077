@@ -72,6 +72,9 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
     def get_registration_datetime(self):
         return self.consent_datetime
 
+    def get_subject_identifier(self):
+        return self.subject_identifier
+
     @property
     def maternal_eligibility(self):
         from bhp077.apps.microbiome_maternal.models import MaternalEligibility

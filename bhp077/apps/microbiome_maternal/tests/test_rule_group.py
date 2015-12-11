@@ -6,7 +6,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, POS, NEG, UNKEYED, KEYED, NOT_REQUIRED
+from edc_constants.constants import NEW, YES, POS, NEG, UNKEYED, KEYED, NOT_REQUIRED, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory,
@@ -19,7 +19,7 @@ from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
 from bhp077.apps.microbiome_maternal.tests.factories.antenatal_enrollment_factory import AntenatalEnrollmentFactory
-from bhp077.apps.microbiome_maternal.models.rapid_test_result import RapidTestResult
+from bhp077.apps.microbiome_maternal.models import RapidTestResult
 from django.utils import timezone
 
 
@@ -64,6 +64,7 @@ class TestRuleGroup(TestCase):
             will_breastfeed=YES,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             valid_regimen=YES)
         visit_codes = [['1000M', ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg']]]
         for visit in visit_codes:
@@ -85,6 +86,7 @@ class TestRuleGroup(TestCase):
             will_breastfeed=YES,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             valid_regimen=YES)
         visit_codes = [['1000M', ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg']]]
         for visit in visit_codes:
@@ -162,8 +164,8 @@ class TestRuleGroup(TestCase):
                     report_datetime=timezone.now(),
                     maternal_visit=maternal_visit,
                     rapid_test_done=YES,
-                    rapid_test_date=timezone.now().date(),
-                    rapid_test_result=POS)
+                    result_date=timezone.now().date(),
+                    result=POS)
                 for model_name in model_names:
                     self.assertEqual(ScheduledEntryMetaData.objects.filter(
                         entry_status=KEYED,
@@ -180,12 +182,14 @@ class TestRuleGroup(TestCase):
                         appointment=appointment
                     ).count(), 1)
 
-    def test_maternal_hiv_status_neg(self):
+    def test_enrollment_hiv_status_neg(self):
 
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
-            evidence_hiv_status=YES)
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=POS)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         MaternalVisitFactory(appointment=appointment)
@@ -218,7 +222,7 @@ class TestRuleGroup(TestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
-        )
+            rapid_test_done=NOT_APPLICABLE)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         MaternalVisitFactory(appointment=appointment)
@@ -247,8 +251,10 @@ class TestRuleGroup(TestCase):
         """
         """
         PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject, rapid_test_done=YES,
-            will_breastfeed=YES, rapid_test_result=POS)
+            registered_subject=self.registered_subject,
+            rapid_test_done=YES,
+            will_breastfeed=YES,
+            rapid_test_result=POS)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         MaternalVisitFactory(appointment=appointment)

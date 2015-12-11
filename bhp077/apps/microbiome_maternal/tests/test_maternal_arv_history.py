@@ -9,7 +9,7 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.choices import YES, NO
+from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 from edc_constants.constants import CONTINUOUS, STOPPED, RESTARTED
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
@@ -43,10 +43,14 @@ class TestMaternalArvHistory(TestCase):
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES
         )
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='1000M')
+        self.appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         self.prior_arv = PriorArv.objects.create(name='ATZ', short_name='ATZ', field_name='prior_arv')
         self.data = {
@@ -102,7 +106,7 @@ class TestMaternalArvHistory(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_haart_start_date(self):
-        """ARV start date should be seex weeks prior to today"""
+        """ARV start date should be six weeks prior to today"""
         self.data['haart_start_date'] = timezone.now()
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))

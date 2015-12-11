@@ -10,12 +10,12 @@ from edc_constants.constants import OFF_STUDY, YES, POS, UNSCHEDULED, NEG, DEAD,
 from edc.subject.visit_tracking.models import PreviousVisitMixin
 
 from bhp077.apps.microbiome.choices import VISIT_REASON
-from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment
+from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment, AntenatalEnrollment
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
-class MaternalVisit(PreviousVisitMixin, MetaDataMixin, MaternalOffStudyMixin, RequiresConsentMixin,
+class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, RequiresConsentMixin,
                     BaseVisitTracking, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
@@ -33,37 +33,24 @@ class MaternalVisit(PreviousVisitMixin, MetaDataMixin, MaternalOffStudyMixin, Re
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
-        if not self.check_if_eligible:
+        if not self.is_eligible():
             self.reason = OFF_STUDY
         super(MaternalVisit, self).save(*args, **kwargs)
 
     def get_visit_reason_choices(self):
         return VISIT_REASON
 
-    @property
-    def check_if_eligible(self):
+    def is_eligible(self):
+        """Returns True if participant is either eligible ante or post natal."""
         eligible = False
-        if self.antenatal_enrollment:
-            eligible = self.antenatal_enrollment.check_eligibility()
-        if self.postnatal_enrollment:
-            eligible = self.postnatal_enrollment.check_eligiblity()
+        try:
+            eligible = self.postnatal_enrollment.is_eligible
+        except AttributeError:
+            try:
+                eligible = self.antenatal_enrollment.is_eligible
+            except AttributeError:
+                pass
         return eligible
-
-    @property
-    def antenatal_enrollment(self):
-        AntenatalEnrollment = models.get_model('microbiome_maternal', 'antenatalenrollment')
-        try:
-            return AntenatalEnrollment.objects.get(registered_subject=self.appointment.registered_subject)
-        except AntenatalEnrollment.DoesNotExist:
-            return False
-
-    @property
-    def postnatal_enrollment(self):
-        try:
-            return PostnatalEnrollment.objects.get(
-                registered_subject=self.appointment.registered_subject)
-        except PostnatalEnrollment.DoesNotExist:
-            return False
 
     def get_visit_reason_no_follow_up_choices(self):
         """ Returns the visit reasons that do not imply any data
@@ -90,7 +77,7 @@ class MaternalVisit(PreviousVisitMixin, MetaDataMixin, MaternalOffStudyMixin, Re
             self.required_for_maternal_not_pos()
 
     def required_for_maternal_pos(self):
-        if self.maternal_hiv_status_pos or self.rapid_test_result_pos():
+        if self.enrollment_hiv_status == POS or self.scheduled_rapid_test == POS:
             if self.appointment.visit_definition.code == '1000M':
                 model_names = ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg']
                 for model_name in model_names:
@@ -122,7 +109,7 @@ class MaternalVisit(PreviousVisitMixin, MetaDataMixin, MaternalOffStudyMixin, Re
                     'Viral Load')
 
     def required_for_maternal_not_pos(self):
-        if self.maternal_hiv_status_neg and self.rapid_test_result_status() in [None, NEG]:
+        if self.enrollment_hiv_status == NEG and self.scheduled_rapid_test != POS:
             if self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
                 self.form_is_required(
                     self.appointment,
@@ -130,83 +117,64 @@ class MaternalVisit(PreviousVisitMixin, MetaDataMixin, MaternalOffStudyMixin, Re
                     'rapidtestresult',
                     message=self.appointment.visit_definition.code)
 
-    def rapid_test_result_pos(self):
+    @property
+    def scheduled_rapid_test(self):
+        """Returns the value of the \'result\' field of the RapidTestResult.
+
+        This is a scheduled maternal form for on-study participants."""
         RapidTestResult = models.get_model('microbiome_maternal', 'rapidtestresult')
         try:
-            return RapidTestResult.objects.get(
+            obj = RapidTestResult.objects.filter(
                 maternal_visit__appointment__registered_subject=self.appointment.registered_subject,
                 rapid_test_done=YES,
-                rapid_test_result=POS)
-        except RapidTestResult.DoesNotExist:
-            return False
-
-    def rapid_test_result_neg(self):
-        RapidTestResult = models.get_model('microbiome_maternal', 'rapidtestresult')
-        try:
-            rapid_test_result_neg = RapidTestResult.objects.filter(
-                maternal_visit__appointment__registered_subject=self.appointment.registered_subject,
-                rapid_test_done=YES,
-                rapid_test_result=NEG).order_by('created').last()
-        except AttributeError:
-            return None
-        return rapid_test_result_neg
-
-    def rapid_test_result_status(self):
-        if self.rapid_test_result_pos():
-            return POS
-        elif self.rapid_test_result_neg():
-            return NEG
-        return None
+                result__in=[POS, NEG]).order_by('created').last()
+            scheduled_rapid_test = obj.result
+        except AttributeError as e:
+            if 'result' not in str(e):
+                raise AttributeError(str(e))
+            scheduled_rapid_test = None
+        return scheduled_rapid_test
 
     @property
-    def maternal_hiv_status_pos(self):
-        AntenatalEnrollment = models.get_model('microbiome_maternal', 'antenatalenrollment')
-        antenatal_enrollment = None
-        maternal_hiv_status_pos = None
+    def enrollment_hiv_status(self):
+        enrollment_hiv_status = None
         try:
-            antenatal_enrollment = AntenatalEnrollment.objects.get(
+            enrollment_hiv_status = self.postnatal_enrollment.enrollment_hiv_status()
+        except AttributeError:
+            try:
+                enrollment_hiv_status = self.antenatal_enrollment.enrollment_hiv_status()
+            except AttributeError:
+                pass
+        return enrollment_hiv_status
+
+    @property
+    def antenatal_enrollment(self):
+        try:
+            return AntenatalEnrollment.objects.get(
                 registered_subject=self.appointment.registered_subject)
         except AntenatalEnrollment.DoesNotExist:
-            pass
-
-        postnatal_enrollment = self.postnatal_enrollment if self.postnatal_enrollment else None
-        if antenatal_enrollment:
-            maternal_hiv_status_pos = True if (
-                (antenatal_enrollment.current_hiv_status == POS and antenatal_enrollment.evidence_hiv_status == YES)
-            ) else False
-        if postnatal_enrollment:
-            maternal_hiv_status_pos = True if (
-                (postnatal_enrollment.current_hiv_status == POS and postnatal_enrollment.evidence_hiv_status == YES)
-            ) else False
-        return maternal_hiv_status_pos
+            return None
 
     @property
-    def maternal_hiv_status_neg(self):
-        maternal_hiv_status_neg = None
-        antenatal_enrollment = self.antenatal_enrollment
-        postnatal_enrollment = self.postnatal_enrollment if self.postnatal_enrollment else None
-        if antenatal_enrollment:
-            maternal_hiv_status_neg = True if (
-                (antenatal_enrollment.current_hiv_status == NEG and antenatal_enrollment.evidence_hiv_status == YES)
-            ) else False
-        if postnatal_enrollment:
-            maternal_hiv_status_neg = True if (
-                (postnatal_enrollment.current_hiv_status == NEG and postnatal_enrollment.evidence_hiv_status == YES)
-            ) else False
-        return maternal_hiv_status_neg
-
-    def maternal_offstudy_required(self):
+    def postnatal_enrollment(self):
         try:
-            self.reason = OFF_STUDY if not self.postnatal_enrollment.postnatal_eligible else self.reason
-            if self.reason == OFF_STUDY:
-                self.scheduled_entry_meta_data_required('microbiome_maternal', 'maternaloffstudy')
-        except AttributeError:
-            pass
+            return PostnatalEnrollment.objects.get(
+                registered_subject=self.appointment.registered_subject)
+        except PostnatalEnrollment.DoesNotExist:
+            return None
 
-    def maternal_death_required(self):
-        if self.reason == DEAD:
-            for model_name in ['maternaldeath', 'maternaloffstudy']:
-                self.scheduled_entry_meta_data_required('microbiome_maternal', model_name)
+#     def maternal_offstudy_required(self):
+#         try:
+#             self.reason = OFF_STUDY if not self.postnatal_enrollment.postnatal_eligible else self.reason
+#             if self.reason == OFF_STUDY:
+#                 self.scheduled_entry_meta_data_required('microbiome_maternal', 'maternaloffstudy')
+#         except AttributeError:
+#             pass
+
+#     def maternal_death_required(self):
+#         if self.reason == DEAD:
+#             for model_name in ['maternaldeath', 'maternaloffstudy']:
+#                 self.scheduled_entry_meta_data_required('microbiome_maternal', model_name)
 
     class Meta:
         app_label = 'microbiome_maternal'
