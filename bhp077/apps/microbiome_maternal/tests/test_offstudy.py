@@ -95,7 +95,10 @@ class TestOffStudy(TestCase):
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
-        maternal_visit = MaternalVisitFactory(appointment=appointment)
+        maternal_visit = MaternalVisitFactory(
+            appointment=appointment,
+            report_datetime=timezone.now(),
+            reason=OFF_STUDY)
         MaternalOffStudyFactory(
             registered_subject=appointment.registered_subject,
             maternal_visit=maternal_visit,

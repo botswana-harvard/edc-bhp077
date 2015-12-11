@@ -1,4 +1,3 @@
-from django import forms
 from django.test import TestCase
 
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -307,25 +306,25 @@ class TestPostnatalEnrollment(TestCase):
         self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_never_tested_for_HIV_1(self):
-        """Test for a subject whose verbal hiv status is Never tested for HIV and rapid test result is NEG."""
-
+        """Test for a subject whose current_hiv_status is Never but tests NEG on rapid."""
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEVER,
+            evidence_hiv_status=NOT_APPLICABLE,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=NEG)
         self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_never_tested_for_HIV_2(self):
-        """Test for a subject whose verbal hiv status is Never tested for HIV rapid test result POS."""
-
+        """Test for a subject whose current_hiv_status is Never but tests POS on rapid."""
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEVER,
-            valid_regimen=NOT_APPLICABLE,
+            evidence_hiv_status=NOT_APPLICABLE,
             rapid_test_done=YES,
-            rapid_test_result=POS)
+            rapid_test_result=POS,
+            valid_regimen=NOT_APPLICABLE)
         self.assertFalse(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_unknown_rapid_test_result_neg(self):
@@ -334,6 +333,7 @@ class TestPostnatalEnrollment(TestCase):
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=UNKNOWN,
+            evidence_hiv_status=NOT_APPLICABLE,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=NEG)
@@ -356,6 +356,7 @@ class TestPostnatalEnrollment(TestCase):
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=DWTA,
+            evidence_hiv_status=NOT_APPLICABLE,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=POS)
@@ -367,6 +368,7 @@ class TestPostnatalEnrollment(TestCase):
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=DWTA,
+            evidence_hiv_status=NOT_APPLICABLE,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=NEG)
