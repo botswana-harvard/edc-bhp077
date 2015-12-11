@@ -153,6 +153,23 @@ class MaternalLabDelDxTAdmin(BaseModelAdmin):
         'hospitalized': admin.VERTICAL}
     radio_fields = {'hospitalized': admin.VERTICAL}
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Maternal Labour & Delivery: Preg Dx with diagnosis",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'maternal_visit__appointment__registered_subject__dob',
+                 'has_who_dx': 'maternal_lab_del_dx__has_who_dx',
+                 'wcs_dx_adult': 'maternal_lab_del_dx__wcs_dx_adult',
+                 'has_preg_dx': 'maternal_lab_del_dx__has_preg_dx',
+                 }),
+        )]
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "maternal_visit":
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
