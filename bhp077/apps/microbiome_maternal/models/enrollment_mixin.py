@@ -203,7 +203,7 @@ class EnrollmentMixin(models.Model):
         exception_cls = exception_cls or ValidationError
         hiv_status_on_or_after_32wk = None
         if self.week32_test == YES and self.week32_test_date:
-            if not self.test_date_is_on_or_after_32wks_gestational_age:
+            if not self.test_date_is_on_or_after_32wks:
                 raise exception_cls(
                     'Test date is not on or after 32 weeks gestational age.')
             elif self.week32_result == POS and self.current_hiv_status == POS:
