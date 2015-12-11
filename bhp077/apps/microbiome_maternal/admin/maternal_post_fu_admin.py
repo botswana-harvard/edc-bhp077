@@ -77,9 +77,9 @@ class MaternalPostFuDxTAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'maternal_visit__appointment__registered_subject__subject_identifier',
-                 'gender': 'maternal_visit__appointment__registered_subject__gender',
-                 'dob': 'maternal_visit__appointment__registered_subject__dob',
+                {'subject_identifier': 'post_fu_dx__maternal_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'post_fu_dx__maternal_visit__appointment__registered_subject__gender',
+                 'dob': 'post_fu_dx__maternal_visit__appointment__registered_subject__dob',
                  'weight_measured': 'post_fu_dx__weight_measured',
                  'weight_kg': 'post_fu_dx__weight_kg',
                  'systolic_bp': 'post_fu_dx__systolic_bp',

@@ -1,7 +1,10 @@
+from collections import OrderedDict
+
 from django.contrib import admin
 
 from edc.base.modeladmin.admin import BaseModelAdmin
 from edc.base.modeladmin.admin import BaseTabularInline
+from edc.export.actions import export_as_csv_action
 
 from ..models import (
     InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
@@ -32,6 +35,19 @@ class InfantCnsAbnormalityItemsAdmin(BaseModelAdmin):
         'cns_abnormality': admin.VERTICAL,
         'abnormality_status': admin.VERTICAL
     }
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Central Nervous System abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
 
 admin.site.register(InfantCnsAbnormalityItems, InfantCnsAbnormalityItemsAdmin)
 
@@ -51,6 +67,20 @@ class InfantFacialDefectItemsAdmin(BaseModelAdmin):
         'facial_defect': admin.VERTICAL,
         'abnormality_status': admin.VERTICAL
     }
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Facial Defect abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
 admin.site.register(InfantFacialDefectItems, InfantFacialDefectItemsAdmin)
 
 
@@ -70,6 +100,20 @@ class InfantCleftDisorderItemsAdmin(BaseModelAdmin):
         'cleft_disorder': admin.VERTICAL,
         'abnormality_status': admin.VERTICAL
     }
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Cleft Disorder abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
 
 admin.site.register(InfantCleftDisorderItems, InfantCleftDisorderItemsAdmin)
 
@@ -91,6 +135,20 @@ class InfantMouthUpGastrointestinalItemsAdmin(BaseModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Mouth Up Gastrointestinal abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
+
 admin.site.register(InfantMouthUpGastrointestinalItems, InfantMouthUpGastrointestinalItemsAdmin)
 
 
@@ -110,6 +168,20 @@ class InfantCardiovascularDisorderItemsAdmin(BaseModelAdmin):
         'cardiovascular_disorder': admin.VERTICAL,
         'abnormality_status': admin.VERTICAL
     }
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Cardiovascular Disorder abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
 
 admin.site.register(InfantCardiovascularDisorderItems, InfantCardiovascularDisorderItemsAdmin)
 
@@ -131,6 +203,20 @@ class InfantRespiratoryDefectItemsAdmin(BaseModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Respiratory Defect abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
+
 admin.site.register(InfantRespiratoryDefectItems, InfantRespiratoryDefectItemsAdmin)
 
 
@@ -150,6 +236,20 @@ class InfantLowerGastrointestinalItemsAdmin(BaseModelAdmin):
         'lower_gastrointestinal': admin.VERTICAL,
         'abnormality_status': admin.VERTICAL
     }
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Lower Gastrointestinal abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
 
 admin.site.register(InfantLowerGastrointestinalItems, InfantLowerGastrointestinalItemsAdmin)
 
@@ -171,6 +271,20 @@ class InfantFemaleGenitalAnomalyItemsAdmin(BaseModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Female Genital abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
+
 admin.site.register(InfantFemaleGenitalAnomalyItems, InfantFemaleGenitalAnomalyItemsAdmin)
 
 
@@ -190,6 +304,20 @@ class InfantMaleGenitalAnomalyItemsAdmin(BaseModelAdmin):
         'male_genital_anomal': admin.VERTICAL,
         'abnormality_status': admin.VERTICAL
     }
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Male Genital abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
 
 admin.site.register(InfantMaleGenitalAnomalyItems, InfantMaleGenitalAnomalyItemsAdmin)
 
@@ -211,6 +339,20 @@ class InfantRenalAnomalyItemsAdmin(BaseModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Renal abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
+
 admin.site.register(InfantRenalAnomalyItems, InfantRenalAnomalyItemsAdmin)
 
 
@@ -230,6 +372,20 @@ class InfantMusculoskeletalAbnormalItemsAdmin(BaseModelAdmin):
         'musculo_skeletal': admin.VERTICAL,
         'abnormality_status': admin.VERTICAL
     }
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Musculoskeletal abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
 
 admin.site.register(InfantMusculoskeletalAbnormalItems, InfantMusculoskeletalAbnormalItemsAdmin)
 
@@ -251,6 +407,20 @@ class InfantSkinAbnormalItemsAdmin(BaseModelAdmin):
         'abnormality_status': admin.VERTICAL
     }
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant skin abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
+
 admin.site.register(InfantSkinAbnormalItems, InfantSkinAbnormalItemsAdmin)
 
 
@@ -270,6 +440,20 @@ class InfantTrisomiesChromosomeItemsAdmin(BaseModelAdmin):
         'triso_chromo_abnormal': admin.VERTICAL,
         'abnormality_status': admin.VERTICAL
     }
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant trisomies abnormality",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
+                 'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
 
 admin.site.register(InfantTrisomiesChromosomeItems, InfantTrisomiesChromosomeItemsAdmin)
 
