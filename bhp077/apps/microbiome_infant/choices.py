@@ -50,30 +50,31 @@ OFF_STUDY_REASON = [
 ]
 
 IMMUNIZATIONS = (
-    ('Vitamin A', 'Vitamin A'),
+    ('Vitamin_A', 'Vitamin A'),
     ('BCG', 'BCG'),
-    ('Hepatitis B', 'Hepatitis B'),
+    ('Hepatitis_B', 'Hepatitis B'),
     ('DPT', 'DPT (Diphtheria, Pertussis and Tetanus)'),
-    ('Influenza B', 'Haemophilus Influenza B Vaccine'),
-    ('PCV Vaccine', 'PCV Vaccine (Pneumonia Conjugated Vaccine)'),
+    ('Haemophilus_influenza', 'Haemophilus Influenza B Vaccine'),
+    ('PCV_Vaccine', 'PCV Vaccine (Pneumonia Conjugated Vaccine)'),
     ('Polio', 'Polio'),
     ('Rotavirus', 'Rotavirus'),
     ('Measles', 'Measles'),
     ('Pentavalent', 'Pentavalent Vaccine (Contains DPT, Hepatitis B and Haemophilus Influenza B Vaccine)'))
 
 INFANT_VACCINATIONS = (
-    ('Vitamin A', 'Vitamin A'),
+    ('Vitamin_A', 'Vitamin A'),
     ('BCG', 'BCG'),
-    ('Hepatitis B', 'Hepatitis B'),
+    ('Hepatitis_B', 'Hepatitis B'),
     ('DPT', 'DPT (Diphtheria, Pertussis and Tetanus)'),
-    ('Influenza B', 'Haemophilus Influenza B Vaccine'),
-    ('PCV Vaccine', 'PCV Vaccine (Pneumonia Conjugated Vaccine)'),
+    ('Haemophilus_influenza', 'Haemophilus Influenza B Vaccine'),
+    ('PCV_Vaccine', 'PCV Vaccine (Pneumonia Conjugated Vaccine)'),
     ('Polio', 'Polio'),
     ('Rotavirus', 'Rotavirus'),
     ('Measles', 'Measles'),
     ('Pentavalent', 'Pentavalent Vaccine (Contains DPT, Hepatitis B and Haemophilus Influenza B Vaccine)'))
 
 INFANT_AGE_VACCINE_GIVEN = (
+    ('At Birth', 'At Birth'),
     ('After Birth', 'After Birth'),
     ('2', '2 months'),
     ('3', '3 months'),

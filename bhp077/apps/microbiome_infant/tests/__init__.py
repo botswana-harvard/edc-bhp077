@@ -6,4 +6,5 @@ from .test_infant_feeding_form import TestInfantFeedingForm
 from .test_infant_birth_record_exam import TestInfantBirthRecordExam
 from .test_infant_fu_form import TestInfantFu
 from .test_infant_birth_data import TestInfantBirthData
-#from .test_infant_death_form import TestInfantDeathForm
+# from .test_infant_death_form import TestInfantDeathForm
+from .test_infant_immunizations import TestInfantImmunizations

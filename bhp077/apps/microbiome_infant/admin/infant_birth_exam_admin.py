@@ -1,12 +1,16 @@
+from collections import OrderedDict
+
 from django.contrib import admin
 
-from edc_base.modeladmin.admin import BaseModelAdmin
+from edc.export.actions import export_as_csv_action
 
 from ..models import InfantBirthExam
 from ..forms import InfantBirthExamForm
 
+from .base_infant_scheduled_modeladmin import BaseInfantScheduleModelAdmin
 
-class InfantBirthExamAdmin(BaseModelAdmin):
+
+class InfantBirthExamAdmin(BaseInfantScheduleModelAdmin):
     form = InfantBirthExamForm
 
     list_display = (
@@ -33,5 +37,19 @@ class InfantBirthExamAdmin(BaseModelAdmin):
         'macular_papular_rash': admin.VERTICAL,
         'neurologic_exam': admin.VERTICAL
     }
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Birth Record: Exam",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'infant_visit__appointment__registered_subject__gender',
+                 'dob': 'infant_visit__appointment__registered_subject__dob',
+                 }),
+        )]
 
 admin.site.register(InfantBirthExam, InfantBirthExamAdmin)
