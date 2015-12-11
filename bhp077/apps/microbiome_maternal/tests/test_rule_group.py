@@ -189,7 +189,7 @@ class TestRuleGroup(TestCase):
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
             rapid_test_done=YES,
-            rapid_test_result=POS)
+            rapid_test_result=NEG)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         MaternalVisitFactory(appointment=appointment)
