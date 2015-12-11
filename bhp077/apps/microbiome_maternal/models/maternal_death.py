@@ -6,7 +6,7 @@ from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
 
 
-class MaternalDeath (MaternalScheduledVisitModel, BaseDeathReport):
+class MaternalDeath(BaseDeathReport, MaternalScheduledVisitModel):
 
     """ A model completed by the user on the mother's death. """
     CONSENT_MODEL = MaternalConsent
