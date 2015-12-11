@@ -30,7 +30,8 @@ class InfantFuNewMedItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'infant_fu_med__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'infant_fu_med__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'infant_fu_med__infant_visit__appointment__registered_subject__gender',
                  'dob': 'infant_fu_med__infant_visit__appointment__registered_subject__dob',
                  'new_medications': 'infant_fu_med__new_medications',

@@ -140,49 +140,63 @@ class EnrollmentMixin(models.Model):
 
         enrollment_hiv_status = None
         if self.evidence_hiv_status == YES:
+            enrollment_hiv_status = self._hiv_status_with_evidence()
+        elif self.evidence_hiv_status in [NO, NOT_APPLICABLE]:
+            enrollment_hiv_status = self._hiv_status_with_without_evidence()
+        if not enrollment_hiv_status:
+            raise ValueError(
+                'Unable to determine maternal hiv status at enrollment. '
+                'Got current_hiv_status={}, evidence_hiv_status={}, '
+                'rapid_test_done={}, rapid_test_result={}'.format(
+                    self.current_hiv_status,
+                    self.evidence_hiv_status,
+                    self.rapid_test_done,
+                    self.rapid_test_result))
+        return enrollment_hiv_status
+
+    def _hiv_status_with_evidence(self):
+        """Returns the hiv status if evidence is available or None."""
+        hiv_status_with_evidence = None
+        if self.evidence_hiv_status == YES:
             if self.hiv_status_on_or_after_32wk() == POS:
-                enrollment_hiv_status = POS
+                hiv_status_with_evidence = POS
             elif self.hiv_status_on_or_after_32wk() == NEG:
-                enrollment_hiv_status = NEG
+                hiv_status_with_evidence = NEG
             elif self.current_hiv_status == POS and self.rapid_test_done in [NO, NOT_APPLICABLE]:
-                enrollment_hiv_status = POS
+                hiv_status_with_evidence = POS
             elif (self.current_hiv_status == POS and self.rapid_test_done == YES and
                     self.rapid_test_result == POS):
-                enrollment_hiv_status = POS
+                hiv_status_with_evidence = POS
             elif (self.current_hiv_status == NEG and
                     self.rapid_test_done == YES and self.rapid_test_result == NEG):
-                enrollment_hiv_status = NEG
+                hiv_status_with_evidence = NEG
             elif (self.current_hiv_status == NEG and
                     self.rapid_test_done == YES and self.rapid_test_result == POS):
-                enrollment_hiv_status = SEROCONVERSION
+                hiv_status_with_evidence = SEROCONVERSION
             elif (self.current_hiv_status == NEG and
                     self.rapid_test_done == YES and self.rapid_test_result == IND):
-                enrollment_hiv_status = IND
-        elif self.evidence_hiv_status in [NO, NOT_APPLICABLE]:
+                hiv_status_with_evidence = IND
+        return hiv_status_with_evidence
+
+    def _hiv_status_with_without_evidence(self):
+        """Returns the hiv status if evidence is not available or None."""
+        if self.evidence_hiv_status in [NO, NOT_APPLICABLE]:
             if (self.current_hiv_status == POS and self.rapid_test_done == YES and
                     self.rapid_test_result == POS):
-                enrollment_hiv_status = POS
+                hiv_status_with_without_evidence = POS
             elif (self.current_hiv_status == POS and self.rapid_test_done == NO and
                     self.rapid_test_result is None):
-                enrollment_hiv_status = UNKNOWN
+                hiv_status_with_without_evidence = UNKNOWN
             elif (self.current_hiv_status in [NEG, NEVER, UNKNOWN, DWTA] and self.rapid_test_done == YES and
                     self.rapid_test_result == NEG):
-                enrollment_hiv_status = NEG
+                hiv_status_with_without_evidence = NEG
             elif (self.current_hiv_status in [NEG, NEVER, UNKNOWN, DWTA] and self.rapid_test_done == YES and
                     self.rapid_test_result == POS):
-                enrollment_hiv_status = SEROCONVERSION
+                hiv_status_with_without_evidence = SEROCONVERSION
             elif (self.current_hiv_status in [NEG, NEVER, UNKNOWN, DWTA] and self.rapid_test_done == NO and
                     self.rapid_test_result is None):
-                enrollment_hiv_status = UNKNOWN
-        if not enrollment_hiv_status:
-            raise ValueError('Unable to determine maternal hiv status at enrollment. '
-                             'Got current_hiv_status={}, evidence_hiv_status={}, '
-                             'rapid_test_done={}, rapid_test_result={}'.format(
-                                 self.current_hiv_status,
-                                 self.evidence_hiv_status,
-                                 self.rapid_test_done,
-                                 self.rapid_test_result))
-        return enrollment_hiv_status
+                hiv_status_with_without_evidence = UNKNOWN
+        return hiv_status_with_without_evidence
 
     def hiv_status_on_or_after_32wk(self, exception_cls=None):
         """Returns the maternal status on or after week 32 gestational age or None."""

@@ -132,11 +132,11 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
     def __unicode__(self):
         return unicode(self.maternal_arv_post)
 
-#     def get_report_datetime(self):
-#         return self.maternal_arv_post.get_report_datetime()
-# 
-#     def get_subject_identifier(self):
-#         return self.maternal_arv_post.get_subject_identifier()
+    def get_report_datetime(self):
+        return self.maternal_arv_post.get_report_datetime()
+
+    def get_subject_identifier(self):
+        return self.maternal_arv_post.get_subject_identifier()
 
     class Meta:
         app_label = "microbiome_maternal"

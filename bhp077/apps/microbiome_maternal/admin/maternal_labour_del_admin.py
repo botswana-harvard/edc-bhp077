@@ -161,7 +161,8 @@ class MaternalLabDelDxTAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'maternal_lab_del_dx__maternal_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'maternal_lab_del_dx__maternal_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'maternal_lab_del_dx__maternal_visit__appointment__registered_subject__gender',
                  'dob': 'maternal_lab_del_dx__maternal_visit__appointment__registered_subject__dob',
                  'has_who_dx': 'maternal_lab_del_dx__has_who_dx',

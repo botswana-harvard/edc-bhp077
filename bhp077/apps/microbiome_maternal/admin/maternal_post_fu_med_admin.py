@@ -32,7 +32,8 @@ class MaternalPostFuMedItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'maternal_post_fu_med__maternal_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'maternal_post_fu_med__maternal_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'maternal_post_fu_med__maternal_visit__appointment__registered_subject__gender',
                  'dob': 'maternal_post_fu_med__maternal_visit__appointment__registered_subject__dob',
                  'has_taken_meds': 'maternal_post_fu_med__has_taken_meds'

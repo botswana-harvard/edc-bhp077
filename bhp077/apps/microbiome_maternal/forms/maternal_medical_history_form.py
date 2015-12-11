@@ -41,14 +41,17 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
             )
             for chronic in chronic_diseases:
                 if chronic.short_name == "Chronic Hypertention" and antenatal_enrollment.on_hypertension_tx == NO:
-                    raise exception_cls('Its indicated that the participant has no chronic disease at antenatal enrollment,'
-                                        'yet have indicated the participant has Chronic Hypertention on the medical history')
+                    raise exception_cls(
+                        'Its indicated that the participant has no chronic disease at antenatal enrollment,'
+                        'yet have indicated the participant has Chronic Hypertention on the medical history')
                 elif chronic.short_name == "Chronic Diabetes" and antenatal_enrollment.is_diabetic == NO:
-                    raise exception_cls('Its indicated that the participant has no chronic disease at antenatal enrollment,'
-                                        'yet have indicated the participant has Chronic Diabetes on the medical history')
+                    raise exception_cls(
+                        'Its indicated that the participant has no chronic disease at antenatal enrollment,'
+                        'yet have indicated the participant has Chronic Diabetes on the medical history')
                 elif chronic.short_name == "Tuberculosis" and antenatal_enrollment.on_tb_tx == NO:
-                    raise exception_cls('Its indicated that the participant has no chronic disease at antenatal enrollment,'
-                                        'yet have indicated the participant has Chronic Diabetes on the medical history')
+                    raise exception_cls(
+                        'Its indicated that the participant has no chronic disease at antenatal enrollment,'
+                        'yet have indicated the participant has Chronic Diabetes on the medical history')
         except AntenatalEnrollment.DoesNotExist:
             pass
         try:
@@ -57,14 +60,17 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
             )
             for chronic in chronic_diseases:
                 if chronic.short_name == "Chronic Hypertention" and postnatal_enrollment.on_hypertension_tx == NO:
-                    raise exception_cls('Its indicated that the participant has no chronic disease at postnatal enrollment,'
-                                        'yet have indicated the participant has Chronic Hypertention on the medical history')
+                    raise exception_cls(
+                        'Its indicated that the participant has no chronic disease at postnatal enrollment,'
+                        'yet have indicated the participant has Chronic Hypertention on the medical history')
                 elif chronic.short_name == "Chronic Diabetes" and postnatal_enrollment.is_diabetic == NO:
-                    raise exception_cls('Its indicated that the participant has no chronic disease at postnatal enrollment,'
-                                        'yet have indicated the participant has Chronic Diabetes on the medical history')
+                    raise exception_cls(
+                        'Its indicated that the participant has no chronic disease at postnatal enrollment,'
+                        'yet have indicated the participant has Chronic Diabetes on the medical history')
                 elif chronic.short_name == "Tuberculosis" and postnatal_enrollment.on_tb_tx == NO:
-                    raise exception_cls('Its indicated that the participant has no chronic disease at postnatal enrollment,'
-                                        'yet have indicated the participant has Chronic Diabetes on the medical history')
+                    raise exception_cls(
+                        'Its indicated that the participant has no chronic disease at postnatal enrollment,'
+                        'yet have indicated the participant has Chronic Diabetes on the medical history')
         except PostnatalEnrollment.DoesNotExist:
             pass
 

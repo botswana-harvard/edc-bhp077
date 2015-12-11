@@ -17,9 +17,12 @@ from ..models import (
 
 from bhp077.apps.microbiome_infant.forms import (
     InfantCongenitalAnomaliesForm, InfantFacialDefectItemsForm,
-    InfantCleftDisorderItemsForm, InfantMouthUpGastrointestinalItemsForm, InfantCardiovascularDisorderItemsForm,
-    InfantRespiratoryDefectItemsForm, InfantLowerGastrointestinalItemsForm, InfantFemaleGenitalAnomalyItemsForm,
-    InfantMaleGenitalAnomalyItemsForm, InfantRenalAnomalyItemsForm, InfantMusculoskeletalAbnormalItemsForm,
+    InfantCleftDisorderItemsForm, InfantMouthUpGastrointestinalItemsForm,
+    InfantCardiovascularDisorderItemsForm,
+    InfantRespiratoryDefectItemsForm, InfantLowerGastrointestinalItemsForm,
+    InfantFemaleGenitalAnomalyItemsForm,
+    InfantMaleGenitalAnomalyItemsForm, InfantRenalAnomalyItemsForm,
+    InfantMusculoskeletalAbnormalItemsForm,
     InfantSkinAbnormalItemsForm, InfantTrisomiesChromosomeItemsForm,
     InfantCnsAbnormalityItemsForm
 )
@@ -43,7 +46,8 @@ class InfantCnsAbnormalityItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -76,7 +80,8 @@ class InfantFacialDefectItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -109,7 +114,8 @@ class InfantCleftDisorderItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -143,7 +149,8 @@ class InfantMouthUpGastrointestinalItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -177,7 +184,8 @@ class InfantCardiovascularDisorderItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -211,7 +219,8 @@ class InfantRespiratoryDefectItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -245,7 +254,8 @@ class InfantLowerGastrointestinalItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -279,7 +289,8 @@ class InfantFemaleGenitalAnomalyItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -313,7 +324,8 @@ class InfantMaleGenitalAnomalyItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -347,7 +359,8 @@ class InfantRenalAnomalyItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -381,7 +394,8 @@ class InfantMusculoskeletalAbnormalItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -415,7 +429,8 @@ class InfantSkinAbnormalItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),
@@ -449,7 +464,8 @@ class InfantTrisomiesChromosomeItemsAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'congenital_anomalies__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'congenital_anomalies__infant_visit__appointment__registered_subject__gender',
                  'dob': 'congenital_anomalies__infant_visit__appointment__registered_subject__dob',
                  }),

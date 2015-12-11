@@ -1,10 +1,10 @@
 from django import forms
 
 from edc.lab.lab_requisition.forms import BaseRequisitionForm
-from edc_constants.constants import YES, NO, SCHEDULED, UNSCHEDULED
+from edc_constants.constants import YES, NO
+from bhp077.apps.microbiome_infant.models import InfantStoolCollection
 
 from ..models import InfantRequisition
-from bhp077.apps.microbiome_infant.models import InfantStoolCollection, InfantVisit
 
 
 class InfantRequisitionForm(BaseRequisitionForm):
@@ -26,10 +26,11 @@ class InfantRequisitionForm(BaseRequisitionForm):
         cleaned_data = self.cleaned_data
         if cleaned_data.get('drawn_datetime'):
             if cleaned_data.get('drawn_datetime').date() < cleaned_data.get('requisition_datetime').date():
-                raise forms.ValidationError('Requisition date cannot be in future of specimen date. Specimen draw date is '
-                                            'indicated as {}, whilst requisition is indicated as{}. Please correct'
-                                            .format(cleaned_data.get('drawn_datetime').date(),
-                                                    cleaned_data.get('requisition_datetime').date()))
+                raise forms.ValidationError(
+                    'Requisition date cannot be in future of specimen date. Specimen draw date is '
+                    'indicated as {}, whilst requisition is indicated as{}. Please correct'.format(
+                        cleaned_data.get('drawn_datetime').date(),
+                        cleaned_data.get('requisition_datetime').date()))
 
     def validate_sample_swabs(self):
         cleaned_data = self.cleaned_data

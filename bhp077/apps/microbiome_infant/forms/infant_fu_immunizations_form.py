@@ -1,10 +1,8 @@
-from distutils.command.clean import clean
 from django import forms
-from tastypie.validation import CleanedDataFormValidation
 
 from edc_constants.constants import YES
 
-from ..models import InfantFuImmunizations, VaccinesReceived, VaccinesMissed, InfantBirth
+from ..models import InfantFuImmunizations, VaccinesReceived, VaccinesMissed
 from .base_infant_model_form import BaseInfantModelForm
 
 

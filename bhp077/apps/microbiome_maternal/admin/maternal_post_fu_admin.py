@@ -35,7 +35,8 @@ class MaternalPostFuAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'maternal_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'maternal_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'maternal_visit__appointment__registered_subject__gender',
                  'dob': 'maternal_visit__appointment__registered_subject__dob',
                  'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
@@ -77,7 +78,8 @@ class MaternalPostFuDxTAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'post_fu_dx__maternal_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'post_fu_dx__maternal_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'post_fu_dx__maternal_visit__appointment__registered_subject__gender',
                  'dob': 'post_fu_dx__maternal_visit__appointment__registered_subject__dob',
                  'weight_measured': 'post_fu_dx__weight_measured',
@@ -137,7 +139,8 @@ class MaternalPostFuDxAdmin(BaseModelAdmin):
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
         if db_field.name == "maternal_post_fu":
             if request.GET.get('maternal_visit'):
-                kwargs["queryset"] = MaternalPostFu.objects.filter(maternal_visit__id=request.GET.get('maternal_visit'))
+                kwargs["queryset"] = MaternalPostFu.objects.filter(
+                    maternal_visit__id=request.GET.get('maternal_visit'))
         return super(MaternalPostFuDxAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalPostFuDx, MaternalPostFuDxAdmin)

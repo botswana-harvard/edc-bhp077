@@ -19,7 +19,8 @@ class InfantArvProph(InfantScheduledVisitModel):
 
     arv_status = models.CharField(
         max_length=25,
-        verbose_name="What is the status of the participant's ARV prophylaxis at this visit or since the last visit? ",
+        verbose_name=(
+            "What is the status of the participant's ARV prophylaxis at this visit or since the last visit? "),
         choices=ARV_STATUS_WITH_NEVER,
         help_text="referring to prophylaxis other than single dose NVP",
         default='N/A',

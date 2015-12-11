@@ -35,7 +35,8 @@ class MaternalArvPostModAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'maternal_arv_post__maternal_visit__appointment__registered_subject__subject_identifier',
+                {'subject_identifier':
+                 'maternal_arv_post__maternal_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'maternal_arv_post__maternal_visit__appointment__registered_subject__gender',
                  'dob': 'maternal_arv_post__maternal_visit__appointment__registered_subject__dob',
                  'on_arv_since': 'maternal_arv_post__on_arv_since',
