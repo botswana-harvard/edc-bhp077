@@ -6,6 +6,7 @@ Unipath
 GitPython
 factory-boy
 pytz
+pyodbc
 -e git+https://github.com/erikvw/django-revision@develop#egg=django-revision
 -e git+https://github.com/botswana-harvard/edc@develop#egg=edc
 -e git+https://github.com/botswana-harvard/lis@develop#egg=lis
