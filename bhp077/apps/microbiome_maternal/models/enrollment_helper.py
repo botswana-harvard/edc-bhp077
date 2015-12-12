@@ -10,26 +10,52 @@ class EnrollmentError(Exception):
 
 class EnrollmentHelper(object):
 
+    """Class that determines maternal eligibility based on the protocol specific criteria.
+
+    * Accepts an instance of AntenatalEnrollment or PostnatalEnrollment.
+    * is called in the save method of the EnrollmentMixin.
+    * makes available the calculated enrollment_hiv_status and date_at_32wks
+      which can be saved to the model instance.
+
+    Note: it's assumed the form validates values to avoid raising an EnrollmentError here.
+
+    For example:
+
+        def save(self, *args, **kwargs):
+            enrollment_helper = EnrollmentHelper(instance=self)
+            self.is_eligible = enrollment_helper.is_eligible
+            self.enrollment_hiv_status = enrollment_helper.enrollment_hiv_status
+            self.date_at_32wks = enrollment_helper.date_at_32wks
+            super(EnrollmentMixin, self).save(*args, **kwargs)
+    """
+
     def __init__(self, instance):
         self._enrollment_hiv_status = None
         self.date_at_32wks = None
         self.instance = instance
         self.enrollment = self.instance._meta.verbose_name
+
+        # make all fields from the enrollment instance available to this instance
         for field in self.instance._meta.fields:
             try:
                 setattr(self, field.name, getattr(self.instance, field.name))
             except AttributeError:
                 pass
+
+        # get correct field value for gestational age and
+        # choose the method to use to determine basic eligibility criteria (not
+        # including HIV status)
         try:
             self.gestational_age = self.gestation_wks
             self.passes_basic_criteria = self.antenatal_criteria
         except AttributeError:
             self.gestational_age = self.gestation_wks_delivered
             self.passes_basic_criteria = self.postnatal_criteria
+
         self.is_eligible = self.is_eligible_for_enrollment()
 
     def is_eligible_for_enrollment(self):
-        """Returns True is all eligibility criteria passes."""
+        """Returns True if all eligibility criteria passes."""
         is_eligible = False
         if self.passes_basic_criteria():
             if (self.enrollment_hiv_status == POS and self.valid_regimen == YES and
@@ -130,7 +156,7 @@ class EnrollmentHelper(object):
     def hiv_status_on_or_after_32wk(self, exception_cls=None):
         """Returns the maternal status on or after week 32 gestational age or None."""
         hiv_status = None
-        exception_cls = exception_cls or ValidationError
+        exception_cls = exception_cls or EnrollmentError
         if self.week32_test == YES and self.week32_test_date:
             if not self.test_date_is_on_or_after_32wks():
                 raise exception_cls(
@@ -146,7 +172,7 @@ class EnrollmentHelper(object):
         self.date_at_32wks = self.report_datetime.date() - relativedelta(weeks=self.gestational_age - 32)
         if self.rapid_test_date:
             if self.week32_test_date > self.rapid_test_date:
-                raise ValidationError('Rapid test date cannot precede test date on or after 32 weeks')
+                raise EnrollmentError('Rapid test date cannot precede test date on or after 32 weeks')
         return self.week32_test_date >= self.date_at_32wks
 
     def no_chronic_conditions(self):

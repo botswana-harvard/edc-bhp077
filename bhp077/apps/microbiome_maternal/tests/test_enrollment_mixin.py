@@ -12,15 +12,13 @@ from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE, NEVER
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory,
-                                                             MaternalConsentFactory,
-                                                             SpecimenConsentFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import (
+    MaternalEligibilityFactory, MaternalConsentFactory, SpecimenConsentFactory)
 from bhp077.apps.microbiome_maternal.forms import BaseEnrollmentForm
 from bhp077.apps.microbiome_maternal.models.enrollment_mixin import EnrollmentMixin
 from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
 from dateutil.relativedelta import relativedelta
-from bhp077.apps.microbiome_maternal.models.enrollment_helper import EnrollmentHelper
-from django.core.exceptions import ValidationError
+from bhp077.apps.microbiome_maternal.models.enrollment_helper import EnrollmentHelper, EnrollmentError
 
 
 class EnrollmentTestModel(EnrollmentMixin):
@@ -278,7 +276,7 @@ class TestEnrollmentMixin(TestCase):
             on_hypertension_tx=NO,
             will_breastfeed=YES,
             will_remain_onstudy=YES)
-        self.assertRaises(ValidationError, EnrollmentHelper, obj)
+        self.assertRaises(EnrollmentError, EnrollmentHelper, obj)
 
     def test_neg_rapid_required(self):
         obj = AntenatalEnrollment(
@@ -333,4 +331,4 @@ class TestEnrollmentMixin(TestCase):
             on_hypertension_tx=NO,
             will_breastfeed=YES,
             will_remain_onstudy=YES)
-        self.assertRaises(ValidationError, EnrollmentHelper, obj)
+        self.assertRaises(EnrollmentError, EnrollmentHelper, obj)
