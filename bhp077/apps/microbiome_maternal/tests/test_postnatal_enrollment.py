@@ -17,6 +17,7 @@ from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentF
 from edc_constants.constants import UNKNOWN, DWTA, NEVER
 from bhp077.apps.microbiome_maternal.models.postnatal_enrollment import PostnatalEnrollment
 from django.utils import timezone
+from bhp077.apps.microbiome_maternal.models.enrollment_helper import EnrollmentError
 
 
 class TestPostnatalEnrollment(TestCase):
@@ -471,24 +472,20 @@ class TestPostnatalEnrollment(TestCase):
         antenatal_enrollment = AntenatalEnrollment.objects.get(
             registered_subject=self.registered_subject)
         self.assertFalse(antenatal_enrollment.is_eligible)
-        PostnatalEnrollment.objects.create(
-            report_datetime=timezone.now(),
-            registered_subject=self.registered_subject,
-            delivery_status=LIVE,
-            gestation_wks_delivered=38,
-            is_diabetic=NO,
-            live_infants=1,
-            on_tb_tx=NO,
-            postpartum_days=2,
-            vaginal_delivery=YES,
-            will_breastfeed=YES,
-            will_remain_onstudy=YES)
-        postnatal_enrollment = PostnatalEnrollment.objects.get(
-            registered_subject=self.registered_subject)
-        self.assertNotEqual(
-            antenatal_enrollment.current_hiv_status,
-            postnatal_enrollment.current_hiv_status)
-        self.assertNotEqual(
-            antenatal_enrollment.evidence_hiv_status,
-            postnatal_enrollment.evidence_hiv_status)
-        self.assertFalse(postnatal_enrollment.is_eligible)
+        with self.assertRaises(EnrollmentError) as cm:
+            PostnatalEnrollment.objects.create(
+                report_datetime=timezone.now(),
+                registered_subject=self.registered_subject,
+                delivery_status=LIVE,
+                gestation_wks_delivered=38,
+                is_diabetic=NO,
+                live_infants=1,
+                on_tb_tx=NO,
+                postpartum_days=2,
+                vaginal_delivery=YES,
+                will_breastfeed=YES,
+                will_remain_onstudy=YES)
+        self.assertEqual(
+            str(cm.exception),
+            ('Unable to determine maternal hiv status at enrollment. Got current_hiv_status=, '
+             'evidence_hiv_status=None, rapid_test_done=None, rapid_test_result=None'))

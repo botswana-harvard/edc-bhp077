@@ -1,5 +1,3 @@
-from dateutil.relativedelta import relativedelta
-
 from django.db import models
 from django.db.models import get_model
 
@@ -9,9 +7,9 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 from edc_consent.models import RequiresConsentMixin
-from edc_constants.choices import YES_NO, YES, NO, POS, NEG
+from edc_constants.choices import YES_NO
 
-from ..maternal_choices import LIVE_STILL_BIRTH, LIVE
+from ..maternal_choices import LIVE_STILL_BIRTH
 
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
@@ -65,33 +63,10 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
 
     def save(self, *args, **kwargs):
         self.update_with_common_fields_from_antenatal_enrollment()
-        self.is_eligible = self.check_eligiblity()
         super(PostnatalEnrollment, self).save(*args, **kwargs)
 
     def get_registration_datetime(self):
         return self.report_datetime
-
-    def check_eligiblity(self):
-        """Returns true if the participant is eligible."""
-        if (self.delivery_status == LIVE and self.gestation_wks_delivered >= 37 and
-                self.is_diabetic == NO and
-                self.on_hypertension_tx == NO and
-                self.on_tb_tx == NO and
-                self.postpartum_days <= 3 and
-                self.vaginal_delivery == YES and
-                self.will_breastfeed == YES and
-                self.will_remain_onstudy == YES):
-            if (self.enrollment_hiv_status() == POS and self.valid_regimen == YES and
-                    self.valid_regimen_duration == YES):
-                return True
-            elif self.enrollment_hiv_status() == NEG:
-                return True
-        return False
-
-    def test_date_is_on_or_after_32wks(self):
-        """Returns True if the test date is on or after 32 weeks gestational age."""
-        date_at_32wks = self.report_datetime.date() - relativedelta(weeks=self.gestation_wks_delivered - 32)
-        return self.week32_test_date >= date_at_32wks
 
     @property
     def antenatal_enrollment(self):
@@ -106,7 +81,7 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         """Updates common field values from Antenatal Enrollment to
         this instance if not already set.
 
-        Only updates if ANtenatalEnrollment.is_eligible=True."""
+        Only updates if AntenatalEnrollment.is_eligible=True."""
         AntenatalEnrollment = get_model('microbiome_maternal', 'antenatalenrollment')
         try:
             antenatal_enrollment = AntenatalEnrollment.objects.get(
@@ -114,7 +89,6 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
                 is_eligible=True)
             for attrname in self.common_fields():
                 if not getattr(self, attrname):
-                    # print(attrname, getattr(self, attrname), getattr(antenatal_enrollment, attrname))
                     setattr(self, attrname, getattr(antenatal_enrollment, attrname))
         except AntenatalEnrollment.DoesNotExist:
             pass

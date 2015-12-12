@@ -6,7 +6,7 @@ from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICE
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
-from edc_constants.constants import OFF_STUDY, YES, POS, UNSCHEDULED, NEG, DEAD, DEATH_VISIT
+from edc_constants.constants import OFF_STUDY, YES, POS, UNSCHEDULED, NEG, DEATH_VISIT
 from edc.subject.visit_tracking.models import PreviousVisitMixin
 
 from bhp077.apps.microbiome.choices import VISIT_REASON
@@ -139,10 +139,10 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
     def enrollment_hiv_status(self):
         enrollment_hiv_status = None
         try:
-            enrollment_hiv_status = self.postnatal_enrollment.enrollment_hiv_status()
+            enrollment_hiv_status = self.postnatal_enrollment.enrollment_hiv_status
         except AttributeError:
             try:
-                enrollment_hiv_status = self.antenatal_enrollment.enrollment_hiv_status()
+                enrollment_hiv_status = self.antenatal_enrollment.enrollment_hiv_status
             except AttributeError:
                 pass
         return enrollment_hiv_status

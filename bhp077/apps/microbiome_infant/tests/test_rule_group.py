@@ -45,7 +45,7 @@ class TestRuleGroupInfant(TestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES)
-        self.assertEqual(postnatal_enrollment.enrollment_hiv_status(), POS)
+        self.assertEqual(postnatal_enrollment.enrollment_hiv_status, POS)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
@@ -75,7 +75,7 @@ class TestRuleGroupInfant(TestCase):
     def test_congentinal_yes(self):
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject)
-        self.assertEqual(postnatal_enrollment.enrollment_hiv_status(), POS)
+        self.assertEqual(postnatal_enrollment.enrollment_hiv_status, POS)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
@@ -108,7 +108,7 @@ class TestRuleGroupInfant(TestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES)
-        self.assertEqual(postnatal_enrollment.enrollment_hiv_status(), POS)
+        self.assertEqual(postnatal_enrollment.enrollment_hiv_status, POS)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
@@ -144,7 +144,7 @@ class TestRuleGroupInfant(TestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES)
-        self.assertEqual(postnatal_enrollment.enrollment_hiv_status(), POS)
+        self.assertEqual(postnatal_enrollment.enrollment_hiv_status, POS)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
@@ -187,7 +187,7 @@ class TestRuleGroupInfant(TestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES)
-        self.assertEqual(postnatal_enrollment.enrollment_hiv_status(), POS)
+        self.assertEqual(postnatal_enrollment.enrollment_hiv_status, POS)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')

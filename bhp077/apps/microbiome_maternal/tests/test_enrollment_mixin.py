@@ -8,8 +8,7 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.registration.models import RegisteredSubject
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.choices import POS, YES, NO, NEG, NOT_APPLICABLE
-from edc_constants.constants import NEVER
+from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE, NEVER
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -18,9 +17,10 @@ from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibility
                                                              SpecimenConsentFactory)
 from bhp077.apps.microbiome_maternal.forms import BaseEnrollmentForm
 from bhp077.apps.microbiome_maternal.models.enrollment_mixin import EnrollmentMixin
-from collections import namedtuple
 from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
 from dateutil.relativedelta import relativedelta
+from bhp077.apps.microbiome_maternal.models.enrollment_helper import EnrollmentHelper
+from django.core.exceptions import ValidationError
 
 
 class EnrollmentTestModel(EnrollmentMixin):
@@ -220,22 +220,117 @@ class TestEnrollmentMixin(TestCase):
             week32_test_date=date.today() - relativedelta(weeks=7),
             gestation_wks=38,
             report_datetime=timezone.now())
-        self.assertFalse(obj.test_date_is_on_or_after_32wks())
+        enrollment_helper = EnrollmentHelper(obj)
+        self.assertFalse(enrollment_helper.test_date_is_on_or_after_32wks())
 
         obj = AntenatalEnrollment(
             week32_test_date=date.today() - relativedelta(weeks=6),
             gestation_wks=38,
             report_datetime=timezone.now())
-        self.assertTrue(obj.test_date_is_on_or_after_32wks())
+        enrollment_helper = EnrollmentHelper(obj)
+        self.assertTrue(enrollment_helper.test_date_is_on_or_after_32wks())
 
         obj = AntenatalEnrollment(
             week32_test_date=date.today() - relativedelta(weeks=5),
             gestation_wks=38,
             report_datetime=timezone.now())
-        self.assertTrue(obj.test_date_is_on_or_after_32wks())
+        enrollment_helper = EnrollmentHelper(obj)
+        self.assertTrue(enrollment_helper.test_date_is_on_or_after_32wks())
 
         obj = AntenatalEnrollment(
             week32_test_date=date.today(),
             gestation_wks=38,
             report_datetime=timezone.now())
-        self.assertTrue(obj.test_date_is_on_or_after_32wks())
+        enrollment_helper = EnrollmentHelper(obj)
+        self.assertTrue(enrollment_helper.test_date_is_on_or_after_32wks())
+
+    def test_neg_rapid_not_required(self):
+        """Assert rapid not required if last test was within 32 weeks."""
+        obj = AntenatalEnrollment(
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES,
+            week32_test=YES,
+            week32_test_date=date(2015, 11, 13),
+            week32_result=NEG,
+            rapid_test_done=NOT_APPLICABLE,
+            report_datetime=timezone.datetime(2015, 12, 11, 0, 0, 0),
+            gestation_wks=36,
+            is_diabetic=NO,
+            on_tb_tx=NO,
+            on_hypertension_tx=NO,
+            will_breastfeed=YES,
+            will_remain_onstudy=YES)
+        enrollment_helper = EnrollmentHelper(obj)
+        self.assertTrue(enrollment_helper.is_eligible)
+
+    def test_neg_rapid_required_raises_on_invalid_week32_date(self):
+        obj = AntenatalEnrollment(
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES,
+            week32_test=YES,
+            week32_test_date=date(2015, 11, 1),
+            week32_result=NEG,
+            rapid_test_done=NOT_APPLICABLE,
+            report_datetime=timezone.datetime(2015, 12, 11, 0, 0, 0),
+            gestation_wks=36,
+            is_diabetic=NO,
+            on_tb_tx=NO,
+            on_hypertension_tx=NO,
+            will_breastfeed=YES,
+            will_remain_onstudy=YES)
+        self.assertRaises(ValidationError, EnrollmentHelper, obj)
+
+    def test_neg_rapid_required(self):
+        obj = AntenatalEnrollment(
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES,
+            week32_test=NO,
+            rapid_test_done=NOT_APPLICABLE,
+            report_datetime=timezone.datetime(2015, 12, 11, 0, 0, 0),
+            gestation_wks=36,
+            is_diabetic=NO,
+            on_tb_tx=NO,
+            on_hypertension_tx=NO,
+            will_breastfeed=YES,
+            will_remain_onstudy=YES)
+        enrollment_helper = EnrollmentHelper(obj)
+        self.assertFalse(enrollment_helper.is_eligible)
+
+    def test_neg_rapid_required2(self):
+        obj = AntenatalEnrollment(
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES,
+            week32_test=YES,
+            week32_test_date=date(2015, 11, 13),
+            week32_result=NEG,
+            rapid_test_done=YES,
+            rapid_test_date=date(2015, 12, 11),
+            rapid_test_result=NEG,
+            report_datetime=timezone.datetime(2015, 12, 11, 0, 0, 0),
+            gestation_wks=36,
+            is_diabetic=NO,
+            on_tb_tx=NO,
+            on_hypertension_tx=NO,
+            will_breastfeed=YES,
+            will_remain_onstudy=YES)
+        enrollment_helper = EnrollmentHelper(obj)
+        self.assertTrue(enrollment_helper.is_eligible)
+
+    def test_neg_rapid_required_invalid_rapid_test_date(self):
+        obj = AntenatalEnrollment(
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES,
+            week32_test=YES,
+            week32_test_date=date(2015, 11, 13),
+            week32_result=NEG,
+            rapid_test_done=YES,
+            rapid_test_date=date(2015, 11, 12),
+            rapid_test_result=NEG,
+            report_datetime=timezone.datetime(2015, 12, 11, 0, 0, 0),
+            gestation_wks=36,
+            is_diabetic=NO,
+            on_tb_tx=NO,
+            on_hypertension_tx=NO,
+            will_breastfeed=YES,
+            will_remain_onstudy=YES)
+        self.assertRaises(ValidationError, EnrollmentHelper, obj)

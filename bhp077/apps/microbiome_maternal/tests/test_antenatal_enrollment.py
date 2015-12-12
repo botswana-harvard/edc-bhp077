@@ -42,6 +42,7 @@ class TestAntenatalEnrollment(TestCase):
         antenatal_enrollment = AntenatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             gestation_wks=35)
         self.assertFalse(antenatal_enrollment.is_eligible)
@@ -66,6 +67,7 @@ class TestAntenatalEnrollment(TestCase):
         antenatal_enrollment = AntenatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             is_diabetic=YES)
         self.assertFalse(antenatal_enrollment.is_eligible)

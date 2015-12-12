@@ -1,14 +1,24 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 
 from edc_base.model.validators import date_not_before_study_start, date_not_future
 from edc_constants.choices import POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO, NO
-from edc_constants.constants import NOT_APPLICABLE, YES, POS, NEG, NEVER, UNKNOWN, DWTA, SEROCONVERSION, IND
+from .enrollment_helper import EnrollmentHelper
 
 
 class EnrollmentMixin(models.Model):
 
     """Base Model for antenal and postnatal enrollment"""
+
+    enrollment_hiv_status = models.CharField(
+        max_length=15,
+        null=True,
+        editable=False,
+        help_text='Auto-filled by enrollment helper')
+
+    date_at_32wks = models.DateField(
+        null=True,
+        editable=False,
+        help_text='Auto-filled by enrollment helper')
 
     is_eligible = models.BooleanField(
         editable=False)
@@ -117,7 +127,7 @@ class EnrollmentMixin(models.Model):
         null=True,
         validators=[
             date_not_before_study_start,
-            date_not_future, ],
+            date_not_future],
         blank=True)
 
     rapid_test_result = models.CharField(
@@ -132,90 +142,22 @@ class EnrollmentMixin(models.Model):
             self.registered_subject.subject_identifier,
             self.registered_subject.first_name)
 
-    def enrollment_hiv_status(self):
-        """Returns the maternal HIV status at enrollment based on valid combinations
-        expected from the form otherwise raises a ValueError.
-
-        Note: the ValueError should never be excepted!!"""
-
-        enrollment_hiv_status = None
-        if self.evidence_hiv_status == YES:
-            enrollment_hiv_status = self._hiv_status_with_evidence()
-        elif self.evidence_hiv_status in [NO, NOT_APPLICABLE]:
-            enrollment_hiv_status = self._hiv_status_with_without_evidence()
-        if not enrollment_hiv_status:
-            raise ValueError(
-                'Unable to determine maternal hiv status at enrollment. '
-                'Got current_hiv_status={}, evidence_hiv_status={}, '
-                'rapid_test_done={}, rapid_test_result={}'.format(
-                    self.current_hiv_status,
-                    self.evidence_hiv_status,
-                    self.rapid_test_done,
-                    self.rapid_test_result))
-        return enrollment_hiv_status
-
-    def _hiv_status_with_evidence(self):
-        """Returns the hiv status if evidence is available or None."""
-        hiv_status_with_evidence = None
-        if self.evidence_hiv_status == YES:
-            if self.hiv_status_on_or_after_32wk() == POS:
-                hiv_status_with_evidence = POS
-            elif self.hiv_status_on_or_after_32wk() == NEG:
-                hiv_status_with_evidence = NEG
-            elif self.current_hiv_status == POS and self.rapid_test_done in [NO, NOT_APPLICABLE]:
-                hiv_status_with_evidence = POS
-            elif (self.current_hiv_status == POS and self.rapid_test_done == YES and
-                    self.rapid_test_result == POS):
-                hiv_status_with_evidence = POS
-            elif (self.current_hiv_status == NEG and
-                    self.rapid_test_done == YES and self.rapid_test_result == NEG):
-                hiv_status_with_evidence = NEG
-            elif (self.current_hiv_status == NEG and
-                    self.rapid_test_done == YES and self.rapid_test_result == POS):
-                hiv_status_with_evidence = SEROCONVERSION
-            elif (self.current_hiv_status == NEG and
-                    self.rapid_test_done == YES and self.rapid_test_result == IND):
-                hiv_status_with_evidence = IND
-        return hiv_status_with_evidence
-
-    def _hiv_status_with_without_evidence(self):
-        """Returns the hiv status if evidence is not available or None."""
-        if self.evidence_hiv_status in [NO, NOT_APPLICABLE]:
-            if (self.current_hiv_status == POS and self.rapid_test_done == YES and
-                    self.rapid_test_result == POS):
-                hiv_status_with_without_evidence = POS
-            elif (self.current_hiv_status == POS and self.rapid_test_done == NO and
-                    self.rapid_test_result is None):
-                hiv_status_with_without_evidence = UNKNOWN
-            elif (self.current_hiv_status in [NEG, NEVER, UNKNOWN, DWTA] and self.rapid_test_done == YES and
-                    self.rapid_test_result == NEG):
-                hiv_status_with_without_evidence = NEG
-            elif (self.current_hiv_status in [NEG, NEVER, UNKNOWN, DWTA] and self.rapid_test_done == YES and
-                    self.rapid_test_result == POS):
-                hiv_status_with_without_evidence = SEROCONVERSION
-            elif (self.current_hiv_status in [NEG, NEVER, UNKNOWN, DWTA] and self.rapid_test_done == NO and
-                    self.rapid_test_result is None):
-                hiv_status_with_without_evidence = UNKNOWN
-        return hiv_status_with_without_evidence
-
-    def hiv_status_on_or_after_32wk(self, exception_cls=None):
-        """Returns the maternal status on or after week 32 gestational age or None."""
-        exception_cls = exception_cls or ValidationError
-        hiv_status_on_or_after_32wk = None
-        if self.week32_test == YES and self.week32_test_date:
-            if not self.test_date_is_on_or_after_32wks:
-                raise exception_cls(
-                    'Test date is not on or after 32 weeks gestational age.')
-            elif self.week32_result == POS and self.current_hiv_status == POS:
-                hiv_status_on_or_after_32wk = POS
-            elif self.week32_result == NEG and self.current_hiv_status == NEG:
-                hiv_status_on_or_after_32wk = NEG
-        return hiv_status_on_or_after_32wk
+    def save(self, *args, **kwargs):
+        enrollment_helper = EnrollmentHelper(instance=self)
+        self.is_eligible = enrollment_helper.is_eligible
+        self.enrollment_hiv_status = enrollment_helper.enrollment_hiv_status
+        self.date_at_32wks = enrollment_helper.date_at_32wks
+        super(EnrollmentMixin, self).save(*args, **kwargs)
 
     def common_fields(self):
         """Returns a list of field names common to postnatal
         and antenatal enrollment models."""
-        return [field.name for field in EnrollmentMixin._meta.fields if field.name not in ['is_eligible']]
+        common_fields = []
+        excluded_fields = ['is_eligible', 'enrollment_hiv_status', 'date_at_32wks']
+        for field in EnrollmentMixin._meta.fields:
+            if field.name not in excluded_fields:
+                common_fields.append(field.name)
+        return common_fields
 
     def get_registration_datetime(self):
         return self.report_datetime
