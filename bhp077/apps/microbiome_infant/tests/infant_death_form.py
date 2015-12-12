@@ -87,7 +87,6 @@ class TestInfantDeathForm(TestCase):
 
     def test_infant_death_form_valid(self):
         infant_death_form = InfantDeathForm(data=self.data)
-        print infant_death_form.errors
         self.assertTrue(infant_death_form.is_valid())
 
     def test_infant_validate_date_of_death(self):

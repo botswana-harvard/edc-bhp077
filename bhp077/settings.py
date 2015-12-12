@@ -70,6 +70,7 @@ INSTALLED_APPS = (
     'edc_call_manager',
     'edc_device',
     'edc_offstudy',
+    'edc_death_report',
     # EDC
     'edc',
     'edc.apps.app_configuration',
@@ -106,7 +107,6 @@ INSTALLED_APPS = (
     'edc.map',
     'edc.testing',
     'edc.utils',
-    'edc.subject.adverse_event',
     'edc.subject.lab_tracker',
     'edc.subject.code_lists',
     'edc.subject.rule_groups',

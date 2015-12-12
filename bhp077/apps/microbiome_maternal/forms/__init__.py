@@ -9,7 +9,7 @@ from .maternal_arv_post_form import MaternalArvPostForm, MaternalArvPostModForm,
 from .maternal_breast_health_form import MaternalBreastHealthForm
 from .maternal_clinical_history_form import MaternalClinicalHistoryForm
 from .maternal_consent_form import MaternalConsentForm
-from .maternal_death_form import MaternalDeathForm
+from .maternal_death_report_form import MaternalDeathReportForm
 from .maternal_demographics_form import MaternalDemographicsForm
 from .maternal_eligibility_form import MaternalEligibilityForm
 from .maternal_eligibility_loss_form import MaternalEligibilityLossForm

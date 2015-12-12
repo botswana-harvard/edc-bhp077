@@ -6,7 +6,7 @@ from .infant_birth_exam import InfantBirthExam
 from .infant_birth_data import InfantBirthData
 from .infant_birth_feeding import InfantBirthFeedVaccine, InfantVaccines
 from .infant_circumcision import InfantCircumcision
-from .infant_death import InfantDeath
+from .infant_death_report import InfantDeathReport
 from .infant_fu import InfantFu
 from .infant_fu_dx import InfantFuDx, InfantFuDxItems
 from .infant_fu_immunizations import InfantFuImmunizations, VaccinesReceived, VaccinesMissed

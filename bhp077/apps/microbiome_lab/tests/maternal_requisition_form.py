@@ -78,4 +78,3 @@ class TestMaternalRequisitionForm(TestCase):
         form = MaternalRequisitionForm(data=self.data)
         self.assertTrue(form.is_valid())
         errors = ''.join(form.errors.get('__all__'))
-        print errors

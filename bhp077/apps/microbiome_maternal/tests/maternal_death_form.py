@@ -9,7 +9,7 @@ from edc.subject.appointment.models import Appointment
 from edc_constants.constants import YES, NO, NEG
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.forms import MaternalDeathForm
+from bhp077.apps.microbiome_maternal.forms import MaternalDeathReportForm
 
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
@@ -18,7 +18,7 @@ from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentF
 from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
 
 
-class TestMaternalDeathForm(TestCase):
+class TestMaternalDeathReportForm(TestCase):
 
     def setUp(self):
         try:
@@ -73,22 +73,21 @@ class TestMaternalDeathForm(TestCase):
         }
 
     def test_maternal_death_form_valid(self):
-        maternal_death_form = MaternalDeathForm(data=self.data)
-        print maternal_death_form.errors
+        maternal_death_form = MaternalDeathReportForm(data=self.data)
         self.assertTrue(maternal_death_form.is_valid())
 
     def test_maternal_validate_date_of_death(self):
         self.data['death_date'] = timezone.now().date()
         self.maternal_consent.consent_datetime = timezone.now()
         self.maternal_consent.save()
-        maternal_death_form = MaternalDeathForm(data=self.data)
+        maternal_death_form = MaternalDeathReportForm(data=self.data)
         self.assertIn(
             u'Consent_Datetime CANNOT be before consent datetime', maternal_death_form.errors.get('__all__'))
 
     def test_death_reason_hospitalized_yes(self):
         self.data['participant_hospitalized'] = YES
         self.data['death_reason_hospitalized"'] = None
-        maternal_death_form = MaternalDeathForm(data=self.data)
+        maternal_death_form = MaternalDeathReportForm(data=self.data)
         self.assertIn(
             u'If the participant was hospitalized, what was the primary reason for hospitalisation?',
             maternal_death_form.errors.get('__all__'))
@@ -97,7 +96,7 @@ class TestMaternalDeathForm(TestCase):
         self.data['participant_hospitalized'] = YES
         self.data['death_reason_hospitalized"'] = None
         self.data['days_hospitalized'] = 0
-        maternal_death_form = MaternalDeathForm(data=self.data)
+        maternal_death_form = MaternalDeathReportForm(data=self.data)
         self.assertIn(
             u'If the participant was hospitalized, please provide number of days the participant was hospitalised.',
             maternal_death_form.errors.get('__all__'))

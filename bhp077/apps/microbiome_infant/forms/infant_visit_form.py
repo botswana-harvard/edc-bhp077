@@ -4,7 +4,7 @@ from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRender
 from edc_constants.constants import MISSED_VISIT, OFF_STUDY, LOST_VISIT, DEATH_VISIT, YES, UNKNOWN
 
 from bhp077.apps.microbiome.choices import VISIT_REASON, VISIT_INFO_SOURCE
-from bhp077.apps.microbiome_maternal.models import MaternalConsent, MaternalDeath
+from bhp077.apps.microbiome_maternal.models import MaternalConsent, MaternalDeathReport
 
 from ..models import InfantVisit
 
@@ -87,12 +87,12 @@ class InfantVisitForm(BaseInfantModelForm):
 
     def validate_information_provider_is_alive(self):
         cleaned_data = self.cleaned_data
-        if (MaternalDeath.objects.filter(
+        if (MaternalDeathReport.objects.filter(
                 maternal_visit__appointment__registered_subject__subject_identifier=cleaned_data.get(
                     'appointment').registered_subject.relative_identifier).exists()):
             if cleaned_data.get('information_provider') == 'MOTHER':
                 raise forms.ValidationError(
-                    'The mother is indicated to be dead (MaternalDeathForm is filled). You '
+                    'The mother is indicated to be dead (MaternalDeathReport is filled). You '
                     'therefore CANNOT indicate the information provider for this infant to be '
                     'the mother')
 

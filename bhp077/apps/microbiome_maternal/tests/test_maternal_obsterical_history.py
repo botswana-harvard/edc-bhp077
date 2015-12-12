@@ -74,7 +74,6 @@ class TestMaternalObstericalHistoryForm(TestCase):
             'children_died_b4_5yrs': 0
         }
         mob = MaternalObstericalHistoryForm(data=self.data)
-        print mob.errors
         self.assertTrue(mob.is_valid())
 
     def test_maternal_obsterical_history_children_died_b4_5yrs_invalid(self):

@@ -5,13 +5,13 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.export.actions import export_as_csv_action
 
-from bhp077.apps.microbiome_maternal.forms import MaternalDeathForm
-from bhp077.apps.microbiome_maternal.models import MaternalDeath, MaternalVisit
+from bhp077.apps.microbiome_maternal.forms import MaternalDeathReportForm
+from bhp077.apps.microbiome_maternal.models import MaternalDeathReport, MaternalVisit
 
 
-class MaternalDeathAdmin(BaseModelAdmin):
+class MaternalDeathReportAdmin(BaseModelAdmin):
 
-    form = MaternalDeathForm
+    form = MaternalDeathReportForm
     fields = (
         "maternal_visit",
         "death_date",
@@ -58,6 +58,6 @@ class MaternalDeathAdmin(BaseModelAdmin):
         if db_field.name == "maternal_visit":
             if request.GET.get('maternal_visit'):
                 kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
-        return super(MaternalDeathAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+        return super(MaternalDeathReportAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
-admin.site.register(MaternalDeath, MaternalDeathAdmin)
+admin.site.register(MaternalDeathReport, MaternalDeathReportAdmin)

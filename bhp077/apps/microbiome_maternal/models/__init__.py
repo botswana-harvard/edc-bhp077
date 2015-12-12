@@ -18,7 +18,7 @@ from .maternal_labour_del import (MaternalLabourDel, MaternalLabDelMed,
                                   MaternalLabDelClinic, MaternalLabDelDx, MaternalLabDelDxT)
 from .rapid_test_result import RapidTestResult
 from .sexual_reproductive_health import SexualReproductiveHealth
-from .maternal_death import MaternalDeath
+from .maternal_death_report import MaternalDeathReport
 from .maternal_off_study import MaternalOffStudy
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel

@@ -256,14 +256,6 @@ DX_MATERNAL = (
      'Other serious (grade 3 or 4) non-infectious diagnosis(not listed above), specify'),
 )
 
-DRUG_RELATIONSHIP = (
-    ('Not related', 'Not related'),
-    ('Probably not related', 'Probably not related'),
-    ('Possibly related', 'Possibly related'),
-    ('Probably related', 'Probably related'),
-    ('Definitely related', 'Definitely related'),
-)
-
 FACIAL_DEFECT = (
     ('None', 'None'),
     ('Anophthalmia/micro-opthalmia', 'Anophthalmia/micro-opthalmia'),
