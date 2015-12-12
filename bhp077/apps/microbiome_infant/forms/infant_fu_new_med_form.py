@@ -33,6 +33,9 @@ class InfantFuNewMedItemsForm(BaseInfantModelForm):
                                             'Please correct.')
         if cleaned_data.get('medication') == OTHER and not cleaned_data.get('other_medication'):
             raise forms.ValidationError('Please specify other medication.')
+        if not cleaned_data.get('medication') == OTHER and cleaned_data.get('other_medication'):
+            raise forms.ValidationError('Please select Other in Medication '
+                                        'in when if Other medication is being record.')
         return cleaned_data
 
     class Meta:
