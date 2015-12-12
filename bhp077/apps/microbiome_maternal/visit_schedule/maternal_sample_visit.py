@@ -12,9 +12,13 @@ class SpecimenConsentVisitSchedule(VisitScheduleConfiguration):
 
     app_label = 'microbiome_maternal'
 
-    membership_forms = OrderedDict({'specimen': MembershipFormTuple('specimen', SpecimenConsent, True)})
+    membership_forms = OrderedDict({
+        'specimen': MembershipFormTuple('specimen', SpecimenConsent, True)
+    })
 
-    schedule_groups = OrderedDict({'Specimen Consent': ScheduleGroupTuple('Specimen Consent', 'specimen', None, None)})
+    schedule_groups = OrderedDict({
+        'Specimen Consent': ScheduleGroupTuple('Specimen Consent', 'specimen', None, None)
+    })
 
     visit_definitions = OrderedDict()
 
