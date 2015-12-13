@@ -1,15 +1,14 @@
 from django.db import models
 
-from edc.subject.visit_tracking.models import BaseVisitTracking
-
 from edc.entry_meta_data.models import MetaDataMixin
 from edc.subject.registration.models import RegisteredSubject
-from edc.subject.visit_tracking.settings import VISIT_REASON_NO_FOLLOW_UP_CHOICES
-from edc.subject.visit_tracking.models import PreviousVisitMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_constants.choices import YES_NO
 from edc_constants.constants import OFF_STUDY, DEATH_VISIT, UNSCHEDULED
+from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
+from edc_visit_tracking.models import BaseVisitTracking
+from edc_visit_tracking.models import PreviousVisitMixin
 
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 from bhp077.apps.microbiome.choices import (

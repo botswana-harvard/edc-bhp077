@@ -71,6 +71,7 @@ INSTALLED_APPS = (
     'edc_device',
     'edc_offstudy',
     'edc_death_report',
+    'edc_visit_tracking',
     # EDC
     'edc',
     'edc.apps.app_configuration',
@@ -120,7 +121,6 @@ INSTALLED_APPS = (
     'edc.subject.appointment',
     'edc.subject.appointment_helper',
     'edc.subject.visit_schedule',
-    'edc.subject.visit_tracking',
     'edc.subject.subject_config',
     'edc.notification',
     'edc.lab.lab_clinic_api',

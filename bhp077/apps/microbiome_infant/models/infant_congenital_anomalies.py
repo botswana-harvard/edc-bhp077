@@ -1,6 +1,6 @@
 from django.db import models
 
-from edc.base.model.fields import OtherCharField
+from edc_base.model.fields import OtherCharField
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_constants.choices import CONFIRMED_SUSPECTED

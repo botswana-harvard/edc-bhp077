@@ -3,7 +3,7 @@ from django.db import models
 from edc.audit.audit_trail import AuditTrail
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc_constants.choices import YES_NO, SEVERITY_LEVEL
-from edc.base.model.validators import datetime_not_before_study_start, datetime_not_future
+from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 
 from bhp077.apps.microbiome_list.models import AutopsyInfoSource
 from bhp077.apps.microbiome.choices import AUTOPSY_SIGNS
