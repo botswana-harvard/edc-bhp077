@@ -263,7 +263,7 @@ DEVICE_ID = 95
 SITE_CODE = '40'
 SERVER_DEVICE_ID_LIST = [91, 92, 93, 94, 95, 96, 97, 99]
 MIDDLEMAN_DEVICE_ID_LIST = [98]
-if str(DEVICE_ID) == range(91, 97):
+if str(DEVICE_ID) in range(91, 97):
     PROJECT_TITLE = 'TEST: Microbiome'
 elif str(DEVICE_ID) == '99':
     PROJECT_TITLE = 'SERVER: Microbiome'
