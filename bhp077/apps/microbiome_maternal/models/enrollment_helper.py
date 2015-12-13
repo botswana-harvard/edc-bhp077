@@ -1,7 +1,6 @@
 from edc_constants.constants import NO, YES, UNKNOWN, POS, NEG, IND, NOT_APPLICABLE, SEROCONVERSION, NEVER, DWTA
 from dateutil.relativedelta import relativedelta
 from bhp077.apps.microbiome.constants import LIVE
-from django.core.exceptions import ValidationError
 
 
 class EnrollmentError(Exception):

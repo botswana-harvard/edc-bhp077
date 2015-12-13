@@ -125,7 +125,7 @@ class BaseEnrollmentForm(BaseModelForm):
             if cleaned_data.get('evidence_hiv_status') == YES:
                 if cleaned_data.get('rapid_test_done') == YES:
                     raise forms.ValidationError(
-                        'DO NOT PROCESS RAPID TEST. PARTICIPANT IS POS and HAS EVIDENCE.')
+                        'There is no need for a rapid test. Subject is positive and has evidence.')
 
     def valid_regimen_and_duration(self):
         cleaned_data = self.cleaned_data

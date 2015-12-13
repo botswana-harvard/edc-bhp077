@@ -179,7 +179,7 @@ class TestEnrollmentMixin(TestCase):
         self.data['evidence_hiv_status'] = YES
         self.data['rapid_test_done'] = YES
         form = BaseEnrollTestForm(data=self.data)
-        self.assertIn('DO NOT PROCESS RAPID TEST. PARTICIPANT IS POS and HAS EVIDENCE.',
+        self.assertIn('There is no need for a rapid test. Subject is positive and has evidence.',
                       form.errors.get('__all__'))
 
     def test_participant_never_tested(self):

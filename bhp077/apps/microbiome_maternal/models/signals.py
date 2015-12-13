@@ -1,14 +1,20 @@
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from edc.subject.registration.models import RegisteredSubject
-from edc_constants.constants import NO, YES
+from edc_constants.constants import NO, YES, FEMALE, OFF_STUDY, SCHEDULED
 from edc.core.identifier.classes import InfantIdentifier
 
 from .maternal_eligibility import MaternalEligibility
 from .maternal_eligibility_loss import MaternalEligibilityLoss
 from .maternal_consent import MaternalConsent
 from .postnatal_enrollment import PostnatalEnrollment
+from edc.subject.appointment.models.appointment import Appointment
+from edc.subject.visit_schedule.models.visit_definition import VisitDefinition
+from bhp077.apps.microbiome_maternal.models.maternal_visit import MaternalVisit
+from django.db.utils import IntegrityError
+from django.db import transaction
+from bhp077.apps.microbiome_maternal.models.maternal_off_study import MaternalOffStudy
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")
@@ -45,12 +51,73 @@ def criteria_passed_create_registered_subject(sender, instance, raw, created, us
                     registered_subject = RegisteredSubject.objects.create(
                         created=instance.created,
                         first_name='Mother',
-                        gender='F',
+                        gender=FEMALE,
                         subject_type='maternal',
                         registration_datetime=instance.created,
                         user_created=instance.user_created)
                     instance.registered_subject = registered_subject
                     instance.save()
+
+
+@receiver(post_save, weak=False, dispatch_uid="ineligible_take_off_study")
+def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
+    """If not is_eligible, creates the 1000M visit and sets to off study."""
+    if not raw:
+        try:
+            if not instance.is_eligible:
+                with transaction.atomic():
+                    report_datetime = instance.report_datetime
+                    visit_definition = VisitDefinition.objects.get(code='1000M')
+                    appointment = Appointment.objects.get(
+                        registered_subject=instance.registered_subject,
+                        visit_definition=visit_definition)
+                    MaternalVisit.objects.create(
+                        appointment=appointment,
+                        report_datetime=report_datetime,
+                        reason=OFF_STUDY)
+        except AttributeError as e:
+            if 'is_eligible' not in str(e):
+                raise
+        except VisitDefinition.DoesNotExist:
+            pass
+        except Appointment.DoesNotExist:
+            pass
+        except IntegrityError as e:
+            if 'maternalvisit' in str(e):
+                with transaction.atomic():
+                    maternal_visit = MaternalVisit.objects.get(appointment=appointment)
+                    maternal_visit.reason = OFF_STUDY
+                    maternal_visit.save()
+            else:
+                raise
+
+
+@receiver(post_save, weak=False, dispatch_uid="eligible_put_back_on_study")
+def eligible_put_back_on_study(sender, instance, raw, created, using, **kwargs):
+    """changes the 1000M visit to scheduled from off study if is_eligible."""
+    if not raw:
+        try:
+            if instance.is_eligible:
+                MaternalOffStudy.objects.get(registered_subject=instance.registered_subject)
+        except AttributeError as e:
+            if 'is_eligible' not in str(e) and 'registered_subject' not in str(e):
+                raise
+        except MaternalOffStudy.DoesNotExist:
+            try:
+                with transaction.atomic():
+                    visit_definition = VisitDefinition.objects.get(code='1000M')
+                    appointment = Appointment.objects.get(
+                        registered_subject=instance.registered_subject,
+                        visit_definition=visit_definition)
+                    maternal_visit = MaternalVisit.objects.get(
+                        appointment=appointment,
+                        reason=OFF_STUDY)
+                    maternal_visit.reason = SCHEDULED
+                    maternal_visit.save()
+            except MaternalVisit.DoesNotExist:
+                pass
+            except VisitDefinition.DoesNotExist:
+                pass
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_consent_on_post_save")
@@ -109,14 +176,3 @@ def create_infant_identifier_on_labour_delivery(sender, instance, raw, created, 
                     infant_identifier.get_identifier()
         except AttributeError:
             pass
-
-
-# @receiver(post_save, weak=False, dispatch_uid="save_common_fields_in_enrollment")
-# def save_common_fields_in_enrollment(sender, instance, raw, created, using, **kwargs):
-#     """Updates common fields on postnatal_enrollment with values from antenatal_enrollment."""
-#     if not raw:
-#         try:
-#             instance.save_common_fields_to_postnatal_enrollment()
-#         except AttributeError as e:
-#             if 'save_common_fields_to_postnatal_enrollment' not in str(e):
-#                 raise AttributeError(str(e))

@@ -37,6 +37,10 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
 
     history = AuditTrail()
 
+    def save(self, *args, **kwargs):
+        self.update_common_fields_to_postnatal_enrollment()
+        super(AntenatalEnrollment, self).save(*args, **kwargs)
+
     def update_common_fields_to_postnatal_enrollment(self):
         """Updates common field values from Antenatal Enrollment to
         Postnatal Enrollment if Postnatal Enrollment exists.
