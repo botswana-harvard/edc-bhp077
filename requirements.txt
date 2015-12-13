@@ -1,24 +1,27 @@
 Django==1.6
 M2Crypto==0.22.3
+django-tastypie
 django_extensions
 django-simple-history
 python-dateutil
 django_databrowse
+numpy
 Unipath
 GitPython
 factory-boy
 pytz
 pyodbc
 pycups
--e git+https://github.com/erikvw/django-revision@develop#egg=django-revision
--e git+https://github.com/botswana-harvard/edc@develop#egg=edc
--e git+https://github.com/botswana-harvard/lis@develop#egg=lis
+-e git+https://github.com/botswana-harvard/edc-admin-exclude@develop#egg=edc-admin-exclude
 -e git+https://github.com/botswana-harvard/edc-base@develop#egg=edc_base
+-e git+https://github.com/botswana-harvard/edc-call-manager.git@develop#egg=edc_call_manager
 -e git+https://github.com/botswana-harvard/edc-consent@develop#egg=edc_consent
 -e git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc_constants
+-e git+https://github.com/botswana-harvard/edc-death-report@develop#egg=edc-death-report
 -e git+https://github.com/botswana-harvard/edc-device@develop#egg=edc_device
--e git+https://github.com/botswana-harvard/edc-call-manager.git@develop#egg=edc_call_manager
 -e git+https://github.com/botswana-harvard/edc-locator.git@develop#egg=edc_locator
 -e git+https://github.com/botswana-harvard/edc-offstudy@develop#egg=edc-offstudy
--e git+https://github.com/botswana-harvard/edc-death-report@develop#egg=edc-death-report
 -e git+https://github.com/botswana-harvard/edc-visit-tracking@develop#egg=edc-visit-tracking
+-e git+https://github.com/botswana-harvard/edc@develop#egg=edc
+-e git+https://github.com/botswana-harvard/lis@develop#egg=lis
+-e git+https://github.com/erikvw/django-revision@develop#egg=django-revision
