@@ -118,6 +118,8 @@ def eligible_put_back_on_study(sender, instance, raw, created, using, **kwargs):
                 pass
             except VisitDefinition.DoesNotExist:
                 pass
+            except Appointment.DoesNotExist:
+                pass
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_consent_on_post_save")
