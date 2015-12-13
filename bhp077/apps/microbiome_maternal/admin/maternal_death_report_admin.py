@@ -5,8 +5,8 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.export.actions import export_as_csv_action
 
-from bhp077.apps.microbiome_maternal.forms import MaternalDeathReportForm
-from bhp077.apps.microbiome_maternal.models import MaternalDeathReport, MaternalVisit
+from ..forms import MaternalDeathReportForm
+from ..models import MaternalDeathReport, MaternalVisit
 
 
 class MaternalDeathReportAdmin(BaseModelAdmin):
@@ -15,30 +15,29 @@ class MaternalDeathReportAdmin(BaseModelAdmin):
     fields = (
         "maternal_visit",
         "death_date",
-        "death_cause_info",
-        "death_cause_info_other",
+        "cause",
+        "cause_other",
         "perform_autopsy",
         "death_cause",
-        "death_cause_category",
-        "death_cause_category_other",
-        "dx_code",
-        "dx_code_other",
+        "cause_category",
+        "cause_category_other",
+        "diagnosis_code",
+        "diagnosis_code_other",
         "illness_duration",
-        "death_medical_responsibility",
+        "medical_responsibility",
         "participant_hospitalized",
-        "death_reason_hospitalized",
-        "death_reason_hospitalized_other",
+        "reason_hospitalized",
+        "reason_hospitalized_other",
         "days_hospitalized",
         "comment")
     radio_fields = {
-        "death_cause_info": admin.VERTICAL,
+        "cause": admin.VERTICAL,
         "perform_autopsy": admin.VERTICAL,
         "participant_hospitalized": admin.VERTICAL,
-        "death_cause_category": admin.VERTICAL,
-        "death_cause_category": admin.VERTICAL,
-        "dx_code": admin.VERTICAL,
-        "death_medical_responsibility": admin.VERTICAL,
-        "death_reason_hospitalized": admin.VERTICAL}
+        "cause_category": admin.VERTICAL,
+        "diagnosis_code": admin.VERTICAL,
+        "medical_responsibility": admin.VERTICAL,
+        "reason_hospitalized": admin.VERTICAL}
 
     actions = [
         export_as_csv_action(

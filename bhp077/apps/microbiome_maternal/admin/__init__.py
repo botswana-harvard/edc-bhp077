@@ -17,7 +17,7 @@ from .maternal_labour_del_admin import (MaternalLabourDelAdmin, MaternalLabDelMe
 from .maternal_height_weight_admin import MaternalHeightWeightAdmin
 from .maternal_arv_history_admin import MaternalArvHistoryAdmin
 from .maternal_arv_preg_admin import MaternalArvPregAdmin
-from .maternal_death_admin import MaternalDeathAdmin
+from .maternal_death_report_admin import MaternalDeathReportAdmin
 from .maternal_off_study_admin import MaternalOffStudyAdmin
 from .maternal_breast_health_admin import MaternalBreastHealthAdmin
 from .rapid_test_result_admin import RapidTestResultAdmin

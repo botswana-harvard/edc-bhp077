@@ -4,52 +4,52 @@ from django.contrib import admin
 
 from edc.base.modeladmin.admin import BaseModelAdmin
 
-from ..forms import InfantDeathForm
-from ..models import InfantDeath, InfantVisit
+from ..forms import InfantDeathReportForm
+from ..models import InfantDeathReport, InfantVisit
 
 from edc.export.actions import export_as_csv_action
 
 
-class InfantDeathAdmin(BaseModelAdmin):
+class InfantDeathReportAdmin(BaseModelAdmin):
 
-    form = InfantDeathForm
+    form = InfantDeathReportForm
 
     fields = (
         "infant_visit",
         "death_date",
-        "death_cause_info",
-        "death_cause_info_other",
+        "cause",
+        "cause_other",
         "perform_autopsy",
         "death_cause",
-        "death_cause_category",
-        "death_cause_category_other",
-        "dx_code",
-        "dx_code_other",
+        "cause_category",
+        "cause_category_other",
+        "diagnosis_code",
+        "diagnosis_code_other",
         "illness_duration",
-        "death_medical_responsibility",
+        "medical_responsibility",
         "participant_hospitalized",
-        "death_reason_hospitalized",
-        "death_reason_hospitalized_other",
+        "reason_hospitalized",
+        "reason_hospitalized_other",
         "days_hospitalized",
-        "study_drug_relate",
-        "infant_nvp_relate",
-        "haart_relate",
-        "trad_med_relate",
+        "study_drug_relationship",
+        "infant_nvp_relationship",
+        "haart_relationship",
+        "trad_med_relationship",
         "comment",
     )
 
     radio_fields = {
-        "death_reason_hospitalized": admin.VERTICAL,
-        "death_medical_responsibility": admin.VERTICAL,
-        "death_cause_info": admin.VERTICAL,
-        "death_cause_category": admin.VERTICAL,
+        "reason_hospitalized": admin.VERTICAL,
+        "medical_responsibility": admin.VERTICAL,
+        "cause": admin.VERTICAL,
+        "cause_category": admin.VERTICAL,
         "perform_autopsy": admin.VERTICAL,
         "participant_hospitalized": admin.VERTICAL,
-        "study_drug_relate": admin.VERTICAL,
-        "infant_nvp_relate": admin.VERTICAL,
-        "haart_relate": admin.VERTICAL,
-        "trad_med_relate": admin.VERTICAL,
-        "dx_code": admin.VERTICAL
+        "study_drug_relationship": admin.VERTICAL,
+        "infant_nvp_relationship": admin.VERTICAL,
+        "haart_relationship": admin.VERTICAL,
+        "trad_med_relationship": admin.VERTICAL,
+        "diagnosis_code": admin.VERTICAL
     }
 
     actions = [
@@ -70,6 +70,6 @@ class InfantDeathAdmin(BaseModelAdmin):
         if db_field.name == "infant_visit":
             if request.GET.get('infant_visit'):
                 kwargs["queryset"] = InfantVisit.objects.filter(id=request.GET.get('infant_visit'))
-        return super(InfantDeathAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+        return super(InfantDeathReportAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
-admin.site.register(InfantDeath, InfantDeathAdmin)
+admin.site.register(InfantDeathReport, InfantDeathReportAdmin)
