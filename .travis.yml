@@ -17,6 +17,7 @@ addons:
      - libssl-dev
      - libssl0.9.8
      - python-m2crypto
+     - python-pyodbc
 
 before_install:
     - "export DISPLAY=:99.0"
