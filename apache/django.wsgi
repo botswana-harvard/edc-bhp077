@@ -16,8 +16,11 @@ sys.path.insert(0, os.path.join(SOURCE_ROOT_PATH, 'edc_project'))
 sys.path.insert(0, os.path.join(SOURCE_ROOT_PATH, 'lis_project'))
 sys.path.insert(0, os.path.join(SOURCE_ROOT_PATH, LOCAL_PROJECT_RELPATH))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'bhp077.settings'
-
+#sys.path.remove('/home/django/source/edc-constants')
+#if platform.system() == 'Darwin':
+#        os.environ['PYTHON_EGG_CACHE'] = '/usr/local/pylons/python-eggs'
 # Activate the virtual env
-
+#activate_env=os.path.join(VIRTUALENV_PATH, 'bin/activate_this.py')
+#execfile(activate_env, dict(__file__=activate_env))
 import django.core.handlers.wsgi
 application = django.core.handlers.wsgi.WSGIHandler()
