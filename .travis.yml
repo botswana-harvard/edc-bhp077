@@ -17,6 +17,7 @@ addons:
      - libssl-dev
      - libssl0.9.8
      - python-m2crypto
+     - unixodbc-dev
      - python-pyodbc
 
 before_install:
