@@ -8,8 +8,6 @@ from django.views.generic import RedirectView
 
 import django_databrowse
 
-from dajaxice.core import dajaxice_autodiscover, dajaxice_config
-
 from edc.data_manager.classes import data_manager
 from edc.dashboard.section.classes import site_sections
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -22,7 +20,6 @@ from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfigura
 from edc_call_manager.caller_site import site_model_callers
 
 site_lab_profiles.autodiscover()
-dajaxice_autodiscover()
 MicrobiomeConfiguration().prepare()
 site_visit_schedules.autodiscover()
 site_visit_schedules.build_all()
@@ -49,12 +46,6 @@ urlpatterns = patterns(
     (r'^admin/logout/$', RedirectView.as_view(url='/{app_name}/logout/'.format(app_name=APP_NAME))),
     (r'^admin/', include(admin.site.urls)),
     (r'^i18n/', include('django.conf.urls.i18n')),
-    url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
-)
-
-urlpatterns += patterns(
-    '',
-    (r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
 )
 
 urlpatterns += patterns(

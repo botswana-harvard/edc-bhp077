@@ -3,6 +3,7 @@ M2Crypto==0.22.3
 django_extensions
 django-simple-history
 python-dateutil
+django_databrowse
 Unipath
 GitPython
 factory-boy
