@@ -10,6 +10,7 @@ from edc_consent.models import RequiresConsentMixin
 from edc_constants.choices import YES_NO
 
 from ..maternal_choices import LIVE_STILL_BIRTH
+from ..managers import PostnatalEnrollmentManager
 
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
@@ -57,9 +58,12 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         null=True,
         blank=True)
 
-    objects = models.Manager()
+    objects = PostnatalEnrollmentManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.report_datetime, self.registered_subject.natural_key())
 
     def save(self, *args, **kwargs):
         self.update_with_common_fields_from_antenatal_enrollment()

@@ -56,8 +56,6 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
         blank=True,
         null=True, )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     def __unicode__(self):

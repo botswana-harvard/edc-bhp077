@@ -12,7 +12,7 @@ class ReproductiveHealthRuleGroup(RuleGroup):
             predicate=('srh_referral', 'equals', YES),
             consequence=UNKEYED,
             alternative=NOT_REQUIRED),
-        target_model=['srhservicesutilization'])
+        target_model=['maternalsrh'])
 
     class Meta:
         app_label = 'microbiome_maternal'

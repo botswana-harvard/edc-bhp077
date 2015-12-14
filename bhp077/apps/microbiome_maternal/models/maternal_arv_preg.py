@@ -9,6 +9,8 @@ from bhp077.apps.microbiome.choices import ARV_INTERRUPTION_REASON
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
+from ..managers import MaternalArvManager
+from edc_constants.constants import NOT_APPLICABLE
 
 
 class MaternalArvPreg(MaternalScheduledVisitModel):
@@ -28,23 +30,19 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
         max_length=3,
         choices=YES_NO,
         verbose_name="Was there an interruption in the ARVs received during pregnancy through delivery of >/=3days?",
-        help_text="",
     )
 
     interrupt = models.CharField(
         verbose_name="Please give reason for interruption",
         max_length=50,
-        help_text="",
         choices=ARV_INTERRUPTION_REASON,
-        default='N/A')
+        default=NOT_APPLICABLE)
 
     interrupt_other = models.TextField(
         max_length=250,
         verbose_name="Other, specify ",
         blank=True,
         null=True)
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -77,9 +75,12 @@ class MaternalArv(BaseUuidModel):
         null=True,
         blank=True)
 
-    objects = models.Manager()
+    objects = MaternalArvManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.maternal_arv_preg.natural_key())
 
     class Meta:
         app_label = 'microbiome_maternal'

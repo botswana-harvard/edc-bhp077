@@ -16,7 +16,7 @@ from bhp077.apps.microbiome_list.models import Contraceptives
 
 from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.forms import SrhServicesUtilizationForm
+from bhp077.apps.microbiome_maternal.forms import MaternalSrhForm
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
 
@@ -51,7 +51,7 @@ class TestSrhServiceUtilizationForm(TestCase):
             'srh_referral_other': None
         }
 
-    def test_srh_services_utilization_form_valid(self):
+    def test_srh_srh_form_valid(self):
         """Asserts form data is valid from setup."""
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
@@ -67,10 +67,10 @@ class TestSrhServiceUtilizationForm(TestCase):
         maternal_visit = MaternalVisitFactory(
             appointment=appointment, reason=SCHEDULED)
         self.data['maternal_visit'] = maternal_visit.id
-        form = SrhServicesUtilizationForm(data=self.data)
+        form = MaternalSrhForm(data=self.data)
         self.assertTrue(form.is_valid())
 
-    def test_srh_services_utilization_form_valid2(self):
+    def test_srh_srh_form_valid2(self):
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
@@ -86,13 +86,13 @@ class TestSrhServiceUtilizationForm(TestCase):
             appointment=appointment, reason=SCHEDULED)
         self.data['seen_at_clinic'] = NO
         self.data['maternal_visit'] = maternal_visit.id
-        form = SrhServicesUtilizationForm(data=self.data)
+        form = MaternalSrhForm(data=self.data)
         self.data['reason_unseen_clinic'] = None
         self.assertIn(
             'If you have not been seen in that clinic since your last visit with us, why not?',
             form.errors.get('__all__'))
 
-    def test_srh_services_utilization_form_valid3(self):
+    def test_srh_srh_form_valid3(self):
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
@@ -111,12 +111,12 @@ class TestSrhServiceUtilizationForm(TestCase):
         self.data['maternal_visit'] = maternal_visit.id
         contraceptives = Contraceptives.objects.exclude(name__icontains='other').first()
         self.data['contraceptive_methods'] = [contraceptives.id]
-        form = SrhServicesUtilizationForm(data=self.data)
+        form = MaternalSrhForm(data=self.data)
         self.assertIn(
             'If have not initiated contraceptive method, please provide reason.',
             form.errors.get('__all__'))
 
-    def test_srh_services_utilization_form_valid4(self):
+    def test_srh_srh_form_valid4(self):
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
@@ -132,7 +132,7 @@ class TestSrhServiceUtilizationForm(TestCase):
         self.data['seen_at_clinic'] = NO
         self.data['reason_not_initiated'] = "no_options"
         self.data['maternal_visit'] = maternal_visit.id
-        form = SrhServicesUtilizationForm(data=self.data)
+        form = MaternalSrhForm(data=self.data)
         self.data['reason_unseen_clinic'] = 'not_sexually_active'
         self.assertIn(
             "Don't answer this question, since you have initiated contraceptive.",

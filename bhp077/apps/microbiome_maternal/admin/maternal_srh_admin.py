@@ -5,13 +5,23 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.export.actions import export_as_csv_action
 
-from bhp077.apps.microbiome_maternal.models import SrhServicesUtilization
-from bhp077.apps.microbiome_maternal.forms import SrhServicesUtilizationForm
+<<<<<<< Updated upstream:bhp077/apps/microbiome_maternal/admin/maternal_srh_admin.py
+from bhp077.apps.microbiome_maternal.models import MaternalSrh
+from bhp077.apps.microbiome_maternal.forms import MaternalSrhForm
 
 
-class SrhServicesUtilizationAdmin(BaseModelAdmin):
+class MaternalSrhAdmin(BaseModelAdmin):
 
-    form = SrhServicesUtilizationForm
+    form = MaternalSrhForm
+=======
+from bhp077.apps.microbiome_maternal.models import Srh
+from bhp077.apps.microbiome_maternal.forms import SrhForm
+
+
+class SrhAdmin(BaseModelAdmin):
+
+    form = SrhForm
+>>>>>>> Stashed changes:bhp077/apps/microbiome_maternal/admin/srh_services_utilization_admin.py
 
     fields = ('seen_at_clinic',
               'reason_unseen_clinic',
@@ -42,4 +52,8 @@ class SrhServicesUtilizationAdmin(BaseModelAdmin):
                  'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
         )]
 
-admin.site.register(SrhServicesUtilization, SrhServicesUtilizationAdmin)
+<<<<<<< Updated upstream:bhp077/apps/microbiome_maternal/admin/maternal_srh_admin.py
+admin.site.register(MaternalSrh, MaternalSrhAdmin)
+=======
+admin.site.register(Srh, SrhAdmin)
+>>>>>>> Stashed changes:bhp077/apps/microbiome_maternal/admin/srh_services_utilization_admin.py

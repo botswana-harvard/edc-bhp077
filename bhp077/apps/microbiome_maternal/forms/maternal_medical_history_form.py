@@ -28,6 +28,8 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
                 m2m=cleaned_data.get('wcs_dx_adult'))
         self.chronic_condition_on_enrollment()
 
+        # HIV NEG, then cannot fill in a WHO diagnosis
+
         return cleaned_data
 
     def chronic_condition_on_enrollment(self):

@@ -13,6 +13,7 @@ from edc_constants.constants import YES, NO
 from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
 from .maternal_consent import MaternalConsent
+from ..managers import MaternalEligibilityManager
 
 
 class MaternalEligibility (BaseUuidModel):
@@ -72,7 +73,7 @@ class MaternalEligibility (BaseUuidModel):
         default=False,
         editable=False)
 
-    objects = models.Manager()
+    objects = MaternalEligibilityManager()
 
     history = AuditTrail()
 
@@ -97,6 +98,9 @@ class MaternalEligibility (BaseUuidModel):
 
     def __unicode__(self):
         return "{0} ({1})".format(self.eligibility_id, self.age_in_years)
+
+    def natural_key(self):
+        return (self.eligibility_id, self.report_datetime, )
 
     @property
     def maternal_ineligibility(self):

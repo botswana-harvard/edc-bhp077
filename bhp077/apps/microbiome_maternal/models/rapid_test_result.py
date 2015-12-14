@@ -1,5 +1,6 @@
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO, POS_NEG
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
@@ -34,6 +35,8 @@ class RapidTestResult(MaternalScheduledVisitModel):
         max_length=250,
         blank=True,
         null=True)
+
+    history = AuditTrail()
 
     def get_result_datetime(self):
         return self.report_datetime

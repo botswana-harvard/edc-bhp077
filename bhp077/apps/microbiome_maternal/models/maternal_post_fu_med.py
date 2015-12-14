@@ -10,6 +10,7 @@ from bhp077.apps.microbiome.choices import MEDICATIONS
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
+from ..managers import MaternalPostMedItemsManager
 
 
 class MaternalPostFuMed(MaternalScheduledVisitModel):
@@ -63,12 +64,15 @@ class MaternalPostFuMedItems(BaseUuidModel):
         null=True,
     )
 
-    objects = models.Manager()
+    objects = MaternalPostMedItemsManager()
 
     history = AuditTrail()
 
     def __unicode__(self):
         return unicode(self.maternal_post_fu_med.maternal_visit)
+
+    def natural_key(self):
+        return (self.maternal_post_fu_med.natural_key())
 
     class Meta:
         app_label = "microbiome_maternal"

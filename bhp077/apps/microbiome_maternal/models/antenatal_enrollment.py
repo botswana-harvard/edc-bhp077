@@ -11,6 +11,7 @@ from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .postnatal_enrollment import PostnatalEnrollment
+from ..managers import AntenatalEnrollmentManager
 
 
 class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmentMixin,
@@ -33,9 +34,12 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         verbose_name="How many weeks pregnant?",
         help_text=" (weeks of gestation). Eligible if >=36 weeks", )
 
-    objects = models.Manager()
+    objects = AntenatalEnrollmentManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.report_datetime, self.registered_subject.natural_key())
 
     def save(self, *args, **kwargs):
         self.update_common_fields_to_postnatal_enrollment()

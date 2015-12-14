@@ -7,6 +7,7 @@ from edc.entry_meta_data.managers.entry_meta_data_manager import EntryMetaDataMa
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from .maternal_visit import MaternalVisit
+from ..managers import ScheduledModelManager
 
 
 class MaternalDeathReport(DeathReportMixin, BaseUuidModel):
@@ -19,11 +20,14 @@ class MaternalDeathReport(DeathReportMixin, BaseUuidModel):
 
     maternal_visit = models.OneToOneField(MaternalVisit)
 
-    objects = models.Manager()
+    objects = ScheduledModelManager()
 
     history = AuditTrail()
 
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
+
+    def natural_key(self):
+        return self.get_visit().natural_key()
 
     def get_report_datetime(self):
         return self.report_datetime

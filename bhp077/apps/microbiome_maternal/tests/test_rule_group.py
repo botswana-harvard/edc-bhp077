@@ -247,7 +247,7 @@ class TestRuleGroup(TestCase):
                     app_label='microbiome_lab', model_name=model_name, appointment=appointment, panel_name='Viral Load'
                 )).count(), 1)
 
-    def test_srh_referral_yes_on_srhservicesutilization(self):
+    def test_srh_referral_yes_on_srh(self):
         """
         """
         PostnatalEnrollmentFactory(
@@ -269,5 +269,5 @@ class TestRuleGroup(TestCase):
                 maternal_visit=MaternalVisitFactory(appointment=appointment)
             )
             self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
-                app_label='microbiome_maternal', model_name='srhservicesutilization', appointment=appointment
+                app_label='microbiome_maternal', model_name='srh', appointment=appointment
             )).count(), 1)

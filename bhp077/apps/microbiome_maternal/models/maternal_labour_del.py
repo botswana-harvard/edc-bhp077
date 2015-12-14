@@ -16,6 +16,7 @@ from bhp077.apps.microbiome_maternal.models import MaternalConsent
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from ..managers import MaternalLabDelDxTManager
 
 
 class MaternalLabourDel(MaternalScheduledVisitModel):
@@ -98,8 +99,6 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -162,8 +161,6 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         verbose_name="Comment if any additional pertinent information ",
         blank=True,
         null=True)
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -233,8 +230,6 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -268,8 +263,6 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
         choices=YES_NO,
         verbose_name="During this pregnancy, did the mother have any of the following diagnoses? ",
         help_text="If yes, Select all that apply in the table, only report grade 3 or 4 diagnoses")
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -312,7 +305,7 @@ class MaternalLabDelDxT (BaseUuidModel):
         verbose_name="Hospitalized",
         help_text="")
 
-    objects = models.Manager()
+    objects = MaternalLabDelDxTManager()
 
     history = AuditTrail()
 
@@ -327,6 +320,9 @@ class MaternalLabDelDxT (BaseUuidModel):
 
     def __unicode__(self):
         return unicode(self.get_visit())
+
+    def natural_key(self):
+        return (self.maternal_lab_del_dx, self.get_visit().natural_key())
 
     class Meta:
         app_label = 'microbiome_maternal'
