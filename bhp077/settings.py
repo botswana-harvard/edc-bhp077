@@ -17,7 +17,7 @@ from unipath import Path
 
 from django.utils import timezone
 
-from bhp077.config.databases import PRODUCTION_MYSQL
+from bhp077.config.databases import PRODUCTION_MYSQL, SECRET_KEY
 
 APP_NAME = 'microbiome'
 PROJECT_TITLE = 'Gut Microbiome Evolution'
@@ -34,7 +34,6 @@ PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 ALLOW_MODEL_SERIALIZATION = True
-SECRET_KEY = 'sdfsdfsdfsdf'
 
 if socket.gethostname() == 'mac2-2.local':
     KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
@@ -199,9 +198,12 @@ TEMPLATE_LOADERS = (
 WSGI_APPLICATION = 'bhp077.config.wsgi.application'
 
 # Database
-if socket.gethostname() == 'edc4.bhp.org.bw':
+MYSQL_HOSTS = ['microbiome.bhp.org.bw']
+if socket.gethostname() in MYSQL_HOSTS:
+    SECRET_KEY = SECRET_KEY
     DATABASES = PRODUCTION_MYSQL
 else:
+    SECRET_KEY = 'sdfsd32fs#*@(@dfsdf'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
