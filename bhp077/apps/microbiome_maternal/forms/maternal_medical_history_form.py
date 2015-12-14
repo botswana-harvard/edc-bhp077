@@ -35,7 +35,9 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
     def chronic_condition_on_enrollment(self):
         """Compares chronic diseases reported on the antenatal and postnatal enrollment."""
         cleaned_data = self.cleaned_data
-        chronic_diseases = cleaned_data.get('chronic_cond').all()
+        chronic_diseases = []
+        if cleaned_data.get('chronic_cond'):
+            chronic_diseases = cleaned_data.get('chronic_cond').all()
         for EnrollmentModel in [AntenatalEnrollment, PostnatalEnrollment]:
             try:
                 enrollment = EnrollmentModel.objects.get(
@@ -45,7 +47,7 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
                         'Participant reported no chronic disease at {}, '
                         'yet you are reporting the participant has {{}}.'.format(
                             enrollment._meta.verbose_name))
-                    if chronic.short_name == "Chronic Hypertention" and enrollment.on_hypertension_tx == NO:
+                    if chronic.short_name == "Chronic Hypertension" and enrollment.on_hypertension_tx == NO:
                         raise forms.ValidationError(error_msg.format(chronic.short_name))
                     elif chronic.short_name == "Chronic Diabetes" and enrollment.is_diabetic == NO:
                         raise forms.ValidationError(error_msg.format(chronic.short_name))

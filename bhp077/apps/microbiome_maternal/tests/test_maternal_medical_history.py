@@ -87,11 +87,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
             'Participant reported no chronic disease at {enrollment}, '
             'yet you are reporting the participant has {condition}.')
 
-    def test_valid(self):
-        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        self.assertTrue(maternal_medicalHistory_form.is_valid())
-
-    def test_chronic_cond_1(self):
+    def test_chronic_but_not_listed(self):
         """If indicated has chronic condition and no conditions supplied."""
         self.data['chronic_cond_since'] = YES
         chronic_condition = ChronicConditions.objects.exclude(
@@ -101,7 +97,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
         errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
         self.assertIn('You stated there ARE chronic condition', errors)
 
-    def test_chronic_cond_2(self):
+    def test_no_chronic_but_listed(self):
         """If indicated has NO chronic condition and conditions supplied"""
         chronic_condition = ChronicConditions.objects.exclude(
             name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
@@ -110,21 +106,23 @@ class TestMaternalMedicalHistoryForm(TestCase):
         errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
         self.assertIn('You stated there are NO chronic conditions.', errors)
 
-    def test_who_diagnosis_1(self):
+    def test_who_but_not_listed(self):
         """Assert raises if has WHO diagnosis but they are not listed."""
         self.data['who_diagnosis'] = YES
-        self.data['chronic_cond_since'] = YES
-        chronic_condition = ChronicConditions.objects.exclude(
-            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
-        self.data['chronic_cond'] = [chronic_condition.id]
+        self.data['wcs_dx_adult'] = None
+        self.data['chronic_cond_since'] = NO
+        self.data['chronic_cond'] = None
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
         errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
         self.assertIn('You stated there ARE WHO diagnoses', errors)
 
-    def test_who_diagnosis_2(self):
+    def test_no_who_but_listed(self):
         """Assert raises if does not have WHO diagnosis but they are not listed."""
+        self.data['who_diagnosis'] = NO
         wcs_dx_adult = WcsDxAdult.objects.all().first()
         self.data['wcs_dx_adult'] = [wcs_dx_adult.id]
+        self.data['chronic_cond_since'] = NO
+        self.data['chronic_cond'] = None
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
         errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
         self.assertIn('You stated there are NO WHO diagnoses', errors)
@@ -133,11 +131,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
         """Test any reported chronic conditions matches what was report at antenatal enrollment."""
         conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertension']
         for condition in conditions:
-            chronic_condition = ChronicConditions.objects.get(
-                name=condition,
-                short_name=condition,
-                field_name='chronic_cond'
-            )
+            chronic_condition = ChronicConditions.objects.get(name=condition)
             self.data['maternal_visit'] = self.maternal_visit_1000.id
             self.data['chronic_cond'] = [chronic_condition.id]
             self.data['chronic_cond_since'] = YES
@@ -152,11 +146,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
         """Test any reported chronic conditions matches what was report at postnatal enrollment."""
         conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertension']
         for condition in conditions:
-            chronic_condition = ChronicConditions.objects.get(
-                name=condition,
-                short_name=condition,
-                field_name='chronic_cond'
-            )
+            chronic_condition = ChronicConditions.objects.get(name=condition)
             self.data['maternal_visit'] = self.maternal_visit_2000.id
             self.data['chronic_cond'] = [chronic_condition.id]
             self.data['chronic_cond_since'] = YES
