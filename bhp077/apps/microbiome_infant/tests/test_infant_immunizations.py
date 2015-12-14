@@ -171,6 +171,15 @@ class TestInfantImmunizations(TestCase):
         self.assertIn("Rotavirus is only administered at 2 or 3 months of"
                       " infant life", form.errors.get('__all__'))
 
+    def test_validate_measles_vaccine(self):
+        """Test measles vaccine administered to an infant who is only a month old"""
+        self.data['received_vaccine_name'] = 'Measles'
+        self.data['infant_age'] = '2'
+        self.data['date_given'] = date.today()
+        form = VaccinesReceivedForm(data=self.data)
+        self.assertIn("Measles vaccine is only administered at 9 or 18"
+                      " months of infant life.", form.errors.get('__all__'))
+
     def test_pentavalent_vaccine(self):
         """Test for Pentavalent vaccine administered at 6-11 months of infant life"""
         self.data['received_vaccine_name'] = 'Pentavalent'
@@ -181,6 +190,7 @@ class TestInfantImmunizations(TestCase):
                       " 4 months of infant life.", form.errors.get('__all__'))
 
     def test_validate_vitamin_a_vaccine(self):
+        """Test for Vitamin A vaccine administered earlier than 6 months"""
         self.data['received_vaccine_name'] = 'Vitamin_A'
         self.data['infant_age'] = '2'
         self.data['date_given'] = date.today()

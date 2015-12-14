@@ -2,7 +2,7 @@ from django import forms
 
 from edc_constants.constants import YES
 
-from ..models import InfantFuImmunizations, VaccinesReceived, VaccinesMissed
+from ..models import InfantFuImmunizations, VaccinesReceived, VaccinesMissed, InfantBirth
 from .base_infant_model_form import BaseInfantModelForm
 
 
@@ -56,6 +56,7 @@ class VaccinesReceivedForm(BaseInfantModelForm):
         self.validate_pcv_vaccine()
         self.validate_polio_vaccine()
         self.validate_rotavirus_vaccine()
+        self.validate_measles_vaccine()
         self.validate_pentavalent_vaccine()
         self.validate_vitamin_a_vaccine()
         return cleaned_data
@@ -122,6 +123,13 @@ class VaccinesReceivedForm(BaseInfantModelForm):
                 raise forms.ValidationError("Rotavirus is only administered at 2 or 3 months"
                                             " of infant life")
 
+    def validate_measles_vaccine(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get("received_vaccine_name") == 'Measles':
+            if cleaned_data.get("infant_age") not in ['9', '18']:
+                raise forms.ValidationError("Measles vaccine is only administered at 9 or 18"
+                                            " months of infant life.")
+
     def validate_pentavalent_vaccine(self):
         cleaned_data = self.cleaned_data
         if (cleaned_data.get('received_vaccine_name') == 'Pentavalent' and
@@ -155,7 +163,6 @@ class VaccinesMissedForm(BaseInfantModelForm):
                 raise forms.ValidationError('You said {} vaccine was missed. Give a reason'
                                             ' for missing this vaccine'.format(
                                                 cleaned_data.get('missed_vaccine_name')))
-
     class Meta:
         model = VaccinesMissed
         fields = '__all__'
