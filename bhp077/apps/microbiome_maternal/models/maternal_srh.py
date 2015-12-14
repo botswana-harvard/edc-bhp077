@@ -9,7 +9,7 @@ from bhp077.apps.microbiome_list.models import Contraceptives
 from .maternal_consent import MaternalConsent
 
 
-class SrhServicesUtilization(MaternalScheduledVisitModel):
+class MaternalSrh(MaternalScheduledVisitModel):
 
     """ A model completed by the user on the mother's use of sexual reproductive health services. """
 
@@ -66,5 +66,5 @@ class SrhServicesUtilization(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = 'SRH Services Utilization'
-        verbose_name_plural = 'SRH Services Utilization'
+        verbose_name = 'Maternal SRH Services'
+        verbose_name_plural = 'Maternal SRH Services'
