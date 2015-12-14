@@ -23,7 +23,7 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
     report_datetime = models.DateTimeField(
-        verbose_name="Date and Time of  Antenatal Enrollment",
+        verbose_name="Report date",
         validators=[
             datetime_not_before_study_start,
             datetime_not_future, ],
