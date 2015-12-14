@@ -52,7 +52,8 @@ class TestMaternalArvHistory(TestCase):
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        prior_arv = PriorArv.objects.all().first()
+        prior_arv = PriorArv.objects.exclude(
+            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
