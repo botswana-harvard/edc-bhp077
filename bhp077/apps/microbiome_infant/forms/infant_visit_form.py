@@ -56,13 +56,10 @@ class InfantVisitForm(BaseInfantModelForm):
         if cleaned_data.get('is_present') == YES:
             if cleaned_data.get('survival_status') == UNKNOWN:
                 raise forms.ValidationError('Survival status cannot be unknown if infant is present')
-            if (
-                cleaned_data.get('reason') == MISSED_VISIT or
-                cleaned_data.get('reason') == LOST_VISIT or
-                cleaned_data.get('reason') == DEATH_VISIT
-            ):
-                raise forms.ValidationError('You indicated that infant visit reason is {}. You therefore CANNOT state that '
-                                            'the infant is present'.format(cleaned_data.get('reason')))
+            if cleaned_data.get('reason') in [MISSED_VISIT, LOST_VISIT, DEATH_VISIT]:
+                raise forms.ValidationError(
+                    'You indicated that infant visit reason is {}. You therefore CANNOT state that the infant is '
+                    'present'.format(cleaned_data.get('reason')))
 
     def validate_reason_death(self):
         cleaned_data = self.cleaned_data
