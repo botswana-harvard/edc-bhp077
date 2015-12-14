@@ -5,7 +5,7 @@ from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_constants.choices import YES_NO
-from edc_constants.constants import OFF_STUDY, DEATH_VISIT, UNSCHEDULED
+from edc_constants.constants import OFF_STUDY, DEATH_VISIT, UNSCHEDULED, SCHEDULED
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 from edc_visit_tracking.models import BaseVisitTracking
 from edc_visit_tracking.models import PreviousVisitMixin
@@ -90,7 +90,8 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
                 self.appointment, 'microbiome_infant', 'infantoffstudy', 'infantdeath')
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
-        elif self.postnatal_enrollment.enrollment_hiv_status:
+        elif self.reason == SCHEDULED:
+            self.postnatal_enrollment.enrollment_hiv_status
             self.requires_infant_birth_arv_on_maternal_pos()
             self.requires_dna_pcr_on_maternal_pos()
 
@@ -109,7 +110,8 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
                 'microbiome_lab',
                 'infantrequisition',
                 'DNA PCR',
-                message=self.appointment.visit_definition.code)
+                message=self.appointment.visit_definition.code,
+                )
 
     def get_visit_reason_choices(self):
         return VISIT_REASON
