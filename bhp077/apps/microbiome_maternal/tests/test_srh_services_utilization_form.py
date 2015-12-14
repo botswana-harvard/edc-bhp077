@@ -1,3 +1,4 @@
+from datetime import date
 from django.test import TestCase
 from django.utils import timezone
 
@@ -6,7 +7,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import YES, NO, NEG, SCHEDULED
+from edc_constants.constants import YES, NO, NEG, SCHEDULED, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
@@ -18,7 +19,6 @@ from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.forms import SrhServicesUtilizationForm
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
 
 
 class TestSrhServiceUtilizationForm(TestCase):
@@ -38,85 +38,70 @@ class TestSrhServiceUtilizationForm(TestCase):
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
-        chronic_condition = ChronicConditions.objects.all().first()
+        contraceptives = Contraceptives.objects.exclude(
+            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
         self.data = {
             'report_datetime': timezone.now(),
             'maternal_visit': None,
             'seen_at_clinic': YES,
             'is_contraceptive_initiated': YES,
-            'contraceptive_methods': [chronic_condition.id],
+            'contraceptive_methods': [contraceptives.id],
             'reason_not_initiated': None,
             'srh_referral': YES,
             'srh_referral_other': None
         }
 
     def test_srh_services_utilization_form_valid(self):
-
-        PostnatalEnrollmentFactory(
+        """Asserts form data is valid from setup."""
+        postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
             rapid_test_done=YES,
+            rapid_test_date=date.today(),
             rapid_test_result=NEG)
+        self.assertTrue(postnatal_enrollment)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
-        maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
-
+        maternal_visit = MaternalVisitFactory(
+            appointment=appointment, reason=SCHEDULED)
         self.data['maternal_visit'] = maternal_visit.id
-
-        maternal_medicalHistory_form = SrhServicesUtilizationForm(data=self.data)
-
-        self.assertTrue(maternal_medicalHistory_form.is_valid())
-
-    def test_srh_services_utilization_form_valid1(self):
-
-        PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
-            current_hiv_status=NEG,
-            evidence_hiv_status=YES,
-            rapid_test_done=YES,
-            rapid_test_result=NEG)
-        appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='1000M')
-        maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
-
-        self.data['maternal_visit'] = maternal_visit.id
-
-        maternal_medicalHistory_form = SrhServicesUtilizationForm(data=self.data)
-
-        self.assertTrue(maternal_medicalHistory_form.is_valid())
+        form = SrhServicesUtilizationForm(data=self.data)
+        self.assertTrue(form.is_valid())
 
     def test_srh_services_utilization_form_valid2(self):
-
-        PostnatalEnrollmentFactory(
+        postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
             rapid_test_done=YES,
+            rapid_test_date=date.today(),
             rapid_test_result=NEG)
+        self.assertTrue(postnatal_enrollment)
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='1000M')
-        maternal_visit = MaternalVisitFactory(appointment=appointment, reason='scheduled')
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
+        maternal_visit = MaternalVisitFactory(
+            appointment=appointment, reason=SCHEDULED)
         self.data['seen_at_clinic'] = NO
         self.data['maternal_visit'] = maternal_visit.id
-
-        maternal_medicalHistory_form = SrhServicesUtilizationForm(data=self.data)
-
-        self.data['reason_unseen_clinic'] = ''
-
+        form = SrhServicesUtilizationForm(data=self.data)
+        self.data['reason_unseen_clinic'] = None
         self.assertIn(
             'If you have not been seen in that clinic since your last visit with us, why not?',
-            maternal_medicalHistory_form.errors.get('__all__'))
+            form.errors.get('__all__'))
 
     def test_srh_services_utilization_form_valid3(self):
 
-        PostnatalEnrollmentFactory(
+        postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
             rapid_test_done=YES,
+            rapid_test_date=date.today(),
             rapid_test_result=NEG)
+        self.assertTrue(postnatal_enrollment)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment, reason=SCHEDULED)
@@ -124,7 +109,7 @@ class TestSrhServiceUtilizationForm(TestCase):
         self.data['reason_unseen_clinic'] = 'not_sexually_active'
         self.data['is_contraceptive_initiated'] = NO
         self.data['maternal_visit'] = maternal_visit.id
-        contraceptives = Contraceptives.objects.all().first()
+        contraceptives = Contraceptives.objects.exclude(name__icontains='other').first()
         self.data['contraceptive_methods'] = [contraceptives.id]
         form = SrhServicesUtilizationForm(data=self.data)
         self.assertIn(
@@ -133,22 +118,22 @@ class TestSrhServiceUtilizationForm(TestCase):
 
     def test_srh_services_utilization_form_valid4(self):
 
-        PostnatalEnrollmentFactory(
+        postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
             rapid_test_done=YES,
+            rapid_test_date=date.today(),
             rapid_test_result=NEG)
+        self.assertTrue(postnatal_enrollment)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment, reason=SCHEDULED)
         self.data['seen_at_clinic'] = NO
-        self.data['is_contraceptive_initiated'] = YES
         self.data['reason_not_initiated'] = "no_options"
         self.data['maternal_visit'] = maternal_visit.id
-        maternal_medicalHistory_form = SrhServicesUtilizationForm(data=self.data)
-        contraceptives = Contraceptives.objects.all().first()
-        self.data['contraceptive_methods'] = [contraceptives.id]
+        form = SrhServicesUtilizationForm(data=self.data)
         self.data['reason_unseen_clinic'] = 'not_sexually_active'
-        self.assertIn("Don't answer this question, since you have initiated contraceptive.",
-                      maternal_medicalHistory_form.errors.get('__all__'))
+        self.assertIn(
+            "Don't answer this question, since you have initiated contraceptive.",
+            form.errors.get('__all__'))

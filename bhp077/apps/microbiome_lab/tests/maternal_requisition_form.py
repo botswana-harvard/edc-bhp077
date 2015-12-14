@@ -1,25 +1,22 @@
 from django.test import TestCase
 from django.utils import timezone
- 
+
 from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc.lab.lab_clinic_api.tests.factories import PanelFactory
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc.subject.code_lists.models import WcsDxAdult
 from edc_constants.choices import YES, NO
-from edc.entry_meta_data.models.requisition_meta_data import RequisitionMetaData
- 
+
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_lab.models.aliquot import AliquotType
-from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
-from bhp077.apps.microbiome_maternal.forms import (MaternalPostFuForm, MaternalPostFuDxForm)
 from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_maternal.tests.factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
-                        MaternalEligibilityFactory, MaternalConsentFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import (
+    PostnatalEnrollmentFactory, MaternalVisitFactory)
+from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
+from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
 
 from ..forms import MaternalRequisitionForm
 from ..models import Panel
@@ -77,4 +74,4 @@ class TestMaternalRequisitionForm(TestCase):
         self.data['priority'] = 'normal'
         form = MaternalRequisitionForm(data=self.data)
         self.assertTrue(form.is_valid())
-        errors = ''.join(form.errors.get('__all__'))
+        self.assertEqual([], form.errors.get('__all__') or [])

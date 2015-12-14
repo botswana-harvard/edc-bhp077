@@ -11,6 +11,7 @@ from bhp077.apps.microbiome_maternal.tests.factories import (AntenatalEnrollment
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule
+from edc_offstudy.models.off_study_model_mixin import OffStudyError
 
 
 class TestEnrollmentStatus(TestCase):
@@ -60,23 +61,24 @@ class TestEnrollmentStatus(TestCase):
         self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_if_antenatal_postnatal_not_eligible(self):
-
-        AntenatalEnrollmentFactory(
+        """Asserts raises exception if antenatal enrollment is not eligible and an attempt
+        is made to complete postnatal enrollment."""
+        antenatal_enrollment = AntenatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
+            week32_test=NO,
             rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             gestation_wks=35)
-
-        postnatal_enrollment = PostnatalEnrollmentFactory(
-            current_hiv_status=POS,
-            evidence_hiv_status=YES,
-            rapid_test_done=NOT_APPLICABLE,
-            registered_subject=self.registered_subject,
-            gestation_wks_delivered=38,
-            will_remain_onstudy=NO)
-
-        self.assertFalse(postnatal_enrollment.is_eligible)
+        self.assertFalse(antenatal_enrollment.is_eligible)
+        with self.assertRaises(OffStudyError):
+            PostnatalEnrollmentFactory(
+                current_hiv_status=POS,
+                evidence_hiv_status=YES,
+                rapid_test_done=NOT_APPLICABLE,
+                registered_subject=self.registered_subject,
+                gestation_wks_delivered=38,
+                will_remain_onstudy=NO)
 
     def test_if_antenatal_not_eligible(self):
         antenatal_enrollment = AntenatalEnrollmentFactory(

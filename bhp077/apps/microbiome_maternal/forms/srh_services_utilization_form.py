@@ -22,7 +22,7 @@ class SrhServicesUtilizationForm(BaseMaternalModelForm):
                     'If you have not been seen in that clinic since your last visit with us, why not?')
         if 'is_contraceptive_initiated' in cleaned_data.keys():
             self.validate_m2m(
-                label='chronic condition',
+                label='contraceptive method',
                 leading=cleaned_data.get('is_contraceptive_initiated'),
                 m2m=cleaned_data.get('contraceptive_methods')
             )
