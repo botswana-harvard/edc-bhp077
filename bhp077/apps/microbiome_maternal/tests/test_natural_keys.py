@@ -36,7 +36,6 @@ class NaturalKeyTests(TestCase):
         app = get_app('microbiome_maternal')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
-                print 'checking for natural key on {0}.'.format(model._meta.object_name)
                 self.assertTrue('natural_key' in dir(model), 'natural key not found in {0}'.format(model._meta.object_name))
 
     def test_p2(self):
@@ -44,5 +43,4 @@ class NaturalKeyTests(TestCase):
         app = get_app('microbiome_maternal')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
-                print 'checking for get_by_natural_key manager method key on {0}.'.format(model._meta.object_name)
                 self.assertTrue('get_by_natural_key' in dir(model.objects), 'get_by_natural_key key not found in {0}'.format(model._meta.object_name))
