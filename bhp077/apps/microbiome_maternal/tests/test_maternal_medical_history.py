@@ -74,14 +74,14 @@ class TestMaternalMedicalHistoryForm(TestCase):
         self.maternal_visit_2000 = MaternalVisitFactory(appointment=self.appointment_visit_2000)
         chronic_condition = ChronicConditions.objects.exclude(
             name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
-        who = WcsDxAdult.objects.create(code=NOT_APPLICABLE, short_name=NOT_APPLICABLE, long_name=NOT_APPLICABLE)
+        wcs_dx_adult = WcsDxAdult.objects.get(short_name__icontains=NOT_APPLICABLE)
         self.data = {
             'report_datetime': timezone.now(),
             'maternal_visit': self.maternal_visit_2000.id,
             'chronic_cond_since': NO,
             'chronic_cond': [chronic_condition.id],
             'who_diagnosis': NO,
-            'wcs_dx_adult': [who.id],
+            'wcs_dx_adult': [wcs_dx_adult.id],
         }
         self.error_message_template = (
             'Participant reported no chronic disease at {enrollment}, '
@@ -94,8 +94,11 @@ class TestMaternalMedicalHistoryForm(TestCase):
     def test_chronic_cond_1(self):
         """If indicated has chronic condition and no conditions supplied."""
         self.data['chronic_cond_since'] = YES
+        chronic_condition = ChronicConditions.objects.exclude(
+            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
+        self.data['chronic_cond'] = [chronic_condition.id]
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
         self.assertIn('You stated there ARE chronic condition', errors)
 
     def test_chronic_cond_2(self):
@@ -104,20 +107,26 @@ class TestMaternalMedicalHistoryForm(TestCase):
             name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
         self.data['chronic_cond'] = [chronic_condition.id]
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
         self.assertIn('You stated there are NO chronic conditions.', errors)
 
     def test_who_diagnosis_1(self):
+        """Assert raises if has WHO diagnosis but they are not listed."""
         self.data['who_diagnosis'] = YES
+        self.data['chronic_cond_since'] = YES
+        chronic_condition = ChronicConditions.objects.exclude(
+            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
+        self.data['chronic_cond'] = [chronic_condition.id]
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
         self.assertIn('You stated there ARE WHO diagnoses', errors)
 
     def test_who_diagnosis_2(self):
-        who_dx = WcsDxAdult.objects.create(code='Meningitis', short_name='Meningitis', long_name='Meningitis')
-        self.data['wcs_dx_adult'] = [who_dx.id]
+        """Assert raises if does not have WHO diagnosis but they are not listed."""
+        wcs_dx_adult = WcsDxAdult.objects.all().first()
+        self.data['wcs_dx_adult'] = [wcs_dx_adult.id]
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
         self.assertIn('You stated there are NO WHO diagnoses', errors)
 
     def test_chronic_conditions_vs_antenatal_enrollment(self):
@@ -133,7 +142,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
             self.data['chronic_cond'] = [chronic_condition.id]
             self.data['chronic_cond_since'] = YES
             maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-            errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+            errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
             error_msg = self.error_message_template.format(
                 enrollment=AntenatalEnrollment._meta.verbose_name,
                 condition=condition)
@@ -152,7 +161,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
             self.data['chronic_cond'] = [chronic_condition.id]
             self.data['chronic_cond_since'] = YES
             maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-            errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
+            errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
             error_msg = self.error_message_template.format(
                 enrollment=PostnatalEnrollment._meta.verbose_name,
                 condition=condition)

@@ -1,3 +1,4 @@
+from datetime import date
 from django.test import TestCase
 from django.utils import timezone
 
@@ -7,7 +8,7 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS
+from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS, NEG
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -54,7 +55,8 @@ class TestMaternalFollowup(TestCase):
             registered_subject=self.registered_subject,
             visit_definition__code='2010M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        chronic_condition = ChronicConditions.objects.all().first()
+        chronic_condition = ChronicConditions.objects.exclude(
+            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
@@ -98,19 +100,15 @@ class TestMaternalFollowup(TestCase):
 
     def test_chronic_cond_1(self):
         """Assert that if has chronic conditions is indicated as YES, then chronic conditions cannot be N/A"""
+        chronic_condition = ChronicConditions.objects.filter(name__icontains=NOT_APPLICABLE).first()
         self.data['chronic_cond_since'] = YES
+        self.data['chronic_cond'] = [chronic_condition.id]
         form = MaternalPostFuForm(data=self.data)
-        errors = ''.join(form.errors.get('__all__'))
+        errors = ''.join(form.errors.get('__all__') or [])
         self.assertIn("You stated there ARE chronic conditionss, yet you selected 'N/A'", errors)
 
     def test_chronic_cond_2(self):
-        """Assert that if has chronic conditions is indicated as YES, then chronic conditions cannot be N/A"""
-        chronic_condition = ChronicConditions.objects.create(
-            name='Tuberculosis',
-            short_name='Tuberculosis',
-            display_index=20,
-            field_name='chronic_cond'
-        )
+        chronic_condition = ChronicConditions.objects.get(name='Tuberculosis')
         self.data['chronic_cond_since'] = NO
         self.data['chronic_cond'] = [chronic_condition.id]
         form = MaternalPostFuForm(data=self.data)
@@ -118,6 +116,8 @@ class TestMaternalFollowup(TestCase):
         self.assertIn('You stated there are NO chronic conditionss. Please correct', errors)
 
     def test_bp(self):
+        self.data['chronic_cond_since'] = NO
+        self.data['chronic_cond'] = None
         self.data['systolic_bp'] = 80
         self.data['diastolic_bp'] = 120
         form = MaternalPostFuForm(data=self.data)
