@@ -12,9 +12,12 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import socket
-# import pytz
+import pytz
 from unipath import Path
+
 from django.utils import timezone
+
+from bhp077.config.databases import PRODUCTION_MYSQL
 
 APP_NAME = 'microbiome'
 PROJECT_TITLE = 'Gut Microbiome Evolution'
@@ -196,12 +199,15 @@ TEMPLATE_LOADERS = (
 WSGI_APPLICATION = 'bhp077.config.wsgi.application'
 
 # Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if socket.gethostname() == 'edc4.bhp.org.bw':
+    DATABASES = PRODUCTION_MYSQL
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
 
 # dajax
 DAJAXICE_MEDIA_PREFIX = "dajaxice"
