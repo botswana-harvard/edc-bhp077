@@ -22,7 +22,7 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
 
     CONSENT_MODEL = MaternalConsent
 
-    history = AuditTrail(True)
+    history = AuditTrail()
 
     def __unicode__(self):
         return '{} {} {}'.format(self.appointment.registered_subject.subject_identifier,
@@ -160,19 +160,6 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
                 registered_subject=self.appointment.registered_subject)
         except PostnatalEnrollment.DoesNotExist:
             return None
-
-#     def maternal_offstudy_required(self):
-#         try:
-#             self.reason = OFF_STUDY if not self.postnatal_enrollment.postnatal_eligible else self.reason
-#             if self.reason == OFF_STUDY:
-#                 self.scheduled_entry_meta_data_required('microbiome_maternal', 'maternaloffstudy')
-#         except AttributeError:
-#             pass
-
-#     def maternal_death_required(self):
-#         if self.reason == DEAD:
-#             for model_name in ['maternaldeath', 'maternaloffstudy']:
-#                 self.scheduled_entry_meta_data_required('microbiome_maternal', model_name)
 
     class Meta:
         app_label = 'microbiome_maternal'

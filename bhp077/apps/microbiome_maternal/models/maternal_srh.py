@@ -1,6 +1,7 @@
 from django.db import models
 
 from edc_base.model.fields import OtherCharField
+from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_DWTA
 
 from ..maternal_choices import REASON_UNSEEN_AT_CLINIC, REASON_CONTRACEPTIVE_NOT_INITIATED
@@ -63,6 +64,8 @@ class MaternalSrh(MaternalScheduledVisitModel):
         blank=True,
         null=True,
         help_text='')
+
+    history = AuditTrail()
 
     class Meta:
         app_label = 'microbiome_maternal'

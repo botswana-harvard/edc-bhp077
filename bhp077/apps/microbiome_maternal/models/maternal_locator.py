@@ -60,13 +60,11 @@ class MaternalLocator(LocatorMixin, BaseUuidModel):
         blank=True,
         null=True)
 
-    objects = models.Manager()
+    objects = ScheduledModelManager()
 
     history = AuditTrail()
 
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
-
-    objects = ScheduledModelManager()
 
     history = AuditTrail()
 

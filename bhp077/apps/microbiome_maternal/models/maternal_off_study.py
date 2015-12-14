@@ -19,6 +19,8 @@ class MaternalOffStudy(OffStudyModelMixin, BaseUuidModel):
 
     maternal_visit = models.OneToOneField(MaternalVisit)
 
+    objects = models.Manager()
+
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 
     history = AuditTrail()
