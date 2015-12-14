@@ -269,5 +269,5 @@ class TestRuleGroup(TestCase):
                 maternal_visit=MaternalVisitFactory(appointment=appointment)
             )
             self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
-                app_label='microbiome_maternal', model_name='srh', appointment=appointment
+                app_label='microbiome_maternal', model_name='maternalsrh', appointment=appointment
             )).count(), 1)

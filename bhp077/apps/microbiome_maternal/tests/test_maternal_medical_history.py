@@ -16,12 +16,13 @@ from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentF
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.forms import MaternalMedicalHistoryForm
 
-from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
-
-from .factories import MaternalVisitFactory
 from bhp077.apps.microbiome_maternal.models.postnatal_enrollment import PostnatalEnrollment
 from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
 from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
+
+from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+
+from .factories import MaternalVisitFactory
 
 
 class TestMaternalMedicalHistoryForm(TestCase):
@@ -71,7 +72,8 @@ class TestMaternalMedicalHistoryForm(TestCase):
 
         self.maternal_visit_1000 = MaternalVisitFactory(appointment=self.appointment_visit_1000)
         self.maternal_visit_2000 = MaternalVisitFactory(appointment=self.appointment_visit_2000)
-        chronic_condition = ChronicConditions.objects.all().first()
+        chronic_condition = ChronicConditions.objects.exclude(
+            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
         who = WcsDxAdult.objects.create(code=NOT_APPLICABLE, short_name=NOT_APPLICABLE, long_name=NOT_APPLICABLE)
         self.data = {
             'report_datetime': timezone.now(),
@@ -98,8 +100,8 @@ class TestMaternalMedicalHistoryForm(TestCase):
 
     def test_chronic_cond_2(self):
         """If indicated has NO chronic condition and conditions supplied"""
-        chronic_condition = ChronicConditions.objects.get(
-            name='Diabetes', short_name='Diabetes', field_name='chronic_cond')
+        chronic_condition = ChronicConditions.objects.exclude(
+            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
         self.data['chronic_cond'] = [chronic_condition.id]
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
         errors = ''.join(maternal_medicalHistory_form.errors.get('__all__'))
@@ -120,7 +122,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
 
     def test_chronic_conditions_vs_antenatal_enrollment(self):
         """Test any reported chronic conditions matches what was report at antenatal enrollment."""
-        conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertention']
+        conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertension']
         for condition in conditions:
             chronic_condition = ChronicConditions.objects.get(
                 name=condition,
@@ -139,7 +141,7 @@ class TestMaternalMedicalHistoryForm(TestCase):
 
     def test_chronic_conditions_vs_postnatal_enrollment(self):
         """Test any reported chronic conditions matches what was report at postnatal enrollment."""
-        conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertention']
+        conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertension']
         for condition in conditions:
             chronic_condition = ChronicConditions.objects.get(
                 name=condition,

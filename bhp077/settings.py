@@ -211,9 +211,6 @@ else:
         }
     }
 
-# dajax
-DAJAXICE_MEDIA_PREFIX = "dajaxice"
-
 # django auth
 AUTH_PROFILE_MODULE = "bhp_userprofile.userprofile"
 
