@@ -21,11 +21,7 @@ from .maternal_death_report_admin import MaternalDeathReportAdmin
 from .maternal_off_study_admin import MaternalOffStudyAdmin
 from .maternal_breast_health_admin import MaternalBreastHealthAdmin
 from .rapid_test_result_admin import RapidTestResultAdmin
-<<<<<<< Updated upstream
 from .maternal_srh_admin import MaternalSrhAdmin
-=======
-from .srh_admin import SrhAdmin
->>>>>>> Stashed changes
 from .sexual_reproductive_health_admin import SexualReproductiveHealthAdmin
 from .maternal_post_fu_admin import (MaternalPostFuAdmin, MaternalPostFuDxAdmin,
                                      MaternalPostFuDxTAdmin, MaternalPostFuDxTInlineAdmin)
