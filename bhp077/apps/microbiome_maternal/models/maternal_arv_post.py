@@ -11,6 +11,7 @@ from .base_haart_modification import BaseHaartModification
 from .maternal_consent import MaternalConsent
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from edc_constants.constants import NOT_APPLICABLE
 
 
 class MaternalArvPost (MaternalScheduledVisitModel):
@@ -30,7 +31,7 @@ class MaternalArvPost (MaternalScheduledVisitModel):
         verbose_name="Reason for triple ARVs ",
         max_length=25,
         choices=REASON_FOR_HAART,
-        default='N/A',
+        default=NOT_APPLICABLE,
         help_text="",)
 
     on_arv_reason_other = models.TextField(
@@ -44,8 +45,7 @@ class MaternalArvPost (MaternalScheduledVisitModel):
                       " treatment / prophylaxis at this visit or since the last visit? "),
         max_length=25,
         choices=ARV_STATUS_WITH_NEVER,
-        help_text="",
-        default='N/A',)
+        default=NOT_APPLICABLE,)
 
     history = AuditTrail()
 
@@ -105,18 +105,18 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
 
     missed_doses = models.IntegerField(
         verbose_name=("Since the last attended last scheduled visit, how many doses of"
-                      " triple ARVs were missed? "),
-        help_text="")
+                      " triple ARVs were missed? "))
+
     missed_days = models.IntegerField(
         verbose_name=("Since the last attended scheduled visit, how many entire days"
                       " were triple ARVS not taken?"),
-        help_text="",
-        default='0')
+        default=0)
+
     missed_days_discnt = models.IntegerField(
         verbose_name=("If triple ARVs discontinued by health provider, how many days were triple ARVs missed"
                       " prior to discontinuation?"),
-        help_text="",
-        default='0')
+        default=0)
+
     comment = models.TextField(
         max_length=250,
         verbose_name="Comment",

@@ -1,6 +1,7 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
+
+from edc_base.audit_trail import AuditTrail
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
@@ -42,6 +43,8 @@ class MaternalObstericalHistory(MaternalScheduledVisitModel):
                       " years of age? "),
         validators=[MinValueValidator(0), MaxValueValidator(20), ],
         help_text="")
+
+    history = AuditTrail()
 
     class Meta:
         app_label = 'microbiome_maternal'

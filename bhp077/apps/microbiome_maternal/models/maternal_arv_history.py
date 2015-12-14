@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 
 from edc_base.model.fields import IsDateEstimatedField, OtherCharField
+from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 
 from ..maternal_choices import PRIOR_PREG_HAART_STATUS
@@ -47,6 +48,8 @@ class MaternalArvHistory(MaternalScheduledVisitModel):
         verbose_name="if other specify...",
         blank=True,
         null=True)
+
+    history = AuditTrail()
 
     class Meta:
         app_label = 'microbiome_maternal'

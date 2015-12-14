@@ -7,8 +7,9 @@ from edc_base.audit_trail import AuditTrail
 from edc_consent.models import RequiresConsentMixin, BaseSpecimenConsent
 from edc_consent.models.fields import SampleCollectionFieldsMixin, VulnerabilityFieldsMixin
 
-from .maternal_consent import MaternalConsent
 from ..managers import SpecimenConsentManager
+
+from .maternal_consent import MaternalConsent
 
 
 class SpecimenConsent(BaseSpecimenConsent, SampleCollectionFieldsMixin, RequiresConsentMixin,

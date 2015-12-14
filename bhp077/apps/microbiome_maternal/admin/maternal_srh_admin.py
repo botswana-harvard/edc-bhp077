@@ -5,13 +5,13 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.export.actions import export_as_csv_action
 
-from bhp077.apps.microbiome_maternal.models import SrhServicesUtilization
-from bhp077.apps.microbiome_maternal.forms import SrhServicesUtilizationForm
+from bhp077.apps.microbiome_maternal.models import MaternalSrh
+from bhp077.apps.microbiome_maternal.forms import MaternalSrhForm
 
 
-class SrhServicesUtilizationAdmin(BaseModelAdmin):
+class MaternalSrhAdmin(BaseModelAdmin):
 
-    form = SrhServicesUtilizationForm
+    form = MaternalSrhForm
 
     fields = ('seen_at_clinic',
               'reason_unseen_clinic',
@@ -42,4 +42,4 @@ class SrhServicesUtilizationAdmin(BaseModelAdmin):
                  'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
         )]
 
-admin.site.register(SrhServicesUtilization, SrhServicesUtilizationAdmin)
+admin.site.register(MaternalSrh, MaternalSrhAdmin)

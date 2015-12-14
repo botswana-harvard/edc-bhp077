@@ -1,8 +1,8 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.model.fields.custom_fields import IsDateEstimatedField
+from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_NA, YES_NO
 
 from .maternal_consent import MaternalConsent
@@ -19,20 +19,17 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
     prev_preg_azt = models.CharField(
         max_length=25,
         choices=YES_NO_NA,
-        verbose_name="Did she ever receive AZT monotherapy in a previous pregnancy?  ",
-        help_text="")
+        verbose_name="Did she ever receive AZT monotherapy in a previous pregnancy?  ")
 
     prev_sdnvp_labour = models.CharField(
         max_length=25,
         choices=YES_NO_NA,
-        verbose_name="Did she ever receive single-dose NVP in labour during a previous pregnancy?",
-        help_text="")
+        verbose_name="Did she ever receive single-dose NVP in labour during a previous pregnancy?")
 
     prev_preg_haart = models.CharField(
         max_length=25,
         choices=YES_NO_NA,
-        verbose_name=("Did she ever receive triple antiretrovirals during a prior pregnancy?"),
-        help_text="")
+        verbose_name=("Did she ever receive triple antiretrovirals during a prior pregnancy?"))
 
     lowest_cd4_known = models.CharField(
         max_length=4,
@@ -46,7 +43,6 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
         validators=[MinValueValidator(0), MaxValueValidator(3000), ],
         null=True,
         blank=True,
-        help_text=""
     )
 
     cd4_date = models.DateField(
@@ -83,8 +79,9 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
     know_hiv_status = models.CharField(
         max_length=50,
         verbose_name="How many people know that you are HIV infected?",
-        choices=KNOW_HIV_STATUS,
-        help_text="",)
+        choices=KNOW_HIV_STATUS)
+
+    history = AuditTrail()
 
     class Meta:
         app_label = 'microbiome_maternal'

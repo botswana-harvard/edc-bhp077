@@ -3,19 +3,19 @@ from django.forms.util import ErrorList
 
 from edc_constants.constants import NO
 
-from ..models import SrhServicesUtilization
+from ..models import MaternalSrh
 
 from .base_maternal_model_form import BaseMaternalModelForm
 
 
-class SrhServicesUtilizationForm(BaseMaternalModelForm):
+class MaternalSrhForm(BaseMaternalModelForm):
 
     class Meta:
-        model = SrhServicesUtilization
+        model = MaternalSrh
         fields = '__all__'
 
     def clean(self):
-        cleaned_data = super(SrhServicesUtilizationForm, self).clean()
+        cleaned_data = super(MaternalSrhForm, self).clean()
         if cleaned_data.get('seen_at_clinic') == NO:
             if not cleaned_data.get('reason_unseen_clinic'):
                 raise forms.ValidationError(

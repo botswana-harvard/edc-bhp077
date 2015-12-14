@@ -1,6 +1,7 @@
 from django.db import models
 
 from edc_base.model.fields import OtherCharField
+from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_DWTA
 
 from ..maternal_choices import YES_NO_DNT_DWTA, NEXT_CHILD_PLAN
@@ -57,6 +58,8 @@ class SexualReproductiveHealth(MaternalScheduledVisitModel):
         max_length=25,
         choices=YES_NO_DWTA,
         help_text='')
+
+    history = AuditTrail()
 
     class Meta:
         app_label = 'microbiome_maternal'

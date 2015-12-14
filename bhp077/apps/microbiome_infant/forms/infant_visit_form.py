@@ -35,7 +35,7 @@ class InfantVisitForm(BaseInfantModelForm):
         self.validate_information_provider_is_alive()
         self._meta.model(**cleaned_data).has_previous_visit_or_raise(forms.ValidationError)
 
-        if not cleaned_data.get('reason') == MISSED_VISIT:
+        if cleaned_data.get('reason') != MISSED_VISIT:
             if not cleaned_data.get('info_source'):
                 raise forms.ValidationError("Provide source of information.")
 
@@ -53,22 +53,27 @@ class InfantVisitForm(BaseInfantModelForm):
 
     def validate_presence(self):
         cleaned_data = self.cleaned_data
-        if cleaned_data.get('is_present') == YES and cleaned_data.get('survival_status') == UNKNOWN:
-            raise forms.ValidationError('Survival status cannot be unknown if infant is present')
+        if cleaned_data.get('is_present') == YES:
+            if cleaned_data.get('survival_status') == UNKNOWN:
+                raise forms.ValidationError('Survival status cannot be unknown if infant is present')
+            if cleaned_data.get('reason') in [MISSED_VISIT, LOST_VISIT, DEATH_VISIT]:
+                raise forms.ValidationError(
+                    'You indicated that infant visit reason is {}. You therefore CANNOT state that the infant is '
+                    'present'.format(cleaned_data.get('reason')))
 
     def validate_reason_death(self):
         cleaned_data = self.cleaned_data
         if cleaned_data.get('reason') == DEATH_VISIT:
-            if not cleaned_data.get('survival_status') == 'DEAD':
+            if cleaned_data.get('survival_status') != 'DEAD':
                 raise forms.ValidationError("You should select \'Deceased\' for survival status.")
-            if not cleaned_data.get('study_status') == OFF_STUDY:
+            if cleaned_data.get('study_status') != OFF_STUDY:
                 raise forms.ValidationError(
                     "This is an Off Study visit. Select \'off study\' for the infant's current study status.")
 
     def validate_reason_lost_and_completed(self):
         cleaned_data = self.cleaned_data
         if cleaned_data.get('reason') in [LOST_VISIT, OFF_STUDY]:
-            if not cleaned_data.get('study_status') == OFF_STUDY:
+            if cleaned_data.get('study_status') != OFF_STUDY:
                 raise forms.ValidationError(
                     "This is an Off Study OR LFU visit. "
                     "Select \'off study\' for the infant's current study status.")

@@ -25,4 +25,4 @@ from .postnatal_enrollment_form import PostnatalEnrollmentForm
 from .rapid_test_result_form import RapidTestResultForm
 from .specimen_consent_form import SpecimenConsentForm
 from .sexual_reproductive_health_form import SexualReproductiveHealthForm
-from .srh_services_utilization_form import SrhServicesUtilizationForm
+from .maternal_srh_form import MaternalSrhForm

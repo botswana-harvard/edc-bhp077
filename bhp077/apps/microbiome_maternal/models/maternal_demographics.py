@@ -1,8 +1,8 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.model.fields import OtherCharField
+from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
@@ -142,6 +142,8 @@ class MaternalDemographics(MaternalScheduledVisitModel):
         verbose_name="Housing type?  ",
         choices=HOUSE_TYPE,
         help_text="Indicate the primary type of housing used over the past 30 days",)
+
+    history = AuditTrail()
 
     class Meta:
         app_label = 'microbiome_maternal'
