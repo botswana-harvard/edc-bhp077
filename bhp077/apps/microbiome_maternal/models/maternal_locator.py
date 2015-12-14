@@ -11,6 +11,7 @@ from edc_constants.choices import YES_NO
 from edc_locator.models import LocatorMixin
 
 from .maternal_visit import MaternalVisit
+from ..managers import ScheduledModelManager
 
 
 class MaternalLocator(LocatorMixin, BaseUuidModel):
@@ -65,12 +66,15 @@ class MaternalLocator(LocatorMixin, BaseUuidModel):
 
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 
-    objects = models.Manager()
+    objects = ScheduledModelManager()
 
     history = AuditTrail()
 
     def __unicode__(self):
         return unicode(self.maternal_visit)
+
+    def natural_key(self):
+        return self.maternal_visit.natural_key()
 
     def get_visit(self):
         return self.maternal_visit

@@ -8,6 +8,7 @@ from edc_consent.models import RequiresConsentMixin, BaseSpecimenConsent
 from edc_consent.models.fields import SampleCollectionFieldsMixin, VulnerabilityFieldsMixin
 
 from .maternal_consent import MaternalConsent
+from ..managers import SpecimenConsentManager
 
 
 class SpecimenConsent(BaseSpecimenConsent, SampleCollectionFieldsMixin, RequiresConsentMixin,
@@ -19,12 +20,15 @@ class SpecimenConsent(BaseSpecimenConsent, SampleCollectionFieldsMixin, Requires
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
-    objects = models.Manager()
+    objects = SpecimenConsentManager()
 
     history = AuditTrail()
 
     def __unicode__(self):
         return "{0}".format(self.registered_subject.subject_identifier)
+
+    def natural_key(self):
+        return self.registered_subject.natural_key()
 
     def get_subject_identifier(self):
         return self.registered_subject.subject_identifier

@@ -6,6 +6,8 @@ from edc_base.model.models import BaseUuidModel
 from .maternal_eligibility import MaternalEligibility
 from django.utils import timezone
 
+from ..managers import MaternalEligibilityLossManager
+
 
 class MaternalEligibilityLoss(BaseUuidModel):
     """ A model triggered and completed by system when a mother is in-eligible. """
@@ -22,9 +24,12 @@ class MaternalEligibilityLoss(BaseUuidModel):
         max_length=500,
         help_text='Gets reasons from Maternal Eligibility.ineligibility')
 
-    objects = models.Manager()
+    objects = MaternalEligibilityLossManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.maternal_eligibility.natural_key(), self.report_datetime, )
 
     def ineligibility(self):
         return self.reason_ineligible or []

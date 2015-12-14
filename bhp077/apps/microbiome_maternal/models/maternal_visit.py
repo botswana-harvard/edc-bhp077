@@ -22,8 +22,6 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
 
     CONSENT_MODEL = MaternalConsent
 
-    objects = models.Manager()
-
     history = AuditTrail(True)
 
     def __unicode__(self):

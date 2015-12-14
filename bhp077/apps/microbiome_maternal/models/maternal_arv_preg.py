@@ -9,6 +9,7 @@ from bhp077.apps.microbiome.choices import ARV_INTERRUPTION_REASON
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
+from ..managers import MaternalArvManager
 
 
 class MaternalArvPreg(MaternalScheduledVisitModel):
@@ -44,8 +45,6 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
         blank=True,
         null=True)
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -77,9 +76,12 @@ class MaternalArv(BaseUuidModel):
         null=True,
         blank=True)
 
-    objects = models.Manager()
+    objects = MaternalArvManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.maternal_arv_preg.natural_key())
 
     class Meta:
         app_label = 'microbiome_maternal'

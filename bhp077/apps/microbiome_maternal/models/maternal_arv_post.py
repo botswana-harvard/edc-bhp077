@@ -47,8 +47,6 @@ class MaternalArvPost (MaternalScheduledVisitModel):
         help_text="",
         default='N/A',)
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     def visit(self):
@@ -124,8 +122,6 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
         verbose_name="Comment",
         blank=True,
         null=True)
-
-    objects = models.Manager()
 
     history = AuditTrail()
 

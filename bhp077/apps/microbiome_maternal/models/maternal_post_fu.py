@@ -88,8 +88,6 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         blank=True,
         null=True,)
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -131,8 +129,6 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
     wcs_dx_adult = models.ManyToManyField(
         WcsDxAdult,
         verbose_name="List any new WHO Stage III/IV diagnoses that are not reported")
-
-    objects = models.Manager()
 
     history = AuditTrail()
 

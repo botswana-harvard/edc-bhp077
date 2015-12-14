@@ -21,8 +21,6 @@ class MaternalOffStudy(OffStudyModelMixin, BaseUuidModel):
 
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     def get_visit(self):
