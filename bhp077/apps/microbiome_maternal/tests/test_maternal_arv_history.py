@@ -52,7 +52,7 @@ class TestMaternalArvHistory(TestCase):
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.prior_arv = PriorArv.objects.create(name='ATZ', short_name='ATZ', field_name='prior_arv')
+        prior_arv = PriorArv.objects.all().first()
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
@@ -61,7 +61,7 @@ class TestMaternalArvHistory(TestCase):
             'preg_on_haart': YES,
             'haart_changes': 0,
             'prior_preg': CONTINUOUS,
-            'prior_arv': [self.prior_arv.id],
+            'prior_arv': [prior_arv.id],
         }
 
     def test_arv_interrupt_1(self):

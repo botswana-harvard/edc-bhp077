@@ -6,7 +6,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE, SCHEDULED
+from edc_constants.constants import YES, NO, NEG, SCHEDULED
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
@@ -18,6 +18,7 @@ from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 from bhp077.apps.microbiome_maternal.forms import SrhServicesUtilizationForm
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
 
 
 class TestSrhServiceUtilizationForm(TestCase):
@@ -34,18 +35,16 @@ class TestSrhServiceUtilizationForm(TestCase):
         site_rule_groups.autodiscover()
 
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
-        c = Contraceptives.objects.create(
-            name='Chrome chronic',
-            short_name='Chrome'
-        )
+        chronic_condition = ChronicConditions.objects.all().first()
         self.data = {
             'report_datetime': timezone.now(),
             'maternal_visit': None,
             'seen_at_clinic': YES,
             'is_contraceptive_initiated': YES,
-            'contraceptive_methods': [c.id],
+            'contraceptive_methods': [chronic_condition.id],
             'reason_not_initiated': None,
             'srh_referral': YES,
             'srh_referral_other': None
@@ -125,9 +124,7 @@ class TestSrhServiceUtilizationForm(TestCase):
         self.data['reason_unseen_clinic'] = 'not_sexually_active'
         self.data['is_contraceptive_initiated'] = NO
         self.data['maternal_visit'] = maternal_visit.id
-        contraceptives = Contraceptives.objects.create(
-            name=NOT_APPLICABLE,
-            short_name=NOT_APPLICABLE)
+        contraceptives = Contraceptives.objects.all().first()
         self.data['contraceptive_methods'] = [contraceptives.id]
         form = SrhServicesUtilizationForm(data=self.data)
         self.assertIn(
@@ -150,9 +147,7 @@ class TestSrhServiceUtilizationForm(TestCase):
         self.data['reason_not_initiated'] = "no_options"
         self.data['maternal_visit'] = maternal_visit.id
         maternal_medicalHistory_form = SrhServicesUtilizationForm(data=self.data)
-        contraceptives = Contraceptives.objects.create(
-            name='Chrome chronic1',
-            short_name='chrome1')
+        contraceptives = Contraceptives.objects.all().first()
         self.data['contraceptive_methods'] = [contraceptives.id]
         self.data['reason_unseen_clinic'] = 'not_sexually_active'
         self.assertIn("Don't answer this question, since you have initiated contraceptive.",

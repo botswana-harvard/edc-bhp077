@@ -11,13 +11,13 @@ from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
 from bhp077.apps.microbiome_maternal.forms import MaternalPostFuForm
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
+from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
 
 
 class TestMaternalFollowup(TestCase):
@@ -54,11 +54,7 @@ class TestMaternalFollowup(TestCase):
             registered_subject=self.registered_subject,
             visit_definition__code='2010M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.chronic_cond = ChronicConditions.objects.create(
-            name=NOT_APPLICABLE,
-            short_name=NOT_APPLICABLE,
-            display_index=10,
-            field_name='chronic_cond')
+        chronic_condition = ChronicConditions.objects.all().first()
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
@@ -67,7 +63,7 @@ class TestMaternalFollowup(TestCase):
             'systolic_bp': 120,
             'diastolic_bp': 80,
             'chronic_cond_since': NO,
-            'chronic_cond': [self.chronic_cond.id],
+            'chronic_cond': [chronic_condition.id],
             'chronic_cond_other': '',
             'comment': '',
         }
@@ -109,14 +105,14 @@ class TestMaternalFollowup(TestCase):
 
     def test_chronic_cond_2(self):
         """Assert that if has chronic conditions is indicated as YES, then chronic conditions cannot be N/A"""
-        cond = ChronicConditions.objects.create(
+        chronic_condition = ChronicConditions.objects.create(
             name='Tuberculosis',
             short_name='Tuberculosis',
             display_index=20,
             field_name='chronic_cond'
         )
         self.data['chronic_cond_since'] = NO
-        self.data['chronic_cond'] = [cond.id]
+        self.data['chronic_cond'] = [chronic_condition.id]
         form = MaternalPostFuForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You stated there are NO chronic conditionss. Please correct', errors)

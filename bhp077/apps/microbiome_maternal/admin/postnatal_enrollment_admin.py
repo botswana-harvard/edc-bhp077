@@ -1,7 +1,6 @@
 from collections import OrderedDict
 
 from django.contrib import admin
-from django import forms
 
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.subject.registration.models import RegisteredSubject

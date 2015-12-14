@@ -11,10 +11,10 @@ from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
 from bhp077.apps.microbiome_maternal.forms import (MaternalBreastHealthForm)
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
+
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
 
@@ -50,8 +50,6 @@ class TestMaternalBreastHealth(TestCase):
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.chronic_cond = ChronicConditions.objects.create(
-            name='N/A', short_name='N/A', display_index=10, field_name='chronic_cond')
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
