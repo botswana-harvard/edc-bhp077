@@ -33,3 +33,4 @@ class PostnatalEnrollmentFactory(factory.DjangoModelFactory):
     valid_regimen_duration = YES
     rapid_test_done = NOT_APPLICABLE
     rapid_test_date = None
+    rapid_test_result = None

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import socket
-import pytz
+
 from unipath import Path
 
 from django.utils import timezone

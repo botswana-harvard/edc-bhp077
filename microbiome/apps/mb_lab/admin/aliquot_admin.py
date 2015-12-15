@@ -4,8 +4,8 @@ from edc.export.actions import export_as_csv_action
 from edc_base.modeladmin.admin import BaseModelAdmin
 from lis.labeling.actions import print_aliquot_label
 
-from ..models import Aliquot
 from ..actions import create_order
+from ..models import Aliquot
 
 
 class AliquotAdmin(BaseModelAdmin):

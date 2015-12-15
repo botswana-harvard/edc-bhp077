@@ -1,3 +1,4 @@
+from datetime import date
 from django.test import TestCase
 from django.utils import timezone
 
@@ -7,7 +8,7 @@ from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.registration.models import RegisteredSubject
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.constants import YES, NO, NEG
+from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb_infant.forms import InfantDeathReportForm
@@ -38,10 +39,14 @@ class TestInfantDeathForm(TestCase):
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_eligibility.registered_subject
 
-        PostnatalEnrollmentFactory(
+        postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
-            evidence_hiv_status=YES)
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_date=date.today(),
+            rapid_test_result=NEG)
+        self.assertTrue(postnatal_enrollment.is_eligible)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
@@ -57,10 +62,17 @@ class TestInfantDeathForm(TestCase):
             maternal_labour_del=maternal_labour_del)
         appointment = Appointment.objects.get(
             registered_subject=infant_registered_subject,
+            visit_definition__code='2000')
+        InfantVisitFactory(appointment=appointment)
+        appointment = Appointment.objects.get(
+            registered_subject=infant_registered_subject,
             visit_definition__code='2010')
         self.infant_visit = InfantVisitFactory(appointment=appointment)
+        self.registered_subject = self.infant_visit.appointment.registered_subject
+        self.assertEqual(self.registered_subject.registration_datetime.date(), timezone.now().date())
 
         self.data = {
+            'registered_subject': self.registered_subject,
             'report_datetime': timezone.now(),
             'infant_visit': self.infant_visit.id,
             'death_date': timezone.now().date(),
