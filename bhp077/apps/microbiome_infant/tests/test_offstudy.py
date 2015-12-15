@@ -16,7 +16,7 @@ from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfigura
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory, AntenatalEnrollmentFactory,
     MaternalVisitFactory)
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory, SexualReproductiveHealthFactory
+from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory, ReproductiveHealthFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 

@@ -10,7 +10,7 @@ from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from bhp077.apps.microbiome_list.models import Contraceptives
 
 
-class SexualReproductiveHealth(MaternalScheduledVisitModel):
+class ReproductiveHealth(MaternalScheduledVisitModel):
 
     """ A model completed by the user on the mother's sexual reproductive health. """
 
@@ -42,12 +42,12 @@ class SexualReproductiveHealth(MaternalScheduledVisitModel):
         choices=YES_NO_DWTA,
         help_text='')
 
-    contraceptives_used = models.ManyToManyField(
+    contraceptives = models.ManyToManyField(
         Contraceptives,
         verbose_name='Please share with us your current contraceptive methods',
         help_text='')
 
-    contraceptives_used_other = OtherCharField(
+    contraceptives_other = OtherCharField(
         max_length=35,
         verbose_name="If Other enter text description of other contraceptive method being used",
         blank=True,
@@ -63,5 +63,5 @@ class SexualReproductiveHealth(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'microbiome_maternal'
-        verbose_name = 'Sexual Reproductive Health'
-        verbose_name_plural = 'Sexual Reproductive Health'
+        verbose_name = 'Reproductive Health'
+        verbose_name_plural = 'Reproductive Health'

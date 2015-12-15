@@ -5,27 +5,27 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.export.actions import export_as_csv_action
 
-from ..models import SexualReproductiveHealth
-from ..forms import SexualReproductiveHealthForm
+from ..models import ReproductiveHealth
+from ..forms import ReproductiveHealthForm
 
 
-class SexualReproductiveHealthAdmin(BaseModelAdmin):
+class ReproductiveHealthAdmin(BaseModelAdmin):
 
-    form = SexualReproductiveHealthForm
+    form = ReproductiveHealthForm
 
     fields = ('more_children',
               'next_child',
               'contraceptive_measure',
               'uses_contraceptive',
-              'contraceptives_used',
-              'contraceptives_used_other',
+              'contraceptives',
+              'contraceptives_other',
               'srh_referral')
     radio_fields = {'more_children': admin.VERTICAL,
                     'next_child': admin.VERTICAL,
                     'contraceptive_measure': admin.VERTICAL,
                     'uses_contraceptive': admin.VERTICAL,
                     'srh_referral': admin.VERTICAL}
-    filter_horizontal = ('contraceptives_used',)
+    filter_horizontal = ('contraceptives',)
 
     actions = [
         export_as_csv_action(
@@ -41,4 +41,4 @@ class SexualReproductiveHealthAdmin(BaseModelAdmin):
                  'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
         )]
 
-admin.site.register(SexualReproductiveHealth, SexualReproductiveHealthAdmin)
+admin.site.register(ReproductiveHealth, ReproductiveHealthAdmin)
