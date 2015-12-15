@@ -6,7 +6,7 @@ from base_maternal_model_form import BaseMaternalModelForm
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
 from bhp077.apps.microbiome.utils import weeks_between
 
-from ..models import MaternalArvPreg, MaternalArv
+from ..models import MaternalArvPreg, MaternalArv, MaternalArvHistory
 
 
 class MaternalArvPregForm(BaseMaternalModelForm):
@@ -63,6 +63,20 @@ class MaternalArvForm(BaseMaternalModelForm):
                     'You have indicated that the stop date of {} is prior to start date of {}. '
                     'Please correct'.format(cleaned_data.get('stop_date'), cleaned_data.get('start_date')))
         return cleaned_data
+
+    def validate_arv_start_dates(self):
+        """Confirms that the Historical ARV start date is not less than the ARV start date
+            in this pregnancy"""
+        cleaned_data = self.cleaned_data
+        try:
+            maternal_visit = cleaned_data.get('maternal_visit')
+            history_arv = MaternalArvHistory.objects.get(maternal_visit=maternal_visit)
+            if cleaned_data.get('start_date') < history_arv.haart_start_date:
+                raise forms.ValidationError(
+                    "Your ARV start date {} is before your Historical ARV date {}".format(
+                        cleaned_data.get('start_date'), history_arv.haart_start_date))
+        except MaternalArvHistory.DoesNotExist:
+            pass
 
     class Meta:
         model = MaternalArv
