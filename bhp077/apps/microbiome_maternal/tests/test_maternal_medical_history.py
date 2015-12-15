@@ -1,13 +1,15 @@
+from django import forms
 from django.test import TestCase
 from django.utils import timezone
 
+from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
 from edc.subject.code_lists.models import WcsDxAdult
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS
+from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS, NEG
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory)
@@ -103,9 +105,10 @@ class TestMaternalMedicalHistoryForm(TestCase):
         self.assertIn('You stated there are NO chronic conditions. Please correct', errors)
 
     def test_has_who_diagnosis_but_not_listed(self):
-        """Assert raises if has WHO diagnosis but they are not listed."""
+        """Test has no chronic condition, but has WHO diagnosis and no listing."""
         self.data['chronic_cond_since'] = NO
-        self.data['chronic_cond'] = None
+        chronic_condition = ChronicConditions.objects.get(name__icontains=NOT_APPLICABLE)
+        self.data['chronic_cond'] = [chronic_condition.id]
         self.data['who_diagnosis'] = YES
         self.data['wcs_dx_adult'] = None
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
@@ -113,12 +116,11 @@ class TestMaternalMedicalHistoryForm(TestCase):
         self.assertIn('You mentioned participant has WHO diagnosis. Please list them.', errors)
 
     def test_no_who_diagnosis_but_listed(self):
-        """Assert raises if does not have WHO diagnosis but they are not listed."""
-        self.data['chronic_cond_since'] = NO
-        self.data['chronic_cond'] = None
-        self.data['who_diagnosis'] = NO
-        wcs_dx_adult = WcsDxAdult.objects.all().first()
+        """Test has no WHO diagnosis but they are listed."""
+        chronic_condition = ChronicConditions.objects.get(name__icontains=NOT_APPLICABLE)
+        self.data['chronic_cond'] = [chronic_condition.id]
+        wcs_dx_adult = WcsDxAdult.objects.get(short_name__icontains='Pneumocystis pneumonia')
         self.data['wcs_dx_adult'] = [wcs_dx_adult.id]
-        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
-        self.assertIn('You stated there are NO WHO diagnoses', errors)
+        form = MaternalMedicalHistoryForm(data=self.data)
+        self.assertIn('You stated there are NO WHO diagnosess. Please correct',
+                      form.errors.get('__all__'))

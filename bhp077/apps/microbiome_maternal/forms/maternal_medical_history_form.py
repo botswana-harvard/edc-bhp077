@@ -1,6 +1,6 @@
 from django import forms
 
-from edc_constants.choices import NEG, YES
+from edc_constants.constants import NEG, YES
 
 from base_maternal_model_form import BaseMaternalModelForm
 
@@ -49,10 +49,12 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
         cleaned_data = self.cleaned_data
         try:
             postnatal_enrollment = PostnatalEnrollment.objects.get(
-                registered_subject=cleaned_data.get('maternal_visit').appointment.registered_subject)
+                registered_subject=cleaned_data.get(
+                    'maternal_visit').appointment.registered_subject)
             if postnatal_enrollment.enrollment_hiv_status == NEG:
                 if cleaned_data.get('who_diagnosis') == YES:
-                    raise forms.ValidationError("Mother is NEG. WHO stage diagnosis should be No.")
+                    raise forms.ValidationError(
+                        "Mother is NEG. WHO stage diagnosis should be No.")
         except PostnatalEnrollment.DoesNotExist:
             pass
 

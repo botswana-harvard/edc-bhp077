@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from lis.specimen.lab_result.models import BaseResult
 
 from .order_item import OrderItem
+from ..managers import ResultManager
 
 
 class Result(BaseResult):
@@ -17,7 +18,7 @@ class Result(BaseResult):
         db_index=True,
         help_text="non-user helper field to simplify search and filtering")
 
-    objects = models.Manager()
+    objects = ResultManager()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.order.aliquot.receive.registered_subject.subject_identifier
@@ -28,6 +29,9 @@ class Result(BaseResult):
             return unicode(self.order_item.panel.edc_name)
         except AttributeError:
             return None
+
+    def natural_key(self):
+        return (self.result_identifier, self.subject_identifier)
 
     def report(self):
         url = reverse('view_result_report', kwargs={'result_identifier': self.result_identifier})

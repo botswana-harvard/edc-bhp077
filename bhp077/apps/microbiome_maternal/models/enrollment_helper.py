@@ -28,11 +28,12 @@ class EnrollmentHelper(object):
             super(EnrollmentMixin, self).save(*args, **kwargs)
     """
 
-    def __init__(self, instance):
+    def __init__(self, instance, exception_cls=None):
         self._enrollment_hiv_status = None
         self.date_at_32wks = None
         self.instance = instance
         self.enrollment = self.instance._meta.verbose_name
+        self.exception_cls = exception_cls or EnrollmentError
 
         # make all fields from the enrollment instance available to this instance
         for field in self.instance._meta.fields:
@@ -96,7 +97,7 @@ class EnrollmentHelper(object):
             elif self.evidence_hiv_status in [NO, NOT_APPLICABLE]:
                 self._enrollment_hiv_status = self.hiv_status_with_without_evidence()
             if not self._enrollment_hiv_status:
-                raise EnrollmentError(
+                raise self.exception_cls(
                     'Unable to determine maternal hiv status at enrollment. '
                     'Got current_hiv_status={}, evidence_hiv_status={}, '
                     'rapid_test_done={}, rapid_test_result={}'.format(
@@ -110,9 +111,9 @@ class EnrollmentHelper(object):
         """Returns the hiv status if evidence is available or None."""
         hiv_status = None
         if self.evidence_hiv_status == YES:
-            if self.hiv_status_on_or_after_32wk() == POS:
+            if self.hiv_status_on_or_after_32wk(self.exception_cls) == POS:
                 hiv_status = POS
-            elif self.hiv_status_on_or_after_32wk() == NEG:
+            elif self.hiv_status_on_or_after_32wk(self.exception_cls) == NEG:
                 hiv_status = NEG
             elif self.current_hiv_status == POS and self.rapid_test_done in [NO, NOT_APPLICABLE]:
                 hiv_status = POS
@@ -171,7 +172,7 @@ class EnrollmentHelper(object):
         self.date_at_32wks = self.report_datetime.date() - relativedelta(weeks=self.gestational_age - 32)
         if self.rapid_test_date:
             if self.week32_test_date > self.rapid_test_date:
-                raise EnrollmentError('Rapid test date cannot precede test date on or after 32 weeks')
+                raise self.exception_cls('Rapid test date cannot precede test date on or after 32 weeks')
         return self.week32_test_date >= self.date_at_32wks
 
     def no_chronic_conditions(self):

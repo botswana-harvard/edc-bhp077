@@ -21,6 +21,7 @@ class BaseEnrollmentForm(BaseModelForm):
         self.rapid_test_date_and_result()
         self.raise_if_rapid_test_required()
         self.raise_if_rapid_test_date_future()
+        self._meta.model(**cleaned_data).enroll_helper(forms.ValidationError)
         return cleaned_data
 
     def clean_report_datetime(self):
