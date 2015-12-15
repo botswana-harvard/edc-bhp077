@@ -5,11 +5,11 @@ from .infant_birth_data_admin import InfantBirthDataAdmin
 from .infant_birth_feeding_admin import InfantBirthFeedVaccineAdmin
 from .infant_circumcision_admin import InfantCircumcisionAdmin
 from .infant_congenital_anomalies_admin import (
-    InfantCongenitalAnomalies, InfantCnsAbnormalityItemsAdmin,
-    InfantFacialDefectItemsAdmin, InfantCleftDisorderItemsAdmin, InfantMouthUpGastrointestinalItemsAdmin,
-    InfantCardiovascularDisorderItemsAdmin, InfantRespiratoryDefectItemsAdmin, InfantLowerGastrointestinalItemsAdmin,
-    InfantFemaleGenitalAnomalyItemsAdmin, InfantMaleGenitalAnomalyItemsAdmin, InfantRenalAnomalyItemsAdmin,
-    InfantMusculoskeletalAbnormalItemsAdmin, InfantSkinAbnormalItemsAdmin, InfantTrisomiesChromosomeItemsAdmin)
+    InfantCongenitalAnomaliesAdmin, InfantCnsAdmin,
+    InfantFacialDefectAdmin, InfantCleftDisorderAdmin, InfantMouthUpGiAdmin,
+    InfantCardioDisorderAdmin, InfantRespiratoryDefectAdmin, InfantLowerGiAdmin,
+    InfantFemaleGenitalAdmin, InfantMaleGenitalAdmin, InfantRenalAdmin,
+    InfantMusculoskeletalAdmin, InfantSkinAdmin, InfantTrisomiesAdmin)
 from .infant_death_report_admin import InfantDeathReportAdmin
 from .infant_off_study_admin import InfantOffStudyAdmin
 from .infant_visit_admin import InfantVisitAdmin

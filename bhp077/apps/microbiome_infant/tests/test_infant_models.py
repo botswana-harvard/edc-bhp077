@@ -13,9 +13,16 @@ from .factories import (InfantBirthFactory, InfantBirthArvFactory, InfantBirthCn
 class InfantModelTests(TestCase):
 
     def test_infantbirth_min_value(self):
-        infant_birth = InfantBirthFactory()
-        infant_birth.birth_order = 0
-        self.assertRaises(ValidationError, infant_birth.full_clean)
+        self.assertRaises(ValidationError, InfantBirthFactory, birth_order=0)
+
+        with self.assertRaises(ValidationError) as cm:
+            try:
+                InfantBirthFactory(birth_order=0)
+            except ValidationError:
+                pass
+            else:
+                raise 
+
 
     def test_infantbirth_max_value(self):
         infant_birth = InfantBirthFactory()

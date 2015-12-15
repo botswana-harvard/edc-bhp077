@@ -1,12 +1,12 @@
 from django.forms.models import ModelForm
 
 from ..models import (
-    InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
-    InfantCleftDisorderItems, InfantMouthUpGastrointestinalItems,
-    InfantCardiovascularDisorderItems, InfantRespiratoryDefectItems, InfantLowerGastrointestinalItems,
-    InfantFemaleGenitalAnomalyItems, InfantMaleGenitalAnomalyItems, InfantMusculoskeletalAbnormalItems,
-    InfantTrisomiesChromosomeItems, InfantOtherAbnormalityItems, InfantSkinAbnormalItems,
-    InfantRenalAnomalyItems)
+    InfantCongenitalAnomalies, InfantCns, InfantFacialDefect,
+    InfantCleftDisorder, InfantMouthUpGi,
+    InfantCardioDisorder, InfantRespiratoryDefect, InfantLowerGi,
+    InfantFemaleGenital, InfantMaleGenital, InfantMusculoskeletal,
+    InfantTrisomies, InfantOtherAbnormalityItems, InfantSkin,
+    InfantRenal)
 
 
 class InfantCongenitalAnomaliesForm(ModelForm):
@@ -16,94 +16,94 @@ class InfantCongenitalAnomaliesForm(ModelForm):
         fields = '__all__'
 
 
-class InfantCnsAbnormalityItemsForm(ModelForm):
+class InfantCnsForm(ModelForm):
 
     class Meta:
-        model = InfantCnsAbnormalityItems
+        model = InfantCns
         fields = '__all__'
 
 
-class InfantFacialDefectItemsForm(ModelForm):
+class InfantFacialDefectForm(ModelForm):
 
     class Meta:
-        model = InfantFacialDefectItems
+        model = InfantFacialDefect
         fields = '__all__'
 
 
-class InfantCleftDisorderItemsForm(ModelForm):
+class InfantCleftDisorderForm(ModelForm):
 
     class Meta:
-        model = InfantCleftDisorderItems
+        model = InfantCleftDisorder
         fields = '__all__'
 
 
-class InfantMouthUpGastrointestinalItemsForm(ModelForm):
+class InfantMouthUpGiForm(ModelForm):
 
     class Meta:
-        model = InfantMouthUpGastrointestinalItems
+        model = InfantMouthUpGi
         fields = '__all__'
 
 
-class InfantCardiovascularDisorderItemsForm(ModelForm):
+class InfantCardioDisorderForm(ModelForm):
 
     class Meta:
-        model = InfantCardiovascularDisorderItems
+        model = InfantCardioDisorder
         fields = '__all__'
 
 
-class InfantRespiratoryDefectItemsForm(ModelForm):
+class InfantRespiratoryDefectForm(ModelForm):
 
     class Meta:
-        model = InfantRespiratoryDefectItems
+        model = InfantRespiratoryDefect
         fields = '__all__'
 
 
-class InfantLowerGastrointestinalItemsForm(ModelForm):
+class InfantLowerGiForm(ModelForm):
 
     class Meta:
-        model = InfantLowerGastrointestinalItems
+        model = InfantLowerGi
         fields = '__all__'
 
 
-class InfantFemaleGenitalAnomalyItemsForm(ModelForm):
+class InfantFemaleGenitalForm(ModelForm):
 
     class Meta:
-        model = InfantFemaleGenitalAnomalyItems
+        model = InfantFemaleGenital
         fields = '__all__'
 
 
-class InfantMaleGenitalAnomalyItemsForm(ModelForm):
+class InfantMaleGenitalForm(ModelForm):
 
     class Meta:
-        model = InfantMaleGenitalAnomalyItems
+        model = InfantMaleGenital
         fields = '__all__'
 
 
-class InfantRenalAnomalyItemsForm(ModelForm):
+class InfantRenalForm(ModelForm):
 
     class Meta:
-        model = InfantRenalAnomalyItems
+        model = InfantRenal
         fields = '__all__'
 
 
-class InfantMusculoskeletalAbnormalItemsForm(ModelForm):
+class InfantMusculoskeletalForm(ModelForm):
 
     class Meta:
-        model = InfantMusculoskeletalAbnormalItems
+        model = InfantMusculoskeletal
         fields = '__all__'
 
 
-class InfantSkinAbnormalItemsForm(ModelForm):
+class InfantSkinForm(ModelForm):
 
     class Meta:
-        model = InfantSkinAbnormalItems
+        model = InfantSkin
         fields = '__all__'
 
 
-class InfantTrisomiesChromosomeItemsForm(ModelForm):
+class InfantTrisomiesForm(ModelForm):
 
     class Meta:
-        model = InfantTrisomiesChromosomeItems
+        model = InfantTrisomies
         fields = '__all__'
 
 
