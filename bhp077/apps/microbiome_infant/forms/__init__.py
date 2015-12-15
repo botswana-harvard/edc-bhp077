@@ -10,12 +10,12 @@ from .infant_death_report_form import InfantDeathReportForm
 from .infant_off_study_form import InfantOffStudyForm
 from .infant_visit_form import InfantVisitForm
 from .infant_congenital_anomalies_form import (
-    InfantCongenitalAnomaliesForm, InfantFacialDefectItemsForm,
-    InfantCleftDisorderItemsForm, InfantMouthUpGastrointestinalItemsForm, InfantCardiovascularDisorderItemsForm,
-    InfantRespiratoryDefectItemsForm, InfantLowerGastrointestinalItemsForm, InfantFemaleGenitalAnomalyItemsForm,
-    InfantMaleGenitalAnomalyItemsForm, InfantRenalAnomalyItemsForm, InfantMusculoskeletalAbnormalItemsForm,
-    InfantSkinAbnormalItemsForm, InfantTrisomiesChromosomeItemsForm, InfantOtherAbnormalityItemsForm,
-    InfantCnsAbnormalityItemsForm
+    InfantCongenitalAnomaliesForm, InfantFacialDefectForm,
+    InfantCleftDisorderForm, InfantMouthUpGiForm, InfantCardioDisorderForm,
+    InfantRespiratoryDefectForm, InfantLowerGiForm, InfantFemaleGenitalForm,
+    InfantMaleGenitalForm, InfantRenalForm, InfantMusculoskeletalForm,
+    InfantSkinForm, InfantTrisomiesForm, InfantOtherAbnormalityItemsForm,
+    InfantCnsForm
 )
 from .infant_fu_dx_form import InfantFuDxForm, InfantFuDxItemsForm
 from .infant_fu_form import InfantFuForm
