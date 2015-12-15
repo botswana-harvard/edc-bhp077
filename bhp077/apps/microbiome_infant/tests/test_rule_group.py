@@ -7,7 +7,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, POS, MALE, SCHEDULED, UNKEYED
+from edc_constants.constants import NEW, YES, POS, MALE, SCHEDULED, UNKEYED, REQUIRED
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory, MaternalVisitFactory)
@@ -21,7 +21,7 @@ from bhp077.apps.microbiome_infant.tests.factories import \
     (InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory, InfantFuFactory)
 
 
-class TestRuleGroupInfant(TestCase):
+class TestRuleGroup(TestCase):
 
     def setUp(self):
         try:
@@ -109,6 +109,7 @@ class TestRuleGroupInfant(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES)
         self.assertEqual(postnatal_enrollment.enrollment_hiv_status, POS)
+        self.assertTrue(postnatal_enrollment.is_eligible)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
@@ -133,7 +134,7 @@ class TestRuleGroupInfant(TestCase):
                 visit_definition__code=code)
             InfantVisitFactory(appointment=appointment)
             self.assertEqual(RequisitionMetaData.objects.filter(
-                entry_status=NEW,
+                entry_status=REQUIRED,
                 lab_entry__requisition_panel__name='DNA PCR',
                 lab_entry__app_label='microbiome_lab',
                 lab_entry__model_name='infantrequisition',

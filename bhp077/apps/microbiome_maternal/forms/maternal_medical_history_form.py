@@ -26,7 +26,6 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
 
         self.who_stage_diagnosis_for_neg_mother()
         self.validate_has_chronic_condition_no_listing()
-        self.chronic_condition_on_enrollment()
         self.validate_has_who_diagnosis_no_listing()
         return cleaned_data
 
