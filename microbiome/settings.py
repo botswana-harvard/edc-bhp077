@@ -17,8 +17,6 @@ from unipath import Path
 
 from django.utils import timezone
 
-from microbiome.config.databases import PRODUCTION_MYSQL, SECRET_KEY
-
 APP_NAME = 'mb'
 PROJECT_TITLE = 'Gut Microbiome Evolution'
 INSTITUTION = 'Botswana-Harvard AIDS Institute'
@@ -207,6 +205,7 @@ WSGI_APPLICATION = 'microbiome.config.wsgi.application'
 # Database
 HOST_NAMES = ['microbiome.bhp.org.bw']
 if socket.gethostname() in HOST_NAMES:
+    from microbiome.config.databases import PRODUCTION_MYSQL, SECRET_KEY
     SECRET_KEY = SECRET_KEY
     DATABASES = PRODUCTION_MYSQL
 else:
