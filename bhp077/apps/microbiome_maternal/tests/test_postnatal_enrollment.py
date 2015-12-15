@@ -159,8 +159,8 @@ class TestPostnatalEnrollment(TestCase):
             postpartum_days=3)
         self.assertTrue(postnatal_enrollment.is_eligible)
 
-    def test_vaginal_delivery_viginal(self):
-        """Test for a subject whose delivery type is viginal."""
+    def test_vaginal_delivery_vaginal(self):
+        """Test for a subject whose delivery type is vaginal."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
@@ -170,8 +170,8 @@ class TestPostnatalEnrollment(TestCase):
             vaginal_delivery=YES)
         self.assertTrue(postnatal_enrollment.is_eligible)
 
-    def test_vaginal_delivery_not_viginal(self):
-        """Test for a subject whose delivery type is viginal."""
+    def test_vaginal_delivery_not_vaginal(self):
+        """Test for a subject whose delivery type is vaginal."""
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,

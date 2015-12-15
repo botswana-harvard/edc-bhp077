@@ -4,7 +4,8 @@ from edc.entry_meta_data.models import MetaDataMixin
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
-from edc_constants.choices import YES_NO
+from edc_constants.choices import YES_NO, ALIVE_DEAD_UNKNOWN
+from edc_base.model.validators import date_not_before_study_start, date_not_future
 from edc_constants.constants import OFF_STUDY, DEATH_VISIT, UNSCHEDULED, SCHEDULED
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 from edc_visit_tracking.models import BaseVisitTracking
@@ -12,8 +13,7 @@ from edc_visit_tracking.models import PreviousVisitMixin
 
 from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
 from bhp077.apps.microbiome.choices import (
-    VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS,
-    ALIVE_DEAD_UNKNOWN)
+    VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS)
 
 from .infant_off_study_mixin import InfantOffStudyMixin
 
@@ -52,9 +52,9 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         null=True,
         blank=False)
 
-    date_last_alive = models.DateField(
+    last_alive_date = models.DateField(
         verbose_name="Date infant last known alive",
-        help_text="",
+        validators=[date_not_before_study_start, date_not_future],
         null=True,
         blank=True)
 
@@ -63,13 +63,14 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
     history = AuditTrail()
 
     def __unicode__(self):
-        return '{} {} {}'.format(self.appointment.registered_subject.subject_identifier,
-                                 self.appointment.registered_subject.first_name,
-                                 self.appointment.visit_definition.code)
+        return '{} {} {}'.format(
+            self.appointment.registered_subject.subject_identifier,
+            self.appointment.registered_subject.first_name,
+            self.appointment.visit_definition.code)
 
-    def save(self, *args, **kwargs):
-        self.reason = OFF_STUDY if not self.postnatal_enrollment.is_eligible else self.reason
-        super(InfantVisit, self).save(*args, **kwargs)
+#     def save(self, *args, **kwargs):
+#         self.reason = OFF_STUDY if not self.postnatal_enrollment.is_eligible else self.reason
+#         super(InfantVisit, self).save(*args, **kwargs)
 
     @property
     def postnatal_enrollment(self):

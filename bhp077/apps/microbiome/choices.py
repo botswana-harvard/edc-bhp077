@@ -601,12 +601,6 @@ WATER_USED = (
     (NOT_APPLICABLE, 'Not Applicable'),
 )
 
-ALIVE_DEAD_UNKNOWN = (
-    ('ALIVE', 'Alive'),
-    ('DEAD', 'Deceased'),
-    ('UNKNOWN', 'Unknown'),
-)
-
 STOOL_TEXTURE_DESC = (
     ('formed_with_blood', 'Formed without blood'),
     ('formed_without_blood', 'Formed with blood'),

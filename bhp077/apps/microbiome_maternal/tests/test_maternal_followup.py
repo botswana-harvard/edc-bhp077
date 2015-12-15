@@ -1,4 +1,3 @@
-from datetime import date
 from django.test import TestCase
 from django.utils import timezone
 
@@ -8,7 +7,7 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS, NEG
+from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
@@ -108,7 +107,8 @@ class TestMaternalFollowup(TestCase):
         self.assertIn("You stated there ARE chronic conditionss, yet you selected 'N/A'", errors)
 
     def test_chronic_cond_2(self):
-        chronic_condition = ChronicConditions.objects.get(name='Tuberculosis')
+        chronic_condition = ChronicConditions.objects.exclude(
+            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
         self.data['chronic_cond_since'] = NO
         self.data['chronic_cond'] = [chronic_condition.id]
         form = MaternalPostFuForm(data=self.data)

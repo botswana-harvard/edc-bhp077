@@ -126,33 +126,3 @@ class TestMaternalMedicalHistoryForm(TestCase):
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
         errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
         self.assertIn('You stated there are NO WHO diagnoses', errors)
-
-    def test_chronic_conditions_vs_antenatal_enrollment(self):
-        """Test any reported chronic conditions matches what was report at antenatal enrollment."""
-        conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertension']
-        for condition in conditions:
-            chronic_condition = ChronicConditions.objects.get(name=condition)
-            self.data['maternal_visit'] = self.maternal_visit_1000.id
-            self.data['chronic_cond'] = [chronic_condition.id]
-            self.data['chronic_cond_since'] = YES
-            maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-            errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
-            error_msg = self.error_message_template.format(
-                enrollment=AntenatalEnrollment._meta.verbose_name,
-                condition=condition)
-            self.assertIn(error_msg, errors)
-
-    def test_chronic_conditions_vs_postnatal_enrollment(self):
-        """Test any reported chronic conditions matches what was report at postnatal enrollment."""
-        conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertension']
-        for condition in conditions:
-            chronic_condition = ChronicConditions.objects.get(name=condition)
-            self.data['maternal_visit'] = self.maternal_visit_2000.id
-            self.data['chronic_cond'] = [chronic_condition.id]
-            self.data['chronic_cond_since'] = YES
-            maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-            errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
-            error_msg = self.error_message_template.format(
-                enrollment=PostnatalEnrollment._meta.verbose_name,
-                condition=condition)
-            self.assertIn(error_msg, errors)
