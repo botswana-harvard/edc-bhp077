@@ -62,7 +62,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,7 +71,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_revision',
     'south',
-
     'edc_base',
     'edc_consent',
     'edc_constants',
@@ -167,7 +166,11 @@ INSTALLED_APPS = (
     'microbiome.apps.mb_dashboard',
     'microbiome.apps.mb_infant',
     'microbiome.apps.mb_maternal',
-    'microbiome.apps.mb_lab')
+    'microbiome.apps.mb_lab']
+
+if socket.gethostname() != 'microbiome.bhp.org.bw':
+    INSTALLED_APPS.pop(INSTALLED_APPS.index('south'))
+INSTALLED_APPS = tuple(INSTALLED_APPS)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
