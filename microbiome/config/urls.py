@@ -62,7 +62,7 @@ urlpatterns += patterns(
 urlpatterns += patterns(
     '',
     url(r'^{app_name}/dashboard/'.format(app_name=APP_NAME),
-        include('bhp077.apps.{app_name}_dashboard.urls'.format(app_name=APP_NAME))),
+        include('microbiome.apps.{app_name}_dashboard.urls'.format(app_name=APP_NAME))),
 )
 
 urlpatterns += patterns(
