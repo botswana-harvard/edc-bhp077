@@ -25,7 +25,6 @@ class InfantArvProph(InfantScheduledVisitModel):
         help_text="referring to prophylaxis other than single dose NVP",
         default='N/A',
     )
-    objects = models.Manager()
 
     history = AuditTrail()
 

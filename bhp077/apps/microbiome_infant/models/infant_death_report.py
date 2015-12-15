@@ -7,6 +7,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_death_report.models import DeathReportMixin, InfantDrugRelationshipMixin
 
 from .infant_visit import InfantVisit
+from ..managers import ScheduledModelManager
 
 
 class InfantDeathReport (DeathReportMixin, InfantDrugRelationshipMixin, BaseUuidModel):
@@ -19,11 +20,17 @@ class InfantDeathReport (DeathReportMixin, InfantDrugRelationshipMixin, BaseUuid
 
     infant_visit = models.OneToOneField(InfantVisit)
 
-    objects = models.Manager()
+    objects = ScheduledModelManager()
 
     entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return self.get_visit().natural_key()
+
+    def get_visit(self):
+        return self.infant_visit
 
     def get_report_datetime(self):
         return self.report_datetime

@@ -2,13 +2,13 @@ import factory
 
 from django.utils import timezone
 
-from bhp077.apps.microbiome_infant.models import InfantCnsAbnormalityItems
+from bhp077.apps.microbiome_infant.models import InfantCns
 
 
 class InfantBirthCnsAbnItemFactory(factory.DjangoModelFactory):
 
     class Meta:
-        model = InfantCnsAbnormalityItems
+        model = InfantCns
 
     report_datetime = timezone.now()
-    cns_abnormality = 'Anencephaly'
+    cns = 'Anencephaly'

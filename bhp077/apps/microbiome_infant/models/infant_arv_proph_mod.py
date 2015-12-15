@@ -18,8 +18,6 @@ class InfantArvProphMod(InfantScheduledVisitModel):
         blank=True,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     def __unicode__(self):

@@ -5,6 +5,7 @@ from edc.subject.registration.models.registered_subject import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_offstudy.models import OffStudyModelMixin
+from edc.subject.visit_tracking.managers.base_visit_tracking_manager import BaseVisitTrackingManager
 
 from .infant_visit import InfantVisit
 
@@ -20,9 +21,12 @@ class InfantOffStudy(OffStudyModelMixin, BaseUuidModel):
 
     entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
 
-    objects = models.Manager()
+    objects = BaseVisitTrackingManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return self.get_visit().natural_key()
 
     def get_visit(self):
         return self.infant_visit

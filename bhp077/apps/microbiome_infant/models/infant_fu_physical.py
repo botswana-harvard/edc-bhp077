@@ -140,8 +140,6 @@ class InfantFuPhysical(InfantScheduledVisitModel):
         blank=True,
         null=True)
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     def __unicode__(self):

@@ -217,7 +217,6 @@ class InfantFeeding(InfantScheduledVisitModel):
         verbose_name="List any comments about participant's feeding that are not answered above",
         blank=True,
         null=True)
-    objects = models.Manager()
 
     history = AuditTrail()
 

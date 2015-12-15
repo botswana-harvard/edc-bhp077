@@ -9,3 +9,4 @@ from .specimen_consent_manager import SpecimenConsentManager
 from .maternal_arv_manager import MaternalArvManager
 from .maternal_eligibility_loss_manager import MaternalEligibilityLossManager
 from .maternal_post_med_items_manager import MaternalPostMedItemsManager
+from .maternal_off_study_manager import MaternalOffStudyManager

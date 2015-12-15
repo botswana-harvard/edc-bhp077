@@ -8,6 +8,7 @@ from edc_constants.choices import YES_NO
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 from bhp077.apps.microbiome.choices import MEDICATIONS
+from bhp077.apps.microbiome_infant.managers.infant_inline_manager import InfantInlineModelManager
 
 
 class InfantFuNewMed(InfantScheduledVisitModel):
@@ -22,8 +23,6 @@ class InfantFuNewMed(InfantScheduledVisitModel):
         help_text="do not report if the same course was recorded at previous visit. "
                   "only report oral and intravenous meds",
     )
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -68,9 +67,12 @@ class InfantFuNewMedItems(BaseUuidModel):
         verbose_name="Drug route",
     )
 
-    objects = models.Manager()
+    objects = InfantInlineModelManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return self.get_visit().natural_key()
 
     def __unicode__(self):
         return unicode(self.get_visit())

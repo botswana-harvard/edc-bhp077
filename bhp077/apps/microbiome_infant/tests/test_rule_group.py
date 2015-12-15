@@ -15,10 +15,11 @@ from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFacto
 from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
 
-from bhp077.apps.microbiome_maternal.visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+from bhp077.apps.microbiome_maternal.visit_schedule import (
+    AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
 from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
-from bhp077.apps.microbiome_infant.tests.factories import \
-    (InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory, InfantFuFactory)
+from bhp077.apps.microbiome_infant.tests.factories import (
+    InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory, InfantFuFactory)
 
 
 class TestRuleGroup(TestCase):
