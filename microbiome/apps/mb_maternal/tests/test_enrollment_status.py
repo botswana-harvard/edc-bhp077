@@ -7,7 +7,8 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_maternal.tests.factories import (AntenatalEnrollmentFactory, MaternalEligibilityFactory, PostnatalEnrollmentFactory)
+from microbiome.apps.mb_maternal.tests.factories import (
+    AntenatalEnrollmentFactory, MaternalEligibilityFactory, PostnatalEnrollmentFactory)
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule
@@ -37,7 +38,7 @@ class TestEnrollmentStatus(TestCase):
         antenatal_enrollment = AntenatalEnrollmentFactory(
             current_hiv_status=POS,
             evidence_hiv_status=YES,
-            rapid_test_done=NOT_APPLICABLE,            
+            rapid_test_done=NOT_APPLICABLE,
             registered_subject=self.registered_subject,
             gestation_wks=35)
         self.assertFalse(antenatal_enrollment.is_eligible)

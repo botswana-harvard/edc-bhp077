@@ -36,8 +36,7 @@ class EnrollmentTestModel(EnrollmentMixin):
         super(EnrollmentTestModel, self).save(*args, **kwargs)
 
     class Meta:
-        app_label = 'mb_maternal
-'
+        app_label = 'mb_maternal'
 
 
 class BaseEnrollTestForm(BaseEnrollmentForm):
