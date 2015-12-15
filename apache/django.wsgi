@@ -4,7 +4,7 @@ import sys
 #import platform
 
 VIRTUALENV_PATH = '/home/django/.virtualenvs/microbiome/'
-SOURCE_ROOT_PATH = '/home/django/source/microbiome/'
+SOURCE_ROOT_PATH = '/home/django/source/'
 LOCAL_PROJECT_RELPATH = 'microbiome/'
 
 # Add the site-packages of the chosen virtualenv to work with
