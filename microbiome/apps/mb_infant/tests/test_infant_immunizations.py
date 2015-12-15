@@ -11,8 +11,8 @@ from edc.subject.appointment.models import Appointment
 from edc_constants.constants import YES, NO, NEG
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_infant.forms import (InfantFuImmunizationsForm, VaccinesReceivedForm,
-                                                 VaccinesMissedForm)
+from microbiome.apps.mb_infant.forms import (
+    InfantFuImmunizationsForm, VaccinesReceivedForm, VaccinesMissedForm)
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile

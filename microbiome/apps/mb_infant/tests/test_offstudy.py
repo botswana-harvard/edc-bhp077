@@ -3,29 +3,25 @@ from django.utils import timezone
 from datetime import date
 
 from edc.subject.registration.models import RegisteredSubject
-from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
+from edc.entry_meta_data.models import ScheduledEntryMetaData
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NO, POS, NEG, NOT_REQUIRED, OFF_STUDY
+from edc_constants.constants import NEW, YES, NEG, OFF_STUDY
 
-from microbiome.apps.mb.constants import LIVE
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_maternal.tests.factories import (MaternalEligibilityFactory, AntenatalEnrollmentFactory,
-    MaternalVisitFactory)
+from microbiome.apps.mb_maternal.tests.factories import (
+    MaternalEligibilityFactory, MaternalVisitFactory)
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory, ReproductiveHealthFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
-from microbiome.apps.mb_maternal.models import PostnatalEnrollment
 
-from microbiome.apps.mb_maternal.visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
-from microbiome.apps.mb_infant.tests.factories import (InfantBirthFactory, InfantBirthDataFactory,
-                                                           InfantVisitFactory, InfantOffStudyFactory
-                                                           )
-from microbiome.apps.mb_infant.models import InfantBirth
+from microbiome.apps.mb_infant.tests.factories import (
+    InfantBirthFactory, InfantVisitFactory, InfantOffStudyFactory)
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT
 
 from ..forms import InfantOffStudyForm

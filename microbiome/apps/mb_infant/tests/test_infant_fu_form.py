@@ -48,7 +48,8 @@ class TestInfantFu(TestCase):
         InfantBirthVisitSchedule().build()
 
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_eligibility.registered_subject
 
         PostnatalEnrollmentFactory(
@@ -91,11 +92,15 @@ class TestInfantFu(TestCase):
         self.data['infant_birth'] = self.infant_visit.id
         self.data['was_hospitalized'] = YES
         infant_fu = BaseTestInfantFuForm(data=self.data)
-        self.assertIn(u'If infant was hospitalized, please provide # of days hospitalized', infant_fu.errors.get('__all__'))
+        self.assertIn(
+            'If infant was hospitalized, please provide # of days hospitalized',
+            infant_fu.errors.get('__all__'))
 
     def test_validate_hospitalization_duration(self):
         self.data['infant_birth'] = self.infant_visit.id
         self.data['was_hospitalized'] = YES
         self.data['days_hospitalized'] = 100
         infant_fu = BaseTestInfantFuForm(data=self.data)
-        self.assertIn(u'days hospitalized cannot be greater than 90days', infant_fu.errors.get('__all__'))
+        self.assertIn(
+            'days hospitalized cannot be greater than 90days',
+            infant_fu.errors.get('__all__'))

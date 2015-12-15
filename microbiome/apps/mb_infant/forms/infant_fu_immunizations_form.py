@@ -164,6 +164,7 @@ class VaccinesMissedForm(BaseInfantModelForm):
                 raise forms.ValidationError('You said {} vaccine was missed. Give a reason'
                                             ' for missing this vaccine'.format(
                                                 cleaned_data.get('missed_vaccine_name')))
+
     class Meta:
         model = VaccinesMissed
         fields = '__all__'

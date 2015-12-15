@@ -65,5 +65,7 @@ class TestSpecimenConsent(TestCase):
             specimen_consent.purpose_explained = NO
             specimen_consent.save()
             form = SpecimenConsentForm
-            self.assertIn(u'If may_store_samples is YES, ensure that purpose of sample storage is explained.', form.errors.get('__all__'))
+            self.assertIn(
+                'If may_store_samples is YES, ensure that purpose of '
+                'sample storage is explained.', form.errors.get('__all__'))
             self.assertRaises(forms.ValidationError)
