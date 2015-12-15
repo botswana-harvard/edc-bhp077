@@ -120,8 +120,6 @@ class InfantBirthExam(InfantScheduledVisitModel):
         blank=True,
         null=True)
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:

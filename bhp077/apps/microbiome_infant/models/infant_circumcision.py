@@ -17,8 +17,6 @@ class InfantCircumcision(InfantScheduledVisitModel):
         help_text="",
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:

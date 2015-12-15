@@ -95,8 +95,6 @@ class InfantStoolCollection(InfantScheduledVisitModel):
         default=NOT_APPLICABLE,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     def __unicode__(self):

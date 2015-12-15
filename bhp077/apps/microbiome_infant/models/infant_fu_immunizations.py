@@ -8,6 +8,7 @@ from edc_base.model.models import BaseUuidModel
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 from bhp077.apps.microbiome.choices import REASONS_VACCINES_MISSED
 from ..choices import IMMUNIZATIONS, INFANT_AGE_VACCINE_GIVEN
+from bhp077.apps.microbiome_infant.managers.infant_inline_manager import InfantInlineModelManager
 
 
 class InfantFuImmunizations(InfantScheduledVisitModel):
@@ -25,8 +26,6 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         choices=YES_NO_UNKNOWN,
         verbose_name="Is the child missing any vaccinations?",
         help_text="")
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -64,9 +63,12 @@ class VaccinesReceived(BaseUuidModel):
         blank=True,
         max_length=35)
 
-    objects = models.Manager()
+    objects = InfantInlineModelManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return self.get_visit().natural_key()
 
     def __unicode__(self):
         return unicode(self.infant_fu_immunizations)
@@ -108,12 +110,15 @@ class VaccinesMissed(BaseUuidModel):
 
     reason_missed_other = OtherCharField()
 
-    objects = models.Manager()
+    objects = InfantInlineModelManager()
 
     history = AuditTrail()
 
     def __unicode__(self):
         return unicode(self.infant_fu_immunizations)
+
+    def natural_key(self):
+        return self.get_visit().natural_key()
 
     def get_visit(self):
         return self.infant_fu_immunizations.infant_visit

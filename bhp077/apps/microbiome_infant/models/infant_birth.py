@@ -11,6 +11,8 @@ from edc_constants.choices import GENDER_UNDETERMINED
 from bhp077.apps.microbiome_maternal.models import MaternalLabourDel
 from bhp077.apps.microbiome_infant.models.infant_off_study_mixin import InfantOffStudyMixin
 
+from ..managers import InfantBirthModelManager
+
 
 class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
     """ A model completed by the user on the infant's birth. """
@@ -46,9 +48,13 @@ class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
         max_length=10,
         choices=GENDER_UNDETERMINED)
 
-    objects = models.Manager()
+    objects = InfantBirthModelManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return self.maternal_labour_del.natural_key()
+    natural_key.dependencies = ['microbiome_maternal.maternallabourdel']
 
     def __unicode__(self):
         return "{} ({}) {}".format(self.first_name, self.initials, self.gender)

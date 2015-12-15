@@ -5,14 +5,14 @@ from edc_constants.choices import YES_NO
 from edc_base.model.models import BaseUuidModel
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from ..managers import InfantInlineModelManager
+
 from bhp077.apps.microbiome.choices import DX_INFANT
 
 
 class InfantFuDx(InfantScheduledVisitModel):
 
     """ A model completed by the user on the infant's follow up dx. """
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -51,9 +51,12 @@ class InfantFuDxItems(BaseUuidModel):
         verbose_name="Hospitalized?",
         help_text="",)
 
-    objects = models.Manager()
+    objects = InfantInlineModelManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return self.get_visit().natural_key()
 
     def __unicode__(self):
         return unicode(self.infant_fu_dx.infant_visit)

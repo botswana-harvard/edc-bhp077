@@ -16,6 +16,7 @@ from bhp077.apps.microbiome.choices import (
     VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS)
 
 from .infant_off_study_mixin import InfantOffStudyMixin
+from edc.subject.visit_tracking.managers.base_visit_tracking_manager import BaseVisitTrackingManager
 
 
 class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
@@ -58,9 +59,9 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         null=True,
         blank=True)
 
-    objects = models.Manager()
-
     history = AuditTrail()
+
+    objects = BaseVisitTrackingManager()
 
     def __unicode__(self):
         return '{} {} {}'.format(
@@ -112,7 +113,11 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
                 'infantrequisition',
                 'DNA PCR',
                 message=self.appointment.visit_definition.code,
-                )
+            )
+
+    def natural_key(self):
+        return self.get_appointment().natural_key()
+    natural_key.dependencies = ['appointment.appointment', ]
 
     def get_visit_reason_choices(self):
         return VISIT_REASON

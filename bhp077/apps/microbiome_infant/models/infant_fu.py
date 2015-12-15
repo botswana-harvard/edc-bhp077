@@ -51,8 +51,6 @@ class InfantFu(InfantScheduledVisitModel):
         validators=[MinValueValidator(0), MaxValueValidator(90), ],
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     def __unicode__(self):

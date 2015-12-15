@@ -12,13 +12,12 @@ from bhp077.apps.microbiome.choices import (
     SKIN_ABNORMALITY, TRISOME_CHROSOMESOME_ABNORMALITY, OTHER_DEFECT)
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from bhp077.apps.microbiome_infant.managers.infant_inline_manager import InfantInlineModelManager
 
 
 class InfantCongenitalAnomalies(InfantScheduledVisitModel):
 
     """ A model completed by the user on the infant's congenital anomalies. """
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -30,9 +29,12 @@ class InfantCongenitalAnomalies(InfantScheduledVisitModel):
 class BaseCnsItem(BaseUuidModel):
     congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
 
-    objects = models.Manager()
+    objects = InfantInlineModelManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return self.get_visit().natural_key()
 
     def get_visit(self):
         return self.congenital_anomalies.get_visit()
@@ -75,8 +77,6 @@ class InfantCnsAbnormalityItems(BaseCnsItem):
         null=True,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -108,8 +108,6 @@ class InfantFacialDefectItems(BaseCnsItem):
         blank=True,
         null=True,
     )
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -143,8 +141,6 @@ class InfantCleftDisorderItems(BaseCnsItem):
         null=True,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -176,8 +172,6 @@ class InfantMouthUpGastrointestinalItems(BaseCnsItem):
         blank=True,
         null=True
     )
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -211,8 +205,6 @@ class InfantCardiovascularDisorderItems(BaseCnsItem):
         null=True,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -244,8 +236,6 @@ class InfantRespiratoryDefectItems(BaseCnsItem):
         blank=True,
         null=True,
     )
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -279,8 +269,6 @@ class InfantLowerGastrointestinalItems(BaseCnsItem):
         null=True,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -312,8 +300,6 @@ class InfantFemaleGenitalAnomalyItems(BaseCnsItem):
         blank=True,
         null=True,
     )
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -347,8 +333,6 @@ class InfantMaleGenitalAnomalyItems(BaseCnsItem):
         null=True,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -381,8 +365,6 @@ class InfantRenalAnomalyItems(BaseCnsItem):
         null=True,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -414,8 +396,6 @@ class InfantMusculoskeletalAbnormalItems(BaseCnsItem):
         blank=True,
         null=True,
     )
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
@@ -451,8 +431,6 @@ class InfantSkinAbnormalItems(BaseCnsItem):
         null=True,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -485,8 +463,6 @@ class InfantTrisomiesChromosomeItems(BaseCnsItem):
         null=True,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
 
     class Meta:
@@ -518,8 +494,6 @@ class InfantOtherAbnormalityItems(BaseCnsItem):
         blank=True,
         null=True,
     )
-
-    objects = models.Manager()
 
     history = AuditTrail()
 
