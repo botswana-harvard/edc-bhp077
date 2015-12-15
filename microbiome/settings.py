@@ -70,6 +70,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_revision',
+    'south',
+
     'edc_base',
     'edc_consent',
     'edc_constants',
