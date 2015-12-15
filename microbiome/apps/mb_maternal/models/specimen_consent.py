@@ -2,7 +2,7 @@ from django.db import models
 
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.audit_trail import AuditTrail
 from edc_consent.models import RequiresConsentMixin, BaseSpecimenConsent
 from edc_consent.models.fields import SampleCollectionFieldsMixin, VulnerabilityFieldsMixin
@@ -13,7 +13,7 @@ from .maternal_consent import MaternalConsent
 
 
 class SpecimenConsent(BaseSpecimenConsent, SampleCollectionFieldsMixin, RequiresConsentMixin,
-                      VulnerabilityFieldsMixin, BaseAppointmentMixin, BaseUuidModel):
+                      VulnerabilityFieldsMixin, BaseAppointmentMixin, BaseSyncUuidModel):
 
     """ A model completed by the user when a mother gives consent for specimen storage. """
 

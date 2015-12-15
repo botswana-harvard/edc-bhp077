@@ -4,13 +4,13 @@ from edc_death_report.models import DeathReportMixin
 
 from edc.subject.registration.models.registered_subject import RegisteredSubject
 from edc.entry_meta_data.managers.entry_meta_data_manager import EntryMetaDataManager
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 
 from .maternal_visit import MaternalVisit
 from ..managers import ScheduledModelManager
 
 
-class MaternalDeathReport(DeathReportMixin, BaseUuidModel):
+class MaternalDeathReport(DeathReportMixin, BaseSyncUuidModel):
 
     """ A model completed by the user on the mother's death. """
 

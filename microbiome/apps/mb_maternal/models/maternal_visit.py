@@ -2,7 +2,7 @@ from django.db import models
 
 from edc.entry_meta_data.models import MetaDataMixin
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_consent.models import RequiresConsentMixin
 from edc_constants.constants import OFF_STUDY, YES, POS, UNSCHEDULED, NEG, DEATH_VISIT
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
@@ -17,7 +17,7 @@ from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
 class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, RequiresConsentMixin,
-                    BaseVisitTracking, BaseUuidModel):
+                    BaseVisitTracking, BaseSyncUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 

@@ -1,7 +1,7 @@
 from django.db import models
 
 from edc.lab.lab_profile.models import BaseProcessing
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 
 from ..managers import AliquotProcessingManager
 
@@ -9,7 +9,7 @@ from .aliquot import Aliquot
 from .aliquot_profile import AliquotProfile
 
 
-class AliquotProcessing(BaseProcessing, BaseUuidModel):
+class AliquotProcessing(BaseProcessing, BaseSyncUuidModel):
 
     aliquot = models.ForeignKey(
         Aliquot,

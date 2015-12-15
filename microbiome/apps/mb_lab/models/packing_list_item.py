@@ -2,7 +2,7 @@ from django.db import models
 
 from edc.lab.lab_packing.models import BasePackingListItem
 from edc.subject.registration.models import RegisteredSubject
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 
 from .aliquot import Aliquot
 from .infant_requisition import InfantRequisition
@@ -13,7 +13,7 @@ from .panel import Panel
 from ..managers import PackingListItemManager
 
 
-class PackingListItem(BasePackingListItem, BaseUuidModel):
+class PackingListItem(BasePackingListItem, BaseSyncUuidModel):
 
     packing_list = models.ForeignKey(PackingList, null=True)
 

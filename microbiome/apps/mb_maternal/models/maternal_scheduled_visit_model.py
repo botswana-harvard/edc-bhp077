@@ -4,7 +4,7 @@ from django.utils import timezone
 from edc.data_manager.models import TimePointStatusMixin
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_consent.models import RequiresConsentMixin
 
@@ -15,7 +15,7 @@ from .maternal_visit import MaternalVisit
 
 
 class MaternalScheduledVisitModel(MaternalOffStudyMixin, RequiresConsentMixin,
-                                  TimePointStatusMixin, BaseUuidModel):
+                                  TimePointStatusMixin, BaseSyncUuidModel):
 
     """ Base model for all scheduled models (adds key to :class:`MaternalVisit`). """
 
