@@ -253,7 +253,7 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
         "is/are NOT reported?",
         help_text="")
 
-    wcs_dx_adult = models.ManyToManyField(
+    who = models.ManyToManyField(
         WcsDxAdult,
         verbose_name="List any new WHO Stage III/IV diagnoses that are not reported in Question 3 below:  ",
     )

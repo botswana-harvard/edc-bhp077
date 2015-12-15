@@ -124,5 +124,5 @@ class InfantBirthExam(InfantScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Birth Record: Exam"
-        verbose_name_plural = "Infant Birth Record: Exam"
+        verbose_name = "Infant Birth: Exam"
+        verbose_name_plural = "Infant Birth: Exam"

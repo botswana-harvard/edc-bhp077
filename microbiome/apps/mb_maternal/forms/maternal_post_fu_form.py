@@ -18,12 +18,12 @@ class MaternalPostFuForm(BaseMaternalModelForm):
                 raise forms.ValidationError(
                     'You indicated that participant was NOT weighed, yet provided the weight. '
                     'Please correct.')
-        if 'chronic_cond' in cleaned_data.keys():
+        if 'chronic' in cleaned_data.keys():
             self.validate_m2m(
                 label='chronic conditions',
-                leading=cleaned_data.get('chronic_cond_since'),
-                m2m=cleaned_data.get('chronic_cond'),
-                other=cleaned_data.get('chronic_cond_other'))
+                leading=cleaned_data.get('chronic_since'),
+                m2m=cleaned_data.get('chronic'),
+                other=cleaned_data.get('chronic_other'))
         if cleaned_data.get('systolic_bp') < cleaned_data.get('diastolic_bp'):
             raise forms.ValidationError('Systolic blood pressure cannot be lower than the diastolic blood preassure.'
                                         ' Please correct.')
@@ -38,11 +38,11 @@ class MaternalPostFuDxForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(MaternalPostFuDxForm, self).clean()
         # WHO validations
-        if 'wcs_dx_adult' in cleaned_data.keys():
+        if 'who' in cleaned_data.keys():
             self.validate_m2m_wcs_dx(
                 label='who diagnoses',
                 leading=cleaned_data.get('who_clinical_stage'),
-                m2m=cleaned_data.get('wcs_dx_adult'))
+                m2m=cleaned_data.get('who'))
         check_dx = self.data.get('maternalpostfudxt_set-0-post_fu_dx')
         if cleaned_data.get('new_diagnoses') == 'Yes' and not check_dx:
             raise forms.ValidationError(

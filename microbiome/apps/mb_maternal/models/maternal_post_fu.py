@@ -65,7 +65,7 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         help_text="",
     )
 
-    chronic_cond_since = models.CharField(
+    chronic_since = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name=(
@@ -74,13 +74,13 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         help_text="",
     )
 
-    chronic_cond = models.ManyToManyField(
+    chronic = models.ManyToManyField(
         ChronicConditions,
         verbose_name="Select all that apply",
         help_text="",
     )
 
-    chronic_cond_other = OtherCharField()
+    chronic_other = OtherCharField()
 
     comment = models.CharField(
         max_length=350,
@@ -126,7 +126,7 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
                       " the diagnoses listed in the WHO Adult/Adolescent HIV clinical staging"
                       " document which are NEW?"),
         help_text="",)
-    wcs_dx_adult = models.ManyToManyField(
+    who = models.ManyToManyField(
         WcsDxAdult,
         verbose_name="List any new WHO Stage III/IV diagnoses that are not reported")
 

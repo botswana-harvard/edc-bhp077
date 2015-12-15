@@ -24,7 +24,7 @@ class InfantCongenitalAnomalies(InfantScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies"
+        verbose_name = "Congenital Anomalies"
 
 
 class BaseCnsItem(BaseUuidModel):
@@ -82,7 +82,7 @@ class InfantCns(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:Cns"
+        verbose_name = "Congenital Anomalies:Cns"
 
 
 class InfantFacialDefect(BaseCnsItem):
@@ -114,7 +114,7 @@ class InfantFacialDefect(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:Facial"
+        verbose_name = "Congenital Anomalies:Facial"
 
 
 class InfantCleftDisorder(BaseCnsItem):
@@ -146,7 +146,7 @@ class InfantCleftDisorder(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:Cleft"
+        verbose_name = "Congenital Anomalies:Cleft"
 
 
 class InfantMouthUpGi(BaseCnsItem):
@@ -178,7 +178,7 @@ class InfantMouthUpGi(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:MouthUp"
+        verbose_name = "Congenital Anomalies:MouthUp"
 
 
 class InfantCardioDisorder(BaseCnsItem):
@@ -210,7 +210,7 @@ class InfantCardioDisorder(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:Cardio"
+        verbose_name = "Congenital Anomalies:Cardio"
 
 
 class InfantRespiratoryDefect(BaseCnsItem):
@@ -242,7 +242,7 @@ class InfantRespiratoryDefect(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:Respitarory"
+        verbose_name = "Congenital Anomalies:Respiratory"
 
 
 class InfantLowerGi(BaseCnsItem):
@@ -274,7 +274,7 @@ class InfantLowerGi(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:LowerGast"
+        verbose_name = "Congenital Anomalies:Lower GI"
 
 
 class InfantFemaleGenital(BaseCnsItem):
@@ -306,7 +306,7 @@ class InfantFemaleGenital(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:FemaleGen"
+        verbose_name = "Congenital Anomalies:Female Gen"
 
 
 class InfantMaleGenital(BaseCnsItem):
@@ -338,7 +338,7 @@ class InfantMaleGenital(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:MaleGen"
+        verbose_name = "Congenital Anomalies:Male Gen"
 
 
 class InfantRenal(BaseCnsItem):
@@ -370,7 +370,7 @@ class InfantRenal(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:Renal"
+        verbose_name = "Congenital Anomalies: Renal"
 
 
 class InfantMusculoskeletal(BaseCnsItem):
@@ -402,7 +402,7 @@ class InfantMusculoskeletal(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:Musculosk"
+        verbose_name = "Congenital Anomalies: Musculo-sk"
 
 
 class InfantSkin(BaseCnsItem):
@@ -436,7 +436,7 @@ class InfantSkin(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:Skin"
+        verbose_name = "Congenital Anomalies: Skin"
 
 
 class InfantTrisomies(BaseCnsItem):
@@ -468,7 +468,7 @@ class InfantTrisomies(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:Trisomes"
+        verbose_name = "Congenital Anomalies: Trisomes"
 
 
 class InfantOtherAbnormalityItems(BaseCnsItem):
@@ -500,4 +500,4 @@ class InfantOtherAbnormalityItems(BaseCnsItem):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Congenital Anomalies:Other"
+        verbose_name = "Congenital Anomalies: Other"

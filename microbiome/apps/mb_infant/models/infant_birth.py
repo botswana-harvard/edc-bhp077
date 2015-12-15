@@ -84,5 +84,4 @@ class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Birth Record"
-        verbose_name_plural = "Infant Birth Record"
+        verbose_name = "Infant Birth"

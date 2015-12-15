@@ -83,5 +83,5 @@ class InfantBirthData(InfantScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Birth Record: Data"
-        verbose_name_plural = "Infant Birth Records: Data"
+        verbose_name = "Infant Birth: Data"
+        verbose_name_plural = "Infant Birth: Data"

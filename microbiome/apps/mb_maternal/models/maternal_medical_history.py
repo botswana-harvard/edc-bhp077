@@ -16,18 +16,18 @@ class MaternalMedicalHistory(MaternalScheduledVisitModel):
 
     CONSENT_MODEL = MaternalConsent
 
-    chronic_cond_since = models.CharField(
+    chronic_since = models.CharField(
         max_length=25,
         choices=YES_NO,
         verbose_name=("Does the mother have any significant chronic condition(s) that were"
                       " diagnosed prior to the current pregnancy and that remain ongoing?"),)
 
-    chronic_cond = models.ManyToManyField(
+    chronic = models.ManyToManyField(
         ChronicConditions,
         verbose_name="Chronic Diagnosis. Tick all that apply",
         help_text="")
 
-    chronic_cond_other = OtherCharField(
+    chronic_other = OtherCharField(
         max_length=35,
         verbose_name="if other specify...",
         blank=True,
@@ -40,7 +40,7 @@ class MaternalMedicalHistory(MaternalScheduledVisitModel):
                       " a WHO Stage III or IV illness?"),
         help_text="Please use the WHO Staging Guidelines. ONLY for HIV infected mothers")
 
-    wcs_dx_adult = models.ManyToManyField(
+    who = models.ManyToManyField(
         WcsDxAdult,
         verbose_name="List any new WHO Stage III/IV diagnoses that are not reported")
 

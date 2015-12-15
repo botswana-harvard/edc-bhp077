@@ -72,5 +72,4 @@ class InfantFuDxItems(BaseUuidModel):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant FollowUp: Dx Items"
-        verbose_name_plural = "Infant FollowUp: Dx Items"
+        verbose_name = "Infant FollowUp: Dx"

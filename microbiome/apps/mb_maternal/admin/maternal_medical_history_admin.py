@@ -13,16 +13,16 @@ class MaternalMedicalHistoryAdmin(BaseModelAdmin):
 
     form = MaternalMedicalHistoryForm
     fields = ('maternal_visit',
-              'chronic_cond_since',
-              'chronic_cond',
-              'chronic_cond_other',
+              'chronic_since',
+              'chronic',
+              'chronic_other',
               'who_diagnosis',
-              'wcs_dx_adult')
-    list_display = ('maternal_visit', 'chronic_cond_since', )
-    list_filter = ('chronic_cond_since', )
-    radio_fields = {'chronic_cond_since': admin.VERTICAL,
+              'who')
+    list_display = ('maternal_visit', 'chronic_since', )
+    list_filter = ('chronic_since', )
+    radio_fields = {'chronic_since': admin.VERTICAL,
                     'who_diagnosis': admin.VERTICAL}
-    filter_horizontal = ('chronic_cond', 'wcs_dx_adult',)
+    filter_horizontal = ('chronic', 'who',)
 
     actions = [
         export_as_csv_action(
