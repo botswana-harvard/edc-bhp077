@@ -2,12 +2,12 @@ from django.test import TestCase
 from django.utils import timezone
 
 from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS
 from edc.subject.code_lists.models import WcsDxAdult
+from edc.subject.lab_tracker.classes import site_lab_tracker
+from edc.subject.rule_groups.classes import site_rule_groups
+from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS
 
 from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory)
@@ -63,15 +63,16 @@ class TestMaternalMedicalHistoryForm(TestCase):
             rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES)
         self.assertTrue(self.postnatal_enrollment.is_eligible)
-        self.appointment_visit_2000 = Appointment.objects.get(
-            registered_subject=self.registered_subject_2,
-            visit_definition__code='2000M')
         self.appointment_visit_1000 = Appointment.objects.get(
             registered_subject=self.registered_subject_1,
             visit_definition__code='1000M')
+        self.appointment_visit_2000 = Appointment.objects.get(
+            registered_subject=self.registered_subject_2,
+            visit_definition__code='2000M')
 
         self.maternal_visit_1000 = MaternalVisitFactory(appointment=self.appointment_visit_1000)
         self.maternal_visit_2000 = MaternalVisitFactory(appointment=self.appointment_visit_2000)
+
         chronic_condition = ChronicConditions.objects.exclude(
             name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
         wcs_dx_adult = WcsDxAdult.objects.get(short_name__icontains=NOT_APPLICABLE)
@@ -87,42 +88,67 @@ class TestMaternalMedicalHistoryForm(TestCase):
             'Participant reported no chronic disease at {enrollment}, '
             'yet you are reporting the participant has {condition}.')
 
-    def test_chronic_but_not_listed(self):
+    def test_chronic_condition_but_not_listed(self):
         """If indicated has chronic condition and no conditions supplied."""
         self.data['chronic_cond_since'] = YES
-        chronic_condition = ChronicConditions.objects.exclude(
-            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
-        self.data['chronic_cond'] = [chronic_condition.id]
-        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
-        self.assertIn('You stated there ARE chronic condition', errors)
-
-    def test_no_chronic_but_listed(self):
-        """If indicated has NO chronic condition and conditions supplied"""
-        chronic_condition = ChronicConditions.objects.exclude(
-            name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
-        self.data['chronic_cond'] = [chronic_condition.id]
-        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
-        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
-        self.assertIn('You stated there are NO chronic conditions.', errors)
-
-    def test_who_but_not_listed(self):
-        """Assert raises if has WHO diagnosis but they are not listed."""
-        self.data['who_diagnosis'] = YES
-        self.data['wcs_dx_adult'] = None
-        self.data['chronic_cond_since'] = NO
         self.data['chronic_cond'] = None
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
         errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
-        self.assertIn('You stated there ARE WHO diagnoses', errors)
+        self.assertIn('You mentioned there are chronic conditions. Please list them.', errors)
 
-    def test_no_who_but_listed(self):
+    def test_no_chronic_condition_but_listed(self):
+        """If indicated has NO chronic condition and conditions supplied"""
+        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
+        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
+        self.assertIn('You stated there are NO chronic conditions. Please correct', errors)
+
+    def test_has_who_diagnosis_but_not_listed(self):
+        """Assert raises if has WHO diagnosis but they are not listed."""
+        self.data['chronic_cond_since'] = NO
+        self.data['chronic_cond'] = None
+        self.data['who_diagnosis'] = YES
+        self.data['wcs_dx_adult'] = None
+        maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
+        errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
+        self.assertIn('You mentioned participant has WHO diagnosis. Please list them.', errors)
+
+    def test_no_who_diagnosis_but_listed(self):
         """Assert raises if does not have WHO diagnosis but they are not listed."""
+        self.data['chronic_cond_since'] = NO
+        self.data['chronic_cond'] = None
         self.data['who_diagnosis'] = NO
         wcs_dx_adult = WcsDxAdult.objects.all().first()
         self.data['wcs_dx_adult'] = [wcs_dx_adult.id]
-        self.data['chronic_cond_since'] = NO
-        self.data['chronic_cond'] = None
         maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
         errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
         self.assertIn('You stated there are NO WHO diagnoses', errors)
+
+    def test_chronic_conditions_vs_antenatal_enrollment(self):
+        """Test any reported chronic conditions matches what was report at antenatal enrollment."""
+        conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertension']
+        for condition in conditions:
+            chronic_condition = ChronicConditions.objects.get(name=condition)
+            self.data['maternal_visit'] = self.maternal_visit_1000.id
+            self.data['chronic_cond_since'] = YES
+            self.data['chronic_cond'] = [chronic_condition.id]
+            maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
+            errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
+            error_msg = self.error_message_template.format(
+                enrollment=AntenatalEnrollment._meta.verbose_name,
+                condition=condition)
+            self.assertIn(error_msg, errors)
+
+    def test_chronic_conditions_vs_postnatal_enrollment(self):
+        """Test any reported chronic conditions matches what was report at postnatal enrollment."""
+        conditions = ['Tuberculosis', 'Chronic Diabetes', 'Chronic Hypertension']
+        for condition in conditions:
+            chronic_condition = ChronicConditions.objects.get(name=condition)
+            self.data['maternal_visit'] = self.maternal_visit_2000.id
+            self.data['chronic_cond_since'] = YES
+            self.data['chronic_cond'] = [chronic_condition.id]
+            maternal_medicalHistory_form = MaternalMedicalHistoryForm(data=self.data)
+            errors = ''.join(maternal_medicalHistory_form.errors.get('__all__') or [])
+            error_msg = self.error_message_template.format(
+                enrollment=PostnatalEnrollment._meta.verbose_name,
+                condition=condition)
+            self.assertIn(error_msg, errors)

@@ -1,11 +1,10 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
-from edc_constants.choices import NO
+from edc_constants.choices import NEG, YES
 
 from base_maternal_model_form import BaseMaternalModelForm
 
-from ..models import MaternalMedicalHistory
+from ..models import MaternalMedicalHistory, PostnatalEnrollment
 
 
 class MaternalMedicalHistoryForm(BaseMaternalModelForm):
@@ -25,9 +24,38 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
                 leading=cleaned_data.get('who_diagnosis'),
                 m2m=cleaned_data.get('wcs_dx_adult'))
 
-        # HIV NEG, then cannot fill in a WHO diagnosis
-
+        self.who_stage_diagnosis_for_neg_mother()
+        self.validate_has_chronic_condition_no_listing()
+        self.chronic_condition_on_enrollment()
+        self.validate_has_who_diagnosis_no_listing()
         return cleaned_data
+
+    def validate_has_chronic_condition_no_listing(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('chronic_cond_since') == YES:
+            if not cleaned_data.get('chronic_cond'):
+                raise forms.ValidationError(
+                    "You mentioned there are chronic conditions. Please list them.")
+
+    def validate_has_who_diagnosis_no_listing(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('who_diagnosis') == YES:
+            if not cleaned_data.get('wcs_dx_adult'):
+                raise forms.ValidationError(
+                    "You mentioned participant has WHO diagnosis. Please list them.")
+
+    def who_stage_diagnosis_for_neg_mother(self):
+        """Confirms the NEG HIV status of a mother and throws
+        validation error on WHO stage selection """
+        cleaned_data = self.cleaned_data
+        try:
+            postnatal_enrollment = PostnatalEnrollment.objects.get(
+                registered_subject=cleaned_data.get('maternal_visit').appointment.registered_subject)
+            if postnatal_enrollment.enrollment_hiv_status == NEG:
+                if cleaned_data.get('who_diagnosis') == YES:
+                    raise forms.ValidationError("Mother is NEG. WHO stage diagnosis should be No.")
+        except PostnatalEnrollment.DoesNotExist:
+            pass
 
     class Meta:
         model = MaternalMedicalHistory
