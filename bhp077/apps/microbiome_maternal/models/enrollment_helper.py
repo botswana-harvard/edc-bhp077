@@ -28,11 +28,12 @@ class EnrollmentHelper(object):
             super(EnrollmentMixin, self).save(*args, **kwargs)
     """
 
-    def __init__(self, instance):
+    def __init__(self, instance, exception_cls=None):
         self._enrollment_hiv_status = None
         self.date_at_32wks = None
         self.instance = instance
         self.enrollment = self.instance._meta.verbose_name
+        self.exception_cls = exception_cls
 
         # make all fields from the enrollment instance available to this instance
         for field in self.instance._meta.fields:
@@ -110,9 +111,9 @@ class EnrollmentHelper(object):
         """Returns the hiv status if evidence is available or None."""
         hiv_status = None
         if self.evidence_hiv_status == YES:
-            if self.hiv_status_on_or_after_32wk() == POS:
+            if self.hiv_status_on_or_after_32wk(self.exception_cls) == POS:
                 hiv_status = POS
-            elif self.hiv_status_on_or_after_32wk() == NEG:
+            elif self.hiv_status_on_or_after_32wk(self.exception_cls) == NEG:
                 hiv_status = NEG
             elif self.current_hiv_status == POS and self.rapid_test_done in [NO, NOT_APPLICABLE]:
                 hiv_status = POS
