@@ -54,8 +54,8 @@ class MaternalLabDelMedAdmin(BaseModelAdmin):
     list_display = ('has_health_cond', 'has_ob_comp')
     radio_fields = {'has_health_cond': admin.VERTICAL,
                     'has_ob_comp': admin.VERTICAL,
-                    'took_suppliments': admin.VERTICAL}
-    filter_horizontal = ('suppliments', 'health_cond', 'ob_comp')
+                    'took_supplements': admin.VERTICAL}
+    filter_horizontal = ('supplements', 'health_cond', 'ob_comp')
 
     actions = [
         export_as_csv_action(

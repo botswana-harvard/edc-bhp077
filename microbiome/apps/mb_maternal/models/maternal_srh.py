@@ -38,10 +38,16 @@ class MaternalSrh(MaternalScheduledVisitModel):
         max_length=15,
         choices=YES_NO_DWTA)
 
-    contraceptives = models.ManyToManyField(
+    contr = models.ManyToManyField(
         Contraceptives,
         verbose_name='If yes, which method did you select? ',
         help_text='Tell us all that apply')
+
+    contr_other = OtherCharField(
+        max_length=35,
+        verbose_name="If Other enter text description of other contraceptive method being used",
+        blank=True,
+        null=True)
 
     reason_not_initiated = models.CharField(
         verbose_name=('If you have not initiated a contraceptive method after attending'

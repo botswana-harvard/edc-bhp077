@@ -1,5 +1,5 @@
 from .antenatal_enrollment_factory import AntenatalEnrollmentFactory
-from .lists_factory import SupplimentsFactory, HealthCondFactory, ChronicConditions
+from .lists_factory import SupplementsFactory, HealthCondFactory, ChronicConditions
 from .maternal_consent_factory import MaternalConsentFactory
 from .maternal_eligibility_factory import MaternalEligibilityFactory
 from .maternal_labour_del_factory import MaternalLabourDelFactory

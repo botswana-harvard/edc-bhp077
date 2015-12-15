@@ -68,12 +68,12 @@ class MaternalLabDelMedForm(BaseMaternalModelForm):
                 leading=cleaned_data.get('has_ob_comp'),
                 m2m=cleaned_data.get('ob_comp'),
                 other=cleaned_data.get('ob_comp_other'))
-        if 'suppliments' in cleaned_data.keys():
+        if 'supplements' in cleaned_data.keys():
             self.validate_m2m(
                 label='pregnancy suppliment',
-                leading=cleaned_data.get('took_suppliments'),
-                m2m=cleaned_data.get('suppliments'),
-                other=cleaned_data.get('suppliments_other'))
+                leading=cleaned_data.get('took_supplements'),
+                m2m=cleaned_data.get('supplements'),
+                other=cleaned_data.get('supplements_other'))
         return cleaned_data
 
     class Meta:

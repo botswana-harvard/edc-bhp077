@@ -10,7 +10,7 @@ from edc_constants.choices import YES_NO, YES_NO_UNKNOWN, YES_NO_NA
 from edc_constants.constants import NOT_APPLICABLE
 
 from microbiome.apps.mb.choices import DX_MATERNAL
-from microbiome.apps.mb_list.models import Suppliments, HealthCond, ObComp
+from microbiome.apps.mb_list.models import Supplements, HealthCond, ObComp
 
 from ..managers import MaternalLabDelDxTManager
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY
@@ -103,8 +103,8 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = "Maternal Labour & Delivery"
-        verbose_name_plural = "Maternal Labour & Delivery"
+        verbose_name = "Delivery"
+        verbose_name_plural = "Delivery"
 
 
 class MaternalLabDelMed(MaternalScheduledVisitModel):
@@ -143,18 +143,18 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
 
     ob_comp_other = OtherCharField()
 
-    took_suppliments = models.CharField(
+    took_supplements = models.CharField(
         max_length=3,
         choices=YES_NO,
         verbose_name="Did the mother take any of the following medications during this pregnancy?",
         help_text="")
 
-    suppliments = models.ManyToManyField(
-        Suppliments,
+    supplements = models.ManyToManyField(
+        Supplements,
         verbose_name="Please select relevant medications taken:",
         help_text="Select all that apply")
 
-    suppliments_other = OtherCharField()
+    supplements_other = OtherCharField()
 
     comment = models.TextField(
         max_length=250,
@@ -166,8 +166,8 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = "Maternal Labour & Delivery: Medical History"
-        verbose_name_plural = "Maternal Labour & Delivery: Medical History"
+        verbose_name = "Delivery: Medical"
+        verbose_name_plural = "Delivery: Medical"
 
 
 class MaternalLabDelClinic(MaternalScheduledVisitModel):
@@ -234,8 +234,8 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = "Maternal Labour & Delivery: Clinical History"
-        verbose_name_plural = "Maternal Labour & Delivery: Clinical History"
+        verbose_name = "Delivery: Clinical"
+        verbose_name_plural = "Delivery: Clinical"
 
 
 class MaternalLabDelDx(MaternalScheduledVisitModel):
@@ -268,8 +268,8 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = "Maternal Labour & Delivery: Preg Dx"
-        verbose_name_plural = "Maternal Labour & Delivery: Preg Dx"
+        verbose_name = "Delivery: Preg Dx"
+        verbose_name_plural = "Delivery: Preg Dx"
 
 
 class MaternalLabDelDxT (BaseUuidModel):
@@ -326,5 +326,5 @@ class MaternalLabDelDxT (BaseUuidModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = "Maternal Labour & Delivery: Preg DxT"
-        verbose_name_plural = "Maternal Labour & Delivery: Preg DxT"
+        verbose_name = "Delivery: Preg DxT"
+        verbose_name_plural = "Delivery: Preg DxT"

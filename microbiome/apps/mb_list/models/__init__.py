@@ -6,4 +6,4 @@ from .household_goods import HouseholdGoods
 from .infant_vaccines import InfantVaccines
 from .maternal_lab_del import HealthCond, DelComp, ObComp, LabDelDx
 from .prior_arv import PriorArv
-from .suppliments import Suppliments
+from .supplements import Supplements

@@ -1477,7 +1477,7 @@
 },
 {
     "pk": 1, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "N/A", 
@@ -1495,7 +1495,7 @@
 },
 {
     "pk": 2, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "B complex", 
@@ -1513,7 +1513,7 @@
 },
 {
     "pk": 3, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Vitamins C", 
@@ -1531,7 +1531,7 @@
 },
 {
     "pk": 4, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Isoniazid", 
@@ -1549,7 +1549,7 @@
 },
 {
     "pk": 5, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Cotrimoxazole", 
@@ -1567,7 +1567,7 @@
 },
 {
     "pk": 6, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Ferrous (separate from prenatal vitamins)", 
@@ -1585,7 +1585,7 @@
 },
 {
     "pk": 7, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Prenatal vitamins", 
@@ -1603,7 +1603,7 @@
 },
 {
     "pk": 9, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Folate", 
@@ -1621,7 +1621,7 @@
 },
 {
     "pk": 10, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Amoxicilin", 
@@ -1639,7 +1639,7 @@
 },
 {
     "pk": 11, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Gentamicin", 
@@ -1657,7 +1657,7 @@
 },
 {
     "pk": 12, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Metronidazole", 
@@ -1675,7 +1675,7 @@
 },
 {
     "pk": 13, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Ampicilin", 
@@ -1693,7 +1693,7 @@
 },
 {
     "pk": 14, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Penicilin", 
@@ -1711,7 +1711,7 @@
 },
 {
     "pk": 15, 
-    "model": "mb_list.suppliments", 
+    "model": "mb_list.supplements", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Other", 

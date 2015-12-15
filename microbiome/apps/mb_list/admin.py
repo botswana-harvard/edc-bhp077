@@ -4,7 +4,7 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 
 from .models import (
     ChronicConditions, Contraceptives, DiseasesAtEnrollment, HouseholdGoods,
-    PriorArv, AutopsyInfoSource, Suppliments, InfantVaccines,
+    PriorArv, AutopsyInfoSource, Supplements, InfantVaccines,
     HealthCond, DelComp, ObComp, LabDelDx)
 
 
@@ -38,9 +38,9 @@ class AutopsyInfoSourceAdmin(BaseModelAdmin):
 admin.site.register(AutopsyInfoSource, AutopsyInfoSourceAdmin)
 
 
-class SupplimentsAdmin(BaseModelAdmin):
+class SupplementsAdmin(BaseModelAdmin):
     pass
-admin.site.register(Suppliments, SupplimentsAdmin)
+admin.site.register(Supplements, SupplementsAdmin)
 
 
 class InfantVaccinesAdmin(BaseModelAdmin):

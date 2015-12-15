@@ -24,7 +24,7 @@ class MaternalSrhForm(BaseMaternalModelForm):
             self.validate_m2m(
                 label='contraceptive method',
                 leading=cleaned_data.get('is_contraceptive_initiated'),
-                m2m=cleaned_data.get('contraceptives')
+                m2m=cleaned_data.get('contra')
             )
         if cleaned_data.get('is_contraceptive_initiated') == NO:
             if not cleaned_data.get('reason_not_initiated'):

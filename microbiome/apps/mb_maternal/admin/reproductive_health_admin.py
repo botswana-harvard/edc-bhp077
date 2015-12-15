@@ -17,8 +17,8 @@ class ReproductiveHealthAdmin(BaseModelAdmin):
               'next_child',
               'contraceptive_measure',
               'uses_contraceptive',
-              'contraceptives',
-              'contraceptives_other',
+              'contr',
+              'contr_other',
               'srh_referral')
     radio_fields = {'more_children': admin.VERTICAL,
                     'next_child': admin.VERTICAL,
