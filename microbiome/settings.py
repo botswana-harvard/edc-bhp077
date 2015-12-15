@@ -51,6 +51,8 @@ elif socket.gethostname() == 'leslie':
     KEY_PATH = '/Users/lesliek/keys'
 elif socket.gethostname() == 'edc4.bhp.org.bw':
     KEY_PATH = '/home/django/source/keys'
+elif socket.gethostname() == 'microbiome.bhp.org.bw':
+    KEY_PATH = '/home/django/source/keys'
 else:
     KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
 
