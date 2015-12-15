@@ -25,7 +25,7 @@ class ReproductiveHealthAdmin(BaseModelAdmin):
                     'contraceptive_measure': admin.VERTICAL,
                     'uses_contraceptive': admin.VERTICAL,
                     'srh_referral': admin.VERTICAL}
-    filter_horizontal = ('contraceptives',)
+    filter_horizontal = ('contr',)
 
     actions = [
         export_as_csv_action(
