@@ -3,7 +3,7 @@ import sys
 #import site
 #import platform
 
-VIRTUALENV_PATH = '/home/django/.virtualenvs/django-1.6.7/'
+VIRTUALENV_PATH = '/home/django/.virtualenvs/microbiome/'
 SOURCE_ROOT_PATH = '/home/django/source/bhp077/microbiome/'
 LOCAL_PROJECT_RELPATH = 'bhp077/'
 
