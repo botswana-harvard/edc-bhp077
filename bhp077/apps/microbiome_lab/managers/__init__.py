@@ -5,3 +5,6 @@ from .profile_item_manager import ProfileItemManager
 from .panel_manager import PanelManager
 from .requisition_manager import RequisitionManager
 from .packing_list_manager import PackingListManager, PackingListItemManager
+from .result_manager import ResultManager
+from .receive_manager import ReceiveManager
+from .result_item_manager import ResultItemManager

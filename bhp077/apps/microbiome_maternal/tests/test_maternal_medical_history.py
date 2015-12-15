@@ -122,4 +122,5 @@ class TestMaternalMedicalHistoryForm(TestCase):
         wcs_dx_adult = WcsDxAdult.objects.get(short_name__icontains='Pneumocystis pneumonia')
         self.data['wcs_dx_adult'] = [wcs_dx_adult.id]
         form = MaternalMedicalHistoryForm(data=self.data)
-        self.assertIn('You stated there are NO WHO diagnosess. Please correct', form.errors.get('__all__'))
+        self.assertIn('You stated there are NO WHO diagnosess. Please correct',
+                      form.errors.get('__all__'))
