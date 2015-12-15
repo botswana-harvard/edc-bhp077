@@ -13,8 +13,7 @@ class InfantDashboard(RegisteredSubjectDashboard):
     view = 'infant_dashboard'
     dashboard_url_name = 'subject_dashboard_url'
     dashboard_name = 'Infant Dashboard'
-    urlpattern_view = 'apps.mb_dashboard
-.views'
+    urlpattern_view = 'apps.mb_dashboard.views'
     template_name = 'infant_dashboard.html'
     urlpatterns = [
         RegisteredSubjectDashboard.urlpatterns[0][:-1] +

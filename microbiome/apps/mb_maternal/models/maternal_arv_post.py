@@ -135,7 +135,6 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
         return self.maternal_arv_post.get_subject_identifier()
 
     class Meta:
-        app_label = "mb_maternal
-"
+        app_label = 'mb_maternal'
         verbose_name = "Maternal ARVs Post: Adherence"
         verbose_name_plural = "Maternal ARVs Post: Adherence"

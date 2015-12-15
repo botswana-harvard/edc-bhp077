@@ -32,8 +32,7 @@ class InfantBirthFeedVaccine(InfantScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Birth Feeding & Vaccination"
         verbose_name_plural = "Infant Birth Feeding & Vaccination"
 
@@ -73,14 +72,12 @@ class InfantVaccines(BaseUuidModel):
         return self.infant_birth_feed_vaccine.get_subject_identifier()
 
     def get_absolute_url(self):
-        return reverse('admin:mb_infant
-_infantvaccines_change', args=(self.id,))
+        return reverse('admin:mb_infant_infantvaccines_change', args=(self.id,))
 
     def natural_key(self):
         return self.get_visit().natural_key()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Vaccines"
         verbose_name_plural = "Infant Vaccines"

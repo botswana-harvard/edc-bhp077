@@ -23,8 +23,7 @@ from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitS
 
 class BaseTestInfantFuModel(InfantFu):
     class Meta:
-        app_label = 'mb_infant
-'
+        app_label = 'mb_infant'
 
 
 class BaseTestInfantFuForm(InfantFuForm):

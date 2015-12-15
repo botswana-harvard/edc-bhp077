@@ -62,8 +62,7 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
         return self.report_datetime
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
 
 
 class InfantVerbalAutopsyItems(BaseUuidModel):
@@ -111,6 +110,5 @@ class InfantVerbalAutopsyItems(BaseUuidModel):
         return self.verbal_autopsy.infant_visit
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Verbal Autopsy:Item"

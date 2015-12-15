@@ -123,7 +123,6 @@ class InfantBirthExam(InfantScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Birth Record: Exam"
         verbose_name_plural = "Infant Birth Record: Exam"

@@ -32,7 +32,6 @@ class InfantArvProph(InfantScheduledVisitModel):
         return unicode(self.infant_visit)
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = 'Infant NVP or AZT Proph'
         verbose_name_plural = 'Infant NVP or AZT Proph'

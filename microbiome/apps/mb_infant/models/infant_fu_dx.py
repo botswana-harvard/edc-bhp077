@@ -17,8 +17,7 @@ class InfantFuDx(InfantScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant FollowUp: Dx"
         verbose_name_plural = "Infant FollowUp: Dx"
 
@@ -72,7 +71,6 @@ class InfantFuDxItems(BaseUuidModel):
         return self.infant_fu_dx.get_subject_identifier()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant FollowUp: Dx Items"
         verbose_name_plural = "Infant FollowUp: Dx Items"

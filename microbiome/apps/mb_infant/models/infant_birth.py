@@ -11,7 +11,8 @@ from edc_constants.choices import GENDER_UNDETERMINED
 from microbiome.apps.mb_maternal.models import MaternalLabourDel
 
 from ..managers import InfantBirthModelManager
-from ..models.infant_off_study_mixin import InfantOffStudyMixin
+
+from .infant_off_study_mixin import InfantOffStudyMixin
 
 
 class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
@@ -82,7 +83,6 @@ class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
         return self.registered_subject.subject_identifier
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Birth Record"
         verbose_name_plural = "Infant Birth Record"

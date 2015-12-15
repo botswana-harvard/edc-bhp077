@@ -5,7 +5,7 @@ from edc.subject.registration.models.registered_subject import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_offstudy.models import OffStudyModelMixin
-from edc.subject.visit_tracking.managers.base_visit_tracking_manager import BaseVisitTrackingManager
+from edc_visit_tracking.managers import BaseVisitTrackingManager
 
 from .infant_visit import InfantVisit
 
@@ -38,7 +38,6 @@ class InfantOffStudy(OffStudyModelMixin, BaseUuidModel):
         return self.infant_visit.appointment.registered_subject.subject_identifier
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Off-Study"
         verbose_name_plural = "Infant Off-Study"

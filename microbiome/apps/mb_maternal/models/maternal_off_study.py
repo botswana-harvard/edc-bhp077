@@ -15,13 +15,12 @@ class MaternalOffStudy(OffStudyModelMixin, BaseUuidModel):
     """ A model completed by the user that completed when the subject is taken off-study. """
 
     VISIT_MODEL = MaternalVisit
-    REGISTERED_SUBJECT_MODEL = RegisteredSubject
 
     registered_subject = models.OneToOneField(RegisteredSubject)
 
     maternal_visit = models.OneToOneField(MaternalVisit)
 
-    objects = MaternalOffStudyManager(REGISTERED_SUBJECT_MODEL)
+    objects = MaternalOffStudyManager(RegisteredSubject)
 
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 

@@ -23,8 +23,7 @@ class InfantCongenitalAnomalies(InfantScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies"
 
 
@@ -82,8 +81,7 @@ class InfantCns(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:Cns"
 
 
@@ -115,8 +113,7 @@ class InfantFacialDefect(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:Facial"
 
 
@@ -148,8 +145,7 @@ class InfantCleftDisorder(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:Cleft"
 
 
@@ -181,8 +177,7 @@ class InfantMouthUpGi(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:MouthUp"
 
 
@@ -214,8 +209,7 @@ class InfantCardioDisorder(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:Cardio"
 
 
@@ -247,8 +241,7 @@ class InfantRespiratoryDefect(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:Respitarory"
 
 
@@ -280,8 +273,7 @@ class InfantLowerGi(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:LowerGast"
 
 
@@ -313,8 +305,7 @@ class InfantFemaleGenital(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:FemaleGen"
 
 
@@ -346,8 +337,7 @@ class InfantMaleGenital(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:MaleGen"
 
 
@@ -379,8 +369,7 @@ class InfantRenal(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:Renal"
 
 
@@ -412,8 +401,7 @@ class InfantMusculoskeletal(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:Musculosk"
 
 
@@ -447,8 +435,7 @@ class InfantSkin(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:Skin"
 
 
@@ -480,8 +467,7 @@ class InfantTrisomies(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:Trisomes"
 
 
@@ -513,6 +499,5 @@ class InfantOtherAbnormalityItems(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Congenital Anomalies:Other"

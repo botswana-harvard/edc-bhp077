@@ -263,7 +263,6 @@ class InfantFeeding(InfantScheduledVisitModel):
         return None
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Feeding"
         verbose_name_plural = "Infant Feeding"

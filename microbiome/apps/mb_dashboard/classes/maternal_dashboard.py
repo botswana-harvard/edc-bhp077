@@ -17,8 +17,7 @@ class MaternalDashboard(RegisteredSubjectDashboard):
     view = 'maternal_dashboard'
     dashboard_url_name = 'subject_dashboard_url'
     dashboard_name = 'Maternal Dashboard'
-    urlpattern_view = 'apps.mb_dashboard
-.views'
+    urlpattern_view = 'apps.mb_dashboard.views'
     template_name = 'maternal_dashboard.html'
     urlpatterns = [
         RegisteredSubjectDashboard.urlpatterns[0][:-1] +

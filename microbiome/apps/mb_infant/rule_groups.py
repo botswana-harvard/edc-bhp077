@@ -7,7 +7,7 @@ from edc.subject.rule_groups.classes import (RuleGroup, site_rule_groups, Logic,
 
 from microbiome.apps.mb_maternal.models import PostnatalEnrollment
 
-from .models import (InfantBirthData, InfantVisit, InfantFu)
+from .models import (InfantBirthData, InfantVisit, InfantFu, InfantStoolCollection)
 
 
 def func_maternal_hiv_pos(visit_instance):

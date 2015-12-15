@@ -16,7 +16,7 @@ from microbiome.apps.mb.choices import (
     VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS)
 
 from .infant_off_study_mixin import InfantOffStudyMixin
-from edc.subject.visit_tracking.managers.base_visit_tracking_manager import BaseVisitTrackingManager
+from edc_visit_tracking.managers.base_visit_tracking_manager import BaseVisitTrackingManager
 
 
 class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
@@ -86,12 +86,10 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         This method is called in a post-save signal in edc.entry_meta_data."""
 
         if self.reason == OFF_STUDY:
-            self.change_to_off_study_visit(self.appointment, 'mb_infant
-', 'infantoffstudy')
+            self.change_to_off_study_visit(self.appointment, 'mb_infant', 'infantoffstudy')
         elif self.reason == DEATH_VISIT:
             self.change_to_death_visit(
-                self.appointment, 'mb_infant
-', 'infantoffstudy', 'infantdeath')
+                self.appointment, 'mb_infant', 'infantoffstudy', 'infantdeath')
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
         elif self.reason == SCHEDULED:
@@ -103,8 +101,7 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         if self.appointment.visit_definition.code == '2000':
             self.form_is_required(
                 self.appointment,
-                'mb_infant
-',
+                'mb_infant',
                 'infantbirtharv',
                 message=self.appointment.visit_definition.code)
 
@@ -112,8 +109,7 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         if self.appointment.visit_definition.code in ['2010', '2030', '2060', '2090', '2120']:
             self.requisition_is_required(
                 self.appointment,
-                'mb_lab
-',
+                'mb_lab',
                 'infantrequisition',
                 'DNA PCR',
                 message=self.appointment.visit_definition.code,
@@ -135,7 +131,6 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         return dct
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Visit"
         verbose_name_plural = "Infant Visit"

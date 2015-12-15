@@ -90,8 +90,7 @@ class TestOffStudy(TestCase):
         self.assertEqual(
             ScheduledEntryMetaData.objects.filter(
                 entry_status=NEW,
-                entry__app_label='mb_infant
-',
+                entry__app_label='mb_infant',
                 entry__model_name='infantoffstudy',
                 appointment=self.infant_appointment).count(), 1)
 

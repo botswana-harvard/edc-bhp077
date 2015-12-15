@@ -69,8 +69,7 @@ class TestRuleGroup(TestCase):
         self.assertEqual(
             ScheduledEntryMetaData.objects.filter(
                 entry_status=UNKEYED,
-                entry__app_label='mb_infant
-',
+                entry__app_label='mb_infant',
                 entry__model_name='infantbirtharv',
                 appointment=appointment).count(), 1)
 
@@ -101,8 +100,7 @@ class TestRuleGroup(TestCase):
         self.assertEqual(
             ScheduledEntryMetaData.objects.filter(
                 entry_status=NEW,
-                entry__app_label='mb_infant
-',
+                entry__app_label='mb_infant',
                 entry__model_name='infantcongenitalanomalies',
                 appointment=appointment).count(), 1)
 
@@ -177,14 +175,12 @@ class TestRuleGroup(TestCase):
         InfantFuFactory(infant_visit=infant_visit)
         self.assertEqual(ScheduledEntryMetaData.objects.filter(
             entry_status=NEW,
-            entry__app_label='mb_infant
-',
+            entry__app_label='mb_infant',
             entry__model_name='infantfuphysical',
             appointment=appointment).count(), 1)
         self.assertEqual(ScheduledEntryMetaData.objects.filter(
             entry_status=NEW,
-            entry__app_label='mb_infant
-',
+            entry__app_label='mb_infant',
             entry__model_name='infantfudx',
             appointment=appointment).count(), 1)
 
@@ -230,7 +226,6 @@ class TestRuleGroup(TestCase):
             reason=SCHEDULED)
         self.assertEqual(ScheduledEntryMetaData.objects.filter(
             entry_status=UNKEYED,
-            entry__app_label='mb_infant
-',
+            entry__app_label='mb_infant',
             entry__model_name='infantcircumcision',
             appointment=appointment).count(), 1)

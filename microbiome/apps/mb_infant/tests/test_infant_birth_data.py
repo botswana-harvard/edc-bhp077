@@ -24,8 +24,7 @@ from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitS
 
 class BaseTestInfantBirthDataModel(InfantBirthData):
     class Meta:
-        app_label = 'mb_infant
-'
+        app_label = 'mb_infant'
 
 
 class BaseTestInfantBirthDataForm(InfantBirthDataForm):

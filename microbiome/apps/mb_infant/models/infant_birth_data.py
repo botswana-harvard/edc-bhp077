@@ -82,7 +82,6 @@ class InfantBirthData(InfantScheduledVisitModel):
         return unicode(self.infant_visit)
 
     class Meta:
-        app_label = "mb_infant
-"
+        app_label = 'mb_infant'
         verbose_name = "Infant Birth Record: Data"
         verbose_name_plural = "Infant Birth Records: Data"
