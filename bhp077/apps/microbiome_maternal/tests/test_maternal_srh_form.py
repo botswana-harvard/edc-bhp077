@@ -45,7 +45,7 @@ class TestSrhServiceUtilizationForm(TestCase):
             'maternal_visit': None,
             'seen_at_clinic': YES,
             'is_contraceptive_initiated': YES,
-            'contraceptive_methods': [contraceptives.id],
+            'contraceptives': [contraceptives.id],
             'reason_not_initiated': None,
             'srh_referral': YES,
             'srh_referral_other': None
@@ -110,7 +110,7 @@ class TestSrhServiceUtilizationForm(TestCase):
         self.data['is_contraceptive_initiated'] = NO
         self.data['maternal_visit'] = maternal_visit.id
         contraceptives = Contraceptives.objects.exclude(name__icontains='other').first()
-        self.data['contraceptive_methods'] = [contraceptives.id]
+        self.data['contraceptives'] = [contraceptives.id]
         form = MaternalSrhForm(data=self.data)
         self.assertIn(
             'If have not initiated contraceptive method, please provide reason.',
