@@ -19,7 +19,6 @@ addons:
      - python-m2crypto
      - unixodbc-dev
      - python-pyodbc
-     - python-cups
 
 before_install:
     - "export DISPLAY=:99.0"
@@ -37,6 +36,7 @@ install:
   - pip install coveralls
   - pip install M2Crypto
   - pip install pyodbc
+  - pip install pycups
   - pip install -q -r requirements.txt
 
 before_script:
