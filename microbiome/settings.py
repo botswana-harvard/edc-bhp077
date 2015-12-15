@@ -267,7 +267,7 @@ DISPATCH_APP_LABELS = []
 DEVICE_ID = 91
 if socket.gethostname() in HOST_NAMES:
     DEVICE_ID = 99
-    PROJECT_TITLE = 'SERVER: Microbiome'
+    PROJECT_TITLE = 'Gut Microbiome Study Live Server'
 
 SITE_CODE = '40'
 SERVER_DEVICE_ID_LIST = [91, 92, 93, 94, 95, 96, 97, 99]
