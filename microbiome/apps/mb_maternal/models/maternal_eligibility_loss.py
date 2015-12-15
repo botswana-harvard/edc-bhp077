@@ -1,7 +1,7 @@
 from django.db import models
 
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 
 from .maternal_eligibility import MaternalEligibility
 from django.utils import timezone
@@ -9,7 +9,7 @@ from django.utils import timezone
 from ..managers import MaternalEligibilityLossManager
 
 
-class MaternalEligibilityLoss(BaseUuidModel):
+class MaternalEligibilityLoss(BaseSyncUuidModel):
     """ A model triggered and completed by system when a mother is in-eligible. """
 
     maternal_eligibility = models.OneToOneField(MaternalEligibility, null=True)

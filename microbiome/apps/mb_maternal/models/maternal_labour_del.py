@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from edc.subject.code_lists.models import WcsDxAdult
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.model.validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN, YES_NO_NA
 from edc_constants.constants import NOT_APPLICABLE
@@ -272,7 +272,7 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
         verbose_name_plural = "Delivery: Preg Dx"
 
 
-class MaternalLabDelDxT (BaseUuidModel):
+class MaternalLabDelDxT (BaseSyncUuidModel):
 
     """ Diagnosis during pregnancy collected during labor and delivery (transactions). """
 

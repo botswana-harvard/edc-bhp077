@@ -2,6 +2,7 @@ import factory
 
 from django.conf import settings
 from django.utils import timezone
+from datetime import date
 
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 from edc.core.bhp_variables.tests.factories import StudySiteFactory
@@ -22,7 +23,7 @@ class MaternalConsentFactory(factory.DjangoModelFactory):
     first_name = "DIMO"
     last_name = "DIMO"
     initials = "DD"
-    dob = timezone.datetime(1988, 7, 7, 0, 0, 0, 0)
+    dob = date(1988, 7, 7)
     is_dob_estimated = NO
     gender = "F"
     citizen = YES

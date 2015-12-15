@@ -5,7 +5,7 @@ from edc.subject.adverse_event.choices import GRADING_SCALE
 from edc.subject.code_lists.models import WcsDxAdult
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields.custom_fields import OtherCharField
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_constants.choices import YES_NO
 
 from microbiome.apps.mb_list.models import ChronicConditions
@@ -138,7 +138,7 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
         verbose_name_plural = "Maternal Postnatal Follow-Up: Dx"
 
 
-class MaternalPostFuDxT(BaseUuidModel):
+class MaternalPostFuDxT(BaseSyncUuidModel):
 
     """ Post-partum follow up of diagnosis (transactions). """
 

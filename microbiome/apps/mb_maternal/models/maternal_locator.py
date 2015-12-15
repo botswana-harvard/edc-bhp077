@@ -5,7 +5,7 @@ from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.encrypted_fields import EncryptedCharField
 from edc_base.model.fields import OtherCharField
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.model.validators import CellNumber, TelephoneNumber
 from edc_constants.choices import YES_NO
 from edc_locator.models import LocatorMixin
@@ -14,7 +14,7 @@ from .maternal_visit import MaternalVisit
 from ..managers import ScheduledModelManager
 
 
-class MaternalLocator(LocatorMixin, BaseUuidModel):
+class MaternalLocator(LocatorMixin, BaseSyncUuidModel):
 
     """ A model completed by the user to capture locator information and
     the details of the infant caretaker. """

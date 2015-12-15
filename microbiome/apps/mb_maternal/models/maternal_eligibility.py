@@ -5,7 +5,7 @@ from django.db.models import get_model
 
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_constants.choices import YES_NO
 from edc_constants.constants import YES, NO
@@ -16,7 +16,7 @@ from .maternal_consent import MaternalConsent
 from ..managers import MaternalEligibilityManager
 
 
-class MaternalEligibility (BaseUuidModel):
+class MaternalEligibility (BaseSyncUuidModel):
     """ This is the eligibility entry point for all mothers.
     If age eligible or not, an eligibility identifier is created for each mother. """
 

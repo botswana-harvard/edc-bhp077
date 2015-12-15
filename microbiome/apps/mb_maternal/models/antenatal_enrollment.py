@@ -3,7 +3,7 @@ from django.db import models
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 from edc_consent.models import RequiresConsentMixin
 
@@ -15,7 +15,7 @@ from ..managers import AntenatalEnrollmentManager
 
 
 class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmentMixin,
-                          RequiresConsentMixin, BaseUuidModel):
+                          RequiresConsentMixin, BaseSyncUuidModel):
 
     CONSENT_MODEL = MaternalConsent
 
@@ -39,7 +39,7 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
     history = AuditTrail()
 
     def natural_key(self):
-        return (self.report_datetime, self.registered_subject.natural_key())
+        return (self.registered_subject,)
 
     def save(self, *args, **kwargs):
         self.update_common_fields_to_postnatal_enrollment()

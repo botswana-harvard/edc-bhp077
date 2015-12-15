@@ -1,7 +1,7 @@
 from django.db import models
 
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_constants.choices import YES_NO
 from edc.subject.haart.choices import ARV_DRUG_LIST
 
@@ -52,7 +52,7 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
         verbose_name_plural = 'Maternal ARV In This Preg'
 
 
-class MaternalArv(BaseUuidModel):
+class MaternalArv(BaseSyncUuidModel):
 
     """ ARV table to indicate ARV medication taken by mother """
 

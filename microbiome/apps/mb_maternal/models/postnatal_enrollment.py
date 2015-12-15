@@ -4,7 +4,7 @@ from django.db.models import get_model
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 from edc_consent.models import RequiresConsentMixin
 from edc_constants.choices import YES_NO
@@ -18,7 +18,7 @@ from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
 class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmentMixin,
-                          RequiresConsentMixin, BaseUuidModel):
+                          RequiresConsentMixin, BaseSyncUuidModel):
 
     CONSENT_MODEL = MaternalConsent
 

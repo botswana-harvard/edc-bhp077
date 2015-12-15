@@ -7,7 +7,7 @@ from edc.core.identifier.classes import SubjectIdentifier
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_consent.models.base_consent import BaseConsent
 from edc_consent.models.fields import (
     PersonalFieldsMixin, CitizenFieldsMixin, ReviewFieldsMixin, VulnerabilityFieldsMixin)
@@ -23,7 +23,7 @@ from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
 class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
                       IdentityFieldsMixin, PersonalFieldsMixin,
-                      CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
+                      CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseSyncUuidModel):
 
     """ A model completed by the user on the mother's consent. """
 

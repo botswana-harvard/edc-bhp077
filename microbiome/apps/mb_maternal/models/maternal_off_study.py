@@ -3,14 +3,14 @@ from django.db import models
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.registration.models.registered_subject import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_offstudy.models import OffStudyModelMixin
 
 from .maternal_visit import MaternalVisit
 from ..managers import MaternalOffStudyManager
 
 
-class MaternalOffStudy(OffStudyModelMixin, BaseUuidModel):
+class MaternalOffStudy(OffStudyModelMixin, BaseSyncUuidModel):
 
     """ A model completed by the user that completed when the subject is taken off-study. """
 
