@@ -48,8 +48,8 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = 'Maternal ARV In This Preg: Pregnancy'
-        verbose_name_plural = 'Maternal ARV In This Preg: Pregnancy'
+        verbose_name = 'Maternal ARV In This Preg'
+        verbose_name_plural = 'Maternal ARV In This Preg'
 
 
 class MaternalArv(BaseUuidModel):

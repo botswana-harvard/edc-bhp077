@@ -86,5 +86,5 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = 'Maternal use of ARVs in Prior Pregnancy'
-        verbose_name_plural = 'Maternal use of ARVs in Prior Pregnancy'
+        verbose_name = 'Maternal ARVs Prior Pregnancy'
+        verbose_name_plural = 'Maternal ARVs Prior Pregnancies'

@@ -35,8 +35,7 @@ class MaternalPostFuMed(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = "Maternal Postnatal Follow-Up: Medications"
-        verbose_name_plural = "Maternal Postnatal Follow-Up: Medications"
+        verbose_name = 'Maternal Postnatal: Med'
 
 
 class MaternalPostFuMedItems(BaseUuidModel):
@@ -78,5 +77,4 @@ class MaternalPostFuMedItems(BaseUuidModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = "Maternal Postnatal Follow-Up: Medications"
-        verbose_name_plural = "Maternal Postnatal Follow-Up: Medications Items"
+        verbose_name = "Maternal Postnatal: Med Item"
