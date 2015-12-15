@@ -6,7 +6,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.entry_meta_data.managers import RequisitionMetaDataManager
 
-from bhp077.apps.microbiome_maternal.models import MaternalVisit
+from microbiome.apps.mb_maternal.models import MaternalVisit
 
 from ..managers import RequisitionManager
 
@@ -41,7 +41,7 @@ class MaternalRequisition(BaseRequisition, BaseUuidModel):
         return (self.requisition_identifier,)
 
     def aliquot(self):
-        url = reverse('admin:microbiome_lab_aliquot_changelist')
+        url = reverse('admin:mb_lab_aliquot_changelist')
         return """<a href="{url}?q={requisition_identifier}" />aliquot</a>""".format(
             url=url, requisition_identifier=self.requisition_identifier)
     aliquot.allow_tags = True
@@ -58,7 +58,7 @@ class MaternalRequisition(BaseRequisition, BaseUuidModel):
     dashboard.allow_tags = True
 
     class Meta:
-        app_label = 'microbiome_lab'
+        app_label = 'mb_lab'
         verbose_name = 'Maternal Requisition'
         verbose_name_plural = 'Maternal Requisition'
         unique_together = ('maternal_visit', 'panel', 'is_drawn')

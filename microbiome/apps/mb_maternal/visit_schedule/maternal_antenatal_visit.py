@@ -11,7 +11,7 @@ from .entries import maternal_history_entries, maternal_requisition_entries
 class AntenatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
 
     name = 'antenatal visit schedule'
-    app_label = 'microbiome_maternal'
+    app_label = 'mb_maternal'
 
     membership_forms = OrderedDict({'antenatal': MembershipFormTuple(
         'antenatal', AntenatalEnrollment, True), })

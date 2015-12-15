@@ -2,7 +2,7 @@ from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 
-from bhp077.apps.microbiome.choices import CIRCUMCISION
+from microbiome.apps.mb.choices import CIRCUMCISION
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
@@ -20,5 +20,6 @@ class InfantCircumcision(InfantScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Male Circumcision"

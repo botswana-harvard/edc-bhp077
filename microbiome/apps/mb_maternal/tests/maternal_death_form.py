@@ -8,14 +8,14 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc_constants.constants import YES, NO, NEG
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.forms import MaternalDeathReportForm
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_maternal.forms import MaternalDeathReportForm
 
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
-from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
+from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
 
 
 class TestMaternalDeathReportForm(TestCase):

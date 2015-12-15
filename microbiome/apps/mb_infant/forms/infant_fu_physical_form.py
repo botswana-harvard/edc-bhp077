@@ -2,7 +2,7 @@ from django import forms
 
 from edc_constants.constants import NO, NOT_EVALUATED, YES
 
-from bhp077.apps.microbiome_maternal.models import MaternalConsent
+from microbiome.apps.mb_maternal.models import MaternalConsent
 
 from ..models import InfantFuPhysical
 

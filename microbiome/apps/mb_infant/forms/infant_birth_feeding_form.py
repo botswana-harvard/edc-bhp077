@@ -4,7 +4,7 @@ from ..models import InfantBirthFeedVaccine, InfantVaccines
 
 from .base_infant_model_form import BaseInfantModelForm
 
-from bhp077.apps.microbiome_maternal.models import MaternalConsent
+from microbiome.apps.mb_maternal.models import MaternalConsent
 from ..models import InfantBirth
 
 

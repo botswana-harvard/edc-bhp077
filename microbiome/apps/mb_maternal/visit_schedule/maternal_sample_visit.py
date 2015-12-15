@@ -10,7 +10,7 @@ class SpecimenConsentVisitSchedule(VisitScheduleConfiguration):
 
     name = 'specimen visit schedule'
 
-    app_label = 'microbiome_maternal'
+    app_label = 'mb_maternal'
 
     membership_forms = OrderedDict({
         'specimen': MembershipFormTuple('specimen', SpecimenConsent, True)

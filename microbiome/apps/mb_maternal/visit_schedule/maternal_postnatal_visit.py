@@ -12,7 +12,7 @@ from .entries import (
 class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
 
     name = 'postnatal visit schedule'
-    app_label = 'microbiome_maternal'
+    app_label = 'mb_maternal'
 
     membership_forms = OrderedDict({'postnatal': MembershipFormTuple(
         'postnatal', PostnatalEnrollment, True), })

@@ -6,9 +6,10 @@ from edc.subject.appointment.admin import BaseAppointmentModelAdmin
 from edc.subject.appointment.models import Appointment
 from edc.export.actions import export_as_csv_action
 
+from microbiome.apps.mb_lab.models import MaternalRequisition
+
 from ..forms import MaternalVisitForm
 from ..models import MaternalVisit
-from bhp077.apps.microbiome_lab.models import MaternalRequisition
 
 
 class MaternalVisitAdmin(BaseAppointmentModelAdmin):

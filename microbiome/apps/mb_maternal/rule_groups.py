@@ -15,7 +15,7 @@ class ReproductiveHealthRuleGroup(RuleGroup):
         target_model=['maternalsrh'])
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         source_fk = (MaternalVisit, 'maternal_visit')
         source_model = ReproductiveHealth
 

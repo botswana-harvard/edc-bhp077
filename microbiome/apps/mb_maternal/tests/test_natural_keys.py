@@ -7,10 +7,10 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 
 from edc.subject.rule_groups.classes import site_rule_groups
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule
 
 
@@ -33,14 +33,14 @@ class NaturalKeyTests(TestCase):
 
     def test_p1(self):
         """Confirms all models have a natural_key method (except Audit models)"""
-        app = get_app('microbiome_maternal')
+        app = get_app('mb_maternal')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
                 self.assertTrue('natural_key' in dir(model), 'natural key not found in {0}'.format(model._meta.object_name))
 
     def test_p2(self):
         """Confirms all models have a get_by_natural_key manager method."""
-        app = get_app('microbiome_maternal')
+        app = get_app('mb_maternal')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
                 self.assertTrue('get_by_natural_key' in dir(model.objects), 'get_by_natural_key key not found in {0}'.format(model._meta.object_name))

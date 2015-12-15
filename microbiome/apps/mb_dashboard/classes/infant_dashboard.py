@@ -1,10 +1,11 @@
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 from edc_constants.constants import YES
-from bhp077.apps.microbiome_infant.models import InfantVisit, InfantBirth
-from bhp077.apps.microbiome_maternal.models import MaternalVisit
-from bhp077.apps.microbiome_lab.models import InfantRequisition, Receive, Result, ResultItem
-from bhp077.apps.microbiome_maternal.models import MaternalLocator, MaternalConsent, MaternalEligibility
+
+from microbiome.apps.mb_infant.models import InfantVisit, InfantBirth
+from microbiome.apps.mb_lab.models import InfantRequisition, Receive, Result, ResultItem
+from microbiome.apps.mb_maternal.models import MaternalLocator, MaternalConsent, MaternalEligibility
+from microbiome.apps.mb_maternal.models import MaternalVisit
 
 
 class InfantDashboard(RegisteredSubjectDashboard):
@@ -12,7 +13,8 @@ class InfantDashboard(RegisteredSubjectDashboard):
     view = 'infant_dashboard'
     dashboard_url_name = 'subject_dashboard_url'
     dashboard_name = 'Infant Dashboard'
-    urlpattern_view = 'apps.microbiome_dashboard.views'
+    urlpattern_view = 'apps.mb_dashboard
+.views'
     template_name = 'infant_dashboard.html'
     urlpatterns = [
         RegisteredSubjectDashboard.urlpatterns[0][:-1] +

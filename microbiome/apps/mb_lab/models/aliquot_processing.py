@@ -31,5 +31,5 @@ class AliquotProcessing(BaseProcessing, BaseUuidModel):
         return retval
 
     class Meta:
-        app_label = 'microbiome_lab'
-        db_table = 'microbiome_lab_processing'
+        app_label = 'mb_lab'
+        db_table = 'mb_lab_processing'

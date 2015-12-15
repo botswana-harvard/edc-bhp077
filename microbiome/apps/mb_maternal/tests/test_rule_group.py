@@ -8,18 +8,18 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc_constants.constants import NEW, YES, POS, NEG, UNKEYED, KEYED, NOT_REQUIRED, NOT_APPLICABLE
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory,
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_maternal.tests.factories import (MaternalEligibilityFactory,
                                                              MaternalVisitFactory)
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.tests.factories import (
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
+from microbiome.apps.mb_maternal.tests.factories import (
     PostnatalEnrollmentFactory, ReproductiveHealthFactory
 )
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_maternal.tests.factories.antenatal_enrollment_factory import AntenatalEnrollmentFactory
-from bhp077.apps.microbiome_maternal.models import RapidTestResult
+from microbiome.apps.mb_maternal.tests.factories.antenatal_enrollment_factory import AntenatalEnrollmentFactory
+from microbiome.apps.mb_maternal.models import RapidTestResult
 from django.utils import timezone
 
 
@@ -75,7 +75,7 @@ class TestRuleGroup(TestCase):
             for model_name in model_names:
                 self.assertEqual(ScheduledEntryMetaData.objects.filter(
                     entry_status=UNKEYED,
-                    entry__app_label='microbiome_maternal',
+                    entry__app_label='mb_maternal',
                     entry__model_name=model_name,
                     appointment=appointment
                 ).count(), 1)
@@ -97,7 +97,7 @@ class TestRuleGroup(TestCase):
             for model_name in model_names:
                 self.assertEqual(ScheduledEntryMetaData.objects.filter(
                     entry_status=UNKEYED,
-                    entry__app_label='microbiome_maternal',
+                    entry__app_label='mb_maternal',
                     entry__model_name=model_name,
                     appointment=appointment
                 ).count(), 1)
@@ -131,7 +131,7 @@ class TestRuleGroup(TestCase):
             for model_name in model_names:
                 self.assertEqual(ScheduledEntryMetaData.objects.filter(
                     entry_status=UNKEYED,
-                    entry__app_label='microbiome_maternal',
+                    entry__app_label='mb_maternal',
                     entry__model_name=model_name,
                     appointment=appointment
                 ).count(), 1)
@@ -169,7 +169,7 @@ class TestRuleGroup(TestCase):
                 for model_name in model_names:
                     self.assertEqual(ScheduledEntryMetaData.objects.filter(
                         entry_status=KEYED,
-                        entry__app_label='microbiome_maternal',
+                        entry__app_label='mb_maternal',
                         entry__model_name=model_name,
                         appointment=appointment
                     ).count(), 1)
@@ -177,7 +177,7 @@ class TestRuleGroup(TestCase):
                 for model_name in model_names:
                     self.assertEqual(ScheduledEntryMetaData.objects.filter(
                         entry_status=NOT_REQUIRED,
-                        entry__app_label='microbiome_maternal',
+                        entry__app_label='mb_maternal',
                         entry__model_name=model_name,
                         appointment=appointment
                     ).count(), 1)
@@ -211,7 +211,7 @@ class TestRuleGroup(TestCase):
             for model_name in model_names:
                 self.assertEqual(ScheduledEntryMetaData.objects.filter(
                     entry_status=UNKEYED,
-                    entry__app_label='microbiome_maternal',
+                    entry__app_label='mb_maternal',
                     entry__model_name=model_name,
                     appointment=appointment
                 ).count(), 1)
@@ -244,7 +244,7 @@ class TestRuleGroup(TestCase):
             MaternalVisitFactory(appointment=appointment)
             for model_name in model_names:
                 self.assertEqual(RequisitionMetaData.objects.filter(entry_status=NEW, **self.lab_entry_model_options(
-                    app_label='microbiome_lab', model_name=model_name, appointment=appointment, panel_name='Viral Load'
+                    app_label='mb_lab', model_name=model_name, appointment=appointment, panel_name='Viral Load'
                 )).count(), 1)
 
     def test_srh_referral_yes_on_srh(self):
@@ -269,5 +269,5 @@ class TestRuleGroup(TestCase):
                 maternal_visit=MaternalVisitFactory(appointment=appointment)
             )
             self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
-                app_label='microbiome_maternal', model_name='maternalsrh', appointment=appointment
+                app_label='mb_maternal', model_name='maternalsrh', appointment=appointment
             )).count(), 1)

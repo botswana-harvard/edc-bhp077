@@ -1,4 +1,4 @@
-# from bhp077.apps.microbiome_maternal.tests.functional_tests.microbiome_base_page import MicrobiomeBasePage
+# from microbiome.apps.mb_maternal.tests.functional_tests.microbiome_base_page import MicrobiomeBasePage
 # from .maternal_finders import MaternalEligibilityFinder, ConsentFinder, SpecimenConsentFinder
 #
 #

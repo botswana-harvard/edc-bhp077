@@ -3,8 +3,7 @@ from django import forms
 from edc_constants.constants import YES, NOT_APPLICABLE
 from base_maternal_model_form import BaseMaternalModelForm
 
-from ..models import MaternalClinicalHistory
-from bhp077.apps.microbiome_maternal.models.maternal_obsterical_history import MaternalObstericalHistory
+from ..models import MaternalClinicalHistory, MaternalObstericalHistory
 
 
 class MaternalClinicalHistoryForm(BaseMaternalModelForm):

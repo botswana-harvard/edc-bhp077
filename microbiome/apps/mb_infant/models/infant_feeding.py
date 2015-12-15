@@ -7,7 +7,7 @@ from edc_consent.plain_fields import IsDateEstimatedField
 from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNSURE_NA
 from edc_constants.constants import NOT_APPLICABLE
 
-from bhp077.apps.microbiome.choices import COWS_MILK, TIMES_BREASTFED, WATER_USED
+from microbiome.apps.mb.choices import COWS_MILK, TIMES_BREASTFED, WATER_USED
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
@@ -263,6 +263,7 @@ class InfantFeeding(InfantScheduledVisitModel):
         return None
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Feeding"
         verbose_name_plural = "Infant Feeding"

@@ -5,9 +5,10 @@ from edc_base.model.fields.custom_fields import IsDateEstimatedField
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_NA, YES_NO
 
+from ..maternal_choices import KNOW_HIV_STATUS
+
 from .maternal_consent import MaternalConsent
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from bhp077.apps.microbiome_maternal.maternal_choices import KNOW_HIV_STATUS
 
 
 class MaternalClinicalHistory(MaternalScheduledVisitModel):
@@ -84,6 +85,6 @@ class MaternalClinicalHistory(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Maternal use of ARVs in Prior Pregnancy'
         verbose_name_plural = 'Maternal use of ARVs in Prior Pregnancy'

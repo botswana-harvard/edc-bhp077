@@ -7,7 +7,7 @@ from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 from edc.core.bhp_variables.tests.factories import StudySiteFactory
 from edc_constants.constants import YES, NO
 
-from bhp077.apps.microbiome_maternal.models import MaternalConsent
+from microbiome.apps.mb_maternal.models import MaternalConsent
 
 
 class MaternalConsentFactory(factory.DjangoModelFactory):

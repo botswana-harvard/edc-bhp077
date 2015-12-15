@@ -12,10 +12,10 @@ from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 from edc_constants.constants import CONTINUOUS, STOPPED, RESTARTED
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_list.models import PriorArv
-from bhp077.apps.microbiome_maternal.forms import (MaternalArvHistoryForm)
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_list.models import PriorArv
+from microbiome.apps.mb_maternal.forms import (MaternalArvHistoryForm)
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 

@@ -1,7 +1,7 @@
 import factory
 
-from bhp077.apps.microbiome_list.models import Suppliments, ChronicConditions
-from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond
+from microbiome.apps.mb_list.models import Suppliments, ChronicConditions
+from microbiome.apps.mb_list.models.maternal_lab_del import HealthCond
 
 
 class SupplimentsFactory(factory.DjangoModelFactory):

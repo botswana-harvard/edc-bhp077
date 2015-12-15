@@ -1,4 +1,4 @@
-from bhp077.apps.microbiome.constants import NO_MODIFICATIONS
+from microbiome.apps.mb.constants import NO_MODIFICATIONS
 
 from ..models import InfantArvProph
 

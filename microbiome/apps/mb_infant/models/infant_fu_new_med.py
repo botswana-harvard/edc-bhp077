@@ -6,9 +6,11 @@ from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import DRUG_ROUTE
 from edc_constants.choices import YES_NO
 
+from microbiome.apps.mb.choices import MEDICATIONS
+
+from ..managers import InfantInlineModelManager
+
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
-from bhp077.apps.microbiome.choices import MEDICATIONS
-from bhp077.apps.microbiome_infant.managers.infant_inline_manager import InfantInlineModelManager
 
 
 class InfantFuNewMed(InfantScheduledVisitModel):
@@ -30,7 +32,8 @@ class InfantFuNewMed(InfantScheduledVisitModel):
         return unicode(self.infant_visit)
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant FollowUp: New Medication"
         verbose_name_plural = "Infant FollowUp: New Medication"
 
@@ -87,6 +90,7 @@ class InfantFuNewMedItems(BaseUuidModel):
         return self.infant_fu_med.get_subject_identifier()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant FollowUp: New Med Items"
         verbose_name_plural = "Infant FollowUp: New Med Items"

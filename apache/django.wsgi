@@ -4,8 +4,8 @@ import sys
 #import platform
 
 VIRTUALENV_PATH = '/home/django/.virtualenvs/microbiome/'
-SOURCE_ROOT_PATH = '/home/django/source/bhp077/microbiome/'
-LOCAL_PROJECT_RELPATH = 'bhp077/'
+SOURCE_ROOT_PATH = '/home/django/source/microbiome/'
+LOCAL_PROJECT_RELPATH = 'microbiome/'
 
 # Add the site-packages of the chosen virtualenv to work with
 activate_env=os.path.join(VIRTUALENV_PATH, 'bin/activate_this.py')
@@ -14,7 +14,7 @@ execfile(activate_env, dict(__file__=activate_env))
 # update path
 sys.path.insert(0, os.path.join(VIRTUALENV_PATH, 'local/lib/python2.7/site-packages'))
 sys.path.insert(0, os.path.join(SOURCE_ROOT_PATH, LOCAL_PROJECT_RELPATH))
-os.environ['DJANGO_SETTINGS_MODULE'] = 'bhp077.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'microbiome.settings'
 
 # Activate the virtual env
 #activate_env=os.path.join(VIRTUALENV_PATH, 'bin/activate_this.py')

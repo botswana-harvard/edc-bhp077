@@ -10,16 +10,16 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, POS, NEG, UNKEYED, OFF_STUDY, NOT_APPLICABLE
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.forms import MaternalOffStudyForm
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory, MaternalOffStudyFactory
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_maternal.forms import MaternalOffStudyForm
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory, MaternalOffStudyFactory
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
+from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 from dateutil.relativedelta import relativedelta
 
 
@@ -60,7 +60,7 @@ class TestOffStudy(TestCase):
         MaternalVisitFactory(appointment=appointment, reason=OFF_STUDY)
         self.assertEqual(ScheduledEntryMetaData.objects.filter(
             entry_status=UNKEYED,
-            entry__app_label='microbiome_maternal',
+            entry__app_label='mb_maternal',
             entry__model_name='maternaloffstudy',
             appointment=appointment).count(), 1)
 

@@ -71,7 +71,7 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
         'Boxing Day': date(2015, 12, 26)}
 
     consent_type_setup = [
-        {'app_label': 'microbiome_maternal',
+        {'app_label': 'mb_maternal',
          'model_name': 'maternalconsent',
          'start_datetime': study_start_datetime,
          'end_datetime': study_end_datetime,

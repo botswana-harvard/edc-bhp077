@@ -80,5 +80,5 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
         return (self.item_reference, )
 
     class Meta:
-        app_label = "microbiome_lab"
+        app_label = "mb_lab"
         verbose_name = 'Packing List Item'

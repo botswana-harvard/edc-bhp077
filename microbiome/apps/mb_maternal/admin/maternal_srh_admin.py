@@ -5,8 +5,8 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.export.actions import export_as_csv_action
 
-from bhp077.apps.microbiome_maternal.models import MaternalSrh
-from bhp077.apps.microbiome_maternal.forms import MaternalSrhForm
+from ..forms import MaternalSrhForm
+from ..models import MaternalSrh
 
 
 class MaternalSrhAdmin(BaseModelAdmin):

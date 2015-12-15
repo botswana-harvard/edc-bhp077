@@ -69,6 +69,6 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
                 pass
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Antenatal Enrollment'
         verbose_name_plural = 'Antenatal Enrollment'

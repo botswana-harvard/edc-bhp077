@@ -2,7 +2,7 @@ from django import forms
 
 from edc_constants.constants import NO, YES, NOT_APPLICABLE
 
-from bhp077.apps.microbiome.constants import NO_MODIFICATIONS
+from microbiome.apps.mb.constants import NO_MODIFICATIONS
 
 from ..models import MaternalArvPost, MaternalArvPostMod, MaternalArvPostAdh
 

@@ -4,7 +4,7 @@ from django.utils import timezone
 
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 
-from bhp077.apps.microbiome_maternal.models import MaternalOffStudy
+from microbiome.apps.mb_maternal.models import MaternalOffStudy
 
 from .maternal_visit_factory import MaternalVisitFactory
 

@@ -1,3 +1,5 @@
+import django_databrowse
+
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls import include, url, patterns
@@ -6,8 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import get_models
 from django.views.generic import RedirectView
 
-import django_databrowse
-
 from edc.data_manager.classes import data_manager
 from edc.dashboard.section.classes import site_sections
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -15,9 +15,9 @@ from edc.dashboard.subject.views import additional_requisition
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.subject.visit_schedule.classes import site_visit_schedules
-
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
 from edc_call_manager.caller_site import site_model_callers
+
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 
 site_lab_profiles.autodiscover()
 MicrobiomeConfiguration().prepare()

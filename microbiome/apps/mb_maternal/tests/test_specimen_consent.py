@@ -11,10 +11,10 @@ from edc_constants.choices import NO
 from .factories import (MaternalEligibilityFactory, MaternalConsentFactory, SpecimenConsentFactory)
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.models import SpecimenConsent
-from bhp077.apps.microbiome_maternal.forms.specimen_consent_form import SpecimenConsentForm
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_maternal.models import SpecimenConsent
+from microbiome.apps.mb_maternal.forms.specimen_consent_form import SpecimenConsentForm
 
 
 class TestSpecimenConsent(TestCase):

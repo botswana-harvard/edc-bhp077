@@ -6,8 +6,8 @@ from edc.subject.registration.models import RegisteredSubject
 from edc_consent.actions import flag_as_verified_against_paper, unflag_as_verified_against_paper
 from edc.export.actions import export_as_csv_action
 
-from bhp077.apps.microbiome_maternal.forms import MaternalConsentForm
-from bhp077.apps.microbiome_maternal.models import MaternalConsent
+from ..forms import MaternalConsentForm
+from ..models import MaternalConsent
 
 
 class MaternalConsentAdmin(BaseModelAdmin):

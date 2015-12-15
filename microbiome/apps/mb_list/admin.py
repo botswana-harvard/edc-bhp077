@@ -1,10 +1,11 @@
 from django.contrib import admin
+
 from edc_base.modeladmin.admin import BaseModelAdmin
-from bhp077.apps.microbiome_list.models import (ChronicConditions, Contraceptives,
-                                                DiseasesAtEnrollment, HouseholdGoods,
-                                                PriorArv, AutopsyInfoSource,
-                                                Suppliments, InfantVaccines)
-from bhp077.apps.microbiome_list.models.maternal_lab_del import HealthCond, DelComp, ObComp, LabDelDx
+
+from .models import (
+    ChronicConditions, Contraceptives, DiseasesAtEnrollment, HouseholdGoods,
+    PriorArv, AutopsyInfoSource, Suppliments, InfantVaccines,
+    HealthCond, DelComp, ObComp, LabDelDx)
 
 
 class ChronicConditionsAdmin(BaseModelAdmin):

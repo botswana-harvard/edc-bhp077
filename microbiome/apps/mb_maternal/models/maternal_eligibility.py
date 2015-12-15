@@ -10,7 +10,7 @@ from edc_base.model.validators import datetime_not_before_study_start, datetime_
 from edc_constants.choices import YES_NO
 from edc_constants.constants import YES, NO
 
-from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
+from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
 from .maternal_consent import MaternalConsent
 from ..managers import MaternalEligibilityManager
@@ -115,7 +115,7 @@ class MaternalEligibility (BaseUuidModel):
 
     @property
     def maternal_eligibility_loss(self):
-        MaternalEligibilityLoss = get_model('microbiome_maternal', 'MaternalEligibilityLoss')
+        MaternalEligibilityLoss = get_model('mb_maternal', 'MaternalEligibilityLoss')
         try:
             maternal_eligibility_loss = MaternalEligibilityLoss.objects.get(
                 maternal_eligibility_id=self.id)
@@ -137,6 +137,6 @@ class MaternalEligibility (BaseUuidModel):
             pass
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Eligibility"
         verbose_name_plural = "Maternal Eligibility"

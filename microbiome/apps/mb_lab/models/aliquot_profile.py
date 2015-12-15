@@ -20,5 +20,5 @@ class AliquotProfile(BaseProfile, BaseUuidModel):
         return (self.name,)
 
     class Meta:
-        app_label = 'microbiome_lab'
-        db_table = 'microbiome_lab_profile'
+        app_label = 'mb_lab'
+        db_table = 'mb_lab_profile'

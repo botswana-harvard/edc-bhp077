@@ -6,7 +6,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import DRUG_ROUTE
 from edc_constants.choices import YES_NO_UNKNOWN
 
-from bhp077.apps.microbiome.choices import MEDICATIONS
+from microbiome.apps.mb.choices import MEDICATIONS
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
@@ -34,7 +34,7 @@ class MaternalPostFuMed(MaternalScheduledVisitModel):
         return self.maternal_visit.get_subject_identifier()
 
     class Meta:
-        app_label = "microbiome_maternal"
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Postnatal Follow-Up: Medications"
         verbose_name_plural = "Maternal Postnatal Follow-Up: Medications"
 
@@ -77,6 +77,6 @@ class MaternalPostFuMedItems(BaseUuidModel):
         return (self.maternal_post_fu_med.natural_key())
 
     class Meta:
-        app_label = "microbiome_maternal"
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Postnatal Follow-Up: Medications"
         verbose_name_plural = "Maternal Postnatal Follow-Up: Medications Items"

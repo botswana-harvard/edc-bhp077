@@ -4,7 +4,7 @@
 # from selenium import webdriver
 #
 # from .microbiome_finders import *
-# from bhp077.apps.microbiome_maternal.tests.functional_tests.microbiome_pages import LoginPage, AdminPage
+# from microbiome.apps.mb_maternal.tests.functional_tests.microbiome_pages import LoginPage, AdminPage
 #
 #
 # class TestMicrobiomePages(unittest.TestCase):

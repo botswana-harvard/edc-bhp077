@@ -7,7 +7,7 @@ from edc_base.model.models import BaseUuidModel
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 from ..managers import InfantInlineModelManager
 
-from bhp077.apps.microbiome.choices import DX_INFANT
+from microbiome.apps.mb.choices import DX_INFANT
 
 
 class InfantFuDx(InfantScheduledVisitModel):
@@ -17,7 +17,8 @@ class InfantFuDx(InfantScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant FollowUp: Dx"
         verbose_name_plural = "Infant FollowUp: Dx"
 
@@ -71,6 +72,7 @@ class InfantFuDxItems(BaseUuidModel):
         return self.infant_fu_dx.get_subject_identifier()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant FollowUp: Dx Items"
         verbose_name_plural = "Infant FollowUp: Dx Items"

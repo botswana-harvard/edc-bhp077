@@ -3,7 +3,7 @@ from django import forms
 from ..models import InfantBirthArv
 
 from edc_constants.constants import YES, NOT_APPLICABLE
-from bhp077.apps.microbiome.constants import BREASTFEED_ONLY
+from microbiome.apps.mb.constants import BREASTFEED_ONLY
 
 from ..models import InfantBirthFeedVaccine
 

@@ -7,5 +7,5 @@ class AliquotType(BaseAliquotType):
     objects = AliquotTypeManager()
 
     class Meta:
-        app_label = 'microbiome_lab'
+        app_label = 'mb_lab'
         ordering = ["name"]

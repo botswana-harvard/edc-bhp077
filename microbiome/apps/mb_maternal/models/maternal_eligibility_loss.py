@@ -36,6 +36,6 @@ class MaternalEligibilityLoss(BaseUuidModel):
     reason_ineligible.allow_tags = True
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Maternal Eligibility Loss'
         verbose_name_plural = 'Maternal Eligibility Loss'

@@ -8,15 +8,15 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc_constants.constants import YES, NEG, SCHEDULED
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.forms import MaternalObstericalHistoryForm
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_maternal.forms import MaternalObstericalHistoryForm
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
+from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 
 
 class TestMaternalObstericalHistoryForm(TestCase):

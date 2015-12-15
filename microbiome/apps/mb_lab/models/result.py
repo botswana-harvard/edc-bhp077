@@ -49,5 +49,5 @@ class Result(BaseResult):
     report.allow_tags = True
 
     class Meta:
-        app_label = 'microbiome_lab'
+        app_label = 'mb_lab'
         ordering = ['result_identifier']

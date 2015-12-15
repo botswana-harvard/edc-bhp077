@@ -8,7 +8,7 @@ from edc_base.model.fields.custom_fields import OtherCharField
 from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import YES_NO
 
-from bhp077.apps.microbiome_list.models import ChronicConditions
+from microbiome.apps.mb_list.models import ChronicConditions
 
 from ..managers import MaternalPostFuDxTManager
 from ..maternal_choices import DX
@@ -91,7 +91,7 @@ class MaternalPostFu(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_maternal"
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Postnatal Follow-Up"
         verbose_name_plural = "Maternal Postnatal Follow-Up"
 
@@ -133,7 +133,7 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_maternal"
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Postnatal Follow-Up: Dx"
         verbose_name_plural = "Maternal Postnatal Follow-Up: Dx"
 
@@ -191,6 +191,6 @@ class MaternalPostFuDxT(BaseUuidModel):
         return unicode(self.get_visit())
 
     class Meta:
-        app_label = "microbiome_maternal"
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Postnatal Follow-Up: DxT"
         verbose_name_plural = "Maternal Postnatal Follow-Up: DxT"

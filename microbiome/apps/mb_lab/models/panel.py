@@ -32,4 +32,4 @@ class Panel(BasePanel):
         return self.name
 
     class Meta:
-        app_label = 'microbiome_lab'
+        app_label = 'mb_lab'

@@ -81,6 +81,6 @@ class MaternalLocator(LocatorMixin, BaseUuidModel):
         return self.maternal_visit.appointment.registered_subject.subject_identifier
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Maternal Locator'
         verbose_name_plural = 'Maternal Locator'

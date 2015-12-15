@@ -13,16 +13,16 @@ from edc_constants.constants import (
     YES, NO, POS, OFF_STUDY, ON_STUDY, DEATH_VISIT, LOST_VISIT, MISSED_VISIT,
     DEAD, ALIVE, SCHEDULED, NOT_APPLICABLE)
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_infant.forms import InfantVisitForm
-from bhp077.apps.microbiome_infant.tests.factories import InfantBirthFactory
-from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
-from bhp077.apps.microbiome_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
-from bhp077.apps.microbiome_maternal.visit_schedule import (
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_infant.forms import InfantVisitForm
+from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory
+from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
+from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
+from microbiome.apps.mb_maternal.visit_schedule import (
     AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
 
 

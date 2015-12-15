@@ -3,8 +3,8 @@ from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRender
 
 from edc_constants.constants import MISSED_VISIT, OFF_STUDY, LOST_VISIT, DEATH_VISIT, YES, UNKNOWN, ALIVE, DEAD
 
-from bhp077.apps.microbiome.choices import VISIT_REASON, VISIT_INFO_SOURCE
-from bhp077.apps.microbiome_maternal.models import MaternalConsent, MaternalDeathReport
+from microbiome.apps.mb.choices import VISIT_REASON, VISIT_INFO_SOURCE
+from microbiome.apps.mb_maternal.models import MaternalConsent, MaternalDeathReport
 
 from ..models import InfantVisit
 

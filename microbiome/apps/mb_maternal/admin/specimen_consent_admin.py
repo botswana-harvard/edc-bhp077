@@ -6,8 +6,8 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.subject.registration.models import RegisteredSubject
 from edc.export.actions import export_as_csv_action
 
-from bhp077.apps.microbiome_maternal.models import SpecimenConsent
-from bhp077.apps.microbiome_maternal.forms import SpecimenConsentForm
+from ..models import SpecimenConsent
+from ..forms import SpecimenConsentForm
 
 
 class SpecimenConsentAdmin(BaseModelAdmin):

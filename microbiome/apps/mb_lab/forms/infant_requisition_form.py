@@ -2,7 +2,7 @@ from django import forms
 
 from edc.lab.lab_requisition.forms import BaseRequisitionForm
 from edc_constants.constants import YES, NO
-from bhp077.apps.microbiome_infant.models import InfantStoolCollection
+from microbiome.apps.mb_infant.models import InfantStoolCollection
 
 from ..models import InfantRequisition
 

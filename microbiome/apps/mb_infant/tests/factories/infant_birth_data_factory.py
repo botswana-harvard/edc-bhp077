@@ -4,7 +4,7 @@ from django.utils import timezone
 
 from edc_constants.constants import YES
 
-from bhp077.apps.microbiome_infant.models import InfantBirthArv
+from microbiome.apps.mb_infant.models import InfantBirthArv
 from .infant_visit_factory import InfantVisitFactory
 from .infant_birth_factory import InfantBirthFactory
 from ...models import InfantBirthData

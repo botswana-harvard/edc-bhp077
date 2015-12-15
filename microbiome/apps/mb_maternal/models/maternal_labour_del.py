@@ -9,14 +9,14 @@ from edc_base.model.validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN, YES_NO_NA
 from edc_constants.constants import NOT_APPLICABLE
 
-from bhp077.apps.microbiome.choices import DX_MATERNAL
-from bhp077.apps.microbiome_list.models import Suppliments, HealthCond, ObComp
-from bhp077.apps.microbiome_maternal.models import MaternalConsent
+from microbiome.apps.mb.choices import DX_MATERNAL
+from microbiome.apps.mb_list.models import Suppliments, HealthCond, ObComp
 
+from ..managers import MaternalLabDelDxTManager
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY
+from ..models import MaternalConsent
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from ..managers import MaternalLabDelDxTManager
 
 
 class MaternalLabourDel(MaternalScheduledVisitModel):
@@ -102,7 +102,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Labour & Delivery"
         verbose_name_plural = "Maternal Labour & Delivery"
 
@@ -165,7 +165,7 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Labour & Delivery: Medical History"
         verbose_name_plural = "Maternal Labour & Delivery: Medical History"
 
@@ -233,7 +233,7 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Labour & Delivery: Clinical History"
         verbose_name_plural = "Maternal Labour & Delivery: Clinical History"
 
@@ -267,7 +267,7 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Labour & Delivery: Preg Dx"
         verbose_name_plural = "Maternal Labour & Delivery: Preg Dx"
 
@@ -325,6 +325,6 @@ class MaternalLabDelDxT (BaseUuidModel):
         return (self.maternal_lab_del_dx, self.get_visit().natural_key())
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Labour & Delivery: Preg DxT"
         verbose_name_plural = "Maternal Labour & Delivery: Preg DxT"

@@ -9,8 +9,9 @@ from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 from edc_visit_tracking.models import BaseVisitTracking
 from edc_visit_tracking.models import PreviousVisitMixin
 
-from bhp077.apps.microbiome.choices import VISIT_REASON
-from bhp077.apps.microbiome_maternal.models import MaternalConsent, PostnatalEnrollment, AntenatalEnrollment
+from microbiome.apps.mb.choices import VISIT_REASON
+
+from ..models import MaternalConsent, PostnatalEnrollment, AntenatalEnrollment
 
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
@@ -64,10 +65,10 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
 
         This method is called in the edc.entry_meta_data signal."""
         if self.reason == OFF_STUDY:
-            self.change_to_off_study_visit(self.appointment, 'microbiome_maternal', 'maternaloffstudy')
+            self.change_to_off_study_visit(self.appointment, 'mb_maternal', 'maternaloffstudy')
         elif self.reason == DEATH_VISIT:
             self.change_to_death_visit(
-                self.appointment, 'microbiome_maternal', 'maternaloffstudy', 'maternaldeath')
+                self.appointment, 'mb_maternal', 'maternaloffstudy', 'maternaldeath')
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
         else:
@@ -81,7 +82,7 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
                 for model_name in model_names:
                     self.form_is_required(
                         self.appointment,
-                        'microbiome_maternal',
+                        'mb_maternal',
                         model_name,
                         message=self.appointment.visit_definition.code)
             elif self.appointment.visit_definition.code == '2000M':
@@ -89,7 +90,7 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
                 for model_name in model_names:
                     self.form_is_required(
                         self.appointment,
-                        'microbiome_maternal',
+                        'mb_maternal',
                         model_name,
                         message=self.appointment.visit_definition.code)
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
@@ -97,12 +98,12 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
                 for model_name in model_names:
                     self.form_is_required(
                         self.appointment,
-                        'microbiome_maternal',
+                        'mb_maternal',
                         model_name,
                         message=self.appointment.visit_definition.code)
                 self.requisition_is_required(
                     self.appointment,
-                    'microbiome_lab',
+                    'mb_lab',
                     'maternalrequisition',
                     'Viral Load')
 
@@ -111,7 +112,7 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
             if self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
                 self.form_is_required(
                     self.appointment,
-                    'microbiome_maternal',
+                    'mb_maternal',
                     'rapidtestresult',
                     message=self.appointment.visit_definition.code)
 
@@ -120,7 +121,7 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
         """Returns the value of the \'result\' field of the RapidTestResult.
 
         This is a scheduled maternal form for on-study participants."""
-        RapidTestResult = models.get_model('microbiome_maternal', 'rapidtestresult')
+        RapidTestResult = models.get_model('mb_maternal', 'rapidtestresult')
         try:
             obj = RapidTestResult.objects.filter(
                 maternal_visit__appointment__registered_subject=self.appointment.registered_subject,
@@ -162,6 +163,6 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
             return None
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Maternal Visit'
         verbose_name_plural = 'Maternal Visit'

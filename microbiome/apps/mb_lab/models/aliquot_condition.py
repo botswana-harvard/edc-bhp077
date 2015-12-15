@@ -7,4 +7,4 @@ class AliquotCondition(BaseAliquotCondition):
     objects = AliquotConditionManager()
 
     class Meta:
-        app_label = 'microbiome_lab'
+        app_label = 'mb_lab'

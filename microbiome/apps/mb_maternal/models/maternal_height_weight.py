@@ -42,6 +42,6 @@ class MaternalHeightWeight(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Maternal Height & Weight'
         verbose_name_plural = 'Maternal Height & Weight'

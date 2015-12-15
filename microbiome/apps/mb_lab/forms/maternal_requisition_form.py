@@ -4,7 +4,7 @@ from edc.lab.lab_requisition.forms import BaseRequisitionForm
 from edc_constants.constants import SCHEDULED, UNSCHEDULED
 
 from ..models import MaternalRequisition
-from bhp077.apps.microbiome_maternal.models import MaternalVisit
+from microbiome.apps.mb_maternal.models import MaternalVisit
 
 
 class MaternalRequisitionForm(BaseRequisitionForm):

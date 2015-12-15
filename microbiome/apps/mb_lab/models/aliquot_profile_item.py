@@ -24,6 +24,6 @@ class AliquotProfileItem(BaseProfileItem, BaseUuidModel):
         return self.profile.natural_key() + self.aliquot_type.natural_key()
 
     class Meta:
-        app_label = 'microbiome_lab'
+        app_label = 'mb_lab'
         unique_together = ('profile', 'aliquot_type')
-        db_table = 'microbiome_lab_profileitem'
+        db_table = 'mb_lab_profileitem'

@@ -11,16 +11,16 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS, NEG
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory)
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory, AntenatalEnrollmentFactory
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.forms import MaternalMedicalHistoryForm
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_maternal.tests.factories import (MaternalEligibilityFactory)
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory, AntenatalEnrollmentFactory
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_maternal.forms import MaternalMedicalHistoryForm
 
-from bhp077.apps.microbiome_maternal.models.postnatal_enrollment import PostnatalEnrollment
-from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
-from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
+from microbiome.apps.mb_maternal.models.postnatal_enrollment import PostnatalEnrollment
+from microbiome.apps.mb_maternal.models.antenatal_enrollment import AntenatalEnrollment
+from microbiome.apps.mb_list.models.chronic_conditions import ChronicConditions
 
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
 

@@ -2,7 +2,7 @@ from django import forms
 
 from edc_constants.constants import YES, NOT_APPLICABLE
 
-from bhp077.apps.microbiome_infant.constants import REALTIME
+from ..constants import REALTIME
 
 from ..constants import BROUGHT
 from ..models import InfantStoolCollection

@@ -50,5 +50,5 @@ class OrderItem(BaseSyncUuidModel):
         return (self.order_identifier, )
 
     class Meta:
-        app_label = 'microbiome_lab'
+        app_label = 'mb_lab'
         ordering = ['-order_datetime', ]

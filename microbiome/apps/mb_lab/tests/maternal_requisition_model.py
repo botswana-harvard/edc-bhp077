@@ -12,15 +12,15 @@ from edc.subject.code_lists.models import WcsDxAdult
 from edc_constants.choices import YES, NO
 from edc.entry_meta_data.models.requisition_meta_data import RequisitionMetaData
  
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_lab.models.aliquot import AliquotType
-from bhp077.apps.microbiome_list.models.chronic_conditions import ChronicConditions
-from bhp077.apps.microbiome_maternal.forms import (MaternalPostFuForm, MaternalPostFuDxForm)
-from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_maternal.tests.factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_lab.models.aliquot import AliquotType
+from microbiome.apps.mb_list.models.chronic_conditions import ChronicConditions
+from microbiome.apps.mb_maternal.forms import (MaternalPostFuForm, MaternalPostFuDxForm)
+from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
+from microbiome.apps.mb_maternal.tests.factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
-from bhp077.apps.microbiome_lab.models.maternal_requisition import MaternalRequisition
+from microbiome.apps.mb_lab.models.maternal_requisition import MaternalRequisition
 
 from ..forms import MaternalRequisitionForm
 from ..models import Panel

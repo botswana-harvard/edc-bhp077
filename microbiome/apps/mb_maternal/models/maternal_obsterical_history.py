@@ -47,6 +47,6 @@ class MaternalObstericalHistory(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Obsterical History"
         verbose_name_plural = "Maternal Obsterical History"

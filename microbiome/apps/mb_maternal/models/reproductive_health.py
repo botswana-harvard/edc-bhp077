@@ -7,7 +7,7 @@ from edc_constants.choices import YES_NO_DWTA
 from ..maternal_choices import YES_NO_DNT_DWTA, NEXT_CHILD_PLAN
 from .maternal_consent import MaternalConsent
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from bhp077.apps.microbiome_list.models import Contraceptives
+from microbiome.apps.mb_list.models import Contraceptives
 
 
 class ReproductiveHealth(MaternalScheduledVisitModel):
@@ -62,6 +62,6 @@ class ReproductiveHealth(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Reproductive Health'
         verbose_name_plural = 'Reproductive Health'

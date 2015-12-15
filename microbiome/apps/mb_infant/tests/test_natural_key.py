@@ -17,15 +17,15 @@ from edc.core.crypto_fields.classes import FieldCryptor
 from edc.device.sync.classes import SerializeToTransaction
 from edc.subject.registration.models import RegisteredSubject
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_infant.tests.factories import InfantBirthFactory
-from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
-from bhp077.apps.microbiome_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
-from bhp077.apps.microbiome_maternal.visit_schedule import (
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory
+from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
+from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
+from microbiome.apps.mb_maternal.visit_schedule import (
     AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
 
 
@@ -70,14 +70,16 @@ class TestNaturalKey(TestCase):
 
     def test_has_natural_key_method(self):
         """Confirms all models have a natural_key method (except Audit models)"""
-        app = get_app('microbiome_infant')
+        app = get_app('mb_infant
+')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
                 self.assertTrue('natural_key' in dir(model), 'natural key not found in {0}'.format(model._meta.object_name))
 
     def test_has_get_by_natural_key(self):
         """Confirms all models have a get_by_natural_key manager method."""
-        app = get_app('microbiome_infant')
+        app = get_app('mb_infant
+')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
                 self.assertTrue('get_by_natural_key' in dir(model.objects), 'get_by_natural_key key not found in {0}'.format(model._meta.object_name))

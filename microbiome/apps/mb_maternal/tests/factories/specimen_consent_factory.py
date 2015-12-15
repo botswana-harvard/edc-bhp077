@@ -6,7 +6,7 @@ from django.utils import timezone
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 from edc_constants.constants import YES
 
-from bhp077.apps.microbiome_maternal.models import SpecimenConsent
+from microbiome.apps.mb_maternal.models import SpecimenConsent
 
 
 class SpecimenConsentFactory(factory.DjangoModelFactory):

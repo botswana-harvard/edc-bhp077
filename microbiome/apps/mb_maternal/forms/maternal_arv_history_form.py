@@ -1,7 +1,7 @@
 from django import forms
 
 from edc_constants.constants import NO, STOPPED, CONTINUOUS, RESTARTED
-from bhp077.apps.microbiome.utils import weeks_between
+from microbiome.apps.mb.utils import weeks_between
 
 from ..models import MaternalArvHistory, MaternalConsent
 

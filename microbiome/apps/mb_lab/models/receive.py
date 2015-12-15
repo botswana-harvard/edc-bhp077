@@ -31,7 +31,7 @@ class Receive(BaseReceive, BaseUuidModel):
         return retval
 
     def requisition(self):
-        url = reverse('admin:microbiome_lab_maternalrequisition_changelist')
+        url = reverse('admin:mb_lab_maternalrequisition_changelist')
         return '<a href="{0}?q={1}">{1}</a>'.format(url, self.requisition_identifier)
     requisition.allow_tags = True
 
@@ -39,4 +39,4 @@ class Receive(BaseReceive, BaseUuidModel):
         return (self.receive_identifier, )
 
     class Meta:
-        app_label = 'microbiome_lab'
+        app_label = 'mb_lab'

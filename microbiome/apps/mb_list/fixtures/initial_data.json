@@ -1,7 +1,8 @@
 [
 {
     "pk": 3, 
-    "model": "microbiome_list.chronicconditions", 
+    "model": "mb_list
+.chronicconditions", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Asthma", 
@@ -19,7 +20,8 @@
 },
 {
     "pk": 4, 
-    "model": "microbiome_list.chronicconditions", 
+    "model": "mb_list
+.chronicconditions", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Depression", 
@@ -37,7 +39,8 @@
 },
 {
     "pk": 5, 
-    "model": "microbiome_list.chronicconditions", 
+    "model": "mb_list
+.chronicconditions", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Hep B  surface antigen positive", 
@@ -55,7 +58,8 @@
 },
 {
     "pk": 6, 
-    "model": "microbiome_list.chronicconditions", 
+    "model": "mb_list
+.chronicconditions", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Chronic Hep B carrier", 
@@ -73,7 +77,8 @@
 },
 {
     "pk": 7, 
-    "model": "microbiome_list.chronicconditions", 
+    "model": "mb_list
+.chronicconditions", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Hepatitis C", 
@@ -91,7 +96,8 @@
 },
 {
     "pk": 8, 
-    "model": "microbiome_list.chronicconditions", 
+    "model": "mb_list
+.chronicconditions", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Hepatitis: Alt/Unknown", 
@@ -109,7 +115,8 @@
 },
 {
     "pk": 10, 
-    "model": "microbiome_list.chronicconditions", 
+    "model": "mb_list
+.chronicconditions", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Diabetes Mellitus", 
@@ -127,7 +134,8 @@
 },
 {
     "pk": 11, 
-    "model": "microbiome_list.chronicconditions", 
+    "model": "mb_list
+.chronicconditions", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Other, specify", 
@@ -145,7 +153,8 @@
 },
 {
     "pk": 12, 
-    "model": "microbiome_list.chronicconditions", 
+    "model": "mb_list
+.chronicconditions", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "N/A", 
@@ -163,7 +172,8 @@
 },
 {
     "pk": 1, 
-    "model": "microbiome_list.contraceptives", 
+    "model": "mb_list
+.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Other, specify", 
@@ -181,7 +191,8 @@
 },
 {
     "pk": 2, 
-    "model": "microbiome_list.contraceptives", 
+    "model": "mb_list
+.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "N/A", 
@@ -199,7 +210,8 @@
 },
 {
     "pk": 3, 
-    "model": "microbiome_list.contraceptives", 
+    "model": "mb_list
+.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Condom", 
@@ -217,7 +229,8 @@
 },
 {
     "pk": 4, 
-    "model": "microbiome_list.contraceptives", 
+    "model": "mb_list
+.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Pills", 
@@ -235,7 +248,8 @@
 },
 {
     "pk": 5, 
-    "model": "microbiome_list.contraceptives", 
+    "model": "mb_list
+.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "IUD", 
@@ -253,7 +267,8 @@
 },
 {
     "pk": 6, 
-    "model": "microbiome_list.contraceptives", 
+    "model": "mb_list
+.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Diapraghm", 
@@ -271,7 +286,8 @@
 },
 {
     "pk": 7, 
-    "model": "microbiome_list.contraceptives", 
+    "model": "mb_list
+.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Spemicide", 
@@ -289,7 +305,8 @@
 },
 {
     "pk": 1, 
-    "model": "microbiome_list.householdgoods", 
+    "model": "mb_list
+.householdgoods", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "None of the above", 
@@ -307,7 +324,8 @@
 },
 {
     "pk": 2, 
-    "model": "microbiome_list.householdgoods", 
+    "model": "mb_list
+.householdgoods", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Satellite Dish", 
@@ -325,7 +343,8 @@
 },
 {
     "pk": 3, 
-    "model": "microbiome_list.householdgoods", 
+    "model": "mb_list
+.householdgoods", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Car", 
@@ -343,7 +362,8 @@
 },
 {
     "pk": 4, 
-    "model": "microbiome_list.householdgoods", 
+    "model": "mb_list
+.householdgoods", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Television", 
@@ -361,7 +381,8 @@
 },
 {
     "pk": 5, 
-    "model": "microbiome_list.householdgoods", 
+    "model": "mb_list
+.householdgoods", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Radio", 
@@ -379,7 +400,8 @@
 },
 {
     "pk": 1, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "N/A", 
@@ -397,7 +419,8 @@
 },
 {
     "pk": 2, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Pentavalent", 
@@ -415,7 +438,8 @@
 },
 {
     "pk": 3, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Influenza", 
@@ -433,7 +457,8 @@
 },
 {
     "pk": 4, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Varicella", 
@@ -451,7 +476,8 @@
 },
 {
     "pk": 5, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "MMR", 
@@ -469,7 +495,8 @@
 },
 {
     "pk": 6, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Rotavirus", 
@@ -487,7 +514,8 @@
 },
 {
     "pk": 7, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Pneumoccal Vaccine", 
@@ -505,7 +533,8 @@
 },
 {
     "pk": 8, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Polio", 
@@ -523,7 +552,8 @@
 },
 {
     "pk": 9, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Hib", 
@@ -541,7 +571,8 @@
 },
 {
     "pk": 10, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "DTap", 
@@ -559,7 +590,8 @@
 },
 {
     "pk": 11, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "BCG", 
@@ -577,7 +609,8 @@
 },
 {
     "pk": 12, 
-    "model": "microbiome_list.infantvaccines", 
+    "model": "mb_list
+.infantvaccines", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "HBV", 
@@ -595,7 +628,8 @@
 },
 {
     "pk": 1, 
-    "model": "microbiome_list.healthcond", 
+    "model": "mb_list
+.healthcond", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "N/A", 
@@ -613,7 +647,8 @@
 },
 {
     "pk": 2, 
-    "model": "microbiome_list.healthcond", 
+    "model": "mb_list
+.healthcond", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Other, specify", 
@@ -631,7 +666,8 @@
 },
 {
     "pk": 3, 
-    "model": "microbiome_list.healthcond", 
+    "model": "mb_list
+.healthcond", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Hepatitis: Alt/Unknown", 
@@ -649,7 +685,8 @@
 },
 {
     "pk": 4, 
-    "model": "microbiome_list.healthcond", 
+    "model": "mb_list
+.healthcond", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Chronic Hepatitis Diagnosed prior to this pregnancy", 
@@ -667,7 +704,8 @@
 },
 {
     "pk": 5, 
-    "model": "microbiome_list.healthcond", 
+    "model": "mb_list
+.healthcond", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Chronic Hep B carrier", 
@@ -685,7 +723,8 @@
 },
 {
     "pk": 6, 
-    "model": "microbiome_list.healthcond", 
+    "model": "mb_list
+.healthcond", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Hep B  surface antigen positive", 
@@ -703,7 +742,8 @@
 },
 {
     "pk": 7, 
-    "model": "microbiome_list.healthcond", 
+    "model": "mb_list
+.healthcond", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Depression", 
@@ -721,7 +761,8 @@
 },
 {
     "pk": 8, 
-    "model": "microbiome_list.healthcond", 
+    "model": "mb_list
+.healthcond", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Asthma", 
@@ -739,7 +780,8 @@
 },
 {
     "pk": 1, 
-    "model": "microbiome_list.delcomp", 
+    "model": "mb_list
+.delcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "N/A", 
@@ -757,7 +799,8 @@
 },
 {
     "pk": 2, 
-    "model": "microbiome_list.delcomp", 
+    "model": "mb_list
+.delcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Other, specify", 
@@ -775,7 +818,8 @@
 },
 {
     "pk": 3, 
-    "model": "microbiome_list.delcomp", 
+    "model": "mb_list
+.delcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Nuchal cord", 
@@ -793,7 +837,8 @@
 },
 {
     "pk": 4, 
-    "model": "microbiome_list.delcomp", 
+    "model": "mb_list
+.delcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Uterine perforation / rapture", 
@@ -811,7 +856,8 @@
 },
 {
     "pk": 5, 
-    "model": "microbiome_list.delcomp", 
+    "model": "mb_list
+.delcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Retained placenta", 
@@ -829,7 +875,8 @@
 },
 {
     "pk": 6, 
-    "model": "microbiome_list.delcomp", 
+    "model": "mb_list
+.delcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Postpartum hemorrhage", 
@@ -847,7 +894,8 @@
 },
 {
     "pk": 7, 
-    "model": "microbiome_list.delcomp", 
+    "model": "mb_list
+.delcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Preterm delivery", 
@@ -865,7 +913,8 @@
 },
 {
     "pk": 8, 
-    "model": "microbiome_list.delcomp", 
+    "model": "mb_list
+.delcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Prolonged rapture of membranes", 
@@ -883,7 +932,8 @@
 },
 {
     "pk": 1, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "N/A", 
@@ -901,7 +951,8 @@
 },
 {
     "pk": 2, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Other, specify", 
@@ -919,7 +970,8 @@
 },
 {
     "pk": 3, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "STI: Syphilis ", 
@@ -937,7 +989,8 @@
 },
 {
     "pk": 4, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "STI: Gonorhea ", 
@@ -955,7 +1008,8 @@
 },
 {
     "pk": 5, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "STI: Chlamydia ", 
@@ -973,7 +1027,8 @@
 },
 {
     "pk": 6, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "STI: Herpes", 
@@ -991,7 +1046,8 @@
 },
 {
     "pk": 7, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "STI: cervicitis unspecified", 
@@ -1009,7 +1065,8 @@
 },
 {
     "pk": 8, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Placenta previa ", 
@@ -1027,7 +1084,8 @@
 },
 {
     "pk": 9, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Placenta abruption", 
@@ -1045,7 +1103,8 @@
 },
 {
     "pk": 10, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Oligohydramnios ", 
@@ -1063,7 +1122,8 @@
 },
 {
     "pk": 11, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Vaginal bleeding ", 
@@ -1081,7 +1141,8 @@
 },
 {
     "pk": 12, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Gestational diabetes", 
@@ -1099,7 +1160,8 @@
 },
 {
     "pk": 13, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Chronic Diabetes", 
@@ -1117,7 +1179,8 @@
 },
 {
     "pk": 14, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Pre-eclampsia", 
@@ -1135,7 +1198,8 @@
 },
 {
     "pk": 15, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Pregnancy induced hypertension", 
@@ -1153,7 +1217,8 @@
 },
 {
     "pk": 16, 
-    "model": "microbiome_list.obcomp", 
+    "model": "mb_list
+.obcomp", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Asthma requiring PO or IV steroids", 
@@ -1171,7 +1236,8 @@
 },
 {
     "pk": 1, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Other, specify", 
@@ -1189,7 +1255,8 @@
 },
 {
     "pk": 2, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "ATZ", 
@@ -1207,7 +1274,8 @@
 },
 {
     "pk": 3, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Raltegravir", 
@@ -1225,7 +1293,8 @@
 },
 {
     "pk": 4, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Kaletra (or Aluvia)", 
@@ -1243,7 +1312,8 @@
 },
 {
     "pk": 5, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Efavirenz (or Sustiva)", 
@@ -1261,7 +1331,8 @@
 },
 {
     "pk": 6, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Nevirapine", 
@@ -1279,7 +1350,8 @@
 },
 {
     "pk": 7, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "DDI", 
@@ -1297,7 +1369,8 @@
 },
 {
     "pk": 8, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "D4T", 
@@ -1315,7 +1388,8 @@
 },
 {
     "pk": 9, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Trizivir (AZT, 3TC, Abacavir)", 
@@ -1333,7 +1407,8 @@
 },
 {
     "pk": 10, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Abacavir", 
@@ -1351,7 +1426,8 @@
 },
 {
     "pk": 11, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Truvada (Tenofovir, FTC)", 
@@ -1369,7 +1445,8 @@
 },
 {
     "pk": 12, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Tenofovir", 
@@ -1387,7 +1464,8 @@
 },
 {
     "pk": 13, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Combivir (AZT,3TC)", 
@@ -1405,7 +1483,8 @@
 },
 {
     "pk": 14, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "3TC", 
@@ -1423,7 +1502,8 @@
 },
 {
     "pk": 15, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "AZT", 
@@ -1441,7 +1521,8 @@
 },
 {
     "pk": 16, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "HAART, unknown", 
@@ -1459,7 +1540,8 @@
 },
 {
     "pk": 17, 
-    "model": "microbiome_list.priorarv", 
+    "model": "mb_list
+.priorarv", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Atripla", 
@@ -1477,7 +1559,8 @@
 },
 {
     "pk": 1, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "N/A", 
@@ -1495,7 +1578,8 @@
 },
 {
     "pk": 2, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "B complex", 
@@ -1513,7 +1597,8 @@
 },
 {
     "pk": 3, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Vitamins C", 
@@ -1531,7 +1616,8 @@
 },
 {
     "pk": 4, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Isoniazid", 
@@ -1549,7 +1635,8 @@
 },
 {
     "pk": 5, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Cotrimoxazole", 
@@ -1567,7 +1654,8 @@
 },
 {
     "pk": 6, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Ferrous (separate from prenatal vitamins)", 
@@ -1585,7 +1673,8 @@
 },
 {
     "pk": 7, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Prenatal vitamins", 
@@ -1603,7 +1692,8 @@
 },
 {
     "pk": 9, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Folate", 
@@ -1621,7 +1711,8 @@
 },
 {
     "pk": 10, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Amoxicilin", 
@@ -1639,7 +1730,8 @@
 },
 {
     "pk": 11, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Gentamicin", 
@@ -1657,7 +1749,8 @@
 },
 {
     "pk": 12, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Metronidazole", 
@@ -1675,7 +1768,8 @@
 },
 {
     "pk": 13, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Ampicilin", 
@@ -1693,7 +1787,8 @@
 },
 {
     "pk": 14, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Penicilin", 
@@ -1711,7 +1806,8 @@
 },
 {
     "pk": 15, 
-    "model": "microbiome_list.suppliments", 
+    "model": "mb_list
+.suppliments", 
     "fields": {
         "hostname_created": "silverapple", 
         "name": "Other", 

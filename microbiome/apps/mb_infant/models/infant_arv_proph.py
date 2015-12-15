@@ -3,7 +3,7 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 
-from bhp077.apps.microbiome.choices import ARV_STATUS_WITH_NEVER
+from microbiome.apps.mb.choices import ARV_STATUS_WITH_NEVER
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
@@ -32,6 +32,7 @@ class InfantArvProph(InfantScheduledVisitModel):
         return unicode(self.infant_visit)
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = 'Infant NVP or AZT Proph'
         verbose_name_plural = 'Infant NVP or AZT Proph'

@@ -3,7 +3,7 @@ from django.utils import timezone
 
 from edc.subject.appointment.tests.factories import AppointmentFactory
 
-from bhp077.apps.microbiome_maternal.models import MaternalVisit
+from microbiome.apps.mb_maternal.models import MaternalVisit
 
 
 class MaternalVisitFactory(factory.DjangoModelFactory):

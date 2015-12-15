@@ -2,8 +2,9 @@ from django import forms
 from django.contrib.admin.widgets import (AdminRadioSelect,
                                           AdminRadioFieldRenderer)
 
-from bhp077.apps.microbiome_maternal.models import MaternalConsent
-from bhp077.apps.microbiome_infant.choices import OFF_STUDY_REASON
+from microbiome.apps.mb_maternal.models import MaternalConsent
+
+from ..choices import OFF_STUDY_REASON
 
 from ..forms import BaseInfantModelForm
 from ..models import InfantOffStudy

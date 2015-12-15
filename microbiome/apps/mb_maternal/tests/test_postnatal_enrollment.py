@@ -8,16 +8,16 @@ from edc_constants.choices import YES, NO, POS, NEG, NOT_APPLICABLE
 
 from ..maternal_choices import STILL_BIRTH, LIVE
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.models import AntenatalEnrollment
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory, AntenatalEnrollmentFactory
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_maternal.models import AntenatalEnrollment
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory, AntenatalEnrollmentFactory
 from edc_constants.constants import UNKNOWN, DWTA, NEVER
-from bhp077.apps.microbiome_maternal.models.postnatal_enrollment import PostnatalEnrollment
+from microbiome.apps.mb_maternal.models.postnatal_enrollment import PostnatalEnrollment
 from django.utils import timezone
-from bhp077.apps.microbiome_maternal.models.enrollment_helper import EnrollmentError
+from microbiome.apps.mb_maternal.models.enrollment_helper import EnrollmentError
 
 
 class TestPostnatalEnrollment(TestCase):

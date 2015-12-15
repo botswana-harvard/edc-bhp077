@@ -1,14 +1,13 @@
 from __future__ import print_function
 
+from edc_constants.constants import YES, NOT_REQUIRED, POS, UNKEYED, MALE
+from edc.subject.registration.models.registered_subject import RegisteredSubject
 from edc.subject.rule_groups.classes import (RuleGroup, site_rule_groups, Logic,
                                              ScheduledDataRule, RequisitionRule)
 
-from bhp077.apps.microbiome_infant.models import (InfantBirthData, InfantVisit, InfantFu,
-                                                  InfantStoolCollection)
-from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
+from microbiome.apps.mb_maternal.models import PostnatalEnrollment
 
-from edc_constants.constants import YES, NOT_REQUIRED, POS, UNKEYED, MALE
-from edc.subject.registration.models.registered_subject import RegisteredSubject
+from .models import (InfantBirthData, InfantVisit, InfantFu)
 
 
 def func_maternal_hiv_pos(visit_instance):
@@ -30,7 +29,7 @@ class InfantBirthDataRuleGroup(RuleGroup):
         target_model=['infantcongenitalanomalies'])
 
     class Meta:
-        app_label = 'microbiome_infant'
+        app_label = 'mb_infant'
         source_fk = (InfantVisit, 'infant_visit')
         source_model = InfantBirthData
 
@@ -54,7 +53,7 @@ class InfantFuRuleGroup(RuleGroup):
         target_model=['infantfudx'])
 
     class Meta:
-        app_label = 'microbiome_infant'
+        app_label = 'mb_infant'
         source_fk = (InfantVisit, 'infant_visit')
         source_model = InfantFu
 
@@ -71,7 +70,7 @@ class InfantCircumcisionRuleGroup(RuleGroup):
         target_model=['infantcircumcision'])
 
     class Meta:
-        app_label = 'microbiome_infant'
+        app_label = 'mb_infant'
         source_fk = None
         source_model = RegisteredSubject
 
@@ -85,11 +84,11 @@ class StoolStorageRequisitionRuleGroup(RuleGroup):
             predicate=('sample_obtained', 'equals', YES),
             consequence='new',
             alternative='not_required'),
-        target_model=[('microbiome_lab', 'infantrequisition')],
+        target_model=[('mb_lab', 'infantrequisition')],
         target_requisition_panels=['Stool storage'])
 
     class Meta:
-        app_label = 'microbiome_infant'
+        app_label = 'mb_infant'
         source_fk = (InfantVisit, 'infant_visit')
         source_model = InfantStoolCollection
 site_rule_groups.register(StoolStorageRequisitionRuleGroup)

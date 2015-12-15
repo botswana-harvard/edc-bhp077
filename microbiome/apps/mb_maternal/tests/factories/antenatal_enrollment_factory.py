@@ -6,7 +6,7 @@ from edc_constants.choices import YES, NO
 
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 
-from bhp077.apps.microbiome_maternal.models import AntenatalEnrollment
+from microbiome.apps.mb_maternal.models import AntenatalEnrollment
 
 
 class AntenatalEnrollmentFactory(factory.DjangoModelFactory):

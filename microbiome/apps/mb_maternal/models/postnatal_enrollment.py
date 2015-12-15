@@ -74,7 +74,7 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
 
     @property
     def antenatal_enrollment(self):
-        AntenatalEnrollment = get_model('microbiome_maternal', 'antenatalenrollment')
+        AntenatalEnrollment = get_model('mb_maternal', 'antenatalenrollment')
         try:
             return AntenatalEnrollment.objects.get(registered_subject=self.registered_subject)
         except AntenatalEnrollment.DoesNotExist:
@@ -86,7 +86,7 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         this instance if not already set.
 
         Only updates if AntenatalEnrollment.is_eligible=True."""
-        AntenatalEnrollment = get_model('microbiome_maternal', 'antenatalenrollment')
+        AntenatalEnrollment = get_model('mb_maternal', 'antenatalenrollment')
         try:
             antenatal_enrollment = AntenatalEnrollment.objects.get(
                 registered_subject=self.registered_subject,
@@ -98,6 +98,6 @@ class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
             pass
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Postnatal Enrollment'
         verbose_name_plural = 'Postnatal Enrollment'

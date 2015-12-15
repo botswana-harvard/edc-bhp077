@@ -9,14 +9,14 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.choices import YES, NO
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_lab.models.aliquot import AliquotType
-from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_maternal.tests.factories import (
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_lab.models.aliquot import AliquotType
+from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
+from microbiome.apps.mb_maternal.tests.factories import (
     PostnatalEnrollmentFactory, MaternalVisitFactory)
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 
 from ..forms import MaternalRequisitionForm
 from ..models import Panel

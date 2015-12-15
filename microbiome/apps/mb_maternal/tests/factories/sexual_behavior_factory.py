@@ -3,7 +3,7 @@ from django.utils import timezone
 
 from edc_constants.constants import YES, NO
 
-from bhp077.apps.microbiome_maternal.models import ReproductiveHealth
+from microbiome.apps.mb_maternal.models import ReproductiveHealth
 
 from .maternal_visit_factory import MaternalVisitFactory
 

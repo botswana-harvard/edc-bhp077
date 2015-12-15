@@ -9,12 +9,12 @@ from edc_call_manager.caller_site import site_model_callers
 from edc_call_manager.models import Call
 from edc_constants.constants import POS, NO, YES, NOT_APPLICABLE
 
-from bhp077.apps.microbiome.app_configuration.classes.microbiome_configuration import MicrobiomeConfiguration
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.model_callers import AnteNatalModelCaller
-from bhp077.apps.microbiome_maternal.models import AntenatalEnrollment
-from bhp077.apps.microbiome_maternal.tests.factories.maternal_consent_factory import MaternalConsentFactory
-from bhp077.apps.microbiome_maternal.tests.factories.maternal_eligibility_factory import MaternalEligibilityFactory
+from microbiome.apps.mb.app_configuration.classes.microbiome_configuration import MicrobiomeConfiguration
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_maternal.model_callers import AnteNatalModelCaller
+from microbiome.apps.mb_maternal.models import AntenatalEnrollment
+from microbiome.apps.mb_maternal.tests.factories.maternal_consent_factory import MaternalConsentFactory
+from microbiome.apps.mb_maternal.tests.factories.maternal_eligibility_factory import MaternalEligibilityFactory
 
 from .factories import AntenatalEnrollmentFactory
 

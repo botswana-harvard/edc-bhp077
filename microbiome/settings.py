@@ -17,7 +17,7 @@ from unipath import Path
 
 from django.utils import timezone
 
-from bhp077.config.databases import PRODUCTION_MYSQL, SECRET_KEY
+from microbiome.config.databases import PRODUCTION_MYSQL, SECRET_KEY
 
 APP_NAME = 'microbiome'
 PROJECT_TITLE = 'Gut Microbiome Evolution'
@@ -38,11 +38,11 @@ ALLOW_MODEL_SERIALIZATION = True
 if socket.gethostname() == 'mac2-2.local':
     KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
 elif socket.gethostname() == 'ckgathi':
-    KEY_PATH = '/Users/ckgathi/source/microbiome/bhp077/keys'
+    KEY_PATH = '/Users/ckgathi/source/microbiome/microbiome/keys'
 elif socket.gethostname() == 'one-2.local' or socket.gethostname() == 'One-2.local':
-    KEY_PATH = '/Users/sirone/Documents/workspace/git_projects/microbiome/bhp077/keys'
+    KEY_PATH = '/Users/sirone/Documents/workspace/git_projects/microbiome/microbiome/keys'
 elif socket.gethostname() == 'silverapple':
-    KEY_PATH = '/Users/melissa/Documents/git/source/microbiome/bhp077/keys'
+    KEY_PATH = '/Users/melissa/Documents/git/source/microbiome/microbiome/keys'
 elif socket.gethostname() == 'tsetsiba':
     KEY_PATH = '/Users/tsetsiba/source/microbiome/keys'
 elif socket.gethostname() == 'fchilisa':
@@ -158,12 +158,12 @@ INSTALLED_APPS = (
     'lis.exim.lab_import_lis',
     'lis.exim.lab_import_dmis',
     # LOCAL_APPS
-    'bhp077.apps.microbiome',
-    'bhp077.apps.microbiome_list',
-    'bhp077.apps.microbiome_dashboard',
-    'bhp077.apps.microbiome_infant',
-    'bhp077.apps.microbiome_maternal',
-    'bhp077.apps.microbiome_lab')
+    'microbiome.apps.mb',
+    'microbiome.apps.mb_list',
+    'microbiome.apps.mb_dashboard',
+    'microbiome.apps.mb_infant',
+    'microbiome.apps.mb_maternal',
+    'microbiome.apps.mb_lab')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -183,7 +183,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages")
 
-ROOT_URLCONF = 'bhp077.config.urls'
+ROOT_URLCONF = 'microbiome.config.urls'
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
     os.path.join(SOURCE_ROOT.child('edc-base').child('edc_base'), 'templates'),
@@ -195,7 +195,7 @@ TEMPLATE_LOADERS = (
      'django.template.loaders.app_directories.Loader',
      'django.template.loaders.eggs.Loader'))
 
-WSGI_APPLICATION = 'bhp077.config.wsgi.application'
+WSGI_APPLICATION = 'microbiome.config.wsgi.application'
 
 # Database
 MYSQL_HOSTS = ['microbiome.bhp.org.bw']

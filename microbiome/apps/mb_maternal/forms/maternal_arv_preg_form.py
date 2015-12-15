@@ -4,7 +4,7 @@ from django.utils import timezone
 from base_maternal_model_form import BaseMaternalModelForm
 
 from edc_constants.constants import YES, NO, NOT_APPLICABLE
-from bhp077.apps.microbiome.utils import weeks_between
+from microbiome.apps.mb.utils import weeks_between
 
 from ..models import MaternalArvPreg, MaternalArv, MaternalArvHistory
 

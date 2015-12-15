@@ -2,8 +2,8 @@ import factory
 
 from django.utils import timezone
 
-from bhp077.apps.microbiome_lab.models import InfantRequisition
-from bhp077.apps.microbiome_infant.tests.factories import InfantVisitFactory
+from microbiome.apps.mb_lab.models import InfantRequisition
+from microbiome.apps.mb_infant.tests.factories import InfantVisitFactory
 
 
 class InfantRequistionFactory(factory.DjangoModelFactory):

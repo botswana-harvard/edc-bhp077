@@ -6,7 +6,7 @@ from edc_constants.choices import YES_NO_DWTA
 
 from ..maternal_choices import REASON_UNSEEN_AT_CLINIC, REASON_CONTRACEPTIVE_NOT_INITIATED
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from bhp077.apps.microbiome_list.models import Contraceptives
+from microbiome.apps.mb_list.models import Contraceptives
 from .maternal_consent import MaternalConsent
 
 
@@ -68,6 +68,6 @@ class MaternalSrh(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Maternal SRH Services'
         verbose_name_plural = 'Maternal SRH Services'

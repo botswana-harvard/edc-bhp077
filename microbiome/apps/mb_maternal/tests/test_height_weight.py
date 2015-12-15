@@ -9,10 +9,10 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.choices import YES, POS, NOT_APPLICABLE
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.forms import MaternalHeightWeightForm
-from bhp077.apps.microbiome_maternal.models import MaternalHeightWeight
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_maternal.forms import MaternalHeightWeightForm
+from microbiome.apps.mb_maternal.models import MaternalHeightWeight
 
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
@@ -21,7 +21,7 @@ from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
 
 class BaseHeightTestModel(MaternalHeightWeight):
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
 
 
 class BaseHeightForm(MaternalHeightWeightForm):

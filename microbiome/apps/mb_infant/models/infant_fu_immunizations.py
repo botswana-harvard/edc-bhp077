@@ -5,10 +5,12 @@ from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_UNKNOWN
 from edc_base.model.models import BaseUuidModel
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
-from bhp077.apps.microbiome.choices import REASONS_VACCINES_MISSED
+from microbiome.apps.mb.choices import REASONS_VACCINES_MISSED
+
 from ..choices import IMMUNIZATIONS, INFANT_AGE_VACCINE_GIVEN
-from bhp077.apps.microbiome_infant.managers.infant_inline_manager import InfantInlineModelManager
+from ..managers import InfantInlineModelManager
+
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantFuImmunizations(InfantScheduledVisitModel):
@@ -33,7 +35,8 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
         return unicode(self.infant_visit)
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant FollowUp: Immunizations"
         verbose_name_plural = "Infant FollowUp: Immunizations"
 
@@ -83,7 +86,8 @@ class VaccinesReceived(BaseUuidModel):
         return self.get_visit().get_subject_identifier()
 
     class Meta:
-        app_label = 'microbiome_infant'
+        app_label = 'mb_infant
+'
         verbose_name = 'Received Vaccines'
         verbose_name_plural = 'Received Vaccines'
 
@@ -130,6 +134,7 @@ class VaccinesMissed(BaseUuidModel):
         return self.get_visit().get_subject_identifier()
 
     class Meta:
-        app_label = 'microbiome_infant'
+        app_label = 'mb_infant
+'
         verbose_name = 'Missed Vaccines'
         verbose_name_plural = 'Missed Vaccines'

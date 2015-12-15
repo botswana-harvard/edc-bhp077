@@ -1,6 +1,6 @@
 from edc_admin_exclude import AdminExcludeFieldsMixin
 
-from bhp077.apps.microbiome_infant.models.infant_visit import InfantVisit
+from ..models import InfantVisit
 
 
 class InfantStoolExcludeFieldsMixin(AdminExcludeFieldsMixin):

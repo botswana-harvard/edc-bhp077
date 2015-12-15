@@ -42,6 +42,6 @@ class SpecimenConsent(BaseSpecimenConsent, SampleCollectionFieldsMixin, Requires
         return self.consent_datetime
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Specimen Consent'
         verbose_name_plural = 'Specimen Consent'

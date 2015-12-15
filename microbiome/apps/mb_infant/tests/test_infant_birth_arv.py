@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from bhp077.apps.microbiome_infant.forms import InfantBirthArvForm
+from microbiome.apps.mb_infant.forms import InfantBirthArvForm
 
 from edc.subject.registration.models import RegisteredSubject
 from edc.lab.lab_profile.classes import site_lab_profiles
@@ -11,18 +11,18 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc_constants.constants import YES, POS
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
 
-from bhp077.apps.microbiome_maternal.visit_schedule import (AntenatalEnrollmentVisitSchedule,
+from microbiome.apps.mb_maternal.visit_schedule import (AntenatalEnrollmentVisitSchedule,
                                                             PostnatalEnrollmentVisitSchedule)
-from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
-from bhp077.apps.microbiome_infant.tests.factories import \
+from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
+from microbiome.apps.mb_infant.tests.factories import \
     (InfantBirthFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
-from bhp077.apps.microbiome.constants import BREASTFEED_ONLY
+from microbiome.apps.mb.constants import BREASTFEED_ONLY
 
 
 class TestInfantBirthArv(TestCase):

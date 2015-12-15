@@ -18,7 +18,7 @@ from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 
 
-from bhp077.apps.microbiome.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
+from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
 
 class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
@@ -75,7 +75,7 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
 
     @property
     def maternal_eligibility(self):
-        from bhp077.apps.microbiome_maternal.models import MaternalEligibility
+        from ..models import MaternalEligibility
         try:
             maternal_eligibility = MaternalEligibility.objects.get(registered_subject=self.registered_subject)
             return maternal_eligibility
@@ -83,6 +83,6 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
             return None
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Maternal Consent'
         verbose_name_plural = 'Maternal Consent'

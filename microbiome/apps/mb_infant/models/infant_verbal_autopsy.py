@@ -5,8 +5,8 @@ from edc_base.model.fields.custom_fields import OtherCharField
 from edc_constants.choices import YES_NO, SEVERITY_LEVEL
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 
-from bhp077.apps.microbiome_list.models import AutopsyInfoSource
-from bhp077.apps.microbiome.choices import AUTOPSY_SIGNS
+from microbiome.apps.mb_list.models import AutopsyInfoSource
+from microbiome.apps.mb.choices import AUTOPSY_SIGNS
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
@@ -62,7 +62,8 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
         return self.report_datetime
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
 
 
 class InfantVerbalAutopsyItems(BaseUuidModel):
@@ -110,5 +111,6 @@ class InfantVerbalAutopsyItems(BaseUuidModel):
         return self.verbal_autopsy.infant_visit
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Verbal Autopsy:Item"

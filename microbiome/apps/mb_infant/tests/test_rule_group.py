@@ -9,16 +9,16 @@ from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc.subject.appointment.models import Appointment
 from edc_constants.constants import NEW, YES, POS, MALE, SCHEDULED, UNKEYED, REQUIRED
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibilityFactory, MaternalVisitFactory)
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from bhp077.apps.microbiome_maternal.tests.factories import PostnatalEnrollmentFactory
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_maternal.tests.factories import (MaternalEligibilityFactory, MaternalVisitFactory)
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
 
-from bhp077.apps.microbiome_maternal.visit_schedule import (
+from microbiome.apps.mb_maternal.visit_schedule import (
     AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
-from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
-from bhp077.apps.microbiome_infant.tests.factories import (
+from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
+from microbiome.apps.mb_infant.tests.factories import (
     InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory, InfantFuFactory)
 
 
@@ -69,7 +69,8 @@ class TestRuleGroup(TestCase):
         self.assertEqual(
             ScheduledEntryMetaData.objects.filter(
                 entry_status=UNKEYED,
-                entry__app_label='microbiome_infant',
+                entry__app_label='mb_infant
+',
                 entry__model_name='infantbirtharv',
                 appointment=appointment).count(), 1)
 
@@ -100,7 +101,8 @@ class TestRuleGroup(TestCase):
         self.assertEqual(
             ScheduledEntryMetaData.objects.filter(
                 entry_status=NEW,
-                entry__app_label='microbiome_infant',
+                entry__app_label='mb_infant
+',
                 entry__model_name='infantcongenitalanomalies',
                 appointment=appointment).count(), 1)
 
@@ -137,7 +139,7 @@ class TestRuleGroup(TestCase):
             self.assertEqual(RequisitionMetaData.objects.filter(
                 entry_status=REQUIRED,
                 lab_entry__requisition_panel__name='DNA PCR',
-                lab_entry__app_label='microbiome_lab',
+                lab_entry__app_label='mb_lab',
                 lab_entry__model_name='infantrequisition',
                 appointment=appointment).count(), 1)
 
@@ -175,12 +177,14 @@ class TestRuleGroup(TestCase):
         InfantFuFactory(infant_visit=infant_visit)
         self.assertEqual(ScheduledEntryMetaData.objects.filter(
             entry_status=NEW,
-            entry__app_label='microbiome_infant',
+            entry__app_label='mb_infant
+',
             entry__model_name='infantfuphysical',
             appointment=appointment).count(), 1)
         self.assertEqual(ScheduledEntryMetaData.objects.filter(
             entry_status=NEW,
-            entry__app_label='microbiome_infant',
+            entry__app_label='mb_infant
+',
             entry__model_name='infantfudx',
             appointment=appointment).count(), 1)
 
@@ -226,6 +230,7 @@ class TestRuleGroup(TestCase):
             reason=SCHEDULED)
         self.assertEqual(ScheduledEntryMetaData.objects.filter(
             entry_status=UNKEYED,
-            entry__app_label='microbiome_infant',
+            entry__app_label='mb_infant
+',
             entry__model_name='infantcircumcision',
             appointment=appointment).count(), 1)

@@ -4,7 +4,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO, YES_NO_NA
 from edc_constants.constants import NOT_APPLICABLE
 
-from bhp077.apps.microbiome.choices import BREAST_CHOICE
+from microbiome.apps.mb.choices import BREAST_CHOICE
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
@@ -67,6 +67,6 @@ class MaternalBreastHealth(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_maternal"
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Breast Health"
         verbose_name_plural = "Maternal Breast Health"

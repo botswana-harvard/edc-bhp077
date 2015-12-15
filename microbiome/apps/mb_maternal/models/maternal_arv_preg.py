@@ -5,7 +5,7 @@ from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_constants.choices import YES_NO
 from edc.subject.haart.choices import ARV_DRUG_LIST
 
-from bhp077.apps.microbiome.choices import ARV_INTERRUPTION_REASON
+from microbiome.apps.mb.choices import ARV_INTERRUPTION_REASON
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
@@ -47,7 +47,7 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_maternal"
+        app_label = 'mb_maternal'
         verbose_name = 'Maternal ARV In This Preg: Pregnancy'
         verbose_name_plural = 'Maternal ARV In This Preg: Pregnancy'
 
@@ -83,6 +83,6 @@ class MaternalArv(BaseUuidModel):
         return (self.maternal_arv_preg.natural_key())
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = 'Maternal ARV'
         verbose_name_plural = 'Maternal ARV'

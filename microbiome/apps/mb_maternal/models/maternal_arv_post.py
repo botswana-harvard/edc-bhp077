@@ -56,7 +56,7 @@ class MaternalArvPost (MaternalScheduledVisitModel):
         return unicode(self.maternal_visit)
 
     class Meta:
-        app_label = "microbiome_maternal"
+        app_label = 'mb_maternal'
         verbose_name = "Maternal ARV Post"
         verbose_name_plural = "Maternal ARV Post"
 
@@ -90,7 +90,7 @@ class MaternalArvPostMod(MaternalOffStudyMixin, BaseHaartModification):
         return super(MaternalArvPostMod, self).natural_key() + self.maternal_arv_post.natural_key()
 
     class Meta:
-        app_label = "microbiome_maternal"
+        app_label = 'mb_maternal'
         verbose_name = 'Maternal ARVs Post: Mods'
         verbose_name_plural = 'Maternal ARVs Post: Mods'
         unique_together = ('maternal_arv_post', 'arv_code', 'modification_date')
@@ -135,6 +135,7 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
         return self.maternal_arv_post.get_subject_identifier()
 
     class Meta:
-        app_label = "microbiome_maternal"
+        app_label = "mb_maternal
+"
         verbose_name = "Maternal ARVs Post: Adherence"
         verbose_name_plural = "Maternal ARVs Post: Adherence"

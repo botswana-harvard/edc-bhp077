@@ -1,20 +1,20 @@
+from django.db import transaction
 from django.db.models.signals import post_save
+from django.db.utils import IntegrityError
 from django.dispatch import receiver
 
-from edc.subject.registration.models import RegisteredSubject
-from edc_constants.constants import NO, YES, FEMALE, OFF_STUDY, SCHEDULED
 from edc.core.identifier.classes import InfantIdentifier
+from edc.subject.appointment.models.appointment import Appointment
+from edc.subject.registration.models import RegisteredSubject
+from edc.subject.visit_schedule.models.visit_definition import VisitDefinition
+from edc_constants.constants import NO, YES, FEMALE, OFF_STUDY, SCHEDULED
 
+from ..models import MaternalOffStudy, MaternalVisit
+
+from .maternal_consent import MaternalConsent
 from .maternal_eligibility import MaternalEligibility
 from .maternal_eligibility_loss import MaternalEligibilityLoss
-from .maternal_consent import MaternalConsent
 from .postnatal_enrollment import PostnatalEnrollment
-from edc.subject.appointment.models.appointment import Appointment
-from edc.subject.visit_schedule.models.visit_definition import VisitDefinition
-from bhp077.apps.microbiome_maternal.models.maternal_visit import MaternalVisit
-from django.db.utils import IntegrityError
-from django.db import transaction
-from bhp077.apps.microbiome_maternal.models.maternal_off_study import MaternalOffStudy
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")

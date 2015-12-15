@@ -9,16 +9,16 @@ from edc.subject.registration.models import RegisteredSubject
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_infant.forms import InfantStoolCollectionForm
-from bhp077.apps.microbiome_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
-from bhp077.apps.microbiome_infant.visit_schedule import InfantBirthVisitSchedule
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile, InfantProfile
-from bhp077.apps.microbiome_maternal.tests.factories import (
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_infant.forms import InfantStoolCollectionForm
+from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
+from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
+from microbiome.apps.mb_maternal.tests.factories import (
     MaternalConsentFactory, MaternalLabourDelFactory, MaternalEligibilityFactory,
     MaternalVisitFactory, PostnatalEnrollmentFactory)
-from bhp077.apps.microbiome_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
-from bhp077.apps.microbiome_infant.constants import REALTIME, CLOTH_NAPPY
+from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
+from microbiome.apps.mb_infant.constants import REALTIME, CLOTH_NAPPY
 
 
 class TestInfantStoolCollection(TestCase):

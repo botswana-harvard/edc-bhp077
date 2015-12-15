@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from bhp077.apps.microbiome_maternal.tests.factories import MaternalEligibilityFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
 
 
 class TestMaternalEligibility(TestCase):

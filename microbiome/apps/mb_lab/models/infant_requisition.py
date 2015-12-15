@@ -9,7 +9,7 @@ from edc_base.model.models.base_uuid_model import BaseUuidModel
 from .aliquot_type import AliquotType
 from .packing_list import PackingList
 from .panel import Panel
-from bhp077.apps.microbiome_infant.models import InfantVisit
+from microbiome.apps.mb_infant.models import InfantVisit
 
 from ..managers import RequisitionManager
 
@@ -34,16 +34,16 @@ class InfantRequisition(BaseRequisition, BaseUuidModel):
         return self.infant_visit
 
     def get_absolute_url(self):
-        return reverse('admin:microbiome_lab_infantrequisition_change', args=(self.id,))
+        return reverse('admin:mb_lab_infantrequisition_change', args=(self.id,))
 
     def aliquot(self):
-        url = reverse('admin:microbiome_lab_aliquot_changelist')
+        url = reverse('admin:mb_lab_aliquot_changelist')
         return """<a href="{url}?q={requisition_identifier}" />aliquot</a>""".format(
             url=url, requisition_identifier=self.requisition_identifier)
     aliquot.allow_tags = True
 
     class Meta:
-        app_label = 'microbiome_lab'
+        app_label = 'mb_lab'
         verbose_name = 'Infant Laboratory Requisition'
         verbose_name_plural = 'Infant Laboratory Requisition'
         unique_together = ('infant_visit', 'panel', 'is_drawn')

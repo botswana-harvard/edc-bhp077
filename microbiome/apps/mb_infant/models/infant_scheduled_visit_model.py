@@ -1,15 +1,15 @@
 from django.db import models
 from django.utils import timezone
 
-from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.audit_trail import AuditTrail
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.data_manager.models import TimePointStatusMixin
 
+from ..managers import ScheduledModelManager
+
 from .infant_off_study_mixin import InfantOffStudyMixin
 from .infant_visit import InfantVisit
-from bhp077.apps.microbiome_infant.managers.scheduled_model_manager import ScheduledModelManager
 
 
 class InfantScheduledVisitModel(InfantOffStudyMixin,

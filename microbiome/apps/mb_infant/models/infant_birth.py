@@ -8,10 +8,10 @@ from edc_base.model.validators import datetime_not_before_study_start, datetime_
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import GENDER_UNDETERMINED
 
-from bhp077.apps.microbiome_maternal.models import MaternalLabourDel
-from bhp077.apps.microbiome_infant.models.infant_off_study_mixin import InfantOffStudyMixin
+from microbiome.apps.mb_maternal.models import MaternalLabourDel
 
 from ..managers import InfantBirthModelManager
+from ..models.infant_off_study_mixin import InfantOffStudyMixin
 
 
 class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
@@ -54,7 +54,7 @@ class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
 
     def natural_key(self):
         return self.maternal_labour_del.natural_key()
-    natural_key.dependencies = ['microbiome_maternal.maternallabourdel']
+    natural_key.dependencies = ['mb_maternal.maternallabourdel']
 
     def __unicode__(self):
         return "{} ({}) {}".format(self.first_name, self.initials, self.gender)
@@ -82,6 +82,7 @@ class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
         return self.registered_subject.subject_identifier
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Birth Record"
         verbose_name_plural = "Infant Birth Record"

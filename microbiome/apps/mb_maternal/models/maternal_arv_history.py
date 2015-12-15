@@ -8,7 +8,7 @@ from edc_constants.choices import YES_NO
 from ..maternal_choices import PRIOR_PREG_HAART_STATUS
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_consent import MaternalConsent
-from bhp077.apps.microbiome_list.models import PriorArv
+from microbiome.apps.mb_list.models import PriorArv
 
 
 class MaternalArvHistory(MaternalScheduledVisitModel):
@@ -52,6 +52,7 @@ class MaternalArvHistory(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal
+'
         verbose_name = "Maternal ARV History"
         verbose_name_plural = "Maternal ARV History"

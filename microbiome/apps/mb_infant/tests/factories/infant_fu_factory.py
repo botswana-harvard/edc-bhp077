@@ -2,7 +2,7 @@ import factory
 
 from django.utils import timezone
 
-from bhp077.apps.microbiome_infant.models import InfantFu
+from microbiome.apps.mb_infant.models import InfantFu
 
 from edc_constants.constants import YES
 

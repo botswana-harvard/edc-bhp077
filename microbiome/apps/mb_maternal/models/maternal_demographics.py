@@ -11,7 +11,7 @@ from ..maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
                                 CURRENT_OCCUPATION, MONEY_PROVIDER, MONEY_EARNED,
                                 WATER_SOURCE, COOKING_METHOD, TOILET_FACILITY,
                                 HOUSE_TYPE)
-from bhp077.apps.microbiome_list.models import HouseholdGoods
+from microbiome.apps.mb_list.models import HouseholdGoods
 
 
 class MaternalDemographics(MaternalScheduledVisitModel):
@@ -146,6 +146,6 @@ class MaternalDemographics(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Demographics"
         verbose_name_plural = "Maternal Demographics"

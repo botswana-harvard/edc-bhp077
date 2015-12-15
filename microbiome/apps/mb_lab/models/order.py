@@ -27,8 +27,8 @@ class Order(BaseSyncUuidModel):
 
     @property
     def order_items(self):
-        OrderItem = models.get_model('microbiome_lab', 'orderitem')
+        OrderItem = models.get_model('mb_lab', 'orderitem')
         return OrderItem.objects.filter(order__pk=self.pk)
 
     class Meta:
-        app_label = 'microbiome_lab'
+        app_label = 'mb_lab'

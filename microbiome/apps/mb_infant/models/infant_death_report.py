@@ -39,5 +39,6 @@ class InfantDeathReport (DeathReportMixin, InfantDrugRelationshipMixin, BaseUuid
         return self.infant_visit.appointment.registered_subject.subject_identifier
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Death Report"

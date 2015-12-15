@@ -3,7 +3,7 @@ from django.contrib import admin
 from edc.lab.lab_requisition.admin import BaseRequisitionModelAdmin
 from edc.export.actions import export_as_csv_action
 
-from bhp077.apps.microbiome_maternal.models import MaternalVisit
+from microbiome.apps.mb_maternal.models import MaternalVisit
 
 from ..actions import print_requisition_label
 from ..models import MaternalRequisition, Panel

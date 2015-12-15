@@ -5,14 +5,15 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_constants.choices import CONFIRMED_SUSPECTED
 
-from bhp077.apps.microbiome.choices import (
+from microbiome.apps.mb.choices import (
     CNS_ABNORMALITIES, FACIAL_DEFECT, CLEFT_DISORDER, MOUTH_UP_GASTROINT_DISORDER,
     CARDIOVASCULAR_DISORDER, RESPIRATORY_DEFECT, LOWER_GASTROINTESTINAL_ABNORMALITY,
     FEM_GENITAL_ANOMALY, MALE_GENITAL_ANOMALY, RENAL_ANOMALY, MUSCULOSKELETAL_ABNORMALITY,
     SKIN_ABNORMALITY, TRISOME_CHROSOMESOME_ABNORMALITY, OTHER_DEFECT)
 
+from ..managers import InfantInlineModelManager
+
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
-from bhp077.apps.microbiome_infant.managers.infant_inline_manager import InfantInlineModelManager
 
 
 class InfantCongenitalAnomalies(InfantScheduledVisitModel):
@@ -22,7 +23,8 @@ class InfantCongenitalAnomalies(InfantScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies"
 
 
@@ -80,7 +82,8 @@ class InfantCns(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:Cns"
 
 
@@ -112,7 +115,8 @@ class InfantFacialDefect(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:Facial"
 
 
@@ -144,7 +148,8 @@ class InfantCleftDisorder(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:Cleft"
 
 
@@ -176,7 +181,8 @@ class InfantMouthUpGi(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:MouthUp"
 
 
@@ -208,7 +214,8 @@ class InfantCardioDisorder(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:Cardio"
 
 
@@ -240,7 +247,8 @@ class InfantRespiratoryDefect(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:Respitarory"
 
 
@@ -272,7 +280,8 @@ class InfantLowerGi(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:LowerGast"
 
 
@@ -304,7 +313,8 @@ class InfantFemaleGenital(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:FemaleGen"
 
 
@@ -336,7 +346,8 @@ class InfantMaleGenital(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:MaleGen"
 
 
@@ -368,7 +379,8 @@ class InfantRenal(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:Renal"
 
 
@@ -400,7 +412,8 @@ class InfantMusculoskeletal(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:Musculosk"
 
 
@@ -434,7 +447,8 @@ class InfantSkin(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:Skin"
 
 
@@ -466,7 +480,8 @@ class InfantTrisomies(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:Trisomes"
 
 
@@ -498,5 +513,6 @@ class InfantOtherAbnormalityItems(BaseCnsItem):
     history = AuditTrail()
 
     class Meta:
-        app_label = "microbiome_infant"
+        app_label = "mb_infant
+"
         verbose_name = "Infant Congenital Anomalies:Other"

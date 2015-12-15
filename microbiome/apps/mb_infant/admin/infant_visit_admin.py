@@ -5,7 +5,7 @@ from django.contrib import admin
 from edc.subject.appointment.admin import BaseAppointmentModelAdmin
 from edc.export.actions import export_as_csv_action
 
-from bhp077.apps.microbiome_lab.models import InfantRequisition
+from microbiome.apps.mb_lab.models import InfantRequisition
 
 from ..forms import InfantVisitForm
 from ..models import InfantVisit

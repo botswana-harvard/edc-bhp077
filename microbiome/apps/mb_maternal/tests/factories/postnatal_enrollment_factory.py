@@ -4,8 +4,8 @@ from django.utils import timezone
 from edc_constants.constants import YES, NO, POS, NOT_APPLICABLE
 from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 
-from bhp077.apps.microbiome_maternal.models import PostnatalEnrollment
-from bhp077.apps.microbiome.constants import LIVE
+from microbiome.apps.mb_maternal.models import PostnatalEnrollment
+from microbiome.apps.mb.constants import LIVE
 
 
 class PostnatalEnrollmentFactory(factory.DjangoModelFactory):

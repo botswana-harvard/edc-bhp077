@@ -6,7 +6,7 @@ from edc_constants.choices import YES_NO
 from edc.subject.code_lists.models import WcsDxAdult
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from bhp077.apps.microbiome_list.models import ChronicConditions
+from microbiome.apps.mb_list.models import ChronicConditions
 from .maternal_consent import MaternalConsent
 
 
@@ -47,6 +47,6 @@ class MaternalMedicalHistory(MaternalScheduledVisitModel):
     history = AuditTrail()
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal'
         verbose_name = "Maternal Medical History"
         verbose_name_plural = "Maternal Medical History"

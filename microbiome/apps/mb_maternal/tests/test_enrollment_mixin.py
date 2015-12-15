@@ -10,15 +10,15 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE, NEVER
 
-from bhp077.apps.microbiome.app_configuration.classes import MicrobiomeConfiguration
-from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
-from bhp077.apps.microbiome_maternal.tests.factories import (
+from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_maternal.tests.factories import (
     MaternalEligibilityFactory, MaternalConsentFactory, SpecimenConsentFactory)
-from bhp077.apps.microbiome_maternal.forms import BaseEnrollmentForm
-from bhp077.apps.microbiome_maternal.models.enrollment_mixin import EnrollmentMixin
-from bhp077.apps.microbiome_maternal.models.antenatal_enrollment import AntenatalEnrollment
+from microbiome.apps.mb_maternal.forms import BaseEnrollmentForm
+from microbiome.apps.mb_maternal.models.enrollment_mixin import EnrollmentMixin
+from microbiome.apps.mb_maternal.models.antenatal_enrollment import AntenatalEnrollment
 from dateutil.relativedelta import relativedelta
-from bhp077.apps.microbiome_maternal.models.enrollment_helper import EnrollmentHelper, EnrollmentError
+from microbiome.apps.mb_maternal.models.enrollment_helper import EnrollmentHelper, EnrollmentError
 
 
 class EnrollmentTestModel(EnrollmentMixin):
@@ -36,7 +36,8 @@ class EnrollmentTestModel(EnrollmentMixin):
         super(EnrollmentTestModel, self).save(*args, **kwargs)
 
     class Meta:
-        app_label = 'microbiome_maternal'
+        app_label = 'mb_maternal
+'
 
 
 class BaseEnrollTestForm(BaseEnrollmentForm):

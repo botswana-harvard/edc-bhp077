@@ -3,7 +3,7 @@ from django import forms
 from edc_constants.constants import YES
 
 from edc_base.form.forms import BaseModelForm
-from bhp077.apps.microbiome_maternal.models import MaternalLabourDel
+from microbiome.apps.mb_maternal.models import MaternalLabourDel
 
 from ..models import InfantBirth
 

@@ -2,10 +2,10 @@ from django.contrib import admin
 
 from edc.lab.lab_requisition.admin import BaseRequisitionModelAdmin
 
-from bhp077.apps.microbiome_infant.models import InfantVisit
-from ..models import InfantRequisition
+from microbiome.apps.mb_infant.models import InfantVisit
+
 from ..forms import InfantRequisitionForm
-from bhp077.apps.microbiome_lab.models.panel import Panel
+from ..models import InfantRequisition, Panel
 
 
 class InfantRequisitionAdmin(BaseRequisitionModelAdmin):
