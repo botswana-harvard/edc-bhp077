@@ -41,7 +41,7 @@ install:
   - pip install -q -r requirements.txt
 
 before_script:
-  - flake8 bhp077
+  - flake8 microbiome
 
 script: 
   - coverage run --source=microbiome manage.py test
