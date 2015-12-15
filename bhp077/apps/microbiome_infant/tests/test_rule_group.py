@@ -111,10 +111,10 @@ class TestRuleGroup(TestCase):
             evidence_hiv_status=YES)
         self.assertEqual(postnatal_enrollment.enrollment_hiv_status, POS)
         self.assertTrue(postnatal_enrollment.is_eligible)
-        self.appointment = Appointment.objects.get(
+        appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
-        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        self.maternal_visit = MaternalVisitFactory(appointment=appointment)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment)

@@ -13,7 +13,7 @@ from bhp077.apps.microbiome_maternal.tests.factories import (MaternalEligibility
                                                              MaternalVisitFactory)
 from bhp077.apps.microbiome_maternal.tests.factories import MaternalConsentFactory
 from bhp077.apps.microbiome_maternal.tests.factories import (
-    PostnatalEnrollmentFactory, SexualReproductiveHealthFactory
+    PostnatalEnrollmentFactory, ReproductiveHealthFactory
 )
 from bhp077.apps.microbiome_lab.lab_profiles import MaternalProfile
 
@@ -265,7 +265,7 @@ class TestRuleGroup(TestCase):
             appointment = Appointment.objects.get(
                 registered_subject=self.registered_subject, visit_definition__code=code
             )
-            SexualReproductiveHealthFactory(
+            ReproductiveHealthFactory(
                 maternal_visit=MaternalVisitFactory(appointment=appointment)
             )
             self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(

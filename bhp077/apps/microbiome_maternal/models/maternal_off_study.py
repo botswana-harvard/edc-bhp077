@@ -7,6 +7,7 @@ from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_offstudy.models import OffStudyModelMixin
 
 from .maternal_visit import MaternalVisit
+from ..managers import MaternalOffStudyManager
 
 
 class MaternalOffStudy(OffStudyModelMixin, BaseUuidModel):
@@ -14,12 +15,13 @@ class MaternalOffStudy(OffStudyModelMixin, BaseUuidModel):
     """ A model completed by the user that completed when the subject is taken off-study. """
 
     VISIT_MODEL = MaternalVisit
+    REGISTERED_SUBJECT_MODEL = RegisteredSubject
 
     registered_subject = models.OneToOneField(RegisteredSubject)
 
     maternal_visit = models.OneToOneField(MaternalVisit)
 
-    objects = models.Manager()
+    objects = MaternalOffStudyManager(REGISTERED_SUBJECT_MODEL)
 
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 

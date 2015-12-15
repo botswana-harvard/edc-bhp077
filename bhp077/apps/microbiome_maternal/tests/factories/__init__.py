@@ -8,4 +8,4 @@ from .maternal_postnatal_fu_factory import MaternalPostFuFactory, MaternalPostFu
 from .maternal_visit_factory import MaternalVisitFactory
 from .postnatal_enrollment_factory import PostnatalEnrollmentFactory
 from .specimen_consent_factory import SpecimenConsentFactory
-from .sexual_behavior_factory import SexualReproductiveHealthFactory
+from .sexual_behavior_factory import ReproductiveHealthFactory

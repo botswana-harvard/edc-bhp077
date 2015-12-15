@@ -52,9 +52,9 @@ class BaseCnsItem(BaseUuidModel):
         abstract = True
 
 
-class InfantCnsAbnormalityItems(BaseCnsItem):
+class InfantCns(BaseCnsItem):
 
-    cns_abnormality = models.CharField(
+    cns = models.CharField(
         max_length=250,
         choices=CNS_ABNORMALITIES,
         verbose_name="Central nervous system abnormality",
@@ -70,7 +70,7 @@ class InfantCnsAbnormalityItems(BaseCnsItem):
         null=True,
     )
 
-    cns_abnormality_other = OtherCharField(
+    cns_other = OtherCharField(
         max_length=250,
         verbose_name="if other specify...",
         blank=True,
@@ -84,7 +84,7 @@ class InfantCnsAbnormalityItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:Cns"
 
 
-class InfantFacialDefectItems(BaseCnsItem):
+class InfantFacialDefect(BaseCnsItem):
 
     facial_defect = models.CharField(
         max_length=250,
@@ -116,7 +116,7 @@ class InfantFacialDefectItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:Facial"
 
 
-class InfantCleftDisorderItems(BaseCnsItem):
+class InfantCleftDisorder(BaseCnsItem):
 
     cleft_disorder = models.CharField(
         max_length=250,
@@ -148,9 +148,9 @@ class InfantCleftDisorderItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:Cleft"
 
 
-class InfantMouthUpGastrointestinalItems(BaseCnsItem):
+class InfantMouthUpGi(BaseCnsItem):
 
-    mouth_up_gastrointest = models.CharField(
+    mouth_up_gi = models.CharField(
         max_length=250,
         choices=MOUTH_UP_GASTROINT_DISORDER,
         verbose_name="Mouth and upper gastrointestinal disorders",
@@ -166,7 +166,7 @@ class InfantMouthUpGastrointestinalItems(BaseCnsItem):
         null=True,
     )
 
-    mouth_up_gastrointest_other = OtherCharField(
+    mouth_up_gi_other = OtherCharField(
         max_length=250,
         verbose_name="if other specify...",
         blank=True,
@@ -177,12 +177,12 @@ class InfantMouthUpGastrointestinalItems(BaseCnsItem):
 
     class Meta:
         app_label = "microbiome_infant"
-        verbose_name = "Infant Congenital Anomalies:MouthUpp"
+        verbose_name = "Infant Congenital Anomalies:MouthUp"
 
 
-class InfantCardiovascularDisorderItems(BaseCnsItem):
+class InfantCardioDisorder(BaseCnsItem):
 
-    cardiovascular_disorder = models.CharField(
+    cardio_disorder = models.CharField(
         max_length=250,
         choices=CARDIOVASCULAR_DISORDER,
         verbose_name="Cardiovascular disorders",
@@ -212,7 +212,7 @@ class InfantCardiovascularDisorderItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:Cardio"
 
 
-class InfantRespiratoryDefectItems(BaseCnsItem):
+class InfantRespiratoryDefect(BaseCnsItem):
 
     respiratory_defect = models.CharField(
         max_length=250,
@@ -244,9 +244,9 @@ class InfantRespiratoryDefectItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:Respitarory"
 
 
-class InfantLowerGastrointestinalItems(BaseCnsItem):
+class InfantLowerGi(BaseCnsItem):
 
-    lower_gastrointestinal = models.CharField(
+    lower_gi = models.CharField(
         max_length=250,
         choices=LOWER_GASTROINTESTINAL_ABNORMALITY,
         verbose_name="Lower gastrointestinal abnormalities",
@@ -262,7 +262,7 @@ class InfantLowerGastrointestinalItems(BaseCnsItem):
         null=True,
     )
 
-    lower_gastrointestinal_other = OtherCharField(
+    lower_gi_other = OtherCharField(
         max_length=250,
         verbose_name="if other specify",
         blank=True,
@@ -276,9 +276,9 @@ class InfantLowerGastrointestinalItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:LowerGast"
 
 
-class InfantFemaleGenitalAnomalyItems(BaseCnsItem):
+class InfantFemaleGenital(BaseCnsItem):
 
-    female_genital_anomal = models.CharField(
+    female_genital = models.CharField(
         max_length=250,
         choices=FEM_GENITAL_ANOMALY,
         verbose_name="Female genital anomaly",
@@ -294,7 +294,7 @@ class InfantFemaleGenitalAnomalyItems(BaseCnsItem):
         null=True,
     )
 
-    female_genital_anomal_other = OtherCharField(
+    female_genital_other = OtherCharField(
         max_length=250,
         verbose_name="if other specify...",
         blank=True,
@@ -308,9 +308,9 @@ class InfantFemaleGenitalAnomalyItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:FemaleGen"
 
 
-class InfantMaleGenitalAnomalyItems(BaseCnsItem):
+class InfantMaleGenital(BaseCnsItem):
 
-    male_genital_anomal = models.CharField(
+    male_genital = models.CharField(
         max_length=250,
         choices=MALE_GENITAL_ANOMALY,
         verbose_name="Male genital anomaly",
@@ -326,7 +326,7 @@ class InfantMaleGenitalAnomalyItems(BaseCnsItem):
         null=True,
     )
 
-    male_genital_anomal_other = OtherCharField(
+    male_genital_other = OtherCharField(
         max_length=250,
         verbose_name="if other specify...",
         blank=True,
@@ -340,9 +340,9 @@ class InfantMaleGenitalAnomalyItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:MaleGen"
 
 
-class InfantRenalAnomalyItems(BaseCnsItem):
+class InfantRenal(BaseCnsItem):
 
-    renal_amomalies = models.CharField(
+    renal = models.CharField(
         max_length=250,
         choices=RENAL_ANOMALY,
         verbose_name="Renal anomalies",
@@ -358,7 +358,7 @@ class InfantRenalAnomalyItems(BaseCnsItem):
         null=True,
     )
 
-    renal_amomalies_other = OtherCharField(
+    renal_other = OtherCharField(
         max_length=250,
         verbose_name="if other specify...",
         blank=True,
@@ -372,7 +372,7 @@ class InfantRenalAnomalyItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:Renal"
 
 
-class InfantMusculoskeletalAbnormalItems(BaseCnsItem):
+class InfantMusculoskeletal(BaseCnsItem):
 
     musculo_skeletal = models.CharField(
         max_length=250,
@@ -404,9 +404,9 @@ class InfantMusculoskeletalAbnormalItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:Musculosk"
 
 
-class InfantSkinAbnormalItems(BaseCnsItem):
+class InfantSkin(BaseCnsItem):
 
-    skin_abnormality = models.CharField(
+    skin = models.CharField(
         max_length=250,
         choices=SKIN_ABNORMALITY,
         verbose_name="Skin abnormalities",
@@ -424,7 +424,7 @@ class InfantSkinAbnormalItems(BaseCnsItem):
         null=True,
     )
 
-    skin_abnormality_other = OtherCharField(
+    skin_other = OtherCharField(
         max_length=250,
         verbose_name="if other specify...",
         blank=True,
@@ -438,9 +438,9 @@ class InfantSkinAbnormalItems(BaseCnsItem):
         verbose_name = "Infant Congenital Anomalies:Skin"
 
 
-class InfantTrisomiesChromosomeItems(BaseCnsItem):
+class InfantTrisomies(BaseCnsItem):
 
-    triso_chromo_abnormal = models.CharField(
+    trisomies = models.CharField(
         max_length=250,
         choices=TRISOME_CHROSOMESOME_ABNORMALITY,
         verbose_name="Trisomies / chromosomes abnormalities",
@@ -456,7 +456,7 @@ class InfantTrisomiesChromosomeItems(BaseCnsItem):
         null=True,
     )
 
-    triso_chromo_abnormal_other = OtherCharField(
+    trisomies_other = OtherCharField(
         max_length=250,
         verbose_name="if other specify...",
         blank=True,

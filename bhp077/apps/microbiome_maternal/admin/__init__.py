@@ -22,7 +22,7 @@ from .maternal_off_study_admin import MaternalOffStudyAdmin
 from .maternal_breast_health_admin import MaternalBreastHealthAdmin
 from .rapid_test_result_admin import RapidTestResultAdmin
 from .maternal_srh_admin import MaternalSrhAdmin
-from .sexual_reproductive_health_admin import SexualReproductiveHealthAdmin
+from .reproductive_health_admin import ReproductiveHealthAdmin
 from .maternal_post_fu_admin import (MaternalPostFuAdmin, MaternalPostFuDxAdmin,
                                      MaternalPostFuDxTAdmin, MaternalPostFuDxTInlineAdmin)
 from .maternal_post_fu_med_admin import (MaternalPostFuMedAdmin, MaternalPostFuMedItemsAdmin,

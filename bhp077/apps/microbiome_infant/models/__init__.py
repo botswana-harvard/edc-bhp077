@@ -19,9 +19,9 @@ from .infant_off_study_mixin import InfantOffStudyMixin
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 from .infant_stool_collection import InfantStoolCollection
 from .infant_congenital_anomalies import (
-    InfantCongenitalAnomalies, InfantCnsAbnormalityItems, InfantFacialDefectItems,
-    InfantCleftDisorderItems, InfantMouthUpGastrointestinalItems, InfantCardiovascularDisorderItems,
-    InfantRespiratoryDefectItems, InfantLowerGastrointestinalItems, InfantFemaleGenitalAnomalyItems,
-    InfantMaleGenitalAnomalyItems, InfantRenalAnomalyItems, InfantMusculoskeletalAbnormalItems,
-    InfantSkinAbnormalItems, InfantTrisomiesChromosomeItems, InfantOtherAbnormalityItems, )
+    InfantCongenitalAnomalies, InfantCns, InfantFacialDefect,
+    InfantCleftDisorder, InfantMouthUpGi, InfantCardioDisorder,
+    InfantRespiratoryDefect, InfantLowerGi, InfantFemaleGenital,
+    InfantMaleGenital, InfantRenal, InfantMusculoskeletal,
+    InfantSkin, InfantTrisomies, InfantOtherAbnormalityItems, )
 from .signals import update_infant_registered_subject_on_post_save

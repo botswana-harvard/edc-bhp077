@@ -38,7 +38,7 @@ class MaternalSrh(MaternalScheduledVisitModel):
         max_length=15,
         choices=YES_NO_DWTA)
 
-    contraceptive_methods = models.ManyToManyField(
+    contraceptives = models.ManyToManyField(
         Contraceptives,
         verbose_name='If yes, which method did you select? ',
         help_text='Tell us all that apply')
