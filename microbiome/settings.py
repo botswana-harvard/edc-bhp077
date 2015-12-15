@@ -198,8 +198,8 @@ TEMPLATE_LOADERS = (
 WSGI_APPLICATION = 'microbiome.config.wsgi.application'
 
 # Database
-MYSQL_HOSTS = ['microbiome.bhp.org.bw']
-if socket.gethostname() in MYSQL_HOSTS:
+HOST_NAMES = ['microbiome.bhp.org.bw']
+if socket.gethostname() in HOST_NAMES:
     SECRET_KEY = SECRET_KEY
     DATABASES = PRODUCTION_MYSQL
 else:
@@ -264,14 +264,17 @@ AGE_IS_ADULT = 18
 GENDER_OF_CONSENT = ['F']
 DISPATCH_APP_LABELS = []
 
-DEVICE_ID = 95
+DEVICE_ID = 91
+if socket.gethostname() in HOST_NAMES:
+    DEVICE_ID = 99
+    PROJECT_TITLE = 'SERVER: Microbiome'
+
 SITE_CODE = '40'
 SERVER_DEVICE_ID_LIST = [91, 92, 93, 94, 95, 96, 97, 99]
+
 MIDDLEMAN_DEVICE_ID_LIST = [98]
 if DEVICE_ID in range(91, 97):
     PROJECT_TITLE = 'TEST: Microbiome'
-elif str(DEVICE_ID) == '99':
-    PROJECT_TITLE = 'SERVER: Microbiome'
 elif str(DEVICE_ID) == '98':
     PROJECT_TITLE = 'RESERVED FOR MIDDLE MAN'
 
