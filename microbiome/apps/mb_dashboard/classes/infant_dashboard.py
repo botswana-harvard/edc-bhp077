@@ -1,9 +1,8 @@
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
-from edc_constants.constants import YES
 
 from microbiome.apps.mb_infant.models import InfantVisit, InfantBirth
-from microbiome.apps.mb_lab.models import InfantRequisition, Receive, Result, ResultItem
+from microbiome.apps.mb_lab.models import InfantRequisition
 from microbiome.apps.mb_maternal.models import MaternalLocator, MaternalConsent, MaternalEligibility
 from microbiome.apps.mb_maternal.models import MaternalVisit
 
