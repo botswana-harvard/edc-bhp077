@@ -24,5 +24,5 @@ from .maternal_visit_form import MaternalVisitForm
 from .postnatal_enrollment_form import PostnatalEnrollmentForm
 from .rapid_test_result_form import RapidTestResultForm
 from .specimen_consent_form import SpecimenConsentForm
-from .sexual_reproductive_health_form import SexualReproductiveHealthForm
+from .reproductive_health_form import ReproductiveHealthForm
 from .maternal_srh_form import MaternalSrhForm

@@ -3,15 +3,15 @@ from django.utils import timezone
 
 from edc_constants.constants import YES, NO
 
-from bhp077.apps.microbiome_maternal.models import SexualReproductiveHealth
+from bhp077.apps.microbiome_maternal.models import ReproductiveHealth
 
 from .maternal_visit_factory import MaternalVisitFactory
 
 
-class SexualReproductiveHealthFactory(factory.DjangoModelFactory):
+class ReproductiveHealthFactory(factory.DjangoModelFactory):
 
     class Meta:
-        model = SexualReproductiveHealth
+        model = ReproductiveHealth
 
     report_datetime = timezone.now()
     maternal_visit = factory.SubFactory(MaternalVisitFactory)

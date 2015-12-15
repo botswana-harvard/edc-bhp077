@@ -30,7 +30,7 @@ maternal_monthly_entries = (
     EntryTuple(10L, u'microbiome_maternal', u'maternalpostfu', REQUIRED, NOT_ADDITIONAL),
     EntryTuple(20L, u'microbiome_maternal', u'maternalpostfudx', REQUIRED, NOT_ADDITIONAL),
     EntryTuple(25L, u'microbiome_maternal', u'maternalpostfumed', REQUIRED, NOT_ADDITIONAL),
-    EntryTuple(30L, u'microbiome_maternal', u'sexualreproductivehealth', NOT_REQUIRED, ADDITIONAL),
+    EntryTuple(30L, u'microbiome_maternal', u'reproductivehealth', NOT_REQUIRED, ADDITIONAL),
     EntryTuple(40L, u'microbiome_maternal', u'maternalsrh', NOT_REQUIRED, ADDITIONAL),
     EntryTuple(50L, u'microbiome_maternal', u'maternalarvpost', NOT_REQUIRED, ADDITIONAL),
     EntryTuple(60L, u'microbiome_maternal', u'maternalarvpostadh', NOT_REQUIRED, ADDITIONAL),

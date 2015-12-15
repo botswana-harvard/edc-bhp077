@@ -2,7 +2,7 @@
 from edc_constants.constants import YES, UNKEYED, NOT_REQUIRED
 from edc.subject.rule_groups.classes import RuleGroup, site_rule_groups, Logic, ScheduledDataRule
 
-from .models import MaternalVisit, SexualReproductiveHealth
+from .models import MaternalVisit, ReproductiveHealth
 
 
 class ReproductiveHealthRuleGroup(RuleGroup):
@@ -17,6 +17,6 @@ class ReproductiveHealthRuleGroup(RuleGroup):
     class Meta:
         app_label = 'microbiome_maternal'
         source_fk = (MaternalVisit, 'maternal_visit')
-        source_model = SexualReproductiveHealth
+        source_model = ReproductiveHealth
 
 site_rule_groups.register(ReproductiveHealthRuleGroup)
