@@ -6,6 +6,7 @@ from edc.lab.lab_clinic_reference.classes import ClinicReferenceFlag, ClinicGrad
 from lis.specimen.lab_result_item.models import BaseResultItem
 
 from .result import Result
+from ..managers import ResultItemManager
 
 
 class ResultItem(BaseResultItem):
@@ -16,7 +17,7 @@ class ResultItem(BaseResultItem):
 
     subject_type = models.CharField(max_length=25, null=True)
 
-    objects = models.Manager()
+    objects = ResultItemManager()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.result.order.aliquot.receive.registered_subject.subject_identifier
@@ -25,6 +26,9 @@ class ResultItem(BaseResultItem):
 
     def __unicode__(self):
         return unicode(self.test_code)
+
+    def natural_key(self):
+        return (self.subject_identifier)
 
     def result_value(self):
         if self.result_item_value_as_float:

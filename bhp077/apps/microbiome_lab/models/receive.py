@@ -6,6 +6,8 @@ from edc_base.model.models import BaseUuidModel
 
 from lis.specimen.lab_receive.models import BaseReceive
 
+from ..managers import ReceiveManager
+
 
 class Receive(BaseReceive, BaseUuidModel):
 
@@ -15,7 +17,7 @@ class Receive(BaseReceive, BaseUuidModel):
 
     subject_type = models.CharField(max_length=25, null=True, editable=False)
 
-    objects = models.Manager()
+    objects = ReceiveManager()
 
     def save(self, *args, **kwargs):
         self.subject_type = self.registered_subject.subject_type
