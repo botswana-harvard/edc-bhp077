@@ -19,7 +19,7 @@ from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 from ..models import Panel
 
 from .factories import MaternalRequistionFactory
-from edc_constants.constants import UNSCHEDULED
+from edc_constants.constants import UNSCHEDULED, SCHEDULED, POS
 
 
 class TestMaternalRequisitionModel(TestCase):
@@ -36,19 +36,37 @@ class TestMaternalRequisitionModel(TestCase):
         site_rule_groups.autodiscover()
         self.study_site = StudySiteFactory(site_code=10, site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject,
-                                                       study_site=self.study_site)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject,
+            study_site=self.study_site)
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            will_breastfeed=YES
-        )
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='2000M')
+            will_breastfeed=YES)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
+        MaternalVisitFactory(appointment=appointment, reason=SCHEDULED)
+        self.appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2000M')
         self.panel = Panel.objects.get(name='Breast Milk (Storage)')
         self.aliquot_type = AliquotType.objects.get(alpha_code='WB')
 
+    def test_visit_reason_scheduled(self):
+        maternal_visit = MaternalVisitFactory(appointment=self.appointment, reason=SCHEDULED)
+        MaternalRequistionFactory(
+            maternal_visit=maternal_visit,
+            panel=self.panel,
+            study_site=self.study_site,
+            aliquot_type=self.aliquot_type)
+
     def test_visit_reason_unscheduled(self):
-        MaternalVisitFactory(appointment=self.appointment, reason=UNSCHEDULED)
-        MaternalRequistionFactory(panel=self.panel, study_site=self.study_site,
-                                  aliquot_type=self.aliquot_type)
+        maternal_visit = MaternalVisitFactory(appointment=self.appointment, reason=UNSCHEDULED)
+        MaternalRequistionFactory(
+            maternal_visit=maternal_visit,
+            panel=self.panel,
+            study_site=self.study_site,
+            aliquot_type=self.aliquot_type)
