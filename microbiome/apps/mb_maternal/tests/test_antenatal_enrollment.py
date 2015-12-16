@@ -1,20 +1,18 @@
-from django import forms
 from django.test import TestCase
-from django.utils import timezone
 
 from edc.lab.lab_profile.classes import site_lab_profiles
+from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE, UNKNOWN
 
-from microbiome.apps.mb_maternal.models import AntenatalEnrollment
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_maternal.tests.factories import (AntenatalEnrollmentFactory, MaternalEligibilityFactory, PostnatalEnrollmentFactory)
-from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule
-from django.core.exceptions import ValidationError
+
+from .factories import (
+    AntenatalEnrollmentFactory, MaternalEligibilityFactory, MaternalConsentFactory)
 
 
 class TestAntenatalEnrollment(TestCase):
@@ -279,33 +277,3 @@ class TestAntenatalEnrollment(TestCase):
             registered_subject=self.registered_subject,
             gestation_wks=37)
         self.assertFalse(antenatal_enrollment.is_eligible)
-
-#     def test_fail_fill_antenatal_if_postnatal_filled(self):
-#         """Test that if postnatal already exists, filling of antenatal fails."""
-#         PostnatalEnrollmentFactory(registered_subject=self.registered_subject)
-#         self.assertRaises(
-#             ValidationError,
-#             AntenatalEnrollmentFactory,
-#             registered_subject=self.registered_subject,
-#             current_hiv_status=NEG,
-#             evidence_hiv_status=NO,
-#             valid_regimen=NOT_APPLICABLE,
-#             valid_regimen_duration=NOT_APPLICABLE,
-#             rapid_test_done=YES,
-#             rapid_test_date=timezone.now().date() - timezone.timedelta(days=1),
-#             rapid_test_result=NEG)
-# 
-#     def test_cannot_change_rapid_test_date(self):
-#         """Test that rapid test date cannot be changed after first entry at enrollment"""
-#         antenatal = AntenatalEnrollmentFactory(
-#             registered_subject=self.registered_subject,
-#             current_hiv_status=NEG,
-#             evidence_hiv_status=NO,
-#             valid_regimen=NOT_APPLICABLE,
-#             valid_regimen_duration=NOT_APPLICABLE,
-#             rapid_test_done=YES,
-#             rapid_test_date=timezone.now().date() - timezone.timedelta(days=1),
-#             rapid_test_result=NEG)
-#         self.assertTrue(AntenatalEnrollment.objects.count(), 1)
-#         antenatal.rapid_test_date = timezone.now().date()
-#         self.assertRaises(ValidationError, antenatal.save)

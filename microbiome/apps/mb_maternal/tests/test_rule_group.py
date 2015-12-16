@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.test import TestCase
 
 from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
@@ -9,18 +10,14 @@ from edc.subject.appointment.models import Appointment
 from edc_constants.constants import NEW, YES, POS, NEG, UNKEYED, KEYED, NOT_REQUIRED, NOT_APPLICABLE
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_maternal.tests.factories import (MaternalEligibilityFactory,
-                                                             MaternalVisitFactory)
-from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
-from microbiome.apps.mb_maternal.tests.factories import (
-    PostnatalEnrollmentFactory, ReproductiveHealthFactory
-)
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
-
-from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
-from microbiome.apps.mb_maternal.tests.factories.antenatal_enrollment_factory import AntenatalEnrollmentFactory
 from microbiome.apps.mb_maternal.models import RapidTestResult
-from django.utils import timezone
+from microbiome.apps.mb_maternal.visit_schedule import (
+    AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
+
+from .factories import (
+    MaternalEligibilityFactory, MaternalConsentFactory, MaternalVisitFactory,
+    PostnatalEnrollmentFactory, ReproductiveHealthFactory, AntenatalEnrollmentFactory)
 
 
 class TestRuleGroup(TestCase):
@@ -40,23 +37,6 @@ class TestRuleGroup(TestCase):
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
-
-    def model_options(self, app_label, model_name, appointment):
-        model_options = {}
-        model_options.update(
-            entry__app_label=app_label,
-            entry__model_name=model_name,
-            appointment=appointment)
-        return model_options
-
-    def lab_entry_model_options(self, app_label, model_name, appointment, panel_name):
-        model_options = {}
-        model_options.update(
-            lab_entry__app_label=app_label,
-            lab_entry__model_name=model_name,
-            lab_entry__requisition_panel__name=panel_name,
-            appointment=appointment)
-        return model_options
 
     def test_postnatal_enrollment_hiv_status(self):
         PostnatalEnrollmentFactory(
@@ -243,9 +223,13 @@ class TestRuleGroup(TestCase):
             )
             MaternalVisitFactory(appointment=appointment)
             for model_name in model_names:
-                self.assertEqual(RequisitionMetaData.objects.filter(entry_status=NEW, **self.lab_entry_model_options(
-                    app_label='mb_lab', model_name=model_name, appointment=appointment, panel_name='Viral Load'
-                )).count(), 1)
+                self.assertEqual(
+                    RequisitionMetaData.objects.filter(
+                        entry_status=NEW,
+                        lab_entry__app_label='mb_lab',
+                        lab_entry__model_name=model_name,
+                        lab_entry__requisition_panel__name='Viral Load',
+                        appointment=appointment).count(), 1)
 
     def test_srh_referral_yes_on_srh(self):
         """
@@ -268,6 +252,8 @@ class TestRuleGroup(TestCase):
             ReproductiveHealthFactory(
                 maternal_visit=MaternalVisitFactory(appointment=appointment)
             )
-            self.assertEqual(ScheduledEntryMetaData.objects.filter(entry_status=NEW, **self.model_options(
-                app_label='mb_maternal', model_name='maternalsrh', appointment=appointment
-            )).count(), 1)
+            self.assertEqual(ScheduledEntryMetaData.objects.filter(
+                entry_status=NEW,
+                app_label='mb_maternal',
+                model_name='maternalsrh',
+                appointment=appointment).count(), 1)

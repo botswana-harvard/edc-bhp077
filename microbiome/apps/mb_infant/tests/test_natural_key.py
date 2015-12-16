@@ -1,6 +1,3 @@
-from django.db.models import signals
-from datetime import datetime, timedelta, date
-
 from django.core import serializers
 from django.db.models import get_app, get_models
 from django.test import TestCase
@@ -45,7 +42,8 @@ class TestNaturalKey(TestCase):
         InfantBirthVisitSchedule().build()
 
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
         PostnatalEnrollmentFactory(
@@ -73,19 +71,25 @@ class TestNaturalKey(TestCase):
         app = get_app('mb_infant')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
-                self.assertTrue('natural_key' in dir(model), 'natural key not found in {0}'.format(model._meta.object_name))
+                self.assertTrue(
+                    'natural_key' in dir(model),
+                    'natural key not found in {0}'.format(model._meta.object_name))
 
     def test_has_get_by_natural_key(self):
         """Confirms all models have a get_by_natural_key manager method."""
         app = get_app('mb_infant')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
-                self.assertTrue('get_by_natural_key' in dir(model.objects), 'get_by_natural_key key not found in {0}'.format(model._meta.object_name))
+                self.assertTrue(
+                    'get_by_natural_key' in dir(model.objects),
+                    'get_by_natural_key key not found in {0}'.format(model._meta.object_name))
 
     def test_serializing_deserialing_models(self):
         print 'test serializing/deserializing {0}'.format(self.infant_birth._meta.object_name)
-        outgoing_transaction = SerializeToTransaction().serialize(self.infant_birth.__class__, self.infant_birth, False, True, 'default')
+        outgoing_transaction = SerializeToTransaction().serialize(
+            self.infant_birth.__class__, self.infant_birth, False, True, 'default')
         print outgoing_transaction
         # pp.pprint(FieldCryptor('aes', 'local').decrypt(outgoing_transaction.tx))
-        for transaction in serializers.deserialize("json", FieldCryptor('aes', 'local').decrypt(outgoing_transaction.tx)):
+        for transaction in serializers.deserialize(
+                "json", FieldCryptor('aes', 'local').decrypt(outgoing_transaction.tx)):
             self.assertEqual(transaction.object.pk, self.infant_birth.pk)

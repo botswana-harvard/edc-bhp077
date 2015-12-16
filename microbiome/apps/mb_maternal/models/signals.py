@@ -92,6 +92,28 @@ def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
                 raise
 
 
+def change_off_study_visit_to_scheduled(instance):
+    """Attempts to change the 1000M maternal visit back to scheduled
+    from off study."""
+    with transaction.atomic():
+        try:
+            visit_definition = VisitDefinition.objects.get(code='1000M')
+            appointment = Appointment.objects.get(
+                registered_subject=instance.registered_subject,
+                visit_definition=visit_definition)
+            maternal_visit = MaternalVisit.objects.get(
+                appointment=appointment,
+                reason=OFF_STUDY)
+            maternal_visit.reason = SCHEDULED
+            maternal_visit.save()
+        except MaternalVisit.DoesNotExist:
+            pass
+        except VisitDefinition.DoesNotExist:
+            pass
+        except Appointment.DoesNotExist:
+            pass
+
+
 @receiver(post_save, weak=False, dispatch_uid="eligible_put_back_on_study")
 def eligible_put_back_on_study(sender, instance, raw, created, using, **kwargs):
     """changes the 1000M visit to scheduled from off study if is_eligible."""
@@ -103,23 +125,7 @@ def eligible_put_back_on_study(sender, instance, raw, created, using, **kwargs):
             if 'is_eligible' not in str(e) and 'registered_subject' not in str(e):
                 raise
         except MaternalOffStudy.DoesNotExist:
-            try:
-                with transaction.atomic():
-                    visit_definition = VisitDefinition.objects.get(code='1000M')
-                    appointment = Appointment.objects.get(
-                        registered_subject=instance.registered_subject,
-                        visit_definition=visit_definition)
-                    maternal_visit = MaternalVisit.objects.get(
-                        appointment=appointment,
-                        reason=OFF_STUDY)
-                    maternal_visit.reason = SCHEDULED
-                    maternal_visit.save()
-            except MaternalVisit.DoesNotExist:
-                pass
-            except VisitDefinition.DoesNotExist:
-                pass
-            except Appointment.DoesNotExist:
-                pass
+            change_off_study_visit_to_scheduled(instance)
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_consent_on_post_save")

@@ -1,9 +1,8 @@
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
-from edc_constants.constants import YES
 
 from microbiome.apps.mb_infant.models import InfantVisit, InfantBirth
-from microbiome.apps.mb_lab.models import InfantRequisition, Receive, Result, ResultItem
+from microbiome.apps.mb_lab.models import InfantRequisition
 from microbiome.apps.mb_maternal.models import MaternalLocator, MaternalConsent, MaternalEligibility
 from microbiome.apps.mb_maternal.models import MaternalVisit
 
@@ -114,19 +113,8 @@ class InfantDashboard(RegisteredSubjectDashboard):
         return self._registered_subject
 
     def get_visit_model(self):
-        return InfantVisit
+        return self.visit_model
 
     @property
     def infant_hiv_status(self):
-        self._infant_hiv_status = None
-        requisition_dna_pcr = InfantRequisition.objects.filter(infant_visit=self.get_visit_model(),
-                                                               panel__name='DNA PCR', is_drawn=YES)
-        for requisitioned in requisition_dna_pcr:
-            try:
-                receive_dna_pcr = Receive.objects.get(requisition_identifier=requisitioned.requisition_identifier)
-            except Receive.DoesNotExist:
-                pass
-            result_dna_pcr = Result.objects.filter(subject_identifier=receive_dna_pcr.registered_subject.subject_identifier).order_by('result_datetime')
-            dna_pcr_result_item = ResultItem.objects.filter(result=result_dna_pcr).order_by('result_item_datetime')
-            self._infant_hiv_status = dna_pcr_result_item.last().result_item_value
-        return self._infant_hiv_status
+        return None
