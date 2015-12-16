@@ -38,6 +38,22 @@ if socket.gethostname() == 'microbiome.bhp.org.bw':
     KEY_PATH = '/home/django/source/microbiome/keys'
 elif 'test' in sys.argv:
     KEY_PATH = os.path.join(SOURCE_ROOT, 'crypto_fields/test_keys')
+elif socket.gethostname() == 'mac2-2.local':
+    KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
+elif socket.gethostname() == 'ckgathi':
+    KEY_PATH = '/Users/ckgathi/source/microbiome/microbiome/keys'
+elif socket.gethostname() == 'one-2.local' or socket.gethostname() == 'One-2.local':
+    KEY_PATH = '/Users/sirone/Documents/workspace/git_projects/microbiome/microbiome/keys'
+elif socket.gethostname() == 'silverapple':
+    KEY_PATH = '/Users/melissa/Documents/git/source/microbiome/microbiome/keys'
+elif socket.gethostname() == 'tsetsiba':
+    KEY_PATH = '/Users/tsetsiba/source/microbiome/keys'
+elif socket.gethostname() == 'fchilisa':
+    KEY_PATH = '/Users/fchilisa/source/microbiome/keys'
+elif socket.gethostname() == 'leslie':
+    KEY_PATH = '/Users/lesliek/keys'
+elif socket.gethostname() == 'edc4.bhp.org.bw':
+    KEY_PATH = '/home/django/source/keys'
 else:
     KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
 
