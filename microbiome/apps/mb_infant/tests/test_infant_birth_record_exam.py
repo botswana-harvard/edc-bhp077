@@ -10,7 +10,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import YES, NO, POS, NOT_APPLICABLE
+from edc_constants.constants import YES, NO, POS
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
@@ -18,7 +18,8 @@ from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, 
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
 
-from microbiome.apps.mb_maternal.visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+from microbiome.apps.mb_maternal.visit_schedule import (
+    AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
 from microbiome.apps.mb_infant.tests.factories import (InfantBirthFactory, InfantVisitFactory)
 
@@ -39,7 +40,8 @@ class TestInfantBirthRecordExam(TestCase):
         InfantBirthVisitSchedule().build()
 
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
         PostnatalEnrollmentFactory(

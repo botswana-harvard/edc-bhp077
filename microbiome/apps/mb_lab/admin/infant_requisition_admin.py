@@ -12,7 +12,6 @@ class InfantRequisitionAdmin(BaseRequisitionModelAdmin):
 
     form = InfantRequisitionForm
     visit_model = InfantVisit
-#     visit_fieldname = 'infant_visit'
     visit_attr = 'infant_visit'
     dashboard_type = 'infant'
 

@@ -17,6 +17,7 @@ addons:
      - libssl-dev
      - libssl0.9.8
      - python-m2crypto
+     - libcups2-dev
      - unixodbc-dev
      - python-pyodbc
 
@@ -36,13 +37,14 @@ install:
   - pip install coveralls
   - pip install M2Crypto
   - pip install pyodbc
+  - pip install pycups
   - pip install -q -r requirements.txt
 
 before_script:
-  - flake8 bhp077
+  - flake8 microbiome
 
 script: 
-  - coverage run --source=bhp077 manage.py test
+  - coverage run --source=microbiome manage.py test
 
 after_success:
   - coveralls

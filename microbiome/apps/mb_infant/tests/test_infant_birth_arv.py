@@ -17,8 +17,8 @@ from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, 
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
 
-from microbiome.apps.mb_maternal.visit_schedule import (AntenatalEnrollmentVisitSchedule,
-                                                            PostnatalEnrollmentVisitSchedule)
+from microbiome.apps.mb_maternal.visit_schedule import (
+    AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
 from microbiome.apps.mb_infant.tests.factories import \
     (InfantBirthFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
@@ -41,7 +41,8 @@ class TestInfantBirthArv(TestCase):
         InfantBirthVisitSchedule().build()
 
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
         PostnatalEnrollmentFactory(

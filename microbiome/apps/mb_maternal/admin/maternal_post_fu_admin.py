@@ -18,14 +18,14 @@ class MaternalPostFuAdmin(BaseModelAdmin):
         "weight_kg",
         "systolic_bp",
         "diastolic_bp",
-        "chronic_cond_since",
-        "chronic_cond",
-        "chronic_cond_other",
+        "chronic_since",
+        "chronic",
+        "chronic_other",
         "comment")
     radio_fields = {
         "weight_measured": admin.VERTICAL,
-        "chronic_cond_since": admin.VERTICAL}
-    filter_horizontal = ('chronic_cond',)
+        "chronic_since": admin.VERTICAL}
+    filter_horizontal = ('chronic',)
 
     actions = [
         export_as_csv_action(
@@ -86,9 +86,9 @@ class MaternalPostFuDxTAdmin(BaseModelAdmin):
                  'weight_kg': 'post_fu_dx__weight_kg',
                  'systolic_bp': 'post_fu_dx__systolic_bp',
                  'diastolic_bp': 'post_fu_dx__diastolic_bp',
-                 'chronic_cond_since': 'post_fu_dx__chronic_cond_since',
-                 'chronic_cond': 'post_fu_dx__chronic_cond',
-                 'chronic_cond_other': 'post_fu_dx__chronic_cond_other',
+                 'chronic_since': 'post_fu_dx__chronic_since',
+                 'chronic': 'post_fu_dx__chronic',
+                 'chronic_other': 'post_fu_dx__chronic_other',
                  'comment': 'post_fu_dx__comment'
                  }),
         )]
@@ -111,13 +111,13 @@ class MaternalPostFuDxAdmin(BaseModelAdmin):
         "maternal_post_fu",
         "hospitalized_since",
         "new_wcs_dx_since",
-        "wcs_dx_adult",
+        "who",
         "new_dx_since")
     radio_fields = {
         "hospitalized_since": admin.VERTICAL,
         "new_dx_since": admin.VERTICAL,
         "new_wcs_dx_since": admin.VERTICAL}
-    filter_horizontal = ("wcs_dx_adult",)
+    filter_horizontal = ("who",)
     inlines = [MaternalPostFuDxTInlineAdmin, ]
 
     actions = [

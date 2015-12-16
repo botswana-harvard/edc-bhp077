@@ -12,19 +12,18 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import socket
-import pytz
+import sys
+
 from unipath import Path
 
 from django.utils import timezone
 
-from microbiome.config.databases import PRODUCTION_MYSQL, SECRET_KEY
-
-APP_NAME = 'microbiome'
+APP_NAME = 'mb'
 PROJECT_TITLE = 'Gut Microbiome Evolution'
 INSTITUTION = 'Botswana-Harvard AIDS Institute'
 PROTOCOL_REVISION = '0.1dev'
 
-SOURCE_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(2)
+SOURCE_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
 MEDIA_ROOT = BASE_DIR.child('media')
 PROJECT_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
@@ -35,7 +34,11 @@ PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 # SECURITY WARNING: keep the secret key used in production secret!
 ALLOW_MODEL_SERIALIZATION = True
 
-if socket.gethostname() == 'mac2-2.local':
+if socket.gethostname() == 'microbiome.bhp.org.bw':
+    KEY_PATH = '/home/django/source/microbiome/keys'
+elif 'test' in sys.argv:
+    KEY_PATH = os.path.join(SOURCE_ROOT, 'crypto_fields/test_keys')
+elif socket.gethostname() == 'mac2-2.local':
     KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
 elif socket.gethostname() == 'ckgathi':
     KEY_PATH = '/Users/ckgathi/source/microbiome/microbiome/keys'
@@ -54,13 +57,14 @@ elif socket.gethostname() == 'edc4.bhp.org.bw':
 else:
     KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
 
+print(KEY_PATH)
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
 
 # Application definition
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,6 +72,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_revision',
+    'south',
     'edc_base',
     'edc_consent',
     'edc_constants',
@@ -163,7 +168,11 @@ INSTALLED_APPS = (
     'microbiome.apps.mb_dashboard',
     'microbiome.apps.mb_infant',
     'microbiome.apps.mb_maternal',
-    'microbiome.apps.mb_lab')
+    'microbiome.apps.mb_lab']
+
+if socket.gethostname() != 'microbiome.bhp.org.bw':
+    INSTALLED_APPS.pop(INSTALLED_APPS.index('south'))
+INSTALLED_APPS = tuple(INSTALLED_APPS)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -186,7 +195,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 ROOT_URLCONF = 'microbiome.config.urls'
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
-    os.path.join(SOURCE_ROOT.child('edc-base').child('edc_base'), 'templates'),
 )
 
 TEMPLATE_LOADERS = (
@@ -198,8 +206,9 @@ TEMPLATE_LOADERS = (
 WSGI_APPLICATION = 'microbiome.config.wsgi.application'
 
 # Database
-MYSQL_HOSTS = ['microbiome.bhp.org.bw']
-if socket.gethostname() in MYSQL_HOSTS:
+HOST_NAMES = ['microbiome.bhp.org.bw']
+if socket.gethostname() in HOST_NAMES:
+    from microbiome.config.databases import PRODUCTION_MYSQL, SECRET_KEY
     SECRET_KEY = SECRET_KEY
     DATABASES = PRODUCTION_MYSQL
 else:
@@ -264,14 +273,17 @@ AGE_IS_ADULT = 18
 GENDER_OF_CONSENT = ['F']
 DISPATCH_APP_LABELS = []
 
-DEVICE_ID = 95
+DEVICE_ID = 91
+if socket.gethostname() in HOST_NAMES:
+    DEVICE_ID = 99
+    PROJECT_TITLE = 'Gut Microbiome Study Live Server'
+
 SITE_CODE = '40'
 SERVER_DEVICE_ID_LIST = [91, 92, 93, 94, 95, 96, 97, 99]
+
 MIDDLEMAN_DEVICE_ID_LIST = [98]
 if DEVICE_ID in range(91, 97):
     PROJECT_TITLE = 'TEST: Microbiome'
-elif str(DEVICE_ID) == '99':
-    PROJECT_TITLE = 'SERVER: Microbiome'
 elif str(DEVICE_ID) == '98':
     PROJECT_TITLE = 'RESERVED FOR MIDDLE MAN'
 

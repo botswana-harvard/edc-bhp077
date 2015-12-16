@@ -52,7 +52,8 @@ class TestNaturalKey(TestCase):
         InfantBirthVisitSchedule().build()
 
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
 
         PostnatalEnrollmentFactory(
@@ -78,7 +79,8 @@ class TestNaturalKey(TestCase):
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
                 self.assertTrue(
-                    'natural_key' in dir(model), 'natural key not found in {0}'.format(model._meta.object_name))
+                    'natural_key' in dir(model),
+                    'natural key not found in {0}'.format(model._meta.object_name))
 
     def test_has_get_by_natural_key(self):
         """Confirms all models have a get_by_natural_key manager method."""
@@ -90,14 +92,14 @@ class TestNaturalKey(TestCase):
                         model.objects), 'get_by_natural_key key not found in {0}'.format(model._meta.object_name))
 
     def test_serializing_deserialing_infant_birth(self):
-        self.infant_birth = InfantBirthFactory(
+        infant_birth = InfantBirthFactory(
             registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
 
-        outgoing_transaction = SerializeToTransaction().serialize(
-            self.infant_birth.__class__, self.infant_birth, False, True, 'default')
-        for transaction in serializers.deserialize(
-                "json", FieldCryptor('aes', 'local').decrypt(outgoing_transaction.tx)):
-            self.assertEqual(transaction.object.pk, self.infant_birth.pk)
+        outgoing_tx = SerializeToTransaction().serialize(
+            infant_birth.__class__, infant_birth, False, True, 'default')
+
+        for transaction in serializers.deserialize("json", FieldCryptor('aes', 'local').decrypt(outgoing_tx.tx)):
+            self.assertEqual(transaction.object.pk, infant_birth.pk)
 
     def test_serializing_deserialing_infant_visit(self):
         InfantBirthFactory(

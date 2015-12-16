@@ -44,15 +44,15 @@ class MaternalRequisitionAdmin(BaseRequisitionModelAdmin):
 
     label_template_name = 'requisition_label'
     actions = [print_requisition_label,
-               export_as_csv_action("Export as csv", fields=[], delimiter=',', exclude=['id', 'revision',
-                                                                                        'hostname_created',
-                                                                                        'hostname_modified',
-                                                                                        'user_created',
-                                                                                        'user_modified'],)]
+               export_as_csv_action(
+                   "Export as csv", fields=[], delimiter=',', exclude=[
+                       'id', 'revision', 'hostname_created', 'hostname_modified',
+                       'user_created', 'user_modified'],)]
 
     def get_fieldsets(self, request, obj=None):
         panels = [
-            'Vaginal swab (Storage)', 'Rectal swab (Storage)', 'Skin Swab (Storage)', 'Vaginal Swab (multiplex PCR)']
+            'Vaginal swab (Storage)', 'Rectal swab (Storage)',
+            'Skin Swab (Storage)', 'Vaginal Swab (multiplex PCR)']
         panel = Panel.objects.get(id=request.GET.get('panel'))
         if panel.name in panels:
             for field in ['estimated_volume']:

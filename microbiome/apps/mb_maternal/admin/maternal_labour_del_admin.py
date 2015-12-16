@@ -54,8 +54,8 @@ class MaternalLabDelMedAdmin(BaseModelAdmin):
     list_display = ('has_health_cond', 'has_ob_comp')
     radio_fields = {'has_health_cond': admin.VERTICAL,
                     'has_ob_comp': admin.VERTICAL,
-                    'took_suppliments': admin.VERTICAL}
-    filter_horizontal = ('suppliments', 'health_cond', 'ob_comp')
+                    'took_supplements': admin.VERTICAL}
+    filter_horizontal = ('supplements', 'health_cond', 'ob_comp')
 
     actions = [
         export_as_csv_action(
@@ -119,7 +119,7 @@ class MaternalLabDelDxAdmin(BaseModelAdmin):
     form = MaternalLabDelDxForm
     radio_fields = {'has_preg_dx': admin.VERTICAL,
                     'has_who_dx': admin.VERTICAL}
-    filter_horizontal = ('wcs_dx_adult',)
+    filter_horizontal = ('who',)
     inlines = [MaternalLabDelDxTInlineAdmin, ]
 
     actions = [
@@ -166,7 +166,7 @@ class MaternalLabDelDxTAdmin(BaseModelAdmin):
                  'gender': 'maternal_lab_del_dx__maternal_visit__appointment__registered_subject__gender',
                  'dob': 'maternal_lab_del_dx__maternal_visit__appointment__registered_subject__dob',
                  'has_who_dx': 'maternal_lab_del_dx__has_who_dx',
-                 'wcs_dx_adult': 'maternal_lab_del_dx__wcs_dx_adult',
+                 'who': 'maternal_lab_del_dx__who',
                  'has_preg_dx': 'maternal_lab_del_dx__has_preg_dx',
                  }),
         )]

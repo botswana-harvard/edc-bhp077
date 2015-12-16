@@ -68,12 +68,12 @@ class MaternalLabDelMedForm(BaseMaternalModelForm):
                 leading=cleaned_data.get('has_ob_comp'),
                 m2m=cleaned_data.get('ob_comp'),
                 other=cleaned_data.get('ob_comp_other'))
-        if 'suppliments' in cleaned_data.keys():
+        if 'supplements' in cleaned_data.keys():
             self.validate_m2m(
                 label='pregnancy suppliment',
-                leading=cleaned_data.get('took_suppliments'),
-                m2m=cleaned_data.get('suppliments'),
-                other=cleaned_data.get('suppliments_other'))
+                leading=cleaned_data.get('took_supplements'),
+                m2m=cleaned_data.get('supplements'),
+                other=cleaned_data.get('supplements_other'))
         return cleaned_data
 
     class Meta:
@@ -162,11 +162,11 @@ class MaternalLabDelDxForm(BaseMaternalModelForm):
         check_dx = self.data.get('maternallabdeldxt-0-lab_del_dx')
 
         # WHO validations
-        if 'wcs_dx_adult' in cleaned_data.keys():
+        if 'who' in cleaned_data.keys():
             self.validate_m2m_wcs_dx(
                 label='who diagnoses',
                 leading=cleaned_data.get('has_who_dx'),
-                m2m=cleaned_data.get('wcs_dx_adult'))
+                m2m=cleaned_data.get('who'))
 
         # Validate diagnosis
         if cleaned_data.get('has_preg_dx') == 'Yes' and not check_dx:

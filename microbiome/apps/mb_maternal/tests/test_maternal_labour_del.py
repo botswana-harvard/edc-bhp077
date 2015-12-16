@@ -93,7 +93,6 @@ class TestMaternalLabourDel(TestCase):
 
     def test_temp_1(self):
         self.data['has_temp'] = YES
-        # self.data['delivery_datetime'] = timezone.now() - relativedelta(days=self.postnatal_enrollment.postpartum_days)
         form = MaternalLabourDelForm(data=self.data)
         self.assertIn("You have indicated that maximum temperature at delivery is known. "
                       "Please provide the maximum temperature.", form.errors.get('__all__'))
@@ -101,7 +100,6 @@ class TestMaternalLabourDel(TestCase):
     def test_temp_2(self):
         self.data['labour_max_temp'] = 37
         form = MaternalLabourDelForm(data=self.data)
-        # self.data['delivery_datetime'] = timezone.now() - relativedelta(days=self.postnatal_enrollment.postpartum_days)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn("You have indicated that maximum temperature is not known. "
                       "You CANNOT provide the maximum temperature", errors)
@@ -145,8 +143,9 @@ class TestMaternalLabourDelClinic(TestCase):
         site_rule_groups.autodiscover()
         self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject,
-                                                       study_site=self.study_site)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject,
+            study_site=self.study_site)
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
@@ -261,7 +260,8 @@ class TestMaternalLabourDelClinic(TestCase):
         self.data['vl_result'] = 1389
         form = MaternalLabDelClinicForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You stated that a VL count was performed. Please indicate if it was detectable.', errors)
+        self.assertIn(
+            'You stated that a VL count was performed. Please indicate if it was detectable.', errors)
 
     def test_has_vl_7(self):
         """If has VL  is YES, the both VL date and result should be provided"""
@@ -277,5 +277,6 @@ class TestMaternalLabourDelClinic(TestCase):
         self.data['vl_detectable'] = YES
         form = MaternalLabDelClinicForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You stated that a VL count was NOT performed, you CANNOT indicate if VL was detectable.',
-                      errors)
+        self.assertIn(
+            'You stated that a VL count was NOT performed, you CANNOT indicate if VL was detectable.',
+            errors)

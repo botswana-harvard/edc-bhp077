@@ -54,7 +54,7 @@ class TestMaternalFollowup(TestCase):
             registered_subject=self.registered_subject,
             visit_definition__code='2010M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        chronic_condition = ChronicConditions.objects.exclude(
+        chronicition = ChronicConditions.objects.exclude(
             name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
         self.data = {
             'maternal_visit': self.maternal_visit.id,
@@ -63,9 +63,9 @@ class TestMaternalFollowup(TestCase):
             'weight_kg': '',
             'systolic_bp': 120,
             'diastolic_bp': 80,
-            'chronic_cond_since': NO,
-            'chronic_cond': [chronic_condition.id],
-            'chronic_cond_other': '',
+            'chronic_since': NO,
+            'chronic': [chronicition.id],
+            'chronic_other': '',
             'comment': '',
         }
 
@@ -97,27 +97,27 @@ class TestMaternalFollowup(TestCase):
         form = MaternalPostFuForm(data=self.data)
         self.assertTrue(form.is_valid)
 
-    def test_chronic_cond_1(self):
+    def test_chronic_1(self):
         """Assert that if has chronic conditions is indicated as YES, then chronic conditions cannot be N/A"""
-        chronic_condition = ChronicConditions.objects.filter(name__icontains=NOT_APPLICABLE).first()
-        self.data['chronic_cond_since'] = YES
-        self.data['chronic_cond'] = [chronic_condition.id]
+        chronicition = ChronicConditions.objects.filter(name__icontains=NOT_APPLICABLE).first()
+        self.data['chronic_since'] = YES
+        self.data['chronic'] = [chronicition.id]
         form = MaternalPostFuForm(data=self.data)
         errors = ''.join(form.errors.get('__all__') or [])
         self.assertIn("You stated there ARE chronic conditionss, yet you selected 'N/A'", errors)
 
-    def test_chronic_cond_2(self):
-        chronic_condition = ChronicConditions.objects.exclude(
+    def test_chronic_2(self):
+        chronicition = ChronicConditions.objects.exclude(
             name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
-        self.data['chronic_cond_since'] = NO
-        self.data['chronic_cond'] = [chronic_condition.id]
+        self.data['chronic_since'] = NO
+        self.data['chronic'] = [chronicition.id]
         form = MaternalPostFuForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You stated there are NO chronic conditionss. Please correct', errors)
 
     def test_bp(self):
-        self.data['chronic_cond_since'] = NO
-        self.data['chronic_cond'] = None
+        self.data['chronic_since'] = NO
+        self.data['chronic'] = None
         self.data['systolic_bp'] = 80
         self.data['diastolic_bp'] = 120
         form = MaternalPostFuForm(data=self.data)

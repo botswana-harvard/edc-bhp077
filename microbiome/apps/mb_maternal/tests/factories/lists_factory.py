@@ -1,10 +1,10 @@
 import factory
 
-from microbiome.apps.mb_list.models import Suppliments, ChronicConditions
+from microbiome.apps.mb_list.models import Supplements, ChronicConditions
 from microbiome.apps.mb_list.models.maternal_lab_del import HealthCond
 
 
-class SupplimentsFactory(factory.DjangoModelFactory):
+class SupplementsFactory(factory.DjangoModelFactory):
 
     name = 'N/A'
     short_name = 'N/A'
@@ -12,7 +12,7 @@ class SupplimentsFactory(factory.DjangoModelFactory):
     version = '1.0'
 
     class Meta:
-        model = Suppliments
+        model = Supplements
 
 
 class HealthCondFactory(factory.DjangoModelFactory):

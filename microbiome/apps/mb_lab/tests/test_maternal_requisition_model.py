@@ -1,30 +1,25 @@
 from django.test import TestCase
-from django.utils import timezone
- 
+
 from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc.lab.lab_clinic_api.tests.factories import PanelFactory
 from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc.subject.code_lists.models import WcsDxAdult
-from edc_constants.choices import YES, NO
-from edc.entry_meta_data.models.requisition_meta_data import RequisitionMetaData
- 
+from edc_constants.choices import YES
+
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from microbiome.apps.mb_lab.models.aliquot import AliquotType
-from microbiome.apps.mb_list.models.chronic_conditions import ChronicConditions
-from microbiome.apps.mb_maternal.forms import (MaternalPostFuForm, MaternalPostFuDxForm)
 from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
-from microbiome.apps.mb_maternal.tests.factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
-                        MaternalEligibilityFactory, MaternalConsentFactory)
-from microbiome.apps.mb_lab.models.maternal_requisition import MaternalRequisition
+from microbiome.apps.mb_maternal.tests.factories import (PostnatalEnrollmentFactory, MaternalVisitFactory)
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 
-from ..forms import MaternalRequisitionForm
 from ..models import Panel
+
 from .factories import MaternalRequistionFactory
+from edc_constants.constants import UNSCHEDULED
 
 
 class TestMaternalRequisitionModel(TestCase):
@@ -54,7 +49,6 @@ class TestMaternalRequisitionModel(TestCase):
         self.aliquot_type = AliquotType.objects.get(alpha_code='WB')
 
     def test_visit_reason_unscheduled(self):
-        maternal_visit = MaternalVisitFactory(appointment=self.appointment, reason="unscheduled")
-        requisition = MaternalRequistionFactory(panel=self.panel, study_site=self.study_site, 
-                                                aliquot_type=self.aliquot_type)
-
+        MaternalVisitFactory(appointment=self.appointment, reason=UNSCHEDULED)
+        MaternalRequistionFactory(panel=self.panel, study_site=self.study_site,
+                                  aliquot_type=self.aliquot_type)

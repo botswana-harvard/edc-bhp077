@@ -6,9 +6,9 @@ from edc_base.utils import convert_from_camel
 from edc_constants.constants import YES, POS, NEG, IND, NEVER, UNKNOWN, DWTA
 
 from microbiome.apps.mb_lab.models.maternal_requisition import MaternalRequisition
-from microbiome.apps.mb_maternal.models import (MaternalVisit, MaternalEligibility,
-                                                    MaternalLocator, MaternalConsent,
-                                                    AntenatalEnrollment, PostnatalEnrollment)
+from microbiome.apps.mb_maternal.models import (
+    MaternalVisit, MaternalEligibility, MaternalConsent, MaternalLocator,
+    AntenatalEnrollment, PostnatalEnrollment)
 from microbiome.apps.mb_infant.models import InfantBirth
 
 

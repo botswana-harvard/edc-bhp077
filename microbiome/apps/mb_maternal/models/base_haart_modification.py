@@ -1,9 +1,9 @@
 from django.db import models
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from ..maternal_choices import ARV_DRUG_LIST, ARV_MODIFICATION_REASON, DOSE_STATUS
 
 
-class BaseHaartModification(BaseUuidModel):
+class BaseHaartModification(BaseSyncUuidModel):
     """
     Base Class for recording HAART medications
     """

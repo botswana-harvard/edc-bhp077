@@ -6,6 +6,7 @@ from edc_constants.choices import YES_NO
 from microbiome.apps.mb.choices import ARV_STATUS_WITH_NEVER
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from edc_constants.constants import NOT_APPLICABLE
 
 
 class InfantArvProph(InfantScheduledVisitModel):
@@ -23,7 +24,7 @@ class InfantArvProph(InfantScheduledVisitModel):
             "What is the status of the participant's ARV prophylaxis at this visit or since the last visit? "),
         choices=ARV_STATUS_WITH_NEVER,
         help_text="referring to prophylaxis other than single dose NVP",
-        default='N/A',
+        default=NOT_APPLICABLE,
     )
 
     history = AuditTrail()

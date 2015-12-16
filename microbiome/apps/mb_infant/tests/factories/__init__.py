@@ -6,6 +6,6 @@ from .infant_cns_abn_item_factory import InfantBirthCnsAbnItemFactory
 from .infant_offstudy_factory import InfantOffStudyFactory
 from .infant_birth_feed_vaccine_factory import InfantBirthFeedVaccineFactory
 from .infant_fu_factory import InfantFuFactory
-from .Infant_fu_physical_factory import InfantFuPhysicalFactory
+from .infant_fu_physical_factory import InfantFuPhysicalFactory
 from .infant_fu_new_med_factory import InfantFuNewMedFactory
-from .Infant_fu_immunizations_factory import InfantFuImmunizationsFactory
+from .infant_fu_immunizations_factory import InfantFuImmunizationsFactory

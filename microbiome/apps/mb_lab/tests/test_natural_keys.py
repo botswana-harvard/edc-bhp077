@@ -26,7 +26,8 @@ class NaturalKeyTests(TestCase):
         AntenatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
         self.data = {
             'registered_subject': self.registered_subject}
@@ -36,11 +37,15 @@ class NaturalKeyTests(TestCase):
         app = get_app('mb_lab')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
-                self.assertTrue('natural_key' in dir(model), 'natural key not found in {0}'.format(model._meta.object_name))
+                self.assertTrue(
+                    'natural_key' in dir(model),
+                    'natural key not found in {0}'.format(model._meta.object_name))
 
     def test_p2(self):
         """Confirms all models have a get_by_natural_key manager method."""
         app = get_app('mb_lab')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
-                self.assertTrue('get_by_natural_key' in dir(model.objects), 'get_by_natural_key key not found in {0}'.format(model._meta.object_name))
+                self.assertTrue(
+                    'get_by_natural_key' in dir(model.objects),
+                    'get_by_natural_key key not found in {0}'.format(model._meta.object_name))

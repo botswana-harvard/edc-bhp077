@@ -33,8 +33,7 @@ class InfantBirthFeedVaccine(InfantScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_infant'
-        verbose_name = "Infant Birth Feeding & Vaccination"
-        verbose_name_plural = "Infant Birth Feeding & Vaccination"
+        verbose_name = "Birth Feeding & Vaccination"
 
 
 class InfantVaccines(BaseUuidModel):

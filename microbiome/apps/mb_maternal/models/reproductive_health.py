@@ -42,12 +42,12 @@ class ReproductiveHealth(MaternalScheduledVisitModel):
         choices=YES_NO_DWTA,
         help_text='')
 
-    contraceptives = models.ManyToManyField(
+    contr = models.ManyToManyField(
         Contraceptives,
         verbose_name='Please share with us your current contraceptive methods',
         help_text='')
 
-    contraceptives_other = OtherCharField(
+    contr_other = OtherCharField(
         max_length=35,
         verbose_name="If Other enter text description of other contraceptive method being used",
         blank=True,

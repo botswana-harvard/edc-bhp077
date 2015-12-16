@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_constants.choices import DRUG_ROUTE
 from edc_constants.choices import YES_NO_UNKNOWN
 
@@ -35,11 +35,10 @@ class MaternalPostFuMed(MaternalScheduledVisitModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = "Maternal Postnatal Follow-Up: Medications"
-        verbose_name_plural = "Maternal Postnatal Follow-Up: Medications"
+        verbose_name = 'Maternal Postnatal: Med'
 
 
-class MaternalPostFuMedItems(BaseUuidModel):
+class MaternalPostFuMedItems(BaseSyncUuidModel):
 
     maternal_post_fu_med = models.OneToOneField(MaternalPostFuMed)
 
@@ -78,5 +77,4 @@ class MaternalPostFuMedItems(BaseUuidModel):
 
     class Meta:
         app_label = 'mb_maternal'
-        verbose_name = "Maternal Postnatal Follow-Up: Medications"
-        verbose_name_plural = "Maternal Postnatal Follow-Up: Medications Items"
+        verbose_name = "Maternal Postnatal: Med Item"

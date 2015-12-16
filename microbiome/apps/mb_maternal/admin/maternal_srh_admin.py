@@ -17,7 +17,8 @@ class MaternalSrhAdmin(BaseModelAdmin):
               'reason_unseen_clinic',
               'reason_unseen_clinic_other',
               'is_contraceptive_initiated',
-              'contraceptives',
+              'contr',  # contraceptives
+              'contr_other',
               'reason_not_initiated',
               'srh_referral',
               'srh_referral_other')
@@ -26,7 +27,7 @@ class MaternalSrhAdmin(BaseModelAdmin):
                     'is_contraceptive_initiated': admin.VERTICAL,
                     'reason_not_initiated': admin.VERTICAL,
                     'srh_referral': admin.VERTICAL}
-    filter_horizontal = ('contraceptives',)
+    filter_horizontal = ('contr',)
 
     actions = [
         export_as_csv_action(

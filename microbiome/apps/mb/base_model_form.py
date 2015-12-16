@@ -117,12 +117,12 @@ class BaseModelForm(forms.ModelForm):
 
             For example, in the ModelForm clean() method call::
 
-                if cleaned_data.has_key('chronic_cond'):
+                if cleaned_data.has_key('chronic'):
                     self.validate_m2m(
                             label = 'chronic condition',
-                            yesno = cleaned_data['chronic_cond_since'],
-                            m2m = cleaned_data['chronic_cond'],
-                            other = cleaned_data['chronic_cond_other'])
+                            yesno = cleaned_data['chronic_since'],
+                            m2m = cleaned_data['chronic'],
+                            other = cleaned_data['chronic_other'])
         """
         label = kwargs.get('label', 'items to be selected')
         leading = kwargs.get('leading')

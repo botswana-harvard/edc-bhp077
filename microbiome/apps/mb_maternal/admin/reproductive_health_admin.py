@@ -17,15 +17,15 @@ class ReproductiveHealthAdmin(BaseModelAdmin):
               'next_child',
               'contraceptive_measure',
               'uses_contraceptive',
-              'contraceptives',
-              'contraceptives_other',
+              'contr',
+              'contr_other',
               'srh_referral')
     radio_fields = {'more_children': admin.VERTICAL,
                     'next_child': admin.VERTICAL,
                     'contraceptive_measure': admin.VERTICAL,
                     'uses_contraceptive': admin.VERTICAL,
                     'srh_referral': admin.VERTICAL}
-    filter_horizontal = ('contraceptives',)
+    filter_horizontal = ('contr',)
 
     actions = [
         export_as_csv_action(
