@@ -20,6 +20,7 @@ from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 
 from ..forms import MaternalRequisitionForm
 from ..models import Panel
+
 from edc_constants.constants import SCHEDULED, UNSCHEDULED
 
 
