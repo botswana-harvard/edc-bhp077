@@ -2,5 +2,7 @@
 
 [![Coverage Status](https://coveralls.io/repos/botswana-harvard/microbiome/badge.svg?branch=develop&service=github)](https://coveralls.io/github/botswana-harvard/microbiome?branch=develop)
 
-# Microbiome bhp077
+[![Coverage Status](https://coveralls.io/repos/botswana-harvard/microbiome/badge.svg?branch=develop&service=github)](https://coveralls.io/github/botswana-harvard/microbiome?branch=develop)
 
+
+# Microbiome bhp077
