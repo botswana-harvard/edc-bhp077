@@ -16,8 +16,10 @@ from microbiome.apps.mb_infant.forms import InfantDeathReportForm
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
-from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
+from microbiome.apps.mb_maternal.tests.factories import (
+    MaternalConsentFactory, MaternalLabourDelFactory)
+from microbiome.apps.mb_maternal.tests.factories import (
+    MaternalEligibilityFactory, MaternalVisitFactory)
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
 
@@ -38,7 +40,8 @@ class TestInfantDeathForm(TestCase):
 
         maternal_eligibility = MaternalEligibilityFactory(
             registered_subject__registration_datetime=timezone.now())
-        maternal_consent = MaternalConsentFactory(registered_subject=maternal_eligibility.registered_subject)
+        maternal_consent = MaternalConsentFactory(
+            registered_subject=maternal_eligibility.registered_subject)
         registered_subject = maternal_consent.registered_subject
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
