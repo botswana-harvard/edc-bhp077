@@ -20,6 +20,7 @@ from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 
 from ..forms import MaternalRequisitionForm
 from ..models import Panel
+from edc_constants.constants import SCHEDULED
 
 
 class TestMaternalRequisitionForm(TestCase):
@@ -64,6 +65,9 @@ class TestMaternalRequisitionForm(TestCase):
         }
 
     def test_visit_reason_unscheduled(self):
+        appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+                                              visit_definition__code='1000M')
+        MaternalVisitFactory(appointment=appointment, reason=SCHEDULED)
         maternal_visit = MaternalVisitFactory(appointment=self.appointment, reason="unscheduled")
         self.data['maternal_visit'] = maternal_visit.id
         self.data['is_drawn'] = YES
