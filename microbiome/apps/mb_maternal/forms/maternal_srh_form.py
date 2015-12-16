@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.util import ErrorList
 
-from edc_constants.constants import NO
+from edc_constants.constants import NO, YES
 
 from ..models import MaternalSrh
 
@@ -20,11 +20,11 @@ class MaternalSrhForm(BaseMaternalModelForm):
             if not cleaned_data.get('reason_unseen_clinic'):
                 raise forms.ValidationError(
                     'If you have not been seen in that clinic since your last visit with us, why not?')
-        if 'is_contraceptive_initiated' in cleaned_data.keys():
+        if cleaned_data.get('is_contraceptive_initiated') == YES:
             self.validate_m2m(
                 label='contraceptive method',
                 leading=cleaned_data.get('is_contraceptive_initiated'),
-                m2m=cleaned_data.get('contra')
+                m2m=cleaned_data.get('contr')
             )
         if cleaned_data.get('is_contraceptive_initiated') == NO:
             if not cleaned_data.get('reason_not_initiated'):

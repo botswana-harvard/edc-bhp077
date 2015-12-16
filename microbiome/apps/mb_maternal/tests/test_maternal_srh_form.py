@@ -45,8 +45,8 @@ class TestSrhServiceUtilizationForm(TestCase):
             'maternal_visit': None,
             'seen_at_clinic': YES,
             'is_contraceptive_initiated': YES,
-            'contra': [contraceptives.id],
-            'contra_other': None,
+            'contr': [contraceptives.id],
+            'contr_other': None,
             'reason_not_initiated': None,
             'srh_referral': YES,
             'srh_referral_other': None
@@ -96,7 +96,7 @@ class TestSrhServiceUtilizationForm(TestCase):
             form.errors.get('__all__'))
 
     def test_srh_srh_form_valid3(self):
-
+        """Asserts if have not initiated contraceptive methods raises."""
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
@@ -113,11 +113,11 @@ class TestSrhServiceUtilizationForm(TestCase):
         self.data['is_contraceptive_initiated'] = NO
         self.data['maternal_visit'] = maternal_visit.id
         contraceptives = Contraceptives.objects.exclude(name__icontains='other').first()
-        self.data['contra'] = [contraceptives.id]
+        self.data['contr'] = [contraceptives.id]
         form = MaternalSrhForm(data=self.data)
         self.assertIn(
             'If have not initiated contraceptive method, please provide reason.',
-            form.errors.get('__all__'))
+            form.errors.get('__all__') or [])
 
     def test_srh_srh_form_valid4(self):
 
@@ -139,4 +139,4 @@ class TestSrhServiceUtilizationForm(TestCase):
         self.data['reason_unseen_clinic'] = 'not_sexually_active'
         self.assertIn(
             "Don't answer this question, since you have initiated contraceptive.",
-            form.errors.get('__all__'))
+            form.errors.get('__all__') or [])

@@ -1,4 +1,3 @@
-from django.db.models import signals
 from django.utils import timezone
 from datetime import date
 
