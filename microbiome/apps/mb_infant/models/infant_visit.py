@@ -3,7 +3,7 @@ from django.db import models
 from edc.entry_meta_data.models import MetaDataMixin
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
 from edc_constants.choices import YES_NO, ALIVE_DEAD_UNKNOWN
 from edc_base.model.validators import date_not_before_study_start, date_not_future
 from edc_constants.constants import OFF_STUDY, DEATH_VISIT, UNSCHEDULED, SCHEDULED
@@ -16,10 +16,9 @@ from microbiome.apps.mb.choices import (
     VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS)
 
 from .infant_off_study_mixin import InfantOffStudyMixin
-from edc_visit_tracking.managers.base_visit_tracking_manager import BaseVisitTrackingManager
 
 
-class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVisitTracking, BaseUuidModel):
+class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVisitTracking, BaseSyncUuidModel):
 
     """ A model completed by the user on the infant visits. """
 
@@ -60,8 +59,6 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         blank=True)
 
     history = AuditTrail()
-
-    objects = BaseVisitTrackingManager()
 
     def __unicode__(self):
         return '{} {} {}'.format(
@@ -116,7 +113,7 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
             )
 
     def natural_key(self):
-        return self.get_appointment().natural_key()
+        return (self.report_datetime,) + self.get_appointment().natural_key()
     natural_key.dependencies = ['appointment.appointment', ]
 
     def get_visit_reason_choices(self):

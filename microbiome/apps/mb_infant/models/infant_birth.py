@@ -3,7 +3,7 @@ from django.db import models
 from edc.subject.appointment_helper.models import BaseAppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import GENDER_UNDETERMINED
@@ -15,7 +15,7 @@ from ..managers import InfantBirthModelManager
 from .infant_off_study_mixin import InfantOffStudyMixin
 
 
-class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseUuidModel):
+class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseSyncUuidModel):
     """ A model completed by the user on the infant's birth. """
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)

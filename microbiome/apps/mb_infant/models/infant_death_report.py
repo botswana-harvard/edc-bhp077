@@ -3,14 +3,14 @@ from django.db import models
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
+from edc.device.sync.models import BaseSyncUuidModel
 from edc_death_report.models import DeathReportMixin, InfantDrugRelationshipMixin
 
 from .infant_visit import InfantVisit
 from ..managers import ScheduledModelManager
 
 
-class InfantDeathReport (DeathReportMixin, InfantDrugRelationshipMixin, BaseUuidModel):
+class InfantDeathReport (DeathReportMixin, InfantDrugRelationshipMixin, BaseSyncUuidModel):
 
     """ A model completed by the user after an infant's death. """
 

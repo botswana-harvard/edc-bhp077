@@ -44,7 +44,8 @@ class InfantScheduledVisitModel(InfantOffStudyMixin,
         return self.infant_visit
 
     def natural_key(self):
-        return self.get_visit().natural_key()
+        return (self.get_visit(),)
+    natural_key.dependencies = ['mb_infant.infant_visit']
 
     class Meta:
         abstract = True

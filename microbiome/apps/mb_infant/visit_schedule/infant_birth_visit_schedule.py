@@ -19,7 +19,6 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
     schedule_groups = OrderedDict({
         'Infant Enrollment': ScheduleGroupTuple('Infant Enrollment',
                                                 'infant_enrollment', None, None)})
-
     visit_definitions = OrderedDict()
     visit_definitions['2000'] = {
         'title': 'Birth',

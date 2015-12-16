@@ -1,12 +1,13 @@
 from django.db.models import signals
-from datetime import datetime, timedelta, date
+from django.utils import timezone
+from datetime import date
 
 from django.core import serializers
 from django.db.models import get_app, get_models
 from django.test import TestCase
 
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import YES, POS
+from edc_constants.constants import YES, POS, OFF_STUDY
 
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
@@ -27,6 +28,12 @@ from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFacto
 from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 from microbiome.apps.mb_maternal.visit_schedule import (
     AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
+from microbiome.apps.mb_infant.tests.factories.infant_visit_factory import InfantVisitFactory
+from microbiome.apps.mb_infant.tests.factories.infant_birth_data_factory import InfantBirthDataFactory
+from microbiome.apps.mb_infant.models.infant_birth_exam import InfantBirthExam
+from ..models import (
+    InfantBirthFeedVaccine, InfantStoolCollection, InfantCongenitalAnomalies, InfantDeathReport, InfantOffStudy)
+from microbiome.apps.mb_infant.tests.factories.infant_fu_factory import InfantFuFactory
 
 
 class TestNaturalKey(TestCase):
@@ -58,34 +65,162 @@ class TestNaturalKey(TestCase):
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject, visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
+        self.maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
 
         self.registered_subject_infant = RegisteredSubject.objects.get(
             subject_type='infant', relative_identifier=self.registered_subject.subject_identifier)
-        self.infant_birth = InfantBirthFactory(
-            registered_subject=self.registered_subject_infant, maternal_labour_del=maternal_labour_del)
-        self.appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject_infant,
-            visit_definition__code='2000')
+#         self.infant_birth = InfantBirthFactory(
+#             registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
 
     def test_has_natural_key_method(self):
         """Confirms all models have a natural_key method (except Audit models)"""
         app = get_app('mb_infant')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
-                self.assertTrue('natural_key' in dir(model), 'natural key not found in {0}'.format(model._meta.object_name))
+                self.assertTrue(
+                    'natural_key' in dir(model), 'natural key not found in {0}'.format(model._meta.object_name))
 
     def test_has_get_by_natural_key(self):
         """Confirms all models have a get_by_natural_key manager method."""
         app = get_app('mb_infant')
         for model in get_models(app):
             if 'Audit' not in model._meta.object_name:
-                self.assertTrue('get_by_natural_key' in dir(model.objects), 'get_by_natural_key key not found in {0}'.format(model._meta.object_name))
+                self.assertTrue(
+                    'get_by_natural_key' in dir(
+                        model.objects), 'get_by_natural_key key not found in {0}'.format(model._meta.object_name))
 
-    def test_serializing_deserialing_models(self):
-        print 'test serializing/deserializing {0}'.format(self.infant_birth._meta.object_name)
-        outgoing_transaction = SerializeToTransaction().serialize(self.infant_birth.__class__, self.infant_birth, False, True, 'default')
-        print outgoing_transaction
-        # pp.pprint(FieldCryptor('aes', 'local').decrypt(outgoing_transaction.tx))
-        for transaction in serializers.deserialize("json", FieldCryptor('aes', 'local').decrypt(outgoing_transaction.tx)):
+    def test_serializing_deserialing_infant_birth(self):
+        self.infant_birth = InfantBirthFactory(
+            registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
+
+        outgoing_transaction = SerializeToTransaction().serialize(
+            self.infant_birth.__class__, self.infant_birth, False, True, 'default')
+        for transaction in serializers.deserialize(
+                "json", FieldCryptor('aes', 'local').decrypt(outgoing_transaction.tx)):
             self.assertEqual(transaction.object.pk, self.infant_birth.pk)
+
+    def test_serializing_deserialing_infant_visit(self):
+        InfantBirthFactory(
+            registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
+
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject_infant,
+            visit_definition__code='2000')
+
+        infant_visit = InfantVisitFactory(
+            appointment=appointment)
+
+        outgoing_tx = SerializeToTransaction().serialize(
+            infant_visit.__class__, infant_visit, False, True, 'default')
+
+        for transaction in serializers.deserialize("json", FieldCryptor('aes', 'local').decrypt(outgoing_tx.tx)):
+            self.assertEqual(transaction.object.pk, infant_visit.pk)
+
+    def test_serializing_deserialing_infant_birth_data(self):
+        InfantBirthFactory(
+            registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
+
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject_infant,
+            visit_definition__code='2000')
+        infant_visit = InfantVisitFactory(
+            appointment=appointment)
+        infant_birth_data = InfantBirthDataFactory(
+            infant_visit=infant_visit
+        )
+        outgoing_tx = SerializeToTransaction().serialize(
+            infant_birth_data.__class__, infant_birth_data, False, True, 'default')
+
+        for transaction in serializers.deserialize("json", FieldCryptor('aes', 'local').decrypt(outgoing_tx.tx)):
+            self.assertEqual(transaction.object.pk, infant_birth_data.pk)
+
+    def test_serializing_deserialing_visit_models_2000(self):
+        InfantBirthFactory(
+            registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
+
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject_infant,
+            visit_definition__code='2000')
+        infant_visit = InfantVisitFactory(
+            appointment=appointment)
+        visit_models = [
+            InfantBirthExam, InfantBirthFeedVaccine, InfantStoolCollection, InfantCongenitalAnomalies]
+        for VISIT_MODEL in visit_models:
+            visit_model = VISIT_MODEL.objects.create(
+                infant_visit=infant_visit,
+                report_datetime=timezone.now()
+            )
+            outgoing_tx = SerializeToTransaction().serialize(
+                visit_model.__class__, visit_model, False, True, 'default')
+
+            for transaction in serializers.deserialize("json", FieldCryptor('aes', 'local').decrypt(outgoing_tx.tx)):
+                self.assertEqual(transaction.object.pk, visit_model.pk)
+
+    def test_serializing_deserialing_infant_death(self):
+        InfantBirthFactory(
+            registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
+
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject_infant,
+            visit_definition__code='2000')
+        infant_visit = InfantVisitFactory(
+            appointment=appointment)
+
+        infant_death = InfantDeathReport.objects.create(
+            infant_visit=infant_visit,
+            report_datetime=timezone.now(),
+            death_date=date(2015, 12, 15),
+            cause_id=5,
+            cause_category_id=2,
+            illness_duration=2,
+            diagnosis_code_id=2,
+            medical_responsibility_id=1,
+            registered_subject=self.registered_subject_infant
+        )
+        out_tx = SerializeToTransaction().serialize(
+            infant_death.__class__, infant_death, False, True, 'default')
+        serialized_objects = serializers.deserialize("json", FieldCryptor('aes', 'local').decrypt(out_tx.tx))
+        for transaction in serialized_objects:
+            self.assertEqual(transaction.object.pk, infant_death.pk)
+
+    def test_serializing_deserialing_infant_offstudy(self):
+        InfantBirthFactory(
+            registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
+
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject_infant,
+            visit_definition__code='2000')
+        infant_visit = InfantVisitFactory(
+            appointment=appointment,
+            reason=OFF_STUDY)
+
+        infant_offstudy = InfantOffStudy.objects.create(
+            infant_visit=infant_visit,
+            report_datetime=timezone.now(),
+            registered_subject=self.registered_subject_infant,
+            offstudy_date=date(2015, 12, 12),
+        )
+        outgoing_tx = SerializeToTransaction().serialize(
+            infant_offstudy.__class__, infant_offstudy, False, True, 'default')
+
+        for transaction in serializers.deserialize("json", FieldCryptor('aes', 'local').decrypt(outgoing_tx.tx)):
+            self.assertEqual(transaction.object.pk, infant_offstudy.pk)
+
+    def test_serializing_deserialing_visit_models_2010(self):
+        InfantBirthFactory(
+            registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
+
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject_infant, visit_definition__code='2000')
+        InfantVisitFactory(appointment=appointment)
+
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject_infant,
+            visit_definition__code='2010')
+        infant_visit = InfantVisitFactory(appointment=appointment)
+        infant_fu = InfantFuFactory(infant_visit=infant_visit)
+        outgoing_tx = SerializeToTransaction().serialize(
+            infant_fu.__class__, infant_fu, False, True, 'default')
+
+        for transaction in serializers.deserialize("json", FieldCryptor('aes', 'local').decrypt(outgoing_tx.tx)):
+            self.assertEqual(transaction.object.pk, infant_fu.pk)
