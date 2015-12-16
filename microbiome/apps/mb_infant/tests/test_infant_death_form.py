@@ -9,14 +9,17 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.registration.models import RegisteredSubject
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
+from edc_death_report.models.reason_hospitalized import ReasonHospitalized
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb_infant.forms import InfantDeathReportForm
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
-from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
+from microbiome.apps.mb_maternal.tests.factories import (
+    MaternalConsentFactory, MaternalLabourDelFactory)
+from microbiome.apps.mb_maternal.tests.factories import (
+    MaternalEligibilityFactory, MaternalVisitFactory)
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
 
@@ -35,46 +38,48 @@ class TestInfantDeathForm(TestCase):
         site_rule_groups.autodiscover()
         InfantBirthVisitSchedule().build()
 
-        self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
-        self.registered_subject = self.maternal_eligibility.registered_subject
+        maternal_eligibility = MaternalEligibilityFactory(
+            registered_subject__registration_datetime=timezone.now())
+        maternal_consent = MaternalConsentFactory(
+            registered_subject=maternal_eligibility.registered_subject)
+        registered_subject = maternal_consent.registered_subject
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
+            registered_subject=registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
             rapid_test_done=YES,
             rapid_test_date=date.today(),
             rapid_test_result=NEG)
         self.assertTrue(postnatal_enrollment.is_eligible)
-        appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject,
+        appointment1 = Appointment.objects.get(
+            registered_subject=registered_subject,
             visit_definition__code='1000M')
-        MaternalVisitFactory(appointment=appointment)
+        MaternalVisitFactory(appointment=appointment1)
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='2000M')
+            registered_subject=postnatal_enrollment.registered_subject,
+            visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment)
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
         infant_registered_subject = RegisteredSubject.objects.get(
-            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier)
-        self.infant_birth = InfantBirthFactory(
+            subject_type='infant',
+            relative_identifier=postnatal_enrollment.registered_subject.subject_identifier)
+        InfantBirthFactory(
             registered_subject=infant_registered_subject,
             maternal_labour_del=maternal_labour_del)
-        appointment = Appointment.objects.get(
+        appointment2000 = Appointment.objects.get(
             registered_subject=infant_registered_subject,
             visit_definition__code='2000')
-        InfantVisitFactory(appointment=appointment)
-        appointment = Appointment.objects.get(
+        InfantVisitFactory(appointment=appointment2000)
+        appointment2010 = Appointment.objects.get(
             registered_subject=infant_registered_subject,
             visit_definition__code='2010')
-        self.infant_visit = InfantVisitFactory(appointment=appointment)
-        self.registered_subject = self.infant_visit.appointment.registered_subject
-        self.assertEqual(self.registered_subject.registration_datetime.date(), timezone.now().date())
+        infant_visit = InfantVisitFactory(appointment=appointment2010)
 
         self.data = {
-            'registered_subject': self.registered_subject,
+            'registered_subject': infant_registered_subject.id,
             'report_datetime': timezone.now(),
-            'infant_visit': self.infant_visit.id,
+            'infant_visit': infant_visit.id,
             'death_date': timezone.now().date(),
             'death_cause_info': 'N/A',
             'death_cause_info_other': NO,
@@ -84,10 +89,8 @@ class TestInfantDeathForm(TestCase):
             'death_cause_other': None,
             'illness_duration': None,
             'death_medical_responsibility': None,
-            'articipant_hospitalized': None,
-            'death_reason_hospitalized': None,
             'participant_hospitalized': YES,
-            'death_reason_hospitalized': None,
+            'reason_hospitalized': None,
             'days_hospitalized': 0,
             'study_drug_relate': None,
             'infant_nvp_relate': None,
@@ -96,34 +99,47 @@ class TestInfantDeathForm(TestCase):
             'comment': None,
         }
 
-    def test_infant_death_form_valid(self):
-        infant_death_form = InfantDeathReportForm(data=self.data)
-        self.assertTrue(infant_death_form.is_valid())
-
-    def test_infant_validate_date_of_death(self):
-        self.data['death_date'] = timezone.now().date()
-        self.maternal_consent.consent_datetime = timezone.now()
-        self.maternal_consent.save()
+    def test_hospitalized_no_reason(self):
+        """Test participant hospitalized and no reason for hospitalization"""
+        self.data['participant_hospitalized'] = YES
+        self.data['reason_hospitalized'] = None
         infant_death_form = InfantDeathReportForm(data=self.data)
         self.assertIn(
-            'Consent_Datetime CANNOT be before consent datetime',
+            'If the participant was hospitalized, indicate '
+            'the primary reason.',
             infant_death_form.errors.get('__all__'))
 
-    def test_death_reason_hospitalized_yes(self):
+    def test_hospitalized_reason_given_no_days(self):
+        """Test participant hospitalized and reason given but number of days hospitalized not
+            given"""
         self.data['participant_hospitalized'] = YES
-        self.data['death_reason_hospitalized"'] = None
-        infant_death_form = InfantDeathReportForm(data=self.data)
-        self.assertIn(
-            'If the participant was hospitalized, what was the '
-            'primary reason for hospitalisation?',
-            infant_death_form.errors.get('__all__'))
-
-    def test_death_reason_hospitalized_yes1(self):
-        self.data['participant_hospitalized'] = YES
-        self.data['death_reason_hospitalized"'] = None
+        reason_hospitalized = ReasonHospitalized.objects.get(
+            name__icontains='Sepsis (unspecified)')
+        self.data['reason_hospitalized'] = reason_hospitalized.id
         self.data['days_hospitalized'] = 0
         infant_death_form = InfantDeathReportForm(data=self.data)
         self.assertIn(
-            'If the participant was hospitalized, please provide number '
-            'of days the participant was hospitalised.',
+            'If the participant was hospitalized, indicate '
+            'for how many days.',
+            infant_death_form.errors.get('__all__'))
+
+    def test_not_hospitalized_but_reason_given(self):
+        """Test participant not hospitalized but hospilization reason given"""
+        self.data['participant_hospitalized'] = NO
+        reason_hospitalized = ReasonHospitalized.objects.get(
+            name__icontains='Sepsis (unspecified)')
+        self.data['reason_hospitalized'] = reason_hospitalized.id
+        infant_death_form = InfantDeathReportForm(data=self.data)
+        self.assertIn(
+            'If the participant was not hospitalized, do not indicate the primary reason.',
+            infant_death_form.errors.get('__all__'))
+
+    def test_not_hospitalized_but_no_days_given(self):
+        """Test participant not hospitalized but days hospitalization given"""
+        self.data['participant_hospitalized'] = NO
+        self.data['reason_hospitalized'] = None
+        self.data['days_hospitalized'] = 10
+        infant_death_form = InfantDeathReportForm(data=self.data)
+        self.assertIn(
+            'If the participant was not hospitalized, do not indicate for how many days.',
             infant_death_form.errors.get('__all__'))
