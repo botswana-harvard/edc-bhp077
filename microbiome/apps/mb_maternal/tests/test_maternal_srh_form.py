@@ -66,7 +66,8 @@ class TestSrhServiceUtilizationForm(TestCase):
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(
-            appointment=appointment, reason=SCHEDULED)
+            appointment=appointment,
+            reason=SCHEDULED)
         self.data['maternal_visit'] = maternal_visit.id
         form = MaternalSrhForm(data=self.data)
         self.assertTrue(form.is_valid())
@@ -84,7 +85,8 @@ class TestSrhServiceUtilizationForm(TestCase):
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(
-            appointment=appointment, reason=SCHEDULED)
+            appointment=appointment,
+            reason=SCHEDULED)
         self.data['seen_at_clinic'] = NO
         self.data['maternal_visit'] = maternal_visit.id
         form = MaternalSrhForm(data=self.data)

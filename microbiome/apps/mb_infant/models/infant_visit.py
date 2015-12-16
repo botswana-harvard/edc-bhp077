@@ -81,7 +81,6 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         """Calls custom methods that manipulate meta data on the post save.
 
         This method is called in a post-save signal in edc.entry_meta_data."""
-
         if self.reason == OFF_STUDY:
             self.change_to_off_study_visit(self.appointment, 'mb_infant', 'infantoffstudy')
         elif self.reason == DEATH_VISIT:
@@ -90,9 +89,9 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
         elif self.reason == SCHEDULED:
-            self.postnatal_enrollment.enrollment_hiv_status
-            self.requires_infant_birth_arv_on_maternal_pos()
-            self.requires_dna_pcr_on_maternal_pos()
+            if self.postnatal_enrollment.enrollment_hiv_status:
+                self.requires_infant_birth_arv_on_maternal_pos()
+                self.requires_dna_pcr_on_maternal_pos()
 
     def requires_infant_birth_arv_on_maternal_pos(self):
         if self.appointment.visit_definition.code == '2000':

@@ -128,12 +128,16 @@ class TestRuleGroup(TestCase):
         appointment = Appointment.objects.get(
             registered_subject=registered_subject_infant,
             visit_definition__code='2000')
-        InfantVisitFactory(appointment=appointment)
+        InfantVisitFactory(
+            appointment=appointment,
+            reason=SCHEDULED)
         for code in ['2010', '2030', '2060', '2090', '2120']:
             appointment = Appointment.objects.get(
                 registered_subject=registered_subject_infant,
                 visit_definition__code=code)
-            InfantVisitFactory(appointment=appointment)
+            InfantVisitFactory(
+                appointment=appointment,
+                reason=SCHEDULED)
             self.assertEqual(RequisitionMetaData.objects.filter(
                 entry_status=REQUIRED,
                 lab_entry__requisition_panel__name='DNA PCR',

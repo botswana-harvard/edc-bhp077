@@ -83,7 +83,7 @@ def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
         except Appointment.DoesNotExist:
             pass
         except IntegrityError as e:
-            if 'maternalvisit' in str(e):
+            if 'maternalvisit' in str(e) or 'column appointment_id is not unique' in str(e):
                 with transaction.atomic():
                     maternal_visit = MaternalVisit.objects.get(appointment=appointment)
                     maternal_visit.reason = OFF_STUDY

@@ -18,6 +18,7 @@ from edc_constants.constants import UNKNOWN, DWTA, NEVER
 from microbiome.apps.mb_maternal.models.postnatal_enrollment import PostnatalEnrollment
 from django.utils import timezone
 from microbiome.apps.mb_maternal.models.enrollment_helper import EnrollmentError
+from microbiome.apps.mb_maternal.models.maternal_visit import MaternalVisit
 
 
 class TestPostnatalEnrollment(TestCase):
@@ -171,8 +172,9 @@ class TestPostnatalEnrollment(TestCase):
         self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_vaginal_delivery_not_vaginal(self):
-        """Test for a subject whose delivery type is vaginal."""
+        """Test for a subject whose delivery type is not vaginal."""
 
+        self.assertEquals(MaternalVisit.objects.all().count(), 0)
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=POS,

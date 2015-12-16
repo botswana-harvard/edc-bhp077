@@ -57,7 +57,6 @@ elif socket.gethostname() == 'edc4.bhp.org.bw':
 else:
     KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
 
-print(KEY_PATH)
 DEBUG = True
 
 ALLOWED_HOSTS = []
