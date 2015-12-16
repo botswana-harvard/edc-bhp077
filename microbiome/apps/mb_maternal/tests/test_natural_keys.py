@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.test import TestCase
 from django.core import serializers
 from django.db.models import get_app, get_models
@@ -16,6 +17,7 @@ from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb_maternal.tests.factories import (MaternalEligibilityFactory, MaternalConsentFactory,
                                                          SpecimenConsentFactory, AntenatalEnrollmentFactory,
                                                          MaternalVisitFactory, MaternalLocatorFactory)
+from microbiome.apps.mb_maternal.models import MaternalDemographics
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule
 
@@ -67,6 +69,22 @@ class NaturalKeyTests(TestCase):
         maternal_locator = MaternalLocatorFactory(
             maternal_visit=maternal_visit,
             registered_subject=antenatal_enrollment.registered_subject,)
+        maternal_demographics = MaternalDemographics.objects.create(
+            maternal_visit=maternal_visit,
+            report_datetime=timezone.now(),
+            marital_status='Single',
+            ethnicity='Black African',
+            highest_education='Tertiary',
+            current_occupation='Student',
+            provides_money='Mother',
+            money_earned='P1001-5000 per month / P212 - 1157 per week',
+            own_phone=YES,
+            house_electrified=YES,
+            house_fridge=YES,
+            cooking_method='Gas or electric stove',
+            toilet_facility='Indoor toilet',
+            house_people_number=1,
+            house_type='Formal: Tin-roofed, concrete walls')
         instances = []
         instances.append(maternal_eligibility)
         instances.append(maternal_consent)
@@ -74,6 +92,7 @@ class NaturalKeyTests(TestCase):
         instances.append(antenatal_enrollment)
         instances.append(maternal_visit)
         instances.append(maternal_locator)
+        instances.append(maternal_demographics)
         for obj in instances:
             natural_key = obj.natural_key()
             get_obj = obj.__class__.objects.get_by_natural_key(*natural_key)

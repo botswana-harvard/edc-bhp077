@@ -10,3 +10,4 @@ from .postnatal_enrollment_factory import PostnatalEnrollmentFactory
 from .specimen_consent_factory import SpecimenConsentFactory
 from .sexual_behavior_factory import ReproductiveHealthFactory
 from .maternal_locator_factory import MaternalLocatorFactory
+from .maternal_demographics_factory import MaternalDemographicsFactory
