@@ -40,47 +40,40 @@ class TestMaternalMedicalHistoryForm(TestCase):
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
 
-        self.maternal_eligibility_1 = MaternalEligibilityFactory()
-        self.maternal_eligibility_2 = MaternalEligibilityFactory()
-
-        self.maternal_consent_1 = MaternalConsentFactory(
-            registered_subject=self.maternal_eligibility_1.registered_subject)
-        self.maternal_consent_2 = MaternalConsentFactory(
-            study_site=self.maternal_consent_1.study_site,
-            registered_subject=self.maternal_eligibility_2.registered_subject)
-
-        self.registered_subject_1 = self.maternal_consent_1.registered_subject
-        self.registered_subject_2 = self.maternal_consent_2.registered_subject
-
-        self.antenatal_enrollment = AntenatalEnrollmentFactory(
-            registered_subject=self.registered_subject_1,
+        maternal_eligibility = MaternalEligibilityFactory()
+        maternal_consent = MaternalConsentFactory(
+            registered_subject=maternal_eligibility.registered_subject)
+        registered_subject = maternal_consent.registered_subject
+        AntenatalEnrollmentFactory(
+            registered_subject=registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES)
-        self.postnatal_enrollment = PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject_2,
+        postnatal_enrollment = PostnatalEnrollmentFactory(
+            registered_subject=registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES)
-        self.assertTrue(self.postnatal_enrollment.is_eligible)
-        self.appointment_visit_1000 = Appointment.objects.get(
-            registered_subject=self.registered_subject_1,
+        self.assertTrue(postnatal_enrollment.is_eligible)
+
+        appointment_visit_1000 = Appointment.objects.get(
+            registered_subject=registered_subject,
             visit_definition__code='1000M')
-        self.appointment_visit_2000 = Appointment.objects.get(
-            registered_subject=self.registered_subject_2,
+        appointment_visit_2000 = Appointment.objects.get(
+            registered_subject=registered_subject,
             visit_definition__code='2000M')
 
-        self.maternal_visit_1000 = MaternalVisitFactory(appointment=self.appointment_visit_1000)
-        self.maternal_visit_2000 = MaternalVisitFactory(appointment=self.appointment_visit_2000)
+        MaternalVisitFactory(appointment=appointment_visit_1000)
+        maternal_visit_2000 = MaternalVisitFactory(appointment=appointment_visit_2000)
 
         chronicition = ChronicConditions.objects.exclude(
             name__icontains='other').exclude(name__icontains=NOT_APPLICABLE).first()
         who = WcsDxAdult.objects.get(short_name__icontains=NOT_APPLICABLE)
         self.data = {
             'report_datetime': timezone.now(),
-            'maternal_visit': self.maternal_visit_2000.id,
+            'maternal_visit': maternal_visit_2000.id,
             'chronic_since': NO,
             'chronic': [chronicition.id],
             'who_diagnosis': NO,
