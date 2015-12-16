@@ -254,6 +254,6 @@ class TestRuleGroup(TestCase):
             )
             self.assertEqual(ScheduledEntryMetaData.objects.filter(
                 entry_status=NEW,
-                app_label='mb_maternal',
-                model_name='maternalsrh',
+                entry__app_label='mb_maternal',
+                entry__model_name='maternalsrh',
                 appointment=appointment).count(), 1)
