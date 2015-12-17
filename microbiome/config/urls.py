@@ -9,9 +9,9 @@ from django.db.models import get_models
 from django.views.generic import RedirectView
 
 from edc.data_manager.classes import data_manager
-from edc.dashboard.section.classes import site_sections
+from edc_dashboard.section import site_sections
 from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.dashboard.subject.views import additional_requisition
+from edc_dashboard.subject.views import additional_requisition
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.subject.visit_schedule.classes import site_visit_schedules
@@ -87,7 +87,7 @@ urlpatterns += patterns(
 )
 urlpatterns += patterns(
     '',
-    url(r'^{app_name}/section/'.format(app_name=APP_NAME), include('edc.dashboard.section.urls'), name='section'),
+    url(r'^{app_name}/section/'.format(app_name=APP_NAME), include('edc_dashboard.section.urls'), name='section'),
 )
 
 urlpatterns += patterns(

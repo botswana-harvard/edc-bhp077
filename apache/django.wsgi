@@ -1,6 +1,6 @@
 ############################################
 # apache2 needs permission to access this file
-# chgrp www-data apache/django.wsgi
+# sudo chgrp www-data apache/django.wsgi
 # chmod g+x apache/django.wsgi
 ############################################
 

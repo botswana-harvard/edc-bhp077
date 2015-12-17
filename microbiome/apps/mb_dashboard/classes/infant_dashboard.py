@@ -1,4 +1,4 @@
-from edc.dashboard.subject.classes import RegisteredSubjectDashboard
+from edc_dashboard.subject import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 
 from microbiome.apps.mb.constants import INFANT

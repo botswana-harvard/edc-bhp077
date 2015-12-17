@@ -1,4 +1,4 @@
-from edc.dashboard.section.classes import BaseSectionView, site_sections
+from edc_dashboard.section import BaseSectionView, site_sections
 
 from microbiome.apps.mb.constants import INFANT
 

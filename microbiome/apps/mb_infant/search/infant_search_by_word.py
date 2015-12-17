@@ -1,6 +1,6 @@
 from django.db.models import Q
 
-from edc.dashboard.search.classes import BaseSearchByWord
+from edc_dashboard.search import BaseSearchByWord
 
 from ..models import InfantBirth
 

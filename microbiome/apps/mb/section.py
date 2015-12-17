@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-from edc.dashboard.section.classes import BaseSectionView, site_sections
+from edc_dashboard.section import BaseSectionView, site_sections
 
 ModelMeta = namedtuple('ModelMeta', 'app_label model_name')
 
