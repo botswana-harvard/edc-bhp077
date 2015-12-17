@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import socket
+import sys
 
 from unipath import Path
 
 from django.utils import timezone
+from django.core.exceptions import ImproperlyConfigured
 
 # these help select the KEY_PATH and full project title
 LIVE_SERVER = 'microbiome.bhp.org.bw'
@@ -43,12 +45,15 @@ if socket.gethostname() == LIVE_SERVER:
     KEY_PATH = '/home/django/source/microbiome/keys'
 elif socket.gethostname() in TEST_HOSTS + DEVELOPER_HOSTS:
     KEY_PATH = os.path.join(SOURCE_ROOT, 'crypto_fields/test_keys')
+elif 'test' in sys.argv:
+    KEY_PATH = os.path.join(SOURCE_ROOT, 'crypto_fields/test_keys')
 else:
-    raise TypeError('Warning! Unknown hostname for KEY_PATH. \n'
-                    'Getting this wrong on a LIVE SERVER will corrupt your encrypted data!!! \n'
-                    'Expected hostname to appear in one of '
-                    'settings.LIVE_SERVER, settings.TEST_HOSTS or settings.DEVELOPER_HOSTS. '
-                    'Got hostname=\'{}\'\n'.format(socket.gethostname()))
+    raise TypeError(
+        'Warning! Unknown hostname for KEY_PATH. \n'
+        'Getting this wrong on a LIVE SERVER will corrupt your encrypted data!!! \n'
+        'Expected hostname to appear in one of '
+        'settings.LIVE_SERVER, settings.TEST_HOSTS or settings.DEVELOPER_HOSTS. '
+        'Got hostname=\'{}\'\n'.format(socket.gethostname()))
 
 DEBUG = True
 
@@ -163,7 +168,7 @@ INSTALLED_APPS = [
     'microbiome.apps.mb_maternal',
     'microbiome.apps.mb_lab']
 
-if socket.gethostname() in DEVELOPER_HOSTS + TEST_HOSTS:
+if socket.gethostname() in DEVELOPER_HOSTS + TEST_HOSTS or 'test' in sys.argv:
     INSTALLED_APPS.pop(INSTALLED_APPS.index('south'))
 INSTALLED_APPS = tuple(INSTALLED_APPS)
 
@@ -199,11 +204,7 @@ TEMPLATE_LOADERS = (
 WSGI_APPLICATION = 'microbiome.config.wsgi.application'
 
 # Database
-if socket.gethostname() in [LIVE_SERVER] + TEST_HOSTS:
-    from microbiome.config.databases import PRODUCTION_MYSQL, SECRET_KEY
-    SECRET_KEY = SECRET_KEY
-    DATABASES = PRODUCTION_MYSQL
-elif socket.gethostname() in DEVELOPER_HOSTS:
+if socket.gethostname() in DEVELOPER_HOSTS:
     SECRET_KEY = 'sdfsd32fs#*@(@dfsdf'
     DATABASES = {
         'default': {
@@ -211,6 +212,10 @@ elif socket.gethostname() in DEVELOPER_HOSTS:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+elif socket.gethostname() in [LIVE_SERVER] + TEST_HOSTS or 'test' in sys.argv:
+    from microbiome.config.databases import PRODUCTION_MYSQL, SECRET_KEY
+    SECRET_KEY = SECRET_KEY
+    DATABASES = PRODUCTION_MYSQL
 
 # django auth
 AUTH_PROFILE_MODULE = "bhp_userprofile.userprofile"
@@ -274,10 +279,14 @@ elif socket.gethostname() in TEST_HOSTS:
 elif socket.gethostname() in DEVELOPER_HOSTS:
     DEVICE_ID = 99
     PROJECT_TITLE = 'TEST (sqlite3): {}'.format(PROJECT_TITLE)
+elif 'test' in sys.argv:
+    DEVICE_ID = 99
+    PROJECT_TITLE = 'TEST (mysql): {}'.format(PROJECT_TITLE)
 else:
-    raise TypeError('Unknown hostname for full PROJECT_TITLE. Expected hostname to appear in one of '
-                    'settings.LIVE_SERVER, settings.TEST_HOSTS or settings.DEVELOPER_HOSTS. '
-                    'Got hostname=\'{}\''.format(socket.gethostname()))
+    raise ImproperlyConfigured(
+        'Unknown hostname for full PROJECT_TITLE. Expected hostname to appear in one of '
+        'settings.LIVE_SERVER, settings.TEST_HOSTS or settings.DEVELOPER_HOSTS. '
+        'Got hostname=\'{}\''.format(socket.gethostname()))
 
 SITE_CODE = '40'
 SERVER_DEVICE_ID_LIST = [91, 92, 93, 94, 95, 96, 97, 99]
