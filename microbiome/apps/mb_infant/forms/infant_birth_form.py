@@ -21,29 +21,17 @@ class InfantBirthForm(BaseModelForm):
                 raise forms.ValidationError('Infant dob must match maternal delivery date of {}. You wrote {}'
                                             .format(maternal_lab_del.delivery_datetime.date(),
                                                     cleaned_data.get('dob')))
+            if not self.instance.id:
+                if InfantBirth.objects.get(maternal_labour_del=maternal_lab_del):
+                    raise forms.ValidationError(
+                        "Infant birth record cannot be saved. An infant has already been "
+                        "registered for this mother.")
         except MaternalLabourDel.DoesNotExist:
             raise forms.ValidationError('Cannot find maternal labour and delivery form for this infant!'
                                         ' This is not expected.')
+        except InfantBirth.DoesNotExist:
+            pass
         return cleaned_data
-
-    def validate_apgar(self, cleaned_data):
-        if cleaned_data.get('apgar_score') == YES:
-            if not cleaned_data.get('apgar_score_min_1'):
-                raise forms.ValidationError('APGAR score is indicated to have been performed. '
-                                            'Please specify score at 1 min.')
-            if not cleaned_data.get('apgar_score_min_5'):
-                raise forms.ValidationError('APGAR score is indicated to have been performed. '
-                                            'Please specify score at 5 min.')
-        else:
-            if cleaned_data.get('apgar_score_min_1'):
-                raise forms.ValidationError('You have indicated that APGAR was not performed. '
-                                            'You CANNOT provide score at 1 min')
-            if cleaned_data.get('apgar_score_min_5'):
-                raise forms.ValidationError('You have indicated that APGAR was not performed. '
-                                            'You CANNOT provide score at 5 min')
-            if cleaned_data.get('apgar_score_min_1'):
-                raise forms.ValidationError('You have indicated that APGAR was not performed. '
-                                            'You CANNOT provide score at 10 min')
 
     class Meta:
         model = InfantBirth
