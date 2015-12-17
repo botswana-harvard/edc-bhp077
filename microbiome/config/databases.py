@@ -9,7 +9,7 @@ try:
     if not os.path.exists(PATH):
         raise TypeError('Path to database credentials at \'{}\' does not exist'.format(PATH))
     with open(os.path.join(PATH, 'secret_key.txt')) as f:
-        SECRET_KEY = f.read().strip()
+        PRODUCTION_SECRET_KEY = f.read().strip()
     PRODUCTION_MYSQL = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -32,6 +32,7 @@ try:
     }
 except TypeError:
     PRODUCTION_MYSQL = None
+    PRODUCTION_SECRET_KEY = None
     print('Path to production database credentials does not exist')
 
 TRAVIS_MYSQL = {
@@ -50,8 +51,37 @@ TRAVIS_MYSQL = {
     'lab_api': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
-            'database': 'lab',
+            'database': 'mb_lab',
             'user': 'travis',
+            'default-character-set': 'utf8',
+            'init_command': 'SET storage_engine=INNODB',
+        },
+        'HOST': '',
+        'PORT': '',
+        'ATOMIC_REQUESTS': True,
+    },
+}
+
+TEST_HOSTS_MYSQL = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'database': 'mb',
+            'user': 'django',
+            'password': 'django',
+            'default-character-set': 'utf8',
+            'init_command': 'SET storage_engine=INNODB',
+        },
+        'HOST': '',
+        'PORT': '',
+        'ATOMIC_REQUESTS': True,
+    },
+    'lab_api': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'database': 'mb_lab',
+            'user': 'django',
+            'password': 'django',
             'default-character-set': 'utf8',
             'init_command': 'SET storage_engine=INNODB',
         },

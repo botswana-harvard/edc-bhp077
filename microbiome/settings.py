@@ -19,7 +19,8 @@ from unipath import Path
 from django.utils import timezone
 from django.core.exceptions import ImproperlyConfigured
 
-from microbiome.config.databases import SECRET_KEY
+from microbiome.config.databases import (
+    PRODUCTION_MYSQL, TEST_HOSTS_MYSQL, TRAVIS_MYSQL, PRODUCTION_SECRET_KEY)
 
 # these help select the KEY_PATH and full project title
 LIVE_SERVER = 'microbiome.bhp.org.bw'
@@ -72,16 +73,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_revision',
     'south',
-    'edc_templates',
     'edc_base',
+    'edc_call_manager',
     'edc_consent',
     'edc_constants',
-    'edc_call_manager',
+    'edc_dashboard',
+    'edc_death_report',
     'edc_device',
     'edc_offstudy',
-    'edc_death_report',
+    'edc_templates',
     'edc_visit_tracking',
-    'edc_dashboard',
     # EDC
     'edc',
     'edc.apps.app_configuration',
@@ -106,10 +107,6 @@ INSTALLED_APPS = [
     'edc.device.dispatch',
     'edc.device.netbook',
     'edc.device.sync',
-    # 'edc.dashboard.base',
-    # 'edc.dashboard.search',
-    # 'edc.dashboard.section',
-    # 'edc.dashboard.subject',
     'edc.export',
     'edc.import',
     'edc.entry_meta_data',
@@ -205,22 +202,21 @@ TEMPLATE_LOADERS = (
 
 WSGI_APPLICATION = 'microbiome.config.wsgi.application'
 
+SECRET_KEY = 'sdfsd32fs#*@(@dfsdf'
 # Database
 if socket.gethostname() in DEVELOPER_HOSTS:
-    SECRET_KEY = 'sdfsd32fs#*@(@dfsdf'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-elif socket.gethostname() in [LIVE_SERVER] + TEST_HOSTS or 'test' in sys.argv:
-    from microbiome.config.databases import PRODUCTION_MYSQL
-    SECRET_KEY = SECRET_KEY
+elif socket.gethostname() == LIVE_SERVER:
+    SECRET_KEY = PRODUCTION_SECRET_KEY
     DATABASES = PRODUCTION_MYSQL
+elif socket.gethostname() in TEST_HOSTS:
+    DATABASES = TEST_HOSTS_MYSQL
 elif 'test' in sys.argv:
-    from microbiome.config.databases import TRAVIS_MYSQL
-    SECRET_KEY = SECRET_KEY
     DATABASES = TRAVIS_MYSQL
 
 # django auth
