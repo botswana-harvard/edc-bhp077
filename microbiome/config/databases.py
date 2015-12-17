@@ -38,24 +38,16 @@ except TypeError:
 TRAVIS_MYSQL = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'database': 'mb',
-            'user': 'travis',
-            'default-character-set': 'utf8',
-            'init_command': 'SET storage_engine=INNODB',
-        },
+        'NAME': 'mb',
+        'USER': 'travis',
         'HOST': '',
         'PORT': '',
         'ATOMIC_REQUESTS': True,
     },
     'lab_api': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'database': 'mb_lab',
-            'user': 'travis',
-            'default-character-set': 'utf8',
-            'init_command': 'SET storage_engine=INNODB',
-        },
+        'NAME': 'mb_lab',
+        'USER': 'travis',
         'HOST': '',
         'PORT': '',
         'ATOMIC_REQUESTS': True,
@@ -65,26 +57,18 @@ TRAVIS_MYSQL = {
 TEST_HOSTS_MYSQL = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'database': 'mb',
-            'user': 'django',
-            'password': 'django',
-            'default-character-set': 'utf8',
-            'init_command': 'SET storage_engine=INNODB',
-        },
+        'NAME': 'mb',
+        'USER': 'django',
+        'PASSWORD': 'django',
         'HOST': '',
         'PORT': '',
         'ATOMIC_REQUESTS': True,
     },
     'lab_api': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'database': 'mb_lab',
-            'user': 'django',
-            'password': 'django',
-            'default-character-set': 'utf8',
-            'init_command': 'SET storage_engine=INNODB',
-        },
+        'NAME': 'mb_lab',
+        'USER': 'django',
+        'PASSWORD': 'django',
         'HOST': '',
         'PORT': '',
         'ATOMIC_REQUESTS': True,
