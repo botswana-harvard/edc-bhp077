@@ -56,7 +56,7 @@ class TestInfantBirth(TestCase):
         maternal_visit = MaternalVisitFactory(appointment=appointment2000)
         self.maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
         self.infant_registered_subject = RegisteredSubject.objects.get(
-            relative_identifier=self.maternal_labour_del.maternal_visit.appointment.registered_subject.subject_identifier,
+            relative_identifier=registered_subject.subject_identifier,
             subject_type='infant')
 
         self.data = {
