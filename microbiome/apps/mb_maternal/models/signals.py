@@ -92,12 +92,17 @@ def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
     if not raw:
         try:
             if not instance.is_eligible:
-                with transaction.atomic():
-                    report_datetime = instance.report_datetime
-                    visit_definition = VisitDefinition.objects.get(code='1000M')
-                    appointment = Appointment.objects.get(
-                        registered_subject=instance.registered_subject,
-                        visit_definition=visit_definition)
+                report_datetime = instance.report_datetime
+                visit_definition = VisitDefinition.objects.get(code='1000M')
+                appointment = Appointment.objects.get(
+                    registered_subject=instance.registered_subject,
+                    visit_definition=visit_definition)
+                try:
+                    maternal_visit = MaternalVisit.objects.get(appointment=appointment)
+                    if maternal_visit.reason != OFF_STUDY:
+                        maternal_visit.reason = OFF_STUDY
+                        maternal_visit.save()
+                except MaternalVisit.DoesNotExist:
                     MaternalVisit.objects.create(
                         appointment=appointment,
                         report_datetime=report_datetime,
@@ -109,14 +114,6 @@ def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
             pass
         except Appointment.DoesNotExist:
             pass
-        except IntegrityError as e:
-            if 'maternalvisit' in str(e) or 'column appointment_id is not unique' in str(e):
-                with transaction.atomic():
-                    maternal_visit = MaternalVisit.objects.get(appointment=appointment)
-                    maternal_visit.reason = OFF_STUDY
-                    maternal_visit.save()
-            else:
-                raise
 
 
 def change_off_study_visit_to_scheduled(instance):
