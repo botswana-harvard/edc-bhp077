@@ -3,22 +3,22 @@ import uuid
 from django.db import models
 from django.db.models import get_model
 
+from edc.device.sync.models import BaseSyncUuidModel
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_constants.choices import YES_NO
-from edc_constants.constants import YES, NO
+from edc_constants.constants import NO
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
-from .maternal_consent import MaternalConsent
 from ..managers import MaternalEligibilityManager
 
 
 class MaternalEligibility (BaseSyncUuidModel):
-    """ This is the eligibility entry point for all mothers.
-    If age eligible or not, an eligibility identifier is created for each mother. """
+    """ A model completed by the user to test and capture the result of the pre-consent eligibility checks.
+
+    This model has no PII."""
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
@@ -76,13 +76,13 @@ class MaternalEligibility (BaseSyncUuidModel):
     history = AuditTrail()
 
     def save(self, *args, **kwargs):
-        self.is_eligible, self.ineligibility = self.mother_is_eligible()
+        self.is_eligible, error_message = self.check_eligibility()
+        self.ineligibility = error_message  # error_message not None if is_eligible is False
         super(MaternalEligibility, self).save(*args, **kwargs)
 
-    def mother_is_eligible(self):
-        """
-        If age criteria failed, Enrollment loss form will be created.
-        """
+    def check_eligibility(self):
+        """Returns a tuple (True, None) if mother is eligible otherwise (False, error_messsage) where
+        error message is the reason for eligibility test failed."""
         error_message = []
         if self.age_in_years < MIN_AGE_OF_CONSENT:
             error_message.append('Mother is under {}'.format(MIN_AGE_OF_CONSENT))
@@ -91,24 +91,13 @@ class MaternalEligibility (BaseSyncUuidModel):
         if self.has_omang == NO:
             error_message.append('Not a citizen')
         is_eligible = False if error_message else True
-        return (is_eligible, error_message)
+        return (is_eligible, ','.join(error_message))
 
     def __unicode__(self):
         return "{0} ({1})".format(self.eligibility_id, self.age_in_years)
 
     def natural_key(self):
         return (self.eligibility_id, self.report_datetime, )
-
-    @property
-    def maternal_ineligibility(self):
-        message = []
-        if self.age_in_years < MIN_AGE_OF_CONSENT:
-            message.append('Mother is under {}'.format(MIN_AGE_OF_CONSENT))
-        if self.age_in_years > MAX_AGE_OF_CONSENT:
-            message.append('Mother is too old (>{})'.format(MAX_AGE_OF_CONSENT))
-        if self.has_omang == NO:
-            message.append('Not a citizen')
-        return message
 
     @property
     def maternal_eligibility_loss(self):
@@ -119,19 +108,6 @@ class MaternalEligibility (BaseSyncUuidModel):
         except MaternalEligibilityLoss.DoesNotExist:
             maternal_eligibility_loss = None
         return maternal_eligibility_loss
-
-    def update_is_consented_from_consent(self):
-        """ """
-        try:
-            maternal_consent = MaternalConsent.objects.get(registered_subject=self.registered_subject)
-            self.is_consented = True
-            if maternal_consent.citizen == YES:
-                self.has_passed_consent = True
-            elif maternal_consent.citizen == NO:
-                self.has_passed_consent = False
-            self.save()
-        except MaternalConsent.DoesNotExist:
-            pass
 
     class Meta:
         app_label = 'mb_maternal'

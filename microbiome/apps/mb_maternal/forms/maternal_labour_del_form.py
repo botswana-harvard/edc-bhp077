@@ -15,24 +15,22 @@ class MaternalLabourDelForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(MaternalLabourDelForm, self).clean()
         if cleaned_data.get('live_infants_to_register') > 1:
-            raise forms.ValidationError("For this study we can only register ONE infant")
-        # Validate that number of live_infants_to_register cannot be 0 or less
+            raise forms.ValidationError("Only one infant per mother can be registered to the study.")
         if cleaned_data.get('live_infants_to_register') <= 0:
             raise forms.ValidationError('Number of live infants to register may not be less than or equal to 0!.')
         if cleaned_data.get('delivery_datetime') > cleaned_data.get('report_datetime'):
-                raise forms.ValidationError('Maternal Labour Delivery date cannot be greater than report date. '
+                raise forms.ValidationError('Delivery date cannot be greater than the report date. '
                                             'Please correct.')
-        postnatal = PostnatalEnrollment.objects.get(
+        postnatal_enrollment = PostnatalEnrollment.objects.get(
             registered_subject__subject_identifier=cleaned_data.get(
                 'maternal_visit').appointment.registered_subject.subject_identifier)
-        if postnatal:
-            expected_delivery_date = cleaned_data.get(
-                'report_datetime').date() - relativedelta(days=postnatal.postpartum_days)
-            if cleaned_data.get('delivery_datetime').date() != expected_delivery_date:
-                raise forms.ValidationError(
-                    'Maternal Delivery date does not match the number of days post delivery as '
-                    'indicated on Postpartum Enrollment of {} days ago. Please correct'.format(
-                        postnatal.postpartum_days))
+        expected_delivery_date = cleaned_data.get(
+            'report_datetime').date() - relativedelta(days=postnatal_enrollment.postpartum_days)
+        if cleaned_data.get('delivery_datetime').date() != expected_delivery_date:
+            raise forms.ValidationError(
+                'Delivery date does not correspond with the number of days post-partum as '
+                'reported at Postnatal Enrollment. Using \'{}\' days post-partum. Please correct'.format(
+                    postnatal_enrollment.postpartum_days))
         if cleaned_data.get('has_temp') == YES:
             if not cleaned_data.get('labour_max_temp'):
                 raise forms.ValidationError(

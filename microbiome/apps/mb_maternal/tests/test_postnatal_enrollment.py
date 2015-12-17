@@ -491,3 +491,16 @@ class TestPostnatalEnrollment(TestCase):
             str(cm.exception),
             ('Unable to determine maternal hiv status at enrollment. Got current_hiv_status=, '
              'evidence_hiv_status=None, rapid_test_done=None, rapid_test_result=None'))
+
+    def test_live_infants_greater_than_one(self):
+        """Test ineligible if more than one live infant is delivered."""
+
+        postnatal_enrollment = PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
+            will_breastfeed=YES,
+            live_infants=2
+        )
+        self.assertFalse(postnatal_enrollment.is_eligible)

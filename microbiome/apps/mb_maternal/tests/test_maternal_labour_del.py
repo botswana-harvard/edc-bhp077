@@ -74,13 +74,13 @@ class TestMaternalLabourDel(TestCase):
         '''Cannot register more than 1 infant.'''
         self.data['live_infants_to_register'] = 3
         form = MaternalLabourDelForm(data=self.data)
-        self.assertIn(u'For this study we can only register ONE infant', form.errors.get('__all__'))
+        self.assertIn('Only one infant per mother can be registered to the study.', form.errors.get('__all__'))
 
     def test_infants_to_register_3(self):
         '''Infant to register cannot be zero or less'''
         self.data['live_infants_to_register'] = -1
         form = MaternalLabourDelForm(data=self.data)
-        self.assertIn(u'Number of live infants to register may not be less than or equal to 0!.',
+        self.assertIn('Number of live infants to register may not be less than or equal to 0!.',
                       form.errors.get('__all__'))
 
     def test_delivery_date_1(self):
@@ -88,7 +88,7 @@ class TestMaternalLabourDel(TestCase):
         self.data['report_datetime'] = timezone.now() - timezone.timedelta(days=1)
         self.data['delivery_datetime'] = timezone.now()
         form = MaternalLabourDelForm(data=self.data)
-        self.assertIn(u'Maternal Labour Delivery date cannot be greater than report date. '
+        self.assertIn('Delivery date cannot be greater than the report date. '
                       'Please correct.', form.errors.get('__all__'))
 
     def test_temp_1(self):
@@ -124,8 +124,8 @@ class TestMaternalLabourDel(TestCase):
     def test_deliverydate_vs_postpartum_days(self):
         self.data['delivery_datetime'] = timezone.now() - timezone.timedelta(days=1)
         form = MaternalLabourDelForm(data=self.data)
-        self.assertIn(u'Maternal Delivery date does not match the number of days post delivery as '
-                      'indicated on Postpartum Enrollment of {} days ago. Please correct'
+        self.assertIn('Delivery date does not correspond with the number of days post-partum as '
+                      'reported at Postnatal Enrollment. Using \'{}\' days post-partum. Please correct'
                       .format(self.postnatal_enrollment.postpartum_days), form.errors.get('__all__'))
 
 
@@ -178,7 +178,7 @@ class TestMaternalLabourDelClinic(TestCase):
         """If has CD4 is indicated as yes, then date CD4 count was performed should be provided."""
         self.data['has_cd4'] = YES
         form = MaternalLabDelClinicForm(data=self.data)
-        self.assertIn(u'You indicated that a CD4 count was performed. Please provide the date.',
+        self.assertIn('You indicated that a CD4 count was performed. Please provide the date.',
                       form.errors.get('__all__'))
 
     def test_has_cd4_2(self):
@@ -186,7 +186,7 @@ class TestMaternalLabourDelClinic(TestCase):
         self.data['has_cd4'] = YES
         self.data['cd4_date'] = timezone.now() - timezone.timedelta(days=2)
         form = MaternalLabDelClinicForm(data=self.data)
-        self.assertIn(u'You indicated that a CD4 count was performed. Please provide the result.',
+        self.assertIn('You indicated that a CD4 count was performed. Please provide the result.',
                       form.errors.get('__all__'))
 
     def test_has_cd4_3(self):
@@ -194,7 +194,7 @@ class TestMaternalLabourDelClinic(TestCase):
         self.data['has_cd4'] = NO
         self.data['cd4_date'] = timezone.now() - timezone.timedelta(days=2)
         form = MaternalLabDelClinicForm(data=self.data)
-        self.assertIn(u'You indicated that a CD4 count was NOT performed, yet provided a date '
+        self.assertIn('You indicated that a CD4 count was NOT performed, yet provided a date '
                       'CD4 was performed. Please correct.', form.errors.get('__all__'))
 
     def test_has_cd4_4(self):
@@ -202,7 +202,7 @@ class TestMaternalLabourDelClinic(TestCase):
         self.data['has_cd4'] = NO
         self.data['cd4_result'] = 600
         form = MaternalLabDelClinicForm(data=self.data)
-        self.assertIn(u'You indicated that a CD4 count was NOT performed, yet provided a CD4 '
+        self.assertIn('You indicated that a CD4 count was NOT performed, yet provided a CD4 '
                       'result. Please correct.', form.errors.get('__all__'))
 
     def test_has_cd4_5(self):
@@ -222,7 +222,7 @@ class TestMaternalLabourDelClinic(TestCase):
         """If has VL is indicated as yes, then date VL was performed should be provided."""
         self.data['has_vl'] = YES
         form = MaternalLabDelClinicForm(data=self.data)
-        self.assertIn(u'You indicated that a VL count was performed. Please provide the date.',
+        self.assertIn('You indicated that a VL count was performed. Please provide the date.',
                       form.errors.get('__all__'))
 
     def test_has_vl_2(self):
@@ -230,7 +230,7 @@ class TestMaternalLabourDelClinic(TestCase):
         self.data['has_vl'] = YES
         self.data['vl_date'] = timezone.now() - timezone.timedelta(days=2)
         form = MaternalLabDelClinicForm(data=self.data)
-        self.assertIn(u'You indicated that a VL count was performed. Please provide the result.',
+        self.assertIn('You indicated that a VL count was performed. Please provide the result.',
                       form.errors.get('__all__'))
 
     def test_has_vl_3(self):
@@ -238,7 +238,7 @@ class TestMaternalLabourDelClinic(TestCase):
         self.data['has_vl'] = NO
         self.data['vl_date'] = timezone.now() - timezone.timedelta(days=2)
         form = MaternalLabDelClinicForm(data=self.data)
-        self.assertIn(u'You indicated that a VL count was NOT performed, yet provided a date VL '
+        self.assertIn('You indicated that a VL count was NOT performed, yet provided a date VL '
                       'was performed. Please correct.', form.errors.get('__all__'))
 
     def test_has_vl_4(self):
@@ -246,7 +246,7 @@ class TestMaternalLabourDelClinic(TestCase):
         self.data['has_vl'] = NO
         self.data['vl_result'] = 899
         form = MaternalLabDelClinicForm(data=self.data)
-        self.assertIn(u'You indicated that a VL count was NOT performed, yet provided a VL result'
+        self.assertIn('You indicated that a VL count was NOT performed, yet provided a VL result'
                       ' Please correct.', form.errors.get('__all__'))
 
     def test_has_vl_5(self):

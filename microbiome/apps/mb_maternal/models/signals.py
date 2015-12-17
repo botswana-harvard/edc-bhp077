@@ -5,9 +5,9 @@ from django.dispatch import receiver
 
 from edc.core.identifier.classes import InfantIdentifier
 from edc.subject.appointment.models.appointment import Appointment
-from edc.subject.registration.models import RegisteredSubject
 from edc.subject.visit_schedule.models.visit_definition import VisitDefinition
-from edc_constants.constants import FEMALE, OFF_STUDY, SCHEDULED
+from edc_constants.constants import FEMALE, OFF_STUDY, SCHEDULED, SCREENED, CONSENTED
+from edc.subject.registration.models import RegisteredSubject
 
 from ..models import MaternalOffStudy, MaternalVisit
 
@@ -15,6 +15,7 @@ from .maternal_consent import MaternalConsent
 from .maternal_eligibility import MaternalEligibility
 from .maternal_eligibility_loss import MaternalEligibilityLoss
 from .postnatal_enrollment import PostnatalEnrollment
+from microbiome.apps.mb.constants import INFANT
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")
@@ -43,20 +44,46 @@ def maternal_eligibility_on_post_save(sender, instance, raw, created, using, **k
 
 @receiver(post_save, weak=False, dispatch_uid="criteria_passed_create_registered_subject")
 def criteria_passed_create_registered_subject(sender, instance, raw, created, using, **kwargs):
-    """Creates a Registered Subject ONLY if maternal eligibility is passed.
+    """Creates and or updates the Registered Subject instance for this subject if maternal eligibility passes.
 
-    This is the ONLY place RegisteredSubject is created!"""
+    If participant is consented, does nothing
+
+    * If registered subject does not exist, it will be created and some attrs
+      updated from the MaternalEligibility;
+    * If registered subject already exists will update some attrs from the MaternalEligibility;
+    * If registered subject and consent already exist, does nothing.
+
+    Note: This is the ONLY place RegisteredSubject is created in this project."""
     if not raw:
         if isinstance(instance, MaternalEligibility):
-            if instance.is_eligible and not instance.registered_subject:
+            if instance.is_eligible:
+                try:
+                    registered_subject = RegisteredSubject.objects.get(
+                        screening_identifier=instance.eligibility_id)
+                    MaternalConsent.objects.get(registered_subject=registered_subject)
+                except RegisteredSubject.DoesNotExist:
                     registered_subject = RegisteredSubject.objects.create(
                         created=instance.created,
                         first_name='Mother',
                         gender=FEMALE,
+                        registration_status=SCREENED,
+                        screening_datetime=instance.report_datetime,
+                        screening_identifier=instance.eligibility_id,
+                        screening_age_in_years=instance.age_in_years,
                         subject_type='maternal',
                         user_created=instance.user_created)
                     instance.registered_subject = registered_subject
                     instance.save()
+                except MaternalConsent.DoesNotExist:
+                    registered_subject.first_name = 'Mother'
+                    registered_subject.gender = FEMALE
+                    registered_subject.registration_status = SCREENED
+                    registered_subject.screening_datetime = instance.report_datetime
+                    registered_subject.screening_identifier = instance.eligibility_id
+                    registered_subject.screening_age_in_years = instance.age_in_years
+                    registered_subject.subject_type = 'maternal'
+                    registered_subject.user_modified = instance.user_modified
+                    registered_subject.save()
 
 
 @receiver(post_save, weak=False, dispatch_uid="ineligible_take_off_study")
@@ -137,9 +164,11 @@ def maternal_consent_on_post_save(sender, instance, raw, created, using, **kwarg
             maternal_eligibility = MaternalEligibility.objects.get(
                 registered_subject=instance.registered_subject)
             maternal_eligibility.is_consented = True
+            # don't trigger the signal
             maternal_eligibility.save(update_fields=['is_consented'])
-
             instance.registered_subject.registration_datetime = instance.consent_datetime
+            instance.registered_subject.registration_status = CONSENTED
+            instance.registered_subject.registration_identifier = instance.pk
             instance.registered_subject.dob = instance.dob
             instance.registered_subject.is_dob_estimated = instance.is_dob_estimated
             instance.registered_subject.gender = instance.gender
@@ -155,23 +184,38 @@ def maternal_consent_on_post_save(sender, instance, raw, created, using, **kwarg
 
 @receiver(post_save, weak=False, dispatch_uid='create_infant_identifier_on_labour_delivery')
 def create_infant_identifier_on_labour_delivery(sender, instance, raw, created, using, **kwargs):
-    """Creates an identifier for registered infants"""
+    """Creates an identifier for the registered infant.
+
+    RegisteredSubject.objects.create( is called by InfantIdentifier
+
+    Only one infant per mother is allowed."""
     if not raw and created:
         try:
-            if instance.live_infants_to_register > 0:
-                registered_subject = instance.maternal_visit.appointment.registered_subject
-                consent = instance.CONSENT_MODEL.objects.get(
-                    registered_subject=registered_subject)
+            if instance.live_infants_to_register == 1:
+                maternal_registered_subject = instance.maternal_visit.appointment.registered_subject
+                maternal_consent = instance.CONSENT_MODEL.objects.get(
+                    registered_subject=maternal_registered_subject)
                 postnatal_enrollment = PostnatalEnrollment.objects.get(
-                    registered_subject=consent.registered_subject)
-                for infant_order in range(0, instance.live_infants_to_register):
+                    registered_subject=maternal_consent.registered_subject)
+                with transaction.atomic():
                     infant_identifier = InfantIdentifier(
-                        maternal_identifier=registered_subject.subject_identifier,
-                        study_site=consent.study_site,
-                        birth_order=infant_order,
+                        maternal_identifier=maternal_registered_subject.subject_identifier,
+                        study_site=maternal_consent.study_site,
+                        birth_order=0,
                         live_infants=postnatal_enrollment.live_infants,
                         live_infants_to_register=instance.live_infants_to_register,
                         user=instance.user_created)
                     infant_identifier.get_identifier()
+                with transaction.atomic():
+                    # TODO: InfantIdentifier class above does not update all registered subject
+                    # attributes correctly.
+                    infant_registered_subject = RegisteredSubject.objects.get(
+                        relative_identifier=maternal_registered_subject.subject_identifier)
+                    infant_registered_subject.registration_datetime = instance.delivery_datetime
+                    infant_registered_subject.subject_type = INFANT
+                    infant_registered_subject.first_name = 'No Name'
+                    infant_registered_subject.initials = None
+                    infant_registered_subject.registration_status = 'DELIVERED'
+                    infant_registered_subject.save()
         except AttributeError:
             pass

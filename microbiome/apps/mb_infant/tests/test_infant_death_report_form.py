@@ -8,10 +8,11 @@ from edc.subject.appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.registration.models import RegisteredSubject
 from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
+from edc_constants.constants import YES, NO, NEG
 from edc_death_report.models.reason_hospitalized import ReasonHospitalized
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantDeathReportForm
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
@@ -24,7 +25,7 @@ from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFacto
 from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
 
 
-class TestInfantDeathForm(TestCase):
+class TestInfantDeathReportForm(TestCase):
 
     def setUp(self):
         try:
@@ -39,10 +40,11 @@ class TestInfantDeathForm(TestCase):
         InfantBirthVisitSchedule().build()
 
         maternal_eligibility = MaternalEligibilityFactory(
-            registered_subject__registration_datetime=timezone.now())
+            report_datetime=timezone.now())
         maternal_consent = MaternalConsentFactory(
             registered_subject=maternal_eligibility.registered_subject)
         registered_subject = maternal_consent.registered_subject
+        maternal_subject_identifier = maternal_consent.subject_identifier
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=registered_subject,
@@ -61,9 +63,10 @@ class TestInfantDeathForm(TestCase):
             visit_definition__code='2000M')
         maternal_visit = MaternalVisitFactory(appointment=appointment)
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
+
         infant_registered_subject = RegisteredSubject.objects.get(
-            subject_type='infant',
-            relative_identifier=postnatal_enrollment.registered_subject.subject_identifier)
+            subject_type=INFANT,
+            relative_identifier=maternal_subject_identifier)
         InfantBirthFactory(
             registered_subject=infant_registered_subject,
             maternal_labour_del=maternal_labour_del)
@@ -75,6 +78,9 @@ class TestInfantDeathForm(TestCase):
             registered_subject=infant_registered_subject,
             visit_definition__code='2010')
         infant_visit = InfantVisitFactory(appointment=appointment2010)
+
+        # requery
+        infant_registered_subject = RegisteredSubject.objects.get(pk=infant_registered_subject.pk)
 
         self.data = {
             'registered_subject': infant_registered_subject.id,

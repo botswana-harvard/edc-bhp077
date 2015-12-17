@@ -81,7 +81,8 @@ class EnrollmentHelper(object):
                 self.postpartum_days <= 3 and
                 self.vaginal_delivery == YES and
                 self.will_breastfeed == YES and
-                self.will_remain_onstudy == YES):
+                self.will_remain_onstudy == YES and
+                self.live_infants == 1):
             return True
         return False
 
