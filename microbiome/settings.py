@@ -19,6 +19,8 @@ from unipath import Path
 from django.utils import timezone
 from django.core.exceptions import ImproperlyConfigured
 
+from microbiome.config.databases import SECRET_KEY
+
 # these help select the KEY_PATH and full project title
 LIVE_SERVER = 'microbiome.bhp.org.bw'
 TEST_HOSTS = ['edc4.bhp.org.bw']
@@ -213,11 +215,11 @@ if socket.gethostname() in DEVELOPER_HOSTS:
         }
     }
 elif socket.gethostname() in [LIVE_SERVER] + TEST_HOSTS or 'test' in sys.argv:
-    from microbiome.config.databases import PRODUCTION_MYSQL, SECRET_KEY
+    from microbiome.config.databases import PRODUCTION_MYSQL
     SECRET_KEY = SECRET_KEY
     DATABASES = PRODUCTION_MYSQL
 elif 'test' in sys.argv:
-    from microbiome.config.databases import TRAVIS_MYSQL, SECRET_KEY
+    from microbiome.config.databases import TRAVIS_MYSQL
     SECRET_KEY = SECRET_KEY
     DATABASES = TRAVIS_MYSQL
 
