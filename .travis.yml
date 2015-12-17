@@ -47,7 +47,7 @@ install:
 before_script:
   - flake8 microbiome
   - mysql -e 'create database mb;'
-  - mysql -e 'create database lab;'
+  - mysql -e 'create database mb_lab;'
 
 script: 
   - coverage run --source=microbiome manage.py test
