@@ -162,7 +162,7 @@ INSTALLED_APPS = [
     'microbiome.apps.mb_maternal',
     'microbiome.apps.mb_lab']
 
-if socket.gethostname() in DEVELOPER_HOSTS:
+if socket.gethostname() in DEVELOPER_HOSTS + TEST_HOSTS:
     INSTALLED_APPS.pop(INSTALLED_APPS.index('south'))
 INSTALLED_APPS = tuple(INSTALLED_APPS)
 
