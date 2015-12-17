@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+from microbiome.apps.mb.constants import INFANT
+
 from ..classes import InfantDashboard
 
 
@@ -13,7 +15,7 @@ def infant_dashboard(request, **kwargs):
         dashboard_model=kwargs.get('dashboard_model'),
         dashboard_category=kwargs.get('dashboard_category'),
         registered_subject=kwargs.get('registered_subject'),
-        dashboard_type_list=['infant'],
+        dashboard_type_list=[INFANT],
         show=kwargs.get('show'),
     )
 

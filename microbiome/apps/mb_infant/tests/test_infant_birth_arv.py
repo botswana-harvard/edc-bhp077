@@ -1,8 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from microbiome.apps.mb_infant.forms import InfantBirthArvForm
-
 from edc.subject.registration.models import RegisteredSubject
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
@@ -12,10 +10,12 @@ from edc.subject.appointment.models import Appointment
 from edc_constants.constants import YES, POS
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
-from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
+from microbiome.apps.mb.constants import INFANT
+from microbiome.apps.mb_infant.forms import InfantBirthArvForm
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
+from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
+from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
+from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 
 from microbiome.apps.mb_maternal.visit_schedule import (
     AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
@@ -60,7 +60,7 @@ class TestInfantBirthArv(TestCase):
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=self.maternal_visit)
 
         registered_subject_infant = RegisteredSubject.objects.get(
-            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier
+            subject_type=INFANT, relative_identifier=self.registered_subject.subject_identifier
         )
         self.infant_birth = InfantBirthFactory(
             registered_subject=registered_subject_infant,

@@ -2,7 +2,6 @@ import factory
 from django.utils import timezone
 
 from edc_constants.constants import YES, NO, POS, NOT_APPLICABLE
-from edc.subject.registration.tests.factories import RegisteredSubjectFactory
 
 from microbiome.apps.mb_maternal.models import PostnatalEnrollment
 from microbiome.apps.mb.constants import LIVE
@@ -14,7 +13,6 @@ class PostnatalEnrollmentFactory(factory.DjangoModelFactory):
         model = PostnatalEnrollment
 
     report_datetime = timezone.now()
-    registered_subject = factory.SubFactory(RegisteredSubjectFactory)
 
     live_infants = 1
     delivery_status = LIVE

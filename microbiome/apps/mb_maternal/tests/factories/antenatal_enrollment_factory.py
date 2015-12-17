@@ -14,7 +14,6 @@ class AntenatalEnrollmentFactory(factory.DjangoModelFactory):
     class Meta:
         model = AntenatalEnrollment
 
-    registered_subject = factory.SubFactory(RegisteredSubjectFactory)
     report_datetime = timezone.now()
 
     gestation_wks = 36

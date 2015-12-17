@@ -5,6 +5,7 @@ from django.contrib import admin
 from edc.subject.appointment.admin import BaseAppointmentModelAdmin
 from edc.export.actions import export_as_csv_action
 
+from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_lab.models import InfantRequisition
 
 from ..forms import InfantVisitForm
@@ -15,7 +16,7 @@ class InfantVisitAdmin(BaseAppointmentModelAdmin):
 
     form = InfantVisitForm
 
-    dashboard_type = 'infant'
+    dashboard_type = INFANT
 
     requisition_model = InfantRequisition
 

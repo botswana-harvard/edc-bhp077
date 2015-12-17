@@ -5,6 +5,8 @@ from edc.subject.visit_schedule.classes import (VisitScheduleConfiguration, site
                                                 RequisitionPanelTuple)
 from edc_constants.constants import REQUIRED, NOT_REQUIRED, ADDITIONAL, NOT_ADDITIONAL
 
+from microbiome.apps.mb.constants import INFANT
+
 from ..models import InfantVisit, InfantBirth
 
 
@@ -29,7 +31,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_lower_bound_unit': 'D',
         'window_upper_bound': 0,
         'window_upper_bound_unit': 'D',
-        'grouping': 'infant',
+        'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
         'schedule_group': 'Infant Enrollment',
         'instructions': None,
@@ -69,7 +71,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_lower_bound_unit': 'D',
         'window_upper_bound': 0,
         'window_upper_bound_unit': 'D',
-        'grouping': 'infant',
+        'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
         'schedule_group': 'Infant Enrollment',
         'instructions': None,
@@ -111,7 +113,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_lower_bound_unit': 'D',
         'window_upper_bound': 0,
         'window_upper_bound_unit': 'D',
-        'grouping': 'infant',
+        'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
         'schedule_group': 'Infant Enrollment',
         'instructions': None,
@@ -155,7 +157,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_lower_bound_unit': 'D',
         'window_upper_bound': 0,
         'window_upper_bound_unit': 'D',
-        'grouping': 'infant',
+        'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
         'schedule_group': 'Infant Enrollment',
         'instructions': None,
@@ -199,7 +201,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_lower_bound_unit': 'D',
         'window_upper_bound': 0,
         'window_upper_bound_unit': 'D',
-        'grouping': 'infant',
+        'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
         'schedule_group': 'Infant Enrollment',
         'instructions': None,
@@ -243,7 +245,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_lower_bound_unit': 'D',
         'window_upper_bound': 0,
         'window_upper_bound_unit': 'D',
-        'grouping': 'infant',
+        'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
         'schedule_group': 'Infant Enrollment',
         'instructions': None,

@@ -12,6 +12,7 @@ from edc.subject.appointment.models import Appointment
 from edc_constants.constants import NEW, YES, NEG, OFF_STUDY
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_maternal.tests.factories import (
     MaternalEligibilityFactory, MaternalVisitFactory)
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
@@ -63,7 +64,7 @@ class TestOffStudy(TestCase):
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
         self.infant_registered_subject = RegisteredSubject.objects.get(
             relative_identifier=self.registered_subject.subject_identifier,
-            subject_type='infant')
+            subject_type=INFANT)
         self.infant_birth = InfantBirthFactory(
             registered_subject=self.infant_registered_subject,
             maternal_labour_del=maternal_labour_del)

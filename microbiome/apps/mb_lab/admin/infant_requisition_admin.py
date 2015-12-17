@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from edc.lab.lab_requisition.admin import BaseRequisitionModelAdmin
 
+from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.models import InfantVisit
 
 from ..forms import InfantRequisitionForm
@@ -13,7 +14,7 @@ class InfantRequisitionAdmin(BaseRequisitionModelAdmin):
     form = InfantRequisitionForm
     visit_model = InfantVisit
     visit_attr = 'infant_visit'
-    dashboard_type = 'infant'
+    dashboard_type = INFANT
 
     def __init__(self, *args, **kwargs):
         super(InfantRequisitionAdmin, self).__init__(*args, **kwargs)

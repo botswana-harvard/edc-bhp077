@@ -5,6 +5,7 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc_base.modeladmin.admin import BaseTabularInline
 from edc.export.actions import export_as_csv_action
+from microbiome.apps.mb.constants import INFANT
 
 from ..models import (
     InfantCongenitalAnomalies, InfantCns, InfantFacialDefect,
@@ -484,7 +485,7 @@ class InfantTrisomiesInline(BaseTabularInline):
 class InfantCongenitalAnomaliesAdmin(BaseModelAdmin):
 
     form = InfantCongenitalAnomaliesForm
-    dashboard_type = 'infant'
+    dashboard_type = INFANT
     visit_model_name = 'infantvisit'
 
     list_display = ('infant_visit',)

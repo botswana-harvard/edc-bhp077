@@ -1,6 +1,7 @@
 from edc.dashboard.subject.classes import RegisteredSubjectDashboard
 from edc.subject.registration.models import RegisteredSubject
 
+from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.models import InfantVisit, InfantBirth
 from microbiome.apps.mb_lab.models import InfantRequisition
 from microbiome.apps.mb_maternal.models import MaternalLocator, MaternalConsent, MaternalEligibility
@@ -20,14 +21,14 @@ class InfantDashboard(RegisteredSubjectDashboard):
     urlpattern_options = dict(
         RegisteredSubjectDashboard.urlpattern_options,
         dashboard_model=RegisteredSubjectDashboard.urlpattern_options['dashboard_model'] + '|infant_birth',
-        dashboard_type='infant',
+        dashboard_type=INFANT,
         appointment_code='2000|2010|2030|2060|2090|2120')
 
     def __init__(self, **kwargs):
         super(InfantDashboard, self).__init__(**kwargs)
         self.subject_dashboard_url = 'subject_dashboard_url'
         self.visit_model = InfantVisit
-        self.dashboard_type_list = ['infant']
+        self.dashboard_type_list = [INFANT]
         self.dashboard_models['registered_subject'] = RegisteredSubject
         self.dashboard_models['infant_birth'] = InfantBirth
         self.dashboard_models['visit'] = InfantVisit
@@ -41,7 +42,7 @@ class InfantDashboard(RegisteredSubjectDashboard):
         super(InfantDashboard, self).get_context_data(**kwargs)
         self.context.update(
             home='microbiome',
-            search_name='infant',
+            search_name=INFANT,
             title='Infant Dashboard',
             subject_dashboard_url=self.subject_dashboard_url,
             infant_hiv_status=self.infant_hiv_status,

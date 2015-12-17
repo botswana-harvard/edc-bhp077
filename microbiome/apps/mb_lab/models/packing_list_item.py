@@ -4,6 +4,8 @@ from edc.lab.lab_packing.models import BasePackingListItem
 from edc.subject.registration.models import RegisteredSubject
 from edc.device.sync.models import BaseSyncUuidModel
 
+from microbiome.apps.mb.constants import INFANT
+
 from .aliquot import Aliquot
 from .infant_requisition import InfantRequisition
 from .maternal_requisition import MaternalRequisition
@@ -32,7 +34,7 @@ class PackingListItem(BasePackingListItem, BaseSyncUuidModel):
     def save(self, *args, **kwargs):
         if self.item_reference:
             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
-            if self.get_subject_type() == 'infant':
+            if self.get_subject_type() == INFANT:
                 requisition = InfantRequisition.objects.get(
                     requisition_identifier=aliquot.receive.requisition_identifier)
             else:
@@ -46,7 +48,7 @@ class PackingListItem(BasePackingListItem, BaseSyncUuidModel):
         retval = "n/a"
         if self.item_reference:
             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
-            if self.get_subject_type() == 'infant':
+            if self.get_subject_type() == INFANT:
                 requisition = InfantRequisition.objects.get(
                     requisition_identifier=aliquot.receive.requisition_identifier)
             else:
@@ -59,7 +61,7 @@ class PackingListItem(BasePackingListItem, BaseSyncUuidModel):
         retval = "n/a"
         if self.item_reference:
             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
-            if self.get_subject_type() == 'infant':
+            if self.get_subject_type() == INFANT:
                 requisition = InfantRequisition.objects.get(
                     requisition_identifier=aliquot.receive.requisition_identifier)
             else:

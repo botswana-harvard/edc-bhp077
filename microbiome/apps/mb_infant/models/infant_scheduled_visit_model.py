@@ -12,8 +12,7 @@ from .infant_off_study_mixin import InfantOffStudyMixin
 from .infant_visit import InfantVisit
 
 
-class InfantScheduledVisitModel(InfantOffStudyMixin,
-                                TimePointStatusMixin, BaseSyncUuidModel):
+class InfantScheduledVisitModel(InfantOffStudyMixin, TimePointStatusMixin, BaseSyncUuidModel):
 
     """ A model completed by the user on the infant's scheduled visit. """
 

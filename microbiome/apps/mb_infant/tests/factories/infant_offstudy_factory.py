@@ -14,8 +14,6 @@ class InfantOffStudyFactory(factory.DjangoModelFactory):
     class Meta:
         model = InfantOffStudy
 
-    registered_subject = factory.SubFactory(RegisteredSubjectFactory)
-
     offstudy_date = timezone.now().date()
 
     infant_visit = factory.SubFactory(InfantVisitFactory)

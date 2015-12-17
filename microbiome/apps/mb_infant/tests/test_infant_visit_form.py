@@ -14,6 +14,7 @@ from edc_constants.constants import (
     DEAD, ALIVE, SCHEDULED, NOT_APPLICABLE)
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantVisitForm
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
@@ -64,7 +65,7 @@ class TestInfantVisitForm(TestCase):
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
 
         registered_subject_infant = RegisteredSubject.objects.get(
-            subject_type='infant',
+            subject_type=INFANT,
             relative_identifier=registered_subject.subject_identifier)
         InfantBirthFactory(
             registered_subject=registered_subject_infant,

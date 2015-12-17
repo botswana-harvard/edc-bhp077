@@ -18,6 +18,7 @@ from edc.device.sync.classes import SerializeToTransaction
 from edc.subject.registration.models import RegisteredSubject
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
@@ -68,7 +69,7 @@ class TestNaturalKey(TestCase):
         self.maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
 
         self.registered_subject_infant = RegisteredSubject.objects.get(
-            subject_type='infant', relative_identifier=self.registered_subject.subject_identifier)
+            subject_type=INFANT, relative_identifier=self.registered_subject.subject_identifier)
 #         self.infant_birth = InfantBirthFactory(
 #             registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
 

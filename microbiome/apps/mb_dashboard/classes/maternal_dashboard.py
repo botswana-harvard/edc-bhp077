@@ -5,6 +5,7 @@ from edc.subject.registration.models import RegisteredSubject
 from edc_base.utils import convert_from_camel
 from edc_constants.constants import YES, POS, NEG, IND, NEVER, UNKNOWN, DWTA
 
+from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_lab.models.maternal_requisition import MaternalRequisition
 from microbiome.apps.mb_maternal.models import (
     MaternalVisit, MaternalEligibility, MaternalConsent, MaternalLocator,
@@ -133,19 +134,19 @@ class MaternalDashboard(RegisteredSubjectDashboard):
         infant_registered_subject = None
         try:
             infant_registered_subject = RegisteredSubject.objects.get(
-                subject_type='infant', relative_identifier__iexact=self.subject_identifier)
+                subject_type=INFANT, relative_identifier__iexact=self.subject_identifier)
             try:
                 infant_birth = InfantBirth.objects.get(registered_subject__exact=infant_registered_subject)
                 dct = infant_birth.__dict__
                 dct['dashboard_model'] = convert_from_camel(infant_birth._meta.object_name)
                 dct['dashboard_id'] = convert_from_camel(infant_birth.pk)
-                dct['dashboard_type'] = 'infant'
+                dct['dashboard_type'] = INFANT
                 infants[infant_registered_subject.subject_identifier] = dct
             except InfantBirth.DoesNotExist:
                 dct = {'subject_identifier': infant_registered_subject.subject_identifier}
                 dct['dashboard_model'] = 'registered_subject'
                 dct['dashboard_id'] = infant_registered_subject.pk
-                dct['dashboard_type'] = 'infant'
+                dct['dashboard_type'] = INFANT
                 infants[infant_registered_subject.subject_identifier] = dct
         except RegisteredSubject.DoesNotExist:
             pass

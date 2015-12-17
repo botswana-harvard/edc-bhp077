@@ -1,17 +1,20 @@
 from collections import OrderedDict
 
 from django.contrib import admin
+
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.export.actions import export_as_csv_action
 
-from ..models import InfantOffStudy
+from microbiome.apps.mb.constants import INFANT
+
 from ..forms import InfantOffStudyForm
+from ..models import InfantOffStudy
 
 
 class InfantOffStudyAdmin(BaseModelAdmin):
 
     form = InfantOffStudyForm
-    dashboard_type = 'infant'
+    dashboard_type = INFANT
     visit_model_name = 'infantvisit'
 
     fields = (

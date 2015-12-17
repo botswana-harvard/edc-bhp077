@@ -1,10 +1,12 @@
 from edc.dashboard.section.classes import BaseSectionView, site_sections
 
+from microbiome.apps.mb.constants import INFANT
+
 from ..search import InfantSearchByWord
 
 
 class SectionInfantView(BaseSectionView):
-    section_name = 'infant'
+    section_name = INFANT
     section_display_name = 'Infants'
     section_display_index = 30
     section_template = 'section_infant.html'

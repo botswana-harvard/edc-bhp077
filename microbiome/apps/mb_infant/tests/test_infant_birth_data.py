@@ -11,6 +11,7 @@ from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, NO, NEG
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantBirthDataForm
 from microbiome.apps.mb_infant.models import InfantBirthData
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
@@ -68,7 +69,7 @@ class TestInfantBirthData(TestCase):
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
         infant_registered_subject = RegisteredSubject.objects.get(
             relative_identifier=self.registered_subject.subject_identifier,
-            subject_type='infant')
+            subject_type=INFANT)
         self.infant_birth = InfantBirthFactory(
             registered_subject=infant_registered_subject,
             maternal_labour_del=maternal_labour_del)
