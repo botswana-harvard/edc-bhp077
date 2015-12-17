@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_revision',
     'south',
+    'edc_templates',
     'edc_base',
     'edc_consent',
     'edc_constants',
