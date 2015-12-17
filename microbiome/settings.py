@@ -12,16 +12,21 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import socket
-import sys
 
 from unipath import Path
 
 from django.utils import timezone
 
+# these help select the KEY_PATH and full project title
+LIVE_SERVER = 'microbiome.bhp.org.bw'
+TEST_HOSTS = ['edc4.bhp.org.bw']
+DEVELOPER_HOSTS = [
+    'mac2-2.local', 'ckgathi', 'one-2.local', 'One-2.local', 'silverapple', 'tsetsiba', 'fchilisa', 'leslie']
+
 APP_NAME = 'mb'
 PROJECT_TITLE = 'Gut Microbiome Evolution'
 INSTITUTION = 'Botswana-Harvard AIDS Institute'
-PROTOCOL_REVISION = '0.1dev'
+PROTOCOL_REVISION = 'UNDEFINED'
 
 SOURCE_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
@@ -34,28 +39,16 @@ PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 # SECURITY WARNING: keep the secret key used in production secret!
 ALLOW_MODEL_SERIALIZATION = True
 
-if socket.gethostname() == 'microbiome.bhp.org.bw':
+if socket.gethostname() == LIVE_SERVER:
     KEY_PATH = '/home/django/source/microbiome/keys'
-elif 'test' in sys.argv:
+elif socket.gethostname() in TEST_HOSTS + DEVELOPER_HOSTS:
     KEY_PATH = os.path.join(SOURCE_ROOT, 'crypto_fields/test_keys')
-elif socket.gethostname() == 'mac2-2.local':
-    KEY_PATH = '/Volumes/bhp066/live_keys'  # DONT DELETE ME!!, just comment out
-elif socket.gethostname() == 'ckgathi':
-    KEY_PATH = '/Users/ckgathi/source/microbiome/microbiome/keys'
-elif socket.gethostname() == 'one-2.local' or socket.gethostname() == 'One-2.local':
-    KEY_PATH = '/Users/sirone/Documents/workspace/git_projects/microbiome/microbiome/keys'
-elif socket.gethostname() == 'silverapple':
-    KEY_PATH = '/Users/melissa/Documents/git/source/microbiome/microbiome/keys'
-elif socket.gethostname() == 'tsetsiba':
-    KEY_PATH = '/Users/tsetsiba/source/microbiome/keys'
-elif socket.gethostname() == 'fchilisa':
-    KEY_PATH = '/Users/fchilisa/source/microbiome/keys'
-elif socket.gethostname() == 'leslie':
-    KEY_PATH = '/Users/lesliek/keys'
-elif socket.gethostname() == 'edc4.bhp.org.bw':
-    KEY_PATH = '/home/django/source/keys'
 else:
-    KEY_PATH = '/Volumes/keys'  # DONT DELETE ME!!, just comment out
+    raise TypeError('Warning! Unknown hostname for KEY_PATH. \n'
+                    'Getting this wrong on a LIVE SERVER will corrupt your encrypted data!!! \n'
+                    'Expected hostname to appear in one of '
+                    'settings.LIVE_SERVER, settings.TEST_HOSTS or settings.DEVELOPER_HOSTS. '
+                    'Got hostname=\'{}\'\n'.format(socket.gethostname()))
 
 DEBUG = True
 
@@ -168,7 +161,7 @@ INSTALLED_APPS = [
     'microbiome.apps.mb_maternal',
     'microbiome.apps.mb_lab']
 
-if socket.gethostname() != 'microbiome.bhp.org.bw':
+if socket.gethostname() in DEVELOPER_HOSTS:
     INSTALLED_APPS.pop(INSTALLED_APPS.index('south'))
 INSTALLED_APPS = tuple(INSTALLED_APPS)
 
@@ -204,12 +197,11 @@ TEMPLATE_LOADERS = (
 WSGI_APPLICATION = 'microbiome.config.wsgi.application'
 
 # Database
-HOST_NAMES = ['microbiome.bhp.org.bw']
-if socket.gethostname() in HOST_NAMES:
+if socket.gethostname() in [LIVE_SERVER] + TEST_HOSTS:
     from microbiome.config.databases import PRODUCTION_MYSQL, SECRET_KEY
     SECRET_KEY = SECRET_KEY
     DATABASES = PRODUCTION_MYSQL
-else:
+elif socket.gethostname() in DEVELOPER_HOSTS:
     SECRET_KEY = 'sdfsd32fs#*@(@dfsdf'
     DATABASES = {
         'default': {
@@ -271,18 +263,24 @@ AGE_IS_ADULT = 18
 GENDER_OF_CONSENT = ['F']
 DISPATCH_APP_LABELS = []
 
-DEVICE_ID = 91
-if socket.gethostname() in HOST_NAMES:
+if socket.gethostname() == LIVE_SERVER:
     DEVICE_ID = 99
-    PROJECT_TITLE = 'Gut Microbiome Study Live Server'
+    PROJECT_TITLE = '{} Live Server'.format(PROJECT_TITLE)
+elif socket.gethostname() in TEST_HOSTS:
+    DEVICE_ID = 99
+    PROJECT_TITLE = 'TEST (mysql): {}'.format(PROJECT_TITLE)
+elif socket.gethostname() in DEVELOPER_HOSTS:
+    DEVICE_ID = 99
+    PROJECT_TITLE = 'TEST (sqlite3): {}'.format(PROJECT_TITLE)
+else:
+    raise TypeError('Unknown hostname for full PROJECT_TITLE. Expected hostname to appear in one of '
+                    'settings.LIVE_SERVER, settings.TEST_HOSTS or settings.DEVELOPER_HOSTS. '
+                    'Got hostname=\'{}\''.format(socket.gethostname()))
 
 SITE_CODE = '40'
 SERVER_DEVICE_ID_LIST = [91, 92, 93, 94, 95, 96, 97, 99]
-
 MIDDLEMAN_DEVICE_ID_LIST = [98]
-if DEVICE_ID in range(91, 97):
-    PROJECT_TITLE = 'TEST: Microbiome'
-elif str(DEVICE_ID) == '98':
+if str(DEVICE_ID) == '98':
     PROJECT_TITLE = 'RESERVED FOR MIDDLE MAN'
 
 CELLPHONE_REGEX = '^[7]{1}[12345678]{1}[0-9]{6}$'
