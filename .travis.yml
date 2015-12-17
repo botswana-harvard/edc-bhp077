@@ -21,6 +21,9 @@ addons:
      - unixodbc-dev
      - python-pyodbc
 
+services:
+  - mysql
+
 before_install:
     - "export DISPLAY=:99.0"
     - "sh -e /etc/init.d/xvfb start"
@@ -42,6 +45,8 @@ install:
 
 before_script:
   - flake8 microbiome
+  - mysql -e 'create database mb;'
+  - mysql -e 'create database lab;'
 
 script: 
   - coverage run --source=microbiome manage.py test

@@ -216,6 +216,10 @@ elif socket.gethostname() in [LIVE_SERVER] + TEST_HOSTS or 'test' in sys.argv:
     from microbiome.config.databases import PRODUCTION_MYSQL, SECRET_KEY
     SECRET_KEY = SECRET_KEY
     DATABASES = PRODUCTION_MYSQL
+elif 'test' in sys.argv:
+    from microbiome.config.databases import TRAVIS_MYSQL, SECRET_KEY
+    SECRET_KEY = SECRET_KEY
+    DATABASES = TRAVIS_MYSQL
 
 # django auth
 AUTH_PROFILE_MODULE = "bhp_userprofile.userprofile"

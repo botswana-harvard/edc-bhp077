@@ -32,3 +32,30 @@ PRODUCTION_MYSQL = {
         'ATOMIC_REQUESTS': True,
     },
 }
+
+TRAVIS_MYSQL = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'database': 'mb',
+            'user': 'travis',
+            'default-character-set': 'utf8',
+            'init_command': 'SET storage_engine=INNODB',
+        },
+        'HOST': '',
+        'PORT': '',
+        'ATOMIC_REQUESTS': True,
+    },
+    'lab_api': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'database': 'lab',
+            'user': 'travis',
+            'default-character-set': 'utf8',
+            'init_command': 'SET storage_engine=INNODB',
+        },
+        'HOST': '',
+        'PORT': '',
+        'ATOMIC_REQUESTS': True,
+    },
+}
