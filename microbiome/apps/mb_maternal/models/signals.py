@@ -97,16 +97,15 @@ def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
                 appointment = Appointment.objects.get(
                     registered_subject=instance.registered_subject,
                     visit_definition=visit_definition)
-                try:
-                    maternal_visit = MaternalVisit.objects.get(appointment=appointment)
-                    if maternal_visit.reason != OFF_STUDY:
-                        maternal_visit.reason = OFF_STUDY
-                        maternal_visit.save()
-                except MaternalVisit.DoesNotExist:
-                    MaternalVisit.objects.create(
-                        appointment=appointment,
-                        report_datetime=report_datetime,
-                        reason=OFF_STUDY)
+                maternal_visit = MaternalVisit.objects.get(appointment=appointment)
+                if maternal_visit.reason != OFF_STUDY:
+                    maternal_visit.reason = OFF_STUDY
+                    maternal_visit.save()
+        except MaternalVisit.DoesNotExist:
+            MaternalVisit.objects.create(
+                appointment=appointment,
+                report_datetime=report_datetime,
+                reason=OFF_STUDY)
         except AttributeError as e:
             if 'is_eligible' not in str(e):
                 raise
