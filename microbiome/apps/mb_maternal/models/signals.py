@@ -7,7 +7,7 @@ from edc.core.identifier.classes import InfantIdentifier
 from edc.subject.appointment.models.appointment import Appointment
 from edc.subject.registration.models import RegisteredSubject
 from edc.subject.visit_schedule.models.visit_definition import VisitDefinition
-from edc_constants.constants import NO, YES, FEMALE, OFF_STUDY, SCHEDULED
+from edc_constants.constants import FEMALE, OFF_STUDY, SCHEDULED
 
 from ..models import MaternalOffStudy, MaternalVisit
 
@@ -43,17 +43,17 @@ def maternal_eligibility_on_post_save(sender, instance, raw, created, using, **k
 
 @receiver(post_save, weak=False, dispatch_uid="criteria_passed_create_registered_subject")
 def criteria_passed_create_registered_subject(sender, instance, raw, created, using, **kwargs):
-    """Creates a Registered Subject ONLY if maternal eligibility is passed."""
+    """Creates a Registered Subject ONLY if maternal eligibility is passed.
+
+    This is the ONLY place RegisteredSubject is created!"""
     if not raw:
         if isinstance(instance, MaternalEligibility):
-            if instance.is_eligible:
-                if not instance.registered_subject:
+            if instance.is_eligible and not instance.registered_subject:
                     registered_subject = RegisteredSubject.objects.create(
                         created=instance.created,
                         first_name='Mother',
                         gender=FEMALE,
                         subject_type='maternal',
-                        registration_datetime=instance.created,
                         user_created=instance.user_created)
                     instance.registered_subject = registered_subject
                     instance.save()
@@ -130,25 +130,16 @@ def eligible_put_back_on_study(sender, instance, raw, created, using, **kwargs):
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_consent_on_post_save")
 def maternal_consent_on_post_save(sender, instance, raw, created, using, **kwargs):
-    """This will update the is_consented boolean on maternal eligibility"""
+    """Update maternal_eligibility consented flag and update matching attrs on
+    RegisteredSubject."""
     if not raw:
         if isinstance(instance, MaternalConsent):
-            maternal_eligibility = MaternalEligibility.objects.get(registered_subject=instance.registered_subject)
+            maternal_eligibility = MaternalEligibility.objects.get(
+                registered_subject=instance.registered_subject)
             maternal_eligibility.is_consented = True
-            if instance.citizen == YES:
-                maternal_eligibility.has_passed_consent = True
-            elif instance.citizen == NO:
-                maternal_eligibility.has_passed_consent = False
-            maternal_eligibility.save()
+            maternal_eligibility.save(update_fields=['is_consented'])
 
-
-@receiver(post_save, weak=False, dispatch_uid='update_registered_subject_on_post_save')
-def update_registered_subject_on_post_save(sender, instance, raw, created, using, **kwargs):
-    """Updates an instance of RegisteredSubject on the sender instance.
-
-    Sender instance is a Consent"""
-    if not raw:
-        if isinstance(instance, MaternalConsent):
+            instance.registered_subject.registration_datetime = instance.consent_datetime
             instance.registered_subject.dob = instance.dob
             instance.registered_subject.is_dob_estimated = instance.is_dob_estimated
             instance.registered_subject.gender = instance.gender

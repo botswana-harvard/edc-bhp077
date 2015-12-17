@@ -143,14 +143,11 @@ class EnrollmentMixin(models.Model):
             self.registered_subject.first_name)
 
     def save(self, *args, **kwargs):
-        self.enroll_helper()
-        super(EnrollmentMixin, self).save(*args, **kwargs)
-
-    def enroll_helper(self, exception_cls=None):
-        enrollment_helper = EnrollmentHelper(instance=self, exception_cls=exception_cls)
+        enrollment_helper = EnrollmentHelper(instance=self)
         self.is_eligible = enrollment_helper.is_eligible
         self.enrollment_hiv_status = enrollment_helper.enrollment_hiv_status
         self.date_at_32wks = enrollment_helper.date_at_32wks
+        super(EnrollmentMixin, self).save(*args, **kwargs)
 
     def common_fields(self):
         """Returns a list of field names common to postnatal

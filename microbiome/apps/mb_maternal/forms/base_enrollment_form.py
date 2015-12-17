@@ -5,6 +5,7 @@ from edc_constants.constants import POS, NEG, NOT_APPLICABLE, YES, NO, DWTA, UNK
 from edc_base.form.forms import BaseModelForm
 
 from ..models import MaternalConsent, SpecimenConsent
+from microbiome.apps.mb_maternal.models.enrollment_helper import EnrollmentHelper
 
 
 class BaseEnrollmentForm(BaseModelForm):
@@ -21,7 +22,7 @@ class BaseEnrollmentForm(BaseModelForm):
         self.rapid_test_date_and_result()
         self.raise_if_rapid_test_required()
         self.raise_if_rapid_test_date_future()
-        self._meta.model(**cleaned_data).enroll_helper(forms.ValidationError)
+        EnrollmentHelper(instance=self._meta.model(**cleaned_data), exception_cls=forms.ValidationError)
         return cleaned_data
 
     def clean_report_datetime(self):

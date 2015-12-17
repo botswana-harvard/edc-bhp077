@@ -19,6 +19,7 @@ from microbiome.apps.mb_maternal.tests.factories import (MaternalEligibilityFact
                                                          MaternalVisitFactory, MaternalLocatorFactory)
 from microbiome.apps.mb_maternal.models import MaternalDemographics
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+
 from ..visit_schedule import AntenatalEnrollmentVisitSchedule
 
 
@@ -48,8 +49,7 @@ class NaturalKeyTests(TestCase):
         """Confirms all models have a get_by_natural_key manager method."""
         app = get_app('mb_maternal')
         for model in get_models(app):
-            if not model._meta.model_name == 'enrollmenttestmodel':
-                if 'Audit' not in model._meta.object_name:
+                if 'Audit' not in model._meta.object_name and model._meta.model_name != 'enrollmenttestmodel':
                     self.assertTrue(
                         'get_by_natural_key' in dir(model.objects),
                         'get_by_natural_key key not found in {0}'.format(model._meta.object_name))

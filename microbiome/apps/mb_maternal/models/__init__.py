@@ -29,5 +29,4 @@ from .maternal_breast_health import MaternalBreastHealth
 from .maternal_srh import MaternalSrh
 from .signals import (criteria_passed_create_registered_subject,
                       maternal_eligibility_on_post_save,
-                      maternal_consent_on_post_save,
-                      update_registered_subject_on_post_save)
+                      maternal_consent_on_post_save)

@@ -25,10 +25,8 @@ class MaternalEligibility (BaseSyncUuidModel):
     eligibility_id = models.CharField(
         verbose_name="Eligibility Identifier",
         max_length=36,
-        null=True,
-        blank=False,
-        editable=False,
-        help_text='')
+        default=uuid.uuid4,
+        editable=False)
 
     report_datetime = models.DateTimeField(
         verbose_name="Report Date and Time",
@@ -78,8 +76,6 @@ class MaternalEligibility (BaseSyncUuidModel):
     history = AuditTrail()
 
     def save(self, *args, **kwargs):
-        if not self.eligibility_id:
-            self.eligibility_id = uuid.uuid4()
         self.is_eligible, self.ineligibility = self.mother_is_eligible()
         super(MaternalEligibility, self).save(*args, **kwargs)
 
@@ -87,14 +83,15 @@ class MaternalEligibility (BaseSyncUuidModel):
         """
         If age criteria failed, Enrollment loss form will be created.
         """
-        message = []
+        error_message = []
         if self.age_in_years < MIN_AGE_OF_CONSENT:
-            message.append('Mother is under {}'.format(MIN_AGE_OF_CONSENT))
+            error_message.append('Mother is under {}'.format(MIN_AGE_OF_CONSENT))
         if self.age_in_years > MAX_AGE_OF_CONSENT:
-            message.append('Mother is too old (>{})'.format(MAX_AGE_OF_CONSENT))
+            error_message.append('Mother is too old (>{})'.format(MAX_AGE_OF_CONSENT))
         if self.has_omang == NO:
-            message.append('Not a citizen')
-        return (False if message else True, message)
+            error_message.append('Not a citizen')
+        is_eligible = False if error_message else True
+        return (is_eligible, error_message)
 
     def __unicode__(self):
         return "{0} ({1})".format(self.eligibility_id, self.age_in_years)
