@@ -308,23 +308,23 @@ INFANT_VISIT_STUDY_STATUS = (
 
 
 OFF_STUDY_REASON = [
-    ('gestations less than 37', ' Gestational age is less than 37 weeks'),
+    ('failed_enrollment', 'Failed Enrollment'),
     ('moved', ' Subject will be moving out of study area or unable to stay in study area'),
-    ('lost_no_contact', ' Lost to follow-up, unable to locate'),
-    ('lost_contacted', ' Lost to follow-up, contacted but did not come to study clinic'),
-    ('withdrew_by_mother', ' Mother changed mind and withdrew consent'),
+    ('lost_no_contact', 'Lost to follow-up, unable to locate'),
+    ('lost_contacted', 'Lost to follow-up, contacted but did not come to study clinic'),
+    ('withdrew_by_mother', 'Mother changed mind and withdrew consent'),
     ('withdrew_by_father',
-     ' Father of baby did not want infant to participate and participant withdrew consent'),
+     'Father of baby did not want infant to participate and participant withdrew consent'),
     ('withdrew_by_family',
      ' Other family member did not want mother/infant to participate and participant withdrew consent'),
-    ('hiv_pos', ' Infant found to be HIV-infected'),
+    ('hiv_pos', 'Infant found to be HIV-infected'),
     ('complete',
-        (' Completion of protocol required period of time for observation '
+        ('Completion of protocol required period of time for observation '
          '(see Study Protocol for definition of Completion.) [skip to end of form]')),
     ('death',
-        (' Participant death (complete the DEATH REPORT FORM AF005) '
+        ('Participant death (complete the DEATH REPORT FORM AF005) '
          '(For EAE Reporting requirements see EAE Reporting Manual)')),
-    (OTHER, ' Other'),
+    (OTHER, 'Other'),
 ]
 
 LOWER_GASTROINTESTINAL_ABNORMALITY = (
