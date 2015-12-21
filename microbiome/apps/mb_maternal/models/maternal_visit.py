@@ -93,6 +93,11 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
                         'mb_maternal',
                         model_name,
                         message=self.appointment.visit_definition.code)
+                self.requisition_is_required(
+                    self.appointment,
+                    'mb_lab',
+                    'maternalrequisition',
+                    'Viral Load')
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
                 model_names = ['maternalarvpost', 'maternalarvpostadh']
                 for model_name in model_names:
