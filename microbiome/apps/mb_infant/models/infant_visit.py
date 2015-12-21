@@ -102,7 +102,7 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
                 message=self.appointment.visit_definition.code)
 
     def requires_dna_pcr_on_maternal_pos(self):
-        if self.appointment.visit_definition.code in ['2010', '2030', '2060', '2090', '2120']:
+        if self.appointment.visit_definition.code in ['2000', '2010', '2030', '2060', '2090', '2120']:
             self.requisition_is_required(
                 self.appointment,
                 'mb_lab',

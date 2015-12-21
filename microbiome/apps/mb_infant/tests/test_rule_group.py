@@ -126,13 +126,7 @@ class TestRuleGroup(TestCase):
         InfantBirthFactory(
             registered_subject=registered_subject_infant,
             maternal_labour_del=maternal_labour_del)
-        appointment = Appointment.objects.get(
-            registered_subject=registered_subject_infant,
-            visit_definition__code='2000')
-        InfantVisitFactory(
-            appointment=appointment,
-            reason=SCHEDULED)
-        for code in ['2010', '2030', '2060', '2090', '2120']:
+        for code in ['2000', '2010', '2030', '2060', '2090', '2120']:
             appointment = Appointment.objects.get(
                 registered_subject=registered_subject_infant,
                 visit_definition__code=code)
