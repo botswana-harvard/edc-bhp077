@@ -12,7 +12,6 @@ class MaternalRequisitionForm(BaseRequisitionForm):
     def __init__(self, *args, **kwargs):
         super(MaternalRequisitionForm, self).__init__(*args, **kwargs)
         self.fields['item_type'].initial = 'tube'
-        self.fields['requisition_identifier'].required = False
 
     def clean(self):
         cleaned_data = super(MaternalRequisitionForm, self).clean()
