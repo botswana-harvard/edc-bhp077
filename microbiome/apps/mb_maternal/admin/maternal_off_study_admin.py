@@ -17,6 +17,7 @@ class MaternalOffStudyAdmin(BaseModelAdmin):
     fields = (
         'registered_subject',
         'maternal_visit',
+        'report_datetime',
         'offstudy_date',
         'reason',
         'reason_other',

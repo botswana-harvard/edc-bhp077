@@ -4,6 +4,7 @@ from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.export.actions import export_as_csv_action
+from edc.subject.registration.models import RegisteredSubject
 
 from ..forms import MaternalDeathReportForm
 from ..models import MaternalDeathReport, MaternalVisit
@@ -14,6 +15,8 @@ class MaternalDeathReportAdmin(BaseModelAdmin):
     form = MaternalDeathReportForm
     fields = (
         "maternal_visit",
+        "registered_subject",
+        "report_datetime",
         "death_date",
         "cause",
         "cause_other",
