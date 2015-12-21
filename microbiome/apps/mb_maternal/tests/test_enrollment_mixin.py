@@ -1,17 +1,10 @@
 from datetime import date
-from django.test import TestCase
 from django.utils import timezone
 from django.db import models
 
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc.subject.registration.models import RegisteredSubject
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE, NEVER
+from edc.subject.registration.models import RegisteredSubject
 
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from microbiome.apps.mb_maternal.tests.factories import (
     MaternalEligibilityFactory, MaternalConsentFactory, SpecimenConsentFactory)
 from microbiome.apps.mb_maternal.forms import BaseEnrollmentForm
@@ -19,6 +12,8 @@ from microbiome.apps.mb_maternal.models.enrollment_mixin import EnrollmentMixin
 from microbiome.apps.mb_maternal.models.antenatal_enrollment import AntenatalEnrollment
 from dateutil.relativedelta import relativedelta
 from microbiome.apps.mb_maternal.models.enrollment_helper import EnrollmentHelper, EnrollmentError
+
+from .base_maternal_test_case import BaseMaternalTestCase
 
 
 class EnrollmentTestModel(EnrollmentMixin):
@@ -46,17 +41,11 @@ class BaseEnrollTestForm(BaseEnrollmentForm):
         fields = '__all__'
 
 
-class TestEnrollmentMixin(TestCase):
+class TestEnrollmentMixin(BaseMaternalTestCase):
     """Test eligibility of a mother for antenatal enrollment."""
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        site_rule_groups.autodiscover()
+        super(TestEnrollmentMixin, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject)

@@ -1,40 +1,24 @@
 from datetime import date
-from django.test import TestCase
 from django.utils import timezone
 
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
 from edc_constants.constants import YES, NO, NEG, SCHEDULED, NOT_APPLICABLE
 
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb_maternal.tests.factories import (
     MaternalEligibilityFactory, MaternalVisitFactory)
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 from microbiome.apps.mb_list.models import Contraceptives
 
-from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from microbiome.apps.mb_maternal.forms import MaternalSrhForm
 
-from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
+from .base_maternal_test_case import BaseMaternalTestCase
+from .factories import PostnatalEnrollmentFactory
 
 
-class TestMaternalSrhForm(TestCase):
+class TestMaternalSrhForm(BaseMaternalTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        AntenatalEnrollmentVisitSchedule().build()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
-
+        super(TestMaternalSrhForm, self).setUp()
         maternal_eligibility = MaternalEligibilityFactory()
         maternal_consent = MaternalConsentFactory(
             registered_subject=maternal_eligibility.registered_subject)

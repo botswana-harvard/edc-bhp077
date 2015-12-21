@@ -93,7 +93,7 @@ def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
         try:
             if not instance.is_eligible:
                 report_datetime = instance.report_datetime
-                visit_definition = VisitDefinition.objects.get(code='1000M')
+                visit_definition = VisitDefinition.objects.get(code=instance.off_study_visit_code)
                 appointment = Appointment.objects.get(
                     registered_subject=instance.registered_subject,
                     visit_definition=visit_definition)
@@ -107,7 +107,7 @@ def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
                 report_datetime=report_datetime,
                 reason=OFF_STUDY)
         except AttributeError as e:
-            if 'is_eligible' not in str(e):
+            if 'is_eligible' not in str(e) and 'off_study_visit_code' not in str(e):
                 raise
         except VisitDefinition.DoesNotExist:
             pass

@@ -1,38 +1,26 @@
-from django.test import TestCase
-
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc_constants.choices import YES, NO, POS, NEG, NOT_APPLICABLE
-
-from ..maternal_choices import STILL_BIRTH, LIVE
-from ..visit_schedule import PostnatalEnrollmentVisitSchedule
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
-from microbiome.apps.mb_maternal.models import AntenatalEnrollment
-from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
-from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
-from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory, AntenatalEnrollmentFactory
-from edc_constants.constants import UNKNOWN, DWTA, NEVER
-from microbiome.apps.mb_maternal.models.postnatal_enrollment import PostnatalEnrollment
 from django.utils import timezone
+
+from edc.subject.appointment.models.appointment import Appointment
+from edc_constants.choices import YES, NO, POS, NEG, NOT_APPLICABLE
+from edc_constants.constants import UNKNOWN, DWTA, NEVER, SCHEDULED
+
+from microbiome.apps.mb_maternal.maternal_choices import STILL_BIRTH, LIVE
+from microbiome.apps.mb_maternal.models import AntenatalEnrollment
 from microbiome.apps.mb_maternal.models.enrollment_helper import EnrollmentError
 from microbiome.apps.mb_maternal.models.maternal_visit import MaternalVisit
+from microbiome.apps.mb_maternal.models.postnatal_enrollment import PostnatalEnrollment
+
+from .base_maternal_test_case import BaseMaternalTestCase
+from .factories import (
+    MaternalVisitFactory, PostnatalEnrollmentFactory, AntenatalEnrollmentFactory,
+    MaternalEligibilityFactory, MaternalConsentFactory)
 
 
-class TestPostnatalEnrollment(TestCase):
+class TestPostnatalEnrollment(BaseMaternalTestCase):
     """Test eligibility of a mother for postnatal enrollment."""
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
+        super(TestPostnatalEnrollment, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject)
@@ -429,17 +417,21 @@ class TestPostnatalEnrollment(TestCase):
         """Assert common value provided in postnatal is NOT overwritten by antenatal.
 
         Note 'rapid_test_result' is changed on postnatal."""
-        AntenatalEnrollmentFactory(
+        antenatal_enrollment = AntenatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
             rapid_test_done=YES,
             rapid_test_result=NEG)
-        antenatal_enrollment = AntenatalEnrollment.objects.get(
-            registered_subject=self.registered_subject)
+        self.assertTrue(antenatal_enrollment.is_eligible)
+        print(Appointment.objects.all())
         self.assertEqual(antenatal_enrollment.current_hiv_status, NEG)
         self.assertEqual(antenatal_enrollment.evidence_hiv_status, YES)
-        self.assertTrue(antenatal_enrollment.is_eligible)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
+        MaternalVisitFactory(
+            appointment=appointment, reason=SCHEDULED)
         PostnatalEnrollment.objects.create(
             rapid_test_done=YES,
             rapid_test_result=POS,

@@ -1,6 +1,6 @@
 from django.db import models
 
-from edc.subject.appointment_helper.models import BaseAppointmentMixin
+from edc.subject.appointment_helper.models import AppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
@@ -15,7 +15,7 @@ from ..managers import InfantBirthModelManager
 from .infant_off_study_mixin import InfantOffStudyMixin
 
 
-class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseSyncUuidModel):
+class InfantBirth(InfantOffStudyMixin, AppointmentMixin, BaseSyncUuidModel):
     """ A model completed by the user on the infant's birth. """
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
@@ -61,23 +61,13 @@ class InfantBirth(InfantOffStudyMixin, BaseAppointmentMixin, BaseSyncUuidModel):
         return "{} ({}) {}".format(self.first_name, self.initials, self.gender)
 
     def prepare_appointments(self, using):
-        """To calculate infant appointments from date-of-delivery"""
+        """Creates infant appointments relative to the date-of-delivery"""
         from edc.subject.appointment_helper.classes import AppointmentHelper
-        try:
-            registered_subject = self.registered_subject
-        except AttributeError:
-            registered_subject = RegisteredSubject.objects.get(subject_identifier=self.subject_identifier)
         relative_identifier = self.registered_subject.relative_identifier
-        try:
-            maternal_labour_del = MaternalLabourDel.objects.get(
-                maternal_visit__appointment__registered_subject__subject_identifier=relative_identifier)
-            AppointmentHelper().create_all(
-                registered_subject, self.__class__.__name__.lower(),
-                using=using,
-                source='BaseAppointmentMixin',
-                base_appt_datetime=maternal_labour_del.delivery_datetime)
-        except MaternalLabourDel.DoesNotExist:
-            pass
+        maternal_labour_del = MaternalLabourDel.objects.get(
+            maternal_visit__appointment__registered_subject__subject_identifier=relative_identifier)
+        AppointmentHelper().create_all(
+            self, base_appt_datetime=maternal_labour_del.delivery_datetime, using=using)
 
     def get_subject_identifier(self):
         return self.registered_subject.subject_identifier

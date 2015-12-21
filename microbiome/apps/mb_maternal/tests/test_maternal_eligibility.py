@@ -1,11 +1,11 @@
-from django.test import TestCase
-
-from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
 from edc_constants.constants import SCREENED
 from edc.subject.registration.models.registered_subject import RegisteredSubject
 
+from .base_maternal_test_case import BaseMaternalTestCase
+from .factories import MaternalEligibilityFactory
 
-class TestMaternalEligibility(TestCase):
+
+class TestMaternalEligibility(BaseMaternalTestCase):
     """Test eligibility of a mother."""
 
     def test_eligibility_for_correct_age(self):

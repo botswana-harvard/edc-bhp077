@@ -1,34 +1,19 @@
-from django.test import TestCase
-
 from edc.entry_meta_data.models import RequisitionMetaData
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
 from edc.subject.entry.models.lab_entry import LabEntry
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, POS, NOT_APPLICABLE
 
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
-from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
+
+from .base_maternal_test_case import BaseMaternalTestCase
 
 
-class TestViralLoadRequisition(TestCase):
+class TestViralLoadRequisition(BaseMaternalTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
-
+        super(TestViralLoadRequisition, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_eligibility.registered_subject

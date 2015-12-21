@@ -1,39 +1,22 @@
-from django.utils import timezone
-from django.test import TestCase
 from django.core import serializers
 from django.db.models import get_app, get_models
+from django.utils import timezone
 
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.device.sync.classes import SerializeToTransaction
-from edc.subject.rule_groups.classes import site_rule_groups
 from edc.subject.appointment.models import Appointment
-
 from edc_base.encrypted_fields import FieldCryptor
 from edc_constants.choices import POS, YES, NO
 
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_maternal.tests.factories import (MaternalEligibilityFactory, MaternalConsentFactory,
-                                                         SpecimenConsentFactory, AntenatalEnrollmentFactory,
-                                                         MaternalVisitFactory, MaternalLocatorFactory)
 from microbiome.apps.mb_maternal.models import MaternalDemographics
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_maternal.tests.factories import (
+    MaternalEligibilityFactory, MaternalConsentFactory,
+    SpecimenConsentFactory, AntenatalEnrollmentFactory,
+    MaternalVisitFactory, MaternalLocatorFactory)
 
-from ..visit_schedule import AntenatalEnrollmentVisitSchedule
+from .base_maternal_test_case import BaseMaternalTestCase
 
 
-class NaturalKeyTests(TestCase):
-
-    def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        AntenatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
+class NaturalKeyTests(BaseMaternalTestCase):
 
     def test_p1(self):
         """Confirms all models have a natural_key method (except Audit models)"""

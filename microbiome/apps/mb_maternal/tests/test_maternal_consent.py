@@ -1,29 +1,17 @@
-from django.test import TestCase
-
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
-from microbiome.apps.mb_maternal.forms import MaternalConsentForm
-
-from .factories import MaternalEligibilityFactory, MaternalConsentFactory
-from edc.subject.registration.models.registered_subject import RegisteredSubject
 from django.utils import timezone
 
+from edc.subject.registration.models.registered_subject import RegisteredSubject
 
-class TestMaternalConsent(TestCase):
+from microbiome.apps.mb_maternal.forms import MaternalConsentForm
+
+from .base_maternal_test_case import BaseMaternalTestCase
+from .factories import MaternalEligibilityFactory, MaternalConsentFactory
+
+
+class TestMaternalConsent(BaseMaternalTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        site_rule_groups.autodiscover()
+        super(TestMaternalConsent, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.registered_subject = RegisteredSubject.objects.get(
             pk=self.maternal_eligibility.registered_subject.pk)

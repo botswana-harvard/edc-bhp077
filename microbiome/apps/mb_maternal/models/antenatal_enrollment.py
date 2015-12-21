@@ -1,20 +1,22 @@
 from django.db import models
 
-from edc.subject.appointment_helper.models import BaseAppointmentMixin
+from edc.device.sync.models import BaseSyncUuidModel
+from edc.subject.appointment_helper.models import AppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 from edc_consent.models import RequiresConsentMixin
 
+from ..managers import AntenatalEnrollmentManager
+
+from .enrollment_helper import EnrollmentError
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
 from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .postnatal_enrollment import PostnatalEnrollment
-from ..managers import AntenatalEnrollmentManager
 
 
-class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmentMixin,
+class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, AppointmentMixin,
                           RequiresConsentMixin, BaseSyncUuidModel):
 
     CONSENT_MODEL = MaternalConsent
@@ -45,6 +47,11 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
         self.update_common_fields_to_postnatal_enrollment()
         super(AntenatalEnrollment, self).save(*args, **kwargs)
 
+    @property
+    def off_study_visit_code(self):
+        """Returns the visit code for the off-study visit if eligibility criteria fail."""
+        return '1000M'
+
     def update_common_fields_to_postnatal_enrollment(self):
         """Updates common field values from Antenatal Enrollment to
         Postnatal Enrollment if Postnatal Enrollment exists.
@@ -58,7 +65,7 @@ class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, BaseAppointmen
                 for attrname in self.common_fields():
                     setattr(postnatal_enrollment, attrname, getattr(self, attrname))
                 if postnatal_enrollment.check_eligiblity() != is_eligible:
-                    raise ValueError(
+                    raise EnrollmentError(
                         'Eligiblity calculated for Postnatal Enrollment unexpectedly '
                         'changed after updating values from Antenatal Enrollment. '
                         'Got \'is_eligible\' changed from {} to {}.'.format(

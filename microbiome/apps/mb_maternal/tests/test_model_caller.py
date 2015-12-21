@@ -1,34 +1,21 @@
-from django.test import TestCase
-
 from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
-from edc.lab.lab_profile.classes.controller import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
-from edc.subject.lab_tracker.classes.controller import site_lab_tracker
-from edc.subject.rule_groups.classes.controller import site_rule_groups
 from edc_call_manager.caller_site import site_model_callers
 from edc_call_manager.models import Call
 from edc_constants.constants import POS, NO, YES, NOT_APPLICABLE
 
-from microbiome.apps.mb.app_configuration.classes.microbiome_configuration import MicrobiomeConfiguration
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from microbiome.apps.mb_maternal.model_callers import AnteNatalModelCaller
 from microbiome.apps.mb_maternal.models import AntenatalEnrollment
 from microbiome.apps.mb_maternal.tests.factories.maternal_consent_factory import MaternalConsentFactory
 from microbiome.apps.mb_maternal.tests.factories.maternal_eligibility_factory import MaternalEligibilityFactory
 
+from .base_maternal_test_case import BaseMaternalTestCase
 from .factories import AntenatalEnrollmentFactory
 
 
-class TestModelCaller(TestCase):
+class TestModelCaller(BaseMaternalTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        site_rule_groups.autodiscover()
+        super(TestModelCaller, self).setUp()
         self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.registered_subject = self.maternal_eligibility.registered_subject

@@ -1,3 +1,3 @@
-from .maternal_antenatal_visit import AntenatalEnrollmentVisitSchedule
-from .maternal_postnatal_visit import PostnatalEnrollmentVisitSchedule
-from .maternal_sample_visit import SpecimenConsentVisitSchedule
+from .antenatal_enrollment import AntenatalEnrollmentVisitSchedule
+from .postnatal_enrollment import PostnatalEnrollmentVisitSchedule
+from .specimen_consent import SpecimenConsentVisitSchedule

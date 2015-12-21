@@ -1,37 +1,22 @@
-from django.test import TestCase
 from django.utils import timezone
 
 from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.choices import YES, NOT_APPLICABLE, POS
 
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from microbiome.apps.mb_maternal.forms import MaternalVisitForm
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
 
-from ..visit_schedule import PostnatalEnrollmentVisitSchedule
-
+from .base_maternal_test_case import BaseMaternalTestCase
 from .factories import PostnatalEnrollmentFactory, MaternalVisitFactory
 
 
-class TestMaternalVisit(TestCase):
+class TestMaternalVisit(BaseMaternalTestCase):
     """Test eligibility of a mother for maternal visit."""
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
+        super(TestMaternalVisit, self).setUp()
         self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(

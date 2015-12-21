@@ -1,31 +1,17 @@
-from django.test import TestCase
-
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE
 
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb_maternal.tests.factories import (
     AntenatalEnrollmentFactory, MaternalEligibilityFactory, PostnatalEnrollmentFactory)
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
-from ..visit_schedule import AntenatalEnrollmentVisitSchedule
-from edc_offstudy.models.off_study_model_mixin import OffStudyError
+from microbiome.apps.mb_maternal.models.enrollment_helper import EnrollmentError
+
+from .base_maternal_test_case import BaseMaternalTestCase
 
 
-class TestEnrollmentStatus(TestCase):
+class TestEnrollmentStatus(BaseMaternalTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        AntenatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
+        super(TestEnrollmentStatus, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
@@ -72,14 +58,12 @@ class TestEnrollmentStatus(TestCase):
             registered_subject=self.registered_subject,
             gestation_wks=35)
         self.assertFalse(antenatal_enrollment.is_eligible)
-        with self.assertRaises(OffStudyError):
+        with self.assertRaises(EnrollmentError):
             PostnatalEnrollmentFactory(
                 current_hiv_status=POS,
                 evidence_hiv_status=YES,
                 rapid_test_done=NOT_APPLICABLE,
-                registered_subject=self.registered_subject,
-                gestation_wks_delivered=38,
-                will_remain_onstudy=NO)
+                registered_subject=self.registered_subject)
 
     def test_if_antenatal_not_eligible(self):
         antenatal_enrollment = AntenatalEnrollmentFactory(

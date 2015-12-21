@@ -14,12 +14,13 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
     name = 'postnatal visit schedule'
     app_label = 'mb_maternal'
 
-    membership_forms = OrderedDict({'postnatal': MembershipFormTuple(
-        'postnatal', PostnatalEnrollment, True), })
+    membership_forms = OrderedDict({
+        'postnatal': MembershipFormTuple(
+            'postnatal', PostnatalEnrollment, True)})
 
     schedule_groups = OrderedDict({
-        'Postnatal Enrollment': ScheduleGroupTuple('Postnatal Enrollment',
-                                                   'postnatal', None, None), })
+        'Postnatal Enrollment': ScheduleGroupTuple(
+            'Postnatal Enrollment', 'postnatal', None, None)})
 
     visit_definitions = OrderedDict()
 

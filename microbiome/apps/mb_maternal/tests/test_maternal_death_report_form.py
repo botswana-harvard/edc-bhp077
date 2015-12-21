@@ -1,41 +1,27 @@
-from django.test import TestCase
+from dateutil.relativedelta import relativedelta
+
 from django.utils import timezone
 
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
-from edc_constants.constants import YES, NO, NEG
-
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_maternal.forms import MaternalDeathReportForm
-
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
-from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
-from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
-from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
-from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
+from edc_constants.constants import YES, NO, NEG, SCHEDULED
 from edc.subject.registration.models.registered_subject import RegisteredSubject
-from dateutil.relativedelta import relativedelta
 from edc_death_report.models import DiagnosisCode, Cause
 from edc_death_report.models.cause_category import CauseCategory
 from edc_death_report.models.medical_responsibility import MedicalResponsibility
 from edc_death_report.models.reason_hospitalized import ReasonHospitalized
 
+from microbiome.apps.mb_maternal.forms import MaternalDeathReportForm
 
-class TestMaternalDeathReportForm(TestCase):
+from .base_maternal_test_case import BaseMaternalTestCase
+from .factories import (
+    PostnatalEnrollmentFactory, MaternalConsentFactory,
+    MaternalLabourDelFactory, MaternalEligibilityFactory, MaternalVisitFactory)
+
+
+class TestMaternalDeathReportForm(BaseMaternalTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
-
+        super(TestMaternalDeathReportForm, self).setUp()
         maternal_eligibility = MaternalEligibilityFactory()
         registered_subject = RegisteredSubject.objects.get(
             pk=maternal_eligibility.registered_subject.pk)
@@ -51,13 +37,15 @@ class TestMaternalDeathReportForm(TestCase):
             rapid_test_done=YES,
             rapid_test_result=NEG)
         self.assertTrue(postnatal_enrollment.is_eligible)
-
         appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='1000M')
-        MaternalVisitFactory(appointment=appointment)
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
+        MaternalVisitFactory(appointment=appointment, reason=SCHEDULED)
         self.appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='2000M')
-        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+            registered_subject=self.registered_subject,
+            visit_definition__code='2000M')
+        self.maternal_visit = MaternalVisitFactory(
+            appointment=self.appointment, reason=SCHEDULED)
         MaternalLabourDelFactory(maternal_visit=self.maternal_visit)
         self.data = {
             'registered_subject': self.registered_subject.pk,

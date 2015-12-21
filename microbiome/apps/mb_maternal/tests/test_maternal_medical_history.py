@@ -1,44 +1,22 @@
-from django import forms
-from django.test import TestCase
 from django.utils import timezone
 
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.appointment.models import Appointment
 from edc.subject.code_lists.models import WcsDxAdult
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
-from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS, NEG
+from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS
 
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_maternal.tests.factories import (MaternalEligibilityFactory)
-from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
-from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory, AntenatalEnrollmentFactory
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
+from microbiome.apps.mb_list.models import ChronicConditions
 from microbiome.apps.mb_maternal.forms import MaternalMedicalHistoryForm
 
-from microbiome.apps.mb_maternal.models.postnatal_enrollment import PostnatalEnrollment
-from microbiome.apps.mb_maternal.models.antenatal_enrollment import AntenatalEnrollment
-from microbiome.apps.mb_list.models.chronic_conditions import ChronicConditions
-
-from ..visit_schedule import AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule
-
-from .factories import MaternalVisitFactory
+from .base_maternal_test_case import BaseMaternalTestCase
+from .factories import (
+    MaternalEligibilityFactory, MaternalConsentFactory,
+    MaternalVisitFactory, PostnatalEnrollmentFactory, AntenatalEnrollmentFactory)
 
 
-class TestMaternalMedicalHistoryForm(TestCase):
+class TestMaternalMedicalHistoryForm(BaseMaternalTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        AntenatalEnrollmentVisitSchedule().build()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
+        super(TestMaternalMedicalHistoryForm, self).setUp()
 
         maternal_eligibility = MaternalEligibilityFactory()
         maternal_consent = MaternalConsentFactory(
