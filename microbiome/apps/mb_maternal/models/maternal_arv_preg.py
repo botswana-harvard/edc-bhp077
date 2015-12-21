@@ -60,15 +60,11 @@ class MaternalArv(BaseSyncUuidModel):
 
     arv_code = models.CharField(
         verbose_name="ARV code",
-        null=True,
-        blank=True,
         max_length=35,
         choices=ARV_DRUG_LIST,)
 
     start_date = models.DateField(
-        verbose_name="Date Started",
-        null=True,
-        blank=True)
+        verbose_name="Date Started")
 
     stop_date = models.DateField(
         verbose_name="Date Stopped",

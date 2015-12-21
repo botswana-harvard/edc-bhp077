@@ -41,7 +41,7 @@ class MaternalArvHistoryForm(BaseMaternalModelForm):
         haart_start_date = cleaned_data.get('haart_start_date')
         if weeks_between(haart_start_date, report_datetime.date()) < 6:
             raise forms.ValidationError(
-                "ARV start date (question 3) must be six weeks prior to today's date or greater.")
+                "ARV start date must be six weeks prior to today's date or greater.")
         try:
             maternal_consent = MaternalConsent.objects.get(
                 registered_subject__subject_identifier=cleaned_data.get(

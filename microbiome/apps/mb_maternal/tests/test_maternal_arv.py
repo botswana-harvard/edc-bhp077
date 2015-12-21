@@ -10,13 +10,15 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 
+from microbiome.apps.mb_list.models import PriorArv
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
-from microbiome.apps.mb_maternal.forms import (MaternalArvPostForm, MaternalArvPregForm)
-
+from microbiome.apps.mb_maternal.forms import (
+    MaternalArvPostForm, MaternalArvPregForm, MaternalArvForm)
 from ..visit_schedule import PostnatalEnrollmentVisitSchedule
-from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
-                        MaternalEligibilityFactory, MaternalConsentFactory)
+from .factories import (
+    PostnatalEnrollmentFactory, MaternalVisitFactory, MaternalEligibilityFactory,
+    MaternalConsentFactory, MaternalArvHistoryFactory)
 
 
 class TestMaternalArvPost(TestCase):
@@ -33,8 +35,9 @@ class TestMaternalArvPost(TestCase):
         site_rule_groups.autodiscover()
         self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject,
-                                                       study_site=self.study_site)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject,
+            study_site=self.study_site)
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
@@ -64,17 +67,21 @@ class TestMaternalArvPost(TestCase):
         self.data['on_arv_since'] = YES
         form = MaternalArvPostForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn("You indicated that participant was on triple ARVs. Reason CANNOT be 'Not Applicable'. ", errors)
+        self.assertIn("You indicated that participant was on triple ARVs. Reason CANNOT be"
+                      " 'Not Applicable'. ", errors)
 
     def test_on_haart_2(self):
-        """Assert that if mother was not supposed to take HAART, then cannot provide a reason for taking HAART"""
+        """Assert that if mother was not supposed to take HAART, then cannot provide
+        a reason for taking HAART"""
         self.data['on_arv_reason'] = 'pmtct bf'
         form = MaternalArvPostForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You indicated that participant was not on HAART. You CANNOT provide a reason.', errors)
+        self.assertIn(
+            'You indicated that participant was not on HAART. You CANNOT provide a reason.', errors)
 
     def test_on_haart_3(self):
-        """Assert that mother was not supposed to take HAART and no reason for taking HAART is provided then valid"""
+        """Assert that mother was not supposed to take HAART and no reason for taking HAART
+        is provided then valid"""
         form = MaternalArvPostForm(data=self.data)
         self.assertTrue(form.is_valid())
 
@@ -84,17 +91,6 @@ class TestMaternalArvPost(TestCase):
         self.data['on_arv_reason'] = 'pmtct bf'
         form = MaternalArvPostForm(data=self.data)
         self.assertTrue(form.is_valid())
-
-    def test_tooke_arv_5(self):
-        """Assert that ARV indicated as not interrupted, then reason not expected"""
-        self.data['interrupt'] = 'FORGOT'
-        self.data['took_arv'] = NO
-        self.postnatal_enrollment.valid_regimen_duration = YES
-        self.postnatal_enrollment.save()
-        form = MaternalArvPregForm(data=self.data)
-        errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You indicated that the participant has been on regimen '
-                      'for period of time. But now you indicated that the participant did not take ARVs.', errors)
 
 
 class TestMaternalArvPreg(TestCase):
@@ -109,35 +105,46 @@ class TestMaternalArvPreg(TestCase):
         site_lab_tracker.autodiscover()
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
-        self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
-        self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject,
-                                                       study_site=self.study_site)
-        self.registered_subject = self.maternal_consent.registered_subject
+        study_site = StudySiteFactory(site_code='10', site_name='Gabs')
+        maternal_eligibility = MaternalEligibilityFactory()
+        maternal_consent = MaternalConsentFactory(
+            registered_subject=maternal_eligibility.registered_subject,
+            study_site=study_site)
+        registered_subject = maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
+            registered_subject=registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES,
         )
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
+        self.appointment = Appointment.objects.get(registered_subject=registered_subject,
                                                    visit_definition__code='1000M')
-        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'report_datetime': timezone.now(),
-            'arv_exposed': NO,
+            'took_arv': YES,
             'is_interrupt': NO,
             'interrupt': 'N/A',
             'interrupt_other': '',
             'comment': '',
         }
 
-    def test_tooke_arv_1(self):
+    def test_valid_regimen_but_no_arv(self):
+        """Assert that Enrollment shows participant on valid_regimen but now says
+        did not take arv"""
+        self.data['took_arv'] = NO
+        self.postnatal_enrollment.valid_regimen_duration = YES
+        self.postnatal_enrollment.save()
+        form = MaternalArvPregForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn(
+            "At PNT you indicated that the participant has been on regimen for period of time. "
+            "But now you indicated that the participant did not take ARVs. "
+            "Please Correct.", errors)
+
+    def test_medication_interrupted(self):
         """Assert that ARV indicated as interrupted, then reason expected"""
         self.data['is_interrupt'] = YES
         form = MaternalArvPregForm(data=self.data)
@@ -145,10 +152,28 @@ class TestMaternalArvPreg(TestCase):
         self.assertIn('You indicated that ARVs were interrupted during pregnancy. '
                       'Please provide a reason', errors)
 
-    def test_tooke_arv_2(self):
+    def test_no_interruption_reason_given(self):
         """Assert that ARV indicated as not interrupted, then reason not expected"""
         self.data['interrupt'] = 'FORGOT'
         form = MaternalArvPregForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You indicated that ARVs were NOT interrupted during pregnancy. '
                       'You cannot provide a reason.', errors)
+
+    def test_took_arv(self):
+        """Assert arv taken but none listed"""
+        form = MaternalArvPregForm(data=self.data)
+        self.assertIn(
+            "You indicated that participant started ARV(s) during this "
+            "pregnancy. Please list them on 'Maternal ARV' table", form.errors.get('__all__'))
+
+    def test_start_stop_date(self):
+        """Assert you cannot put a stop date that is before the start date"""
+        self.data['arv_code'] = '3TC'
+        self.data['start_date'] = timezone.now().date()
+        self.data['stop_date'] = timezone.now().date() - timezone.timedelta(days=1)
+        form = MaternalArvForm(data=self.data)
+        self.assertIn(
+            'Your stop date of {} is prior to start date of {}. '
+            'Please correct'.format(
+                self.data['stop_date'], self.data['start_date']), form.errors.get('__all__'))
