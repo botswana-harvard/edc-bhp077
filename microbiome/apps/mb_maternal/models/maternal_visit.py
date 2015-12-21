@@ -68,7 +68,7 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
             self.change_to_off_study_visit(self.appointment, 'mb_maternal', 'maternaloffstudy')
         elif self.reason == DEATH_VISIT:
             self.change_to_death_visit(
-                self.appointment, 'mb_maternal', 'maternaloffstudy', 'maternaldeath')
+                self.appointment, 'mb_maternal', 'maternaloffstudy', 'maternaldeathreport')
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
         else:
