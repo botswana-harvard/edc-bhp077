@@ -24,7 +24,6 @@ from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
 
 
 class TestMaternalArvHistory(TestCase):
-    """Test eligibility of a mother for postnatal followup."""
 
     def setUp(self):
         try:
@@ -66,7 +65,8 @@ class TestMaternalArvHistory(TestCase):
         }
 
     def test_arv_interrupt_1(self):
-        """Assert that if was not still on ARV then 'interruption never restarted' is not a valid option."""
+        """Assert that if was not still on ARV then 'interruption never restarted' 
+        is not a valid option."""
 
         self.data['prior_preg'] = STOPPED
         self.data['haart_start_date'] = date(2015, 04, 10)
@@ -89,8 +89,8 @@ class TestMaternalArvHistory(TestCase):
             'ARVs could not have been interrupted. Please correct.', errors)
 
     def test_arv_interrupt_3(self):
-        """Assert that if was not still on ARV then 'Received continuous HAART from the time she started'
-           is not a valid option."""
+        """Assert that if was not still on ARV then 'Received continuous HAART from the
+        time she started is not a valid option."""
         self.data['preg_on_haart'] = NO
         self.data['prior_preg'] = CONTINUOUS
         form = MaternalArvHistoryForm(data=self.data)
@@ -100,7 +100,8 @@ class TestMaternalArvHistory(TestCase):
             'ARVs could not have been uninterrupted. Please correct.', errors)
 
     def test_arv_interrupt_4(self):
-        """Assert that if was not still on ARV only valid answer is 'interrupted and never restarted'"""
+        """Assert that if was not still on ARV only valid answer is 'interrupted and never 
+        restarted'"""
         self.data['preg_on_haart'] = NO
         self.data['prior_preg'] = STOPPED
         form = MaternalArvHistoryForm(data=self.data)
@@ -111,7 +112,7 @@ class TestMaternalArvHistory(TestCase):
         self.data['haart_start_date'] = timezone.now()
         form = MaternalArvHistoryForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn("ARV start date (question 3) must be six weeks prior to today's date or greater.", errors)
+        self.assertIn("ARV start date must be six weeks prior to today's date or greater.", errors)
 
     def test_haart_start_date_2(self):
         """Start date of ARVs CANNOT be before DOB"""
