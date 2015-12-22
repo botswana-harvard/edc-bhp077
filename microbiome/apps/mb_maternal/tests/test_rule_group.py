@@ -1,7 +1,7 @@
 from django.utils import timezone
 
 from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
-from edc.subject.appointment.models import Appointment
+from edc_appointment.models import Appointment
 from edc_constants.constants import NEW, YES, POS, NEG, UNKEYED, KEYED, NOT_REQUIRED, NOT_APPLICABLE
 
 from microbiome.apps.mb_maternal.models import RapidTestResult

@@ -228,7 +228,7 @@ class InfantFeeding(InfantScheduledVisitModel):
     def previous_infant_instance(self, infant_visit):
         """ Returns previous infant visit. """
         from .infant_visit import InfantVisit
-        from edc.subject.appointment.models import Appointment
+        from edc_appointment.models import Appointment
         visit = ['2000', '2010', '2030', '2060', '2090', '2120']
         try:
             registered_subject = infant_visit.appointment.registered_subject

@@ -1,7 +1,7 @@
 from datetime import date
 from django.utils import timezone
 
-from edc.subject.appointment.models import Appointment
+from edc_appointment.models import Appointment
 from edc_constants.constants import YES, NO, NEG, SCHEDULED, NOT_APPLICABLE
 
 from microbiome.apps.mb_maternal.tests.factories import (

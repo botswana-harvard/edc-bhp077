@@ -2,7 +2,7 @@ from dateutil.relativedelta import relativedelta
 
 from django.utils import timezone
 
-from edc.subject.appointment.models import Appointment
+from edc_appointment.models import Appointment
 from edc_constants.constants import YES, NO, NEG, SCHEDULED
 from edc.subject.registration.models.registered_subject import RegisteredSubject
 from edc_death_report.models import DiagnosisCode, Cause

@@ -1,13 +1,12 @@
 from django.db import transaction
 from django.db.models.signals import post_save
-from django.db.utils import IntegrityError
 from django.dispatch import receiver
 
 from edc.core.identifier.classes import InfantIdentifier
-from edc.subject.appointment.models.appointment import Appointment
-from edc.subject.visit_schedule.models.visit_definition import VisitDefinition
-from edc_constants.constants import FEMALE, OFF_STUDY, SCHEDULED, SCREENED, CONSENTED
 from edc.subject.registration.models import RegisteredSubject
+from edc.subject.visit_schedule.models.visit_definition import VisitDefinition
+from edc_appointment.models.appointment import Appointment
+from edc_constants.constants import FEMALE, OFF_STUDY, SCHEDULED, SCREENED, CONSENTED
 
 from ..models import MaternalOffStudy, MaternalVisit
 

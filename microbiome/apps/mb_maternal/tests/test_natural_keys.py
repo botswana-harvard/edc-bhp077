@@ -3,7 +3,7 @@ from django.db.models import get_app, get_models
 from django.utils import timezone
 
 from edc.device.sync.classes import SerializeToTransaction
-from edc.subject.appointment.models import Appointment
+from edc_appointment.models import Appointment
 from edc_base.encrypted_fields import FieldCryptor
 from edc_constants.choices import POS, YES, NO
 

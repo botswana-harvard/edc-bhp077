@@ -2,8 +2,8 @@ from collections import OrderedDict
 
 from django.contrib import admin
 
-from edc.subject.appointment.admin import BaseAppointmentModelAdmin
 from edc.export.actions import export_as_csv_action
+from edc_appointment.admin import BaseAppointmentModelAdmin
 
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_lab.models import InfantRequisition

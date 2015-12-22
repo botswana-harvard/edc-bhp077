@@ -1,9 +1,9 @@
 from django.db import models
 
-from edc.subject.appointment_helper.models import AppointmentMixin
-from edc.subject.registration.models import RegisteredSubject
-from edc_base.audit_trail import AuditTrail
 from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
+from edc.subject.registration.models import RegisteredSubject
+from edc_appointment.models import AppointmentMixin
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import GENDER_UNDETERMINED
@@ -62,7 +62,7 @@ class InfantBirth(InfantOffStudyMixin, AppointmentMixin, BaseSyncUuidModel):
 
     def prepare_appointments(self, using):
         """Creates infant appointments relative to the date-of-delivery"""
-        from edc.subject.appointment_helper.classes import AppointmentHelper
+        from edc_appointment.models import AppointmentHelper
         relative_identifier = self.registered_subject.relative_identifier
         maternal_labour_del = MaternalLabourDel.objects.get(
             maternal_visit__appointment__registered_subject__subject_identifier=relative_identifier)

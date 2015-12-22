@@ -1,7 +1,7 @@
 from django.utils import timezone
 
 from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
-from edc.subject.appointment.models import Appointment
+from edc_appointment.models import Appointment
 from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS
 
 from microbiome.apps.mb_list.models import ChronicConditions

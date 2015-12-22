@@ -32,7 +32,7 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
         'appointment':
             {'allowed_iso_weekdays': '12345',
              'use_same_weekday': True,
-             'default_appt_type': 'home',
+             'default_appt_type': 'clinic',
              'appointments_per_day_max': 20,
              'appointments_days_forward': 15},
     }

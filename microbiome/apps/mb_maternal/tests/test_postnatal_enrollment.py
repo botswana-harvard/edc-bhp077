@@ -1,6 +1,6 @@
 from django.utils import timezone
 
-from edc.subject.appointment.models.appointment import Appointment
+from edc_appointment.models.appointment import Appointment
 from edc_constants.choices import YES, NO, POS, NEG, NOT_APPLICABLE
 from edc_constants.constants import UNKNOWN, DWTA, NEVER, SCHEDULED
 

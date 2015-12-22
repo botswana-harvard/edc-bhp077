@@ -3,7 +3,7 @@ from __future__ import print_function
 from django.utils import timezone
 
 from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
-from edc.subject.appointment.models import Appointment
+from edc_appointment.models import Appointment
 from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 
 from microbiome.apps.mb_maternal.forms import (MaternalArvPostForm, MaternalArvPregForm)

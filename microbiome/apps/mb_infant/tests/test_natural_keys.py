@@ -5,7 +5,7 @@ from django.core import serializers
 from django.db.models import get_app, get_models
 from django.test import TestCase
 
-from edc.subject.appointment.models import Appointment
+from edc_appointment.models import Appointment
 from edc_constants.constants import YES, POS, OFF_STUDY
 
 from edc.lab.lab_profile.classes import site_lab_profiles

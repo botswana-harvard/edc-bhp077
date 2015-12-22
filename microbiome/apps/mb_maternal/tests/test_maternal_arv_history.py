@@ -3,7 +3,7 @@ from dateutil.relativedelta import relativedelta
 from datetime import date, datetime
 
 from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
-from edc.subject.appointment.models import Appointment
+from edc_appointment.models import Appointment
 from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 from edc_constants.constants import CONTINUOUS, STOPPED, RESTARTED
 

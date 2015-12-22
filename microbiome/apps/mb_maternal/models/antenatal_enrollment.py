@@ -1,8 +1,8 @@
 from django.db import models
 
 from edc.device.sync.models import BaseSyncUuidModel
-from edc.subject.appointment_helper.models import AppointmentMixin
 from edc.subject.registration.models import RegisteredSubject
+from edc_appointment.models import AppointmentMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 from edc_consent.models import RequiresConsentMixin
