@@ -66,7 +66,6 @@ class TestMaternalDeathReportForm(BaseMaternalTestCase):
 
     def test_form_valid(self):
         form = MaternalDeathReportForm(data=self.data)
-        # print(form.non_field_errors())
         self.assertTrue(form.is_valid())
 
     def test_maternal_validate_date_of_death(self):

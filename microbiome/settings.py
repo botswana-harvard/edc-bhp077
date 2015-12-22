@@ -92,7 +92,6 @@ INSTALLED_APPS = [
     'edc.core.crypto_fields',
     'edc.core.model_data_inspector',
     'edc.core.model_selector',
-    # 'edc.core.bhp_templates',
     'edc.core.bhp_static',
     'edc.core.bhp_string',
     'edc.core.bhp_userprofile',

@@ -1,1 +1,5 @@
+recursive-include microbiome/mb/templates *
+recursive-include microbiome/mb_dashboard/templates *
+recursive-include microbiome/mb_infant/templates *
+recursive-include microbiome/mb_maternal/templates *
 recursive-include microbiome/templates *

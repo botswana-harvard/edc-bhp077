@@ -6,7 +6,7 @@ from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteF
 from edc_appointment.models import Appointment
 from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 
-from microbiome.apps.mb_maternal.forms import (MaternalArvPostForm, MaternalArvPregForm)
+from microbiome.apps.mb_maternal.forms import (MaternalArvPostForm)
 
 
 from .base_maternal_test_case import BaseMaternalTestCase

@@ -424,7 +424,6 @@ class TestPostnatalEnrollment(BaseMaternalTestCase):
             rapid_test_done=YES,
             rapid_test_result=NEG)
         self.assertTrue(antenatal_enrollment.is_eligible)
-        print(Appointment.objects.all())
         self.assertEqual(antenatal_enrollment.current_hiv_status, NEG)
         self.assertEqual(antenatal_enrollment.evidence_hiv_status, YES)
         appointment = Appointment.objects.get(
