@@ -74,6 +74,7 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
         else:
             self.required_for_maternal_pos()
             self.required_for_maternal_not_pos()
+            self.required_labs_for_maternal_neg()
 
     def required_for_maternal_pos(self):
         if self.enrollment_hiv_status == POS or self.scheduled_rapid_test == POS:
@@ -93,11 +94,15 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
                         'mb_maternal',
                         model_name,
                         message=self.appointment.visit_definition.code)
-                self.requisition_is_required(
-                    self.appointment,
-                    'mb_lab',
-                    'maternalrequisition',
-                    'Viral Load')
+                    for labs in ['Viral Load', 'Breast Milk (Storage)', 'Vaginal swab (Storage)',
+                                 'Rectal swab (Storage)', 'Skin Swab (Storage)',
+                                 'Vaginal Swab (multiplex PCR)', 'Hematology (ARV)',
+                                 'CD4 (ARV)']:
+                        self.requisition_is_required(
+                            self.appointment,
+                            'mb_lab',
+                            'maternalrequisition',
+                            labs)
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
                 model_names = ['maternalarvpost', 'maternalarvpostadh']
                 for model_name in model_names:
@@ -120,6 +125,25 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
                     'mb_maternal',
                     'rapidtestresult',
                     message=self.appointment.visit_definition.code)
+
+    def required_labs_for_maternal_neg(self):
+        if self.enrollment_hiv_status == NEG and self.scheduled_rapid_test != POS:
+            if self.appointment.visit_definition.code == '2000M':
+                for labs in ['Breast Milk (Storage)', 'Vaginal swab (Storage)',
+                             'Rectal swab (Storage)', 'Skin Swab (Storage)',
+                             'Vaginal Swab (multiplex PCR)', 'Hematology (ARV)',
+                             'CD4 (ARV)']:
+                    self.requisition_is_required(
+                        self.appointment,
+                        'mb_lab',
+                        'maternalrequisition',
+                        labs)
+            if self.appointment.visit_definition.code == '2010M':
+                self.requisition_is_required(
+                    self.appointment,
+                    'mb_lab',
+                    'maternalrequisition',
+                    'Breast Milk (Storage)')
 
     @property
     def scheduled_rapid_test(self):
