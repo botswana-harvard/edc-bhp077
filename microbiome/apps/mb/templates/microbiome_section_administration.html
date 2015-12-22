@@ -5,16 +5,16 @@
 {% block admin_sections %}
     <H5>Appointments</H5>
     <ul>
-    <li><A href="{% url 'admin:appointment_appointment_changelist' %}?registered_subject__subject_type=maternal">Maternal Appointments</A>
-    &nbsp(<A href="{% url 'admin:appointment_appointment_changelist' %}?appt_status__exact=new&registered_subject__subject_type=maternal">New</A>,&nbsp
-    <A href="{% url 'admin:appointment_appointment_changelist' %}?appt_status__exact=in_progress&registered_subject__subject_type=maternal">In Progress</A>,&nbsp
-    <A href="{% url 'admin:appointment_appointment_changelist' %}?appt_status__exact=incomplete&registered_subject__subject_type=maternal">Incomplete</A>,&nbsp
-    <A href="{% url 'admin:appointment_appointment_changelist' %}?appt_status__exact=done&registered_subject__subject_type=maternal">Done</A>)
-    <li><A href="{% url 'admin:appointment_appointment_changelist' %}?registered_subject__subject_type=infant">Infant Appointments</A>
-    &nbsp(<A href="{% url 'admin:appointment_appointment_changelist' %}?appt_status__exact=new&registered_subject__subject_type=infant">New</A>,&nbsp
-    <A href="{% url 'admin:appointment_appointment_changelist' %}?appt_status__exact=in_progress&registered_subject__subject_type=infant">In Progress</A>,&nbsp
-    <A href="{% url 'admin:appointment_appointment_changelist' %}?appt_status__exact=incomplete&registered_subject__subject_type=infant">Incomplete</A>,&nbsp
-    <A href="{% url 'admin:appointment_appointment_changelist' %}?appt_status__exact=done&registered_subject__subject_type=infant">Done</A>)
+    <li><A href="{% url 'admin:edc_appointment_appointment_changelist' %}?registered_subject__subject_type=maternal">Maternal Appointments</A>
+    &nbsp(<A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=new&registered_subject__subject_type=maternal">New</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=in_progress&registered_subject__subject_type=maternal">In Progress</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=incomplete&registered_subject__subject_type=maternal">Incomplete</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=done&registered_subject__subject_type=maternal">Done</A>)
+    <li><A href="{% url 'admin:edc_appointment_appointment_changelist' %}?registered_subject__subject_type=infant">Infant Appointments</A>
+    &nbsp(<A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=new&registered_subject__subject_type=infant">New</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=in_progress&registered_subject__subject_type=infant">In Progress</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=incomplete&registered_subject__subject_type=infant">Incomplete</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=done&registered_subject__subject_type=infant">Done</A>)
     </ul>
 
     <H5>Registered Subjects</H5>
