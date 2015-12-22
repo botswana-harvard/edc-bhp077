@@ -1,5 +1,5 @@
-from edc_call_manager.model_caller import ModelCaller, WEEKLY
 from edc_call_manager.decorators import register
+from edc_call_manager.model_caller import ModelCaller, WEEKLY
 
 from .models import (
     MaternalConsent, MaternalLocator, AntenatalEnrollment, PostnatalEnrollment)

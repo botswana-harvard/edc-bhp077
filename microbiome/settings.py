@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     'edc_templates',
     'edc_visit_tracking',
     'edc_appointment',
+    'edc_visit_schedule',
     # EDC
     'edc',
     'edc.apps.app_configuration',
@@ -125,7 +126,6 @@ INSTALLED_APPS = [
     'edc.subject.subject',
     'edc.subject.subject_summary',
     'edc.subject.registration',
-    'edc.subject.visit_schedule',
     'edc.subject.subject_config',
     'edc.notification',
     'edc.lab.lab_clinic_api',

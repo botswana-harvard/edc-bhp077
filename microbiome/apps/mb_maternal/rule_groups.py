@@ -1,4 +1,3 @@
-
 from edc_constants.constants import YES, UNKEYED, NOT_REQUIRED
 from edc.subject.rule_groups.classes import RuleGroup, site_rule_groups, Logic, ScheduledDataRule
 

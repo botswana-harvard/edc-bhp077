@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from edc.subject.visit_schedule.classes import (
+from edc_visit_schedule.classes import (
     VisitScheduleConfiguration, site_visit_schedules, MembershipFormTuple, ScheduleGroupTuple)
 
 from ..models import AntenatalEnrollment, MaternalVisit

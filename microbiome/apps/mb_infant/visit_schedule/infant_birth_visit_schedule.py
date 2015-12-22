@@ -1,9 +1,9 @@
 from collections import OrderedDict
 
-from edc.subject.visit_schedule.classes import (VisitScheduleConfiguration, site_visit_schedules,
-                                                EntryTuple, MembershipFormTuple, ScheduleGroupTuple,
-                                                RequisitionPanelTuple)
 from edc_constants.constants import REQUIRED, NOT_REQUIRED, ADDITIONAL, NOT_ADDITIONAL
+from edc_visit_schedule.classes import (
+    VisitScheduleConfiguration, site_visit_schedules,
+    EntryTuple, MembershipFormTuple, ScheduleGroupTuple, RequisitionPanelTuple)
 
 from microbiome.apps.mb.constants import INFANT
 

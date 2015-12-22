@@ -1,4 +1,4 @@
-from edc.subject.visit_schedule.classes.visit_schedule_configuration import RequisitionPanelTuple, EntryTuple
+from edc_visit_schedule.classes.visit_schedule_configuration import RequisitionPanelTuple, EntryTuple
 from edc_constants.constants import NOT_REQUIRED, REQUIRED, ADDITIONAL, NOT_ADDITIONAL
 
 
