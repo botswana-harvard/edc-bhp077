@@ -1,7 +1,5 @@
 from datetime import datetime, date
 
-from edc.core.bhp_variables.models import StudySpecific
-
 from edc.apps.app_configuration.classes import BaseAppConfiguration
 from edc_device import device
 from edc.lab.lab_packing.models import DestinationTuple

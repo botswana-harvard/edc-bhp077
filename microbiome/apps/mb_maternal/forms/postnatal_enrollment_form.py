@@ -7,6 +7,7 @@ from microbiome.apps.mb.constants import LIVE
 from ..models import MaternalEligibility, PostnatalEnrollment, AntenatalEnrollment
 
 from .base_enrollment_form import BaseEnrollmentForm
+from microbiome.apps.mb_maternal.models.maternal_visit import MaternalVisit
 
 
 class MyBaseEnrollmentForm(BaseEnrollmentForm):
@@ -23,11 +24,22 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
         self.raise_if_rapid_test_required()
         antenatal_enrollment = self.get_antenatal_enrollment(cleaned_data.get('registered_subject'))
         if antenatal_enrollment:
+            self.previous_visit_complete()
             self.is_eligible_on_antenatal_enrollment(antenatal_enrollment.is_eligible)
             self.hiv_status_matches_antenatal_enrollment(
                 antenatal_enrollment.current_hiv_status,
                 antenatal_enrollment.evidence_hiv_status)
         return cleaned_data
+
+    def previous_visit_complete(self):
+        cleaned_data = self.cleaned_data
+        try:
+            MaternalVisit.objects.get(
+                appointment__visit_definition__code='1000M',
+                appointment__registered_subject=cleaned_data.get('registered_subject'))
+        except MaternalVisit.DoesNotExist:
+            raise forms.ValidationError(
+                'Mother was enrolled antenatally. Visit 1000M must be completed before Postnatal Enrollment.')
 
     def clean_gestation_wks_delivered(self):
         """Confirms delivery happened within 45 weeks gestational age."""
