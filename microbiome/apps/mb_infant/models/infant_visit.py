@@ -85,7 +85,7 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
             self.change_to_off_study_visit(self.appointment, 'mb_infant', 'infantoffstudy')
         elif self.reason == DEATH_VISIT:
             self.change_to_death_visit(
-                self.appointment, 'mb_infant', 'infantoffstudy', 'infantdeath')
+                self.appointment, 'mb_infant', 'infantoffstudy', 'infantdeathreport')
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
         elif self.reason == SCHEDULED:
