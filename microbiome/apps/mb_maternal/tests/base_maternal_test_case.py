@@ -27,4 +27,3 @@ class BaseMaternalTestCase(TestCase):
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
         self.study_site = StudySite.objects.first()
-        
