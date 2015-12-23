@@ -2,9 +2,9 @@ from __future__ import print_function
 
 from django.utils import timezone
 
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc_appointment.models import Appointment
 from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
+from edc.core.bhp_variables.models.study_site import StudySite
 
 from microbiome.apps.mb_maternal.forms import (MaternalArvPostForm)
 
@@ -19,11 +19,11 @@ class TestMaternalArvPost(BaseMaternalTestCase):
 
     def setUp(self):
         super(TestMaternalArvPost, self).setUp()
-        self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
+        study_site = StudySite.objects.first()
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject,
-            study_site=self.study_site)
+            study_site=study_site)
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,

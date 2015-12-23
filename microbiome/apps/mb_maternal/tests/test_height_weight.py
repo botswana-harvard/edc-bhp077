@@ -1,6 +1,5 @@
 from django.utils import timezone
 
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc_appointment.models import Appointment
 from edc_constants.choices import YES, POS, NOT_APPLICABLE
 
@@ -29,7 +28,6 @@ class TestHeightWeight(BaseMaternalTestCase):
 
     def setUp(self):
         super(TestHeightWeight, self).setUp()
-        self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject,

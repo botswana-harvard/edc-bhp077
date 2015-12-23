@@ -1,4 +1,3 @@
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc_call_manager.caller_site import site_model_callers
 from edc_call_manager.models import Call
 from edc_constants.constants import POS, NO, YES, NOT_APPLICABLE
@@ -16,7 +15,6 @@ class TestModelCaller(BaseMaternalTestCase):
 
     def setUp(self):
         super(TestModelCaller, self).setUp()
-        self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.registered_subject = self.maternal_eligibility.registered_subject
         self.maternal_consent = MaternalConsentFactory(

@@ -2,7 +2,6 @@ from __future__ import print_function
 
 from django.utils import timezone
 
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc_appointment.models import Appointment
 from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 
@@ -18,11 +17,10 @@ class TestMaternalArvPreg(BaseMaternalTestCase):
 
     def setUp(self):
         super(TestMaternalArvPreg, self).setUp()
-        study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         maternal_eligibility = MaternalEligibilityFactory()
         maternal_consent = MaternalConsentFactory(
             registered_subject=maternal_eligibility.registered_subject,
-            study_site=study_site)
+            study_site=self.study_site)
         registered_subject = maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=registered_subject,

@@ -1,10 +1,8 @@
 import factory
 
-from django.conf import settings
 from django.utils import timezone
 from datetime import date
 
-from edc.core.bhp_variables.tests.factories import StudySiteFactory
 from edc_constants.constants import YES, NO
 
 from microbiome.apps.mb_maternal.models import MaternalConsent
@@ -16,7 +14,6 @@ class MaternalConsentFactory(factory.DjangoModelFactory):
         model = MaternalConsent
 
     report_datetime = timezone.now()
-    study_site = factory.SubFactory(StudySiteFactory)
     consent_datetime = timezone.now()
     first_name = "DIMO"
     last_name = "DIMO"
@@ -34,4 +31,4 @@ class MaternalConsentFactory(factory.DjangoModelFactory):
     assessment_score = YES
     consent_signature = YES
     consent_copy = YES
-    language = settings.LANGUAGES
+    language = 'en'

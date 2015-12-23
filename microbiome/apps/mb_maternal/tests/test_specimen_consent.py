@@ -1,6 +1,5 @@
 from django import forms
 
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc_constants.choices import NO
 
 from microbiome.apps.mb_maternal.models import SpecimenConsent
@@ -15,13 +14,10 @@ class TestSpecimenConsent(BaseMaternalTestCase):
 
     def setUp(self):
         super(TestSpecimenConsent, self).setUp()
-        self.study_site = StudySiteFactory(site_code='40', site_name='Gaborone')
         self.maternal_eligibility = MaternalEligibilityFactory()
-
         maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject,
             study_site=self.study_site)
-
         specimen_consent = SpecimenConsentFactory(registered_subject=maternal_consent.registered_subject)
         self.data = {
             'registered_subject': maternal_consent.registered_subject}

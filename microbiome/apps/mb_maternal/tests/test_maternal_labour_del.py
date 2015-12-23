@@ -3,7 +3,6 @@ from dateutil.relativedelta import relativedelta
 from django.test import TestCase
 from django.utils import timezone
 
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
@@ -27,7 +26,6 @@ class TestMaternalLabourDel(BaseMaternalTestCase):
 
     def setUp(self):
         super(TestMaternalLabourDel, self).setUp()
-        self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject,
@@ -137,7 +135,6 @@ class TestMaternalLabourDelClinic(TestCase):
         site_lab_tracker.autodiscover()
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
-        self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject,

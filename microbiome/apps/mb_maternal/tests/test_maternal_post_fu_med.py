@@ -1,6 +1,5 @@
 from django.utils import timezone
 
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
 from edc_appointment.models import Appointment
 from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 
@@ -16,10 +15,10 @@ class TestMaternalPostFuMedItems(BaseMaternalTestCase):
 
     def setUp(self):
         super(TestMaternalPostFuMedItems, self).setUp()
-        self.study_site = StudySiteFactory(site_code='10', site_name='Gabs')
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject,
-                                                       study_site=self.study_site)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject,
+            study_site=self.study_site)
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,

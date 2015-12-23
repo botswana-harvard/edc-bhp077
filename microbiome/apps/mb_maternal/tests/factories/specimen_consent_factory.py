@@ -1,6 +1,5 @@
 import factory
 
-from django.conf import settings
 from django.utils import timezone
 
 from edc_constants.constants import YES
@@ -14,6 +13,6 @@ class SpecimenConsentFactory(factory.DjangoModelFactory):
         model = SpecimenConsent
 
     consent_datetime = timezone.now()
-    language = settings.LANGUAGES
+    language = 'en'
     may_store_samples = YES
     is_literate = YES

@@ -1,5 +1,6 @@
 from django.test.testcases import TestCase
 
+from edc.core.bhp_variables.models import StudySite
 from edc.subject.rule_groups.classes.controller import site_rule_groups
 from edc.subject.lab_tracker.classes.controller import site_lab_tracker
 from edc.lab.lab_profile.classes.controller import site_lab_profiles
@@ -25,3 +26,5 @@ class BaseMaternalTestCase(TestCase):
         AntenatalEnrollmentVisitSchedule().build()
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
+        self.study_site = StudySite.objects.first()
+        
