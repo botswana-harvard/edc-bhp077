@@ -35,9 +35,6 @@ class InfantOffStudy(OffStudyModelMixin, BaseSyncUuidModel):
     def get_visit_model_cls(self):
         return InfantVisit
 
-    def get_offstudy_visit_reasons(self):
-        return [OFF_STUDY, DEATH_VISIT]
-
     def get_subject_identifier(self):
         return self.infant_visit.appointment.registered_subject.subject_identifier
 
