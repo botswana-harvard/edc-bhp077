@@ -14,7 +14,7 @@ class InfantBirthFactory(factory.DjangoModelFactory):
 
     report_datetime = timezone.now()
     maternal_labour_del = factory.SubFactory(MaternalLabourDelFactory)
-    first_name = factory.Sequence(lambda n: 'RANGO{0}'.format(n))
-    initials = factory.Sequence(lambda n: 'R{0}'.format(n))
+    first_name = 'BABY'
+    initials = 'BB'
     dob = timezone.now().date()
     gender = 'F'

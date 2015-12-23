@@ -38,7 +38,7 @@ class InfantBirth(InfantOffStudyMixin, AppointmentMixin, BaseSyncUuidModel):
                   "use Baby + birth order + mother's last name, e.g. 'Baby1Malane'")
 
     initials = models.CharField(
-        max_length=2)
+        max_length=3)
 
     dob = models.DateField(
         verbose_name='Date of Birth',
