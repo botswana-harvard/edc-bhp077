@@ -1,9 +1,10 @@
 from django.db import models
 
+from edc.device.sync.models import BaseSyncUuidModel
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.registration.models.registered_subject import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc.device.sync.models import BaseSyncUuidModel
+from edc_constants.constants import OFF_STUDY, DEATH_VISIT
 from edc_offstudy.models import OffStudyModelMixin
 
 from .maternal_visit import MaternalVisit
@@ -31,6 +32,9 @@ class MaternalOffStudy(OffStudyModelMixin, BaseSyncUuidModel):
 
     def get_visit_model_cls(self):
         return MaternalVisit
+
+    def get_offstudy_visit_reasons(self):
+        return [OFF_STUDY, DEATH_VISIT]
 
     def get_subject_identifier(self):
         return self.maternal_visit.appointment.registered_subject.subject_identifier
