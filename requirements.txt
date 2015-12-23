@@ -12,6 +12,7 @@ factory-boy
 pytz
 pyodbc
 pycups
+mysql-python
 git+https://github.com/botswana-harvard/edc-admin-exclude@develop#egg=edc-admin-exclude
 git+https://github.com/botswana-harvard/edc-appointment.git@develop#egg=edc-appointment
 git+https://github.com/botswana-harvard/edc-audit@develop#egg=edc-audit
