@@ -20,7 +20,6 @@ from .rapid_test_result import RapidTestResult
 from .reproductive_health import ReproductiveHealth
 from .maternal_death_report import MaternalDeathReport
 from .maternal_off_study import MaternalOffStudy
-from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from .maternal_post_fu import MaternalPostFu, MaternalPostFuDx, MaternalPostFuDxT
 from .maternal_post_fu_med import MaternalPostFuMed, MaternalPostFuMedItems

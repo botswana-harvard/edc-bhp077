@@ -4,14 +4,11 @@ from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO, POS_NEG
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from .maternal_consent import MaternalConsent
 
 
 class RapidTestResult(MaternalScheduledVisitModel):
 
     """ A model completed by the user on the mother's rapid test result. """
-
-    CONSENT_MODEL = MaternalConsent
 
     rapid_test_done = models.CharField(
         verbose_name="Was a rapid test processed?",

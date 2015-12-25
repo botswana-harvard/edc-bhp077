@@ -11,6 +11,7 @@ from microbiome.apps.mb.choices import AUTOPSY_SIGNS
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_visit_tracking.models.crf_inline_model_mixin import CrfInlineModelMixin
 
 
 class InfantVerbalAutopsy(InfantScheduledVisitModel):
@@ -51,21 +52,15 @@ class InfantVerbalAutopsy(InfantScheduledVisitModel):
 
     history = AuditTrail()
 
-    def __unicode__(self):
-        return self.registered_subject.subject_identifier
-
-    def get_consenting_subject_identifier(self):
-        """Returns mother's identifier."""
-        return self.registered_subject.relative_identifier
-
-    def get_registration_datetime(self):
-        return self.report_datetime
-
     class Meta:
         app_label = 'mb_infant'
+        verbose_name = 'Infant Verbal Autopsy'
+        verbose_name = 'Infant Verbal Autopsies'
 
 
-class InfantVerbalAutopsyItems(BaseUuidModel):
+class InfantVerbalAutopsyItems(CrfInlineModelMixin, BaseUuidModel):
+
+    fk_model_attr = 'verbal_autopsy'
 
     verbal_autopsy = models.ForeignKey(InfantVerbalAutopsy)
 
@@ -95,19 +90,7 @@ class InfantVerbalAutopsyItems(BaseUuidModel):
         null=True,
     )
 
-    objects = models.Manager()
-
     history = AuditTrail()
-
-    def get_report_datetime(self):
-        return self.verbal_autopsy.report_datetime
-
-    def get_consenting_subject_identifier(self):
-        """Returns mother's identifier."""
-        return self.verbal_autopsy.get_consenting_subject_identifier()
-
-    def get_visit(self):
-        return self.verbal_autopsy.infant_visit
 
     class Meta:
         app_label = 'mb_infant'

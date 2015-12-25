@@ -13,9 +13,7 @@ class InfantCircumcision(InfantScheduledVisitModel):
     circumcised = models.CharField(
         max_length=15,
         verbose_name="In performing your physical exam, you determined this male infant to be:",
-        choices=CIRCUMCISION,
-        help_text="",
-    )
+        choices=CIRCUMCISION)
 
     history = AuditTrail()
 

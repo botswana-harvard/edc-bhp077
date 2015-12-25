@@ -6,7 +6,7 @@ from django.db.models import get_app, get_models
 from django.test import TestCase
 
 from edc_appointment.models import Appointment
-from edc_constants.constants import YES, POS, OFF_STUDY
+from edc_constants.constants import YES, POS, OFF_STUDY, COMPLETED_PROTOCOL_VISIT
 
 from edc.lab.lab_profile.classes import site_lab_profiles
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
@@ -145,10 +145,10 @@ class TestNaturalKey(TestCase):
             visit_definition__code='2000')
         infant_visit = InfantVisitFactory(
             appointment=appointment)
-        visit_models = [
+        visit_model_classes = [
             InfantBirthExam, InfantBirthFeedVaccine, InfantStoolCollection, InfantCongenitalAnomalies]
-        for VISIT_MODEL in visit_models:
-            visit_model = VISIT_MODEL.objects.create(
+        for visit_model_class in visit_model_classes:
+            visit_model = visit_model_class.objects.create(
                 infant_visit=infant_visit,
                 report_datetime=timezone.now()
             )
@@ -194,7 +194,7 @@ class TestNaturalKey(TestCase):
             visit_definition__code='2000')
         infant_visit = InfantVisitFactory(
             appointment=appointment,
-            reason=OFF_STUDY)
+            reason=COMPLETED_PROTOCOL_VISIT)
 
         infant_offstudy = InfantOffStudy.objects.create(
             infant_visit=infant_visit,

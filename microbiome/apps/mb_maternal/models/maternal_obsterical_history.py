@@ -4,14 +4,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from edc_base.audit_trail import AuditTrail
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from .maternal_consent import MaternalConsent
 
 
 class MaternalObstericalHistory(MaternalScheduledVisitModel):
 
     """ A model completed by the user on Obsterical History for all mothers. """
-
-    CONSENT_MODEL = MaternalConsent
 
     prev_pregnancies = models.IntegerField(
         verbose_name="Not including this pregnancy, how many previous pregnancies for this participant?",

@@ -1,17 +1,14 @@
-from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 
-from .maternal_consent import MaternalConsent
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalHeightWeight(MaternalScheduledVisitModel):
 
     """ A model completed by the user on Height, Weight details for all mothers. """
-
-    CONSENT_MODEL = MaternalConsent
 
     weight_kg = models.DecimalField(
         max_digits=5,

@@ -17,7 +17,7 @@ class SpecimenConsent(BaseSpecimenConsent, SampleCollectionFieldsMixin, Requires
 
     """ A model completed by the user when a mother gives consent for specimen storage. """
 
-    CONSENT_MODEL = MaternalConsent
+    consent_model = MaternalConsent
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 

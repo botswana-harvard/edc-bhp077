@@ -8,20 +8,22 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 from edc_consent.models import RequiresConsentMixin
 from edc_constants.choices import YES_NO
+from edc_offstudy.models import OffStudyMixin
 
 from ..managers import PostnatalEnrollmentManager
 from ..maternal_choices import LIVE_STILL_BIRTH
 
+from .enrollment_helper import EnrollmentError
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
-from .maternal_off_study_mixin import MaternalOffStudyMixin
-from microbiome.apps.mb_maternal.models.enrollment_helper import EnrollmentError
 
 
-class PostnatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, AppointmentMixin,
+class PostnatalEnrollment(EnrollmentMixin, OffStudyMixin, AppointmentMixin,
                           RequiresConsentMixin, BaseSyncUuidModel):
 
-    CONSENT_MODEL = MaternalConsent
+    consent_model = MaternalConsent
+
+    off_study_model = ('mb_maternal', 'MaternalOffStudy')
 
     weeks_base_field = 'gestation_wks_delivered'  # for rapid test required calc
 

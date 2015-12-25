@@ -1,10 +1,7 @@
-from collections import OrderedDict
-
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.subject.registration.models import RegisteredSubject
-from edc.export.actions import export_as_csv_action
 
 from ..forms import PostnatalEnrollmentForm
 from ..models import PostnatalEnrollment, AntenatalEnrollment
@@ -100,41 +97,9 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
         try:
             for attrname in antenatal_enrollment.common_fields():
                 form.base_fields[attrname].initial = getattr(antenatal_enrollment, attrname)
-                # form.base_fields[attrname].widget.attrs['disabled'] = 'disabled'
         except AntenatalEnrollment.DoesNotExist:
             pass
         return form
-
-#     def disable_fields(self, form):
-#         for field in self.exclude_fields():
-#             form.base_fields[field].widget.attrs['disabled'] = 'disabled'
-#         return form
-#
-#     def hide_fields(self, form):
-#         for field in self.exclude_fields():
-#             form.base_fields[field].widget = forms.HiddenInput()
-#         return form
-#
-#     def exclude_fields(self):
-#         exclude = ['is_diabetic', 'on_tb_tx', 'on_hypertension_tx', 'will_breastfeed',
-#                    'will_remain_onstudy', 'week32_test', 'week32_test_date', 'week32_result', 'current_hiv_status',
-#                    'valid_regimen', 'valid_regimen_duration', 'rapid_test_done', 'rapid_test_date',
-#                    'rapid_test_result', 'valid_regimen', 'evidence_hiv_status']
-#         return exclude
-
-    actions = [
-        export_as_csv_action(
-            description="CSV Export of Postnatal Enrollment",
-            fields=[],
-            delimiter=',',
-            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
-                     'hostname_modified'],
-            extra_fields=OrderedDict(
-                {'subject_identifier': 'registered_subject__subject_identifier',
-                 'gender': 'registered_subject__gender',
-                 'dob': 'registered_subject__dob',
-                 'registered': 'registered_subject__registration_datetime'}),
-        )]
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "registered_subject":

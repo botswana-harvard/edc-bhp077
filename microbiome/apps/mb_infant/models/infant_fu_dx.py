@@ -3,11 +3,13 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 from edc_base.model.models import BaseUuidModel
-
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
-from ..managers import InfantInlineModelManager
+from edc_visit_tracking.models import CrfInlineModelMixin
 
 from microbiome.apps.mb.choices import DX_INFANT
+
+from ..managers import InfantInlineModelManager
+
+from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
 
 class InfantFuDx(InfantScheduledVisitModel):
@@ -22,53 +24,36 @@ class InfantFuDx(InfantScheduledVisitModel):
         verbose_name_plural = "Infant FollowUp: Dx"
 
 
-class InfantFuDxItems(BaseUuidModel):
+class InfantFuDxItems(CrfInlineModelMixin, BaseUuidModel):
+
+    fk_model_attr = 'infant_fu_dx'
 
     infant_fu_dx = models.ForeignKey(InfantFuDx)
 
     fu_dx = models.CharField(
-        max_length=150,
-        choices=DX_INFANT,
         verbose_name="Diagnosis",
-        help_text="")
+        max_length=150,
+        choices=DX_INFANT)
 
     fu_dx_specify = models.CharField(
-        max_length=50,
         verbose_name="Diagnosis specification",
-        help_text="",
+        max_length=50,
         blank=True,
         null=True)
 
     health_facility = models.CharField(
-        choices=YES_NO,
-        max_length=3,
         verbose_name="Seen at health facility for Dx",
-        help_text="")
+        choices=YES_NO,
+        max_length=3)
 
     was_hospitalized = models.CharField(
-        choices=YES_NO,
-        max_length=3,
         verbose_name="Hospitalized?",
-        help_text="",)
+        choices=YES_NO,
+        max_length=3)
 
     objects = InfantInlineModelManager()
 
     history = AuditTrail()
-
-    def natural_key(self):
-        return self.get_visit().natural_key()
-
-    def __unicode__(self):
-        return unicode(self.infant_fu_dx.infant_visit)
-
-    def get_visit(self):
-        return self.infant_fu_dx.get_visit()
-
-    def get_report_datetime(self):
-        return self.infant_fu_dx.get_report_datetime()
-
-    def get_subject_identifier(self):
-        return self.infant_fu_dx.get_subject_identifier()
 
     class Meta:
         app_label = 'mb_infant'

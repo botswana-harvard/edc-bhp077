@@ -4,6 +4,7 @@ from edc_base.model.fields import OtherCharField
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_constants.choices import CONFIRMED_SUSPECTED
+from edc_visit_tracking.models import CrfInlineModelMixin
 
 from microbiome.apps.mb.choices import (
     CNS_ABNORMALITIES, FACIAL_DEFECT, CLEFT_DISORDER, MOUTH_UP_GASTROINT_DISORDER,
@@ -27,27 +28,15 @@ class InfantCongenitalAnomalies(InfantScheduledVisitModel):
         verbose_name = "Congenital Anomalies"
 
 
-class BaseCnsItem(BaseUuidModel):
+class BaseCnsItem(CrfInlineModelMixin, BaseUuidModel):
+
+    fk_model_attr = 'congenital_anomalies'
+
     congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
 
     objects = InfantInlineModelManager()
 
     history = AuditTrail()
-
-    def natural_key(self):
-        return self.get_visit().natural_key()
-
-    def get_visit(self):
-        return self.congenital_anomalies.get_visit()
-
-    def get_report_datetime(self):
-        return self.congenital_anomalies.get_report_datetime()
-
-    def get_subject_identifier(self):
-        return self.congenital_anomalies.get_subject_identifier()
-
-    def __unicode__(self):
-        return unicode(self.get_visit())
 
     class Meta:
         abstract = True

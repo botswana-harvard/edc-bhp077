@@ -27,6 +27,7 @@ class MaternalVisitAdmin(BaseAppointmentModelAdmin):
         "report_datetime",
         "info_source",
         "info_source_other",
+        'study_status',
         "reason",
         "reason_missed",
         "comments")
@@ -34,6 +35,7 @@ class MaternalVisitAdmin(BaseAppointmentModelAdmin):
     list_display = (
         'appointment',
         'report_datetime',
+        'study_status',
         'reason',
         "info_source",
         'created',

@@ -1,5 +1,4 @@
-from .infant_arv_proph import InfantArvProph
-from .infant_arv_proph_mod import InfantArvProphMod
+from .infant_arv_proph import InfantArvProph, InfantArvProphMod
 from .infant_birth import InfantBirth
 from .infant_birth_arv import InfantBirthArv
 from .infant_birth_exam import InfantBirthExam
@@ -15,7 +14,6 @@ from .infant_fu_physical import InfantFuPhysical
 from .infant_feeding import InfantFeeding
 from .infant_off_study import InfantOffStudy
 from .infant_visit import InfantVisit
-from .infant_off_study_mixin import InfantOffStudyMixin
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 from .infant_stool_collection import InfantStoolCollection
 from .infant_congenital_anomalies import (

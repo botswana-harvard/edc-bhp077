@@ -1,66 +1,38 @@
 from django.db import models
-from django.utils import timezone
 
 from edc.data_manager.models import TimePointStatusMixin
+from edc.device.sync.models import BaseSyncUuidModel
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc_base.audit_trail import AuditTrail
-from edc.device.sync.models import BaseSyncUuidModel
-from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_consent.models import RequiresConsentMixin
+from edc_offstudy.models import OffStudyMixin
+from edc_visit_tracking.models import CrfModelMixin
 
-from ..managers import ScheduledModelManager
-
-from .maternal_off_study_mixin import MaternalOffStudyMixin
+from .maternal_consent import MaternalConsent
 from .maternal_visit import MaternalVisit
 
 
-class MaternalScheduledVisitModel(MaternalOffStudyMixin, RequiresConsentMixin,
+class MaternalScheduledVisitModel(CrfModelMixin, OffStudyMixin, RequiresConsentMixin,
                                   TimePointStatusMixin, BaseSyncUuidModel):
 
     """ Base model for all scheduled models (adds key to :class:`MaternalVisit`). """
 
+    consent_model = MaternalConsent
+
+    off_study_model = ('mb_maternal', 'MaternalOffStudy')
+
     maternal_visit = models.OneToOneField(MaternalVisit)
-
-    report_datetime = models.DateTimeField(
-        verbose_name="Report Date",
-        validators=[
-            datetime_not_before_study_start,
-            datetime_not_future, ],
-        default=timezone.now,
-        help_text=('If reporting today, use today\'s date/time, otherwise use '
-                   'the date/time this information was reported.'))
-
-    objects = ScheduledModelManager()
 
     history = AuditTrail()
 
     entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
 
     def natural_key(self):
-        return self.get_visit().natural_key()
+        return (self.maternal_visit.natural_key(), )
+    natural_key.dependencies = ['mb_maternal.maternal_visit']
 
     def __unicode__(self):
         return unicode(self.get_visit())
-
-    def get_report_datetime(self):
-        return self.get_visit().report_datetime
-
-    def get_subject_identifier(self):
-        return self.get_visit().appointment.registered_subject.subject_identifier
-
-    def get_visit(self):
-        return self.maternal_visit
-
-    def get_visit_code(self):
-        try:
-            return self.maternal_visit.appointment.visit_definition.code
-        except AttributeError:
-            return None
-
-    @classmethod
-    def visit_model(self):
-        """Used by search in audit_trail"""
-        return MaternalVisit
 
     class Meta:
         abstract = True

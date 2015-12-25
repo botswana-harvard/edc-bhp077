@@ -48,7 +48,9 @@ class AntenatalEnrollmentForm(BaseEnrollmentForm):
                 registered_subject=registered_subject,
                 recently_delivered=YES)
             if not self.get_postnatal_enrollment():
-                raise forms.ValidationError("Participant just delivered, fill postnatal instead.")
+                raise forms.ValidationError(
+                    'According to the Maternal Eligibility form the participant has just delivered. '
+                    'Please fill the Postnatal Enrollment form instead.')
         except MaternalEligibility.DoesNotExist:
             pass
 

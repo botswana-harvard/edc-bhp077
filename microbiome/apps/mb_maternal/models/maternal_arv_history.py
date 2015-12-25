@@ -5,17 +5,16 @@ from edc_base.model.fields import IsDateEstimatedField, OtherCharField
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 
-from ..maternal_choices import PRIOR_PREG_HAART_STATUS
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from .maternal_consent import MaternalConsent
 from microbiome.apps.mb_list.models import PriorArv
+
+from ..maternal_choices import PRIOR_PREG_HAART_STATUS
+
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalArvHistory(MaternalScheduledVisitModel):
 
     """ A model completed by the user on ARV history for infected mothers only. """
-
-    CONSENT_MODEL = MaternalConsent
 
     haart_start_date = models.DateField(
         verbose_name="Date of triple antiretrovirals first started")

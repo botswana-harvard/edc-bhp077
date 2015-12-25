@@ -1,24 +1,21 @@
 from django.db import models
 
+from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
 from edc.subject.haart.choices import ARV_STATUS_WITH_NEVER
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
+from edc_constants.constants import NOT_APPLICABLE
+from edc_visit_tracking.models.crf_inline_model_mixin import CrfInlineModelMixin
 
 from ..managers import MaternalArvPostModManager
-from ..maternal_choices import REASON_FOR_HAART
+from ..maternal_choices import REASON_FOR_HAART, ARV_DRUG_LIST, DOSE_STATUS, ARV_MODIFICATION_REASON
 
-from .base_haart_modification import BaseHaartModification
-from .maternal_consent import MaternalConsent
-from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from edc_constants.constants import NOT_APPLICABLE
 
 
 class MaternalArvPost (MaternalScheduledVisitModel):
 
     """ A model completed by the user on the mother's ARVs administered post-partum. """
-
-    CONSENT_MODEL = MaternalConsent
 
     on_arv_since = models.CharField(
         max_length=25,
@@ -61,33 +58,37 @@ class MaternalArvPost (MaternalScheduledVisitModel):
         verbose_name_plural = "Maternal ARV Post"
 
 
-class MaternalArvPostMod(MaternalOffStudyMixin, BaseHaartModification):
+class MaternalArvPostMod(CrfInlineModelMixin, BaseSyncUuidModel):
 
     """ Maternal ARV modifications post-partum.
 
     if art_status never, no_mod or N/A then this is not required"""
-    CONSENT_MODEL = MaternalConsent
+
+    fk_model_attr = 'maternal_arv_post'
 
     maternal_arv_post = models.ForeignKey(MaternalArvPost)
+
+    arv_code = models.CharField(
+        verbose_name="ARV Code",
+        max_length=25,
+        choices=ARV_DRUG_LIST)
+
+    dose_status = models.CharField(
+        max_length=25,
+        choices=DOSE_STATUS,
+        verbose_name="Dose Status")
+
+    modification_date = models.DateField(
+        verbose_name="Date ARV Modified")
+
+    modification_code = models.CharField(
+        max_length=50,
+        choices=ARV_MODIFICATION_REASON,
+        verbose_name="Reason for Modification")
 
     objects = MaternalArvPostModManager()
 
     history = AuditTrail()
-
-    def get_visit(self):
-        return self.maternal_arv_post.maternal_visit
-
-    def __unicode__(self):
-        return unicode(self.maternal_arv_post)
-
-    def get_report_datetime(self):
-        return self.get_visit().get_report_datetime()
-
-    def get_subject_identifier(self):
-        return self.get_visit().get_subject_identifier()
-
-    def natural_key(self):
-        return super(MaternalArvPostMod, self).natural_key() + self.maternal_arv_post.natural_key()
 
     class Meta:
         app_label = 'mb_maternal'
@@ -99,9 +100,6 @@ class MaternalArvPostMod(MaternalOffStudyMixin, BaseHaartModification):
 class MaternalArvPostAdh(MaternalScheduledVisitModel):
 
     """Maternal ARV adherence post-partum"""
-    CONSENT_MODEL = MaternalConsent
-
-    maternal_arv_post = models.OneToOneField(MaternalArvPost)
 
     missed_doses = models.IntegerField(
         verbose_name=("Since the last attended last scheduled visit, how many doses of"
@@ -124,15 +122,6 @@ class MaternalArvPostAdh(MaternalScheduledVisitModel):
         null=True)
 
     history = AuditTrail()
-
-    def __unicode__(self):
-        return unicode(self.maternal_arv_post)
-
-    def get_report_datetime(self):
-        return self.maternal_arv_post.get_report_datetime()
-
-    def get_subject_identifier(self):
-        return self.maternal_arv_post.get_subject_identifier()
 
     class Meta:
         app_label = 'mb_maternal'

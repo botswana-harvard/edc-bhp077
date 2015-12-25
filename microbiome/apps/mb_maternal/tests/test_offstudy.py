@@ -5,7 +5,8 @@ from django.utils import timezone
 
 from edc.entry_meta_data.models import ScheduledEntryMetaData
 from edc_appointment.models import Appointment
-from edc_constants.constants import YES, NO, POS, NEG, UNKEYED, OFF_STUDY, NOT_APPLICABLE, SCHEDULED
+from edc_constants.constants import YES, NO, POS, NEG, UNKEYED, OFF_STUDY, NOT_APPLICABLE, SCHEDULED,\
+    COMPLETED_PROTOCOL_VISIT
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT
 from microbiome.apps.mb_maternal.forms import MaternalOffStudyForm
@@ -46,7 +47,7 @@ class TestOffStudy(BaseMaternalTestCase):
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
-        MaternalVisit.objects.get(appointment=appointment, reason=OFF_STUDY)
+        MaternalVisit.objects.get(appointment=appointment, reason=COMPLETED_PROTOCOL_VISIT)
         self.assertEqual(ScheduledEntryMetaData.objects.filter(
             entry_status=UNKEYED,
             entry__app_label='mb_maternal',
@@ -84,7 +85,7 @@ class TestOffStudy(BaseMaternalTestCase):
             visit_definition__code='2000M')
         with self.assertRaises(MaternalVisit.DoesNotExist):
             try:
-                MaternalVisit.objects.get(appointment=appointment, reason=OFF_STUDY)
+                MaternalVisit.objects.get(appointment=appointment, reason=COMPLETED_PROTOCOL_VISIT)
             except:
                 pass
             else:
@@ -106,7 +107,7 @@ class TestOffStudy(BaseMaternalTestCase):
             visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(
             appointment=appointment,
-            reason=OFF_STUDY)
+            reason=COMPLETED_PROTOCOL_VISIT)
         MaternalOffStudyFactory(
             registered_subject=appointment.registered_subject,
             report_datetime=timezone.now(),
@@ -129,7 +130,7 @@ class TestOffStudy(BaseMaternalTestCase):
         maternal_visit = MaternalVisitFactory(
             appointment=appointment,
             report_datetime=timezone.now(),
-            reason=OFF_STUDY)
+            reason=COMPLETED_PROTOCOL_VISIT)
         MaternalOffStudyFactory(
             registered_subject=appointment.registered_subject,
             maternal_visit=maternal_visit,
@@ -150,7 +151,7 @@ class TestOffStudy(BaseMaternalTestCase):
             visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(
             appointment=appointment,
-            reason=OFF_STUDY)
+            reason=COMPLETED_PROTOCOL_VISIT)
         self.data['maternal_visit'] = maternal_visit.id
         self.data['offstudy_date'] = date(2015, 10, 6)
         offstudy_form = MaternalOffStudyForm(data=self.data)
@@ -171,7 +172,7 @@ class TestOffStudy(BaseMaternalTestCase):
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(
-            appointment=appointment, reason=OFF_STUDY)
+            appointment=appointment, reason=COMPLETED_PROTOCOL_VISIT)
         self.data['maternal_visit'] = maternal_visit.id
         self.data['offstudy_date'] = timezone.now() - relativedelta(weeks=2)
         offstudy_form = MaternalOffStudyForm(data=self.data)

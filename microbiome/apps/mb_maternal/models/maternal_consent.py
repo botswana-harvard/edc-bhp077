@@ -12,16 +12,14 @@ from edc_consent.models.base_consent import BaseConsent
 from edc_consent.models.fields import (
     PersonalFieldsMixin, CitizenFieldsMixin, ReviewFieldsMixin, VulnerabilityFieldsMixin)
 from edc_consent.models.fields.bw import IdentityFieldsMixin
-
-from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
-
-from .maternal_off_study_mixin import MaternalOffStudyMixin
-
+from edc_offstudy.models import OffStudyMixin
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
+from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 
-class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
+
+class MaternalConsent(BaseConsent, OffStudyMixin, ReviewFieldsMixin,
                       IdentityFieldsMixin, PersonalFieldsMixin,
                       CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseSyncUuidModel):
 
@@ -29,6 +27,8 @@ class MaternalConsent(BaseConsent, MaternalOffStudyMixin, ReviewFieldsMixin,
 
     MIN_AGE_OF_CONSENT = MIN_AGE_OF_CONSENT
     MAX_AGE_OF_CONSENT = MAX_AGE_OF_CONSENT
+
+    off_study_model = ('mb_maternal', 'MaternalOffStudy')
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 

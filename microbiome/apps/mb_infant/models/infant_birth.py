@@ -12,11 +12,13 @@ from microbiome.apps.mb_maternal.models import MaternalLabourDel
 
 from ..managers import InfantBirthModelManager
 
-from .infant_off_study_mixin import InfantOffStudyMixin
+from edc_offstudy.models import OffStudyMixin
 
 
-class InfantBirth(InfantOffStudyMixin, AppointmentMixin, BaseSyncUuidModel):
+class InfantBirth(OffStudyMixin, AppointmentMixin, BaseSyncUuidModel):
     """ A model completed by the user on the infant's birth. """
+
+    off_study_model = ('mb_infant', 'InfantOffStudy')
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 

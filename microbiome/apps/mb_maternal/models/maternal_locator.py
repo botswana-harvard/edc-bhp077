@@ -1,25 +1,20 @@
 from django.db import models
 
-from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.encrypted_fields import EncryptedCharField
 from edc_base.model.fields import OtherCharField
-from edc.device.sync.models import BaseSyncUuidModel
 from edc_base.model.validators import CellNumber, TelephoneNumber
 from edc_constants.choices import YES_NO
 from edc_locator.models import LocatorMixin
 
-from .maternal_visit import MaternalVisit
-from ..managers import ScheduledModelManager
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
-class MaternalLocator(LocatorMixin, BaseSyncUuidModel):
+class MaternalLocator(LocatorMixin, MaternalScheduledVisitModel):
 
     """ A model completed by the user to capture locator information and
     the details of the infant caretaker. """
-
-    maternal_visit = models.ForeignKey(MaternalVisit)
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
@@ -45,40 +40,20 @@ class MaternalLocator(LocatorMixin, BaseSyncUuidModel):
         null=True)
 
     caretaker_cell = EncryptedCharField(
-        max_length=8,
         verbose_name="Cell number",
+        max_length=8,
         validators=[CellNumber, ],
-        help_text="",
         blank=True,
         null=True)
 
     caretaker_tel = EncryptedCharField(
-        max_length=8,
         verbose_name="Telephone number",
+        max_length=8,
         validators=[TelephoneNumber, ],
-        help_text="",
         blank=True,
         null=True)
 
-    objects = ScheduledModelManager()
-
     history = AuditTrail()
-
-    entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
-
-    history = AuditTrail()
-
-    def __unicode__(self):
-        return unicode(self.maternal_visit)
-
-    def natural_key(self):
-        return self.maternal_visit.natural_key()
-
-    def get_visit(self):
-        return self.maternal_visit
-
-    def get_subject_identifier(self):
-        return self.maternal_visit.appointment.registered_subject.subject_identifier
 
     class Meta:
         app_label = 'mb_maternal'

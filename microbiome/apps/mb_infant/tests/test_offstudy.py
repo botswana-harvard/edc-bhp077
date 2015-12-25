@@ -9,7 +9,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NEG, OFF_STUDY
+from edc_constants.constants import NEW, YES, NEG, OFF_STUDY, COMPLETED_PROTOCOL_VISIT
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb.constants import INFANT
@@ -83,7 +83,7 @@ class TestOffStudy(TestCase):
     def test_offstudy_meta_data_created_on_visit(self):
         self.infant_visit = InfantVisitFactory(
             appointment=self.infant_appointment,
-            reason=OFF_STUDY)
+            reason=COMPLETED_PROTOCOL_VISIT)
         self.assertEqual(
             ScheduledEntryMetaData.objects.filter(
                 entry_status=NEW,
@@ -94,7 +94,7 @@ class TestOffStudy(TestCase):
     def test_offstudy2(self):
         self.infant_visit = InfantVisitFactory(
             appointment=self.infant_appointment,
-            reason=OFF_STUDY)
+            reason=COMPLETED_PROTOCOL_VISIT)
         InfantOffStudyFactory(
             report_datetime=timezone.now(),
             registered_subject=self.infant_appointment.registered_subject,
@@ -107,7 +107,7 @@ class TestOffStudy(TestCase):
 
         self.infant_visit = InfantVisitFactory(
             appointment=self.infant_appointment,
-            reason=OFF_STUDY)
+            reason=COMPLETED_PROTOCOL_VISIT)
         self.data['infant_visit'] = self.infant_visit.id
         self.data['offstudy_date'] = date(2015, 10, 6)
         offstudy_form = InfantOffStudyForm(data=self.data)

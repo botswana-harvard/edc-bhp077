@@ -123,18 +123,11 @@ class TestMaternalLabourDel(BaseMaternalTestCase):
                       .format(self.postnatal_enrollment.postpartum_days), form.errors.get('__all__'))
 
 
-class TestMaternalLabourDelClinic(TestCase):
+class TestMaternalLabourDelClinic(BaseMaternalTestCase):
     """Test eligibility of a mother for postnatal enrollment."""
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        MicrobiomeConfiguration().prepare()
-        site_lab_tracker.autodiscover()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
+        super(TestMaternalLabourDelClinic, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject,

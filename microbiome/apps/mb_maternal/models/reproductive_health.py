@@ -4,17 +4,16 @@ from edc_base.model.fields import OtherCharField
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_DWTA
 
-from ..maternal_choices import YES_NO_DNT_DWTA, NEXT_CHILD_PLAN
-from .maternal_consent import MaternalConsent
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from microbiome.apps.mb_list.models import Contraceptives
+
+from ..maternal_choices import YES_NO_DNT_DWTA, NEXT_CHILD_PLAN
+
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class ReproductiveHealth(MaternalScheduledVisitModel):
 
     """ A model completed by the user on the mother's sexual reproductive health. """
-
-    CONSENT_MODEL = MaternalConsent
 
     more_children = models.CharField(
         verbose_name='Do you desire more children?',

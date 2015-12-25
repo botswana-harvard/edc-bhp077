@@ -7,14 +7,11 @@ from edc_constants.constants import NOT_APPLICABLE
 from microbiome.apps.mb.choices import BREAST_CHOICE
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from .maternal_consent import MaternalConsent
 
 
 class MaternalBreastHealth(MaternalScheduledVisitModel):
 
     """ A model completed by the user on the mother's General post-partum follow-up. """
-
-    CONSENT_MODEL = MaternalConsent
 
     breast_feeding = models.CharField(
         max_length=3,

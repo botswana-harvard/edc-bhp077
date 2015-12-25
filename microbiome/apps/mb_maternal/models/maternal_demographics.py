@@ -1,24 +1,23 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from edc_base.model.fields import OtherCharField
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.fields import OtherCharField
 from edc_constants.choices import YES_NO
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from .maternal_consent import MaternalConsent
+from microbiome.apps.mb_list.models import HouseholdGoods
+
 from ..maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
                                 CURRENT_OCCUPATION, MONEY_PROVIDER, MONEY_EARNED,
                                 WATER_SOURCE, COOKING_METHOD, TOILET_FACILITY,
                                 HOUSE_TYPE)
-from microbiome.apps.mb_list.models import HouseholdGoods
+
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalDemographics(MaternalScheduledVisitModel):
 
     """ A model completed by the user on Demographics form for all mothers. """
-
-    CONSENT_MODEL = MaternalConsent
 
     marital_status = models.CharField(
         max_length=25,

@@ -1,51 +1,45 @@
+from datetime import date
+
 from django.db import models
-from django.utils import timezone
 
 from edc_base.audit_trail import AuditTrail
 from edc.device.sync.models import BaseSyncUuidModel
-from edc_constants.choices import DRUG_ROUTE
-from edc_constants.choices import YES_NO_UNKNOWN
+from edc_constants.choices import DRUG_ROUTE, YES_NO_UNKNOWN
+from edc_visit_tracking.models import CrfInlineModelMixin
 
 from microbiome.apps.mb.choices import MEDICATIONS
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from .maternal_consent import MaternalConsent
 from ..managers import MaternalPostMedItemsManager
+
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalPostFuMed(MaternalScheduledVisitModel):
 
     """ A model completed by the user on the mother's Post-partum follow up of medications. """
 
-    CONSENT_MODEL = MaternalConsent
-
     has_taken_meds = models.CharField(
+        verbose_name=(
+            "Since the last scheduled visit, has the mother taken any of the following medications?"),
         max_length=10,
-        choices=YES_NO_UNKNOWN,
-        verbose_name=("Since the last scheduled visit, has the mother taken any of the following medications?"),
-        help_text="",)
+        choices=YES_NO_UNKNOWN)
 
     history = AuditTrail()
-
-    def get_report_datetime(self):
-        return self.maternal_visit.get_report_datetime()
-
-    def get_subject_identifier(self):
-        return self.maternal_visit.get_subject_identifier()
 
     class Meta:
         app_label = 'mb_maternal'
         verbose_name = 'Maternal Postnatal: Med'
 
 
-class MaternalPostFuMedItems(BaseSyncUuidModel):
+class MaternalPostFuMedItems(CrfInlineModelMixin, BaseSyncUuidModel):
+
+    fk_model_attr = 'maternal_post_fu_med'
 
     maternal_post_fu_med = models.OneToOneField(MaternalPostFuMed)
 
     date_first_medication = models.DateField(
         verbose_name="Date of first medication use",
-        default=timezone.now().date()
-    )
+        default=date.today)
 
     medication = models.CharField(
         max_length=100,
@@ -68,12 +62,6 @@ class MaternalPostFuMedItems(BaseSyncUuidModel):
     objects = MaternalPostMedItemsManager()
 
     history = AuditTrail()
-
-    def __unicode__(self):
-        return unicode(self.maternal_post_fu_med.maternal_visit)
-
-    def natural_key(self):
-        return (self.maternal_post_fu_med.natural_key())
 
     class Meta:
         app_label = 'mb_maternal'

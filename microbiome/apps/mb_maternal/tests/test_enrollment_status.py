@@ -13,7 +13,8 @@ class TestEnrollmentStatus(BaseMaternalTestCase):
     def setUp(self):
         super(TestEnrollmentStatus, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject
         self.data = {
             'registered_subject': self.registered_subject}

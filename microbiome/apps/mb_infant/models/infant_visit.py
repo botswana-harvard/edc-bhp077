@@ -1,26 +1,26 @@
 from django.db import models
 
+from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
 from edc.entry_meta_data.models import MetaDataMixin
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
-from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
-from edc_constants.choices import YES_NO, ALIVE_DEAD_UNKNOWN
 from edc_base.model.validators import date_not_before_study_start, date_not_future
-from edc_constants.constants import OFF_STUDY, DEATH_VISIT, UNSCHEDULED, SCHEDULED
+from edc_constants.choices import YES_NO, ALIVE_DEAD_UNKNOWN
+from edc_constants.constants import OFF_STUDY, DEATH_VISIT, UNSCHEDULED, SCHEDULED, COMPLETED_PROTOCOL_VISIT
+from edc_offstudy.models import OffStudyMixin
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 from edc_visit_tracking.models import BaseVisitTracking
 from edc_visit_tracking.models import PreviousVisitMixin
 
 from microbiome.apps.mb_maternal.models import PostnatalEnrollment
-from microbiome.apps.mb.choices import (
-    VISIT_REASON, INFO_PROVIDER, INFANT_VISIT_STUDY_STATUS)
-
-from .infant_off_study_mixin import InfantOffStudyMixin
+from microbiome.apps.mb.choices import VISIT_REASON, INFO_PROVIDER
 
 
-class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVisitTracking, BaseSyncUuidModel):
+class InfantVisit(MetaDataMixin, PreviousVisitMixin, OffStudyMixin, BaseVisitTracking, BaseSyncUuidModel):
 
     """ A model completed by the user on the infant visits. """
+
+    off_study_model = ('mb_infant', 'InfantOffStudy')
 
     information_provider = models.CharField(
         verbose_name="Please indicate who provided most of the information for this child's visit",
@@ -39,11 +39,6 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         max_length=10,
         verbose_name="Is the infant present at today\'s visit",
         choices=YES_NO)
-
-    study_status = models.CharField(
-        verbose_name="What is the infant's current study status",
-        max_length=50,
-        choices=INFANT_VISIT_STUDY_STATUS)
 
     survival_status = models.CharField(
         max_length=10,
@@ -66,10 +61,6 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
             self.appointment.registered_subject.first_name,
             self.appointment.visit_definition.code)
 
-#     def save(self, *args, **kwargs):
-#         self.reason = OFF_STUDY if not self.postnatal_enrollment.is_eligible else self.reason
-#         super(InfantVisit, self).save(*args, **kwargs)
-
     @property
     def postnatal_enrollment(self):
         """Returns the mother's postnatal enrollment instance."""
@@ -81,7 +72,7 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
         """Calls custom methods that manipulate meta data on the post save.
 
         This method is called in a post-save signal in edc.entry_meta_data."""
-        if self.reason == OFF_STUDY:
+        if self.reason == COMPLETED_PROTOCOL_VISIT:
             self.change_to_off_study_visit(self.appointment, 'mb_infant', 'infantoffstudy')
         elif self.reason == DEATH_VISIT:
             self.change_to_death_visit(
@@ -112,8 +103,8 @@ class InfantVisit(MetaDataMixin, PreviousVisitMixin, InfantOffStudyMixin, BaseVi
             )
 
     def natural_key(self):
-        return (self.report_datetime,) + self.get_appointment().natural_key()
-    natural_key.dependencies = ['appointment.appointment', ]
+        return (self.report_datetime,) + self.appointment.natural_key()
+    natural_key.dependencies = ['edc_appointment.appointment']
 
     def get_visit_reason_choices(self):
         return VISIT_REASON

@@ -25,6 +25,7 @@ from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFacto
 from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 from microbiome.apps.mb_maternal.visit_schedule import (
     AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
+from dateutil.relativedelta import relativedelta
 
 
 class TestInfantVisitForm(TestCase):
@@ -97,24 +98,26 @@ class TestInfantVisitForm(TestCase):
             'appointment': self.appointment.id,
             'info_source': 'other_doctor',
             'information_provider': 'MOTHER',
-            'report_datetime': timezone.now()}
+            'report_datetime': timezone.now(),
+            'last_alive_date': date.today()}
         form = InfantVisitForm(data=data)
         self.assertIn('A death is being reported. Select \'Deceased\' for survival status.',
                       form.errors.get('__all__'))
 
     def test_validate_reason_death_not_valid1(self):
         data = {
-            'is_present': YES,
-            'reason': OFF_STUDY,
+            'is_present': NO,
+            'reason': LOST_VISIT,
             'survival_status': ALIVE,
             'study_status': ON_STUDY,
             'appointment': self.appointment.id,
             'info_source': 'other_doctor',
             'information_provider': 'MOTHER',
-            'report_datetime': timezone.now()}
+            'report_datetime': timezone.now(),
+            'last_alive_date': date.today() - relativedelta(weeks=4)}
         form = InfantVisitForm(data=data)
         self.assertIn(
-            "This is an Off Study or LFU visit. Select 'off study' for the infant's current study status.",
+            "The infant is reported as lost to follow-up. Select 'off study' for the infant's current study status.",
             form.errors.get('__all__'))
 
     def test_validate_reason_lost_and_completed(self):
@@ -131,7 +134,7 @@ class TestInfantVisitForm(TestCase):
         form = InfantVisitForm(data=data)
         self.assertFalse(form.is_valid())
         self.assertIn(
-            "This is an Off Study or LFU visit. Select 'off study' for the infant's current study status.",
+            "The infant is reported as lost to follow-up. Select 'off study' for the infant's current study status.",
             form.errors.get('__all__'))
 
     def test_validate_reason_missed_valid(self):
@@ -157,7 +160,8 @@ class TestInfantVisitForm(TestCase):
             'appointment': self.appointment.id,
             'info_source': 'other_doctor',
             'information_provider': 'MOTHER',
-            'report_datetime': timezone.now()}
+            'report_datetime': timezone.now(),
+            'last_alive_date': date.today()}
         form = InfantVisitForm(data=data)
         self.assertIn("Provide reason scheduled visit was missed.", form.errors.get('__all__'))
 

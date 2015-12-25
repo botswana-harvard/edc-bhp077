@@ -3,19 +3,17 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc.device.sync.models import BaseSyncUuidModel
 from edc_constants.choices import YES_NO
+from edc_constants.constants import NOT_APPLICABLE
 from edc.subject.haart.choices import ARV_DRUG_LIST
 
 from microbiome.apps.mb.choices import ARV_INTERRUPTION_REASON
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from .maternal_consent import MaternalConsent
 from ..managers import MaternalArvManager
-from edc_constants.constants import NOT_APPLICABLE
+
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalArvPreg(MaternalScheduledVisitModel):
-
-    CONSENT_MODEL = MaternalConsent
 
     """ This model is for all HIV positive mothers who are pregnant (whom we hope to enroll their infant)
      and/or for mothers who have just delivered """

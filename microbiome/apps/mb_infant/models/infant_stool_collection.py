@@ -97,9 +97,6 @@ class InfantStoolCollection(InfantScheduledVisitModel):
 
     history = AuditTrail()
 
-    def __unicode__(self):
-        return unicode(self.infant_visit)
-
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Infant Stool Collection"

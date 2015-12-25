@@ -4,17 +4,16 @@ from edc_base.model.fields import OtherCharField
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_DWTA
 
-from ..maternal_choices import REASON_UNSEEN_AT_CLINIC, REASON_CONTRACEPTIVE_NOT_INITIATED
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 from microbiome.apps.mb_list.models import Contraceptives
-from .maternal_consent import MaternalConsent
+
+from ..maternal_choices import REASON_UNSEEN_AT_CLINIC, REASON_CONTRACEPTIVE_NOT_INITIATED
+
+from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalSrh(MaternalScheduledVisitModel):
 
     """ A model completed by the user on the mother's use of sexual reproductive health services. """
-
-    CONSENT_MODEL = MaternalConsent
 
     seen_at_clinic = models.CharField(
         verbose_name=('At the last visit, you had asked to be referred to the Sexual'

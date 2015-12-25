@@ -31,7 +31,7 @@ DEVELOPER_HOSTS = [
 APP_NAME = 'mb'
 PROJECT_TITLE = 'Gut Microbiome Evolution'
 INSTITUTION = 'Botswana-Harvard AIDS Institute'
-PROTOCOL_REVISION = 'UNDEFINED'
+PROTOCOL_REVISION = 'v1.0'
 
 SOURCE_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
 BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
@@ -65,6 +65,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
+    'edc_templates',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,7 +82,6 @@ INSTALLED_APPS = [
     'edc_death_report',
     'edc_device',
     'edc_offstudy',
-    'edc_templates',
     'edc_visit_tracking',
     'edc_appointment',
     'edc_visit_schedule',
@@ -188,9 +188,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages")
 
 ROOT_URLCONF = 'microbiome.config.urls'
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, 'templates'),
-)
+
+TEMPLATE_DIRS = ()
 
 TEMPLATE_LOADERS = (
     # ( 'django.template.loaders.cached.Loader', (

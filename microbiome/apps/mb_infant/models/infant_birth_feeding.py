@@ -1,14 +1,13 @@
-from django.core.urlresolvers import reverse
 from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_visit_tracking.models import CrfInlineModelMixin
 
 from microbiome.apps.mb.choices import FEEDING_CHOICES
 
-from ..managers import InfantInlineModelManager
-
 from ..choices import INFANT_VACCINATIONS
+from ..managers import InfantInlineModelManager
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
 
@@ -36,7 +35,9 @@ class InfantBirthFeedVaccine(InfantScheduledVisitModel):
         verbose_name = "Birth Feeding & Vaccination"
 
 
-class InfantVaccines(BaseUuidModel):
+class InfantVaccines(CrfInlineModelMixin, BaseUuidModel):
+
+    fk_model_attr = 'infant_birth_feed_vaccine'
 
     infant_birth_feed_vaccine = models.ForeignKey(InfantBirthFeedVaccine)
 
@@ -45,36 +46,16 @@ class InfantVaccines(BaseUuidModel):
         verbose_name="Since delivery, did the child receive any of the following vaccinations",
         max_length=100,
         null=True,
-        blank=True,
-    )
+        blank=True)
 
     vaccine_date = models.DateField(
         verbose_name='Date Vaccine was given',
         null=True,
-        blank=True,
-    )
-
-    history = AuditTrail()
+        blank=True)
 
     objects = InfantInlineModelManager()
 
-    def __unicode__(self):
-        return unicode(self.get_visit())
-
-    def get_visit(self):
-        return self.infant_birth_feed_vaccine.get_visit()
-
-    def get_report_datetime(self):
-        return self.infant_birth_feed_vaccine.get_report_datetime()
-
-    def get_subject_identifier(self):
-        return self.infant_birth_feed_vaccine.get_subject_identifier()
-
-    def get_absolute_url(self):
-        return reverse('admin:mb_infant_infantvaccines_change', args=(self.id,))
-
-    def natural_key(self):
-        return self.get_visit().natural_key()
+    history = AuditTrail()
 
     class Meta:
         app_label = 'mb_infant'

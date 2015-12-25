@@ -2,12 +2,20 @@ from django import forms
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
 from edc_base.form.forms import BaseModelForm
-from microbiome.apps.mb.choices import VISIT_REASON, VISIT_INFO_SOURCE
+from microbiome.apps.mb.choices import VISIT_REASON, VISIT_INFO_SOURCE, MATERNAL_VISIT_STUDY_STATUS
 
 from ..models import MaternalVisit, MaternalConsent
+from edc_constants.constants import ON_STUDY
 
 
 class MaternalVisitForm (BaseModelForm):
+
+    study_status = forms.ChoiceField(
+        label='What is the mother\'s current study status',
+        choices=MATERNAL_VISIT_STUDY_STATUS,
+        initial=ON_STUDY,
+        help_text="",
+        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     reason = forms.ChoiceField(
         label='Reason for visit',

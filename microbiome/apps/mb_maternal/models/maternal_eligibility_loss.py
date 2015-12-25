@@ -1,10 +1,10 @@
 from django.db import models
+from django.utils import timezone
 
 from edc_base.audit_trail import AuditTrail
 from edc.device.sync.models import BaseSyncUuidModel
 
 from .maternal_eligibility import MaternalEligibility
-from django.utils import timezone
 
 from ..managers import MaternalEligibilityLossManager
 

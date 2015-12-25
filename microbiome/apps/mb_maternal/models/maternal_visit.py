@@ -4,24 +4,24 @@ from edc.entry_meta_data.models import MetaDataMixin
 from edc_base.audit_trail import AuditTrail
 from edc.device.sync.models import BaseSyncUuidModel
 from edc_consent.models import RequiresConsentMixin
-from edc_constants.constants import OFF_STUDY, YES, POS, UNSCHEDULED, NEG, DEATH_VISIT
+from edc_constants.constants import YES, POS, UNSCHEDULED, NEG, DEATH_VISIT, COMPLETED_PROTOCOL_VISIT
+from edc_offstudy.models import OffStudyMixin
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
-from edc_visit_tracking.models import BaseVisitTracking
-from edc_visit_tracking.models import PreviousVisitMixin
+from edc_visit_tracking.models import BaseVisitTracking, PreviousVisitMixin
 
 from microbiome.apps.mb.choices import VISIT_REASON
 
 from ..models import MaternalConsent, PostnatalEnrollment, AntenatalEnrollment
 
-from .maternal_off_study_mixin import MaternalOffStudyMixin
 
-
-class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, RequiresConsentMixin,
+class MaternalVisit(OffStudyMixin, PreviousVisitMixin, MetaDataMixin, RequiresConsentMixin,
                     BaseVisitTracking, BaseSyncUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 
-    CONSENT_MODEL = MaternalConsent
+    consent_model = MaternalConsent
+
+    off_study_model = ('mb_maternal', 'MaternalOffStudy')
 
     history = AuditTrail()
 
@@ -33,7 +33,7 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
         if not self.is_eligible():
-            self.reason = OFF_STUDY
+            self.reason = COMPLETED_PROTOCOL_VISIT
         super(MaternalVisit, self).save(*args, **kwargs)
 
     def get_visit_reason_choices(self):
@@ -64,7 +64,7 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
         """Custom methods that manipulate meta data on the post save.
 
         This method is called in the edc.entry_meta_data signal."""
-        if self.reason == OFF_STUDY:
+        if self.reason == COMPLETED_PROTOCOL_VISIT:
             self.change_to_off_study_visit(self.appointment, 'mb_maternal', 'maternaloffstudy')
         elif self.reason == DEATH_VISIT:
             self.change_to_death_visit(
@@ -194,4 +194,3 @@ class MaternalVisit(MaternalOffStudyMixin, PreviousVisitMixin, MetaDataMixin, Re
     class Meta:
         app_label = 'mb_maternal'
         verbose_name = 'Maternal Visit'
-        verbose_name_plural = 'Maternal Visit'

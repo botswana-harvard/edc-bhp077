@@ -34,8 +34,7 @@ class MaternalEligibilityAdmin(BaseModelAdmin):
             description="CSV Export of Maternal Eligibility",
             fields=[],
             delimiter=',',
-            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
-                     'hostname_modified'],
+            exclude=['user_created', 'user_modified', 'hostname_created', 'hostname_modified'],
             extra_fields=OrderedDict(
                 {'subject_identifier': 'registered_subject__subject_identifier',
                  'gender': 'registered_subject__gender',

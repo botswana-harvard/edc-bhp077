@@ -7,6 +7,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc.device.sync.models import BaseSyncUuidModel
 from edc_constants.choices import YES_NO
+from edc_visit_tracking.models import CrfInlineModelMixin
 
 from microbiome.apps.mb_list.models import ChronicConditions
 
@@ -14,79 +15,65 @@ from ..managers import MaternalPostFuDxTManager
 from ..maternal_choices import DX
 
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
-from .maternal_consent import MaternalConsent
 
 
 class MaternalPostFu(MaternalScheduledVisitModel):
 
     """ A model completed by the user on the mother's General post-partum follow-up. """
 
-    CONSENT_MODEL = MaternalConsent
-
     weight_measured = models.CharField(
-        max_length=3,
-        choices=YES_NO,
         verbose_name="Was the mother's weight measured at this visit?",
-        help_text="",)
+        max_length=3,
+        choices=YES_NO)
 
     weight_kg = models.DecimalField(
+        verbose_name="Enter mother's weight  ",
         max_digits=4,
         decimal_places=1,
-        verbose_name="Enter mother's weight  ",
         help_text="kg",
         blank=True,
-        null=True,)
+        null=True)
 
     systolic_bp = models.IntegerField(
-        max_length=3,
         verbose_name="Mother's systolic blood pressure?",
+        max_length=3,
         validators=[MinValueValidator(75), MaxValueValidator(220), ],
-        help_text="in mm e.g. 120, should be between 75 and 220.",
-    )
+        help_text="in mm e.g. 120, should be between 75 and 220.")
 
     diastolic_bp = models.IntegerField(
-        max_length=3,
         verbose_name="Mother's diastolic blood pressure?",
+        max_length=3,
         validators=[MinValueValidator(35), MaxValueValidator(130), ],
-        help_text="in hg e.g. 80, should be between 35 and 130.",
-    )
+        help_text="in hg e.g. 80, should be between 35 and 130.")
 
     breastfed_since = models.CharField(
-        max_length=3,
         verbose_name="Has the mother breastfed since the last attended visit?",
-        choices=YES_NO,
-        help_text="",
-    )
+        max_length=3,
+        choices=YES_NO)
 
     mastitis_since = models.CharField(
-        max_length=3,
         verbose_name="If yes,since the last attended scheduled visit,has the mother had mastitis at any time?",
-        choices=YES_NO,
-        help_text="",
-    )
+        max_length=3,
+        choices=YES_NO)
 
     chronic_since = models.CharField(
-        max_length=3,
-        choices=YES_NO,
         verbose_name=(
             "Since the last attended scheduled visit, has the mother had any of the "
             "following chronic health conditions, which were NEW diagnoses (never previously reported)?"),
-        help_text="",
-    )
+        max_length=3,
+        choices=YES_NO)
 
     chronic = models.ManyToManyField(
         ChronicConditions,
-        verbose_name="Select all that apply",
-        help_text="",
-    )
+        verbose_name="Select all that apply")
 
     chronic_other = OtherCharField()
 
     comment = models.CharField(
-        max_length=350,
         verbose_name="Comment if any additional pertinent information: ",
+        max_length=350,
         blank=True,
-        null=True,)
+        null=True)
 
     history = AuditTrail()
 
@@ -99,9 +86,6 @@ class MaternalPostFu(MaternalScheduledVisitModel):
 class MaternalPostFuDx(MaternalScheduledVisitModel):
 
     """ Post-partum follow up of diagnosis. """
-    CONSENT_MODEL = MaternalConsent
-
-    maternal_post_fu = models.OneToOneField(MaternalPostFu)
 
     hospitalized_since = models.CharField(
         max_length=3,
@@ -138,57 +122,44 @@ class MaternalPostFuDx(MaternalScheduledVisitModel):
         verbose_name_plural = "Maternal Postnatal Follow-Up: Dx"
 
 
-class MaternalPostFuDxT(BaseSyncUuidModel):
+class MaternalPostFuDxT(CrfInlineModelMixin, BaseSyncUuidModel):
 
     """ Post-partum follow up of diagnosis (transactions). """
+
+    fk_model_attr = 'maternal_post_fu_dx'
 
     maternal_post_fu_dx = models.ForeignKey(MaternalPostFuDx)
 
     post_fu_dx = models.CharField(
+        verbose_name="Diagnosis",
         max_length=100,
         choices=DX,
-        verbose_name="Diagnosis",
         blank=True,
-        null=True,
-        help_text="",)
+        null=True)
+
     post_fu_specify = models.CharField(
-        max_length=100,
         verbose_name="Diagnosis specification",
-        help_text="",
+        max_length=100,
         blank=True,
-        null=True,)
+        null=True)
+
     grade = models.IntegerField(
+        verbose_name="Grade",
         max_length=3,
         choices=GRADING_SCALE,
-        verbose_name="Grade",
         blank=True,
-        null=True,)
+        null=True)
+
     hospitalized = models.CharField(
+        verbose_name="Hospitalized",
         choices=YES_NO,
         max_length=3,
-        verbose_name="Hospitalized",
         blank=True,
-        null=True,
-        help_text="",)
+        null=True)
 
     objects = MaternalPostFuDxTManager()
 
     history = AuditTrail()
-
-    def natural_key(self):
-        return (self.post_fu_dx, ) + self.maternal_post_fu_dx.natural_key()
-
-    def get_visit(self):
-        return self.maternal_post_fu_dx.get_visit()
-
-    def get_report_datetime(self):
-        return self.maternal_post_fu_dx.get_report_datetime()
-
-    def get_subject_identifier(self):
-        return self.maternal_post_fu_dx.get_subject_identifier()
-
-    def __unicode__(self):
-        return unicode(self.get_visit())
 
     class Meta:
         app_label = 'mb_maternal'

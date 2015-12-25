@@ -33,8 +33,8 @@ class MaternalOffStudyForm (BaseMaternalModelForm):
                     raise forms.ValidationError("Off study date cannot be before consent date")
                 if cleaned_data.get('offstudy_date') < maternal_consent.dob:
                     raise forms.ValidationError("Off study date cannot be before dob")
-            except AttributeError as err:
-                print err
+            except AttributeError:
+                pass
         except MaternalConsent.DoesNotExist:
             raise forms.ValidationError('Maternal Consent does not exist.')
 

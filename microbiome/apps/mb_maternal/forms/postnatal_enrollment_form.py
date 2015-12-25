@@ -25,7 +25,7 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
         antenatal_enrollment = self.get_antenatal_enrollment(cleaned_data.get('registered_subject'))
         if antenatal_enrollment:
             self.previous_visit_complete()
-            self.is_eligible_on_antenatal_enrollment(antenatal_enrollment.is_eligible)
+            self.has_eligible_antenatal_enrollment(antenatal_enrollment.is_eligible)
             self.hiv_status_matches_antenatal_enrollment(
                 antenatal_enrollment.current_hiv_status,
                 antenatal_enrollment.evidence_hiv_status)
@@ -55,7 +55,7 @@ class PostnatalEnrollmentForm(BaseEnrollmentForm):
                 raise forms.ValidationError("Live infants cannot be greater than 8.")
         return live_infants
 
-    def is_eligible_on_antenatal_enrollment(self, is_eligible):
+    def has_eligible_antenatal_enrollment(self, is_eligible):
         """Confirms that mother was eligible at Antenatal if the Antenatal Enrollment form was complete."""
         if not is_eligible:
             raise forms.ValidationError(

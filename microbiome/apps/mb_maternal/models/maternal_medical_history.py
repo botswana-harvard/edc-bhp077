@@ -14,7 +14,7 @@ class MaternalMedicalHistory(MaternalScheduledVisitModel):
 
     """ A model completed by the user on Medical History for all mothers. """
 
-    CONSENT_MODEL = MaternalConsent
+    consent_model = MaternalConsent
 
     chronic_since = models.CharField(
         max_length=25,

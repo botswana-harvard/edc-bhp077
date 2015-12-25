@@ -1,21 +1,16 @@
-from collections import OrderedDict
-
 from django.contrib import admin
 
-from edc_base.modeladmin.admin import BaseModelAdmin
-from edc.export.actions import export_as_csv_action
-from edc.subject.registration.models import RegisteredSubject
-
 from ..forms import MaternalDeathReportForm
-from ..models import MaternalDeathReport, MaternalVisit
+from ..models import MaternalDeathReport
+
+from .base_maternal_model_admin import BaseMaternalModelAdmin
 
 
-class MaternalDeathReportAdmin(BaseModelAdmin):
+class MaternalDeathReportAdmin(BaseMaternalModelAdmin):
 
     form = MaternalDeathReportForm
     fields = (
         "maternal_visit",
-        "registered_subject",
         "report_datetime",
         "death_date",
         "cause",
@@ -41,25 +36,5 @@ class MaternalDeathReportAdmin(BaseModelAdmin):
         "diagnosis_code": admin.VERTICAL,
         "medical_responsibility": admin.VERTICAL,
         "reason_hospitalized": admin.VERTICAL}
-
-    actions = [
-        export_as_csv_action(
-            description="CSV Export of Maternal Death",
-            fields=[],
-            delimiter=',',
-            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
-                     'hostname_modified'],
-            extra_fields=OrderedDict(
-                {'subject_identifier': 'registered_subject__subject_identifier',
-                 'gender': 'registered_subject__gender',
-                 'dob': 'registered_subject__dob',
-                 }),
-        )]
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "maternal_visit":
-            if request.GET.get('maternal_visit'):
-                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
-        return super(MaternalDeathReportAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalDeathReport, MaternalDeathReportAdmin)

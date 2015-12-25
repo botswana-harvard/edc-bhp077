@@ -4,6 +4,7 @@ from edc_base.model.fields import OtherCharField
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_UNKNOWN
 from edc_base.model.models import BaseUuidModel
+from edc_visit_tracking.models import CrfInlineModelMixin
 
 from microbiome.apps.mb.choices import REASONS_VACCINES_MISSED
 
@@ -31,18 +32,17 @@ class InfantFuImmunizations(InfantScheduledVisitModel):
 
     history = AuditTrail()
 
-    def __unicode__(self):
-        return unicode(self.infant_visit)
-
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Infant FollowUp: Immunizations"
         verbose_name_plural = "Infant FollowUp: Immunizations"
 
 
-class VaccinesReceived(BaseUuidModel):
+class VaccinesReceived(CrfInlineModelMixin, BaseUuidModel):
 
     """ALL possible vaccines given to infant"""
+
+    fk_model_attr = 'infant_fu_immunizations'
 
     infant_fu_immunizations = models.ForeignKey(InfantFuImmunizations)
 
@@ -69,30 +69,17 @@ class VaccinesReceived(BaseUuidModel):
 
     history = AuditTrail()
 
-    def natural_key(self):
-        return self.get_visit().natural_key()
-
-    def __unicode__(self):
-        return unicode(self.infant_fu_immunizations)
-
-    def get_visit(self):
-        return self.infant_fu_immunizations.infant_visit
-
-    def get_report_datetime(self):
-        return self.get_visit().get_report_datetime()
-
-    def get_subject_identifier(self):
-        return self.get_visit().get_subject_identifier()
-
     class Meta:
         app_label = 'mb_infant'
         verbose_name = 'Received Vaccines'
         verbose_name_plural = 'Received Vaccines'
 
 
-class VaccinesMissed(BaseUuidModel):
+class VaccinesMissed(CrfInlineModelMixin, BaseUuidModel):
 
     """ALL vaccines missed by infant"""
+
+    fk_model_attr = 'infant_fu_immunizations'
 
     infant_fu_immunizations = models.ForeignKey(InfantFuImmunizations)
 
@@ -115,21 +102,6 @@ class VaccinesMissed(BaseUuidModel):
     objects = InfantInlineModelManager()
 
     history = AuditTrail()
-
-    def __unicode__(self):
-        return unicode(self.infant_fu_immunizations)
-
-    def natural_key(self):
-        return self.get_visit().natural_key()
-
-    def get_visit(self):
-        return self.infant_fu_immunizations.infant_visit
-
-    def get_report_datetime(self):
-        return self.get_visit().get_report_datetime()
-
-    def get_subject_identifier(self):
-        return self.get_visit().get_subject_identifier()
 
     class Meta:
         app_label = 'mb_infant'

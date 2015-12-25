@@ -4,9 +4,11 @@ from django.dispatch import receiver
 
 from edc.core.identifier.classes import InfantIdentifier
 from edc.subject.registration.models import RegisteredSubject
-from edc_visit_schedule.models.visit_definition import VisitDefinition
 from edc_appointment.models.appointment import Appointment
-from edc_constants.constants import FEMALE, OFF_STUDY, SCHEDULED, SCREENED, CONSENTED
+from edc_constants.constants import FEMALE, SCHEDULED, SCREENED, CONSENTED, COMPLETED_PROTOCOL_VISIT
+from edc_visit_schedule.models.visit_definition import VisitDefinition
+
+from microbiome.apps.mb.constants import INFANT
 
 from ..models import MaternalOffStudy, MaternalVisit
 
@@ -14,7 +16,6 @@ from .maternal_consent import MaternalConsent
 from .maternal_eligibility import MaternalEligibility
 from .maternal_eligibility_loss import MaternalEligibilityLoss
 from .postnatal_enrollment import PostnatalEnrollment
-from microbiome.apps.mb.constants import INFANT
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")
@@ -97,14 +98,14 @@ def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
                     registered_subject=instance.registered_subject,
                     visit_definition=visit_definition)
                 maternal_visit = MaternalVisit.objects.get(appointment=appointment)
-                if maternal_visit.reason != OFF_STUDY:
-                    maternal_visit.reason = OFF_STUDY
+                if maternal_visit.reason != COMPLETED_PROTOCOL_VISIT:
+                    maternal_visit.reason = COMPLETED_PROTOCOL_VISIT
                     maternal_visit.save()
         except MaternalVisit.DoesNotExist:
             MaternalVisit.objects.create(
                 appointment=appointment,
                 report_datetime=report_datetime,
-                reason=OFF_STUDY)
+                reason=COMPLETED_PROTOCOL_VISIT)
         except AttributeError as e:
             if 'is_eligible' not in str(e) and 'off_study_visit_code' not in str(e):
                 raise
@@ -125,7 +126,7 @@ def change_off_study_visit_to_scheduled(instance):
                 visit_definition=visit_definition)
             maternal_visit = MaternalVisit.objects.get(
                 appointment=appointment,
-                reason=OFF_STUDY)
+                reason=COMPLETED_PROTOCOL_VISIT)
             maternal_visit.reason = SCHEDULED
             maternal_visit.save()
         except MaternalVisit.DoesNotExist:
@@ -188,7 +189,7 @@ def create_infant_identifier_on_labour_delivery(sender, instance, raw, created, 
         try:
             if instance.live_infants_to_register == 1:
                 maternal_registered_subject = instance.maternal_visit.appointment.registered_subject
-                maternal_consent = instance.CONSENT_MODEL.objects.get(
+                maternal_consent = instance.consent_model.objects.get(
                     registered_subject=maternal_registered_subject)
                 postnatal_enrollment = PostnatalEnrollment.objects.get(
                     registered_subject=maternal_consent.registered_subject)

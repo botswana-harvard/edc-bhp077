@@ -6,20 +6,22 @@ from edc_appointment.models import AppointmentMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 from edc_consent.models import RequiresConsentMixin
+from edc_offstudy.models import OffStudyMixin
 
 from ..managers import AntenatalEnrollmentManager
 
 from .enrollment_helper import EnrollmentError
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
-from .maternal_off_study_mixin import MaternalOffStudyMixin
 from .postnatal_enrollment import PostnatalEnrollment
 
 
-class AntenatalEnrollment(EnrollmentMixin, MaternalOffStudyMixin, AppointmentMixin,
+class AntenatalEnrollment(EnrollmentMixin, OffStudyMixin, AppointmentMixin,
                           RequiresConsentMixin, BaseSyncUuidModel):
 
-    CONSENT_MODEL = MaternalConsent
+    consent_model = MaternalConsent
+
+    off_study_model = ('mb_maternal', 'MaternalOffStudy')
 
     weeks_base_field = 'gestation_wks'  # for rapid test required calc
 

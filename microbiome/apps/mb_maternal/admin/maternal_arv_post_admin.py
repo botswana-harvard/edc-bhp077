@@ -3,10 +3,12 @@ from collections import OrderedDict
 from django.contrib import admin
 
 from edc.export.actions import export_as_csv_action
-from edc_base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
+from edc_base.modeladmin.admin import BaseTabularInline
 from ..forms import MaternalArvPostForm, MaternalArvPostModForm, MaternalArvPostAdhForm
 
 from ..models import MaternalVisit, MaternalArvPost, MaternalArvPostMod, MaternalArvPostAdh
+
+from .base_maternal_model_admin import BaseMaternalModelAdmin
 
 
 class MaternalArvPostModInlineAdmin(BaseTabularInline):
@@ -16,7 +18,7 @@ class MaternalArvPostModInlineAdmin(BaseTabularInline):
     extra = 1
 
 
-class MaternalArvPostModAdmin(BaseModelAdmin):
+class MaternalArvPostModAdmin(BaseMaternalModelAdmin):
 
     form = MaternalArvPostModForm
     list_display = ('maternal_arv_post', 'arv_code', 'dose_status', 'modification_date', 'modification_code')
@@ -46,17 +48,10 @@ class MaternalArvPostModAdmin(BaseModelAdmin):
                  }),
         )]
 
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "maternal_arv_post":
-            if request.GET.get('maternal_visit'):
-                kwargs["queryset"] = MaternalArvPost.objects.filter(
-                    maternal_visit__id=request.GET.get('maternal_visit'))
-        return super(MaternalArvPostAdhAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
 admin.site.register(MaternalArvPostMod, MaternalArvPostModAdmin)
 
 
-class MaternalArvPostAdmin(BaseModelAdmin):
+class MaternalArvPostAdmin(BaseMaternalModelAdmin):
 
     form = MaternalArvPostForm
 
@@ -96,7 +91,7 @@ class MaternalArvPostAdmin(BaseModelAdmin):
 admin.site.register(MaternalArvPost, MaternalArvPostAdmin)
 
 
-class MaternalArvPostAdhAdmin(BaseModelAdmin):
+class MaternalArvPostAdhAdmin(BaseMaternalModelAdmin):
 
     form = MaternalArvPostAdhForm
     fields = (
@@ -120,14 +115,5 @@ class MaternalArvPostAdhAdmin(BaseModelAdmin):
                  'dob': 'maternal_visit__appointment__registered_subject__dob',
                  'registered': 'maternal_visit__appointment__registered_subject__registration_datetime'}),
         )]
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "maternal_visit":
-                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
-        if db_field.name == "maternal_arv_post":
-            if request.GET.get('maternal_visit'):
-                kwargs["queryset"] = MaternalArvPost.objects.filter(
-                    maternal_visit__id=request.GET.get('maternal_visit'))
-        return super(MaternalArvPostAdhAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalArvPostAdh, MaternalArvPostAdhAdmin)

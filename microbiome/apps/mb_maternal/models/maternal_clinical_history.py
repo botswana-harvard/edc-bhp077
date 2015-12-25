@@ -7,13 +7,10 @@ from edc_constants.choices import YES_NO_NA, YES_NO
 
 from ..maternal_choices import KNOW_HIV_STATUS
 
-from .maternal_consent import MaternalConsent
 from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
 
 
 class MaternalClinicalHistory(MaternalScheduledVisitModel):
-
-    CONSENT_MODEL = MaternalConsent
 
     """ A model completed by the user on Clinical History for infected mothers only. """
 

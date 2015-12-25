@@ -20,11 +20,11 @@ class InfantVisitAdmin(BaseAppointmentModelAdmin):
 
     requisition_model = InfantRequisition
 
-    list_display = ('information_provider', 'information_provider_other', 'study_status', 'is_present')
+    list_display = ('information_provider', 'information_provider_other',
+                    'study_status', 'is_present', 'survival_status')
 
     radio_fields = {
         'information_provider': admin.VERTICAL,
-        'study_status': admin.VERTICAL,
         'survival_status': admin.VERTICAL,
         'is_present': admin.VERTICAL}
 
@@ -33,8 +33,8 @@ class InfantVisitAdmin(BaseAppointmentModelAdmin):
             description="CSV Export of Infant Visit",
             fields=[],
             delimiter=',',
-            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
-                     'hostname_modified'],
+            exclude=['created', 'modified', 'user_created', 'user_modified',
+                     'revision', 'id', 'hostname_created', 'hostname_modified'],
             extra_fields=OrderedDict(
                 {'subject_identifier': 'appointment__registered_subject__subject_identifier',
                  'gender': 'appointment__registered_subject__gender',

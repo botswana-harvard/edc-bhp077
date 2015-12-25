@@ -6,7 +6,7 @@ from edc.export.actions import export_as_csv_action
 from edc_base.modeladmin.admin import BaseTabularInline
 
 from ..forms import MaternalArvPregForm, MaternalArvForm
-from ..models import MaternalArvPreg, MaternalArv, MaternalVisit
+from ..models import MaternalArvPreg, MaternalArv
 
 from .base_maternal_model_admin import BaseMaternalModelAdmin
 
@@ -63,10 +63,5 @@ class MaternalArvPregAdmin(BaseMaternalModelAdmin):
                  'dob': 'maternal_arv_preg__maternal_visit__appointment__registered_subject__dob',
                  }),
         )]
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "maternal_visit":
-                kwargs["queryset"] = MaternalVisit.objects.filter(id=request.GET.get('maternal_visit'))
-        return super(MaternalArvPregAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalArvPreg, MaternalArvPregAdmin)
