@@ -4,6 +4,7 @@ from django.contrib import admin
 
 from edc.export.actions import export_as_csv_action
 from edc_base.modeladmin.admin import BaseModelAdmin
+from edc.subject.registration.models.registered_subject import RegisteredSubject
 
 from ..forms import InfantDeathReportForm
 from ..models import InfantDeathReport, InfantVisit
@@ -15,6 +16,8 @@ class InfantDeathReportAdmin(BaseModelAdmin):
 
     fields = (
         "infant_visit",
+        "registered_subject",
+        "report_datetime",
         "death_date",
         "cause",
         "cause_other",
@@ -69,6 +72,11 @@ class InfantDeathReportAdmin(BaseModelAdmin):
         if db_field.name == "infant_visit":
             if request.GET.get('infant_visit'):
                 kwargs["queryset"] = InfantVisit.objects.filter(id=request.GET.get('infant_visit'))
+        if db_field.name == "registered_subject":
+            if request.GET.get('infant_visit'):
+                infant_visit = InfantVisit.objects.get(id=request.GET.get('infant_visit'))
+                kwargs["queryset"] = RegisteredSubject.objects.filter(
+                    subject_identifier=infant_visit.appointment.registered_subject.subject_identifier)
         return super(InfantDeathReportAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(InfantDeathReport, InfantDeathReportAdmin)

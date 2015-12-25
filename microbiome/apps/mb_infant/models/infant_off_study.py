@@ -1,10 +1,10 @@
 from django.db import models
 
+from edc.device.sync.models import BaseSyncUuidModel
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_offstudy.models import OffStudyModelMixin
-from edc.device.sync.models import BaseSyncUuidModel
 from edc_visit_tracking.models import CrfModelMixin
 
 from .infant_visit import InfantVisit
