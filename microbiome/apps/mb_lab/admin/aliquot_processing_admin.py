@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from edc.lab.lab_profile.admin import BaseProcessingAdmin
+from edc_lab.lab_profile.admin import BaseProcessingAdmin
 
 from ..models import AliquotProcessing
 

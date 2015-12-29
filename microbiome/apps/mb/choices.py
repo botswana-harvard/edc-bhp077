@@ -4,6 +4,10 @@ from edc_constants.constants import (
 
 from .constants import NO_MODIFICATIONS, START, BREASTFEED_ONLY
 
+STUDY_SITES = (
+    ('40', 'Gaborone'),
+    ('50', 'Mogoditshane'),
+)
 
 VISIT_INFO_SOURCE = [
     ('participant', 'Clinic visit with participant'),

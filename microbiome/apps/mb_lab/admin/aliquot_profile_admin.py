@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseTabularInline
-from edc.lab.lab_profile.admin import BaseProfileAdmin, BaseProfileItemAdmin
+from edc_lab.lab_profile.admin import BaseProfileAdmin, BaseProfileItemAdmin
 
 from ..models import AliquotProfileItem, AliquotProfile
 

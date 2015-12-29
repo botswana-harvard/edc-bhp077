@@ -3,8 +3,9 @@ from datetime import date
 from django.db import models
 
 from edc_base.audit_trail import AuditTrail
-from edc.device.sync.models import BaseSyncUuidModel
+from edc_base.model.models import BaseUuidModel
 from edc_constants.choices import DRUG_ROUTE, YES_NO_UNKNOWN
+from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.models import CrfInlineModelMixin
 
 from microbiome.apps.mb.choices import MEDICATIONS
@@ -31,7 +32,7 @@ class MaternalPostFuMed(MaternalScheduledVisitModel):
         verbose_name = 'Maternal Postnatal: Med'
 
 
-class MaternalPostFuMedItems(CrfInlineModelMixin, BaseSyncUuidModel):
+class MaternalPostFuMedItems(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     fk_model_attr = 'maternal_post_fu_med'
 

@@ -1,21 +1,21 @@
 from django.db import models
 
-from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
-from edc.subject.registration.models import RegisteredSubject
 from edc_appointment.models import AppointmentMixin
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import GENDER_UNDETERMINED
+from edc_offstudy.models import OffStudyMixin
+from edc_registration.models import RegisteredSubject
+from edc_sync.models import SyncModelMixin
 
 from microbiome.apps.mb_maternal.models import MaternalLabourDel
 
 from ..managers import InfantBirthModelManager
 
-from edc_offstudy.models import OffStudyMixin
 
-
-class InfantBirth(OffStudyMixin, AppointmentMixin, BaseSyncUuidModel):
+class InfantBirth(OffStudyMixin, SyncModelMixin, AppointmentMixin, BaseUuidModel):
     """ A model completed by the user on the infant's birth. """
 
     off_study_model = ('mb_infant', 'InfantOffStudy')

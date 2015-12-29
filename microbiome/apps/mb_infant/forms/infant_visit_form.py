@@ -3,7 +3,7 @@ from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRender
 
 from edc_base.form.forms import BaseModelForm
 from edc_constants.constants import ON_STUDY
-from edc_visit_tracking.forms import VisitFormMixin
+from edc_visit_tracking.forms import VisitTrackingFormMixin
 
 from microbiome.apps.mb.choices import VISIT_REASON, VISIT_INFO_SOURCE, INFANT_VISIT_STUDY_STATUS
 from microbiome.apps.mb_maternal.models import MaternalConsent, MaternalDeathReport
@@ -11,7 +11,7 @@ from microbiome.apps.mb_maternal.models import MaternalConsent, MaternalDeathRep
 from ..models import InfantVisit
 
 
-class InfantVisitForm(VisitFormMixin, BaseModelForm):
+class InfantVisitForm(VisitTrackingFormMixin, BaseModelForm):
 
     participant_label = 'infant'
 

@@ -1,17 +1,16 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
+from edc_lab.lab_profile.classes import site_lab_profiles
+from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.registration.models import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, NEG, FEMALE
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb_infant.forms import InfantBirthForm
-from microbiome.apps.mb_infant.models import InfantBirth
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
@@ -19,6 +18,8 @@ from microbiome.apps.mb_maternal.tests.factories import (
     MaternalEligibilityFactory, MaternalVisitFactory, MaternalConsentFactory,
     PostnatalEnrollmentFactory, MaternalLabourDelFactory)
 from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
+
+from microbiome.apps.mb.constants import INFANT
 
 
 class TestInfantBirth(TestCase):
@@ -36,15 +37,16 @@ class TestInfantBirth(TestCase):
         InfantBirthVisitSchedule().build()
 
         maternal_eligibility = MaternalEligibilityFactory()
-        maternal_consent = MaternalConsentFactory(registered_subject=maternal_eligibility.registered_subject)
+        maternal_consent = MaternalConsentFactory(
+            registered_subject=maternal_eligibility.registered_subject)
         registered_subject = maternal_consent.registered_subject
-        PostnatalEnrollmentFactory(
+        postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=registered_subject,
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
             rapid_test_done=YES,
             rapid_test_result=NEG)
-
+        self.assertTrue(postnatal_enrollment.is_eligible)
         appointment1000 = Appointment.objects.get(
             registered_subject=registered_subject,
             visit_definition__code='1000M')
@@ -54,10 +56,11 @@ class TestInfantBirth(TestCase):
 
         MaternalVisitFactory(appointment=appointment1000)
         maternal_visit = MaternalVisitFactory(appointment=appointment2000)
-        self.maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
+        self.maternal_labour_del = MaternalLabourDelFactory(
+            maternal_visit=maternal_visit)
         self.infant_registered_subject = RegisteredSubject.objects.get(
             relative_identifier=registered_subject.subject_identifier,
-            subject_type='infant')
+            subject_type=INFANT)
 
         self.data = {
             'report_datetime': timezone.now(),

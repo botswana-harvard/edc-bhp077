@@ -1,9 +1,10 @@
 import factory
 
-from django.utils import timezone
 from datetime import date
 
-from edc_constants.constants import YES, NO
+from django.utils import timezone
+
+from edc_constants.constants import YES, NO, FEMALE
 
 from microbiome.apps.mb_maternal.models import MaternalConsent
 
@@ -20,7 +21,7 @@ class MaternalConsentFactory(factory.DjangoModelFactory):
     initials = "DD"
     dob = date(1988, 7, 7)
     is_dob_estimated = NO
-    gender = "F"
+    gender = FEMALE
     citizen = YES
     identity = "111121111"
     identity_type = "OMANG"

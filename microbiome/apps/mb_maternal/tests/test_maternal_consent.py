@@ -1,6 +1,6 @@
 from django.utils import timezone
 
-from edc.subject.registration.models.registered_subject import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 
 from microbiome.apps.mb_maternal.forms import MaternalConsentForm
 

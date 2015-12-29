@@ -5,7 +5,7 @@ from microbiome.apps.mb_infant.models import InfantCongenitalAnomalies
 from .infant_visit_factory import InfantVisitFactory
 
 
-class InfantCongenitalAnomaliesFactory():
+class InfantCongenitalAnomaliesFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = InfantCongenitalAnomalies

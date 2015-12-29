@@ -1,4 +1,4 @@
-from edc.lab.lab_requisition.classes import site_requisitions
+from edc_lab.lab_requisition.classes import site_requisitions
 from .models import MaternalRequisition, InfantRequisition
 
 from microbiome.apps.mb.constants import INFANT, MATERNAL

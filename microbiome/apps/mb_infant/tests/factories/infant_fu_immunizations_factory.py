@@ -1,10 +1,8 @@
 import factory
 
-from django.utils import timezone
+from edc_constants.constants import YES, NO
 
 from microbiome.apps.mb_infant.models import InfantFuImmunizations
-
-from edc_constants.constants import YES, NO
 
 
 class InfantFuImmunizationsFactory(factory.DjangoModelFactory):

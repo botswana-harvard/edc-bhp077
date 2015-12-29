@@ -1,19 +1,20 @@
 from django.db import models
 
-from edc.device.sync.models import BaseSyncUuidModel
-from edc.subject.registration.models import RegisteredSubject
 from edc_appointment.models import AppointmentMixin
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin, BaseSpecimenConsent
 from edc_consent.models.fields import SampleCollectionFieldsMixin, VulnerabilityFieldsMixin
+from edc_registration.models import RegisteredSubject
+from edc_sync.models import SyncModelMixin
 
 from ..managers import SpecimenConsentManager
 
 from .maternal_consent import MaternalConsent
 
 
-class SpecimenConsent(BaseSpecimenConsent, SampleCollectionFieldsMixin, RequiresConsentMixin,
-                      VulnerabilityFieldsMixin, AppointmentMixin, BaseSyncUuidModel):
+class SpecimenConsent(BaseSpecimenConsent, SyncModelMixin, SampleCollectionFieldsMixin, RequiresConsentMixin,
+                      VulnerabilityFieldsMixin, AppointmentMixin, BaseUuidModel):
 
     """ A model completed by the user when a mother gives consent for specimen storage. """
 

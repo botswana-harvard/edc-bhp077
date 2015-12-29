@@ -3,6 +3,7 @@ import factory
 from django.utils import timezone
 
 from microbiome.apps.mb_infant.models import InfantBirthArv
+
 from .infant_visit_factory import InfantVisitFactory
 from .infant_birth_factory import InfantBirthFactory
 

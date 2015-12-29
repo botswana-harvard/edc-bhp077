@@ -5,7 +5,7 @@ from django.utils import timezone
 
 from edc.entry_meta_data.models import ScheduledEntryMetaData
 from edc_appointment.models import Appointment
-from edc_constants.constants import YES, NO, POS, NEG, UNKEYED, OFF_STUDY, NOT_APPLICABLE, SCHEDULED,\
+from edc_constants.constants import YES, NO, POS, NEG, UNKEYED, NOT_APPLICABLE, SCHEDULED,\
     COMPLETED_PROTOCOL_VISIT
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT

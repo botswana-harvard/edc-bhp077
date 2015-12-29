@@ -1,5 +1,5 @@
 from edc_dashboard.subject import RegisteredSubjectDashboard
-from edc.subject.registration.models import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.models import InfantVisit, InfantBirth

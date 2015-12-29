@@ -2,9 +2,9 @@ import factory
 
 from django.utils import timezone
 
-from microbiome.apps.mb_infant.models import InfantFuPhysical
-
 from edc_constants.constants import YES
+
+from microbiome.apps.mb_infant.models import InfantFuPhysical
 
 
 class InfantFuPhysicalFactory(factory.DjangoModelFactory):

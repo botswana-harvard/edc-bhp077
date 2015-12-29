@@ -1,16 +1,17 @@
 from django.db import models
 
-from edc.device.sync.models import BaseSyncUuidModel
 from edc.entry_meta_data.managers import EntryMetaDataManager
-from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.models import BaseUuidModel
 from edc_offstudy.models import OffStudyModelMixin
+from edc_registration.models import RegisteredSubject
+from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.models import CrfModelMixin
 
 from .infant_visit import InfantVisit
 
 
-class InfantOffStudy(CrfModelMixin, OffStudyModelMixin, BaseSyncUuidModel):
+class InfantOffStudy(CrfModelMixin, SyncModelMixin, OffStudyModelMixin, BaseUuidModel):
 
     """ A model completed by the user when the infant is taken off study. """
 

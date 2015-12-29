@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from edc.lab.lab_requisition.admin import BaseRequisitionModelAdmin
+from edc_lab.lab_requisition.admin import BaseRequisitionModelAdmin
 
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.models import InfantVisit

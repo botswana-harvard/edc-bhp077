@@ -4,8 +4,6 @@ from django.utils import timezone
 
 from edc_constants.choices import YES, NO
 
-from edc.subject.registration.tests.factories import RegisteredSubjectFactory
-
 from microbiome.apps.mb_maternal.models import AntenatalEnrollment
 
 

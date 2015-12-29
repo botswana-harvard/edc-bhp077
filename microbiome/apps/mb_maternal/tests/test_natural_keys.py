@@ -1,8 +1,7 @@
 from django.core import serializers
-from django.db.models import get_app, get_models
 from django.utils import timezone
 
-from edc.device.sync.classes import SerializeToTransaction
+# from edc.device.sync.classes import SerializeToTransaction
 from edc_appointment.models import Appointment
 from edc_base.encrypted_fields import FieldCryptor
 from edc_constants.choices import POS, YES, NO
@@ -18,26 +17,7 @@ from .base_maternal_test_case import BaseMaternalTestCase
 
 class NaturalKeyTests(BaseMaternalTestCase):
 
-    def test_p1(self):
-        """Confirms all models have a natural_key method (except Audit models)"""
-        app = get_app('mb_maternal')
-        for model in get_models(app):
-            if not model._meta.model_name == 'enrollmenttestmodel':
-                if 'Audit' not in model._meta.object_name:
-                    self.assertTrue(
-                        'natural_key' in dir(model),
-                        'natural key not found in {0}'.format(model._meta.object_name))
-
-    def test_p2(self):
-        """Confirms all models have a get_by_natural_key manager method."""
-        app = get_app('mb_maternal')
-        for model in get_models(app):
-                if 'Audit' not in model._meta.object_name and model._meta.model_name != 'enrollmenttestmodel':
-                    self.assertTrue(
-                        'get_by_natural_key' in dir(model.objects),
-                        'get_by_natural_key key not found in {0}'.format(model._meta.object_name))
-
-    def test_serialisation_deserialize(self):
+    def test_serialize_deserialize(self):
         """Confirms all models have a get_by_natural_key manager method."""
         maternal_eligibility = MaternalEligibilityFactory()
         maternal_consent = MaternalConsentFactory(registered_subject=maternal_eligibility.registered_subject)

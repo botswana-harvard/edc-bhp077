@@ -1,8 +1,10 @@
 from django.db import models
 
-from edc.lab.lab_packing.models import BasePackingListItem
-from edc.subject.registration.models import RegisteredSubject
-from edc.device.sync.models import BaseSyncUuidModel
+from edc_lab.lab_packing.models import BasePackingListItem
+from edc_base.model.models import BaseUuidModel
+from edc_constants.constants import NOT_APPLICABLE
+from edc_registration.models import RegisteredSubject
+from edc_sync.models import SyncModelMixin
 
 from microbiome.apps.mb.constants import INFANT
 
@@ -15,7 +17,7 @@ from .panel import Panel
 from ..managers import PackingListItemManager
 
 
-class PackingListItem(BasePackingListItem, BaseSyncUuidModel):
+class PackingListItem(BasePackingListItem, SyncModelMixin, BaseUuidModel):
 
     packing_list = models.ForeignKey(PackingList, null=True)
 
@@ -29,7 +31,7 @@ class PackingListItem(BasePackingListItem, BaseSyncUuidModel):
     def get_subject_type(self):
         aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
         registered_subject = RegisteredSubject.objects.get(subject_identifier=aliquot.subject_identifier)
-        return registered_subject.subject_type.lower()
+        return registered_subject.subject_type
 
     def save(self, *args, **kwargs):
         if self.item_reference:
@@ -45,7 +47,7 @@ class PackingListItem(BasePackingListItem, BaseSyncUuidModel):
         super(PackingListItem, self).save(*args, **kwargs)
 
     def drawn_datetime(self):
-        retval = "n/a"
+        retval = NOT_APPLICABLE
         if self.item_reference:
             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
             if self.get_subject_type() == INFANT:
@@ -58,7 +60,7 @@ class PackingListItem(BasePackingListItem, BaseSyncUuidModel):
         return retval
 
     def clinician(self):
-        retval = "n/a"
+        retval = NOT_APPLICABLE
         if self.item_reference:
             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
             if self.get_subject_type() == INFANT:
@@ -71,7 +73,7 @@ class PackingListItem(BasePackingListItem, BaseSyncUuidModel):
         return retval
 
     def gender(self):
-        retval = "n/a"
+        retval = NOT_APPLICABLE
         if self.item_reference:
             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
             registered_subject = RegisteredSubject.objects.get(subject_identifier=aliquot.subject_identifier)

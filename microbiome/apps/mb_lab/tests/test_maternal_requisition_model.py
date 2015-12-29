@@ -1,8 +1,7 @@
 from django.test import TestCase
 
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
+from edc_lab.lab_profile.classes import site_lab_profiles
+from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
@@ -36,7 +35,7 @@ class TestMaternalRequisitionModel(TestCase):
         site_lab_tracker.autodiscover()
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
-        self.study_site = StudySiteFactory(site_code=10, site_name='Gabs')
+        self.study_site = '40'
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject,

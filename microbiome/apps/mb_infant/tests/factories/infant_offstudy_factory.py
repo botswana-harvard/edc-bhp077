@@ -2,8 +2,6 @@ import factory
 
 from django.utils import timezone
 
-from edc.subject.registration.tests.factories import RegisteredSubjectFactory
-
 from microbiome.apps.mb_infant.models import InfantOffStudy
 
 from .infant_visit_factory import InfantVisitFactory

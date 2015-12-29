@@ -6,7 +6,6 @@ from edc_constants.constants import NO, YES
 
 from microbiome.apps.mb_maternal.models import MaternalPostFu, MaternalPostFuMed
 
-from .lists_factory import ChronicConditionsFactory
 from .maternal_visit_factory import MaternalVisitFactory
 
 

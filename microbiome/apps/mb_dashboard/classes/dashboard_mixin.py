@@ -1,4 +1,4 @@
-from edc.lab.lab_clinic_api.classes import EdcLabResults
+from edc_lab.lab_clinic_api.classes import EdcLabResults
 
 
 class DashboardMixin(object):

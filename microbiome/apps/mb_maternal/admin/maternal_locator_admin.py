@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from edc.subject.registration.models import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 from edc_locator.admin import BaseLocatorModelAdmin
 
 from ..models import MaternalLocator

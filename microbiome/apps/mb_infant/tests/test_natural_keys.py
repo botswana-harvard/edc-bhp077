@@ -2,20 +2,18 @@ from django.utils import timezone
 from datetime import date
 
 from django.core import serializers
-from django.db.models import get_app, get_models
 from django.test import TestCase
 
 from edc_appointment.models import Appointment
-from edc_constants.constants import YES, POS, OFF_STUDY, COMPLETED_PROTOCOL_VISIT
+from edc_constants.constants import YES, POS, COMPLETED_PROTOCOL_VISIT
 
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
+from edc_lab.lab_profile.classes import site_lab_profiles
+from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc.subject.rule_groups.classes import site_rule_groups
 from edc.subject.lab_tracker.classes import site_lab_tracker
 
-from edc.core.crypto_fields.classes import FieldCryptor
-from edc.device.sync.classes import SerializeToTransaction
-from edc.subject.registration.models import RegisteredSubject
+from edc_base.encrypted_fields import FieldCryptor
+from edc_registration.models import RegisteredSubject
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb.constants import INFANT
@@ -72,24 +70,6 @@ class TestNaturalKey(TestCase):
             subject_type=INFANT, relative_identifier=self.registered_subject.subject_identifier)
 #         self.infant_birth = InfantBirthFactory(
 #             registered_subject=self.registered_subject_infant, maternal_labour_del=self.maternal_labour_del)
-
-    def test_has_natural_key_method(self):
-        """Confirms all models have a natural_key method (except Audit models)"""
-        app = get_app('mb_infant')
-        for model in get_models(app):
-            if 'Audit' not in model._meta.object_name:
-                self.assertTrue(
-                    'natural_key' in dir(model),
-                    'natural key not found in {0}'.format(model._meta.object_name))
-
-    def test_has_get_by_natural_key(self):
-        """Confirms all models have a get_by_natural_key manager method."""
-        app = get_app('mb_infant')
-        for model in get_models(app):
-            if 'Audit' not in model._meta.object_name:
-                self.assertTrue(
-                    'get_by_natural_key' in dir(
-                        model.objects), 'get_by_natural_key key not found in {0}'.format(model._meta.object_name))
 
     def test_serializing_deserialing_infant_birth(self):
         infant_birth = InfantBirthFactory(

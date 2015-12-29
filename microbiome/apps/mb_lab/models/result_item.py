@@ -1,7 +1,9 @@
 from django.db import models
 
-from edc.lab.lab_clinic_api.models import TestCode
-from edc.lab.lab_clinic_reference.classes import ClinicReferenceFlag, ClinicGradeFlag
+from edc_lab.lab_clinic_api.models import TestCode
+from edc_lab.lab_clinic_reference.classes import ClinicReferenceFlag, ClinicGradeFlag
+from edc_base.model.models import BaseUuidModel
+from edc_sync.models import SyncModelMixin
 
 from lis.specimen.lab_result_item.models import BaseResultItem
 
@@ -9,7 +11,7 @@ from .result import Result
 from ..managers import ResultItemManager
 
 
-class ResultItem(BaseResultItem):
+class ResultItem(BaseResultItem, SyncModelMixin, BaseUuidModel):
     """Stores each result item in a result in one-to-many relation with :class:`Result`."""
     test_code = models.ForeignKey(TestCode, related_name='+')
 

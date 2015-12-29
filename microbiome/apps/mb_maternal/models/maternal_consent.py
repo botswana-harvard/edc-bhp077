@@ -1,27 +1,27 @@
 from django.db import models
 from django.conf import settings
 
-from edc.core.bhp_variables.models import StudySite
-from edc.core.bhp_variables.utils import default_study_site
-from edc.core.identifier.classes import SubjectIdentifier
-from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
-from edc.device.sync.models import BaseSyncUuidModel
+from edc_base.model.models import BaseUuidModel
 from edc_consent.models.base_consent import BaseConsent
 from edc_consent.models.fields import (
     PersonalFieldsMixin, CitizenFieldsMixin, ReviewFieldsMixin, VulnerabilityFieldsMixin)
 from edc_consent.models.fields.bw import IdentityFieldsMixin
+from edc_identifier.subject.classes import SubjectIdentifier
 from edc_offstudy.models import OffStudyMixin
+from edc_registration.models import RegisteredSubject
+from edc_sync.models import SyncModelMixin
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
+from microbiome.apps.mb.choices import STUDY_SITES
 
 from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 
 
-class MaternalConsent(BaseConsent, OffStudyMixin, ReviewFieldsMixin,
+class MaternalConsent(BaseConsent, SyncModelMixin, OffStudyMixin, ReviewFieldsMixin,
                       IdentityFieldsMixin, PersonalFieldsMixin,
-                      CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseSyncUuidModel):
+                      CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
 
     """ A model completed by the user on the mother's consent. """
 
@@ -32,7 +32,10 @@ class MaternalConsent(BaseConsent, OffStudyMixin, ReviewFieldsMixin,
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
-    study_site = models.ForeignKey(StudySite, default=lambda: default_study_site('site_code', settings.SITE_CODE))
+    study_site = models.CharField(
+        max_length=10,
+        choices=STUDY_SITES,
+        default=settings.SITE_CODE)
 
     recruit_source = models.CharField(
         max_length=75,
@@ -63,8 +66,9 @@ class MaternalConsent(BaseConsent, OffStudyMixin, ReviewFieldsMixin,
                                           self.last_name, self.initials)
 
     def save(self, *args, **kwargs):
-        self.subject_identifier = SubjectIdentifier(site_code=self.study_site.site_code).get_identifier()
-        self.gender = self.maternal_eligibility.registered_subject.gender
+        if not self.id:
+            self.subject_identifier = SubjectIdentifier(
+                site_code=self.study_site).get_identifier()
         super(MaternalConsent, self).save(*args, **kwargs)
 
     def get_registration_datetime(self):
@@ -73,16 +77,6 @@ class MaternalConsent(BaseConsent, OffStudyMixin, ReviewFieldsMixin,
     def get_subject_identifier(self):
         return self.subject_identifier
 
-    @property
-    def maternal_eligibility(self):
-        from ..models import MaternalEligibility
-        try:
-            maternal_eligibility = MaternalEligibility.objects.get(registered_subject=self.registered_subject)
-            return maternal_eligibility
-        except MaternalEligibility.DoesNotExist:
-            return None
-
     class Meta:
         app_label = 'mb_maternal'
         verbose_name = 'Maternal Consent'
-        verbose_name_plural = 'Maternal Consent'

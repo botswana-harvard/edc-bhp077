@@ -1,22 +1,24 @@
 from django.db import models
 
-from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
 from edc.entry_meta_data.models import MetaDataMixin
-from edc.subject.registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import date_not_before_study_start, date_not_future
 from edc_constants.choices import YES_NO, ALIVE_DEAD_UNKNOWN
-from edc_constants.constants import OFF_STUDY, DEATH_VISIT, UNSCHEDULED, SCHEDULED, COMPLETED_PROTOCOL_VISIT
+from edc_constants.constants import DEATH_VISIT, UNSCHEDULED, SCHEDULED, COMPLETED_PROTOCOL_VISIT
 from edc_offstudy.models import OffStudyMixin
+from edc_registration.models import RegisteredSubject
+from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
-from edc_visit_tracking.models import BaseVisitTracking
 from edc_visit_tracking.models import PreviousVisitMixin
+from edc_visit_tracking.models import VisitTrackingModelMixin
 
 from microbiome.apps.mb_maternal.models import PostnatalEnrollment
 from microbiome.apps.mb.choices import VISIT_REASON, INFO_PROVIDER
 
 
-class InfantVisit(MetaDataMixin, PreviousVisitMixin, OffStudyMixin, BaseVisitTracking, BaseSyncUuidModel):
+class InfantVisit(
+        MetaDataMixin, SyncModelMixin, PreviousVisitMixin, OffStudyMixin, VisitTrackingModelMixin, BaseUuidModel):
 
     """ A model completed by the user on the infant visits. """
 

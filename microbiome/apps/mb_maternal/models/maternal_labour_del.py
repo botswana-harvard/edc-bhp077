@@ -1,13 +1,14 @@
-from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db import models
 
 from edc.subject.code_lists.models import WcsDxAdult
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
-from edc.device.sync.models import BaseSyncUuidModel
+from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_future
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN, YES_NO_NA
 from edc_constants.constants import NOT_APPLICABLE
+from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.models import CrfInlineModelMixin
 
 from microbiome.apps.mb.choices import DX_MATERNAL
@@ -94,7 +95,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
     class Meta:
         app_label = 'mb_maternal'
         verbose_name = "Delivery"
-        verbose_name_plural = "Delivery"
+        verbose_name_plural = "Deliveries"
 
 
 class MaternalLabDelMed(MaternalScheduledVisitModel):
@@ -245,7 +246,7 @@ class MaternalLabDelDx(MaternalScheduledVisitModel):
         verbose_name_plural = "Delivery: Preg Dx"
 
 
-class MaternalLabDelDxT (CrfInlineModelMixin, BaseSyncUuidModel):
+class MaternalLabDelDxT (CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     """ Diagnosis during pregnancy collected during labor and delivery (transactions). """
 

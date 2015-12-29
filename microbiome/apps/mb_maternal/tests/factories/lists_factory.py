@@ -1,13 +1,14 @@
 import factory
 
-from microbiome.apps.mb_list.models import Supplements, ChronicConditions
-from microbiome.apps.mb_list.models.maternal_lab_del import HealthCond
+from edc_constants.constants import NOT_APPLICABLE
+
+from microbiome.apps.mb_list.models import Supplements, ChronicConditions, HealthCond
 
 
 class SupplementsFactory(factory.DjangoModelFactory):
 
-    name = 'N/A'
-    short_name = 'N/A'
+    name = NOT_APPLICABLE
+    short_name = NOT_APPLICABLE
     display_index = 10
     version = '1.0'
 
@@ -17,8 +18,8 @@ class SupplementsFactory(factory.DjangoModelFactory):
 
 class HealthCondFactory(factory.DjangoModelFactory):
 
-    name = 'N/A'
-    short_name = 'N/A'
+    name = NOT_APPLICABLE
+    short_name = NOT_APPLICABLE
     display_index = 20
     version = '1.0'
 
@@ -28,8 +29,8 @@ class HealthCondFactory(factory.DjangoModelFactory):
 
 class ChronicConditionsFactory(factory.DjangoModelFactory):
 
-    name = 'N/A'
-    short_name = 'N/A'
+    name = NOT_APPLICABLE
+    short_name = NOT_APPLICABLE
     display_index = 20
     version = '1.0'
 

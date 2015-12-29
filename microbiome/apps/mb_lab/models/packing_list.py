@@ -1,12 +1,13 @@
 from django.db import models
 
-from edc.lab.lab_packing.models import BasePackingList
-from edc.device.sync.models import BaseSyncUuidModel
+from edc_sync.models import SyncModelMixin
+from edc_base.model.models import BaseUuidModel
+from edc_lab.lab_packing.models import BasePackingList
 
 from ..managers import PackingListManager
 
 
-class PackingList(BasePackingList, BaseSyncUuidModel):
+class PackingList(BasePackingList, SyncModelMixin, BaseUuidModel):
 
     def natural_key(self):
         return (self.timestamp, )

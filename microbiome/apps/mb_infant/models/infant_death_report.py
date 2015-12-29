@@ -1,6 +1,6 @@
 from django.db import models
 
-from edc.subject.registration.models import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_death_report.models import DeathReportModelMixin, InfantDrugRelationshipMixin
 

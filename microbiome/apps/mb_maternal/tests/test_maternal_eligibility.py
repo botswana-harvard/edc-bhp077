@@ -1,5 +1,5 @@
 from edc_constants.constants import SCREENED
-from edc.subject.registration.models.registered_subject import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 
 from .base_maternal_test_case import BaseMaternalTestCase
 from .factories import MaternalEligibilityFactory

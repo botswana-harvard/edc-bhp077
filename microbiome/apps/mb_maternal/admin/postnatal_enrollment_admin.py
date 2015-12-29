@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from edc.subject.registration.models import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 
 from ..forms import PostnatalEnrollmentForm
 from ..models import PostnatalEnrollment, AntenatalEnrollment
@@ -74,7 +74,8 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
     custom_valid_regimen.short_description = 'Valid Regimen'
 
     def get_form(self, request, obj=None, **kwargs):
-        """Updates the ADD form fields in a form from antenatal enrollment."""
+        """Populates the ADD form fields in a form with values from antenatal enrollment
+        if it exists."""
         form = super(PostnatalEnrollmentAdmin, self).get_form(request, obj, **kwargs)
         if not obj:
             try:
@@ -83,7 +84,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
                 antenatal_enrollment = AntenatalEnrollment.objects.get(
                     registered_subject=registered_subject,
                     is_eligible=True)
-                form = self.update_with_common_fields_from_antenatal_enrollment(
+                form = self.populate_common_fields_from_antenatal_enrollment(
                     form, antenatal_enrollment)
             except RegisteredSubject.DoesNotExist:
                 pass
@@ -91,7 +92,7 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
                 pass
         return form
 
-    def update_with_common_fields_from_antenatal_enrollment(self, form, antenatal_enrollment):
+    def populate_common_fields_from_antenatal_enrollment(self, form, antenatal_enrollment):
         """Sets the form field value from antenatal enrollment for fields common between the
         two models."""
         try:

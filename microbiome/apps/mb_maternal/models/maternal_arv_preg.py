@@ -1,10 +1,11 @@
 from django.db import models
 
 from edc_base.audit_trail import AuditTrail
-from edc.device.sync.models import BaseSyncUuidModel
-from edc_constants.choices import YES_NO
+from edc_base.model.models import BaseUuidModel
+from edc_constants.choices import YES_NO, ARV_DRUG_LIST
 from edc_constants.constants import NOT_APPLICABLE
-from edc.subject.haart.choices import ARV_DRUG_LIST
+from edc_sync.models import SyncModelMixin
+from edc_visit_tracking.models import CrfInlineModelMixin
 
 from microbiome.apps.mb.choices import ARV_INTERRUPTION_REASON
 
@@ -50,9 +51,11 @@ class MaternalArvPreg(MaternalScheduledVisitModel):
         verbose_name_plural = 'Maternal ARV In This Preg'
 
 
-class MaternalArv(BaseSyncUuidModel):
+class MaternalArv(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     """ ARV table to indicate ARV medication taken by mother """
+
+    fk_model_attr = 'maternal_arv_preg'
 
     maternal_arv_preg = models.ForeignKey(MaternalArvPreg)
 
@@ -72,9 +75,6 @@ class MaternalArv(BaseSyncUuidModel):
     objects = MaternalArvManager()
 
     history = AuditTrail()
-
-    def natural_key(self):
-        return (self.maternal_arv_preg.natural_key())
 
     class Meta:
         app_label = 'mb_maternal'

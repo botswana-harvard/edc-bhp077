@@ -1,16 +1,18 @@
 from django.db import models
 
 from edc.data_manager.models import TimePointStatusMixin
-from edc.device.sync.models import BaseSyncUuidModel
 from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.models import BaseUuidModel
 from edc_offstudy.models import OffStudyMixin
+from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.models import CrfModelMixin
 
 from .infant_visit import InfantVisit
 
 
-class InfantScheduledVisitModel(CrfModelMixin, OffStudyMixin, TimePointStatusMixin, BaseSyncUuidModel):
+class InfantScheduledVisitModel(
+        CrfModelMixin, SyncModelMixin, OffStudyMixin, TimePointStatusMixin, BaseUuidModel):
 
     """ A model completed by the user on the infant's scheduled visit. """
 

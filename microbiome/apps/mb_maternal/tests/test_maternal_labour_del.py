@@ -1,20 +1,11 @@
 from dateutil.relativedelta import relativedelta
 
-from django.test import TestCase
 from django.utils import timezone
 
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
-from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
 from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS
 
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from microbiome.apps.mb_maternal.forms import (MaternalLabourDelForm, MaternalLabDelClinicForm)
-
-from ..visit_schedule import PostnatalEnrollmentVisitSchedule
 
 from .base_maternal_test_case import BaseMaternalTestCase
 from .factories import (PostnatalEnrollmentFactory, MaternalLabourDelFactory, MaternalVisitFactory,
@@ -135,8 +126,8 @@ class TestMaternalLabourDelClinic(BaseMaternalTestCase):
         self.registered_subject = self.maternal_consent.registered_subject
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
-            will_breastfeed=YES
-        )
+            will_breastfeed=YES)
+        self.assertTrue(self.postnatal_enrollment.is_eligible)
         self.appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
@@ -145,7 +136,10 @@ class TestMaternalLabourDelClinic(BaseMaternalTestCase):
             registered_subject=self.registered_subject,
             visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+
         self.labour_del = MaternalLabourDelFactory(maternal_visit=self.maternal_visit)
+        self.labour_del.save()
+
         self.data = {
             'maternal_visit': self.maternal_visit.id,
             'maternal_lab_del': self.labour_del.id,

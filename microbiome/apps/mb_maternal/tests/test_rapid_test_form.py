@@ -18,6 +18,7 @@ class TestRapidTestForm(BaseMaternalTestCase):
     def setUp(self):
         super(TestRapidTestForm, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
+        self.assertTrue(self.maternal_eligibility.is_eligible)
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_consent.registered_subject

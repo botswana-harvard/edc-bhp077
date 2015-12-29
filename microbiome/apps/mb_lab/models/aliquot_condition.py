@@ -1,8 +1,15 @@
-from lis.specimen.lab_aliquot_list.managers import AliquotConditionManager
-from lis.specimen.lab_aliquot_list.models import BaseAliquotCondition
+from django.db import models
+
+from edc_base.model.models.base_list_model import BaseListModel
 
 
-class AliquotCondition(BaseAliquotCondition):
+class AliquotConditionManager(models.Manager):
+
+    def get_by_natural_key(self, name):
+        return self.get(name=name)
+
+
+class AliquotCondition(BaseListModel):
 
     objects = AliquotConditionManager()
 

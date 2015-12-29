@@ -1,4 +1,4 @@
-from edc.lab.lab_packing.forms import BasePackingListForm, BasePackingListItemForm
+from edc_lab.lab_packing.forms import BasePackingListForm, BasePackingListItemForm
 
 from ..models import MaternalRequisition, PackingList, PackingListItem, Aliquot
 

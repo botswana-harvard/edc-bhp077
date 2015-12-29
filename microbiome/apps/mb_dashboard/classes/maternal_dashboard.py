@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from edc.subject.registration.models import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 from edc_base.utils import convert_from_camel
 from edc_constants.constants import YES, POS, NEG, IND, NEVER, UNKNOWN, DWTA
 from edc_dashboard.subject import RegisteredSubjectDashboard

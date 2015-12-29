@@ -2,19 +2,21 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 from edc.entry_meta_data.managers import RequisitionMetaDataManager
-from edc.lab.lab_requisition.models import BaseRequisition
+from edc_lab.lab_requisition.models import BaseRequisition
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_sync.models import SyncModelMixin
 
-from .aliquot_type import AliquotType
-from .packing_list import PackingList
-from .panel import Panel
 from microbiome.apps.mb_infant.models import InfantVisit
 
 from ..managers import RequisitionManager
 
+from .aliquot_type import AliquotType
+from .packing_list import PackingList
+from .panel import Panel
 
-class InfantRequisition(BaseRequisition, BaseUuidModel):
+
+class InfantRequisition(BaseRequisition, SyncModelMixin, BaseUuidModel):
 
     infant_visit = models.ForeignKey(InfantVisit)
 

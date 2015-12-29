@@ -3,12 +3,13 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 from edc_constants.constants import NOT_APPLICABLE
+from edc_visit_tracking.models import CrfInlineModelMixin
+from edc_sync.models import SyncModelMixin
+from edc_base.model.models import BaseUuidModel
 
 from microbiome.apps.mb.choices import ARV_STATUS_WITH_NEVER
 
 from .infant_scheduled_visit_model import InfantScheduledVisitModel
-from edc_visit_tracking.models.crf_inline_model_mixin import CrfInlineModelMixin
-from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
 
 
 class InfantArvProph(InfantScheduledVisitModel):
@@ -40,7 +41,7 @@ class InfantArvProph(InfantScheduledVisitModel):
         verbose_name_plural = 'Infant NVP or AZT Proph'
 
 
-class InfantArvProphMod(CrfInlineModelMixin, BaseSyncUuidModel):
+class InfantArvProphMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
     """ A model completed by the user on the infant's nvp or azt prophylaxis modifications. """
 
     fk_model_attr = 'infant_arv_proph'

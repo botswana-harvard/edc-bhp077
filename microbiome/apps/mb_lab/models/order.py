@@ -3,12 +3,13 @@ from django.db import models
 from django.utils import timezone
 
 from edc_base.audit_trail import AuditTrail
-from edc.device.sync.models import BaseSyncUuidModel
+from edc_base.model.models import BaseUuidModel
+from edc_sync.models import SyncModelMixin
 
 from ..managers import OrderManager
 
 
-class Order(BaseSyncUuidModel):
+class Order(SyncModelMixin, BaseUuidModel):
 
     order_datetime = models.DateTimeField(default=timezone.now)
 

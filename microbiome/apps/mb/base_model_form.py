@@ -6,7 +6,7 @@ from django.db.models.query import QuerySet
 
 from edc_base.form.classes import LogicCheck
 from edc_constants.constants import YES, NO, OTHER, NOT_APPLICABLE
-from edc_visit_tracking.models import BaseVisitTracking
+from edc_visit_tracking.models import VisitTrackingModelMixin
 
 
 class BaseModelForm(forms.ModelForm):
@@ -29,7 +29,7 @@ class BaseModelForm(forms.ModelForm):
             # look for a visit model field
             for field in self._meta.model._meta.fields:
                 if isinstance(field, (OneToOneField, ForeignKey)):
-                    if isinstance(field.rel.to, BaseVisitTracking):
+                    if isinstance(field.rel.to, VisitTrackingModelMixin):
                         attrname = field.attrname
                         visit = cleaned_data.get(attrname, None)
                         if visit:

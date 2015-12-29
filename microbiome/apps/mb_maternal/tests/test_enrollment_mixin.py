@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.db import models
 
 from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE, NEVER
-from edc.subject.registration.models import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 
 from microbiome.apps.mb_maternal.tests.factories import (
     MaternalEligibilityFactory, MaternalConsentFactory, SpecimenConsentFactory)

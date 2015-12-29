@@ -2,20 +2,21 @@ from django.db import models
 
 from edc.entry_meta_data.models import MetaDataMixin
 from edc_base.audit_trail import AuditTrail
-from edc.device.sync.models import BaseSyncUuidModel
+from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
 from edc_constants.constants import YES, POS, UNSCHEDULED, NEG, DEATH_VISIT, COMPLETED_PROTOCOL_VISIT
 from edc_offstudy.models import OffStudyMixin
+from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
-from edc_visit_tracking.models import BaseVisitTracking, PreviousVisitMixin
+from edc_visit_tracking.models import VisitTrackingModelMixin, PreviousVisitMixin
 
 from microbiome.apps.mb.choices import VISIT_REASON
 
 from ..models import MaternalConsent, PostnatalEnrollment, AntenatalEnrollment
 
 
-class MaternalVisit(OffStudyMixin, PreviousVisitMixin, MetaDataMixin, RequiresConsentMixin,
-                    BaseVisitTracking, BaseSyncUuidModel):
+class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataMixin, RequiresConsentMixin,
+                    VisitTrackingModelMixin, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 

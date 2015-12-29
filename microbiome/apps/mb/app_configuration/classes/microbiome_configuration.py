@@ -1,9 +1,9 @@
 from datetime import datetime, date
 
-from edc.apps.app_configuration.classes import BaseAppConfiguration
+from edc_lab.lab_packing.models import DestinationTuple
+from edc_lab.lab_profile.classes import ProfileItemTuple, ProfileTuple
+from edc_configuration.base_app_configuration import BaseAppConfiguration
 from edc_device import device
-from edc.lab.lab_packing.models import DestinationTuple
-from edc.lab.lab_profile.classes import ProfileItemTuple, ProfileTuple
 
 from lis.labeling.classes import LabelPrinterTuple, ZplTemplateTuple, ClientTuple
 from lis.specimen.lab_aliquot_list.classes import AliquotTypeTuple
@@ -75,8 +75,9 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
          'end_datetime': study_end_datetime,
          'version': '1'}]
 
-    study_site_setup = [{'site_name': 'Gaborone', 'site_code': '40'},
-                        {'site_name': 'Mogoditshane', 'site_code': '50'}]
+#     study_site_setup = [{'site_name': 'Gaborone', 'site_code': '40'},
+#                         {'site_name': 'Mogoditshane', 'site_code': '50'}]
+    study_site_setup = []
 
     lab_clinic_api_setup = {
         'panel': [PanelTuple('Viral Load', 'TEST', 'WB'),

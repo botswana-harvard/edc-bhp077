@@ -1,9 +1,8 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from edc.core.bhp_variables.tests.factories.study_site_factory import StudySiteFactory
-from edc.lab.lab_profile.classes import site_lab_profiles
-from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
+from edc_lab.lab_profile.classes import site_lab_profiles
+from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc.subject.rule_groups.classes import site_rule_groups
@@ -36,10 +35,10 @@ class TestMaternalRequisitionForm(TestCase):
         site_lab_tracker.autodiscover()
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
-        self.study_site = StudySiteFactory()
         self.maternal_eligibility = MaternalEligibilityFactory()
-        self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject,
-                                                       study_site=self.study_site)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject,
+            study_site='40')
         self.registered_subject = self.maternal_consent.registered_subject
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
@@ -63,7 +62,7 @@ class TestMaternalRequisitionForm(TestCase):
             'is_drawn': NO,
             'reason_not_drawn': 'collection_failed',
             'drawn_datetime': '',
-            'site': self.study_site.id,
+            'site': self.study_site,
             'panel': self.panel.id,
             'aliquot_type': self.aliquot_type.id,
             'item_type': 'tube',

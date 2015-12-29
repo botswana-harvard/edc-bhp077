@@ -1,14 +1,15 @@
 from django.db import models
 
-from edc.lab.lab_profile.models import BaseProfile
-from edc.device.sync.models import BaseSyncUuidModel
+from edc_lab.lab_profile.models import BaseProfile
+from edc_base.model.models import BaseUuidModel
+from edc_sync.models import SyncModelMixin
 
 from ..managers import ProfileManager
 
 from .aliquot_type import AliquotType
 
 
-class AliquotProfile(BaseProfile, BaseSyncUuidModel):
+class AliquotProfile(BaseProfile, SyncModelMixin, BaseUuidModel):
 
     aliquot_type = models.ForeignKey(
         AliquotType,

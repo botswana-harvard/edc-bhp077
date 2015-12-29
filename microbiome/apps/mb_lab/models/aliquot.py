@@ -1,17 +1,17 @@
-from django.db import models
 from django.core.urlresolvers import reverse
+from django.db import models
 
-from lis.specimen.lab_aliquot.models import BaseAliquot
-from edc.device.sync.models import BaseSyncUuidModel
-
+from edc_base.model.models import BaseUuidModel
+from edc_sync.models import SyncModelMixin
 from lis.specimen.lab_aliquot.managers import AliquotManager
+from lis.specimen.lab_aliquot.models import BaseAliquot
 
 from .aliquot_condition import AliquotCondition
 from .aliquot_type import AliquotType
 from .receive import Receive
 
 
-class Aliquot(BaseAliquot, BaseSyncUuidModel):
+class Aliquot(BaseAliquot, SyncModelMixin, BaseUuidModel):
 
     receive = models.ForeignKey(
         Receive,

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from edc.lab.lab_packing.admin import BasePackingListAdmin, BasePackingListItemAdmin
+from edc_lab.lab_packing.admin import BasePackingListAdmin, BasePackingListItemAdmin
 
 from ..forms import PackingListForm, PackingListItemForm
 from ..models import PackingList, PackingListItem

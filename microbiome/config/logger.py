@@ -51,15 +51,15 @@ LOGGING = {
             'handlers': ['console', ],
             'level': 'INFO',
         },
-        'edc.lab.lab_clinic_api.managers.lab_manager': {
+        'edc_lab.lab_clinic_api.managers.lab_manager': {
             'handlers': ['console', ],
             'level': 'INFO',
         },
-        'edc.lab.lab_clinic_api.classes.updater': {
+        'edc_lab.lab_clinic_api.classes.updater': {
             'handlers': ['console', ],
             'level': 'INFO',
         },
-        'edc.lab.lab_clinic_api.management.commands.update_labs': {
+        'edc_lab.lab_clinic_api.management.commands.update_labs': {
             'handlers': ['console', ],
             'level': 'INFO',
         },
@@ -79,11 +79,11 @@ LOGGING = {
             'handlers': ['console', ],
             'level': 'INFO',
         },
-        'edc.lab.lab_clinic_api.managers.lab_manager': {
+        'edc_lab.lab_clinic_api.managers.lab_manager': {
             'handlers': ['console', ],
             'level': 'INFO',
         },
-        'edc.lab.lab_clinic_api.managers.result_manager': {
+        'edc_lab.lab_clinic_api.managers.result_manager': {
             'handlers': ['console', ],
             'level': 'INFO',
         },
@@ -91,7 +91,7 @@ LOGGING = {
             'handlers': ['console', ],
             'level': 'INFO',
         },
-        'edc.lab.lab_clinic_api.classes.dmis_result': {
+        'edc_lab.lab_clinic_api.classes.dmis_result': {
             'handlers': ['console', ],
             'level': 'INFO',
         },

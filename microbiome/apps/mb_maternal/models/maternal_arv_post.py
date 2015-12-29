@@ -1,10 +1,11 @@
 from django.db import models
 
-from edc.device.sync.models.base_sync_uuid_model import BaseSyncUuidModel
-from edc.subject.haart.choices import ARV_STATUS_WITH_NEVER
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.models import BaseUuidModel
+from edc_constants.choices import ARV_STATUS_WITH_NEVER
 from edc_constants.choices import YES_NO
 from edc_constants.constants import NOT_APPLICABLE
+from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.models.crf_inline_model_mixin import CrfInlineModelMixin
 
 from ..managers import MaternalArvPostModManager
@@ -58,7 +59,7 @@ class MaternalArvPost (MaternalScheduledVisitModel):
         verbose_name_plural = "Maternal ARV Post"
 
 
-class MaternalArvPostMod(CrfInlineModelMixin, BaseSyncUuidModel):
+class MaternalArvPostMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     """ Maternal ARV modifications post-partum.
 

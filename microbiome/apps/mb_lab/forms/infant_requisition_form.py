@@ -1,6 +1,6 @@
 from django import forms
 
-from edc.lab.lab_requisition.forms import BaseRequisitionForm
+from edc_lab.lab_requisition.forms import BaseRequisitionForm
 from edc_constants.constants import YES, NO
 from microbiome.apps.mb_infant.models import InfantStoolCollection
 

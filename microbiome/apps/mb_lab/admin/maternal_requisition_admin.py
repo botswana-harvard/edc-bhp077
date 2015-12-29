@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from edc.lab.lab_requisition.admin import BaseRequisitionModelAdmin
+from edc_lab.lab_requisition.admin import BaseRequisitionModelAdmin
 from edc.export.actions import export_as_csv_action
 
 from microbiome.apps.mb_maternal.models import MaternalVisit

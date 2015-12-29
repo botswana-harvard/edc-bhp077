@@ -4,11 +4,8 @@ from django.utils import timezone
 
 from edc_appointment.models import Appointment
 from edc_constants.constants import YES, NO, NEG, SCHEDULED
-from edc.subject.registration.models.registered_subject import RegisteredSubject
-from edc_death_report.models import DiagnosisCode, Cause
-from edc_death_report.models.cause_category import CauseCategory
-from edc_death_report.models.medical_responsibility import MedicalResponsibility
-from edc_death_report.models.reason_hospitalized import ReasonHospitalized
+from edc_death_report.models import Cause, CauseCategory, MedicalResponsibility, DiagnosisCode, ReasonHospitalized
+from edc_registration.models import RegisteredSubject
 
 from microbiome.apps.mb_maternal.forms import MaternalDeathReportForm
 
