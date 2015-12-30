@@ -22,6 +22,7 @@ git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc-constants
 git+https://github.com/botswana-harvard/edc-dashboard@develop#egg=edc-dashboard
 git+https://github.com/botswana-harvard/edc-death-report@develop#egg=edc-death-report
 git+https://github.com/botswana-harvard/edc-device@develop#egg=edc-device
+git+https://github.com/botswana-harvard/edc-lab@develop#egg=edc-lab
 git+https://github.com/botswana-harvard/edc-sync@develop#egg=edc-sync
 git+https://github.com/botswana-harvard/edc-registration@develop#egg=edc-registration
 git+https://github.com/botswana-harvard/edc-locator.git@develop#egg=edc-locator
