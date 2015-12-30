@@ -14,7 +14,6 @@ from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
-from microbiome.apps.mb.choices import STUDY_SITES
 
 from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 
@@ -32,10 +31,10 @@ class MaternalConsent(BaseConsent, SyncModelMixin, OffStudyMixin, ReviewFieldsMi
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
-    study_site = models.CharField(
-        max_length=10,
-        choices=STUDY_SITES,
-        default=settings.SITE_CODE)
+#     study_site = models.CharField(
+#         max_length=10,
+#         choices=STUDY_SITES,
+#         default=settings.SITE_CODE)
 
     recruit_source = models.CharField(
         max_length=75,

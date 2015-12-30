@@ -1,15 +1,27 @@
 from dateutil.relativedelta import relativedelta
+
 from django import forms
+from django.conf import settings
 from django.forms.util import ErrorList
 from django.utils import timezone
 
 from edc_consent.forms.base_consent_form import BaseConsentForm
 from edc_constants.constants import FEMALE, OMANG, OTHER
 
+from microbiome.apps.mb.choices import STUDY_SITES
+
 from ..models import MaternalConsent, MaternalEligibility
+from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
 
 class MaternalConsentForm(BaseConsentForm):
+
+    study_site = forms.ChoiceField(
+        label='Study site',
+        choices=STUDY_SITES,
+        initial=settings.STUDY_SITE,
+        help_text="",
+        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     def clean(self):
         self.cleaned_data['gender'] = FEMALE
