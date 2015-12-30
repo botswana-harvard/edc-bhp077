@@ -3,8 +3,8 @@ from django.contrib import admin
 from edc_registration.models import RegisteredSubject
 from edc_locator.admin import BaseLocatorModelAdmin
 
+from ..forms import MaternalLocatorForm
 from ..models import MaternalLocator
-from ..forms.maternal_locator_form import MaternalLocatorForm
 
 
 class MaternalLocatorAdmin(BaseLocatorModelAdmin):
