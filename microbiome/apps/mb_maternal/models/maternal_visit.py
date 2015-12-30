@@ -1,10 +1,13 @@
+from django import forms
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from edc.entry_meta_data.models import MetaDataMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
-from edc_constants.constants import YES, POS, UNSCHEDULED, NEG, DEATH_VISIT, COMPLETED_PROTOCOL_VISIT
+from edc_constants.constants import (
+    YES, POS, UNSCHEDULED, NEG, DEATH_VISIT, COMPLETED_PROTOCOL_VISIT, NO_FURTHER_DATA_COLLECTION)
 from edc_offstudy.models import OffStudyMixin
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
@@ -34,7 +37,8 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataM
     def save(self, *args, **kwargs):
         self.subject_identifier = self.appointment.registered_subject.subject_identifier
         if not self.is_eligible():
-            self.reason = COMPLETED_PROTOCOL_VISIT
+            self.reason = NO_FURTHER_DATA_COLLECTION
+        self.no_further_data_collection()
         super(MaternalVisit, self).save(*args, **kwargs)
 
     def get_visit_reason_choices(self):
@@ -52,6 +56,12 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataM
                 pass
         return eligible
 
+    def no_further_data_collection(self, exception_cls=None):
+        exception_cls = exception_cls or ValidationError
+        if self.is_eligible() and self.reason == NO_FURTHER_DATA_COLLECTION:
+            raise exception_cls(
+                "Subject is eligible. Visit reason cannot be 'No further data collection'")
+
     def get_visit_reason_no_follow_up_choices(self):
         """ Returns the visit reasons that do not imply any data
         collection; that is, the subject is not available. """
@@ -65,7 +75,7 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataM
         """Custom methods that manipulate meta data on the post save.
 
         This method is called in the edc.entry_meta_data signal."""
-        if self.reason == COMPLETED_PROTOCOL_VISIT:
+        if self.reason == NO_FURTHER_DATA_COLLECTION:
             self.change_to_off_study_visit(self.appointment, 'mb_maternal', 'maternaloffstudy')
         elif self.reason == DEATH_VISIT:
             self.change_to_death_visit(

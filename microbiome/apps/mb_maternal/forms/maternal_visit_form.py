@@ -45,6 +45,13 @@ class MaternalVisitForm (BaseModelForm):
         except MaternalConsent.DoesNotExist:
             raise forms.ValidationError('Maternal Consent does not exist.')
 
+        instance = None
+        if self.instance.id:
+            instance = self.instance
+        else:
+            instance = MaternalVisit(**self.cleaned_data)
+        instance.no_further_data_collection(forms.ValidationError)
+
         return cleaned_data
 
     def validate_reason_missed(self, cleaned_data):
