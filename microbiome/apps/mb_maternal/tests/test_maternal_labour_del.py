@@ -205,12 +205,21 @@ class TestMaternalLabourDelClinic(BaseMaternalTestCase):
         self.assertIn('You indicated that a VL count was performed. Please provide the date.',
                       form.errors.get('__all__'))
 
-    def test_has_vl_2(self):
-        """If has VL is indicated as yes, then VL result should be provided."""
+    def test_has_vl_and_detectable(self):
+        """If has VL is indicated as yes, was it detectable."""
         self.data['has_vl'] = YES
         self.data['vl_date'] = timezone.now() - timezone.timedelta(days=2)
         form = MaternalLabDelClinicForm(data=self.data)
-        self.assertIn('You indicated that a VL count was performed. Please provide the result.',
+        self.assertIn('You stated that a VL count was performed. Please indicate if it was detectable.',
+                      form.errors.get('__all__'))
+
+    def test_detectable_vl_for_result(self):
+        """If has VL is indicated as yes, and is detectable, what is the result"""
+        self.data['has_vl'] = YES
+        self.data['vl_date'] = timezone.now() - timezone.timedelta(days=2)
+        self.data['vl_detectable'] = YES
+        form = MaternalLabDelClinicForm(data=self.data)
+        self.assertIn('You indicated that the VL was detectable. Provide provide VL result.',
                       form.errors.get('__all__'))
 
     def test_has_vl_3(self):
