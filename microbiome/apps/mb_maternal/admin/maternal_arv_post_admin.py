@@ -96,7 +96,6 @@ class MaternalArvPostAdhAdmin(BaseMaternalModelAdmin):
     form = MaternalArvPostAdhForm
     fields = (
         "maternal_visit",
-        "maternal_arv_post",
         "missed_doses",
         "missed_days",
         "missed_days_discnt",

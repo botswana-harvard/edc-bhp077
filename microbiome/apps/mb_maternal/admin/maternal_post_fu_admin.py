@@ -60,7 +60,6 @@ class MaternalPostFuDxAdmin(BaseMaternalModelAdmin):
 
     fields = (
         "maternal_visit",
-        "maternal_post_fu",
         "hospitalized_since",
         "new_wcs_dx_since",
         "who",
