@@ -1,13 +1,24 @@
 from django import forms
+from django.conf import settings
+from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
 from edc_lab.lab_requisition.forms import BaseRequisitionForm
 from edc_constants.constants import YES, NO
+
+from microbiome.apps.mb.choices import STUDY_SITES
 from microbiome.apps.mb_infant.models import InfantStoolCollection
 
 from ..models import InfantRequisition
 
 
 class InfantRequisitionForm(BaseRequisitionForm):
+
+    study_site = forms.ChoiceField(
+        label='Study site',
+        choices=STUDY_SITES,
+        initial=settings.DEFAULT_STUDY_SITE,
+        help_text="",
+        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     def __init__(self, *args, **kwargs):
         super(InfantRequisitionForm, self).__init__(*args, **kwargs)
