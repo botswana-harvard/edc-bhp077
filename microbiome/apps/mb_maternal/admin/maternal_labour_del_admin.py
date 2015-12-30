@@ -1,13 +1,11 @@
-from collections import OrderedDict
-
 from django.contrib import admin
 
-from edc_base.modeladmin.admin import BaseModelAdmin, BaseTabularInline
+from edc_base.modeladmin.admin import BaseTabularInline
 
 from ..forms import (MaternalLabourDelForm, MaternalLabDelMedForm,
                      MaternalLabDelClinicForm, MaternalLabDelDxForm, MaternalLabDelDxTForm)
 from ..models import (MaternalLabourDel, MaternalLabDelMed, MaternalLabDelClinic,
-                      MaternalLabDelDx, MaternalLabDelDxT, MaternalVisit)
+                      MaternalLabDelDx, MaternalLabDelDxT)
 
 from .base_maternal_model_admin import BaseMaternalModelAdmin
 

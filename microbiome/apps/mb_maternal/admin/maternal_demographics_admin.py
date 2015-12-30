@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from ..forms import MaternalDemographicsForm
-from ..models import MaternalDemographics, MaternalVisit
+from ..models import MaternalDemographics
 
 from .base_maternal_model_admin import BaseMaternalModelAdmin
 

@@ -4,7 +4,7 @@ from django.contrib import admin
 
 from edc.export.actions import export_as_csv_action
 from edc_base.modeladmin.admin import BaseModelAdmin
-from edc.subject.registration.models.registered_subject import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 
 from ..forms import InfantDeathReportForm
 from ..models import InfantDeathReport, InfantVisit

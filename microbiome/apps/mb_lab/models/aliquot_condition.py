@@ -1,6 +1,6 @@
 from django.db import models
 
-from edc_base.model.models.base_list_model import BaseListModel
+from lis.specimen.lab_aliquot_list.models import BaseAliquotCondition
 
 
 class AliquotConditionManager(models.Manager):
@@ -9,7 +9,7 @@ class AliquotConditionManager(models.Manager):
         return self.get(name=name)
 
 
-class AliquotCondition(BaseListModel):
+class AliquotCondition(BaseAliquotCondition):
 
     objects = AliquotConditionManager()
 

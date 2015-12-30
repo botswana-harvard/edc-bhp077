@@ -67,7 +67,7 @@ urlpatterns += patterns(
 
 urlpatterns += patterns(
     '',
-    (r'^bhp_sync/', include('edc.device.sync.urls')),
+    (r'^bhp_sync/', include('edc_sync.urls')),
 )
 
 urlpatterns += patterns(

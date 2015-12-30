@@ -2,11 +2,10 @@ from collections import OrderedDict
 
 from django.contrib import admin
 
-from edc_base.modeladmin.admin import BaseModelAdmin
 from edc.export.actions import export_as_csv_action
 
 from ..forms import InfantBirthDataForm
-from ..models import InfantBirthData, InfantVisit, InfantBirth
+from ..models import InfantBirthData
 
 from .base_infant_scheduled_modeladmin import BaseInfantScheduleModelAdmin
 

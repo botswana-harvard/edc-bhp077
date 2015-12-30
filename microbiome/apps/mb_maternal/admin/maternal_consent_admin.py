@@ -40,20 +40,21 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'consent_signature',
               'consent_copy')
     actions = [flag_as_verified_against_paper, unflag_as_verified_against_paper]
-    radio_fields = {'citizen': admin.VERTICAL,
-                    'study_site': admin.VERTICAL,
-                    'language': admin.VERTICAL,
-                    'study_site': admin.VERTICAL,
-                    'recruit_source': admin.VERTICAL,
-                    'recruitment_clinic': admin.VERTICAL,
-                    'is_literate': admin.VERTICAL,
-                    'is_dob_estimated': admin.VERTICAL,
-                    'identity_type': admin.VERTICAL,
-                    'consent_reviewed': admin.VERTICAL,
-                    'study_questions': admin.VERTICAL,
-                    'assessment_score': admin.VERTICAL,
-                    'consent_signature': admin.VERTICAL,
-                    'consent_copy': admin.VERTICAL}
+
+    radio_fields = {
+        'assessment_score': admin.VERTICAL,
+        'citizen': admin.VERTICAL,
+        'consent_copy': admin.VERTICAL,
+        'consent_reviewed': admin.VERTICAL,
+        'consent_signature': admin.VERTICAL,
+        'identity_type': admin.VERTICAL,
+        'is_dob_estimated': admin.VERTICAL,
+        'is_literate': admin.VERTICAL,
+        'language': admin.VERTICAL,
+        'recruit_source': admin.VERTICAL,
+        'recruitment_clinic': admin.VERTICAL,
+        'study_questions': admin.VERTICAL}
+
     list_display = ('subject_identifier',
                     'registered_subject',
                     'is_verified',

@@ -1,7 +1,5 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
-from edc_sync.models import SyncModelMixin
 from lis.specimen.lab_aliquot_list.models import BaseAliquotType
 
 
@@ -11,7 +9,7 @@ class AliquotTypeManager(models.Manager):
         return self.get(alpha_code=alpha_code, numeric_code=numeric_code)
 
 
-class AliquotType(BaseAliquotType, SyncModelMixin, BaseUuidModel):
+class AliquotType(BaseAliquotType):
 
     objects = AliquotTypeManager()
 

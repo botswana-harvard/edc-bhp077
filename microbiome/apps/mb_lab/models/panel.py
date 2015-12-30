@@ -2,8 +2,6 @@ from django.db import models
 
 from edc_lab.lab_clinic_api.choices import PANEL_TYPE
 from edc_lab.lab_clinic_api.models import TestCode
-from edc_sync.models import SyncModelMixin
-from edc_base.model.models import BaseUuidModel
 
 from lis.specimen.lab_panel.models import BasePanel
 
@@ -12,7 +10,7 @@ from .aliquot_type import AliquotType
 from ..managers import PanelManager
 
 
-class Panel(BasePanel, SyncModelMixin, BaseUuidModel):
+class Panel(BasePanel):
 
     test_code = models.ManyToManyField(TestCode, null=True, blank=True, related_name='+')
 

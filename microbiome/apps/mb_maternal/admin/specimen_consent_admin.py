@@ -2,12 +2,12 @@ from collections import OrderedDict
 
 from django.contrib import admin
 
+from edc.export.actions import export_as_csv_action
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc_registration.models import RegisteredSubject
-from edc.export.actions import export_as_csv_action
 
-from ..models import SpecimenConsent
 from ..forms import SpecimenConsentForm
+from ..models import SpecimenConsent
 
 
 class SpecimenConsentAdmin(BaseModelAdmin):
