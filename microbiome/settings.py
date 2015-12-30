@@ -123,7 +123,6 @@ INSTALLED_APPS = [
     'edc.subject.locator',
     'edc.subject.rule_groups',
     'edc.subject.subject',
-    'edc.subject.subject_config',
     'edc.subject.subject_summary',
     'edc.testing',
     'edc.utils',
