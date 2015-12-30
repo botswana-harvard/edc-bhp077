@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
@@ -30,11 +29,6 @@ class MaternalConsent(BaseConsent, SyncModelMixin, OffStudyMixin, ReviewFieldsMi
     off_study_model = ('mb_maternal', 'MaternalOffStudy')
 
     registered_subject = models.OneToOneField(RegisteredSubject, null=True)
-
-#     study_site = models.CharField(
-#         max_length=10,
-#         choices=STUDY_SITES,
-#         default=settings.SITE_CODE)
 
     recruit_source = models.CharField(
         max_length=75,
