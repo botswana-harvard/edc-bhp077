@@ -14,22 +14,23 @@ class MaternalConsentFactory(factory.DjangoModelFactory):
     class Meta:
         model = MaternalConsent
 
-    report_datetime = timezone.now()
-    consent_datetime = timezone.now()
-    first_name = "DIMO"
-    last_name = "DIMO"
-    initials = "DD"
-    dob = date(1988, 7, 7)
-    is_dob_estimated = NO
-    gender = FEMALE
+    assessment_score = YES
     citizen = YES
+    confirm_identity = "111121111"
+    consent_copy = YES
+    consent_datetime = timezone.now()
+    consent_reviewed = YES
+    consent_signature = YES
+    dob = date(1988, 7, 7)
+    first_name = "DIMO"
+    gender = FEMALE
     identity = "111121111"
     identity_type = "OMANG"
-    confirm_identity = "111121111"
-    consent_reviewed = YES
-    study_questions = YES
+    initials = "DD"
+    is_dob_estimated = NO
     is_literate = YES
-    assessment_score = YES
-    consent_signature = YES
-    consent_copy = YES
     language = 'en'
+    last_name = "DIMO"
+    report_datetime = timezone.now()
+    study_questions = YES
+    study_site = '40'

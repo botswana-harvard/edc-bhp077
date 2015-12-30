@@ -19,7 +19,7 @@ class MaternalConsentForm(BaseConsentForm):
     study_site = forms.ChoiceField(
         label='Study site',
         choices=STUDY_SITES,
-        initial=settings.STUDY_SITE,
+        initial=settings.DEFAULT_STUDY_SITE,
         help_text="",
         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
