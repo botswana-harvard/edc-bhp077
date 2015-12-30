@@ -83,8 +83,8 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
 
     def clean(self):
         cleaned_data = super(MaternalLabDelClinicForm, self).clean()
-        self.validate_viral_load()
         self.validate_cd4()
+        self.validate_viral_load()
         self.validate_vl_result()
         return cleaned_data
 
@@ -116,9 +116,6 @@ class MaternalLabDelClinicForm(BaseMaternalModelForm):
             if not cleaned_data.get('vl_date'):
                 raise forms.ValidationError(
                     'You indicated that a VL count was performed. Please provide the date.')
-            if not cleaned_data.get('vl_result'):
-                raise forms.ValidationError(
-                    'You indicated that a VL count was performed. Please provide the result.')
             if cleaned_data.get('vl_detectable') == NOT_APPLICABLE:
                 raise forms.ValidationError(
                     'You stated that a VL count was performed. Please indicate if it '
