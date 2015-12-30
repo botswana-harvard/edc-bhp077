@@ -11,38 +11,19 @@ from ..forms import MaternalRequisitionForm
 
 
 class MaternalRequisitionAdmin(BaseRequisitionModelAdmin):
+
     def __init__(self, *args, **kwargs):
         super(MaternalRequisitionAdmin, self).__init__(*args, **kwargs)
-        self.list_filter = list(self.list_filter)
-        self.list_filter = tuple(self.list_filter)
         for field in ['test_code', ]:
             self.fields.remove(field)
 
+    form = MaternalRequisitionForm
+
     visit_model = MaternalVisit
     visit_attr = 'maternal_visit'
-
-    fields = (
-        'maternal_visit',
-        'requisition_datetime',
-        'is_drawn',
-        'reason_not_drawn',
-        'drawn_datetime',
-        'study_site',
-        'panel',
-        'aliquot_type',
-        'item_type',
-        'item_count_total',
-        'estimated_volume',
-        'priority',
-        'comments',
-    )
-
-    form = MaternalRequisitionForm
-    visit_model = MaternalVisit
-    visit_fieldname = 'maternal_visit'
     dashboard_type = 'maternal'
-
     label_template_name = 'requisition_label'
+
     actions = [print_requisition_label,
                export_as_csv_action(
                    "Export as csv", fields=[], delimiter=',', exclude=[
