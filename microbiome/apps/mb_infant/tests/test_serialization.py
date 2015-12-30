@@ -34,6 +34,11 @@ from ..models import (
 from microbiome.apps.mb_infant.tests.factories.infant_fu_factory import InfantFuFactory
 
 
+# TODO: need to rewrite these tests
+class SerializeToTransaction(object):
+    pass
+
+
 class TestNaturalKey(TestCase):
 
     def setUp(self):

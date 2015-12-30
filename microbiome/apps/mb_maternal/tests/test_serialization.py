@@ -1,7 +1,6 @@
 from django.core import serializers
 from django.utils import timezone
 
-# from edc.device.sync.classes import SerializeToTransaction
 from edc_appointment.models import Appointment
 from edc_base.encrypted_fields import FieldCryptor
 from edc_constants.choices import POS, YES, NO
@@ -15,7 +14,12 @@ from microbiome.apps.mb_maternal.tests.factories import (
 from .base_maternal_test_case import BaseMaternalTestCase
 
 
-class NaturalKeyTests(BaseMaternalTestCase):
+# TODO: need to rewrite these tests
+class SerializeToTransaction(object):
+    pass
+
+
+class TestSerialization(BaseMaternalTestCase):
 
     def test_serialize_deserialize(self):
         """Confirms all models have a get_by_natural_key manager method."""
