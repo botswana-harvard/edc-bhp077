@@ -27,7 +27,7 @@ class MaternalRequisitionAdmin(BaseRequisitionModelAdmin):
         'is_drawn',
         'reason_not_drawn',
         'drawn_datetime',
-        'site',
+        'study_site',
         'panel',
         'aliquot_type',
         'item_type',
