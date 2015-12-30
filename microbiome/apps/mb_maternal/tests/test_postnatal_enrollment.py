@@ -478,10 +478,9 @@ class TestPostnatalEnrollment(BaseMaternalTestCase):
                 vaginal_delivery=YES,
                 will_breastfeed=YES,
                 will_remain_onstudy=YES)
-        self.assertEqual(
-            str(cm.exception),
-            ('Unable to determine maternal hiv status at enrollment. Got current_hiv_status=, '
-             'evidence_hiv_status=None, rapid_test_done=None, rapid_test_result=None'))
+        self.assertIn(
+            'Subject was determined ineligible at Antenatal Enrollment on',
+            str(cm.exception))
 
     def test_live_infants_greater_than_one(self):
         """Test ineligible if more than one live infant is delivered."""
