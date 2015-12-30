@@ -35,10 +35,11 @@ class TestMaternalRequisitionForm(TestCase):
         site_lab_tracker.autodiscover()
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
+        self.study_site = '40'
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject,
-            study_site='40')
+            study_site=self.study_site)
         self.registered_subject = self.maternal_consent.registered_subject
         postnatal_enrollment = PostnatalEnrollmentFactory(
             current_hiv_status=POS,
@@ -62,7 +63,7 @@ class TestMaternalRequisitionForm(TestCase):
             'is_drawn': NO,
             'reason_not_drawn': 'collection_failed',
             'drawn_datetime': '',
-            'site': self.study_site,
+            'study_site': self.study_site,
             'panel': self.panel.id,
             'aliquot_type': self.aliquot_type.id,
             'item_type': 'tube',

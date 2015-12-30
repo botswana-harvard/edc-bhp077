@@ -45,12 +45,12 @@ class TestMaternalRequisitionModel(TestCase):
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             registered_subject=self.registered_subject,
-            will_breastfeed=YES
-        )
+            will_breastfeed=YES)
         self.panel = Panel.objects.get(name='Breast Milk (Storage)')
         self.aliquot_type = AliquotType.objects.get(alpha_code='WB')
-        self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                                   visit_definition__code='1000M')
+        self.appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
 
     def test_visit_reason_scheduled(self):
         maternal_visit = MaternalVisitFactory(appointment=self.appointment, reason=SCHEDULED)
@@ -60,8 +60,9 @@ class TestMaternalRequisitionModel(TestCase):
             aliquot_type=self.aliquot_type)
 
     def test_visit_reason_unscheduled(self):
-        appointment = Appointment.objects.get(registered_subject=self.registered_subject,
-                                              visit_definition__code='2000M')
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2000M')
         MaternalVisitFactory(appointment=self.appointment, reason=SCHEDULED)
         maternal_visit = MaternalVisitFactory(appointment=appointment, reason=UNSCHEDULED)
         MaternalRequistionFactory(panel=self.panel,
