@@ -87,7 +87,7 @@ class TestInfantVisitForm(TestCase):
             'report_datetime': timezone.now(),
             'last_alive_date': date.today()}
         form = InfantVisitForm(data=data)
-        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid)
 
     def test_validate_reason_death_not_valid(self):
         data = {
@@ -149,7 +149,7 @@ class TestInfantVisitForm(TestCase):
             'reason_missed': 'I was in the cattle post.',
             'last_alive_date': date.today()}
         form = InfantVisitForm(data=data)
-        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid)
 
     def test_validate_reason_missed_not_valid(self):
         data = {
