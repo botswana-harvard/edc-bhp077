@@ -1,4 +1,3 @@
-from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -82,6 +81,8 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataM
                 self.appointment, 'mb_maternal', 'maternaloffstudy', 'maternaldeathreport')
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
+        elif self.reason == COMPLETED_PROTOCOL_VISIT:
+            self.form_is_required(self.appointment, 'mb_maternal', 'maternaloffstudy')
         else:
             self.required_for_maternal_pos()
             self.required_for_maternal_not_pos()
