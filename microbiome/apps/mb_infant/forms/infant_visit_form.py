@@ -3,29 +3,31 @@ from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRender
 
 from edc_base.form.forms import BaseModelForm
 from edc_constants.constants import ON_STUDY
-from edc_visit_tracking.forms import VisitTrackingFormMixin
+from edc_visit_tracking.forms import VisitFormMixin
 
-from microbiome.apps.mb.choices import VISIT_REASON, VISIT_INFO_SOURCE, INFANT_VISIT_STUDY_STATUS
+from microbiome.apps.mb.choices import VISIT_REASON, VISIT_INFO_SOURCE, INFANT_VISIT_STUDY_STATUS, INFO_PROVIDER
 from microbiome.apps.mb_maternal.models import MaternalConsent, MaternalDeathReport
 
 from ..models import InfantVisit
 
 
-class InfantVisitForm(VisitTrackingFormMixin, BaseModelForm):
+class InfantVisitForm(VisitFormMixin, BaseModelForm):
 
-    participant_label = 'infant'
+    information_provider = forms.ChoiceField(
+        label='Please indicate who provided most of the information for this infant\'s visit',
+        choices=INFO_PROVIDER,
+        initial='MOTHER',
+        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     study_status = forms.ChoiceField(
         label='What is the infant\'s current study status',
         choices=INFANT_VISIT_STUDY_STATUS,
         initial=ON_STUDY,
-        help_text="",
         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     reason = forms.ChoiceField(
         label='Reason for visit',
         choices=[choice for choice in VISIT_REASON],
-        help_text="",
         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     info_source = forms.ChoiceField(

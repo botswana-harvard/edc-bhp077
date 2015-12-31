@@ -24,17 +24,13 @@ class InfantOffStudyAdmin(BaseModelAdmin):
         'offstudy_date',
         'reason',
         'reason_other',
-        'has_scheduled_data',
         'comment',
     )
 
     list_display = (
         'infant_visit',
         'offstudy_date',
-        'reason',
-        'has_scheduled_data',)
-
-    radio_fields = {'has_scheduled_data': admin.VERTICAL}
+        'reason')
 
     actions = [
         export_as_csv_action(

@@ -1,34 +1,26 @@
 from django.contrib import admin
 
-from edc_lab.lab_requisition.admin import BaseRequisitionModelAdmin
-from edc.export.actions import export_as_csv_action
+from edc_base.modeladmin.admin import BaseModelAdmin
+from edc_lab.lab_requisition.admin import RequisitionAdminMixin
 
 from microbiome.apps.mb_maternal.models import MaternalVisit
 
-from ..actions import print_requisition_label
 from ..models import MaternalRequisition, Panel
 from ..forms import MaternalRequisitionForm
 
 
-class MaternalRequisitionAdmin(BaseRequisitionModelAdmin):
+class MaternalRequisitionAdmin(RequisitionAdminMixin, BaseModelAdmin):
+
+    dashboard_type = 'maternal'
+    form = MaternalRequisitionForm
+    label_template_name = 'requisition_label'
+    visit_attr = 'maternal_visit'
+    visit_model = MaternalVisit
 
     def __init__(self, *args, **kwargs):
         super(MaternalRequisitionAdmin, self).__init__(*args, **kwargs)
         for field in ['test_code', ]:
             self.fields.remove(field)
-
-    form = MaternalRequisitionForm
-
-    visit_model = MaternalVisit
-    visit_attr = 'maternal_visit'
-    dashboard_type = 'maternal'
-    label_template_name = 'requisition_label'
-
-    actions = [print_requisition_label,
-               export_as_csv_action(
-                   "Export as csv", fields=[], delimiter=',', exclude=[
-                       'id', 'revision', 'hostname_created', 'hostname_modified',
-                       'user_created', 'user_modified'],)]
 
     def get_fieldsets(self, request, obj=None):
         panels = [
@@ -49,6 +41,6 @@ class MaternalRequisitionAdmin(BaseRequisitionModelAdmin):
             if Panel.objects.filter(pk=panel_pk):
                 if Panel.objects.get(pk=panel_pk).aliquot_type.all():
                     kwargs["queryset"] = Panel.objects.get(pk=panel_pk).aliquot_type.all()
-        return super(BaseRequisitionModelAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+        return super(MaternalRequisitionAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(MaternalRequisition, MaternalRequisitionAdmin)

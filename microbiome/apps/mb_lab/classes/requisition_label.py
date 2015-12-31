@@ -38,24 +38,26 @@ class RequisitionLabel(ModelLabel):
     def refresh_label_context(self):
         requisition = self.model_instance
         subject_identifier = requisition.get_subject_identifier()
-        registered_subject = RegisteredSubject.objects.get(subject_identifier=subject_identifier)
+        registered_subject = RegisteredSubject.objects.get(
+            subject_identifier=subject_identifier)
         primary = '<'
         custom = {}
         custom.update({
-            'requisition_identifier': requisition.requisition_identifier,
             'aliquot_count': 1,
-            'primary': primary,
-            'panel': requisition.panel.name,
+            'aliquot_type': requisition.aliquot_type.alpha_code.upper(),
             'barcode_value': requisition.requisition_identifier,
-            'protocol': subject_identifier[0:3],
-            'site': subject_identifier[4:6],
             'clinician_initials': requisition.user_created[0:2].upper(),
-            'drawn_datetime': requisition.drawn_datetime,
-            'subject_identifier': subject_identifier,
-            'gender': registered_subject.gender,
             'dob': registered_subject.dob,
+            'drawn_datetime': requisition.drawn_datetime,
+            'gender': registered_subject.gender,
             'initials': registered_subject.initials,
-            'aliquot_type': requisition.aliquot_type.alpha_code.upper()})
+            'panel': requisition.panel.name,
+            'primary': primary,
+            'protocol': subject_identifier[0:3],
+            'requisition_identifier': requisition.requisition_identifier,
+            'site': subject_identifier[4:6],
+            'subject_identifier': subject_identifier,
+        })
         self.label_context.update(**custom)
 
     def print_label_for_requisition(self, request, requisition):

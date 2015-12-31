@@ -1,59 +1,26 @@
-from django.db import models
-
 from edc.entry_meta_data.models import MetaDataMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
-from edc_base.model.validators import date_not_before_study_start, date_not_future
-from edc_constants.choices import YES_NO, ALIVE_DEAD_UNKNOWN
 from edc_constants.constants import DEATH_VISIT, UNSCHEDULED, SCHEDULED, COMPLETED_PROTOCOL_VISIT
 from edc_offstudy.models import OffStudyMixin
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 from edc_visit_tracking.models import PreviousVisitMixin
-from edc_visit_tracking.models import VisitTrackingModelMixin
+from edc_visit_tracking.models import VisitModelMixin
 
 from microbiome.apps.mb_maternal.models import PostnatalEnrollment
-from microbiome.apps.mb.choices import VISIT_REASON, INFO_PROVIDER
+from microbiome.apps.mb.choices import VISIT_REASON
+from edc_visit_tracking.models.caretaker_fields_mixin import CaretakerFieldsMixin
 
 
 class InfantVisit(
-        MetaDataMixin, SyncModelMixin, PreviousVisitMixin, OffStudyMixin, VisitTrackingModelMixin, BaseUuidModel):
+        MetaDataMixin, SyncModelMixin, PreviousVisitMixin, OffStudyMixin, VisitModelMixin,
+        CaretakerFieldsMixin, BaseUuidModel):
 
     """ A model completed by the user on the infant visits. """
 
     off_study_model = ('mb_infant', 'InfantOffStudy')
-
-    information_provider = models.CharField(
-        verbose_name="Please indicate who provided most of the information for this child's visit",
-        choices=INFO_PROVIDER,
-        max_length=20,
-        help_text="")
-
-    information_provider_other = models.CharField(
-        verbose_name="if information provider is Other, please specify",
-        max_length=20,
-        help_text="",
-        blank=True,
-        null=True)
-
-    is_present = models.CharField(
-        max_length=10,
-        verbose_name="Is the infant present at today\'s visit",
-        choices=YES_NO)
-
-    survival_status = models.CharField(
-        max_length=10,
-        verbose_name="Infant survival status",
-        choices=ALIVE_DEAD_UNKNOWN,
-        null=True,
-        blank=False)
-
-    last_alive_date = models.DateField(
-        verbose_name="Date infant last known alive",
-        validators=[date_not_before_study_start, date_not_future],
-        null=True,
-        blank=True)
 
     history = AuditTrail()
 

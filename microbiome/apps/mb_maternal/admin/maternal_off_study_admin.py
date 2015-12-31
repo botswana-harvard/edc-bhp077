@@ -15,12 +15,6 @@ class MaternalOffStudyAdmin(BaseMaternalModelAdmin):
         'offstudy_date',
         'reason',
         'reason_other',
-        'has_scheduled_data',
         'comment')
-
-    radio_fields = {
-        "has_scheduled_data": admin.VERTICAL,
-    }
-
 
 admin.site.register(MaternalOffStudy, MaternalOffStudyAdmin)

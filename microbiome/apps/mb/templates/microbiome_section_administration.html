@@ -19,8 +19,8 @@
 
     <H5>Registered Subjects</H5>
     <ul>
-    <li><A href="{% url 'admin:registration_registeredsubject_changelist' %}?subject_type=maternal">Maternal Registered Subjects</A>
-    <li><A href="{% url 'admin:registration_registeredsubject_changelist' %}?subject_type=maternal">Infant Registered Subjects</A>
+    <li><A href="{% url 'admin:edc_registration_registeredsubject_changelist' %}?subject_type=maternal">Maternal Registered Subjects</A>
+    <li><A href="{% url 'admin:edc_registration_registeredsubject_changelist' %}?subject_type=maternal">Infant Registered Subjects</A>
 	</ul>
 
     <H5>Labs</H5>
@@ -52,7 +52,7 @@
 
     <H5>Infant</H5>
     <ul>
-    Go to <A href="{% url 'admin:app_list' app_label='mb_maternal' %}">All Infant Forms</A> or select one:
+    Go to <A href="{% url 'admin:app_list' app_label='mb_infant' %}">All Infant Forms</A> or select one:
     <ul>
     <li><A href="{% url 'admin:mb_infant_infantbirth_changelist' %}">Infant Birth</A>
     <li><A href="{% url 'admin:mb_infant_infantoffstudy_changelist' %}">Infant Off Study</A>

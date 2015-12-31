@@ -6,17 +6,22 @@ from edc_lab.lab_requisition.models import BaseRequisition
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_sync.models import SyncModelMixin
+from edc_visit_tracking.models import CrfModelManager, CrfModelMixin
 
 from microbiome.apps.mb_infant.models import InfantVisit
-
-from ..managers import RequisitionManager
 
 from .aliquot_type import AliquotType
 from .packing_list import PackingList
 from .panel import Panel
 
 
-class InfantRequisition(BaseRequisition, SyncModelMixin, BaseUuidModel):
+class InfantRequisitionManager(CrfModelManager):
+
+    def get_by_natural_key(self, requisition_identifier):
+        return self.get(requisition_identifier=requisition_identifier)
+
+
+class InfantRequisition(CrfModelMixin, BaseRequisition, SyncModelMixin, BaseUuidModel):
 
     infant_visit = models.ForeignKey(InfantVisit)
 
@@ -26,7 +31,7 @@ class InfantRequisition(BaseRequisition, SyncModelMixin, BaseUuidModel):
 
     panel = models.ForeignKey(Panel)
 
-    objects = RequisitionManager()
+    objects = InfantRequisitionManager()
 
     history = AuditTrail()
 
@@ -34,9 +39,6 @@ class InfantRequisition(BaseRequisition, SyncModelMixin, BaseUuidModel):
 
     def get_visit(self):
         return self.infant_visit
-
-    def get_absolute_url(self):
-        return reverse('admin:mb_lab_infantrequisition_change', args=(self.id,))
 
     def aliquot(self):
         url = reverse('admin:mb_lab_aliquot_changelist')
