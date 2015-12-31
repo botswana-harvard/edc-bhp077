@@ -2,8 +2,8 @@ from django import forms
 from django.conf import settings
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
-from edc_lab.lab_requisition.forms import BaseRequisitionForm
 from edc_constants.constants import SCHEDULED, UNSCHEDULED
+from edc_lab.lab_requisition.forms import RequisitionFormMixin
 
 from microbiome.apps.mb.choices import STUDY_SITES
 from microbiome.apps.mb_maternal.models import MaternalVisit
@@ -11,7 +11,7 @@ from microbiome.apps.mb_maternal.models import MaternalVisit
 from ..models import MaternalRequisition
 
 
-class MaternalRequisitionForm(BaseRequisitionForm):
+class MaternalRequisitionForm(RequisitionFormMixin):
 
     study_site = forms.ChoiceField(
         label='Study site',

@@ -17,28 +17,4 @@ class InfantVisitAdmin(VisitAdminMixin, BaseModelAdmin):
     requisition_model = InfantRequisition
     visit_attr = 'infant_visit'
 
-
-#     list_display = ('information_provider', 'information_provider_other',
-#                     'study_status', 'is_present', 'survival_status')
-#
-#     radio_fields = {
-#         'information_provider': admin.VERTICAL,
-#         'survival_status': admin.VERTICAL,
-#         'require_crfs': admin.VERTICAL,
-#         'is_present': admin.VERTICAL}
-#
-#     actions = [
-#         export_as_csv_action(
-#             description="CSV Export of Infant Visit",
-#             fields=[],
-#             delimiter=',',
-#             exclude=['created', 'modified', 'user_created', 'user_modified',
-#                      'revision', 'id', 'hostname_created', 'hostname_modified'],
-#             extra_fields=OrderedDict(
-#                 {'subject_identifier': 'appointment__registered_subject__subject_identifier',
-#                  'gender': 'appointment__registered_subject__gender',
-#                  'dob': 'appointment__registered_subject__dob',
-#                  }),
-#         )]
-
 admin.site.register(InfantVisit, InfantVisitAdmin)

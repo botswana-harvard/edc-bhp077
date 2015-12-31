@@ -1,8 +1,7 @@
-from django.core.urlresolvers import reverse
 from django.db import models
 
 from edc.entry_meta_data.managers import RequisitionMetaDataManager
-from edc_lab.lab_requisition.models import BaseRequisition
+from edc_lab.lab_requisition.models import RequisitionModelMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_sync.models import SyncModelMixin
@@ -10,6 +9,7 @@ from edc_visit_tracking.models import CrfModelManager, CrfModelMixin
 
 from microbiome.apps.mb_infant.models import InfantVisit
 
+from .aliquot import Aliquot
 from .aliquot_type import AliquotType
 from .packing_list import PackingList
 from .panel import Panel
@@ -21,7 +21,9 @@ class InfantRequisitionManager(CrfModelManager):
         return self.get(requisition_identifier=requisition_identifier)
 
 
-class InfantRequisition(CrfModelMixin, BaseRequisition, SyncModelMixin, BaseUuidModel):
+class InfantRequisition(CrfModelMixin, RequisitionModelMixin, SyncModelMixin, BaseUuidModel):
+
+    aliquot_model = Aliquot
 
     infant_visit = models.ForeignKey(InfantVisit)
 
@@ -39,12 +41,6 @@ class InfantRequisition(CrfModelMixin, BaseRequisition, SyncModelMixin, BaseUuid
 
     def get_visit(self):
         return self.infant_visit
-
-    def aliquot(self):
-        url = reverse('admin:mb_lab_aliquot_changelist')
-        return """<a href="{url}?q={requisition_identifier}" />aliquot</a>""".format(
-            url=url, requisition_identifier=self.requisition_identifier)
-    aliquot.allow_tags = True
 
     class Meta:
         app_label = 'mb_lab'

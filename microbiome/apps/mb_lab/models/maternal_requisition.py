@@ -1,8 +1,6 @@
-from django.core.urlresolvers import reverse
 from django.db import models
 
 from edc.entry_meta_data.managers import RequisitionMetaDataManager
-from edc_lab.lab_requisition.models import BaseRequisition
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_sync.models import SyncModelMixin
@@ -10,9 +8,11 @@ from edc_visit_tracking.models.crf_model_mixin import CrfModelMixin, CrfModelMan
 
 from microbiome.apps.mb_maternal.models import MaternalVisit
 
+from .aliquot import Aliquot
 from .aliquot_type import AliquotType
 from .packing_list import PackingList
 from .panel import Panel
+from edc_lab.lab_requisition.models import RequisitionModelMixin
 
 
 class MaternalRequisitionManager(CrfModelManager):
@@ -21,7 +21,9 @@ class MaternalRequisitionManager(CrfModelManager):
         return self.get(requisition_identifier=requisition_identifier)
 
 
-class MaternalRequisition(CrfModelMixin, BaseRequisition, SyncModelMixin, BaseUuidModel):
+class MaternalRequisition(CrfModelMixin, RequisitionModelMixin, SyncModelMixin, BaseUuidModel):
+
+    aliquot_model = Aliquot
 
     maternal_visit = models.ForeignKey(MaternalVisit)
 
@@ -42,23 +44,6 @@ class MaternalRequisition(CrfModelMixin, BaseRequisition, SyncModelMixin, BaseUu
 
     def natural_key(self):
         return (self.requisition_identifier,)
-
-    def aliquot(self):
-        url = reverse('admin:mb_lab_aliquot_changelist')
-        return """<a href="{url}?q={requisition_identifier}" />aliquot</a>""".format(
-            url=url, requisition_identifier=self.requisition_identifier)
-    aliquot.allow_tags = True
-
-    def dashboard(self):
-        url = reverse(
-            'subject_dashboard_url',
-            kwargs={
-                'dashboard_type': self.maternal_visit.appointment.registered_subject.subject_type.lower(),
-                'dashboard_model': 'appointment',
-                'dashboard_id': self.maternal_visit.appointment.pk,
-                'show': 'appointments'})
-        return """<a href="{url}" />dashboard</a>""".format(url=url)
-    dashboard.allow_tags = True
 
     class Meta:
         app_label = 'mb_lab'

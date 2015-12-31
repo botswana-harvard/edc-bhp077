@@ -2,8 +2,8 @@ from django import forms
 from django.conf import settings
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
-from edc_lab.lab_requisition.forms import BaseRequisitionForm
 from edc_constants.constants import YES, NO
+from edc_lab.lab_requisition.forms import RequisitionFormMixin
 
 from microbiome.apps.mb.choices import STUDY_SITES
 from microbiome.apps.mb_infant.models import InfantStoolCollection
@@ -11,7 +11,7 @@ from microbiome.apps.mb_infant.models import InfantStoolCollection
 from ..models import InfantRequisition
 
 
-class InfantRequisitionForm(BaseRequisitionForm):
+class InfantRequisitionForm(RequisitionFormMixin):
 
     study_site = forms.ChoiceField(
         label='Study site',
