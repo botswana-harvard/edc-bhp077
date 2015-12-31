@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     'edc_offstudy',
     'edc_registration',
     'edc_sync',
+    'edc_testing',
     'edc_visit_schedule',
     'edc_visit_tracking',
     # EDC
@@ -124,7 +125,6 @@ INSTALLED_APPS = [
     'edc.subject.rule_groups',
     'edc.subject.subject',
     'edc.subject.subject_summary',
-    'edc.testing',
     'edc.utils',
     # LIS
     'lis.base.model',
