@@ -50,7 +50,7 @@ class MaternalVisitForm (BaseModelForm):
             instance = self.instance
         else:
             instance = MaternalVisit(**self.cleaned_data)
-        instance.no_further_data_collection(forms.ValidationError)
+        instance.subject_failed_eligibility(forms.ValidationError)
 
         return cleaned_data
 

@@ -2,7 +2,7 @@ from django.utils import timezone
 
 from edc_appointment.models import Appointment
 from edc_constants.choices import YES, NOT_APPLICABLE, POS
-from edc_constants.constants import NO_FURTHER_DATA_COLLECTION
+from edc_constants.constants import FAILED_ELIGIBILITY
 
 from microbiome.apps.mb_maternal.forms import MaternalVisitForm
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
@@ -62,8 +62,8 @@ class TestMaternalVisit(BaseMaternalTestCase):
     def test_passed_enrollment_but_no_data_collection(self):
         """Test a participant who passed eligibility but no further data collection
         on visit report"""
-        self.data['reason'] = NO_FURTHER_DATA_COLLECTION
+        self.data['reason'] = FAILED_ELIGIBILITY
         form = MaternalVisitForm(data=self.data)
         self.assertIn(
-            "Subject is eligible. Visit reason cannot be 'No further data collection'",
+            "Subject is eligible. Visit reason cannot be 'Failed Eligibility'",
             form.errors.get('__all__'))

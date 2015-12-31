@@ -1,6 +1,6 @@
 from edc_constants.constants import (
     NOT_APPLICABLE, UNKNOWN, OTHER, UNSCHEDULED, SCHEDULED, MISSED_VISIT, LOST_VISIT,
-    OFF_STUDY, DEATH_VISIT, ON_STUDY, COMPLETED_PROTOCOL_VISIT, NO_FURTHER_DATA_COLLECTION, )
+    OFF_STUDY, DEATH_VISIT, ON_STUDY, COMPLETED_PROTOCOL_VISIT, FAILED_ELIGIBILITY, )
 
 from .constants import NO_MODIFICATIONS, START, BREASTFEED_ONLY
 
@@ -24,7 +24,7 @@ VISIT_REASON = [
     (UNSCHEDULED, 'Unscheduled visit at which lab samples or data are being submitted'),
     (LOST_VISIT, 'Lost to follow-up (use only when taking subject off study)'),
     (DEATH_VISIT, 'Death'),
-    (NO_FURTHER_DATA_COLLECTION, 'No further data collection (Subject failed enrollment)'),
+    (FAILED_ELIGIBILITY, 'Subject failed enrollment eligibility'),
     (COMPLETED_PROTOCOL_VISIT, 'Subject has completed the study')]
 
 VISIT_UNSCHEDULED_REASON = (
