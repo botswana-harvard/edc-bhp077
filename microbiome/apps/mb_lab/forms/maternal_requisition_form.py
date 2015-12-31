@@ -8,7 +8,6 @@ from edc_constants.constants import SCHEDULED, UNSCHEDULED
 from microbiome.apps.mb.choices import STUDY_SITES
 from microbiome.apps.mb_maternal.models import MaternalVisit
 
-
 from ..models import MaternalRequisition
 
 
