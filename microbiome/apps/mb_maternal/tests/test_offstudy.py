@@ -3,7 +3,7 @@ from datetime import date
 
 from django.utils import timezone
 
-from edc.entry_meta_data.models import ScheduledEntryMetaData
+from edc_meta_data.models import CrfMetaData
 from edc_appointment.models import Appointment
 from edc_constants.constants import YES, NO, POS, NEG, UNKEYED, NOT_APPLICABLE, SCHEDULED,\
     COMPLETED_PROTOCOL_VISIT
@@ -48,7 +48,7 @@ class TestOffStudy(BaseMaternalTestCase):
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
         MaternalVisit.objects.get(appointment=appointment, reason=COMPLETED_PROTOCOL_VISIT)
-        self.assertEqual(ScheduledEntryMetaData.objects.filter(
+        self.assertEqual(CrfMetaData.objects.filter(
             entry_status=UNKEYED,
             entry__app_label='mb_maternal',
             entry__model_name='maternaloffstudy',
@@ -90,7 +90,7 @@ class TestOffStudy(BaseMaternalTestCase):
                 pass
             else:
                 raise MaternalVisit.DoesNotExist
-        self.assertEqual(ScheduledEntryMetaData.objects.filter(
+        self.assertEqual(CrfMetaData.objects.filter(
             entry_status=UNKEYED,
             entry__app_label='mb_maternal',
             entry__model_name='maternaloffstudy',

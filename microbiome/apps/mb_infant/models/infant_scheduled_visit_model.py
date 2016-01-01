@@ -1,9 +1,8 @@
 from django.db import models
 
-from edc.data_manager.models import TimePointStatusMixin
-from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
+from edc_meta_data.managers import CrfMetaDataManager
 from edc_offstudy.models import OffStudyMixin
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.models import CrfModelMixin
@@ -12,7 +11,7 @@ from .infant_visit import InfantVisit
 
 
 class InfantScheduledVisitModel(
-        CrfModelMixin, SyncModelMixin, OffStudyMixin, TimePointStatusMixin, BaseUuidModel):
+        CrfModelMixin, SyncModelMixin, OffStudyMixin, BaseUuidModel):
 
     """ A model completed by the user on the infant's scheduled visit. """
 
@@ -22,7 +21,7 @@ class InfantScheduledVisitModel(
 
     history = AuditTrail()
 
-    entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
+    entry_meta_data_manager = CrfMetaDataManager(InfantVisit)
 
     def __unicode__(self):
         return str(self.infant_visit)

@@ -1,4 +1,4 @@
-from edc.entry_meta_data.models import MetaDataMixin
+from edc_meta_data.models import CrfMetaDataMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_constants.constants import DEATH_VISIT, UNSCHEDULED, SCHEDULED, COMPLETED_PROTOCOL_VISIT
@@ -15,7 +15,7 @@ from edc_visit_tracking.models.caretaker_fields_mixin import CaretakerFieldsMixi
 
 
 class InfantVisit(
-        MetaDataMixin, SyncModelMixin, PreviousVisitMixin, OffStudyMixin, VisitModelMixin,
+        CrfMetaDataMixin, SyncModelMixin, PreviousVisitMixin, OffStudyMixin, VisitModelMixin,
         CaretakerFieldsMixin, BaseUuidModel):
 
     """ A model completed by the user on the infant visits. """
@@ -37,10 +37,10 @@ class InfantVisit(
             subject_identifier=self.appointment.registered_subject.relative_identifier)
         return PostnatalEnrollment.objects.get(registered_subject=maternal_registered_subject)
 
-    def custom_post_update_entry_meta_data(self):
+    def custom_post_update_crf_meta_data(self):
         """Calls custom methods that manipulate meta data on the post save.
 
-        This method is called in a post-save signal in edc.entry_meta_data."""
+        This method is called in a post-save signal in edc_meta_data."""
         if self.reason == COMPLETED_PROTOCOL_VISIT:
             self.change_to_off_study_visit(self.appointment, 'mb_infant', 'infantoffstudy')
         elif self.reason == DEATH_VISIT:
@@ -55,7 +55,7 @@ class InfantVisit(
 
     def requires_infant_birth_arv_on_maternal_pos(self):
         if self.appointment.visit_definition.code == '2000':
-            self.form_is_required(
+            self.crf_is_required(
                 self.appointment,
                 'mb_infant',
                 'infantbirtharv',

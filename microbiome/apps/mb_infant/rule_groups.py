@@ -2,8 +2,7 @@ from __future__ import print_function
 
 from edc_constants.constants import YES, NOT_REQUIRED, POS, UNKEYED, MALE
 from edc_registration.models import RegisteredSubject
-from edc.subject.rule_groups.classes import (RuleGroup, site_rule_groups, Logic,
-                                             ScheduledDataRule, RequisitionRule)
+from edc_rule_groups.classes import (RuleGroup, site_rule_groups, Logic, CrfRule, RequisitionRule)
 
 from microbiome.apps.mb_maternal.models import PostnatalEnrollment
 
@@ -21,7 +20,7 @@ def func_maternal_hiv_pos(visit_instance):
 
 class InfantBirthDataRuleGroup(RuleGroup):
 
-    congenital_anomalities_yes = ScheduledDataRule(
+    congenital_anomalities_yes = CrfRule(
         logic=Logic(
             predicate=('congenital_anomalities', 'equals', YES),
             consequence=UNKEYED,
@@ -38,14 +37,14 @@ site_rule_groups.register(InfantBirthDataRuleGroup)
 
 class InfantFuRuleGroup(RuleGroup):
 
-    physical_assessment_yes = ScheduledDataRule(
+    physical_assessment_yes = CrfRule(
         logic=Logic(
             predicate=('physical_assessment', 'equals', YES),
             consequence=UNKEYED,
             alternative=NOT_REQUIRED),
         target_model=['infantfuphysical'])
 
-    has_dx_yes = ScheduledDataRule(
+    has_dx_yes = CrfRule(
         logic=Logic(
             predicate=('has_dx', 'equals', YES),
             consequence=UNKEYED,
@@ -62,7 +61,7 @@ site_rule_groups.register(InfantFuRuleGroup)
 
 class InfantCircumcisionRuleGroup(RuleGroup):
 
-    circumcision = ScheduledDataRule(
+    circumcision = CrfRule(
         logic=Logic(
             predicate=('gender', 'equals', MALE),
             consequence=UNKEYED,

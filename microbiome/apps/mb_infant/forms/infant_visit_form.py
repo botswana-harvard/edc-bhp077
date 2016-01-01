@@ -13,6 +13,8 @@ from ..models import InfantVisit
 
 class InfantVisitForm(VisitFormMixin, BaseModelForm):
 
+    participant_label = 'infant'
+
     information_provider = forms.ChoiceField(
         label='Please indicate who provided most of the information for this infant\'s visit',
         choices=INFO_PROVIDER,

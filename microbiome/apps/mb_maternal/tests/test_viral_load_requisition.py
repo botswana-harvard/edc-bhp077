@@ -1,7 +1,7 @@
-from edc.entry_meta_data.models import RequisitionMetaData
 from edc_appointment.models import Appointment
-from edc.subject.entry.models.lab_entry import LabEntry
 from edc_constants.constants import YES, POS, NOT_APPLICABLE
+from edc_meta_data.models import RequisitionMetaData
+from edc_meta_data.models.lab_entry import LabEntry
 
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory

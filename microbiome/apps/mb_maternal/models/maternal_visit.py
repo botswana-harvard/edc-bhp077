@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from edc.entry_meta_data.models import MetaDataMixin
+from edc_meta_data.models import CrfMetaDataMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
@@ -17,7 +17,7 @@ from microbiome.apps.mb.choices import VISIT_REASON
 from ..models import MaternalConsent, PostnatalEnrollment, AntenatalEnrollment
 
 
-class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataMixin, RequiresConsentMixin,
+class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, CrfMetaDataMixin, RequiresConsentMixin,
                     VisitModelMixin, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
@@ -70,10 +70,10 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataM
         del dct[DEATH_VISIT]
         return dct
 
-    def custom_post_update_entry_meta_data(self):
+    def custom_post_update_crf_meta_data(self):
         """Custom methods that manipulate meta data on the post save.
 
-        This method is called in the edc.entry_meta_data signal."""
+        This method is called in the edc_meta_data signal."""
         if self.reason == FAILED_ELIGIBILITY:
             self.change_to_off_study_visit(self.appointment, 'mb_maternal', 'maternaloffstudy')
         elif self.reason == DEATH_VISIT:
@@ -82,7 +82,7 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataM
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
         elif self.reason == COMPLETED_PROTOCOL_VISIT:
-            self.form_is_required(self.appointment, 'mb_maternal', 'maternaloffstudy')
+            self.crf_is_required(self.appointment, 'mb_maternal', 'maternaloffstudy')
         else:
             self.required_for_maternal_pos()
             self.required_for_maternal_not_pos()
@@ -93,7 +93,7 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataM
             if self.appointment.visit_definition.code == '1000M':
                 model_names = ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg']
                 for model_name in model_names:
-                    self.form_is_required(
+                    self.crf_is_required(
                         self.appointment,
                         'mb_maternal',
                         model_name,
@@ -101,7 +101,7 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataM
             elif self.appointment.visit_definition.code == '2000M':
                 model_names = ['maternalarvpreg', 'maternallabdelclinic']
                 for model_name in model_names:
-                    self.form_is_required(
+                    self.crf_is_required(
                         self.appointment,
                         'mb_maternal',
                         model_name,
@@ -118,7 +118,7 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataM
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
                 model_names = ['maternalarvpost', 'maternalarvpostadh']
                 for model_name in model_names:
-                    self.form_is_required(
+                    self.crf_is_required(
                         self.appointment,
                         'mb_maternal',
                         model_name,
@@ -132,7 +132,7 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MetaDataM
     def required_for_maternal_not_pos(self):
         if self.enrollment_hiv_status == NEG and self.scheduled_rapid_test != POS:
             if self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
-                self.form_is_required(
+                self.crf_is_required(
                     self.appointment,
                     'mb_maternal',
                     'rapidtestresult',

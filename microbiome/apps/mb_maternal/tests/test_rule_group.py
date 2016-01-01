@@ -1,8 +1,8 @@
 from django.utils import timezone
 
-from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
 from edc_appointment.models import Appointment
 from edc_constants.constants import NEW, YES, POS, NEG, UNKEYED, KEYED, NOT_REQUIRED, NOT_APPLICABLE
+from edc_meta_data.models import CrfMetaData, RequisitionMetaData
 
 from microbiome.apps.mb_maternal.models import RapidTestResult
 
@@ -36,7 +36,7 @@ class TestRuleGroup(BaseMaternalTestCase):
                 registered_subject=self.registered_subject, visit_definition__code=code)
             MaternalVisitFactory(appointment=appointment)
             for model_name in model_names:
-                self.assertEqual(ScheduledEntryMetaData.objects.filter(
+                self.assertEqual(CrfMetaData.objects.filter(
                     entry_status=UNKEYED,
                     entry__app_label='mb_maternal',
                     entry__model_name=model_name,
@@ -58,7 +58,7 @@ class TestRuleGroup(BaseMaternalTestCase):
                 registered_subject=self.registered_subject, visit_definition__code=code)
             MaternalVisitFactory(appointment=appointment)
             for model_name in model_names:
-                self.assertEqual(ScheduledEntryMetaData.objects.filter(
+                self.assertEqual(CrfMetaData.objects.filter(
                     entry_status=UNKEYED,
                     entry__app_label='mb_maternal',
                     entry__model_name=model_name,
@@ -92,7 +92,7 @@ class TestRuleGroup(BaseMaternalTestCase):
                 registered_subject=self.registered_subject, visit_definition__code=code)
             MaternalVisitFactory(appointment=appointment)
             for model_name in model_names:
-                self.assertEqual(ScheduledEntryMetaData.objects.filter(
+                self.assertEqual(CrfMetaData.objects.filter(
                     entry_status=UNKEYED,
                     entry__app_label='mb_maternal',
                     entry__model_name=model_name,
@@ -130,7 +130,7 @@ class TestRuleGroup(BaseMaternalTestCase):
                     result_date=timezone.now().date(),
                     result=POS)
                 for model_name in model_names:
-                    self.assertEqual(ScheduledEntryMetaData.objects.filter(
+                    self.assertEqual(CrfMetaData.objects.filter(
                         entry_status=KEYED,
                         entry__app_label='mb_maternal',
                         entry__model_name=model_name,
@@ -138,7 +138,7 @@ class TestRuleGroup(BaseMaternalTestCase):
                     ).count(), 1)
             else:
                 for model_name in model_names:
-                    self.assertEqual(ScheduledEntryMetaData.objects.filter(
+                    self.assertEqual(CrfMetaData.objects.filter(
                         entry_status=NOT_REQUIRED,
                         entry__app_label='mb_maternal',
                         entry__model_name=model_name,
@@ -172,7 +172,7 @@ class TestRuleGroup(BaseMaternalTestCase):
                 registered_subject=self.registered_subject, visit_definition__code=code)
             MaternalVisitFactory(appointment=appointment)
             for model_name in model_names:
-                self.assertEqual(ScheduledEntryMetaData.objects.filter(
+                self.assertEqual(CrfMetaData.objects.filter(
                     entry_status=UNKEYED,
                     entry__app_label='mb_maternal',
                     entry__model_name=model_name,
@@ -235,7 +235,7 @@ class TestRuleGroup(BaseMaternalTestCase):
             ReproductiveHealthFactory(
                 maternal_visit=MaternalVisitFactory(appointment=appointment)
             )
-            self.assertEqual(ScheduledEntryMetaData.objects.filter(
+            self.assertEqual(CrfMetaData.objects.filter(
                 entry_status=NEW,
                 entry__app_label='mb_maternal',
                 entry__model_name='maternalsrh',

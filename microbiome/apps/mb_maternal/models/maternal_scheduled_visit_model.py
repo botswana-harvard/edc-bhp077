@@ -1,7 +1,6 @@
 from django.db import models
 
-from edc.data_manager.models import TimePointStatusMixin
-from edc.entry_meta_data.managers import EntryMetaDataManager
+from edc_meta_data.managers import CrfMetaDataManager
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
@@ -13,8 +12,8 @@ from .maternal_consent import MaternalConsent
 from .maternal_visit import MaternalVisit
 
 
-class MaternalScheduledVisitModel(CrfModelMixin, SyncModelMixin, OffStudyMixin, RequiresConsentMixin,
-                                  TimePointStatusMixin, BaseUuidModel):
+class MaternalScheduledVisitModel(CrfModelMixin, SyncModelMixin, OffStudyMixin,
+                                  RequiresConsentMixin, BaseUuidModel):
 
     """ Base model for all scheduled models (adds key to :class:`MaternalVisit`). """
 
@@ -26,7 +25,7 @@ class MaternalScheduledVisitModel(CrfModelMixin, SyncModelMixin, OffStudyMixin, 
 
     history = AuditTrail()
 
-    entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
+    entry_meta_data_manager = CrfMetaDataManager(MaternalVisit)
 
     def natural_key(self):
         return (self.maternal_visit.natural_key(), )

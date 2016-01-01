@@ -2,15 +2,12 @@ from django.db import models
 
 from edc_sync.models import SyncModelMixin
 from edc_base.model.models import BaseUuidModel
-from edc_lab.lab_packing.models import BasePackingList
+from edc_lab.lab_packing.models import PackingListMixin
 
 from ..managers import PackingListManager
 
 
-class PackingList(BasePackingList, SyncModelMixin, BaseUuidModel):
-
-    def natural_key(self):
-        return (self.timestamp, )
+class PackingList(PackingListMixin, SyncModelMixin, BaseUuidModel):
 
     objects = PackingListManager()
 

@@ -6,7 +6,7 @@ from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc_appointment.models import Appointment
 from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc_registration.models import RegisteredSubject
-from edc.subject.rule_groups.classes import site_rule_groups
+from edc_rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration

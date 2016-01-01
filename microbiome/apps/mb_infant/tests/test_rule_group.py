@@ -1,10 +1,10 @@
 from django.test import TestCase
 
 from edc_registration.models import RegisteredSubject
-from edc.entry_meta_data.models import ScheduledEntryMetaData, RequisitionMetaData
+from edc_meta_data.models import CrfMetaData, RequisitionMetaData
 from edc_lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
+from edc_rule_groups.classes import site_rule_groups
 from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
 from edc_constants.constants import NEW, YES, POS, MALE, SCHEDULED, UNKEYED, REQUIRED
@@ -68,10 +68,10 @@ class TestRuleGroup(TestCase):
             visit_definition__code='2000')
         InfantVisitFactory(appointment=appointment, reason=SCHEDULED)
         self.assertEqual(
-            ScheduledEntryMetaData.objects.filter(
+            CrfMetaData.objects.filter(
                 entry_status=UNKEYED,
-                entry__app_label='mb_infant',
-                entry__model_name='infantbirtharv',
+                crf_entry__app_label='mb_infant',
+                crf_entry__model_name='infantbirtharv',
                 appointment=appointment).count(), 1)
 
     def test_congentinal_yes(self):
@@ -99,10 +99,10 @@ class TestRuleGroup(TestCase):
         infant_visit = InfantVisitFactory(appointment=appointment)
         InfantBirthDataFactory(infant_visit=infant_visit)
         self.assertEqual(
-            ScheduledEntryMetaData.objects.filter(
+            CrfMetaData.objects.filter(
                 entry_status=NEW,
-                entry__app_label='mb_infant',
-                entry__model_name='infantcongenitalanomalies',
+                crf_entry__app_label='mb_infant',
+                crf_entry__model_name='infantcongenitalanomalies',
                 appointment=appointment).count(), 1)
 
     def test_if_maternal_pos_dna_pcr_required(self):
@@ -172,15 +172,15 @@ class TestRuleGroup(TestCase):
             appointment=appointment,
             reason=SCHEDULED)
         InfantFuFactory(infant_visit=infant_visit)
-        self.assertEqual(ScheduledEntryMetaData.objects.filter(
+        self.assertEqual(CrfMetaData.objects.filter(
             entry_status=NEW,
-            entry__app_label='mb_infant',
-            entry__model_name='infantfuphysical',
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantfuphysical',
             appointment=appointment).count(), 1)
-        self.assertEqual(ScheduledEntryMetaData.objects.filter(
+        self.assertEqual(CrfMetaData.objects.filter(
             entry_status=NEW,
-            entry__app_label='mb_infant',
-            entry__model_name='infantfudx',
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantfudx',
             appointment=appointment).count(), 1)
 
     def test_infant_visit_circumcision_required(self):
@@ -223,8 +223,8 @@ class TestRuleGroup(TestCase):
         InfantVisitFactory(
             appointment=appointment,
             reason=SCHEDULED)
-        self.assertEqual(ScheduledEntryMetaData.objects.filter(
+        self.assertEqual(CrfMetaData.objects.filter(
             entry_status=UNKEYED,
-            entry__app_label='mb_infant',
-            entry__model_name='infantcircumcision',
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantcircumcision',
             appointment=appointment).count(), 1)

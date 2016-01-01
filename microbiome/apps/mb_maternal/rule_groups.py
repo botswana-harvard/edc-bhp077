@@ -1,12 +1,12 @@
 from edc_constants.constants import YES, UNKEYED, NOT_REQUIRED
-from edc.subject.rule_groups.classes import RuleGroup, site_rule_groups, Logic, ScheduledDataRule
+from edc_rule_groups.classes import RuleGroup, site_rule_groups, Logic, CrfRule
 
 from .models import MaternalVisit, ReproductiveHealth
 
 
 class ReproductiveHealthRuleGroup(RuleGroup):
 
-    is_srh_referral = ScheduledDataRule(
+    is_srh_referral = CrfRule(
         logic=Logic(
             predicate=('srh_referral', 'equals', YES),
             consequence=UNKEYED,

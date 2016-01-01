@@ -1,9 +1,9 @@
 from django.db import models
 
-from edc.entry_meta_data.managers.entry_meta_data_manager import EntryMetaDataManager
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_death_report.models import DeathReportModelMixin
+from edc_meta_data.managers import CrfMetaDataManager
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.models.crf_model_mixin import CrfModelMixin
 
@@ -18,7 +18,7 @@ class MaternalDeathReport(CrfModelMixin, SyncModelMixin, DeathReportModelMixin, 
 
     history = AuditTrail()
 
-    entry_meta_data_manager = EntryMetaDataManager(MaternalVisit)
+    entry_meta_data_manager = CrfMetaDataManager(MaternalVisit)
 
     def natural_key(self):
         return self.get_visit().natural_key()

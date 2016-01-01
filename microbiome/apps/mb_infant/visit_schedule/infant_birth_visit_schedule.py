@@ -3,7 +3,7 @@ from collections import OrderedDict
 from edc_constants.constants import REQUIRED, NOT_REQUIRED, ADDITIONAL, NOT_ADDITIONAL
 from edc_visit_schedule.classes import (
     VisitScheduleConfiguration, site_visit_schedules,
-    EntryTuple, MembershipFormTuple, ScheduleGroupTuple, RequisitionPanelTuple)
+    CrfTuple, MembershipFormTuple, ScheduleGroupTuple, RequisitionPanelTuple)
 
 from microbiome.apps.mb.constants import INFANT
 
@@ -54,14 +54,14 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
-            EntryTuple(10L, u'mb_infant', u'infantbirthdata', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(20L, u'mb_infant', u'infantbirthexam', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(30L, u'mb_infant', u'infantbirthfeedvaccine', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'mb_infant', u'infantbirtharv', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(50L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(100L, u'mb_infant', u'infantcongenitalanomalies', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(230L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
+            CrfTuple(10L, u'mb_infant', u'infantbirthdata', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(20L, u'mb_infant', u'infantbirthexam', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(30L, u'mb_infant', u'infantbirthfeedvaccine', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(40L, u'mb_infant', u'infantbirtharv', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(50L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(100L, u'mb_infant', u'infantcongenitalanomalies', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(230L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
     visit_definitions['2010'] = {
         'title': 'Infant 1 Month Visit',
         'time_point': 10,
@@ -94,16 +94,16 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
-            EntryTuple(30L, u'mb_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'mb_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(50L, u'mb_infant', u'infantfudx', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(80L, u'mb_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(80L, u'mb_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(240L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
+            CrfTuple(30L, u'mb_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(40L, u'mb_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(50L, u'mb_infant', u'infantfudx', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(80L, u'mb_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(80L, u'mb_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(240L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
     visit_definitions['2030'] = {
         'title': 'Infant 3 Month Visit',
         'time_point': 30,
@@ -136,17 +136,17 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
-            EntryTuple(30L, u'mb_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'mb_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(50L, u'mb_infant', u'infantfudx', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(80L, u'mb_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(80L, u'mb_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(110L, u'mb_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(240L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
+            CrfTuple(30L, u'mb_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(40L, u'mb_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(50L, u'mb_infant', u'infantfudx', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(80L, u'mb_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(80L, u'mb_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(110L, u'mb_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(240L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
 
     visit_definitions['2060'] = {
         'title': 'Infant 6 Month Visit',
@@ -180,17 +180,17 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
-            EntryTuple(30L, u'mb_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'mb_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(50L, u'mb_infant', u'infantfudx', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(80L, u'mb_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(80L, u'mb_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(110L, u'mb_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(240L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
+            CrfTuple(30L, u'mb_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(40L, u'mb_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(50L, u'mb_infant', u'infantfudx', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(80L, u'mb_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(80L, u'mb_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(110L, u'mb_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(240L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
 
     visit_definitions['2090'] = {
         'title': 'Infant 9 Month Visit',
@@ -224,17 +224,17 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
-            EntryTuple(30L, u'mb_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'mb_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(50L, u'mb_infant', u'infantfudx', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(80L, u'mb_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(80L, u'mb_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(110L, u'mb_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(240L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
+            CrfTuple(30L, u'mb_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(40L, u'mb_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(50L, u'mb_infant', u'infantfudx', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(80L, u'mb_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(80L, u'mb_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(110L, u'mb_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(240L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
 
     visit_definitions['2120'] = {
         'title': 'Infant 12 Month Visit',
@@ -268,16 +268,16 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
                                   'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
         ),
         'entries': (
-            EntryTuple(30L, u'mb_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(40L, u'mb_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(50L, u'mb_infant', u'infantfudx', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(80L, u'mb_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(80L, u'mb_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
-            EntryTuple(110L, u'mb_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
-            EntryTuple(240L, u'mb_infant', u'infantoffstudy', REQUIRED, ADDITIONAL))}
+            CrfTuple(30L, u'mb_infant', u'infantfu', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(40L, u'mb_infant', u'infantfuphysical', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(50L, u'mb_infant', u'infantfudx', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(80L, u'mb_infant', u'infantfunewmed', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(80L, u'mb_infant', u'infantfuimmunizations', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
+            CrfTuple(110L, u'mb_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
+            CrfTuple(240L, u'mb_infant', u'infantoffstudy', REQUIRED, ADDITIONAL))}
 
 site_visit_schedules.register(InfantBirthVisitSchedule)

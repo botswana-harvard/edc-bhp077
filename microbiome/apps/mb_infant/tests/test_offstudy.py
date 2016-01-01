@@ -2,14 +2,14 @@ from django.test import TestCase
 from django.utils import timezone
 from datetime import date
 
-from edc_registration.models import RegisteredSubject
-from edc.entry_meta_data.models import ScheduledEntryMetaData
-from edc_lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
-from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NEG, OFF_STUDY, COMPLETED_PROTOCOL_VISIT
+from edc_constants.constants import NEW, YES, NEG, COMPLETED_PROTOCOL_VISIT
+from edc_lab.lab_profile.classes import site_lab_profiles
+from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
+from edc_meta_data.models import CrfMetaData
+from edc_registration.models import RegisteredSubject
+from edc_rule_groups.classes import site_rule_groups
 
 from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
 from microbiome.apps.mb.constants import INFANT
@@ -85,10 +85,10 @@ class TestOffStudy(TestCase):
             appointment=self.infant_appointment,
             reason=COMPLETED_PROTOCOL_VISIT)
         self.assertEqual(
-            ScheduledEntryMetaData.objects.filter(
+            CrfMetaData.objects.filter(
                 entry_status=NEW,
-                entry__app_label='mb_infant',
-                entry__model_name='infantoffstudy',
+                crf_entry__app_label='mb_infant',
+                crf_entry__model_name='infantoffstudy',
                 appointment=self.infant_appointment).count(), 1)
 
     def test_offstudy2(self):

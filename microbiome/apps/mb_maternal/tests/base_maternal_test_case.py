@@ -1,6 +1,6 @@
 from django.test.testcases import TestCase
 
-from edc.subject.rule_groups.classes.controller import site_rule_groups
+from edc_rule_groups.classes.controller import site_rule_groups
 from edc.subject.lab_tracker.classes.controller import site_lab_tracker
 from edc_lab.lab_profile.classes.controller import site_lab_profiles
 from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile

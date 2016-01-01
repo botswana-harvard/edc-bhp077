@@ -64,12 +64,11 @@ class InfantBirth(OffStudyMixin, SyncModelMixin, AppointmentMixin, BaseUuidModel
 
     def prepare_appointments(self, using):
         """Creates infant appointments relative to the date-of-delivery"""
-        from edc_appointment.models import AppointmentHelper
         relative_identifier = self.registered_subject.relative_identifier
         maternal_labour_del = MaternalLabourDel.objects.get(
             maternal_visit__appointment__registered_subject__subject_identifier=relative_identifier)
-        AppointmentHelper().create_all(
-            self, base_appt_datetime=maternal_labour_del.delivery_datetime, using=using)
+        self.create_all(
+            base_appt_datetime=maternal_labour_del.delivery_datetime, using=using)
 
     def get_subject_identifier(self):
         return self.registered_subject.subject_identifier

@@ -1,8 +1,8 @@
 from django.db import models
 
-from edc.entry_meta_data.managers import EntryMetaDataManager
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
+from edc_meta_data.managers import CrfMetaDataManager
 from edc_offstudy.models import OffStudyModelMixin
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
@@ -19,7 +19,7 @@ class InfantOffStudy(CrfModelMixin, SyncModelMixin, OffStudyModelMixin, BaseUuid
 
     infant_visit = models.OneToOneField(InfantVisit)
 
-    entry_meta_data_manager = EntryMetaDataManager(InfantVisit)
+    entry_meta_data_manager = CrfMetaDataManager(InfantVisit)
 
     history = AuditTrail()
 

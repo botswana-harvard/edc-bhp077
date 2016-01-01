@@ -11,7 +11,7 @@ from django.views.generic import RedirectView
 from edc.data_manager.classes import data_manager
 from edc_lab.lab_profile.classes import site_lab_profiles
 from edc.subject.lab_tracker.classes import site_lab_tracker
-from edc.subject.rule_groups.classes import site_rule_groups
+from edc_rule_groups.classes import site_rule_groups
 from edc_call_manager.caller_site import site_model_callers
 from edc_dashboard.section import site_sections
 from edc_dashboard.subject.views import additional_requisition
