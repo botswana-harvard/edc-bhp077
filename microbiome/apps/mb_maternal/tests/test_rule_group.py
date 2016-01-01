@@ -38,8 +38,8 @@ class TestRuleGroup(BaseMaternalTestCase):
             for model_name in model_names:
                 self.assertEqual(CrfMetaData.objects.filter(
                     entry_status=UNKEYED,
-                    entry__app_label='mb_maternal',
-                    entry__model_name=model_name,
+                    crf_entry__app_label='mb_maternal',
+                    crf_entry__model_name=model_name,
                     appointment=appointment
                 ).count(), 1)
 
@@ -60,8 +60,8 @@ class TestRuleGroup(BaseMaternalTestCase):
             for model_name in model_names:
                 self.assertEqual(CrfMetaData.objects.filter(
                     entry_status=UNKEYED,
-                    entry__app_label='mb_maternal',
-                    entry__model_name=model_name,
+                    crf_entry__app_label='mb_maternal',
+                    crf_entry__model_name=model_name,
                     appointment=appointment
                 ).count(), 1)
 
@@ -94,8 +94,8 @@ class TestRuleGroup(BaseMaternalTestCase):
             for model_name in model_names:
                 self.assertEqual(CrfMetaData.objects.filter(
                     entry_status=UNKEYED,
-                    entry__app_label='mb_maternal',
-                    entry__model_name=model_name,
+                    crf_entry__app_label='mb_maternal',
+                    crf_entry__model_name=model_name,
                     appointment=appointment
                 ).count(), 1)
 
@@ -132,16 +132,16 @@ class TestRuleGroup(BaseMaternalTestCase):
                 for model_name in model_names:
                     self.assertEqual(CrfMetaData.objects.filter(
                         entry_status=KEYED,
-                        entry__app_label='mb_maternal',
-                        entry__model_name=model_name,
+                        crf_entry__app_label='mb_maternal',
+                        crf_entry__model_name=model_name,
                         appointment=appointment
                     ).count(), 1)
             else:
                 for model_name in model_names:
                     self.assertEqual(CrfMetaData.objects.filter(
                         entry_status=NOT_REQUIRED,
-                        entry__app_label='mb_maternal',
-                        entry__model_name=model_name,
+                        crf_entry__app_label='mb_maternal',
+                        crf_entry__model_name=model_name,
                         appointment=appointment
                     ).count(), 1)
 
@@ -174,8 +174,8 @@ class TestRuleGroup(BaseMaternalTestCase):
             for model_name in model_names:
                 self.assertEqual(CrfMetaData.objects.filter(
                     entry_status=UNKEYED,
-                    entry__app_label='mb_maternal',
-                    entry__model_name=model_name,
+                    crf_entry__app_label='mb_maternal',
+                    crf_entry__model_name=model_name,
                     appointment=appointment
                 ).count(), 1)
 
@@ -230,13 +230,11 @@ class TestRuleGroup(BaseMaternalTestCase):
         MaternalVisitFactory(appointment=appointment)
         for code in ['2010M', '2030M']:
             appointment = Appointment.objects.get(
-                registered_subject=self.registered_subject, visit_definition__code=code
-            )
+                registered_subject=self.registered_subject, visit_definition__code=code)
             ReproductiveHealthFactory(
-                maternal_visit=MaternalVisitFactory(appointment=appointment)
-            )
+                maternal_visit=MaternalVisitFactory(appointment=appointment))
             self.assertEqual(CrfMetaData.objects.filter(
                 entry_status=NEW,
-                entry__app_label='mb_maternal',
-                entry__model_name='maternalsrh',
+                crf_entry__app_label='mb_maternal',
+                crf_entry__model_name='maternalsrh',
                 appointment=appointment).count(), 1)

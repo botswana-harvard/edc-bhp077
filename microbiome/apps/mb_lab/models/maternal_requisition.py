@@ -23,6 +23,10 @@ class MaternalRequisitionManager(CrfModelManager):
 
 class MaternalRequisition(CrfModelMixin, RequisitionModelMixin, SyncModelMixin, BaseUuidModel):
 
+    visit_model = MaternalVisit
+
+    visit_model_attr = 'maternal_visit'
+
     aliquot_model = Aliquot
 
     maternal_visit = models.ForeignKey(MaternalVisit)

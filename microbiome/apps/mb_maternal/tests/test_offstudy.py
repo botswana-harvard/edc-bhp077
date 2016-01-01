@@ -50,8 +50,8 @@ class TestOffStudy(BaseMaternalTestCase):
         MaternalVisit.objects.get(appointment=appointment, reason=COMPLETED_PROTOCOL_VISIT)
         self.assertEqual(CrfMetaData.objects.filter(
             entry_status=UNKEYED,
-            entry__app_label='mb_maternal',
-            entry__model_name='maternaloffstudy',
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='maternaloffstudy',
             appointment=appointment).count(), 1)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
