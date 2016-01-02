@@ -9,10 +9,10 @@ from microbiome.apps.mb_list.models import PriorArv
 
 from ..maternal_choices import PRIOR_PREG_HAART_STATUS
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalArvHistory(MaternalScheduledVisitModel):
+class MaternalArvHistory(MaternalCrfModel):
 
     """ A model completed by the user on ARV history for infected mothers only. """
 

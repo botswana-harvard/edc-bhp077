@@ -7,10 +7,10 @@ from edc_constants.choices import YES_NO_NA, YES_NO
 
 from ..maternal_choices import KNOW_HIV_STATUS
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalClinicalHistory(MaternalScheduledVisitModel):
+class MaternalClinicalHistory(MaternalCrfModel):
 
     """ A model completed by the user on Clinical History for infected mothers only. """
 

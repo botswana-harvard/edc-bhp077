@@ -10,7 +10,7 @@ from edc_visit_tracking.models import CrfModelMixin
 from .infant_visit import InfantVisit
 
 
-class InfantScheduledVisitModel(
+class InfantCrfModel(
         CrfModelMixin, SyncModelMixin, OffStudyMixin, BaseUuidModel):
 
     """ A model completed by the user on the infant's scheduled visit. """

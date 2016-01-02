@@ -9,10 +9,10 @@ from edc_constants.constants import NOT_APPLICABLE
 
 from microbiome.apps.mb.choices import COWS_MILK, TIMES_BREASTFED, WATER_USED
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_crf_visit_model import InfantCrfModel
 
 
-class InfantFeeding(InfantScheduledVisitModel):
+class InfantFeeding(InfantCrfModel):
 
     """ A model completed by the user on the infant's feeding. """
 

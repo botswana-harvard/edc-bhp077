@@ -9,10 +9,10 @@ from microbiome.apps.mb.choices import FEEDING_CHOICES
 from ..choices import INFANT_VACCINATIONS
 from ..managers import InfantInlineModelManager
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_crf_visit_model import InfantCrfModel
 
 
-class InfantBirthFeedVaccine(InfantScheduledVisitModel):
+class InfantBirthFeedVaccine(InfantCrfModel):
 
     """ A model completed by the user on the infant's feeding & vaccination/ immunization. """
 

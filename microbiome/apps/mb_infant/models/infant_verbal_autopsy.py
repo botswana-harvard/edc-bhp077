@@ -8,13 +8,13 @@ from edc_base.model.validators import datetime_not_before_study_start, datetime_
 from microbiome.apps.mb_list.models import AutopsyInfoSource
 from microbiome.apps.mb.choices import AUTOPSY_SIGNS
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_crf_visit_model import InfantCrfModel
 
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_visit_tracking.models.crf_inline_model_mixin import CrfInlineModelMixin
 
 
-class InfantVerbalAutopsy(InfantScheduledVisitModel):
+class InfantVerbalAutopsy(InfantCrfModel):
 
     """ A model completed by the user on the infant's Verbal Autopsy. """
 

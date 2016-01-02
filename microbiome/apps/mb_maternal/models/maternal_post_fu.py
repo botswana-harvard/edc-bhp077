@@ -14,10 +14,10 @@ from microbiome.apps.mb_list.models import ChronicConditions
 from ..managers import MaternalPostFuDxTManager
 from ..maternal_choices import DX
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalPostFu(MaternalScheduledVisitModel):
+class MaternalPostFu(MaternalCrfModel):
 
     """ A model completed by the user on the mother's General post-partum follow-up. """
 
@@ -83,7 +83,7 @@ class MaternalPostFu(MaternalScheduledVisitModel):
         verbose_name_plural = "Maternal Postnatal Follow-Up"
 
 
-class MaternalPostFuDx(MaternalScheduledVisitModel):
+class MaternalPostFuDx(MaternalCrfModel):
 
     """ Post-partum follow up of diagnosis. """
 

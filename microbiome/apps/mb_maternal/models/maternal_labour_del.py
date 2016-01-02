@@ -17,10 +17,10 @@ from microbiome.apps.mb_list.models import Supplements, HealthCond, ObComp
 from ..managers import MaternalLabDelDxTManager
 from ..maternal_choices import DELIVERY_HEALTH_FACILITY
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalLabourDel(MaternalScheduledVisitModel):
+class MaternalLabourDel(MaternalCrfModel):
 
     """ A model completed by the user on Maternal Labor and Delivery which triggers registration of infants. """
 
@@ -98,7 +98,7 @@ class MaternalLabourDel(MaternalScheduledVisitModel):
         verbose_name_plural = "Deliveries"
 
 
-class MaternalLabDelMed(MaternalScheduledVisitModel):
+class MaternalLabDelMed(MaternalCrfModel):
 
     """ Medical history collected during labor and delivery. """
 
@@ -154,7 +154,7 @@ class MaternalLabDelMed(MaternalScheduledVisitModel):
         verbose_name_plural = "Delivery: Medical"
 
 
-class MaternalLabDelClinic(MaternalScheduledVisitModel):
+class MaternalLabDelClinic(MaternalCrfModel):
 
     """ Laboratory and other clinical information collected during labor and delivery.
     for HIV +ve mothers ONLY"""
@@ -215,7 +215,7 @@ class MaternalLabDelClinic(MaternalScheduledVisitModel):
         verbose_name_plural = "Delivery: Clinical"
 
 
-class MaternalLabDelDx(MaternalScheduledVisitModel):
+class MaternalLabDelDx(MaternalCrfModel):
 
     """ Diagnosis during pregnancy collected during labor and delivery.
     This is for HIV positive mothers only"""

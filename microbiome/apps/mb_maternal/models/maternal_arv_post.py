@@ -11,10 +11,10 @@ from edc_visit_tracking.models.crf_inline_model_mixin import CrfInlineModelMixin
 from ..managers import MaternalArvPostModManager
 from ..maternal_choices import REASON_FOR_HAART, ARV_DRUG_LIST, DOSE_STATUS, ARV_MODIFICATION_REASON
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalArvPost (MaternalScheduledVisitModel):
+class MaternalArvPost (MaternalCrfModel):
 
     """ A model completed by the user on the mother's ARVs administered post-partum. """
 
@@ -98,7 +98,7 @@ class MaternalArvPostMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
         unique_together = ('maternal_arv_post', 'arv_code', 'modification_date')
 
 
-class MaternalArvPostAdh(MaternalScheduledVisitModel):
+class MaternalArvPostAdh(MaternalCrfModel):
 
     """Maternal ARV adherence post-partum"""
 

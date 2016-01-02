@@ -8,10 +8,10 @@ from microbiome.apps.mb_list.models import Contraceptives
 
 from ..maternal_choices import YES_NO_DNT_DWTA, NEXT_CHILD_PLAN
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class ReproductiveHealth(MaternalScheduledVisitModel):
+class ReproductiveHealth(MaternalCrfModel):
 
     """ A model completed by the user on the mother's sexual reproductive health. """
 

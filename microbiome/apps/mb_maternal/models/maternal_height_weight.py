@@ -3,10 +3,10 @@ from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalHeightWeight(MaternalScheduledVisitModel):
+class MaternalHeightWeight(MaternalCrfModel):
 
     """ A model completed by the user on Height, Weight details for all mothers. """
 

@@ -3,10 +3,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 from edc_base.audit_trail import AuditTrail
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalObstericalHistory(MaternalScheduledVisitModel):
+class MaternalObstericalHistory(MaternalCrfModel):
 
     """ A model completed by the user on Obsterical History for all mothers. """
 

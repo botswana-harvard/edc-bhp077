@@ -6,10 +6,10 @@ from edc_constants.constants import NOT_APPLICABLE
 
 from microbiome.apps.mb.choices import BREAST_CHOICE
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalBreastHealth(MaternalScheduledVisitModel):
+class MaternalBreastHealth(MaternalCrfModel):
 
     """ A model completed by the user on the mother's General post-partum follow-up. """
 

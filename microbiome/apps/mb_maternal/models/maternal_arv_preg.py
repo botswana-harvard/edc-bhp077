@@ -11,10 +11,10 @@ from microbiome.apps.mb.choices import ARV_INTERRUPTION_REASON
 
 from ..managers import MaternalArvManager
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalArvPreg(MaternalScheduledVisitModel):
+class MaternalArvPreg(MaternalCrfModel):
 
     """ This model is for all HIV positive mothers who are pregnant (whom we hope to enroll their infant)
      and/or for mothers who have just delivered """

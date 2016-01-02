@@ -5,12 +5,12 @@ from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 from edc.subject.code_lists.models import WcsDxAdult
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 from microbiome.apps.mb_list.models import ChronicConditions
 from .maternal_consent import MaternalConsent
 
 
-class MaternalMedicalHistory(MaternalScheduledVisitModel):
+class MaternalMedicalHistory(MaternalCrfModel):
 
     """ A model completed by the user on Medical History for all mothers. """
 

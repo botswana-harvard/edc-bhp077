@@ -4,10 +4,10 @@ from edc_registration.models import RegisteredSubject
 from edc_base.audit_trail import AuditTrail
 from edc_death_report.models import DeathReportModelMixin, InfantDrugRelationshipMixin
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_crf_visit_model import InfantCrfModel
 
 
-class InfantDeathReport (DeathReportModelMixin, InfantDrugRelationshipMixin, InfantScheduledVisitModel):
+class InfantDeathReport (DeathReportModelMixin, InfantDrugRelationshipMixin, InfantCrfModel):
 
     """ A model completed by the user after an infant's death. """
 

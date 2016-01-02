@@ -12,10 +12,10 @@ from microbiome.apps.mb.choices import MEDICATIONS
 
 from ..managers import MaternalPostMedItemsManager
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalPostFuMed(MaternalScheduledVisitModel):
+class MaternalPostFuMed(MaternalCrfModel):
 
     """ A model completed by the user on the mother's Post-partum follow up of medications. """
 

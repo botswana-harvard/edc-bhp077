@@ -4,10 +4,10 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_crf_visit_model import InfantCrfModel
 
 
-class InfantBirthData(InfantScheduledVisitModel):
+class InfantBirthData(InfantCrfModel):
     """ A model completed by the user on the infant's birth exam. """
 
     weight_kg = models.DecimalField(

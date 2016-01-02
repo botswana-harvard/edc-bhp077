@@ -1,11 +1,11 @@
 from edc_base.audit_trail import AuditTrail
 from edc_offstudy.models import OffStudyModelMixin
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 from .maternal_consent import MaternalConsent
 
 
-class MaternalOffStudy(OffStudyModelMixin, MaternalScheduledVisitModel):
+class MaternalOffStudy(OffStudyModelMixin, MaternalCrfModel):
 
     """ A model completed by the user on the visit when the mother is taken off-study. """
 

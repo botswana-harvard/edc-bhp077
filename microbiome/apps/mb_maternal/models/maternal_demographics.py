@@ -12,10 +12,10 @@ from ..maternal_choices import (MARITAL_STATUS, ETHNICITY, HIGHEST_EDUCATION,
                                 WATER_SOURCE, COOKING_METHOD, TOILET_FACILITY,
                                 HOUSE_TYPE)
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalDemographics(MaternalScheduledVisitModel):
+class MaternalDemographics(MaternalCrfModel):
 
     """ A model completed by the user on Demographics form for all mothers. """
 

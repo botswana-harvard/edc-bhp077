@@ -8,10 +8,10 @@ from edc_base.model.validators import CellNumber, TelephoneNumber
 from edc_constants.choices import YES_NO
 from edc_locator.models import LocatorMixin
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalLocator(LocatorMixin, MaternalScheduledVisitModel):
+class MaternalLocator(LocatorMixin, MaternalCrfModel):
 
     """ A model completed by the user to capture locator information and
     the details of the infant caretaker. """

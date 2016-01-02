@@ -9,10 +9,10 @@ from microbiome.apps.mb.choices import DX_INFANT
 
 from ..managers import InfantInlineModelManager
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_crf_visit_model import InfantCrfModel
 
 
-class InfantFuDx(InfantScheduledVisitModel):
+class InfantFuDx(InfantCrfModel):
 
     """ A model completed by the user on the infant's follow up dx. """
 

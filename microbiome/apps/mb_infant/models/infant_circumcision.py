@@ -4,10 +4,10 @@ from edc_base.audit_trail import AuditTrail
 
 from microbiome.apps.mb.choices import CIRCUMCISION
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_crf_visit_model import InfantCrfModel
 
 
-class InfantCircumcision(InfantScheduledVisitModel):
+class InfantCircumcision(InfantCrfModel):
 
     """ A model completed by the user on the infant's circumcision. """
     circumcised = models.CharField(

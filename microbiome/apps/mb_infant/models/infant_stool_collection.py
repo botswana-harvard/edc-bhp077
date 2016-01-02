@@ -8,10 +8,10 @@ from edc_constants.constants import NOT_APPLICABLE
 
 from ..choices import STOOL_COLLECTION_TIME, STOOL_STORED, NAPPY_TYPE
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_crf_visit_model import InfantCrfModel
 
 
-class InfantStoolCollection(InfantScheduledVisitModel):
+class InfantStoolCollection(InfantCrfModel):
 
     """ Infant stool collection. Used in every visit from birth to 12 months. """
 

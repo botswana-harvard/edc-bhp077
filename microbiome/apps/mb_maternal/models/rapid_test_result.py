@@ -3,10 +3,10 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO, POS_NEG
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class RapidTestResult(MaternalScheduledVisitModel):
+class RapidTestResult(MaternalCrfModel):
 
     """ A model completed by the user on the mother's rapid test result. """
 

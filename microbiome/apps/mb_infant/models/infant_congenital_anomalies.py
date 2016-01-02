@@ -14,10 +14,10 @@ from microbiome.apps.mb.choices import (
 
 from ..managers import InfantInlineModelManager
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_crf_visit_model import InfantCrfModel
 
 
-class InfantCongenitalAnomalies(InfantScheduledVisitModel):
+class InfantCongenitalAnomalies(InfantCrfModel):
 
     """ A model completed by the user on the infant's congenital anomalies. """
 

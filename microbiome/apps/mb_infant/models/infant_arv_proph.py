@@ -9,10 +9,10 @@ from edc_base.model.models import BaseUuidModel
 
 from microbiome.apps.mb.choices import ARV_STATUS_WITH_NEVER
 
-from .infant_scheduled_visit_model import InfantScheduledVisitModel
+from .infant_crf_visit_model import InfantCrfModel
 
 
-class InfantArvProph(InfantScheduledVisitModel):
+class InfantArvProph(InfantCrfModel):
     """ A model completed by the user on the infant's nvp or azt prophylaxis. """
 
     prophylatic_nvp = models.CharField(

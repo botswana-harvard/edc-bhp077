@@ -8,10 +8,10 @@ from microbiome.apps.mb_list.models import Contraceptives
 
 from ..maternal_choices import REASON_UNSEEN_AT_CLINIC, REASON_CONTRACEPTIVE_NOT_INITIATED
 
-from .maternal_scheduled_visit_model import MaternalScheduledVisitModel
+from .maternal_crf_model import MaternalCrfModel
 
 
-class MaternalSrh(MaternalScheduledVisitModel):
+class MaternalSrh(MaternalCrfModel):
 
     """ A model completed by the user on the mother's use of sexual reproductive health services. """
 
