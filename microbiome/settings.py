@@ -97,7 +97,7 @@ INSTALLED_APPS = [
     'edc.subject.code_lists',
     'edc.subject.lab_tracker',
     # 'edc.subject.subject',
-    # 'edc.subject.subject_summary',
+    'edc.subject.subject_summary',
     'edc.utils',
     'edc_appointment',
     'edc_base',
