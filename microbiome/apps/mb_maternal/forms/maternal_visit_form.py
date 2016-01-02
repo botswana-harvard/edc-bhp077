@@ -5,10 +5,13 @@ from edc_base.form.forms import BaseModelForm
 from microbiome.apps.mb.choices import VISIT_REASON, VISIT_INFO_SOURCE, MATERNAL_VISIT_STUDY_STATUS
 
 from ..models import MaternalVisit, MaternalConsent
-from edc_constants.constants import ON_STUDY
+from edc_constants.constants import ON_STUDY, MISSED_VISIT
+from edc_visit_tracking.forms import VisitFormMixin
 
 
-class MaternalVisitForm (BaseModelForm):
+class MaternalVisitForm (VisitFormMixin, BaseModelForm):
+
+    participant_label = 'mother'
 
     study_status = forms.ChoiceField(
         label='What is the mother\'s current study status',
@@ -33,7 +36,6 @@ class MaternalVisitForm (BaseModelForm):
         cleaned_data = super(MaternalVisitForm, self).clean()
         self.validate_reason_missed(cleaned_data)
         MaternalVisit(**cleaned_data).has_previous_visit_or_raise(forms.ValidationError)
-
         try:
             subject_identifier = cleaned_data.get('appointment').registered_subject.subject_identifier
             maternal_consent = MaternalConsent.objects.get(
@@ -55,7 +57,7 @@ class MaternalVisitForm (BaseModelForm):
         return cleaned_data
 
     def validate_reason_missed(self, cleaned_data):
-        if cleaned_data.get('reason') == 'missed':
+        if cleaned_data.get('reason') == MISSED_VISIT:
             if not cleaned_data.get('reason_missed'):
                 raise forms.ValidationError(
                     'You indicated that the visit was missed. Please provide a reason why '
