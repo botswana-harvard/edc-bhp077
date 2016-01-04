@@ -60,6 +60,7 @@ class TestMaternalRequisitionForm(TestCase):
             'maternal_visit': None,
             'requisition_identifier': 'ZXDF39U',
             'requisition_datetime': timezone.now(),
+            'report_datetime': timezone.now(),
             'is_drawn': NO,
             'reason_not_drawn': 'collection_failed',
             'drawn_datetime': '',
@@ -84,5 +85,4 @@ class TestMaternalRequisitionForm(TestCase):
         self.data['reason_not_drawn'] = None
         self.data['priority'] = 'normal'
         form = MaternalRequisitionForm(data=self.data)
-        print(form)
         self.assertTrue(form.is_valid())
