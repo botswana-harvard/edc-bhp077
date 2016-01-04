@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 from edc_visit_schedule.classes import (
-    VisitScheduleConfiguration, site_visit_schedules, MembershipFormTuple, ScheduleGroupTuple)
+    VisitScheduleConfiguration, site_visit_schedules, MembershipFormTuple, ScheduleTuple)
 
 from ..models import SpecimenConsent
 
@@ -16,8 +16,8 @@ class SpecimenConsentVisitSchedule(VisitScheduleConfiguration):
         'specimen': MembershipFormTuple('specimen', SpecimenConsent, True)
     })
 
-    schedule_groups = OrderedDict({
-        'Specimen Consent': ScheduleGroupTuple('Specimen Consent', 'specimen', None, None)
+    schedules = OrderedDict({
+        'Specimen Consent': ScheduleTuple('Specimen Consent', 'specimen', None, None)
     })
 
     visit_definitions = OrderedDict()

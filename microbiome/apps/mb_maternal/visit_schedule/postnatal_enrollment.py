@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 from edc_visit_schedule.classes import (
-    VisitScheduleConfiguration, site_visit_schedules, MembershipFormTuple, ScheduleGroupTuple)
+    VisitScheduleConfiguration, site_visit_schedules, MembershipFormTuple, ScheduleTuple)
 
 from ..models import MaternalVisit, PostnatalEnrollment
 
@@ -18,8 +18,8 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'postnatal': MembershipFormTuple(
             'postnatal', PostnatalEnrollment, True)})
 
-    schedule_groups = OrderedDict({
-        'Postnatal Enrollment': ScheduleGroupTuple(
+    schedules = OrderedDict({
+        'Postnatal Enrollment': ScheduleTuple(
             'Postnatal Enrollment', 'postnatal', None, None)})
 
     visit_definitions = OrderedDict()
@@ -35,7 +35,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': 'maternal',
         'visit_tracking_model': MaternalVisit,
-        'schedule_group': 'Postnatal Enrollment',
+        'schedule': 'Postnatal Enrollment',
         'instructions': '',
         'requisitions': maternal_requisition_entries,
         'entries': maternal_history_entries}
@@ -51,7 +51,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': 'maternal',
         'visit_tracking_model': MaternalVisit,
-        'schedule_group': 'Postnatal Enrollment',
+        'schedule': 'Postnatal Enrollment',
         'instructions': '',
         'requisitions': maternal_requisition_entries,
         'entries': maternal_delivery_entries}
@@ -67,7 +67,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': 'maternal',
         'visit_tracking_model': MaternalVisit,
-        'schedule_group': 'Postnatal Enrollment',
+        'schedule': 'Postnatal Enrollment',
         'instructions': None,
         'requisitions': maternal_requisition_entries,
         'entries': maternal_monthly_entries}
@@ -83,7 +83,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': 'maternal',
         'visit_tracking_model': MaternalVisit,
-        'schedule_group': 'Postnatal Enrollment',
+        'schedule': 'Postnatal Enrollment',
         'instructions': None,
         'requisitions': maternal_requisition_entries,
         'entries': maternal_monthly_entries}
@@ -99,7 +99,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': 'maternal',
         'visit_tracking_model': MaternalVisit,
-        'schedule_group': 'Postnatal Enrollment',
+        'schedule': 'Postnatal Enrollment',
         'instructions': None,
         'requisitions': maternal_requisition_entries,
         'entries': maternal_monthly_entries}
@@ -115,7 +115,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': 'maternal',
         'visit_tracking_model': MaternalVisit,
-        'schedule_group': 'Postnatal Enrollment',
+        'schedule': 'Postnatal Enrollment',
         'instructions': None,
         'requisitions': maternal_requisition_entries,
         'entries': maternal_monthly_entries}
@@ -131,7 +131,7 @@ class PostnatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': 'maternal',
         'visit_tracking_model': MaternalVisit,
-        'schedule_group': 'Postnatal Enrollment',
+        'schedule': 'Postnatal Enrollment',
         'instructions': None,
         'requisitions': maternal_requisition_entries,
         'entries': maternal_monthly_entries}

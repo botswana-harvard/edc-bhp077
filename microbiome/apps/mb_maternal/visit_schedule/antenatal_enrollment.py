@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 from edc_visit_schedule.classes import (
-    VisitScheduleConfiguration, site_visit_schedules, MembershipFormTuple, ScheduleGroupTuple)
+    VisitScheduleConfiguration, site_visit_schedules, MembershipFormTuple, ScheduleTuple)
 
 from ..models import AntenatalEnrollment, MaternalVisit
 
@@ -16,8 +16,8 @@ class AntenatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
     membership_forms = OrderedDict({'antenatal': MembershipFormTuple(
         'antenatal', AntenatalEnrollment, True), })
 
-    schedule_groups = OrderedDict({
-        'Antenatal Enrollment': ScheduleGroupTuple('Antenatal Enrollment',
+    schedules = OrderedDict({
+        'Antenatal Enrollment': ScheduleTuple('Antenatal Enrollment',
                                                    'antenatal', None, None), })
 
     visit_definitions = OrderedDict()
@@ -33,7 +33,7 @@ class AntenatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': 'maternal',
         'visit_tracking_model': MaternalVisit,
-        'schedule_group': 'Antenatal Enrollment',
+        'schedule': 'Antenatal Enrollment',
         'instructions': '',
         'requisitions': maternal_requisition_entries,
         'entries': maternal_history_entries}

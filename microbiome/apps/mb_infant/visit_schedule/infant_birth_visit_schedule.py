@@ -3,7 +3,7 @@ from collections import OrderedDict
 from edc_constants.constants import REQUIRED, NOT_REQUIRED, ADDITIONAL, NOT_ADDITIONAL
 from edc_visit_schedule.classes import (
     VisitScheduleConfiguration, site_visit_schedules,
-    CrfTuple, MembershipFormTuple, ScheduleGroupTuple, RequisitionPanelTuple)
+    CrfTuple, MembershipFormTuple, ScheduleTuple, RequisitionPanelTuple)
 
 from microbiome.apps.mb.constants import INFANT
 
@@ -18,8 +18,8 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
     membership_forms = OrderedDict({
         'infant_enrollment': MembershipFormTuple('infant_enrollment', InfantBirth, True)})
 
-    schedule_groups = OrderedDict({
-        'Infant Enrollment': ScheduleGroupTuple('Infant Enrollment',
+    schedules = OrderedDict({
+        'Infant Enrollment': ScheduleTuple('Infant Enrollment',
                                                 'infant_enrollment', None, None)})
     visit_definitions = OrderedDict()
     visit_definitions['2000'] = {
@@ -33,7 +33,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
-        'schedule_group': 'Infant Enrollment',
+        'schedule': 'Infant Enrollment',
         'instructions': None,
         'requisitions': (
             RequisitionPanelTuple(10L, u'mb_lab', u'infantrequisition',
@@ -73,7 +73,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
-        'schedule_group': 'Infant Enrollment',
+        'schedule': 'Infant Enrollment',
         'instructions': None,
         'requisitions': (
             RequisitionPanelTuple(10L, u'mb_lab', u'infantrequisition',
@@ -115,7 +115,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
-        'schedule_group': 'Infant Enrollment',
+        'schedule': 'Infant Enrollment',
         'instructions': None,
         'requisitions': (
             RequisitionPanelTuple(10L, u'mb_lab', u'infantrequisition',
@@ -159,7 +159,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
-        'schedule_group': 'Infant Enrollment',
+        'schedule': 'Infant Enrollment',
         'instructions': None,
         'requisitions': (
             RequisitionPanelTuple(10L, u'mb_lab', u'infantrequisition',
@@ -203,7 +203,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
-        'schedule_group': 'Infant Enrollment',
+        'schedule': 'Infant Enrollment',
         'instructions': None,
         'requisitions': (
             RequisitionPanelTuple(10L, u'mb_lab', u'infantrequisition',
@@ -247,7 +247,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
         'window_upper_bound_unit': 'D',
         'grouping': INFANT,
         'visit_tracking_model': InfantVisit,
-        'schedule_group': 'Infant Enrollment',
+        'schedule': 'Infant Enrollment',
         'instructions': None,
         'requisitions': (
             RequisitionPanelTuple(10L, u'mb_lab', u'infantrequisition',
