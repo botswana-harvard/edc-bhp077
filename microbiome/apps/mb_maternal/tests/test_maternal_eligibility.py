@@ -1,6 +1,8 @@
 from edc_constants.constants import SCREENED
 from edc_registration.models import RegisteredSubject
 
+from microbiome.apps.mb_maternal.models import MaternalEligibility
+
 from .base_maternal_test_case import BaseMaternalTestCase
 from .factories import MaternalEligibilityFactory
 
@@ -42,6 +44,7 @@ class TestMaternalEligibility(BaseMaternalTestCase):
         options = {'age_in_years': 26}
         self.assertEqual(RegisteredSubject.objects.all().count(), 0)
         maternal_eligibility = MaternalEligibilityFactory(**options)
+        maternal_eligibility = MaternalEligibility.objects.get(pk=maternal_eligibility.pk)
         self.assertTrue(maternal_eligibility.is_eligible)
         registered_subject = RegisteredSubject.objects.get(pk=maternal_eligibility.registered_subject.pk)
         self.assertEquals(registered_subject.screening_datetime, maternal_eligibility.report_datetime)
