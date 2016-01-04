@@ -24,9 +24,10 @@ from microbiome.config.databases import (
 
 # these help select the KEY_PATH and full project title
 LIVE_SERVER = 'microbiome.bhp.org.bw'
-TEST_HOSTS = ['edc4.bhp.org.bw']
+
+TEST_HOSTS = ['edc4.bhp.org.bw', 'mac2-2.local']
 DEVELOPER_HOSTS = [
-    'mac2-2.local', 'ckgathi', 'one-2.local', 'One-2.local', 'silverapple', 'tsetsiba', 'fchilisa', 'leslie']
+    'ckgathi', 'one-2.local', 'One-2.local', 'silverapple', 'tsetsiba', 'fchilisa', 'leslie']
 
 APP_NAME = 'mb'
 PROJECT_TITLE = 'Gut Microbiome Evolution'
@@ -39,11 +40,6 @@ BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
 MEDIA_ROOT = BASE_DIR.child('media')
 PROJECT_DIR = Path(os.path.dirname(os.path.realpath(__file__)))
 PROJECT_ROOT = Path(os.path.dirname(os.path.realpath(__file__))).ancestor(1)
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-ALLOW_MODEL_SERIALIZATION = True
 
 if socket.gethostname() == LIVE_SERVER:
     KEY_PATH = '/home/django/source/microbiome/keys'
@@ -75,7 +71,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_revision',
     'south',
-    'edc',
     'edc.core.identifier',
     'edc.data_dictionary',
     'edc.data_manager',
@@ -85,7 +80,6 @@ INSTALLED_APPS = [
     'edc.subject.code_lists',
     'edc.subject.lab_tracker',
     'edc.subject.subject_summary',
-    'edc.utils',
     'edc_appointment',
     'edc_base',
     'edc_call_manager',
@@ -108,32 +102,9 @@ INSTALLED_APPS = [
     'edc_registration',
     'edc_rule_groups',
     'edc_sync',
-    'edc_testing',
     'edc_visit_schedule',
     'edc_visit_tracking',
-    'lis.base.model',
-    'lis.core.bhp_research_protocol',
-    'lis.core.lab_common',
-    'lis.core.lab_flag',
-    'lis.core.lab_grading',
-    'lis.core.lab_reference',
-    'lis.core.lab_result_report',
-    'lis.core.lock',
-    'lis.exim.lab_export',
-    'lis.exim.lab_import',
-    'lis.exim.lab_import_dmis',
-    'lis.exim.lab_import_lis',
     'lis.labeling',
-    'lis.specimen.lab_aliquot',
-    'lis.specimen.lab_aliquot_list',
-    'lis.specimen.lab_order',
-    'lis.specimen.lab_panel',
-    'lis.specimen.lab_receive',
-    'lis.specimen.lab_result',
-    'lis.specimen.lab_result_item',
-    'lis.specimen.lab_test_code',
-    'lis.subject.lab_account',
-    'lis.subject.lab_patient',
     'microbiome.apps.mb',
     'microbiome.apps.mb_dashboard',
     'microbiome.apps.mb_infant',
@@ -141,6 +112,9 @@ INSTALLED_APPS = [
     'microbiome.apps.mb_list',
     'microbiome.apps.mb_maternal',
 ]
+
+if 'test' in sys.argv:
+    INSTALLED_APPS.append('edc_testing')
 
 if socket.gethostname() in DEVELOPER_HOSTS + TEST_HOSTS or 'test' in sys.argv:
     INSTALLED_APPS.pop(INSTALLED_APPS.index('south'))
@@ -257,7 +231,7 @@ elif socket.gethostname() in DEVELOPER_HOSTS:
     PROJECT_TITLE = 'TEST (sqlite3): {}'.format(PROJECT_TITLE)
 elif 'test' in sys.argv:
     DEVICE_ID = 99
-    PROJECT_TITLE = 'TEST (mysql): {}'.format(PROJECT_TITLE)
+    PROJECT_TITLE = 'TEST (sqlite3): {}'.format(PROJECT_TITLE)
 else:
     raise ImproperlyConfigured(
         'Unknown hostname for full PROJECT_TITLE. Expected hostname to appear in one of '
@@ -273,3 +247,4 @@ if str(DEVICE_ID) == '98':
 CELLPHONE_REGEX = '^[7]{1}[12345678]{1}[0-9]{6}$'
 TELEPHONE_REGEX = '^[2-8]{1}[0-9]{6}$'
 DEFAULT_STUDY_SITE = '40'
+ALLOW_MODEL_SERIALIZATION = True
