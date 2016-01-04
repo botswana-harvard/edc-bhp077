@@ -11,7 +11,7 @@ from edc_sync.models import SyncModelMixin
 
 from ..managers import AntenatalEnrollmentManager
 
-from .enrollment_helper import EnrollmentError
+from .enrollment_helper import EnrollmentError, EnrollmentHelper
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
 from .postnatal_enrollment import PostnatalEnrollment
@@ -64,10 +64,10 @@ class AntenatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, Appoin
             try:
                 postnatal_enrollment = PostnatalEnrollment.objects.get(
                     registered_subject=self.registered_subject)
-                is_eligible = postnatal_enrollment.is_eligible
                 for attrname in self.common_fields():
                     setattr(postnatal_enrollment, attrname, getattr(self, attrname))
-                if postnatal_enrollment.check_eligiblity() != is_eligible:
+                is_eligible = EnrollmentHelper(postnatal_enrollment).is_eligible
+                if is_eligible != postnatal_enrollment.is_eligible:
                     raise EnrollmentError(
                         'Eligiblity calculated for Postnatal Enrollment unexpectedly '
                         'changed after updating values from Antenatal Enrollment. '
