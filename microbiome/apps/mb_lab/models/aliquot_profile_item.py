@@ -2,7 +2,6 @@ from django.db import models
 
 from edc_lab.lab_profile.models import BaseProfileItem
 from edc_base.model.models import BaseUuidModel
-from edc_sync.models import SyncModelMixin
 
 from ..managers import ProfileItemManager
 
@@ -10,7 +9,7 @@ from .aliquot_type import AliquotType
 from .aliquot_profile import AliquotProfile
 
 
-class AliquotProfileItem(BaseProfileItem, SyncModelMixin, BaseUuidModel):
+class AliquotProfileItem(BaseProfileItem, BaseUuidModel):
 
     profile = models.ForeignKey(AliquotProfile)
 

@@ -2,14 +2,13 @@ from django.db import models
 
 from edc_lab.lab_profile.models import BaseProfile
 from edc_base.model.models import BaseUuidModel
-from edc_sync.models import SyncModelMixin
 
 from ..managers import ProfileManager
 
 from .aliquot_type import AliquotType
 
 
-class AliquotProfile(BaseProfile, SyncModelMixin, BaseUuidModel):
+class AliquotProfile(BaseProfile, BaseUuidModel):
 
     aliquot_type = models.ForeignKey(
         AliquotType,
