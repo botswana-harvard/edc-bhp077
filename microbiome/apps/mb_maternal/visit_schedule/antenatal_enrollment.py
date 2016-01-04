@@ -18,7 +18,7 @@ class AntenatalEnrollmentVisitSchedule(VisitScheduleConfiguration):
 
     schedules = OrderedDict({
         'Antenatal Enrollment': ScheduleTuple('Antenatal Enrollment',
-                                                   'antenatal', None, None), })
+                                              'antenatal', None, None), })
 
     visit_definitions = OrderedDict()
 

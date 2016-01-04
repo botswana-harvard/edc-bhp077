@@ -20,7 +20,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
 
     schedules = OrderedDict({
         'Infant Enrollment': ScheduleTuple('Infant Enrollment',
-                                                'infant_enrollment', None, None)})
+                                           'infant_enrollment', None, None)})
     visit_definitions = OrderedDict()
     visit_definitions['2000'] = {
         'title': 'Birth',
