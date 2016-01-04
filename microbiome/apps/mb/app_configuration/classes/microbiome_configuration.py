@@ -3,7 +3,7 @@ from datetime import datetime, date
 from edc_lab.lab_packing.models import DestinationTuple
 from edc_lab.lab_profile.classes import ProfileItemTuple, ProfileTuple
 from edc_configuration.base_app_configuration import BaseAppConfiguration
-from edc_device import device
+from edc_device import Device
 
 from lis.labeling.classes import LabelPrinterTuple, ZplTemplateTuple, ClientTuple
 from lis.specimen.lab_aliquot_list.classes import AliquotTypeTuple
@@ -50,7 +50,7 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
         'subject_type': 'subject',
         'machine_type': 'SERVER',
         'hostname_prefix': '0000',
-        'device_id': device.device_id}
+        'device_id': Device().device_id}
 
     holidays_setup = {
         'New Year': date(2016, 1, 1),

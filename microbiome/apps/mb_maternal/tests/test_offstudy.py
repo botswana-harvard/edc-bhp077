@@ -6,7 +6,7 @@ from django.utils import timezone
 from edc_meta_data.models import CrfMetaData
 from edc_appointment.models import Appointment
 from edc_constants.constants import YES, NO, POS, NEG, UNKEYED, NOT_APPLICABLE, SCHEDULED,\
-    COMPLETED_PROTOCOL_VISIT
+    COMPLETED_PROTOCOL_VISIT, FAILED_ELIGIBILITY
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT
 from microbiome.apps.mb_maternal.forms import MaternalOffStudyForm
@@ -47,7 +47,7 @@ class TestOffStudy(BaseMaternalTestCase):
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
-        MaternalVisit.objects.get(appointment=appointment, reason=COMPLETED_PROTOCOL_VISIT)
+        MaternalVisit.objects.get(appointment=appointment, reason=FAILED_ELIGIBILITY)
         self.assertEqual(CrfMetaData.objects.filter(
             entry_status=UNKEYED,
             crf_entry__app_label='mb_maternal',
@@ -85,15 +85,15 @@ class TestOffStudy(BaseMaternalTestCase):
             visit_definition__code='2000M')
         with self.assertRaises(MaternalVisit.DoesNotExist):
             try:
-                MaternalVisit.objects.get(appointment=appointment, reason=COMPLETED_PROTOCOL_VISIT)
+                MaternalVisit.objects.get(appointment=appointment, reason=FAILED_ELIGIBILITY)
             except:
                 pass
             else:
                 raise MaternalVisit.DoesNotExist
         self.assertEqual(CrfMetaData.objects.filter(
             entry_status=UNKEYED,
-            entry__app_label='mb_maternal',
-            entry__model_name='maternaloffstudy',
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='maternaloffstudy',
             appointment=appointment).count(), 1)
 
     def test_offstudy2(self):

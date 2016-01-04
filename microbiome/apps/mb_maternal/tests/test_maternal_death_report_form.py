@@ -22,10 +22,9 @@ class TestMaternalDeathReportForm(BaseMaternalTestCase):
         maternal_eligibility = MaternalEligibilityFactory()
         registered_subject = RegisteredSubject.objects.get(
             pk=maternal_eligibility.registered_subject.pk)
-        self.maternal_consent = MaternalConsentFactory(registered_subject=registered_subject)
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=registered_subject)
         self.registered_subject = RegisteredSubject.objects.get(pk=registered_subject.pk)
-        self.assertEqual(self.registered_subject.registration_datetime,
-                         self.maternal_consent.consent_datetime)
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,

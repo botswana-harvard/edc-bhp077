@@ -84,4 +84,5 @@ class TestMaternalRequisitionForm(TestCase):
         self.data['reason_not_drawn'] = None
         self.data['priority'] = 'normal'
         form = MaternalRequisitionForm(data=self.data)
+        print(form)
         self.assertTrue(form.is_valid())
