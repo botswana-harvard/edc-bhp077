@@ -10,7 +10,7 @@ from edc_registration.models import RegisteredSubject
 from edc_rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, NO, NEG
 
-from microbiome.apps.mb import MicrobiomeConfiguration
+from microbiome.apps.mb import AppConfiguration
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantBirthDataForm
 from microbiome.apps.mb_infant.models import InfantBirthData

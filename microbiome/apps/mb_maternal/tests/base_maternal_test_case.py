@@ -6,7 +6,7 @@ from edc_lab.lab_profile.classes.controller import site_lab_profiles
 from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
-from microbiome.apps.mb import MicrobiomeConfiguration
+from microbiome.apps.mb import AppConfiguration
 from microbiome.apps.mb_maternal.visit_schedule import (
     SpecimenConsentVisitSchedule, AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
 

@@ -9,7 +9,7 @@ from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc_appointment.models import Appointment
 from edc_constants.constants import NEW, YES, POS, MALE, SCHEDULED, UNKEYED, REQUIRED
 
-from microbiome.apps.mb import MicrobiomeConfiguration
+from microbiome.apps.mb import AppConfiguration
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_maternal.tests.factories import (MaternalEligibilityFactory, MaternalVisitFactory)
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory

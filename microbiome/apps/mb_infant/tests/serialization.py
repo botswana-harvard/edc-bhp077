@@ -15,7 +15,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc_base.encrypted_fields import FieldCryptor
 from edc_registration.models import RegisteredSubject
 
-from microbiome.apps.mb import MicrobiomeConfiguration
+from microbiome.apps.mb import AppConfiguration
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule

@@ -8,7 +8,7 @@ from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc_rule_groups.classes import site_rule_groups
 from edc_constants.choices import YES, NO, POS
 
-from microbiome.apps.mb import MicrobiomeConfiguration
+from microbiome.apps.mb import AppConfiguration
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from microbiome.apps.mb_lab.models.aliquot import AliquotType
 from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule

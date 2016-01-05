@@ -20,7 +20,7 @@ study_start_datetime = datetime(2015, 12, 1, 0, 0, 0)
 study_end_datetime = datetime(2016, 12, 1, 0, 0, 0)
 
 
-class MicrobiomeConfiguration(BaseAppConfiguration):
+class AppConfiguration(BaseAppConfiguration):
 
     global_configuration = {
         'dashboard':

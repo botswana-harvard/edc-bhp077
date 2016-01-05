@@ -17,10 +17,10 @@ from edc_dashboard.section import site_sections
 from edc_dashboard.subject.views import additional_requisition
 from edc_visit_schedule.classes import site_visit_schedules
 
-from microbiome.apps.mb import MicrobiomeConfiguration
+from microbiome.apps.mb import AppConfiguration
 
 site_lab_profiles.autodiscover()
-MicrobiomeConfiguration(lab_profiles=site_lab_profiles).prepare()
+AppConfiguration(lab_profiles=site_lab_profiles).prepare()
 site_visit_schedules.autodiscover()
 site_visit_schedules.build_all()
 site_rule_groups.autodiscover()
