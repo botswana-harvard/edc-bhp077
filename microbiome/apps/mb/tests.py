@@ -17,13 +17,13 @@ class TestConfiguration(TestCase):
         self.assertEqual(default_global_configuration.get('appointment').get('allowed_iso_weekdays'), '1234567')
         self.assertEqual(default_global_configuration.get('appointment').get('default_appt_type'), 'default')
         self.assertEqual(default_global_configuration.get('appointment').get('use_same_weekday'), True)
-        MicrobiomeConfiguration(lab_profiles=site_lab_profiles).prepare()
+        AppConfiguration(lab_profiles=site_lab_profiles).prepare()
         self.assertEqual(GlobalConfiguration.objects.get_attr_value('default_appt_type'), 'clinic')
         self.assertEqual(GlobalConfiguration.objects.get_attr_value('use_same_weekday'), True)
         self.assertEqual(GlobalConfiguration.objects.get_attr_value('allowed_iso_weekdays'), '12345')
 
     def test_prepare(self):
-        MicrobiomeConfiguration(lab_profiles=site_lab_profiles).prepare()
+        AppConfiguration(lab_profiles=site_lab_profiles).prepare()
         self.assertEqual(GlobalConfiguration.objects.get_attr_value('default_appt_type'), 'clinic')
         self.assertEqual(GlobalConfiguration.objects.get_attr_value('use_same_weekday'), True)
         self.assertEqual(GlobalConfiguration.objects.get_attr_value('appointments_days_forward'), 15)

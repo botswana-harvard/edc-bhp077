@@ -43,7 +43,7 @@ class TestInfantBirthData(TestCase):
             site_lab_profiles.register(InfantProfile())
         except AlreadyRegisteredLabProfile:
             pass
-        MicrobiomeConfiguration().prepare()
+        AppConfiguration(lab_profiles=site_lab_profiles).prepare()
         site_lab_tracker.autodiscover()
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()

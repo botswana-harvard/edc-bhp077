@@ -20,8 +20,8 @@ from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFacto
 from microbiome.apps.mb_maternal.visit_schedule import (
     AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
 from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
-from microbiome.apps.mb_infant.tests.factories import \
-    (InfantBirthFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
+from microbiome.apps.mb_infant.tests.factories import (
+    InfantBirthFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
 from microbiome.apps.mb.constants import BREASTFEED_ONLY
 
 
@@ -33,7 +33,7 @@ class TestInfantBirthArv(TestCase):
             site_lab_profiles.register(InfantProfile())
         except AlreadyRegisteredLabProfile:
             pass
-        MicrobiomeConfiguration().prepare()
+        AppConfiguration(lab_profiles=site_lab_profiles).prepare()
         site_lab_tracker.autodiscover()
         AntenatalEnrollmentVisitSchedule().build()
         PostnatalEnrollmentVisitSchedule().build()
