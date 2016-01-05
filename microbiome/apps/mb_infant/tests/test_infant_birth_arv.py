@@ -9,7 +9,7 @@ from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 from edc_appointment.models import Appointment
 from edc_constants.constants import YES, POS
 
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb import MicrobiomeConfiguration
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantBirthArvForm
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile

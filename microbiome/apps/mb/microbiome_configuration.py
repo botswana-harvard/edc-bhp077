@@ -9,15 +9,15 @@ from lis.labeling.classes import LabelPrinterTuple, ZplTemplateTuple, ClientTupl
 from lis.specimen.lab_aliquot_list.classes import AliquotTypeTuple
 from lis.specimen.lab_panel.classes import PanelTuple
 
-from ...constants import MIN_AGE_OF_CONSENT
+from .constants import MIN_AGE_OF_CONSENT
 
 try:
     from config.labels import aliquot_label
 except ImportError:
     aliquot_label = None
 
-study_start_datetime = datetime(2013, 10, 18, 0, 0, 0)
-study_end_datetime = datetime(2016, 10, 17, 23, 0, 0)
+study_start_datetime = datetime(2015, 12, 1, 0, 0, 0)
+study_end_datetime = datetime(2016, 12, 1, 0, 0, 0)
 
 
 class MicrobiomeConfiguration(BaseAppConfiguration):
@@ -28,11 +28,14 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
              'allow_additional_requisitions': False,
              'show_drop_down_requisitions': True},
         'appointment':
-            {'allowed_iso_weekdays': '12345',
+            {'allowed_iso_weekdays': ('12345', False),
              'use_same_weekday': True,
              'default_appt_type': 'clinic',
              'appointments_per_day_max': 20,
              'appointments_days_forward': 15},
+        'protocol': {
+            'start_datetime': study_start_datetime,
+            'end_datetime': study_end_datetime},
     }
 
     study_variables_setup = {
@@ -168,5 +171,3 @@ class MicrobiomeConfiguration(BaseAppConfiguration):
                      '^FO310,152^A0N,25,20^FD${drawn_datetime}^FS\n'
                      '^XZ')), True)]
     }
-
-microbiome_configuration = MicrobiomeConfiguration()

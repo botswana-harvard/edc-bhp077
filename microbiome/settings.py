@@ -25,9 +25,9 @@ from microbiome.config.databases import (
 # these help select the KEY_PATH and full project title
 LIVE_SERVER = 'microbiome.bhp.org.bw'
 
-TEST_HOSTS = ['edc4.bhp.org.bw', 'mac2-2.local']
+TEST_HOSTS = ['edc4.bhp.org.bw']
 DEVELOPER_HOSTS = [
-    'ckgathi', 'one-2.local', 'One-2.local', 'silverapple', 'tsetsiba', 'fchilisa', 'leslie']
+    'mac2-2.local', 'ckgathi', 'one-2.local', 'One-2.local', 'silverapple', 'tsetsiba', 'fchilisa', 'leslie']
 
 APP_NAME = 'mb'
 PROJECT_TITLE = 'Gut Microbiome Evolution'

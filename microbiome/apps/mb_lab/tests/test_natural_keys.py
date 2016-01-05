@@ -7,7 +7,7 @@ from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegistere
 
 from edc_rule_groups.classes import site_rule_groups
 
-from microbiome.apps.mb.app_configuration.classes import MicrobiomeConfiguration
+from microbiome.apps.mb import MicrobiomeConfiguration
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
