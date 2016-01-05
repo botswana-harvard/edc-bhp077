@@ -23,6 +23,7 @@ git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc-constants
 git+https://github.com/botswana-harvard/edc-content-type-map@develop#egg=edc-content_type_map
 git+https://github.com/botswana-harvard/edc-crypto-fields@develop#egg=edc-crypto-fields
 git+https://github.com/botswana-harvard/edc-dashboard@develop#egg=edc-dashboard
+git+https://github.com/botswana-harvard/edc-data-dictionary@develop#egg=edc-data-dictionary
 git+https://github.com/botswana-harvard/edc-death-report@develop#egg=edc-death-report
 git+https://github.com/botswana-harvard/edc-device@develop#egg=edc-device
 git+https://github.com/botswana-harvard/edc-identifier@develop#egg=edc-identifier
