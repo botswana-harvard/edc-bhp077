@@ -13,12 +13,6 @@ class MaternalVisitForm (VisitFormMixin, BaseModelForm):
 
     participant_label = 'mother'
 
-    information_provider = forms.ChoiceField(
-        label='Please indicate who provided most of the information for this infant\'s visit',
-        choices=INFO_PROVIDER,
-        initial='MOTHER',
-        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
-
     study_status = forms.ChoiceField(
         label='What is the mother\'s current study status',
         choices=MATERNAL_VISIT_STUDY_STATUS,
