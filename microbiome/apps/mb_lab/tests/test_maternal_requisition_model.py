@@ -8,7 +8,7 @@ from edc_rule_groups.classes import site_rule_groups
 from edc_constants.choices import YES
 from edc_constants.constants import UNSCHEDULED, SCHEDULED, POS
 
-from microbiome.apps.mb import AppConfiguration
+from microbiome.apps.mb.app_configuration import AppConfiguration
 from microbiome.apps.mb_lab.lab_profiles import MaternalProfile
 from microbiome.apps.mb_lab.models import MaternalRequisition
 from microbiome.apps.mb_lab.models.aliquot import AliquotType

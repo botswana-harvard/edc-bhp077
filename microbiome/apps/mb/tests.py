@@ -5,7 +5,7 @@ from edc_configuration.models import GlobalConfiguration
 from edc_configuration.defaults import default_global_configuration
 from edc_lab.lab_profile.classes import site_lab_profiles
 
-from microbiome.apps.mb import AppConfiguration, study_end_datetime, study_start_datetime
+from microbiome.apps.mb.app_configuration import AppConfiguration, study_end_datetime, study_start_datetime
 
 site_lab_profiles.autodiscover()
 

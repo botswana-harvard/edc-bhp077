@@ -17,7 +17,7 @@ from edc_dashboard.section import site_sections
 from edc_dashboard.subject.views import additional_requisition
 from edc_visit_schedule.classes import site_visit_schedules
 
-from microbiome.apps.mb import AppConfiguration
+from microbiome.apps.mb.app_configuration import AppConfiguration
 
 site_lab_profiles.autodiscover()
 AppConfiguration(lab_profiles=site_lab_profiles).prepare()

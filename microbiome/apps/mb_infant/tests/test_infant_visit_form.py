@@ -13,7 +13,7 @@ from edc_constants.constants import (
     YES, NO, POS, OFF_STUDY, ON_STUDY, DEATH_VISIT, LOST_VISIT, MISSED_VISIT,
     DEAD, ALIVE, SCHEDULED, NOT_APPLICABLE)
 
-from microbiome.apps.mb import AppConfiguration
+from microbiome.apps.mb.app_configuration import AppConfiguration
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantVisitForm
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory
