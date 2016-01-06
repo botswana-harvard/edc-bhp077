@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 from django.contrib import admin
 
-from edc.export.actions import export_as_csv_action
+from edc_export.actions import export_as_csv_action
 
 from ..forms import InfantFuPhysicalForm
 from ..models import InfantVisit, InfantFuPhysical

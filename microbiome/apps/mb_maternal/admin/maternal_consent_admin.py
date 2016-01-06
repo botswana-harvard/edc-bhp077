@@ -4,7 +4,7 @@ from collections import OrderedDict
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc_registration.models import RegisteredSubject
 from edc_consent.actions import flag_as_verified_against_paper, unflag_as_verified_against_paper
-from edc.export.actions import export_as_csv_action
+from edc_export.actions import export_as_csv_action
 
 from ..forms import MaternalConsentForm
 from ..models import MaternalConsent

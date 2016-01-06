@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc_registration.models import RegisteredSubject
-from edc.export.actions import export_as_csv_action
+from edc_export.actions import export_as_csv_action
 
 from ..forms import AntenatalEnrollmentForm
 from ..models import AntenatalEnrollment
