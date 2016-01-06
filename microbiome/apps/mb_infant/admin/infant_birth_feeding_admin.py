@@ -4,7 +4,7 @@ from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
 from edc_base.modeladmin.admin import BaseTabularInline
-from edc.export.actions import export_as_csv_action
+from edc_export.actions import export_as_csv_action
 
 from ..models import InfantBirthFeedVaccine, InfantVaccines
 from ..forms import InfantVaccinesForm, InfantBirthFeedVaccineForm
