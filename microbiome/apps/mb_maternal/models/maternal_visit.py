@@ -11,6 +11,7 @@ from edc_offstudy.models import OffStudyMixin
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
 from edc_visit_tracking.models import VisitModelMixin, PreviousVisitMixin
+from edc_visit_tracking.models.caretaker_fields_mixin import CaretakerFieldsMixin
 
 from microbiome.apps.mb.choices import VISIT_REASON
 
@@ -18,7 +19,7 @@ from ..models import MaternalConsent, PostnatalEnrollment, AntenatalEnrollment
 
 
 class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, CrfMetaDataMixin, RequiresConsentMixin,
-                    VisitModelMixin, BaseUuidModel):
+                    CaretakerFieldsMixin, VisitModelMixin, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 
