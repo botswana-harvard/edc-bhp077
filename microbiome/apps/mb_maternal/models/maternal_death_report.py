@@ -21,7 +21,8 @@ class MaternalDeathReport(CrfModelMixin, SyncModelMixin, DeathReportModelMixin, 
     entry_meta_data_manager = CrfMetaDataManager(MaternalVisit)
 
     def natural_key(self):
-        return self.get_visit().natural_key()
+        return self.maternal_visit.natural_key()
+    natural_key.dependencies = ['mb_maternal.maternalvisit']
 
     class Meta:
         app_label = 'mb_maternal'
