@@ -5,7 +5,8 @@ from django.dispatch import receiver
 from edc_identifier.subject.classes import InfantIdentifier
 from edc_registration.models import RegisteredSubject
 from edc_appointment.models.appointment import Appointment
-from edc_constants.constants import FEMALE, SCHEDULED, SCREENED, COMPLETED_PROTOCOL_VISIT, CONSENTED
+from edc_constants.constants import (
+    FEMALE, SCHEDULED, SCREENED, COMPLETED_PROTOCOL_VISIT, CONSENTED, FAILED_ELIGIBILITY)
 from edc_visit_schedule.models.visit_definition import VisitDefinition
 
 from microbiome.apps.mb.constants import INFANT
@@ -15,7 +16,9 @@ from ..models import MaternalOffStudy, MaternalVisit
 from .maternal_consent import MaternalConsent
 from .maternal_eligibility import MaternalEligibility
 from .maternal_eligibility_loss import MaternalEligibilityLoss
+from .enrollment_loss import AntenatalEnrollmentLoss, PostnatalEnrollmentLoss
 from .postnatal_enrollment import PostnatalEnrollment
+from .antenatal_enrollment import AntenatalEnrollment
 from django.utils import timezone
 from microbiome.apps.mb_maternal.models.maternal_labour_del import MaternalLabourDel
 
@@ -63,6 +66,56 @@ def maternal_eligibility_on_post_save(sender, instance, raw, created, using, **k
                 except MaternalConsent.DoesNotExist:
                     registered_subject = update_maternal_registered_subject(registered_subject, instance)
                     registered_subject.save()
+
+
+@receiver(post_save, weak=False, dispatch_uid="antenatal_enrollment_on_post_save")
+def antenatal_enrollment_on_post_save(sender, instance, raw, created, using, **kwargs):
+    """Creates/Updates RegisteredSubject and creates or deletes AntenatalEnrollmentLoss"""
+    if not raw:
+        if isinstance(instance, AntenatalEnrollment) and not kwargs.get('update_fields'):
+            if not instance.is_eligible:
+                try:
+                    antenatal_enrollment_loss = AntenatalEnrollmentLoss.objects.get(
+                        antenatal_enrollment=instance)
+                    antenatal_enrollment_loss.report_datetime = instance.report_datetime
+                    antenatal_enrollment_loss.reason_unenrolled = instance.unenrolled
+                    antenatal_enrollment_loss.user_modified = instance.user_modified
+                    antenatal_enrollment_loss.save()
+                except AntenatalEnrollmentLoss.DoesNotExist:
+                    AntenatalEnrollmentLoss.objects.create(
+                        created=instance.created,
+                        antenatal_enrollment=instance,
+                        report_datetime=instance.report_datetime,
+                        reason_unenrolled=instance.unenrolled,
+                        user_created=instance.user_created,
+                        user_modified=instance.user_modified)
+            else:
+                AntenatalEnrollmentLoss.objects.filter(antenatal_enrollment=instance).delete()
+
+
+@receiver(post_save, weak=False, dispatch_uid="postnatal_enrollment_on_post_save")
+def postnatal_enrollment_on_post_save(sender, instance, raw, created, using, **kwargs):
+    """Creates/Updates RegisteredSubject and creates or deletes PostnatalEnrollmentLoss"""
+    if not raw:
+        if isinstance(instance, PostnatalEnrollment) and not kwargs.get('update_fields'):
+            if not instance.is_eligible:
+                try:
+                    postnatal_enrollment_loss = PostnatalEnrollmentLoss.objects.get(
+                        postnatal_enrollment=instance)
+                    postnatal_enrollment_loss.report_datetime = instance.report_datetime
+                    postnatal_enrollment_loss.reason_unenrolled = instance.unenrolled
+                    postnatal_enrollment_loss.user_modified = instance.user_modified
+                    postnatal_enrollment_loss.save()
+                except PostnatalEnrollmentLoss.DoesNotExist:
+                    PostnatalEnrollmentLoss.objects.create(
+                        created=instance.created,
+                        postnatal_enrollment=instance,
+                        report_datetime=instance.report_datetime,
+                        reason_unenrolled=instance.unenrolled,
+                        user_created=instance.user_created,
+                        user_modified=instance.user_modified)
+            else:
+                PostnatalEnrollmentLoss.objects.filter(postnatal_enrollment=instance).delete()
 
 
 def create_maternal_registered_subject(instance):
@@ -130,7 +183,7 @@ def change_off_study_visit_to_scheduled(instance):
                 visit_definition=visit_definition)
             maternal_visit = MaternalVisit.objects.get(
                 appointment=appointment,
-                reason=COMPLETED_PROTOCOL_VISIT)
+                reason=FAILED_ELIGIBILITY)
             maternal_visit.reason = SCHEDULED
             maternal_visit.save()
         except MaternalVisit.DoesNotExist:

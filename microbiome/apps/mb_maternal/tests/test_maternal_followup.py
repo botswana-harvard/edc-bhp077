@@ -28,6 +28,7 @@ class TestMaternalFollowup(BaseMaternalTestCase):
             rapid_test_done=NOT_APPLICABLE,
             will_breastfeed=YES
         )
+
         for code in ['1000M', '2000M']:
             appointment = Appointment.objects.get(
                 registered_subject=self.registered_subject,

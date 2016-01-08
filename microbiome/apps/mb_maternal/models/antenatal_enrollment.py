@@ -1,10 +1,12 @@
 from django.db import models
+from django.db.models import get_model
 
 from edc_appointment.models import AppointmentMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 from edc_consent.models import RequiresConsentMixin
+from edc_constants.constants import NO, YES
 from edc_offstudy.models import OffStudyMixin
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
@@ -44,11 +46,40 @@ class AntenatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, Appoin
     history = AuditTrail()
 
     def natural_key(self):
-        return (self.registered_subject,)
+        return self.registered_subject.natural_key()
+    natural_key.dependencies = ['edc_registration.registeredsubject']
 
     def save(self, *args, **kwargs):
         self.update_common_fields_to_postnatal_enrollment()
         super(AntenatalEnrollment, self).save(*args, **kwargs)
+
+    def unenrolled_error_messages(self):
+        """Returns a tuple (True, None) if mother is eligible otherwise
+        (False, unenrolled_error_message) where error message is the reason enrollment failed."""
+        unenrolled_error_message = []
+        if self.is_diabetic == YES:
+            unenrolled_error_message.append('Diabetic')
+        if self.on_tb_tx == YES:
+            unenrolled_error_message.append('on TB treatment')
+        if self.on_hypertension_tx == YES:
+            unenrolled_error_message.append('Hypertensive')
+        if self.will_breastfeed == NO:
+            unenrolled_error_message.append('will not breastfeed')
+        if self.will_remain_onstudy == NO:
+            unenrolled_error_message.append('won\'t remain in study')
+        if self.week32_test == NO:
+            unenrolled_error_message.append('no week32 test')
+        if self.evidence_hiv_status == NO:
+            unenrolled_error_message.append('no HIV status evidence')
+        if self.valid_regimen == NO:
+            unenrolled_error_message.append('not on valid regimen')
+        if self.valid_regimen_duration == NO:
+            unenrolled_error_message.append('regimen duration invalid')
+        if self.rapid_test_done == NO:
+            unenrolled_error_message.append('rapid test not done')
+        if self.gestation_wks < 36:
+            unenrolled_error_message.append('gestation < 36wks')
+        return (self.is_eligible, ', '.join(unenrolled_error_message))
 
     @property
     def off_study_visit_code(self):

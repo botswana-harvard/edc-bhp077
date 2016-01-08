@@ -1,8 +1,12 @@
 from django.db import models
+from django.db.models import get_model
 
 from edc_base.model.validators import date_not_before_study_start, date_not_future
-from edc_constants.choices import POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO, NO
+from edc_constants.choices import POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO
+from edc_constants.constants import NO, YES
 from .enrollment_helper import EnrollmentHelper
+
+from microbiome.apps.mb.constants import STILL_BIRTH
 
 
 class EnrollmentMixin(models.Model):
@@ -137,6 +141,12 @@ class EnrollmentMixin(models.Model):
         null=True,
         blank=True)
 
+    unenrolled = models.TextField(
+        verbose_name="Reason not enrolled",
+        max_length=350,
+        null=True,
+        editable=False)
+
     def __unicode__(self):
         return "{0} {1}".format(
             self.registered_subject.subject_identifier,
@@ -147,13 +157,15 @@ class EnrollmentMixin(models.Model):
         self.is_eligible = enrollment_helper.is_eligible
         self.enrollment_hiv_status = enrollment_helper.enrollment_hiv_status
         self.date_at_32wks = enrollment_helper.date_at_32wks
+        self.is_eligible, unenrolled_error_message = self.unenrolled_error_messages()
+        self.unenrolled = unenrolled_error_message
         super(EnrollmentMixin, self).save(*args, **kwargs)
 
     def common_fields(self):
         """Returns a list of field names common to postnatal
         and antenatal enrollment models."""
         common_fields = []
-        excluded_fields = ['is_eligible', 'enrollment_hiv_status', 'date_at_32wks']
+        excluded_fields = ['is_eligible', 'enrollment_hiv_status', 'date_at_32wks', 'unenrolled']
         for field in EnrollmentMixin._meta.fields:
             if field.name not in excluded_fields:
                 common_fields.append(field.name)
