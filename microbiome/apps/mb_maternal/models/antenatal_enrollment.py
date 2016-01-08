@@ -57,12 +57,8 @@ class AntenatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, Appoin
         """Returns a tuple (True, None) if mother is eligible otherwise
         (False, unenrolled_error_message) where error message is the reason enrollment failed."""
         unenrolled_error_message = []
-        if self.is_diabetic == YES:
-            unenrolled_error_message.append('Diabetic')
-        if self.on_tb_tx == YES:
-            unenrolled_error_message.append('on TB treatment')
-        if self.on_hypertension_tx == YES:
-            unenrolled_error_message.append('Hypertensive')
+        chronic_message = self.chronic_unenrolled_error_messages()
+        unenrolled_error_message.append(chronic_message) if chronic_message else None
         if self.will_breastfeed == NO:
             unenrolled_error_message.append('will not breastfeed')
         if self.will_remain_onstudy == NO:
@@ -80,6 +76,16 @@ class AntenatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, Appoin
         if self.gestation_wks < 36:
             unenrolled_error_message.append('gestation < 36wks')
         return (self.is_eligible, ', '.join(unenrolled_error_message))
+
+    def chronic_unenrolled_error_messages(self):
+        unenrolled_error_message = None
+        if self.is_diabetic == YES:
+            unenrolled_error_message = 'Diabetic'
+        if self.on_tb_tx == YES:
+            unenrolled_error_message = 'on TB treatment'
+        if self.on_hypertension_tx == YES:
+            unenrolled_error_message = 'Hypertensive'
+        return unenrolled_error_message
 
     @property
     def off_study_visit_code(self):

@@ -80,12 +80,8 @@ class PostnatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, Appoin
         """Returns a tuple (True, None) if mother is eligible otherwise
         (False, unenrolled_error_message) where error message is the reason enrollment failed."""
         unenrolled_error_message = []
-        if self.is_diabetic == YES:
-            unenrolled_error_message.append('Diabetic')
-        if self.on_tb_tx == YES:
-            unenrolled_error_message.append('on TB treatment')
-        if self.on_hypertension_tx == YES:
-            unenrolled_error_message.append('Hypertensive')
+        chronic_message = self.chronic_and_postpartum_unenrolled_error_messages()
+        unenrolled_error_message.append(chronic_message) if chronic_message else None
         if self.will_breastfeed == NO:
             unenrolled_error_message.append('will not breastfeed')
         if self.will_remain_onstudy == NO:
@@ -100,15 +96,26 @@ class PostnatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, Appoin
             unenrolled_error_message.append('regimen duration invalid')
         if self.rapid_test_done == NO:
             unenrolled_error_message.append('rapid test not done')
-        if self.postpartum_days > 3:
-            unenrolled_error_message.append('postpartum > 3days')
-        if self.vaginal_delivery == NO:
-            unenrolled_error_message.append('not vaginal delivery')
-        if self.gestation_wks_delivered < 37:
-            unenrolled_error_message.append('born before 37wks')
-        if self.delivery_status == STILL_BIRTH:
-            unenrolled_error_message.append('still birth')
         return (self.is_eligible, ', '.join(unenrolled_error_message))
+
+    def chronic_and_postpartum_unenrolled_error_messages(self):
+        unenrolled_error_message = None
+        if self.is_diabetic == YES:
+            unenrolled_error_message = 'Diabetic'
+        if self.on_tb_tx == YES:
+            unenrolled_error_message = 'on TB treatment'
+        if self.on_hypertension_tx == YES:
+            unenrolled_error_message = 'Hypertensive'
+        # postpartum
+        if self.postpartum_days > 3:
+            unenrolled_error_message = 'postpartum > 3days'
+        if self.vaginal_delivery == NO:
+            unenrolled_error_message = 'not vaginal delivery'
+        if self.gestation_wks_delivered < 37:
+            unenrolled_error_message = 'born before 37wks'
+        if self.delivery_status == STILL_BIRTH:
+            unenrolled_error_message = 'still birth'
+        return unenrolled_error_message
 
     def get_registration_datetime(self):
         return self.report_datetime
