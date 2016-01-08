@@ -13,9 +13,6 @@ class AntenatalEnrollmentLossManager(models.Manager):
 
 class PostnatalEnrollmentLossManager(models.Manager):
 
-#     def get_by_natural_key(self, postnatal_enrollment):
-#         return self.get(postnatal_enrollment=postnatal_enrollment)
-
     def get_by_natural_key(self, registered_subject):
         PostnatalEnrollment = get_model('mb_maternal', 'PostnatalEnrollment')
         postnatal_enrollment = PostnatalEnrollment.objects.get_by_natural_key(
