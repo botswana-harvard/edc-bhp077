@@ -1,5 +1,8 @@
-from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE, UNKNOWN
+# from pytz import timezone
+from django.utils import timezone
+from datetime import timedelta, date
 
+from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE, UNKNOWN
 
 from .factories import (
     AntenatalEnrollmentFactory, MaternalEligibilityFactory, MaternalConsentFactory)
@@ -181,24 +184,25 @@ class TestAntenatalEnrollment(BaseMaternalTestCase):
         antenatal_enrollment = AntenatalEnrollmentFactory(
             week32_test=YES,
             week32_result=POS,
+            rapid_test_date=timezone.now().date() - timedelta(weeks=5),
             evidence_hiv_status=YES,
             current_hiv_status=POS,
             registered_subject=self.registered_subject,
-            rapid_test_done=NO,
+            rapid_test_done=NOT_APPLICABLE,
             gestation_wks=37)
         self.assertTrue(antenatal_enrollment.is_eligible)
 
-    def test_mother_tested_at_32weeks_without_evidence(self):
+    def test_mother_untested_at_32weeks_undergoes_rapid(self):
         """Test for a mother who is at 37weeks of gestational age,
-        tested at 32weeks, but has no evidence of the hiv_status but undergoes rapid testing """
+        did not test at 32weeks, has no evidence of NEG hiv_status but undergoes rapid testing """
 
         antenatal_enrollment = AntenatalEnrollmentFactory(
-            week32_test=YES,
-            week32_result=None,
+            week32_test=NO,
             current_hiv_status=NEG,
             evidence_hiv_status=NO,
             rapid_test_done=YES,
             rapid_test_result=NEG,
+            rapid_test_date=timezone.now().date(),
             registered_subject=self.registered_subject,
             gestation_wks=37)
         self.assertTrue(antenatal_enrollment.is_eligible)

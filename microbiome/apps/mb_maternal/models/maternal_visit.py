@@ -88,6 +88,26 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, CrfMetaDa
             self.required_for_maternal_pos()
             self.required_for_maternal_not_pos()
             self.required_labs_for_maternal_neg()
+            self.required_forms_for_maternal_neg()
+
+    def required_forms_for_maternal_neg(self):
+        """If attempt to change an offstudy to scheduled visit has been successful, ensure that
+        necessary forms at 1000M are REQUIRED"""
+        if self.enrollment_hiv_status == NEG or self.scheduled_rapid_test == NEG:
+            if self.appointment.visit_definition.code == '1000M':
+                model_names = [
+                    'maternallocator', 'maternaldemographics', 'maternalmedicalhistory',
+                    'maternalobstericalhistory']
+                for model_name in model_names:
+                    self.crf_is_required(
+                        self.appointment,
+                        'mb_maternal',
+                        model_name,
+                        message=self.appointment.visit_definition.code)
+                self.crf_is_not_required(
+                    self.appointment,
+                    'mb_maternal',
+                    'maternaloffstudy')
 
     def required_for_maternal_pos(self):
         if self.enrollment_hiv_status == POS or self.scheduled_rapid_test == POS:

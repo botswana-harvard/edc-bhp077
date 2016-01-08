@@ -1,4 +1,5 @@
 from django.utils import timezone
+from datetime import timedelta
 
 from edc_appointment.models.appointment import Appointment
 from edc_constants.choices import YES, NO, POS, NEG, NOT_APPLICABLE
@@ -277,11 +278,14 @@ class TestPostnatalEnrollment(BaseMaternalTestCase):
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
+            week32_test=NO,
             current_hiv_status=NEG,
             evidence_hiv_status=NO,
             valid_regimen=NOT_APPLICABLE,
+            valid_regimen_duration=NOT_APPLICABLE,
             rapid_test_done=YES,
-            rapid_test_result=NEG)
+            rapid_test_result=NEG,
+            rapid_test_date=timezone.now().date())
         self.assertTrue(postnatal_enrollment.is_eligible)
 
     def test_current_hiv_status_neg_with_no_evidence(self):
@@ -312,6 +316,7 @@ class TestPostnatalEnrollment(BaseMaternalTestCase):
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEVER,
+            week32_test=NO,
             evidence_hiv_status=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=POS,
@@ -334,6 +339,7 @@ class TestPostnatalEnrollment(BaseMaternalTestCase):
         """Test for a subject whose verbal hiv status is unknown and rapid test result POS."""
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
+            week32_test=NO,
             current_hiv_status=UNKNOWN,
             evidence_hiv_status=NOT_APPLICABLE,
             valid_regimen=NOT_APPLICABLE,
@@ -348,6 +354,7 @@ class TestPostnatalEnrollment(BaseMaternalTestCase):
             registered_subject=self.registered_subject,
             current_hiv_status=DWTA,
             evidence_hiv_status=NOT_APPLICABLE,
+            week32_test=NO,
             valid_regimen=NOT_APPLICABLE,
             rapid_test_done=YES,
             rapid_test_result=POS)
@@ -383,26 +390,32 @@ class TestPostnatalEnrollment(BaseMaternalTestCase):
         AntenatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=NEG,
+            week32_result=NEG,
+            week32_test_date=timezone.now().date() - timedelta(weeks=4),
             evidence_hiv_status=YES,
-            rapid_test_done=YES,
-            rapid_test_result=NEG)
+            valid_regimen=NOT_APPLICABLE,
+            valid_regimen_duration=NOT_APPLICABLE,
+            rapid_test_done=NOT_APPLICABLE)
         antenatal_enrollment = AntenatalEnrollment.objects.get(
             registered_subject=self.registered_subject)
         self.assertEqual(antenatal_enrollment.current_hiv_status, NEG)
         self.assertEqual(antenatal_enrollment.evidence_hiv_status, YES)
         self.assertTrue(antenatal_enrollment.is_eligible)
-        PostnatalEnrollment.objects.create(
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
+        MaternalVisitFactory(
+            appointment=appointment, reason=SCHEDULED)
+        PostnatalEnrollmentFactory(
             report_datetime=timezone.now(),
             registered_subject=self.registered_subject,
-            delivery_status=LIVE,
-            gestation_wks_delivered=38,
-            is_diabetic=NO,
-            live_infants=1,
-            on_tb_tx=NO,
             postpartum_days=2,
-            vaginal_delivery=YES,
-            will_breastfeed=YES,
-            will_remain_onstudy=YES)
+            gestation_wks_delivered=38,
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES,
+            valid_regimen=NOT_APPLICABLE,
+            valid_regimen_duration=NOT_APPLICABLE,
+            rapid_test_done=NOT_APPLICABLE)
         postnatal_enrollment = PostnatalEnrollment.objects.get(
             registered_subject=self.registered_subject)
         self.assertTrue(postnatal_enrollment.is_eligible)
@@ -458,6 +471,7 @@ class TestPostnatalEnrollment(BaseMaternalTestCase):
         AntenatalEnrollment.is_eligible=False."""
         AntenatalEnrollmentFactory(
             registered_subject=self.registered_subject,
+            week32_test=NO,
             current_hiv_status=NEG,
             evidence_hiv_status=YES,
             rapid_test_done=YES,
@@ -487,6 +501,7 @@ class TestPostnatalEnrollment(BaseMaternalTestCase):
 
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
+            week32_test=NO,
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             rapid_test_done=NOT_APPLICABLE,

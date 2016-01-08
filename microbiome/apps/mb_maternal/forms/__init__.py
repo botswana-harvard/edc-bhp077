@@ -13,6 +13,7 @@ from .maternal_death_report_form import MaternalDeathReportForm
 from .maternal_demographics_form import MaternalDemographicsForm
 from .maternal_eligibility_form import MaternalEligibilityForm
 from .maternal_eligibility_loss_form import MaternalEligibilityLossForm
+from .enrollment_loss_form import PostnatalEnrollmentLossForm, AntenatalEnrollmentLossForm
 from .maternal_locator_form import MaternalLocatorForm
 from .maternal_medical_history_form import MaternalMedicalHistoryForm
 from .maternal_obsterical_history_form import MaternalObstericalHistoryForm

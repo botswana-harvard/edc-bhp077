@@ -7,6 +7,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import (datetime_not_before_study_start, datetime_not_future,)
 from edc_consent.models import RequiresConsentMixin
 from edc_constants.choices import YES_NO
+from edc_constants.constants import NO, YES
 from edc_offstudy.models import OffStudyMixin
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
@@ -17,6 +18,7 @@ from ..maternal_choices import LIVE_STILL_BIRTH
 from .enrollment_helper import EnrollmentError
 from .enrollment_mixin import EnrollmentMixin
 from .maternal_consent import MaternalConsent
+from microbiome.apps.mb.constants import STILL_BIRTH
 
 
 class PostnatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, AppointmentMixin,
@@ -73,6 +75,47 @@ class PostnatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, Appoin
         self.update_with_common_fields_from_antenatal_enrollment()
         self.is_eligible_if_antenatal_exists_or_raise()
         super(PostnatalEnrollment, self).save(*args, **kwargs)
+
+    def unenrolled_error_messages(self):
+        """Returns a tuple (True, None) if mother is eligible otherwise
+        (False, unenrolled_error_message) where error message is the reason enrollment failed."""
+        unenrolled_error_message = []
+        chronic_message = self.chronic_and_postpartum_unenrolled_error_messages()
+        unenrolled_error_message.append(chronic_message) if chronic_message else None
+        if self.will_breastfeed == NO:
+            unenrolled_error_message.append('will not breastfeed')
+        if self.will_remain_onstudy == NO:
+            unenrolled_error_message.append('won\'t remain in study')
+        if self.week32_test == NO:
+            unenrolled_error_message.append('no week32 test')
+        if self.evidence_hiv_status == NO:
+            unenrolled_error_message.append('no HIV status evidence')
+        if self.valid_regimen == NO:
+            unenrolled_error_message.append('not on valid regimen')
+        if self.valid_regimen_duration == NO:
+            unenrolled_error_message.append('regimen duration invalid')
+        if self.rapid_test_done == NO:
+            unenrolled_error_message.append('rapid test not done')
+        return (self.is_eligible, ', '.join(unenrolled_error_message))
+
+    def chronic_and_postpartum_unenrolled_error_messages(self):
+        unenrolled_error_message = None
+        if self.is_diabetic == YES:
+            unenrolled_error_message = 'Diabetic'
+        if self.on_tb_tx == YES:
+            unenrolled_error_message = 'on TB treatment'
+        if self.on_hypertension_tx == YES:
+            unenrolled_error_message = 'Hypertensive'
+        # postpartum
+        if self.postpartum_days > 3:
+            unenrolled_error_message = 'postpartum > 3days'
+        if self.vaginal_delivery == NO:
+            unenrolled_error_message = 'not vaginal delivery'
+        if self.gestation_wks_delivered < 37:
+            unenrolled_error_message = 'born before 37wks'
+        if self.delivery_status == STILL_BIRTH:
+            unenrolled_error_message = 'still birth'
+        return unenrolled_error_message
 
     def get_registration_datetime(self):
         return self.report_datetime

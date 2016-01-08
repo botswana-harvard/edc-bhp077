@@ -21,6 +21,7 @@ class PostnatalEnrollmentFactory(factory.DjangoModelFactory):
     on_tb_tx = NO
     on_hypertension_tx = NO
     postpartum_days = 2
+    week32_test = YES
     vaginal_delivery = YES
     will_breastfeed = YES
     will_remain_onstudy = YES
