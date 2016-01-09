@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_sync.models import SyncModelMixin
 from lis.specimen.lab_aliquot.managers import AliquotManager
@@ -29,6 +30,8 @@ class Aliquot(BaseAliquot, SyncModelMixin, BaseUuidModel):
         blank=True)
 
     objects = AliquotManager()
+    
+    history = AuditTrail()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.receive.registered_subject.subject_identifier

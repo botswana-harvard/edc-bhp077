@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
@@ -19,6 +20,8 @@ class Receive(BaseReceive, SyncModelMixin, BaseUuidModel):
     subject_type = models.CharField(max_length=25, null=True, editable=False)
 
     objects = ReceiveManager()
+
+    history = AuditTrail()
 
     def save(self, *args, **kwargs):
         self.subject_type = self.registered_subject.subject_type

@@ -1,8 +1,9 @@
 from django.db import models
 
-from edc_lab.lab_packing.models import BasePackingListItem
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_constants.constants import NOT_APPLICABLE
+from edc_lab.lab_packing.models import BasePackingListItem
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
 
@@ -27,6 +28,8 @@ class PackingListItem(BasePackingListItem, SyncModelMixin, BaseUuidModel):
         blank=True)
 
     objects = PackingListItemManager()
+
+    history = AuditTrail()
 
     def get_subject_type(self):
         aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)

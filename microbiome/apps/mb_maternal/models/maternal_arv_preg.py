@@ -62,10 +62,14 @@ class MaternalArv(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
     arv_code = models.CharField(
         verbose_name="ARV code",
         max_length=35,
-        choices=ARV_DRUG_LIST,)
+        choices=ARV_DRUG_LIST,
+        null=True,
+        blank=False)
 
     start_date = models.DateField(
-        verbose_name="Date Started")
+        verbose_name="Date Started",
+        null=True,
+        blank=False)
 
     stop_date = models.DateField(
         verbose_name="Date Stopped",

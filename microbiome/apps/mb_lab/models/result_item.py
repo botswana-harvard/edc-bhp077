@@ -1,8 +1,9 @@
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
+from edc_base.model.models import BaseUuidModel
 from edc_lab.lab_clinic_api.models import TestCode
 from edc_lab.lab_clinic_reference.classes import ClinicReferenceFlag, ClinicGradeFlag
-from edc_base.model.models import BaseUuidModel
 from edc_sync.models import SyncModelMixin
 
 from lis.specimen.lab_result_item.models import BaseResultItem
@@ -20,6 +21,8 @@ class ResultItem(BaseResultItem, SyncModelMixin, BaseUuidModel):
     subject_type = models.CharField(max_length=25, null=True)
 
     objects = ResultItemManager()
+
+    history = AuditTrail()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.result.order.aliquot.receive.registered_subject.subject_identifier

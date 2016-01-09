@@ -1,8 +1,9 @@
 from django.db import models
 
-from edc_sync.models import SyncModelMixin
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_lab.lab_packing.models import PackingListMixin
+from edc_sync.models import SyncModelMixin
 
 from ..managers import PackingListManager
 
@@ -10,6 +11,8 @@ from ..managers import PackingListManager
 class PackingList(PackingListMixin, SyncModelMixin, BaseUuidModel):
 
     objects = PackingListManager()
+
+    history = AuditTrail()
 
     @property
     def item_models(self):

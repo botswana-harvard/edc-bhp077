@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
+from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_sync.models import SyncModelMixin
 from lis.specimen.lab_result.models import BaseResult
@@ -22,6 +23,8 @@ class Result(BaseResult, SyncModelMixin, BaseUuidModel):
         help_text="non-user helper field to simplify search and filtering")
 
     objects = ResultManager()
+
+    history = AuditTrail()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.order.aliquot.receive.registered_subject.subject_identifier
