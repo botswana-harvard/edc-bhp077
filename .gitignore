@@ -8,6 +8,7 @@ __pycache__/
 test-*
 db.sqlite3
 etc/*
+microbiome/apps/*/migrations/
 # C extensions
 *.so
 getresults_receive/.DS_Store
