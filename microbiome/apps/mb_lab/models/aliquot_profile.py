@@ -1,7 +1,7 @@
 from django.db import models
 
-from edc_lab.lab_profile.models import BaseProfile
 from edc_base.model.models import BaseUuidModel
+from edc_lab.lab_profile.models import BaseProfile
 
 from ..managers import ProfileManager
 

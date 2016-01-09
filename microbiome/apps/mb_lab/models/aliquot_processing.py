@@ -1,7 +1,7 @@
 from django.db import models
 
-from edc_lab.lab_profile.models import BaseProcessing
 from edc_base.model.models import BaseUuidModel
+from edc_lab.lab_profile.models import BaseProcessing
 from edc_sync.models import SyncModelMixin
 
 from ..managers import AliquotProcessingManager
