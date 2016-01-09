@@ -27,6 +27,6 @@ from .maternal_post_fu_med import MaternalPostFuMed, MaternalPostFuMedItems
 from .maternal_arv_post import MaternalArvPost, MaternalArvPostMod, MaternalArvPostAdh
 from .maternal_breast_health import MaternalBreastHealth
 from .maternal_srh import MaternalSrh
-from .signals import (maternal_eligibility_on_post_save,
-                      maternal_consent_on_post_save, antenatal_enrollment_on_post_save,
-                      postnatal_enrollment_on_post_save)
+from .signals import (
+    maternal_eligibility_on_post_save, maternal_consent_on_post_save,
+    antenatal_enrollment_on_post_save, postnatal_enrollment_on_post_save)
