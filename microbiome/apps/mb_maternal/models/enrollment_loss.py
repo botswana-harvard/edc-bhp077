@@ -5,10 +5,10 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_sync.models import SyncModelMixin
 
+from ..managers import AntenatalEnrollmentLossManager, PostnatalEnrollmentLossManager
+
 from .antenatal_enrollment import AntenatalEnrollment
 from .postnatal_enrollment import PostnatalEnrollment
-
-from ..managers import AntenatalEnrollmentLossManager, PostnatalEnrollmentLossManager
 
 
 class BaseEnrollmentLoss(SyncModelMixin, BaseUuidModel):
@@ -37,7 +37,7 @@ class BaseEnrollmentLoss(SyncModelMixin, BaseUuidModel):
 class AntenatalEnrollmentLoss(BaseEnrollmentLoss):
     """ A model triggered and completed by system when a mother fails antenatal enrollment"""
 
-    antenatal_enrollment = models.OneToOneField(AntenatalEnrollment, null=True)
+    antenatal_enrollment = models.OneToOneField(AntenatalEnrollment)
 
     objects = AntenatalEnrollmentLossManager()
 
@@ -54,7 +54,7 @@ class AntenatalEnrollmentLoss(BaseEnrollmentLoss):
 class PostnatalEnrollmentLoss(BaseEnrollmentLoss):
     """ A model triggered and completed by system when a mother fails postnatal enrollment"""
 
-    postnatal_enrollment = models.OneToOneField(PostnatalEnrollment, null=True)
+    postnatal_enrollment = models.OneToOneField(PostnatalEnrollment)
 
     objects = PostnatalEnrollmentLossManager()
 
