@@ -1,4 +1,5 @@
 from .antenatal_enrollment_admin import AntenatalEnrollmentAdmin
+from .enrollment_loss_admin import AntenatalEnrollmentLossAdmin, PostnatalEnrollmentLossAdmin
 from .maternal_arv_history_admin import MaternalArvHistoryAdmin
 from .maternal_arv_post_admin import (MaternalArvPostModInlineAdmin, MaternalArvPostModAdmin,
                                       MaternalArvPostAdmin, MaternalArvPostAdhAdmin)
@@ -10,7 +11,6 @@ from .maternal_death_report_admin import MaternalDeathReportAdmin
 from .maternal_demographics_admin import MaternalDemographicsAdmin
 from .maternal_eligibility_admin import MaternalEligibilityAdmin
 from .maternal_eligibility_loss_admin import MaternalEligibilityLossAdmin
-from .enrollment_loss_admin import AntenatalEnrollmentLossAdmin, PostnatalEnrollmentLossAdmin
 from .maternal_height_weight_admin import MaternalHeightWeightAdmin
 from .maternal_labour_del_admin import (MaternalLabourDelAdmin, MaternalLabDelMedAdmin,
                                         MaternalLabDelClinicAdmin, MaternalLabDelDxAdmin,
