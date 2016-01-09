@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import get_model
 
 from edc_appointment.models import AppointmentMixin
 from edc_base.audit_trail import AuditTrail
