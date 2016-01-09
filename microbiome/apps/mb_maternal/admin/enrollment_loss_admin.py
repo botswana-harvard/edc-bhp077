@@ -3,7 +3,7 @@ from collections import OrderedDict
 from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseModelAdmin
-from edc.export.actions import export_as_csv_action
+from edc_export.actions import export_as_csv_action
 
 from ..forms import AntenatalEnrollmentLossForm, PostnatalEnrollmentLossForm
 from ..models import AntenatalEnrollmentLoss, PostnatalEnrollmentLoss
