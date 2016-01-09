@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 from edc_identifier.subject.classes import InfantIdentifier
 from edc_registration.models import RegisteredSubject
@@ -10,17 +11,16 @@ from edc_constants.constants import (
 from edc_visit_schedule.models.visit_definition import VisitDefinition
 
 from microbiome.apps.mb.constants import INFANT
+from microbiome.apps.mb_maternal.models.maternal_labour_del import MaternalLabourDel
 
 from ..models import MaternalOffStudy, MaternalVisit
 
+from .antenatal_enrollment import AntenatalEnrollment
+from .enrollment_loss import AntenatalEnrollmentLoss, PostnatalEnrollmentLoss
 from .maternal_consent import MaternalConsent
 from .maternal_eligibility import MaternalEligibility
 from .maternal_eligibility_loss import MaternalEligibilityLoss
-from .enrollment_loss import AntenatalEnrollmentLoss, PostnatalEnrollmentLoss
 from .postnatal_enrollment import PostnatalEnrollment
-from .antenatal_enrollment import AntenatalEnrollment
-from django.utils import timezone
-from microbiome.apps.mb_maternal.models.maternal_labour_del import MaternalLabourDel
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_eligibility_on_post_save")
