@@ -1,10 +1,10 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from edc.subject.code_lists.models import WcsDxAdult
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields.custom_fields import OtherCharField
 from edc_base.model.models import BaseUuidModel
+from edc_code_lists.models import WcsDxAdult
 from edc_constants.choices import YES_NO, GRADING_SCALE
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.models import CrfInlineModelMixin

@@ -1,9 +1,9 @@
 from django.db import models
 
-from edc_base.model.fields import OtherCharField
 from edc_base.audit_trail import AuditTrail
+from edc_base.model.fields import OtherCharField
+from edc_code_lists.models import WcsDxAdult
 from edc_constants.choices import YES_NO
-from edc.subject.code_lists.models import WcsDxAdult
 
 from .maternal_crf_model import MaternalCrfModel
 from microbiome.apps.mb_list.models import ChronicConditions

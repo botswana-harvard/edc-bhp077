@@ -1,5 +1,5 @@
 from edc_base.model.models import BaseListModel
-from edc.subject.code_lists.models import DxCode
+from edc_code_lists.models import DxCode
 
 
 class HealthCond (BaseListModel):

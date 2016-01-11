@@ -59,13 +59,11 @@ class BaseModelForm(forms.ModelForm):
                         'You wrote \'{1}\''.format(fld, cleaned_data['{0}_other'.format(fld)]))
 
     def encrypted_fields_validation(self):
-        """Encrypted fields may have their own validation code to run.
-
-        See the custom field objects in edc.core.crypto_fields."""
+        """Encrypted fields may have their own validation code to run."""
         # TODO: is this used??
         cleaned_data = self.cleaned_data
         try:
-            from edc.core.crypto_fields.fields import BaseEncryptedField
+            from edc_base.encrypted_fields import BaseEncryptedField
             for field in self._meta.model._meta.fields:
                 if isinstance(field, BaseEncryptedField):
                     field.validate_with_cleaned_data(field.attname, cleaned_data)

@@ -1,11 +1,11 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-from edc.subject.code_lists.models import WcsDxAdult
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_future
+from edc_code_lists.models import WcsDxAdult
 from edc_constants.choices import YES_NO, YES_NO_UNKNOWN, YES_NO_NA
 from edc_constants.constants import NOT_APPLICABLE
 from edc_sync.models import SyncModelMixin
