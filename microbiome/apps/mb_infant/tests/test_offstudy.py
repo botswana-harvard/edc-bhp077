@@ -3,7 +3,7 @@ from django.utils import timezone
 from datetime import date
 
 from edc_appointment.models import Appointment
-from edc_constants.constants import NEW, YES, NEG, COMPLETED_PROTOCOL_VISIT
+from edc_constants.constants import NEW, YES, NEG, COMPLETED_PROTOCOL_VISIT, OFF_STUDY
 from edc_lab.lab_profile.classes import site_lab_profiles
 from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_meta_data.models import CrfMetaData
@@ -81,6 +81,7 @@ class TestOffStudy(TestCase):
     def test_offstudy_meta_data_created_on_visit(self):
         self.infant_visit = InfantVisitFactory(
             appointment=self.infant_appointment,
+            study_status=OFF_STUDY,
             reason=COMPLETED_PROTOCOL_VISIT)
         self.assertEqual(
             CrfMetaData.objects.filter(
@@ -92,6 +93,7 @@ class TestOffStudy(TestCase):
     def test_offstudy2(self):
         self.infant_visit = InfantVisitFactory(
             appointment=self.infant_appointment,
+            study_status=OFF_STUDY,
             reason=COMPLETED_PROTOCOL_VISIT)
         InfantOffStudyFactory(
             report_datetime=timezone.now(),
