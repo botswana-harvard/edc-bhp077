@@ -5,8 +5,9 @@ from django.utils import timezone
 
 from edc_meta_data.models import CrfMetaData
 from edc_appointment.models import Appointment
-from edc_constants.constants import YES, NO, POS, NEG, UNKEYED, NOT_APPLICABLE, SCHEDULED,\
-    COMPLETED_PROTOCOL_VISIT, FAILED_ELIGIBILITY
+from edc_constants.constants import (
+    YES, NO, POS, NEG, UNKEYED, NOT_APPLICABLE, SCHEDULED,
+    COMPLETED_PROTOCOL_VISIT, FAILED_ELIGIBILITY, REQUIRED, OFF_STUDY)
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT
 from microbiome.apps.mb_maternal.forms import MaternalOffStudyForm
@@ -49,7 +50,7 @@ class TestOffStudy(BaseMaternalTestCase):
             visit_definition__code='1000M')
         MaternalVisit.objects.get(appointment=appointment, reason=FAILED_ELIGIBILITY)
         self.assertEqual(CrfMetaData.objects.filter(
-            entry_status=UNKEYED,
+            entry_status=REQUIRED,
             crf_entry__app_label='mb_maternal',
             crf_entry__model_name='maternaloffstudy',
             appointment=appointment).count(), 1)
@@ -91,7 +92,7 @@ class TestOffStudy(BaseMaternalTestCase):
             else:
                 raise MaternalVisit.DoesNotExist
         self.assertEqual(CrfMetaData.objects.filter(
-            entry_status=UNKEYED,
+            entry_status=REQUIRED,
             crf_entry__app_label='mb_maternal',
             crf_entry__model_name='maternaloffstudy',
             appointment=appointment).count(), 1)
@@ -107,6 +108,8 @@ class TestOffStudy(BaseMaternalTestCase):
             visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(
             appointment=appointment,
+            report_datetime=timezone.now(),
+            study_status=OFF_STUDY,
             reason=COMPLETED_PROTOCOL_VISIT)
         MaternalOffStudyFactory(
             registered_subject=appointment.registered_subject,
@@ -130,6 +133,7 @@ class TestOffStudy(BaseMaternalTestCase):
         maternal_visit = MaternalVisitFactory(
             appointment=appointment,
             report_datetime=timezone.now(),
+            study_status=OFF_STUDY,
             reason=COMPLETED_PROTOCOL_VISIT)
         MaternalOffStudyFactory(
             registered_subject=appointment.registered_subject,

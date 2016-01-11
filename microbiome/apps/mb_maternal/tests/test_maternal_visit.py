@@ -48,16 +48,14 @@ class TestMaternalVisit(BaseMaternalTestCase):
         self.data['reason_missed'] = None
         form = MaternalVisitForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You indicated that the visit was missed. Please provide a reason why '
-                      'it was missed.', errors)
+        self.assertIn('Provide reason visit was missed.', errors)
 
     def test_attended_visit_reason_missed_given(self):
         self.data['reason'] = 'scheduled'
         self.data['reason_missed'] = 'At work.'
         form = MaternalVisitForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
-        self.assertIn('You indicated that the visit was NOT missed, yet you provided a reason '
-                      'why it was missed. Please correct.', errors)
+        self.assertIn('Visit was not missed, do not provide reason visit was missed.', errors)
 
     def test_passed_enrollment_but_no_data_collection(self):
         """Test a participant who passed eligibility but no further data collection

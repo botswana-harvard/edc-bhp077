@@ -1,12 +1,9 @@
 from django.db import models
-from django.db.models import get_model
 
 from edc_base.model.validators import date_not_before_study_start, date_not_future
 from edc_constants.choices import POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO
-from edc_constants.constants import NO, YES
+from edc_constants.constants import NO
 from .enrollment_helper import EnrollmentHelper
-
-from microbiome.apps.mb.constants import STILL_BIRTH
 
 
 class EnrollmentMixin(models.Model):

@@ -1,12 +1,11 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from edc_meta_data.models import CrfMetaDataMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
 from edc_constants.constants import (
-    YES, POS, UNSCHEDULED, NEG, DEATH_VISIT, COMPLETED_PROTOCOL_VISIT, FAILED_ELIGIBILITY)
+    YES, POS, NEG, FAILED_ELIGIBILITY)
 from edc_offstudy.models import OffStudyMixin
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
@@ -17,15 +16,19 @@ from microbiome.apps.mb.choices import VISIT_REASON
 
 from ..models import MaternalConsent, PostnatalEnrollment, AntenatalEnrollment
 
+from .maternal_visit_crf_meta_data_mixin import MaternalVisitCrfMetaDataMixin
 
-class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, CrfMetaDataMixin, RequiresConsentMixin,
-                    CaretakerFieldsMixin, VisitModelMixin, BaseUuidModel):
+
+class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MaternalVisitCrfMetaDataMixin,
+                    RequiresConsentMixin, CaretakerFieldsMixin, VisitModelMixin, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 
     consent_model = MaternalConsent
 
     off_study_model = ('mb_maternal', 'MaternalOffStudy')
+
+    death_report_model = ('mb_maternal', 'MaternalDeathReport')
 
     history = AuditTrail()
 
@@ -68,115 +71,7 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, CrfMetaDa
         dct = {}
         for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
             dct.update({item: item})
-        del dct[DEATH_VISIT]
         return dct
-
-    def custom_post_update_crf_meta_data(self):
-        """Custom methods that manipulate meta data on the post save.
-
-        This method is called in the edc_meta_data signal."""
-        if self.reason == FAILED_ELIGIBILITY:
-            self.change_to_off_study_visit(self.appointment, 'mb_maternal', 'maternaloffstudy')
-        elif self.reason == DEATH_VISIT:
-            self.change_to_death_visit(
-                self.appointment, 'mb_maternal', 'maternaloffstudy', 'maternaldeathreport')
-        elif self.reason == UNSCHEDULED:
-            self.change_to_unscheduled_visit(self.appointment)
-        elif self.reason == COMPLETED_PROTOCOL_VISIT:
-            self.crf_is_required(self.appointment, 'mb_maternal', 'maternaloffstudy')
-        else:
-            self.required_for_maternal_pos()
-            self.required_for_maternal_not_pos()
-            self.required_labs_for_maternal_neg()
-            self.required_forms_for_maternal_neg()
-
-    def required_forms_for_maternal_neg(self):
-        """If attempt to change an offstudy to scheduled visit has been successful, ensure that
-        necessary forms at 1000M are REQUIRED"""
-        if self.enrollment_hiv_status == NEG or self.scheduled_rapid_test == NEG:
-            if self.appointment.visit_definition.code == '1000M':
-                model_names = [
-                    'maternallocator', 'maternaldemographics', 'maternalmedicalhistory',
-                    'maternalobstericalhistory']
-                for model_name in model_names:
-                    self.crf_is_required(
-                        self.appointment,
-                        'mb_maternal',
-                        model_name,
-                        message=self.appointment.visit_definition.code)
-                self.crf_is_not_required(
-                    self.appointment,
-                    'mb_maternal',
-                    'maternaloffstudy')
-
-    def required_for_maternal_pos(self):
-        if self.enrollment_hiv_status == POS or self.scheduled_rapid_test == POS:
-            if self.appointment.visit_definition.code == '1000M':
-                model_names = ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg']
-                for model_name in model_names:
-                    self.crf_is_required(
-                        self.appointment,
-                        'mb_maternal',
-                        model_name,
-                        message=self.appointment.visit_definition.code)
-            elif self.appointment.visit_definition.code == '2000M':
-                model_names = ['maternalarvpreg', 'maternallabdelclinic']
-                for model_name in model_names:
-                    self.crf_is_required(
-                        self.appointment,
-                        'mb_maternal',
-                        model_name,
-                        message=self.appointment.visit_definition.code)
-                    for labs in ['Viral Load', 'Breast Milk (Storage)', 'Vaginal swab (Storage)',
-                                 'Rectal swab (Storage)', 'Skin Swab (Storage)',
-                                 'Vaginal Swab (multiplex PCR)', 'Hematology (ARV)',
-                                 'CD4 (ARV)']:
-                        self.requisition_is_required(
-                            self.appointment,
-                            'mb_lab',
-                            'maternalrequisition',
-                            labs)
-            elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
-                model_names = ['maternalarvpost', 'maternalarvpostadh']
-                for model_name in model_names:
-                    self.crf_is_required(
-                        self.appointment,
-                        'mb_maternal',
-                        model_name,
-                        message=self.appointment.visit_definition.code)
-                self.requisition_is_required(
-                    self.appointment,
-                    'mb_lab',
-                    'maternalrequisition',
-                    'Viral Load')
-
-    def required_for_maternal_not_pos(self):
-        if self.enrollment_hiv_status == NEG and self.scheduled_rapid_test != POS:
-            if self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
-                self.crf_is_required(
-                    self.appointment,
-                    'mb_maternal',
-                    'rapidtestresult',
-                    message=self.appointment.visit_definition.code)
-
-    def required_labs_for_maternal_neg(self):
-        if self.enrollment_hiv_status == NEG and self.scheduled_rapid_test != POS:
-            if self.appointment.visit_definition.code == '2000M':
-                for labs in ['Breast Milk (Storage)', 'Vaginal swab (Storage)',
-                             'Rectal swab (Storage)', 'Skin Swab (Storage)',
-                             'Vaginal Swab (multiplex PCR)', 'Hematology (ARV)',
-                             'CD4 (ARV)']:
-                    self.requisition_is_required(
-                        self.appointment,
-                        'mb_lab',
-                        'maternalrequisition',
-                        labs)
-            if self.appointment.visit_definition.code == '2010M':
-                self.requisition_is_required(
-                    self.appointment,
-                    'mb_lab',
-                    'maternalrequisition',
-                    'Breast Milk (Storage)')
 
     @property
     def scheduled_rapid_test(self):

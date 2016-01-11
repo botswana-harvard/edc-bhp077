@@ -7,7 +7,7 @@ from edc_identifier.subject.classes import InfantIdentifier
 from edc_registration.models import RegisteredSubject
 from edc_appointment.models.appointment import Appointment
 from edc_constants.constants import (
-    FEMALE, SCHEDULED, SCREENED, COMPLETED_PROTOCOL_VISIT, CONSENTED, FAILED_ELIGIBILITY)
+    FEMALE, SCHEDULED, SCREENED, CONSENTED, FAILED_ELIGIBILITY, ALIVE, OFF_STUDY, ON_STUDY)
 from edc_visit_schedule.models.visit_definition import VisitDefinition
 
 from microbiome.apps.mb.constants import INFANT
@@ -155,14 +155,17 @@ def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
                     registered_subject=instance.registered_subject,
                     visit_definition=visit_definition)
                 maternal_visit = MaternalVisit.objects.get(appointment=appointment)
-                if maternal_visit.reason != COMPLETED_PROTOCOL_VISIT:
-                    maternal_visit.reason = COMPLETED_PROTOCOL_VISIT
+                if maternal_visit.reason != FAILED_ELIGIBILITY:
+                    maternal_visit.reason = FAILED_ELIGIBILITY
+                    maternal_visit.study_status = OFF_STUDY
                     maternal_visit.save()
         except MaternalVisit.DoesNotExist:
             MaternalVisit.objects.create(
                 appointment=appointment,
                 report_datetime=report_datetime,
-                reason=COMPLETED_PROTOCOL_VISIT)
+                survival_status=ALIVE,
+                study_status=OFF_STUDY,
+                reason=FAILED_ELIGIBILITY)
         except AttributeError as e:
             if 'is_eligible' not in str(e) and 'off_study_visit_code' not in str(e):
                 raise
@@ -172,7 +175,7 @@ def ineligible_take_off_study(sender, instance, raw, created, using, **kwargs):
             pass
 
 
-def change_off_study_visit_to_scheduled(instance):
+def put_back_on_study_from_failed_eligibility(instance):
     """Attempts to change the 1000M maternal visit back to scheduled
     from off study."""
     with transaction.atomic():
@@ -184,6 +187,7 @@ def change_off_study_visit_to_scheduled(instance):
             maternal_visit = MaternalVisit.objects.get(
                 appointment=appointment,
                 reason=FAILED_ELIGIBILITY)
+            maternal_visit.study_status = ON_STUDY
             maternal_visit.reason = SCHEDULED
             maternal_visit.save()
         except MaternalVisit.DoesNotExist:
@@ -206,7 +210,7 @@ def eligible_put_back_on_study(sender, instance, raw, created, using, **kwargs):
             if 'is_eligible' not in str(e) and 'registered_subject' not in str(e):
                 raise
         except MaternalOffStudy.DoesNotExist:
-            change_off_study_visit_to_scheduled(instance)
+            put_back_on_study_from_failed_eligibility(instance)
 
 
 @receiver(post_save, weak=False, dispatch_uid="maternal_consent_on_post_save")

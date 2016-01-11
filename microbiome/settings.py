@@ -59,7 +59,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 INSTALLED_APPS = [
     'edc_templates',
@@ -91,6 +90,7 @@ INSTALLED_APPS = [
     'edc_death_report',
     'edc_device',
     'edc_export',
+    'edc_identifier',
     'edc_lab.lab_clinic_api',
     'edc_lab.lab_clinic_reference',
     'edc_lab.lab_packing',

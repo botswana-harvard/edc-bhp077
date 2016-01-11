@@ -10,7 +10,7 @@ from edc_rule_groups.classes import site_rule_groups
 from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
 from edc_constants.constants import (
-    YES, NO, POS, OFF_STUDY, ON_STUDY, DEATH_VISIT, LOST_VISIT, MISSED_VISIT,
+    YES, NO, POS, OFF_STUDY, ON_STUDY, LOST_VISIT, MISSED_VISIT,
     DEAD, ALIVE, SCHEDULED, NOT_APPLICABLE)
 
 from microbiome.apps.mb.app_configuration import AppConfiguration
@@ -78,7 +78,7 @@ class TestInfantVisitForm(TestCase):
     def test_validate_reason_death_valid(self):
         data = {
             'is_present': NO,
-            'reason': DEATH_VISIT,
+            'reason': SCHEDULED,
             'survival_status': DEAD,
             'study_status': OFF_STUDY,
             'appointment': self.appointment.id,
@@ -88,21 +88,6 @@ class TestInfantVisitForm(TestCase):
             'last_alive_date': date.today()}
         form = InfantVisitForm(data=data)
         self.assertTrue(form.is_valid)
-
-    def test_validate_reason_death_not_valid(self):
-        data = {
-            'is_present': NO,
-            'reason': DEATH_VISIT,
-            'survival_status': ALIVE,
-            'study_status': OFF_STUDY,
-            'appointment': self.appointment.id,
-            'info_source': 'other_doctor',
-            'information_provider': 'MOTHER',
-            'report_datetime': timezone.now(),
-            'last_alive_date': date.today()}
-        form = InfantVisitForm(data=data)
-        self.assertIn('A death is being reported. Select \'Deceased\' for survival status.',
-                      form.errors.get('__all__'))
 
     def test_validate_reason_death_not_valid1(self):
         data = {
@@ -163,7 +148,7 @@ class TestInfantVisitForm(TestCase):
             'report_datetime': timezone.now(),
             'last_alive_date': date.today()}
         form = InfantVisitForm(data=data)
-        self.assertIn("Provide reason scheduled visit was missed.", form.errors.get('__all__'))
+        self.assertIn("Provide reason visit was missed.", form.errors.get('__all__'))
 
     def test_validate_survival_status(self):
         data = {

@@ -2,9 +2,8 @@ from datetime import timedelta
 from django.utils import timezone
 
 from edc_appointment.models import Appointment
-from edc_appointment.tests.factories.appointment_factory import AppointmentFactory
 from edc_constants.constants import (
-    POS, YES, NEG, NOT_APPLICABLE, FAILED_ELIGIBILITY, UNKEYED, SCHEDULED, NOT_REQUIRED)
+    POS, YES, NEG, NOT_APPLICABLE, FAILED_ELIGIBILITY, SCHEDULED, REQUIRED, ON_STUDY)
 from edc_meta_data.models import CrfMetaData
 
 from .factories import (
@@ -61,7 +60,7 @@ class TestEnrollmentLoss(BaseMaternalTestCase):
         self.assertEqual(
             CrfMetaData.objects.filter(
                 appointment=appointment,
-                entry_status=UNKEYED,
+                entry_status=REQUIRED,
                 crf_entry__app_label='mb_maternal',
                 crf_entry__model_name='maternaloffstudy').count(), 1)
 
@@ -87,16 +86,17 @@ class TestEnrollmentLoss(BaseMaternalTestCase):
         """Test that the mothers now scheduled visit now has off study set to not_required"""
         self.antenatal_enrollment.gestation_wks = 37
         self.antenatal_enrollment.save()
+        self.assertTrue(self.antenatal_enrollment.is_eligible)
         appointment = Appointment.objects.get(
             registered_subject=self.antenatal_enrollment.registered_subject,
             visit_definition__code='1000M')
-        MaternalVisit.objects.get(appointment=appointment, reason=SCHEDULED)
+        maternal_visit = MaternalVisit.objects.get(appointment=appointment, reason=SCHEDULED)
+        self.assertEqual(maternal_visit.study_status, ON_STUDY)
         self.assertEqual(
             CrfMetaData.objects.filter(
                 appointment=appointment,
-                entry_status=NOT_REQUIRED,
                 crf_entry__app_label='mb_maternal',
-                crf_entry__model_name='maternaloffstudy').count(), 1)
+                crf_entry__model_name='maternaloffstudy').count(), 0)
 
     def test_eligible_mother_scheduled_visit_has_correct_forms(self):
         """Test that the mothers all required forms for a scheduled visit"""
@@ -109,7 +109,7 @@ class TestEnrollmentLoss(BaseMaternalTestCase):
         self.assertEqual(
             CrfMetaData.objects.filter(
                 appointment=appointment,
-                entry_status=UNKEYED,
+                entry_status=REQUIRED,
                 crf_entry__app_label='mb_maternal',
                 crf_entry__model_name__in=[
                     'maternallocator', 'maternaldemographics', 'maternalmedicalhistory',

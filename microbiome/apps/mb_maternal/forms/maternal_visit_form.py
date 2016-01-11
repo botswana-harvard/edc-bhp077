@@ -34,7 +34,6 @@ class MaternalVisitForm (VisitFormMixin, BaseModelForm):
 
     def clean(self):
         cleaned_data = super(MaternalVisitForm, self).clean()
-        self.validate_reason_missed(cleaned_data)
         MaternalVisit(**cleaned_data).has_previous_visit_or_raise(forms.ValidationError)
         try:
             subject_identifier = cleaned_data.get('appointment').registered_subject.subject_identifier
@@ -55,18 +54,6 @@ class MaternalVisitForm (VisitFormMixin, BaseModelForm):
         instance.subject_failed_eligibility(forms.ValidationError)
 
         return cleaned_data
-
-    def validate_reason_missed(self, cleaned_data):
-        if cleaned_data.get('reason') == MISSED_VISIT:
-            if not cleaned_data.get('reason_missed'):
-                raise forms.ValidationError(
-                    'You indicated that the visit was missed. Please provide a reason why '
-                    'it was missed.')
-        else:
-            if cleaned_data.get('reason_missed'):
-                raise forms.ValidationError(
-                    'You indicated that the visit was NOT missed, yet you provided a reason '
-                    'why it was missed. Please correct.')
 
     class Meta:
         model = MaternalVisit

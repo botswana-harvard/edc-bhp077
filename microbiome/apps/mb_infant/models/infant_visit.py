@@ -1,7 +1,7 @@
 from edc_meta_data.models import CrfMetaDataMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
-from edc_constants.constants import DEATH_VISIT, UNSCHEDULED, SCHEDULED, COMPLETED_PROTOCOL_VISIT
+from edc_constants.constants import UNSCHEDULED, SCHEDULED, COMPLETED_PROTOCOL_VISIT, DEAD
 from edc_offstudy.models import OffStudyMixin
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
@@ -22,6 +22,8 @@ class InfantVisit(
 
     off_study_model = ('mb_infant', 'InfantOffStudy')
 
+    death_report_model = ('mb_infant', 'InfantDeathReport')
+
     history = AuditTrail()
 
     def __unicode__(self):
@@ -41,11 +43,10 @@ class InfantVisit(
         """Calls custom methods that manipulate meta data on the post save.
 
         This method is called in a post-save signal in edc_meta_data."""
-        if self.reason == COMPLETED_PROTOCOL_VISIT:
-            self.change_to_off_study_visit(self.appointment, 'mb_infant', 'infantoffstudy')
-        elif self.reason == DEATH_VISIT:
-            self.change_to_death_visit(
-                self.appointment, 'mb_infant', 'infantoffstudy', 'infantdeathreport')
+        if self.survival_status == DEAD:
+            self.require_death_report()
+        elif self.reason == COMPLETED_PROTOCOL_VISIT:
+            self.require_off_study_report()
         elif self.reason == UNSCHEDULED:
             self.change_to_unscheduled_visit(self.appointment)
         elif self.reason == SCHEDULED:
@@ -55,21 +56,11 @@ class InfantVisit(
 
     def requires_infant_birth_arv_on_maternal_pos(self):
         if self.appointment.visit_definition.code == '2000':
-            self.crf_is_required(
-                self.appointment,
-                'mb_infant',
-                'infantbirtharv',
-                message=self.appointment.visit_definition.code)
+            self.crf_is_required(self.appointment, 'mb_infant', 'infantbirtharv')
 
     def requires_dna_pcr_on_maternal_pos(self):
         if self.appointment.visit_definition.code in ['2000', '2010', '2030', '2060', '2090', '2120']:
-            self.requisition_is_required(
-                self.appointment,
-                'mb_lab',
-                'infantrequisition',
-                'DNA PCR',
-                message=self.appointment.visit_definition.code,
-            )
+            self.requisition_is_required(self.appointment, 'mb_lab', 'infantrequisition', 'DNA PCR')
 
     def natural_key(self):
         return (self.report_datetime,) + self.appointment.natural_key()
@@ -79,11 +70,11 @@ class InfantVisit(
         return VISIT_REASON
 
     def get_visit_reason_no_follow_up_choices(self):
-        """Returns the visit reasons that do not imply any data collection; that is, the subject is not available."""
+        """Returns the visit reasons that do not imply any data collection;
+        that is, the subject is not available."""
         dct = {}
         for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
             dct.update({item: item})
-        del dct[DEATH_VISIT]
         return dct
 
     class Meta:
