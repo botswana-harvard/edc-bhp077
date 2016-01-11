@@ -53,6 +53,7 @@ class InfantVisit(
             if self.postnatal_enrollment.enrollment_hiv_status:
                 self.requires_infant_birth_arv_on_maternal_pos()
                 self.requires_dna_pcr_on_maternal_pos()
+        return self
 
     def requires_infant_birth_arv_on_maternal_pos(self):
         if self.appointment.visit_definition.code == '2000':
