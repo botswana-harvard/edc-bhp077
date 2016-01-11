@@ -3,7 +3,6 @@ from django.test import TestCase
 from edc_registration.models import RegisteredSubject
 from edc_meta_data.models import CrfMetaData, RequisitionMetaData
 from edc_lab.lab_profile.classes import site_lab_profiles
-from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc_rule_groups.classes import site_rule_groups
 from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
@@ -32,7 +31,6 @@ class TestRuleGroup(TestCase):
         except AlreadyRegisteredLabProfile:
             pass
         AppConfiguration(lab_profiles=site_lab_profiles).prepare()
-        site_lab_tracker.autodiscover()
         AntenatalEnrollmentVisitSchedule().build()
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()

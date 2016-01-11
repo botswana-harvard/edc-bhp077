@@ -2,7 +2,6 @@ from django.test import TestCase
 from django.utils import timezone
 from datetime import date
 
-from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc_appointment.models import Appointment
 from edc_constants.constants import NEW, YES, NEG, COMPLETED_PROTOCOL_VISIT
 from edc_lab.lab_profile.classes import site_lab_profiles
@@ -37,7 +36,6 @@ class TestOffStudy(TestCase):
         except AlreadyRegisteredLabProfile:
             pass
         AppConfiguration(lab_profiles=site_lab_profiles).prepare()
-        site_lab_tracker.autodiscover()
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
         InfantBirthVisitSchedule().build()

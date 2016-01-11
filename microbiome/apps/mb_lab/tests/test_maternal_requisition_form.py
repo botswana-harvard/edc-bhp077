@@ -4,7 +4,6 @@ from django.utils import timezone
 from edc_lab.lab_profile.classes import site_lab_profiles
 from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
-from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc_rule_groups.classes import site_rule_groups
 from edc_constants.choices import YES, NO, POS
 
@@ -32,7 +31,6 @@ class TestMaternalRequisitionForm(TestCase):
         except AlreadyRegisteredLabProfile:
             pass
         AppConfiguration(lab_profiles=site_lab_profiles).prepare()
-        site_lab_tracker.autodiscover()
         PostnatalEnrollmentVisitSchedule().build()
         site_rule_groups.autodiscover()
         self.study_site = '40'

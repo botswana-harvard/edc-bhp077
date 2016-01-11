@@ -10,7 +10,6 @@ from django.views.generic import RedirectView
 
 from edc.data_manager.classes import data_manager
 from edc_lab.lab_profile.classes import site_lab_profiles
-from edc.subject.lab_tracker.classes import site_lab_tracker
 from edc_rule_groups.classes import site_rule_groups
 from edc_call_manager.caller_site import site_model_callers
 from edc_dashboard.section import site_sections
@@ -24,7 +23,6 @@ AppConfiguration(lab_profiles=site_lab_profiles).prepare()
 site_visit_schedules.autodiscover()
 site_visit_schedules.build_all()
 site_rule_groups.autodiscover()
-site_lab_tracker.autodiscover()
 data_manager.prepare()
 site_sections.autodiscover()
 site_sections.update_section_lists()

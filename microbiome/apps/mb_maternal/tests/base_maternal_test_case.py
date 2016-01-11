@@ -1,7 +1,6 @@
 from django.test.testcases import TestCase
 
 from edc_rule_groups.classes.controller import site_rule_groups
-from edc.subject.lab_tracker.classes.controller import site_lab_tracker
 from edc_lab.lab_profile.classes.controller import site_lab_profiles
 from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 
@@ -20,7 +19,6 @@ class BaseMaternalTestCase(TestCase):
         except AlreadyRegisteredLabProfile:
             pass
         AppConfiguration(lab_profiles=site_lab_profiles).prepare()
-        site_lab_tracker.autodiscover()
         SpecimenConsentVisitSchedule().build()
         AntenatalEnrollmentVisitSchedule().build()
         PostnatalEnrollmentVisitSchedule().build()
