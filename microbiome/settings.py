@@ -75,7 +75,6 @@ INSTALLED_APPS = [
     'edc.import',
     'edc.notification',
     'edc.subject.code_lists',
-    'edc.subject.lab_tracker',
     'edc.subject.subject_summary',
     'edc_appointment',
     'edc_base',
