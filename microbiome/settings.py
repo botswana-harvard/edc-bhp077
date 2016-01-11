@@ -70,7 +70,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_revision',
     'south',
-    'edc.core.identifier',
     'edc.data_manager',
     'edc.import',
     'edc.notification',
