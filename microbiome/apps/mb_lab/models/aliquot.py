@@ -30,7 +30,7 @@ class Aliquot(BaseAliquot, SyncModelMixin, BaseUuidModel):
         blank=True)
 
     objects = AliquotManager()
-    
+
     history = AuditTrail()
 
     def save(self, *args, **kwargs):
