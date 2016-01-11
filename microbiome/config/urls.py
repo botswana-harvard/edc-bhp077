@@ -8,12 +8,12 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import get_models
 from django.views.generic import RedirectView
 
-from edc.data_manager.classes import data_manager
-from edc_lab.lab_profile.classes import site_lab_profiles
-from edc_rule_groups.classes import site_rule_groups
 from edc_call_manager.caller_site import site_model_callers
 from edc_dashboard.section import site_sections
 from edc_dashboard.subject.views import additional_requisition
+from edc_data_manager.data_manager import data_manager
+from edc_lab.lab_profile.classes import site_lab_profiles
+from edc_rule_groups.classes import site_rule_groups
 from edc_visit_schedule.classes import site_visit_schedules
 
 from microbiome.apps.mb.app_configuration import AppConfiguration
