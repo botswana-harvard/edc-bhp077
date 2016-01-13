@@ -37,7 +37,7 @@ class MaternalRequisitionForm(RequisitionFormMixin):
             cleaned_data.get('panel').name == 'Vaginal swab (Storage)' or
             cleaned_data.get('panel').name == 'Rectal swab (Storage)' or
             cleaned_data.get('panel').name == 'Skin Swab (Storage)' or
-            cleaned_data.get('panel').name == 'Vaginal Swab (multiplex PCR)'
+            cleaned_data.get('panel').name == 'Vaginal STI Swab (Storage)'
         ):
             if cleaned_data.get('item_type') != 'swab':
                 raise forms.ValidationError('Panel is a swab therefore collection type is swab. Please correct.')
