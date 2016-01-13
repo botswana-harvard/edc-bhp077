@@ -3,7 +3,7 @@ from copy import copy
 from django.contrib import admin
 
 from edc_base.modeladmin.admin.base_model_admin import BaseModelAdmin
-from edc_lab.lab_requisition.admin import RequisitionAdminMixin
+from lab_requisition.admin import RequisitionAdminMixin
 
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.models import InfantVisit

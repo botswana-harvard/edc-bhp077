@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
 from edc_constants.constants import YES, NO
-from edc_lab.lab_requisition.forms import RequisitionFormMixin
+from lab_requisition.forms import RequisitionFormMixin
 
 from microbiome.apps.mb.choices import STUDY_SITES
 from microbiome.apps.mb_infant.models import InfantStoolCollection
