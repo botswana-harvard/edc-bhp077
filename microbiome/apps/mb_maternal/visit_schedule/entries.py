@@ -57,11 +57,11 @@ maternal_requisition_entries = (
         'Skin Swab (Storage)', 'STORAGE', 'SW', NOT_REQUIRED, ADDITIONAL),
     RequisitionPanelTuple(
         60L, u'mb_lab', u'maternalrequisition',
-        'Vaginal Swab (multiplex PCR)', 'TEST', 'VS', NOT_REQUIRED, ADDITIONAL),
+        'Vaginal STI Swab (Storage)', 'TEST', 'VS', NOT_REQUIRED, ADDITIONAL),
     RequisitionPanelTuple(
         70L, u'mb_lab', u'maternalrequisition',
         'Hematology (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
     RequisitionPanelTuple(
         80L, u'mb_lab', u'maternalrequisition',
-        'CD4 (ARV)', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
+        'CD4/ CD8', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
 )

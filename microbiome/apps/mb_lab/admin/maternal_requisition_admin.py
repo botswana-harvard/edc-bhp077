@@ -26,7 +26,7 @@ class MaternalRequisitionAdmin(RequisitionAdminMixin, BaseModelAdmin):
             'Vaginal swab (Storage)',
             'Rectal swab (Storage)',
             'Skin Swab (Storage)',
-            'Vaginal Swab (multiplex PCR)']
+            'Vaginal STI Swab (Storage)']
         panel = self.panel_model.objects.get(id=request.GET.get('panel'))
         if panel.name in panel_names:
             try:
