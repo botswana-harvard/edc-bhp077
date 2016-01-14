@@ -39,7 +39,6 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'assessment_score',
               'consent_signature',
               'consent_copy')
-    actions = [flag_as_verified_against_paper, unflag_as_verified_against_paper]
 
     radio_fields = {
         'assessment_score': admin.VERTICAL,
@@ -76,6 +75,8 @@ class MaternalConsentAdmin(BaseModelAdmin):
                    'identity_type')
 
     actions = [
+        flag_as_verified_against_paper,
+        unflag_as_verified_against_paper,
         export_as_csv_action(
             description="CSV Export of Maternal Consent",
             fields=[],

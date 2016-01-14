@@ -133,7 +133,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages")
 
-ROOT_URLCONF = 'microbiome.config.urls'
+ROOT_URLCONF = 'microbiome.urls'
 
 TEMPLATE_DIRS = ()
 
@@ -143,7 +143,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
     'django.template.loaders.eggs.Loader')
 
-WSGI_APPLICATION = 'microbiome.config.wsgi.application'
+WSGI_APPLICATION = 'microbiome.wsgi.application'
 
 SECRET_KEY = 'sdfsd32fs#*@(@dfsdf'
 # Database

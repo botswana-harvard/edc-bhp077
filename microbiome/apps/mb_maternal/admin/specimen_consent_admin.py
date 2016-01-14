@@ -4,6 +4,7 @@ from django.contrib import admin
 
 from edc_export.actions import export_as_csv_action
 from edc_base.modeladmin.admin import BaseModelAdmin
+from edc_consent.actions import flag_as_verified_against_paper, unflag_as_verified_against_paper
 from edc_registration.models import RegisteredSubject
 
 from ..forms import SpecimenConsentForm
@@ -30,9 +31,22 @@ class SpecimenConsentAdmin(BaseModelAdmin):
                     'purpose_explained': admin.VERTICAL,
                     'purpose_understood': admin.VERTICAL,
                     'offered_copy': admin.VERTICAL, }
-    list_dispay = ('registered_subject', 'may_store_samples')
 
+    list_display = ('subject_identifier',
+                    'registered_subject',
+                    'is_verified',
+                    'is_verified_datetime',
+                    'consent_datetime',
+                    'created',
+                    'modified',
+                    'user_created',
+                    'user_modified')
+    list_filter = ('language',
+                   'is_verified',
+                   'is_literate')
     actions = [
+        flag_as_verified_against_paper,
+        unflag_as_verified_against_paper,
         export_as_csv_action(
             description="CSV Export of Specimen Consent",
             fields=[],

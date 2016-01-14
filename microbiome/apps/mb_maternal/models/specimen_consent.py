@@ -42,6 +42,10 @@ class SpecimenConsent(BaseSpecimenConsent, SyncModelMixin, SampleCollectionField
     def get_report_datetime(self):
         return self.consent_datetime
 
+    def subject_identifier(self):
+        return self.get_subject_identifier()
+    subject_identifier.allow_tags = True
+
     @property
     def report_datetime(self):
         return self.consent_datetime
