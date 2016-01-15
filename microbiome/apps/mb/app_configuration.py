@@ -140,8 +140,8 @@ class AppConfiguration(BaseAppConfiguration):
                                   ProfileItemTuple('Viral Load', 'BC', 0.5, 1),
                                   ProfileItemTuple('Stool', 'ST', 1, 1),
                                   ProfileItemTuple('Breast Milk (Storage)', 'BM', 2, 3),
-                                  ProfileItemTuple('Breast Milk (Storage)', 'BMF', 2, 3),
-                                  ProfileItemTuple('Breast Milk (Storage)', 'BMP', 1, 1)]}}
+                                  ProfileItemTuple('Breast Milk (Storage)', 'BMF', 2, 5),
+                                  ProfileItemTuple('Breast Milk (Storage)', 'BMP', 1, 2)]}}
 
     labeling_setup = {
         'label_printer': [LabelPrinterTuple('Zebra_Technologies_ZTC_GK420t',
