@@ -46,8 +46,7 @@ class MaternalVisitCrfMetaDataMixin(CrfMetaDataMixin):
                     self.crf_is_required(self.appointment, 'mb_maternal', model_name)
                     for labs in ['Viral Load', 'Breast Milk (Storage)', 'Vaginal swab (Storage)',
                                  'Rectal swab (Storage)', 'Skin Swab (Storage)',
-                                 'Vaginal STI Swab (Storage)', 'Hematology (ARV)',
-                                 'CD4/ CD8']:
+                                 'Vaginal STI Swab (Storage)', 'CD4/ CD8']:
                         self.requisition_is_required(self.appointment, 'mb_lab', 'maternalrequisition', labs)
             elif self.appointment.visit_definition.code in ['2010M', '2030M', '2060M', '2090M', '2120M']:
                 model_names = ['maternalarvpost', 'maternalarvpostadh']
@@ -65,8 +64,7 @@ class MaternalVisitCrfMetaDataMixin(CrfMetaDataMixin):
             if self.appointment.visit_definition.code == '2000M':
                 for labs in ['Breast Milk (Storage)', 'Vaginal swab (Storage)',
                              'Rectal swab (Storage)', 'Skin Swab (Storage)',
-                             'Vaginal Swab (multiplex PCR)', 'Hematology (ARV)',
-                             'CD4/ CD8']:
+                             'Vaginal STI Swab (Storage)', 'CD4/ CD8']:
                     self.requisition_is_required(self.appointment, 'mb_lab', 'maternalrequisition', labs)
             if self.appointment.visit_definition.code == '2010M':
                 self.requisition_is_required(
