@@ -18,7 +18,6 @@ class InfantOffStudyAdmin(BaseModelAdmin):
     visit_model_name = 'infantvisit'
 
     fields = (
-        'registered_subject',
         'infant_visit',
         'report_datetime',
         'offstudy_date',
@@ -40,9 +39,9 @@ class InfantOffStudyAdmin(BaseModelAdmin):
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
                      'hostname_modified'],
             extra_fields=OrderedDict(
-                {'subject_identifier': 'registered_subject__subject_identifier',
-                 'gender': 'registered_subject__gender',
-                 'dob': 'registered_subject__dob',
+                {'subject_identifier': 'infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'infant_visit__appointment__registered_subject__gender',
+                 'dob': 'infant_visit__appointment__registered_subject__dob',
                  }),
         )]
 
