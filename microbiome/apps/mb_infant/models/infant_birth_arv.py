@@ -5,7 +5,7 @@ from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import YES_NO_UNKNOWN, YES_NO_UNKNOWN_NA
 
 from .infant_birth import InfantBirth
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantBirthArv(InfantCrfModel):

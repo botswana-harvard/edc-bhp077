@@ -27,12 +27,5 @@ class MaternalCrfModel(CrfModelMixin, SyncModelMixin, OffStudyMixin,
 
     entry_meta_data_manager = CrfMetaDataManager(MaternalVisit)
 
-    def natural_key(self):
-        return (self.maternal_visit.natural_key(), )
-    natural_key.dependencies = ['mb_maternal.maternal_visit']
-
-    def __unicode__(self):
-        return unicode(self.get_visit())
-
     class Meta:
         abstract = True

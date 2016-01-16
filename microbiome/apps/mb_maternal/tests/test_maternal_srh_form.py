@@ -11,11 +11,11 @@ from microbiome.apps.mb_list.models import Contraceptives
 
 from microbiome.apps.mb_maternal.forms import MaternalSrhForm
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import PostnatalEnrollmentFactory
 
 
-class TestMaternalSrhForm(BaseMaternalTestCase):
+class TestMaternalSrhForm(BaseTestCase):
 
     def setUp(self):
         super(TestMaternalSrhForm, self).setUp()

@@ -9,7 +9,7 @@ from microbiome.apps.mb_maternal.models import MaternalHeightWeight
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 
 
 class BaseHeightTestModel(MaternalHeightWeight):
@@ -24,7 +24,7 @@ class BaseHeightForm(MaternalHeightWeightForm):
         fields = '__all__'
 
 
-class TestHeightWeight(BaseMaternalTestCase):
+class TestHeightWeight(BaseTestCase):
 
     def setUp(self):
         super(TestHeightWeight, self).setUp()

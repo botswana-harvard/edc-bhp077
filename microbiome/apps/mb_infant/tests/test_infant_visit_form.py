@@ -1,46 +1,29 @@
 from datetime import date
+from dateutil.relativedelta import relativedelta
 
-from django.test import TestCase
 from django.utils import timezone
 
 from edc_registration.models import RegisteredSubject
-from edc_lab.lab_profile.classes import site_lab_profiles
-from edc_rule_groups.classes import site_rule_groups
-from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
 from edc_constants.constants import (
     YES, NO, POS, OFF_STUDY, ON_STUDY, LOST_VISIT, MISSED_VISIT,
     DEAD, ALIVE, SCHEDULED, NOT_APPLICABLE)
 
-from microbiome.apps.mb.app_configuration import AppConfiguration
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantVisitForm
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory
-from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
-from microbiome.apps.mb_maternal.visit_schedule import (
-    AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
-from dateutil.relativedelta import relativedelta
+
+from .base_test_case import BaseTestCase
 
 
-class TestInfantVisitForm(TestCase):
+class TestInfantVisitForm(BaseTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-            site_lab_profiles.register(InfantProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        AppConfiguration(lab_profiles=site_lab_profiles).prepare()
-        AntenatalEnrollmentVisitSchedule().build()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
-        InfantBirthVisitSchedule().build()
-
+        super(TestInfantVisitForm, self).setUp()
         maternal_eligibility = MaternalEligibilityFactory()
         maternal_consent = MaternalConsentFactory(registered_subject=maternal_eligibility.registered_subject)
         registered_subject = maternal_consent.registered_subject

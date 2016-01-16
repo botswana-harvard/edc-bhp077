@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from django.utils import timezone
 
 from edc_appointment.models import Appointment
@@ -7,12 +5,12 @@ from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 
 from microbiome.apps.mb_maternal.forms import MaternalArvPregForm, MaternalArvForm
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
 
 
-class TestMaternalArvPreg(BaseMaternalTestCase):
+class TestMaternalArvPreg(BaseTestCase):
     """Test eligibility of a mother for ARV Preg."""
 
     def setUp(self):

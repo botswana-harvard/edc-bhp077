@@ -5,11 +5,11 @@ from edc_constants.choices import NO
 from microbiome.apps.mb_maternal.models import SpecimenConsent
 from microbiome.apps.mb_maternal.forms.specimen_consent_form import SpecimenConsentForm
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import (MaternalEligibilityFactory, MaternalConsentFactory, SpecimenConsentFactory)
 
 
-class TestSpecimenConsent(BaseMaternalTestCase):
+class TestSpecimenConsent(BaseTestCase):
     """Test sample consent vs similarities in maternal consent"""
 
     def setUp(self):

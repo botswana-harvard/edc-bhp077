@@ -4,7 +4,7 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantBirthData(InfantCrfModel):
@@ -76,9 +76,6 @@ class InfantBirthData(InfantCrfModel):
         null=True)
 
     history = AuditTrail()
-
-    def __unicode__(self):
-        return unicode(self.infant_visit)
 
     class Meta:
         app_label = 'mb_infant'

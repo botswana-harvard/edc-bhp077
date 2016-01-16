@@ -8,7 +8,7 @@ from edc_constants.constants import NOT_APPLICABLE
 
 from ..choices import STOOL_COLLECTION_TIME, STOOL_STORED, NAPPY_TYPE
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantStoolCollection(InfantCrfModel):

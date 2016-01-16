@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantFu(InfantCrfModel):

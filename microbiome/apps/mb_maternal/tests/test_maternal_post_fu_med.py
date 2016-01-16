@@ -5,12 +5,12 @@ from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
 
 from microbiome.apps.mb_maternal.forms import MaternalPostFuMedItemsForm
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory, MaternalPostFuMedFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory, MaternalPostFuFactory)
 
 
-class TestMaternalPostFuMedItems(BaseMaternalTestCase):
+class TestMaternalPostFuMedItems(BaseTestCase):
     """Test eligibility of a mother for postnatal followup medications."""
 
     def setUp(self):

@@ -13,7 +13,7 @@ from microbiome.apps.mb_maternal.models.antenatal_enrollment import AntenatalEnr
 from dateutil.relativedelta import relativedelta
 from microbiome.apps.mb_maternal.models.enrollment_helper import EnrollmentHelper, EnrollmentError
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 
 
 class EnrollmentTestModel(EnrollmentMixin):
@@ -41,7 +41,7 @@ class BaseEnrollTestForm(BaseEnrollmentForm):
         fields = '__all__'
 
 
-class TestEnrollmentMixin(BaseMaternalTestCase):
+class TestEnrollmentMixin(BaseTestCase):
     """Test eligibility of a mother for antenatal enrollment."""
 
     def setUp(self):

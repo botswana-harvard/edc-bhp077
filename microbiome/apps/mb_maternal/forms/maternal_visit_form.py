@@ -34,18 +34,6 @@ class MaternalVisitForm (VisitFormMixin, BaseModelForm):
 
     def clean(self):
         cleaned_data = super(MaternalVisitForm, self).clean()
-        MaternalVisit(**cleaned_data).has_previous_visit_or_raise(forms.ValidationError)
-        try:
-            subject_identifier = cleaned_data.get('appointment').registered_subject.subject_identifier
-            maternal_consent = MaternalConsent.objects.get(
-                registered_subject__subject_identifier=subject_identifier)
-            if cleaned_data.get("report_datetime") < maternal_consent.consent_datetime:
-                raise forms.ValidationError("Report datetime CANNOT be before consent datetime")
-            if cleaned_data.get("report_datetime").date() < maternal_consent.dob:
-                raise forms.ValidationError("Report datetime CANNOT be before DOB")
-        except MaternalConsent.DoesNotExist:
-            raise forms.ValidationError('Maternal Consent does not exist.')
-
         instance = None
         if self.instance.id:
             instance = self.instance

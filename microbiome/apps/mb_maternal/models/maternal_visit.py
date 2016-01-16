@@ -9,8 +9,7 @@ from edc_constants.constants import (
 from edc_offstudy.models import OffStudyMixin
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
-from edc_visit_tracking.models import VisitModelMixin, PreviousVisitMixin
-from edc_visit_tracking.models.caretaker_fields_mixin import CaretakerFieldsMixin
+from edc_visit_tracking.models import VisitModelMixin, PreviousVisitMixin, CaretakerFieldsMixin
 
 from microbiome.apps.mb.choices import VISIT_REASON
 

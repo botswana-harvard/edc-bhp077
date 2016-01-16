@@ -9,13 +9,13 @@ from edc_registration.models import RegisteredSubject
 
 from microbiome.apps.mb_maternal.forms import MaternalDeathReportForm
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import (
     PostnatalEnrollmentFactory, MaternalConsentFactory,
     MaternalLabourDelFactory, MaternalEligibilityFactory, MaternalVisitFactory)
 
 
-class TestMaternalDeathReportForm(BaseMaternalTestCase):
+class TestMaternalDeathReportForm(BaseTestCase):
 
     def setUp(self):
         super(TestMaternalDeathReportForm, self).setUp()

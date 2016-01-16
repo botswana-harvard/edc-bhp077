@@ -4,7 +4,7 @@ from edc_base.audit_trail import AuditTrail
 
 from microbiome.apps.mb.choices import CIRCUMCISION
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantCircumcision(InfantCrfModel):

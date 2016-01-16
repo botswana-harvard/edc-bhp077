@@ -7,4 +7,3 @@ class BaseTestCase(TestCase):
 
     def setUp(self):
         load_edc()
-        self.study_site = '40'

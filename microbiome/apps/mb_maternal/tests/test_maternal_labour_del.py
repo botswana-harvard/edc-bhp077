@@ -7,12 +7,12 @@ from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS
 
 from microbiome.apps.mb_maternal.forms import (MaternalLabourDelForm, MaternalLabDelClinicForm)
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import (PostnatalEnrollmentFactory, MaternalLabourDelFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
 
 
-class TestMaternalLabourDel(BaseMaternalTestCase):
+class TestMaternalLabourDel(BaseTestCase):
     """Test eligibility of a mother for labour and delivery."""
 
     def setUp(self):
@@ -114,7 +114,7 @@ class TestMaternalLabourDel(BaseMaternalTestCase):
                       .format(self.postnatal_enrollment.postpartum_days), form.errors.get('__all__'))
 
 
-class TestMaternalLabourDelClinic(BaseMaternalTestCase):
+class TestMaternalLabourDelClinic(BaseTestCase):
     """Test eligibility of a mother for postnatal enrollment."""
 
     def setUp(self):

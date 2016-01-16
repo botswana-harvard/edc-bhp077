@@ -8,11 +8,11 @@ from microbiome.apps.mb_maternal.forms import MaternalVisitForm
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import PostnatalEnrollmentFactory, MaternalVisitFactory
 
 
-class TestMaternalVisit(BaseMaternalTestCase):
+class TestMaternalVisit(BaseTestCase):
     """Test eligibility of a mother for maternal visit."""
 
     def setUp(self):

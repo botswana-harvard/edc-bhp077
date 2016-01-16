@@ -9,13 +9,14 @@ from edc_meta_data.models import CrfMetaData
 from .factories import (
     MaternalEligibilityFactory, MaternalConsentFactory, AntenatalEnrollmentFactory,
     PostnatalEnrollmentFactory)
-from microbiome.apps.mb_maternal.tests.base_maternal_test_case import BaseMaternalTestCase
 from microbiome.apps.mb_maternal.models.enrollment_loss import (
     AntenatalEnrollmentLoss, PostnatalEnrollmentLoss)
 from microbiome.apps.mb_maternal.models import MaternalVisit
 
+from .base_test_case import BaseTestCase
 
-class TestEnrollmentLoss(BaseMaternalTestCase):
+
+class TestEnrollmentLoss(BaseTestCase):
     """Test failed enrollment creates enrollment loss form"""
 
     def setUp(self):

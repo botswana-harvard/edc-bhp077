@@ -1,39 +1,24 @@
-from django.test import TestCase
 from django.utils import timezone
 
-from edc_lab.lab_profile.classes import site_lab_profiles
-from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
 from edc_registration.models import RegisteredSubject
-from edc_rule_groups.classes import site_rule_groups
 from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
 
-from microbiome.apps.mb.app_configuration import AppConfiguration
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantStoolCollectionForm
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
-from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
 from microbiome.apps.mb_maternal.tests.factories import (
     MaternalConsentFactory, MaternalLabourDelFactory, MaternalEligibilityFactory,
     MaternalVisitFactory, PostnatalEnrollmentFactory)
-from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
 from microbiome.apps.mb_infant.constants import REALTIME, CLOTH_NAPPY
 
+from .base_test_case import BaseTestCase
 
-class TestInfantStoolCollection(TestCase):
+
+class TestInfantStoolCollection(BaseTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-            site_lab_profiles.register(InfantProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        AppConfiguration(lab_profiles=site_lab_profiles).prepare()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
-        InfantBirthVisitSchedule().build()
-
+        super(TestInfantStoolCollection, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(registered_subject=self.maternal_eligibility.registered_subject)
         self.registered_subject = self.maternal_eligibility.registered_subject

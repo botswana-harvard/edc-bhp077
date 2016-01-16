@@ -7,10 +7,10 @@ from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 
 
-class TestViralLoadRequisition(BaseMaternalTestCase):
+class TestViralLoadRequisition(BaseTestCase):
 
     def setUp(self):
         super(TestViralLoadRequisition, self).setUp()

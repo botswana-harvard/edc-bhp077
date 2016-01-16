@@ -7,11 +7,11 @@ from microbiome.apps.mb_maternal.models import AntenatalEnrollment
 from microbiome.apps.mb_maternal.tests.factories.maternal_consent_factory import MaternalConsentFactory
 from microbiome.apps.mb_maternal.tests.factories.maternal_eligibility_factory import MaternalEligibilityFactory
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import AntenatalEnrollmentFactory
 
 
-class TestModelCaller(BaseMaternalTestCase):
+class TestModelCaller(BaseTestCase):
 
     def setUp(self):
         super(TestModelCaller, self).setUp()

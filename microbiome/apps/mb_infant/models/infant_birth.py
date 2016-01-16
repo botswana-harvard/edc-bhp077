@@ -57,7 +57,7 @@ class InfantBirth(OffStudyMixin, SyncModelMixin, AppointmentMixin, BaseUuidModel
 
     def natural_key(self):
         return self.maternal_labour_del.natural_key()
-    natural_key.dependencies = ['mb_maternal.maternallabourdel']
+    natural_key.dependencies = ['mb_maternal.maternallabourdel', 'edc_registration.registered_subject']
 
     def __unicode__(self):
         return "{} ({}) {}".format(self.first_name, self.initials, self.gender)

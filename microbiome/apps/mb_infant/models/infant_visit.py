@@ -13,6 +13,8 @@ from microbiome.apps.mb_maternal.models import PostnatalEnrollment
 from microbiome.apps.mb.choices import VISIT_REASON
 from edc_visit_tracking.models.caretaker_fields_mixin import CaretakerFieldsMixin
 
+from .infant_birth import InfantBirth
+
 
 class InfantVisit(
         CrfMetaDataMixin, SyncModelMixin, PreviousVisitMixin, OffStudyMixin, VisitModelMixin,
@@ -24,13 +26,9 @@ class InfantVisit(
 
     death_report_model = ('mb_infant', 'InfantDeathReport')
 
-    history = AuditTrail()
+    consent_model = InfantBirth  # a bit weird, see visit_form_mixin clean()
 
-    def __unicode__(self):
-        return '{} {} {}'.format(
-            self.appointment.registered_subject.subject_identifier,
-            self.appointment.registered_subject.first_name,
-            self.appointment.visit_definition.code)
+    history = AuditTrail()
 
     @property
     def postnatal_enrollment(self):

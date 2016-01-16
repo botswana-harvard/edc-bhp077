@@ -6,8 +6,8 @@ from django.utils import timezone
 from edc_meta_data.models import CrfMetaData
 from edc_appointment.models import Appointment
 from edc_constants.constants import (
-    YES, NO, POS, NEG, UNKEYED, NOT_APPLICABLE, SCHEDULED,
-    COMPLETED_PROTOCOL_VISIT, FAILED_ELIGIBILITY, REQUIRED, OFF_STUDY)
+    YES, NO, POS, NEG, NOT_APPLICABLE, SCHEDULED,
+    COMPLETED_PROTOCOL_VISIT, FAILED_ELIGIBILITY, REQUIRED, OFF_STUDY, ALIVE)
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT
 from microbiome.apps.mb_maternal.forms import MaternalOffStudyForm
@@ -18,10 +18,11 @@ from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFacto
 from microbiome.apps.mb_maternal.tests.factories.antenatal_enrollment_factory import AntenatalEnrollmentFactory
 from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
+from microbiome.apps.mb_maternal.visit_schedule.postnatal_enrollment import PostnatalEnrollmentVisitSchedule
 
 
-class TestOffStudy(BaseMaternalTestCase):
+class TestOffStudy(BaseTestCase):
 
     def setUp(self):
         super(TestOffStudy, self).setUp()
@@ -118,7 +119,7 @@ class TestOffStudy(BaseMaternalTestCase):
             maternal_visit=maternal_visit)
         self.assertEqual(
             Appointment.objects.filter(
-                registered_subject=self.registered_subject).count(), 1)
+                registered_subject=self.registered_subject).count(), 2)
 
     def test_offstudy3(self):
         PostnatalEnrollmentFactory(
@@ -127,13 +128,18 @@ class TestOffStudy(BaseMaternalTestCase):
             evidence_hiv_status=YES,
             rapid_test_done=YES,
             rapid_test_result=NEG)
+        self.assertEqual(Appointment.objects.filter(
+            registered_subject=self.registered_subject).count(),
+            len(PostnatalEnrollmentVisitSchedule.visit_definitions))
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
-            visit_definition__code='1000M')
+            visit_definition__code='1000M',
+            visit_instance='0')
         maternal_visit = MaternalVisitFactory(
             appointment=appointment,
             report_datetime=timezone.now(),
             study_status=OFF_STUDY,
+            survival_status=ALIVE,
             reason=COMPLETED_PROTOCOL_VISIT)
         MaternalOffStudyFactory(
             registered_subject=appointment.registered_subject,
@@ -141,7 +147,7 @@ class TestOffStudy(BaseMaternalTestCase):
             report_datetime=timezone.now(),
             offstudy_date=date.today())
         self.assertEqual(Appointment.objects.filter(
-            registered_subject=self.registered_subject).count(), 1)
+            registered_subject=self.registered_subject).count(), 2)
 
     def test_validate_offstudy_date(self):
         PostnatalEnrollmentFactory(
@@ -155,7 +161,9 @@ class TestOffStudy(BaseMaternalTestCase):
             visit_definition__code='1000M')
         maternal_visit = MaternalVisitFactory(
             appointment=appointment,
-            reason=COMPLETED_PROTOCOL_VISIT)
+            reason=COMPLETED_PROTOCOL_VISIT,
+            study_status=OFF_STUDY,
+            survival_status=ALIVE)
         self.data['maternal_visit'] = maternal_visit.id
         self.data['offstudy_date'] = date(2015, 10, 6)
         offstudy_form = MaternalOffStudyForm(data=self.data)
@@ -174,9 +182,13 @@ class TestOffStudy(BaseMaternalTestCase):
             rapid_test_result=NEG)
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
-            visit_definition__code='1000M')
+            visit_definition__code='1000M',
+            visit_instance='0')
         maternal_visit = MaternalVisitFactory(
-            appointment=appointment, reason=COMPLETED_PROTOCOL_VISIT)
+            appointment=appointment,
+            reason=COMPLETED_PROTOCOL_VISIT,
+            study_status=OFF_STUDY,
+            survival_status=ALIVE)
         self.data['maternal_visit'] = maternal_visit.id
         self.data['offstudy_date'] = timezone.now() - relativedelta(weeks=2)
         offstudy_form = MaternalOffStudyForm(data=self.data)

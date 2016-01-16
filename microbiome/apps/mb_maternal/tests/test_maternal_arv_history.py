@@ -9,12 +9,12 @@ from edc_constants.constants import CONTINUOUS, STOPPED, RESTARTED
 from microbiome.apps.mb_list.models import PriorArv
 from microbiome.apps.mb_maternal.forms import (MaternalArvHistoryForm)
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import (PostnatalEnrollmentFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
 
 
-class TestMaternalArvHistory(BaseMaternalTestCase):
+class TestMaternalArvHistory(BaseTestCase):
     """Test eligibility of a mother for postnatal followup."""
 
     def setUp(self):

@@ -23,19 +23,9 @@ class InfantCrfModel(
 
     entry_meta_data_manager = CrfMetaDataManager(InfantVisit)
 
-    def __unicode__(self):
-        return str(self.infant_visit)
-
-    def __str__(self):
-        return str(self.infant_visit)
-
     def get_consenting_subject_identifier(self):
         """Returns mother's identifier."""
         return self.get_visit().appointment.registered_subject.relative_identifier
-
-    def natural_key(self):
-        return (self.infant_visit.natural_key(), )
-    natural_key.dependencies = ['mb_infant.infant_visit']
 
     class Meta:
         abstract = True

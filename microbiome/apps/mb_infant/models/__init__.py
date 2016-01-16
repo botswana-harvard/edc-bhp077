@@ -14,7 +14,7 @@ from .infant_fu_physical import InfantFuPhysical
 from .infant_feeding import InfantFeeding
 from .infant_off_study import InfantOffStudy
 from .infant_visit import InfantVisit
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 from .infant_stool_collection import InfantStoolCollection
 from .infant_congenital_anomalies import (
     InfantCongenitalAnomalies, InfantCns, InfantFacialDefect,

@@ -8,7 +8,7 @@ from edc_constants.choices import YES_NO, SEVERITY_LEVEL
 from microbiome.apps.mb_list.models import AutopsyInfoSource
 from microbiome.apps.mb.choices import AUTOPSY_SIGNS
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_visit_tracking.models.crf_inline_model_mixin import CrfInlineModelMixin

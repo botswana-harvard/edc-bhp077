@@ -6,13 +6,13 @@ from edc_meta_data.models import CrfMetaData, RequisitionMetaData
 
 from microbiome.apps.mb_maternal.models import RapidTestResult
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import (
     MaternalEligibilityFactory, MaternalConsentFactory, MaternalVisitFactory,
     PostnatalEnrollmentFactory, ReproductiveHealthFactory, AntenatalEnrollmentFactory)
 
 
-class TestRuleGroup(BaseMaternalTestCase):
+class TestRuleGroup(BaseTestCase):
 
     def setUp(self):
         super(TestRuleGroup, self).setUp()

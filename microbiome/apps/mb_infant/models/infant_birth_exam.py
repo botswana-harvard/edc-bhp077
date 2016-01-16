@@ -4,7 +4,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import NORMAL_ABNORMAL, YES_NO_NOT_EVALUATED_NA, NORMAL_ABNORMAL_NOEXAM
 from edc_constants.constants import NOT_APPLICABLE
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantBirthExam(InfantCrfModel):

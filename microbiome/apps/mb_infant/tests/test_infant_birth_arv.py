@@ -1,4 +1,3 @@
-from django.test import TestCase
 from django.utils import timezone
 
 from edc_registration.models import RegisteredSubject
@@ -23,21 +22,13 @@ from microbiome.apps.mb_infant.tests.factories import (
     InfantBirthFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
 from microbiome.apps.mb.constants import BREASTFEED_ONLY
 
+from .base_test_case import BaseTestCase
 
-class TestInfantBirthArv(TestCase):
+
+class TestInfantBirthArv(BaseTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-            site_lab_profiles.register(InfantProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        AppConfiguration(lab_profiles=site_lab_profiles).prepare()
-        AntenatalEnrollmentVisitSchedule().build()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
-        InfantBirthVisitSchedule().build()
-
+        super(TestInfantBirthArv, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(
             registered_subject=self.maternal_eligibility.registered_subject)

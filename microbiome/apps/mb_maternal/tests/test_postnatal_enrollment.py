@@ -11,13 +11,13 @@ from microbiome.apps.mb_maternal.models.enrollment_helper import EnrollmentError
 from microbiome.apps.mb_maternal.models.maternal_visit import MaternalVisit
 from microbiome.apps.mb_maternal.models.postnatal_enrollment import PostnatalEnrollment
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import (
     MaternalVisitFactory, PostnatalEnrollmentFactory, AntenatalEnrollmentFactory,
     MaternalEligibilityFactory, MaternalConsentFactory)
 
 
-class TestPostnatalEnrollment(BaseMaternalTestCase):
+class TestPostnatalEnrollment(BaseTestCase):
     """Test eligibility of a mother for postnatal enrollment."""
 
     def setUp(self):

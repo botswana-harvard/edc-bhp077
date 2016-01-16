@@ -3,11 +3,11 @@ from edc_registration.models import RegisteredSubject
 
 from microbiome.apps.mb_maternal.models import MaternalEligibility
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import MaternalEligibilityFactory
 
 
-class TestMaternalEligibility(BaseMaternalTestCase):
+class TestMaternalEligibility(BaseTestCase):
     """Test eligibility of a mother."""
 
     def test_eligibility_for_correct_age(self):

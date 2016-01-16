@@ -11,7 +11,7 @@ from microbiome.apps.mb.choices import MEDICATIONS
 
 from ..managers import InfantInlineModelManager
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantFuNewMed(InfantCrfModel):

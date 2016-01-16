@@ -9,7 +9,7 @@ from edc_constants.constants import NOT_APPLICABLE
 
 from microbiome.apps.mb.choices import COWS_MILK, TIMES_BREASTFED, WATER_USED
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantFeeding(InfantCrfModel):

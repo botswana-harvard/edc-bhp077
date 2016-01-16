@@ -9,7 +9,7 @@ from edc_base.model.models import BaseUuidModel
 
 from microbiome.apps.mb.choices import ARV_STATUS_WITH_NEVER
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantArvProph(InfantCrfModel):
@@ -32,9 +32,6 @@ class InfantArvProph(InfantCrfModel):
 
     history = AuditTrail()
 
-    def __unicode__(self):
-        return unicode(self.infant_visit)
-
     class Meta:
         app_label = 'mb_infant'
         verbose_name = 'Infant NVP or AZT Proph'
@@ -52,8 +49,7 @@ class InfantArvProphMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
         verbose_name="Specify Other",
         max_length=100,
         null=True,
-        blank=True,
-    )
+        blank=True)
 
     history = AuditTrail()
 

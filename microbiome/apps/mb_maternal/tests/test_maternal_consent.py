@@ -4,11 +4,11 @@ from edc_registration.models import RegisteredSubject
 
 from microbiome.apps.mb_maternal.forms import MaternalConsentForm
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import MaternalEligibilityFactory, MaternalConsentFactory
 
 
-class TestMaternalConsent(BaseMaternalTestCase):
+class TestMaternalConsent(BaseTestCase):
 
     def setUp(self):
         super(TestMaternalConsent, self).setUp()

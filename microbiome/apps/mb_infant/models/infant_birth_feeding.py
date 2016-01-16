@@ -9,7 +9,7 @@ from microbiome.apps.mb.choices import FEEDING_CHOICES
 from ..choices import INFANT_VACCINATIONS
 from ..managers import InfantInlineModelManager
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantBirthFeedVaccine(InfantCrfModel):

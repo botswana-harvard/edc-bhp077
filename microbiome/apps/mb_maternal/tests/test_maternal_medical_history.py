@@ -7,13 +7,13 @@ from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS
 from microbiome.apps.mb_list.models import ChronicConditions
 from microbiome.apps.mb_maternal.forms import MaternalMedicalHistoryForm
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 from .factories import (
     MaternalEligibilityFactory, MaternalConsentFactory,
     MaternalVisitFactory, PostnatalEnrollmentFactory, AntenatalEnrollmentFactory)
 
 
-class TestMaternalMedicalHistoryForm(BaseMaternalTestCase):
+class TestMaternalMedicalHistoryForm(BaseTestCase):
 
     def setUp(self):
         super(TestMaternalMedicalHistoryForm, self).setUp()

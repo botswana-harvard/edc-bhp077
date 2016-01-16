@@ -11,7 +11,7 @@ from microbiome.apps.mb_maternal.tests.factories import (
     SpecimenConsentFactory, AntenatalEnrollmentFactory,
     MaternalVisitFactory, MaternalLocatorFactory)
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 
 
 # TODO: need to rewrite these tests
@@ -19,7 +19,7 @@ class SerializeToTransaction(object):
     pass
 
 
-class TestSerialization(BaseMaternalTestCase):
+class TestSerialization(BaseTestCase):
 
     def test_serialize_deserialize(self):
         """Confirms all models have a get_by_natural_key manager method."""

@@ -11,7 +11,7 @@ from microbiome.apps.mb.choices import REASONS_VACCINES_MISSED
 from ..choices import IMMUNIZATIONS, INFANT_AGE_VACCINE_GIVEN
 from ..managers import InfantInlineModelManager
 
-from .infant_crf_visit_model import InfantCrfModel
+from .infant_crf_model import InfantCrfModel
 
 
 class InfantFuImmunizations(InfantCrfModel):

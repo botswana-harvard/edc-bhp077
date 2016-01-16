@@ -1,25 +1,19 @@
-from django.test import TestCase
 from django.utils import timezone
 from datetime import date
 
 from edc_registration.models import RegisteredSubject
-from edc_lab.lab_profile.classes import site_lab_profiles
-from edc_rule_groups.classes import site_rule_groups
-from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
 from edc_constants.constants import YES, NO, NEG
 
-from microbiome.apps.mb.app_configuration import AppConfiguration
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantFeedingForm
 from microbiome.apps.mb_infant.models import InfantFeeding
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
-from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
-from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
+
+from .base_test_case import BaseTestCase
 
 
 class BaseTestInfantFeedingModel(InfantFeeding):
@@ -34,18 +28,10 @@ class BaseTestInfantFeedingForm(InfantFeedingForm):
         fields = '__all__'
 
 
-class TestInfantFeedingForm(TestCase):
+class TestInfantFeedingForm(BaseTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-            site_lab_profiles.register(InfantProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        AppConfiguration(lab_profiles=site_lab_profiles).prepare()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
-        InfantBirthVisitSchedule().build()
+        super(TestInfantFeedingForm, self).setUp()
 
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.maternal_consent = MaternalConsentFactory(

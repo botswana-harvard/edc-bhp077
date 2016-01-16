@@ -23,10 +23,6 @@ class InfantRequisitionManager(CrfModelManager):
 
 class InfantRequisition(CrfModelMixin, RequisitionModelMixin, SyncModelMixin, BaseUuidModel):
 
-    visit_model = InfantVisit
-
-    visit_model_attr = 'infant_visit'
-
     aliquot_model = Aliquot
 
     infant_visit = models.ForeignKey(InfantVisit)

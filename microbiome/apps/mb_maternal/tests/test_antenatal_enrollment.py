@@ -1,15 +1,15 @@
-# from pytz import timezone
 from django.utils import timezone
-from datetime import timedelta, date
+from datetime import timedelta
 
 from edc_constants.constants import POS, YES, NO, NEG, NOT_APPLICABLE, UNKNOWN
 
 from .factories import (
     AntenatalEnrollmentFactory, MaternalEligibilityFactory, MaternalConsentFactory)
-from microbiome.apps.mb_maternal.tests.base_maternal_test_case import BaseMaternalTestCase
+
+from .base_test_case import BaseTestCase
 
 
-class TestAntenatalEnrollment(BaseMaternalTestCase):
+class TestAntenatalEnrollment(BaseTestCase):
     """Test eligibility of a mother for antenatal enrollment."""
 
     def setUp(self):

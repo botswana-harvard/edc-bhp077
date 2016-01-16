@@ -10,10 +10,10 @@ from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFacto
 from microbiome.apps.mb_maternal.forms import RapidTestResultForm
 from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 
 
-class TestRapidTestForm(BaseMaternalTestCase):
+class TestRapidTestForm(BaseTestCase):
 
     def setUp(self):
         super(TestRapidTestForm, self).setUp()

@@ -10,10 +10,10 @@ from microbiome.apps.mb_maternal.forms import MaternalObstericalHistoryForm
 
 from .factories import MaternalVisitFactory
 
-from .base_maternal_test_case import BaseMaternalTestCase
+from .base_test_case import BaseTestCase
 
 
-class TestMaternalObstericalHistoryForm(BaseMaternalTestCase):
+class TestMaternalObstericalHistoryForm(BaseTestCase):
 
     def setUp(self):
         super(TestMaternalObstericalHistoryForm, self).setUp()

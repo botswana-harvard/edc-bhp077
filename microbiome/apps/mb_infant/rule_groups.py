@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from edc_constants.constants import YES, NOT_REQUIRED, POS, UNKEYED, MALE
 from edc_registration.models import RegisteredSubject
 from edc_rule_groups.classes import (RuleGroup, site_rule_groups, Logic, CrfRule, RequisitionRule)

@@ -1,45 +1,29 @@
-from django.test import TestCase
 from django.utils import timezone
 from datetime import date
 
 from edc_appointment.models import Appointment
 from edc_constants.constants import NEW, YES, NEG, COMPLETED_PROTOCOL_VISIT, OFF_STUDY
-from edc_lab.lab_profile.classes import site_lab_profiles
-from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_meta_data.models import CrfMetaData
 from edc_registration.models import RegisteredSubject
-from edc_rule_groups.classes import site_rule_groups
 
-from microbiome.apps.mb.app_configuration import AppConfiguration
-from microbiome.apps.mb.constants import INFANT
+from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, INFANT
 from microbiome.apps.mb_maternal.tests.factories import (
     MaternalEligibilityFactory, MaternalVisitFactory)
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
-
-from microbiome.apps.mb_maternal.visit_schedule import PostnatalEnrollmentVisitSchedule
-from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
 from microbiome.apps.mb_infant.tests.factories import (
     InfantBirthFactory, InfantVisitFactory, InfantOffStudyFactory)
-from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT
+from microbiome.apps.mb_infant.visit_schedule.infant_birth_visit_schedule import InfantBirthVisitSchedule
 
 from ..forms import InfantOffStudyForm
 
+from .base_test_case import BaseTestCase
 
-class TestOffStudy(TestCase):
+
+class TestOffStudy(BaseTestCase):
 
     def setUp(self):
-        try:
-            site_lab_profiles.register(MaternalProfile())
-            site_lab_profiles.register(InfantProfile())
-        except AlreadyRegisteredLabProfile:
-            pass
-        AppConfiguration(lab_profiles=site_lab_profiles).prepare()
-        PostnatalEnrollmentVisitSchedule().build()
-        site_rule_groups.autodiscover()
-        InfantBirthVisitSchedule().build()
-
+        super(TestOffStudy, self).setUp()
         self.maternal_eligibility = MaternalEligibilityFactory()
         self.registered_subject = self.maternal_eligibility.registered_subject
         self.maternal_consent = MaternalConsentFactory(
@@ -95,10 +79,15 @@ class TestOffStudy(TestCase):
             appointment=self.infant_appointment,
             study_status=OFF_STUDY,
             reason=COMPLETED_PROTOCOL_VISIT)
+        self.assertEqual(
+            Appointment.objects.filter(
+                registered_subject=self.infant_registered_subject).count(),
+            len(InfantBirthVisitSchedule.visit_definitions))
         InfantOffStudyFactory(
             report_datetime=timezone.now(),
             registered_subject=self.infant_appointment.registered_subject,
-            infant_visit=self.infant_visit)
+            infant_visit=self.infant_visit,
+            offstudy_date=date.today())
         self.assertEqual(
             Appointment.objects.filter(
                 registered_subject=self.infant_registered_subject).count(), 1)
