@@ -1,6 +1,6 @@
-from edc_meta_data.models import CrfMetaDataMixin
 from edc_constants.constants import (
     FAILED_ELIGIBILITY, UNSCHEDULED, COMPLETED_PROTOCOL_VISIT, NEG, POS, OFF_STUDY)
+from edc_meta_data.models import CrfMetaDataMixin
 
 
 class MaternalVisitCrfMetaDataMixin(CrfMetaDataMixin):
