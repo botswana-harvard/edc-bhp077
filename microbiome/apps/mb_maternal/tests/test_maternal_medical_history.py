@@ -1,11 +1,13 @@
 from django.utils import timezone
+from datetime import timedelta
 
 from edc_appointment.models import Appointment
 from edc_code_lists.models import WcsDxAdult
-from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS
+from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS, NEG
 
 from microbiome.apps.mb_list.models import ChronicConditions
 from microbiome.apps.mb_maternal.forms import MaternalMedicalHistoryForm
+from microbiome.apps.mb_maternal.models import MaternalVisit
 
 from .base_test_case import BaseTestCase
 from .factories import (
@@ -95,3 +97,74 @@ class TestMaternalMedicalHistoryForm(BaseTestCase):
         form = MaternalMedicalHistoryForm(data=self.data)
         self.assertIn('You stated there are NO WHO diagnosess. Please correct',
                       form.errors.get('__all__'))
+
+    def test_who_stage_diagnosis_for_neg_mother(self):
+        """Test that NEG mother can only answer N/A for who_diagnosis"""
+        eligibility = MaternalEligibilityFactory()
+        consent = MaternalConsentFactory(
+            registered_subject=eligibility.registered_subject,
+            study_site='50')
+        registered_subject = consent.registered_subject
+        antenatal_enrollment = AntenatalEnrollmentFactory(
+            gestation_wks=35,
+            week32_test=YES,
+            week32_result=NEG,
+            week32_test_date=timezone.now().date() - timedelta(weeks=3),
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES,
+            valid_regimen=NOT_APPLICABLE,
+            valid_regimen_duration=NOT_APPLICABLE,
+            rapid_test_done=NOT_APPLICABLE,
+            registered_subject=registered_subject)
+        subject_appointment = Appointment.objects.get(
+            registered_subject=antenatal_enrollment.registered_subject,
+            visit_definition__code='1000M')
+        maternal_visit = MaternalVisit.objects.get(appointment=subject_appointment)
+        self.data['maternal_visit'] = maternal_visit.id
+        self.data['chronic'] = None
+        form = MaternalMedicalHistoryForm(data=self.data)
+        self.assertIn(
+            'Mother is NEG. WHO stage diagnosis should be Not applicable.',
+            form.errors.get('__all__'))
+
+    def test_who_stage_diagnosis_cannot_be_not_applicable_for_pos_mother(self):
+        """Test that POS mother cannot answer N/A for who_diagnosis"""
+        self.data['who_diagnosis'] = NOT_APPLICABLE
+        self.data['chronic'] = None
+        form = MaternalMedicalHistoryForm(data=self.data)
+        self.assertIn(
+            'Mother is POS. WHO stage diagnosis cannot be N/A.',
+            form.errors.get('__all__'))
+
+    def test_neg_mother_cannot_make_who_listing(self):
+        """Test a NEG mother with a who listing"""
+        eligibility = MaternalEligibilityFactory()
+        consent = MaternalConsentFactory(
+            registered_subject=eligibility.registered_subject,
+            study_site='50')
+        registered_subject = consent.registered_subject
+        antenatal_enrollment = AntenatalEnrollmentFactory(
+            gestation_wks=35,
+            week32_test=YES,
+            week32_result=NEG,
+            week32_test_date=timezone.now().date() - timedelta(weeks=3),
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES,
+            valid_regimen=NOT_APPLICABLE,
+            valid_regimen_duration=NOT_APPLICABLE,
+            rapid_test_done=NOT_APPLICABLE,
+            registered_subject=registered_subject)
+        subject_appointment = Appointment.objects.get(
+            registered_subject=antenatal_enrollment.registered_subject,
+            visit_definition__code='1000M')
+        maternal_visit = MaternalVisit.objects.get(appointment=subject_appointment)
+        who_list = WcsDxAdult.objects.exclude(short_name__icontains=NOT_APPLICABLE).first()
+        self.data['maternal_visit'] = maternal_visit.id
+        self.data['chronic'] = NOT_APPLICABLE
+        self.data['who_diagnosis'] = NOT_APPLICABLE
+        self.data['who'] = [who_list.id]
+        form = MaternalMedicalHistoryForm(data=self.data)
+        self.assertIn(
+            "Mother is NEG and cannot have a WHO diagnosis listing. "
+            "Answer should be 'Not Applicable', Please Correct.",
+            form.errors.get('__all__'))

@@ -3,7 +3,7 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.fields import OtherCharField
 from edc_code_lists.models import WcsDxAdult
-from edc_constants.choices import YES_NO
+from edc_constants.choices import YES_NO, YES_NO_NA
 
 from .maternal_crf_model import MaternalCrfModel
 from microbiome.apps.mb_list.models import ChronicConditions
@@ -35,7 +35,7 @@ class MaternalMedicalHistory(MaternalCrfModel):
 
     who_diagnosis = models.CharField(
         max_length=25,
-        choices=YES_NO,
+        choices=YES_NO_NA,
         verbose_name=("Prior to the current pregnancy, was the participant ever diagnosed with"
                       " a WHO Stage III or IV illness?"),
         help_text="Please use the WHO Staging Guidelines. ONLY for HIV infected mothers")

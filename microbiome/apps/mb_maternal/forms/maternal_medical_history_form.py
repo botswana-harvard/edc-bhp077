@@ -1,10 +1,12 @@
 from django import forms
+from django.db.models import get_model
 
-from edc_constants.constants import NEG, YES
+from edc_constants.constants import NEG, YES, NOT_APPLICABLE, POS
+from edc_registration.models import RegisteredSubject
 
 from base_maternal_model_form import BaseMaternalModelForm
 
-from ..models import MaternalMedicalHistory, PostnatalEnrollment
+from ..models import MaternalMedicalHistory, AntenatalEnrollment, PostnatalEnrollment
 
 
 class MaternalMedicalHistoryForm(BaseMaternalModelForm):
@@ -24,7 +26,7 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
                 leading=cleaned_data.get('who_diagnosis'),
                 m2m=cleaned_data.get('who'))
 
-        self.who_stage_diagnosis_for_neg_mother()
+        self.who_stage_diagnosis_for_neg_and_pos_mother()
         self.validate_has_chronicition_no_listing()
         self.validate_has_who_diagnosis_no_listing()
         return cleaned_data
@@ -43,20 +45,44 @@ class MaternalMedicalHistoryForm(BaseMaternalModelForm):
                 raise forms.ValidationError(
                     "You mentioned participant has WHO diagnosis. Please list them.")
 
-    def who_stage_diagnosis_for_neg_mother(self):
-        """Confirms the NEG HIV status of a mother and throws
-        validation error on WHO stage selection """
+    def who_stage_diagnosis_for_neg_and_pos_mother(self):
+        """Confirms the HIV status of a mother and throws
+        validation error on WHO stage diagnosis selection"""
         cleaned_data = self.cleaned_data
         try:
-            postnatal_enrollment = PostnatalEnrollment.objects.get(
-                registered_subject=cleaned_data.get(
-                    'maternal_visit').appointment.registered_subject)
-            if postnatal_enrollment.enrollment_hiv_status == NEG:
-                if cleaned_data.get('who_diagnosis') == YES:
+            registered_subject = cleaned_data.get('maternal_visit').appointment.registered_subject
+            antenatal_enrollment = AntenatalEnrollment.objects.get(
+                registered_subject=registered_subject)
+            if antenatal_enrollment.enrollment_hiv_status == NEG:
+                if cleaned_data.get('who_diagnosis') != NOT_APPLICABLE:
                     raise forms.ValidationError(
-                        "Mother is NEG. WHO stage diagnosis should be No.")
-        except PostnatalEnrollment.DoesNotExist:
-            pass
+                        "Mother is NEG. WHO stage diagnosis should be Not applicable.")
+                if cleaned_data.get('who')[0].short_name != NOT_APPLICABLE:
+                    raise forms.ValidationError(
+                        "Mother is NEG and cannot have a WHO diagnosis listing. "
+                        "Answer should be 'Not Applicable', Please Correct.")
+            if antenatal_enrollment.enrollment_hiv_status == POS:
+                if cleaned_data.get('who_diagnosis') == NOT_APPLICABLE:
+                    raise forms.ValidationError(
+                        "Mother is POS. WHO stage diagnosis cannot be N/A.")
+        except AntenatalEnrollment.DoesNotExist:
+            try:
+                postnatal_enrollment = PostnatalEnrollment.objects.get(
+                    registered_subject=registered_subject)
+                if postnatal_enrollment.enrollment_hiv_status == NEG:
+                    if cleaned_data.get('who_diagnosis') != NOT_APPLICABLE:
+                        raise forms.ValidationError(
+                            "Mother is NEG. WHO stage diagnosis should be Not applicable.")
+                    if cleaned_data.get('who')[0].short_name != NOT_APPLICABLE:
+                        raise forms.ValidationError(
+                            "Mother is NEG and cannot have a WHO diagnosis listing. "
+                            "Answer should be 'Not Applicable', Please Correct.")
+                if postnatal_enrollment.enrollment_hiv_status == POS:
+                    if cleaned_data.get('who_diagnosis') == NOT_APPLICABLE:
+                        raise forms.ValidationError(
+                            "Mother is POS. WHO stage diagnosis cannot be N/A.")
+            except PostnatalEnrollment.DoesNotExist:
+                pass
 
     class Meta:
         model = MaternalMedicalHistory
