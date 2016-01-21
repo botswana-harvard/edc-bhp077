@@ -119,7 +119,7 @@ class TestOffStudy(BaseTestCase):
             maternal_visit=maternal_visit)
         self.assertEqual(
             Appointment.objects.filter(
-                registered_subject=self.registered_subject).count(), 2)
+                registered_subject=self.registered_subject).count(), 1)
 
     def test_offstudy3(self):
         PostnatalEnrollmentFactory(
@@ -131,6 +131,7 @@ class TestOffStudy(BaseTestCase):
         self.assertEqual(Appointment.objects.filter(
             registered_subject=self.registered_subject).count(),
             len(PostnatalEnrollmentVisitSchedule.visit_definitions))
+        print '----Appointments----', Appointment.objects.filter(registered_subject=self.registered_subject).count()
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M',
@@ -147,7 +148,7 @@ class TestOffStudy(BaseTestCase):
             report_datetime=timezone.now(),
             offstudy_date=date.today())
         self.assertEqual(Appointment.objects.filter(
-            registered_subject=self.registered_subject).count(), 2)
+            registered_subject=self.registered_subject).count(), 1)
 
     def test_validate_offstudy_date(self):
         PostnatalEnrollmentFactory(
