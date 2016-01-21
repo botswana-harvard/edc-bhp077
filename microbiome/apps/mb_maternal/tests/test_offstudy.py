@@ -131,7 +131,6 @@ class TestOffStudy(BaseTestCase):
         self.assertEqual(Appointment.objects.filter(
             registered_subject=self.registered_subject).count(),
             len(PostnatalEnrollmentVisitSchedule.visit_definitions))
-        print '----Appointments----', Appointment.objects.filter(registered_subject=self.registered_subject).count()
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M',
