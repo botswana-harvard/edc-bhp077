@@ -27,16 +27,15 @@ class MaternalRequisitionAdmin(RequisitionAdminMixin, BaseModelAdmin):
             'Rectal swab (Storage)',
             'Skin Swab (Storage)',
             'Vaginal STI Swab (Storage)']
-        panel = self.panel_model.objects.get(id=request.GET.get('panel'))
-        if panel.name in panel_names:
-            try:
-                fields.remove(fields.index('estimated_volume'))
-            except ValueError:
-                pass
         try:
-            fields.remove(fields.index('test_code'))
-        except ValueError:
+            panel = self.panel_model.objects.get(id=request.GET.get('panel'))
+            if panel.name in panel_names:
+                try:
+                    fields.remove('estimated_volume')
+                except ValueError:
+                    pass
+        except self.panel_model.DoesNotExist:
             pass
-        return [(None, {'fields': self.fields})]
+        return [(None, {'fields': fields})]
 
 admin.site.register(MaternalRequisition, MaternalRequisitionAdmin)
