@@ -60,8 +60,6 @@ class InfantVerbalAutopsy(InfantCrfModel):
 
 class InfantVerbalAutopsyItems(CrfInlineModelMixin, BaseUuidModel):
 
-    fk_model_attr = 'verbal_autopsy'
-
     verbal_autopsy = models.ForeignKey(InfantVerbalAutopsy)
 
     sign_symptom = models.CharField(

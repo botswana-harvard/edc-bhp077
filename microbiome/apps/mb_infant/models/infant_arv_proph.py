@@ -41,8 +41,6 @@ class InfantArvProph(InfantCrfModel):
 class InfantArvProphMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
     """ A model completed by the user on the infant's nvp or azt prophylaxis modifications. """
 
-    fk_model_attr = 'infant_arv_proph'
-
     infant_arv_proph = models.ForeignKey(InfantArvProph)
 
     other_reason = models.CharField(

@@ -33,12 +33,13 @@ class MaternalConsentForm(BaseConsentForm):
             raise forms.ValidationError(
                 "In eligibility you said has_omang is {}. Yet you wrote citizen is {}. "
                 "Please correct.".format(eligibility.has_omang, cleaned_data.get('citizen')))
-        self.validate_eligibility_age(cleaned_data)
+        self.validate_eligibility_age()
         self.validate_recruit_source()
         self.validate_recruitment_clinic()
         return cleaned_data
 
-    def validate_eligibility_age(self, cleaned_data):
+    def validate_eligibility_age(self):
+        cleaned_data = self.cleaned_data
         consent_age = relativedelta(timezone.now().date(), cleaned_data.get('dob')).years
         eligibility_age = MaternalEligibility.objects.get(
             registered_subject=cleaned_data.get('registered_subject')).age_in_years

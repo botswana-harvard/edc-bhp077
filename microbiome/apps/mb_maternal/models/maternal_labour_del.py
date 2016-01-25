@@ -250,8 +250,6 @@ class MaternalLabDelDxT (CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     """ Diagnosis during pregnancy collected during labor and delivery (transactions). """
 
-    fk_model_attr = 'maternal_lab_del_dx'
-
     maternal_lab_del_dx = models.OneToOneField(MaternalLabDelDx)
 
     lab_del_dx = models.CharField(

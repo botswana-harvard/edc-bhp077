@@ -30,8 +30,6 @@ class InfantCongenitalAnomalies(InfantCrfModel):
 
 class BaseCnsItem(CrfInlineModelMixin, BaseUuidModel):
 
-    fk_model_attr = 'congenital_anomalies'
-
     congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
 
     objects = InfantInlineModelManager()
