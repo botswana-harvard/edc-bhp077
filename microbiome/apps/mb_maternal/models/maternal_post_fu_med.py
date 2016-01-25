@@ -34,8 +34,6 @@ class MaternalPostFuMed(MaternalCrfModel):
 
 class MaternalPostFuMedItems(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
-    fk_model_attr = 'maternal_post_fu_med'
-
     maternal_post_fu_med = models.OneToOneField(MaternalPostFuMed)
 
     date_first_medication = models.DateField(

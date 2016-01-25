@@ -55,8 +55,6 @@ class MaternalArv(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     """ ARV table to indicate ARV medication taken by mother """
 
-    fk_model_attr = 'maternal_arv_preg'
-
     maternal_arv_preg = models.ForeignKey(MaternalArvPreg)
 
     arv_code = models.CharField(

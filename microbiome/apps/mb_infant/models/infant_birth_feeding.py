@@ -37,8 +37,6 @@ class InfantBirthFeedVaccine(InfantCrfModel):
 
 class InfantVaccines(CrfInlineModelMixin, BaseUuidModel):
 
-    fk_model_attr = 'infant_birth_feed_vaccine'
-
     infant_birth_feed_vaccine = models.ForeignKey(InfantBirthFeedVaccine)
 
     vaccination = models.CharField(

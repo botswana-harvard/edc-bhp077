@@ -126,8 +126,6 @@ class MaternalPostFuDxT(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     """ Post-partum follow up of diagnosis (transactions). """
 
-    fk_model_attr = 'maternal_post_fu_dx'
-
     maternal_post_fu_dx = models.ForeignKey(MaternalPostFuDx)
 
     post_fu_dx = models.CharField(

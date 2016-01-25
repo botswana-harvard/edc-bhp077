@@ -42,8 +42,6 @@ class VaccinesReceived(CrfInlineModelMixin, BaseUuidModel):
 
     """ALL possible vaccines given to infant"""
 
-    fk_model_attr = 'infant_fu_immunizations'
-
     infant_fu_immunizations = models.ForeignKey(InfantFuImmunizations)
 
     received_vaccine_name = models.CharField(
@@ -79,7 +77,7 @@ class VaccinesMissed(CrfInlineModelMixin, BaseUuidModel):
 
     """ALL vaccines missed by infant"""
 
-    fk_model_attr = 'infant_fu_immunizations'
+    parent_model_attr = 'infant_fu_immunizations'
 
     infant_fu_immunizations = models.ForeignKey(InfantFuImmunizations)
 

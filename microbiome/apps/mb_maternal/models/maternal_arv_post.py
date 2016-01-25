@@ -65,8 +65,6 @@ class MaternalArvPostMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     if art_status never, no_mod or N/A then this is not required"""
 
-    fk_model_attr = 'maternal_arv_post'
-
     maternal_arv_post = models.ForeignKey(MaternalArvPost)
 
     arv_code = models.CharField(

@@ -39,8 +39,6 @@ class InfantFuNewMedItems(CrfInlineModelMixin, BaseUuidModel):
 
     """A model completed by the user on the infant's follow up medication items."""
 
-    fk_model_attr = 'infant_fu_med'
-
     infant_fu_med = models.ForeignKey(InfantFuNewMed)
 
     medication = models.CharField(

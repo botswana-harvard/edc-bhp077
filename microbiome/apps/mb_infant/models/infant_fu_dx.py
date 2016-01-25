@@ -26,8 +26,6 @@ class InfantFuDx(InfantCrfModel):
 
 class InfantFuDxItems(CrfInlineModelMixin, BaseUuidModel):
 
-    fk_model_attr = 'infant_fu_dx'
-
     infant_fu_dx = models.ForeignKey(InfantFuDx)
 
     fu_dx = models.CharField(

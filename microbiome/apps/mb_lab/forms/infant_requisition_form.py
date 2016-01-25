@@ -28,7 +28,7 @@ class InfantRequisitionForm(RequisitionFormMixin):
         cleaned_data = super(InfantRequisitionForm, self).clean()
         self.validate_requisition_and_drawn_datetime()
         self.validate_sample_swabs()
-        self.validate_dna_pcr_and_elisa()
+        self.validate_dna_pcr_and_cytokines()
         self.validate_stool_sample_collection()
         self.validate_requisition_and_infant_visit()
         return cleaned_data
@@ -50,9 +50,9 @@ class InfantRequisitionForm(RequisitionFormMixin):
                 raise forms.ValidationError('Panel {} is a swab therefore collection type is swab. Please correct.'
                                             .format(cleaned_data.get('panel').name))
 
-    def validate_dna_pcr_and_elisa(self):
+    def validate_dna_pcr_and_cytokines(self):
         cleaned_data = self.cleaned_data
-        if cleaned_data.get('panel').name in ['DNA PCR', 'ELISA']:
+        if cleaned_data.get('panel').name in ['DNA PCR', 'Inflammatory Cytokines']:
             if cleaned_data.get('item_type') not in ['dbs', 'tube']:
                 raise forms.ValidationError('Panel {} collection type can only be dbs or tube. '
                                             'Please correct.'.format(cleaned_data.get('panel').name))
