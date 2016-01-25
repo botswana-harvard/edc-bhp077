@@ -19,8 +19,9 @@ class InfantStoolCollection(InfantCrfModel):
         verbose_name="A stool sample/specimen can be obtained from the nappy of this child today ",
         choices=YES_NO,
         max_length=3,
-        help_text=("If a stool samples/specimen cannot be obtained today, do not complete the"
-                   " remainder of this form"),
+        help_text=(
+            "If stool samples/specimens cannot be obtained today, please complete questions"
+            " 9 through 12 only"),
     )
 
     nappy_type = models.CharField(
