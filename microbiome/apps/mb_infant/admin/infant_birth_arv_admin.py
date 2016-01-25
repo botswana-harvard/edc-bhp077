@@ -19,9 +19,7 @@ class InfantBirthArvAdmin(BaseInfantScheduleModelAdmin):
         'azt_after_birth': admin.VERTICAL,
         'azt_additional_dose': admin.VERTICAL,
         'sdnvp_after_birth': admin.VERTICAL,
-        #'additional_nvp_doses': admin.VERTICAL,
         'azt_discharge_supply': admin.VERTICAL,
-        #'nvp_discharge_supply': admin.VERTICAL,
     }
 
     actions = [

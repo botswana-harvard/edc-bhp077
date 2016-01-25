@@ -20,7 +20,6 @@ class InfantBirthArvForm(BaseInfantModelForm):
         cleaned_data = super(InfantBirthArvForm, self).clean()
         self.validate_azt_after_birth(cleaned_data)
         self.validate_sdnvp_after_birth(cleaned_data)
-        #self.validate_nvp_discharge_supply(cleaned_data)
         return cleaned_data
 
     def validate_azt_after_birth(self, cleaned_data):
@@ -34,10 +33,3 @@ class InfantBirthArvForm(BaseInfantModelForm):
         if cleaned_data.get('azt_after_birth') == YES:
             if not cleaned_data.get('nvp_dose_date'):
                 raise forms.ValidationError('If infant has received single dose NVP then provide NVP date.')
-
-#     def validate_nvp_discharge_supply(self, cleaned_data):
-#         infant_birth_feeding = InfantBirthFeedVaccine.objects.get(infant_visit=cleaned_data.get('infant_visit'))
-#         if infant_birth_feeding.feeding_after_delivery == BREASTFEED_ONLY:
-#             if cleaned_data.get('nvp_discharge_supply') == NOT_APPLICABLE:
-#                 raise forms.ValidationError(
-#                     'If the infant is breast feeding then do not select not applicaticable for Q11.')
