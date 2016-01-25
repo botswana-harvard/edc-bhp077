@@ -37,8 +37,7 @@ class MaternalPostFuMedItems(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel)
     maternal_post_fu_med = models.OneToOneField(MaternalPostFuMed)
 
     date_first_medication = models.DateField(
-        verbose_name="Date of first medication use",
-        default=date.today)
+        verbose_name="Date of first medication use",)
 
     medication = models.CharField(
         max_length=100,
