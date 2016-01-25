@@ -44,21 +44,11 @@ class InfantBirthArv(InfantCrfModel):
         blank=True,
         null=True)
 
-    additional_nvp_doses = models.CharField(
-        max_length=15,
-        choices=YES_NO_UNKNOWN_NA,
-        verbose_name="Was the infant given additional doses of NVP before discharge from the hospital? ")
-
     azt_discharge_supply = models.CharField(
         max_length=15,
         choices=YES_NO_UNKNOWN_NA,
         verbose_name="Was the infant discharged with a supply of AZT? ",
         help_text="if infant not yet discharged, please enter 'Not applicable'")
-
-    nvp_discharge_supply = models.CharField(
-        max_length=15,
-        choices=YES_NO_UNKNOWN_NA,
-        verbose_name="Was the infant discharged with a supply of NVP? ")
 
     infant_arv_comments = models.TextField(
         max_length=250,
