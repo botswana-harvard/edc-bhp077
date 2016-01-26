@@ -66,8 +66,16 @@ class InfantVisit(
                 self.crf_is_required(self.appointment, 'mb_infant', 'infantbirtharv')
 
     def requires_dna_pcr_on_maternal_pos(self):
-        if self.appointment.visit_definition.code in ['2000', '2010', '2030', '2060', '2090', '2120']:
-            self.requisition_is_required(self.appointment, 'mb_lab', 'infantrequisition', 'DNA PCR')
+        PostnatalEnrollment = get_model('mb_maternal', 'PostnatalEnrollment')
+        maternal_registered_subject = RegisteredSubject.objects.get(
+            subject_identifier=self.appointment.registered_subject.relative_identifier)
+        postnatal_enrollment = PostnatalEnrollment.objects.get(
+            registered_subject=maternal_registered_subject)
+        if postnatal_enrollment.enrollment_hiv_status == POS:
+            if self.appointment.visit_definition.code in [
+                    '2000', '2010', '2030', '2060', '2090', '2120']:
+                self.requisition_is_required(
+                    self.appointment, 'mb_lab', 'infantrequisition', 'DNA PCR')
 
     def natural_key(self):
         return (self.report_datetime,) + self.appointment.natural_key()
