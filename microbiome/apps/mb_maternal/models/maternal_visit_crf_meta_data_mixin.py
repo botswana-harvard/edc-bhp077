@@ -53,6 +53,9 @@ class MaternalVisitCrfMetaDataMixin(CrfMetaDataMixin):
                 for model_name in model_names:
                     self.crf_is_required(self.appointment, 'mb_maternal', model_name)
                 self.requisition_is_required(self.appointment, 'mb_lab', 'maternalrequisition', 'Viral Load')
+            if self.appointment.visit_definition.code == '2010M':
+                self.requisition_is_required(
+                    self.appointment, 'mb_lab', 'maternalrequisition', 'Breast Milk (Storage)')
 
     def required_for_maternal_not_pos(self):
         if self.enrollment_hiv_status == NEG and self.scheduled_rapid_test != POS:
