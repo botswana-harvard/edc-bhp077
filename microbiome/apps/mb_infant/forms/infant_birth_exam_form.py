@@ -105,18 +105,6 @@ class InfantBirthExamForm(BaseInfantModelForm):
                     'You indicated that Skin exam was not normal. Provide answer to Q15.'
                 )
 
-    def validate_rash_exam(self, cleaned_data):
-        if cleaned_data.get('macular_papular_rash') == YES:
-            if cleaned_data.get('macular_papular_rash_other'):
-                raise forms.ValidationError(
-                    'If macular / papular rash Exam is normal, Do not answer the following Question (Q17).'
-                )
-        elif cleaned_data.get('macular_papular_rash') in [NO, NOT_EVALUATED]:
-            if not cleaned_data.get('macular_papular_rash_other'):
-                raise forms.ValidationError(
-                    'You indicated that macular / papular rash exam was not normal. Provide answer to Q17.'
-                )
-
     def validate_neuro_exam(self, cleaned_data):
         if cleaned_data.get('neurologic_exam') == YES:
             if cleaned_data.get('neuro_exam_other'):
