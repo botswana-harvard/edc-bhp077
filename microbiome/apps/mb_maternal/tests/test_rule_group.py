@@ -214,6 +214,28 @@ class TestRuleGroup(BaseTestCase):
                         lab_entry__requisition_panel__name='Viral Load',
                         appointment=appointment).count(), 1)
 
+    def test_breastmilk_for_pos_at_2010M(self):
+        PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='1000M')
+        MaternalVisitFactory(appointment=appointment)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='2000M')
+        MaternalVisitFactory(appointment=appointment)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject, visit_definition__code='2010M')
+        MaternalVisitFactory(appointment=appointment)
+        self.assertEqual(RequisitionMetaData.objects.filter(
+            entry_status=NEW,
+            lab_entry__app_label='mb_lab',
+            lab_entry__model_name='maternalrequisition',
+            lab_entry__requisition_panel__name='Breast Milk (Storage)',
+            appointment=appointment).count(), 1)
+
     def test_srh_referral_yes_on_srh(self):
         """
         """
