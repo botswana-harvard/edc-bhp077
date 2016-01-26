@@ -20,7 +20,6 @@ class InfantBirthExamForm(BaseInfantModelForm):
         self.validate_cardiac_exam(cleaned_data)
         self.validate_abdominal_exam(cleaned_data)
         self.validate_skin_exam(cleaned_data)
-        self.validate_rash_exam(cleaned_data)
         self.validate_neuro_exam(cleaned_data)
         return cleaned_data
 
