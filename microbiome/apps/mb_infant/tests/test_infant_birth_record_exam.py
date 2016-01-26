@@ -72,8 +72,6 @@ class TestInfantBirthRecordExam(BaseTestCase):
             'abdominal_exam_other': '',
             'skin_exam': YES,
             'skin_exam_other': '',
-            'macular_papular_rash': YES,
-            'macular_papular_rash_other': '',
             'neurologic_exam': YES,
             'neuro_exam_other': '',
             'other_exam_info': 'NA',
@@ -164,19 +162,6 @@ class TestInfantBirthRecordExam(BaseTestCase):
         infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
         errors = ''.join(infant_birth_record_arv_form.errors.get('__all__'))
         self.assertIn(u'If Skin Exam is normal', errors)
-
-    def test_rash_exam_1(self):
-        self.data['macular_papular_rash'] = YES
-        self.data['macular_papular_rash_other'] = 'ringworm'
-        infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
-        errors = ''.join(infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'If macular / papular rash Exam is normal', errors)
-
-    def test_rash_exam_2(self):
-        self.data['macular_papular_rash'] = NO
-        infant_birth_record_arv_form = InfantBirthExamForm(data=self.data)
-        errors = ''.join(infant_birth_record_arv_form.errors.get('__all__'))
-        self.assertIn(u'Provide answer to Q17.', errors)
 
     def test_neuro_exam_1(self):
         self.data['neurologic_exam'] = YES

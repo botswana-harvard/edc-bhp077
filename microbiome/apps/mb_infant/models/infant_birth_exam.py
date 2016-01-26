@@ -90,18 +90,6 @@ class InfantBirthExam(InfantCrfModel):
         blank=True,
         null=True)
 
-    macular_papular_rash = models.CharField(
-        max_length=15,
-        choices=YES_NO_NOT_EVALUATED_NA,
-        verbose_name="Was any macular / papular rash observed?",
-        default=NOT_APPLICABLE,
-        help_text="")
-
-    macular_papular_rash_other = models.TextField(
-        help_text="",
-        blank=True,
-        null=True)
-
     neurologic_exam = models.CharField(
         max_length=15,
         choices=YES_NO_NOT_EVALUATED_NA,
