@@ -57,23 +57,6 @@ class InfantFuRuleGroup(RuleGroup):
 site_rule_groups.register(InfantFuRuleGroup)
 
 
-class InfantCircumcisionRuleGroup(RuleGroup):
-
-    circumcision = CrfRule(
-        logic=Logic(
-            predicate=('gender', 'equals', MALE),
-            consequence=UNKEYED,
-            alternative=NOT_REQUIRED),
-        target_model=['infantcircumcision'])
-
-    class Meta:
-        app_label = 'mb_infant'
-        source_fk = None
-        source_model = RegisteredSubject
-
-site_rule_groups.register(InfantCircumcisionRuleGroup)
-
-
 class StoolStorageRequisitionRuleGroup(RuleGroup):
 
     initiation = RequisitionRule(

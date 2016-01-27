@@ -1,9 +1,11 @@
 from django.db.models import get_model
 
+from edc_appointment.models import Appointment
 from edc_meta_data.models import CrfMetaDataMixin
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
-from edc_constants.constants import UNSCHEDULED, SCHEDULED, COMPLETED_PROTOCOL_VISIT, DEAD, POS
+from edc_constants.constants import (
+    UNSCHEDULED, SCHEDULED, COMPLETED_PROTOCOL_VISIT, DEAD, POS, MALE, MISSED_VISIT)
 from edc_offstudy.models import OffStudyMixin
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
@@ -53,6 +55,7 @@ class InfantVisit(
             if self.postnatal_enrollment.enrollment_hiv_status:
                 self.requires_infant_birth_arv_on_maternal_pos()
                 self.requires_dna_pcr_on_maternal_pos()
+                self.requires_circumcision_for_male_at_2030_or_2060()
         return self
 
     def requires_infant_birth_arv_on_maternal_pos(self):
@@ -76,6 +79,23 @@ class InfantVisit(
                     '2000', '2010', '2030', '2060', '2090', '2120']:
                 self.requisition_is_required(
                     self.appointment, 'mb_lab', 'infantrequisition', 'DNA PCR')
+
+    def requires_circumcision_for_male_at_2030_or_2060(self):
+        infant_birth = InfantBirth.objects.get(
+            registered_subject=self.appointment.registered_subject)
+        if infant_birth.gender == MALE:
+            if self.appointment.visit_definition.code == '2030':
+                self.crf_is_required(
+                    self.appointment, 'mb_infant', 'infantcircumcision')
+            if self.appointment.visit_definition.code == '2060':
+                appointment = Appointment.objects.get(
+                    visit_definition__code='2030',
+                    registered_subject=self.appointment.registered_subject)
+                if appointment:
+                    infant_visit = InfantVisit.objects.get(appointment=appointment)
+                    if infant_visit.reason == MISSED_VISIT:
+                        self.crf_is_required(
+                            self.appointment, 'mb_infant', 'infantcircumcision')
 
     def natural_key(self):
         return (self.report_datetime,) + self.appointment.natural_key()

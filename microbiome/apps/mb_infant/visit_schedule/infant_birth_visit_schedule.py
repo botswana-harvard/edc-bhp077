@@ -228,7 +228,6 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
             CrfTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
             CrfTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
             CrfTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
-            CrfTuple(110L, u'mb_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
             CrfTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
             CrfTuple(240L, u'mb_infant', u'infantoffstudy', NOT_REQUIRED, ADDITIONAL))}
 
@@ -270,7 +269,6 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
             CrfTuple(90L, u'mb_infant', u'infantarvproph', NOT_REQUIRED, ADDITIONAL),
             CrfTuple(100L, u'mb_infant', u'infantfeeding', REQUIRED, NOT_ADDITIONAL),
             CrfTuple(110L, u'mb_infant', u'infantstoolcollection', REQUIRED, NOT_ADDITIONAL),
-            CrfTuple(110L, u'mb_infant', u'infantcircumcision', NOT_REQUIRED, ADDITIONAL),
             CrfTuple(200L, u'mb_infant', u'infantdeathreport', NOT_REQUIRED, ADDITIONAL),
             CrfTuple(240L, u'mb_infant', u'infantoffstudy', REQUIRED, ADDITIONAL))}
 
