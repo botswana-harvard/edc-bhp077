@@ -5,6 +5,7 @@ from edc_appointment.models import Appointment
 from edc_constants.constants import NEW, YES, NEG, COMPLETED_PROTOCOL_VISIT, OFF_STUDY
 from edc_meta_data.models import CrfMetaData
 from edc_registration.models import RegisteredSubject
+from edc_visit_schedule.classes.controller import site_visit_schedules
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, INFANT
 from microbiome.apps.mb_maternal.tests.factories import (
@@ -13,7 +14,6 @@ from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, 
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 from microbiome.apps.mb_infant.tests.factories import (
     InfantBirthFactory, InfantVisitFactory, InfantOffStudyFactory)
-from microbiome.apps.mb_infant.visit_schedule.infant_birth_visit_schedule import InfantBirthVisitSchedule
 
 from ..forms import InfantOffStudyForm
 
@@ -79,10 +79,11 @@ class TestOffStudy(BaseTestCase):
             appointment=self.infant_appointment,
             study_status=OFF_STUDY,
             reason=COMPLETED_PROTOCOL_VISIT)
+        infant_birth_visit_schedule = site_visit_schedules.get_visit_schedule('birth visit schedule')
         self.assertEqual(
             Appointment.objects.filter(
                 registered_subject=self.infant_registered_subject).count(),
-            len(InfantBirthVisitSchedule.visit_definitions))
+            len(infant_birth_visit_schedule.visit_definitions))
         InfantOffStudyFactory(
             report_datetime=timezone.now(),
             registered_subject=self.infant_appointment.registered_subject,

@@ -1,26 +1,17 @@
 from django.utils import timezone
 
 from edc_registration.models import RegisteredSubject
-from edc_lab.lab_profile.classes import site_lab_profiles
-from edc_rule_groups.classes import site_rule_groups
-from edc_lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
 from edc_appointment.models import Appointment
 from edc_constants.constants import YES, POS
 
-from microbiome.apps.mb.app_configuration import AppConfiguration
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantBirthArvForm
-from microbiome.apps.mb_lab.lab_profiles import MaternalProfile, InfantProfile
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 
-from microbiome.apps.mb_maternal.visit_schedule import (
-    AntenatalEnrollmentVisitSchedule, PostnatalEnrollmentVisitSchedule)
-from microbiome.apps.mb_infant.visit_schedule import InfantBirthVisitSchedule
 from microbiome.apps.mb_infant.tests.factories import (
-    InfantBirthFactory, InfantVisitFactory, InfantBirthFeedVaccineFactory)
-from microbiome.apps.mb.constants import BREASTFEED_ONLY
+    InfantBirthFactory, InfantVisitFactory)
 
 from .base_test_case import BaseTestCase
 
@@ -37,28 +28,23 @@ class TestInfantBirthArv(BaseTestCase):
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
-            evidence_hiv_status=YES,
-        )
+            evidence_hiv_status=YES)
         self.appointment = Appointment.objects.get(registered_subject=self.registered_subject,
                                                    visit_definition__code='1000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         self.appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='2000M'
-        )
+            registered_subject=self.registered_subject, visit_definition__code='2000M')
         self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=self.maternal_visit)
 
         registered_subject_infant = RegisteredSubject.objects.get(
-            subject_type=INFANT, relative_identifier=self.registered_subject.subject_identifier
-        )
+            subject_type=INFANT, relative_identifier=self.registered_subject.subject_identifier)
         self.infant_birth = InfantBirthFactory(
             registered_subject=registered_subject_infant,
-            maternal_labour_del=maternal_labour_del,
-        )
+            maternal_labour_del=maternal_labour_del)
         self.appointment = Appointment.objects.get(
             registered_subject=registered_subject_infant,
-            visit_definition__code='2000'
-        )
+            visit_definition__code='2000')
         self.infant_visit = InfantVisitFactory(appointment=self.appointment)
         self.data = {
             'report_datetime': timezone.now(),
