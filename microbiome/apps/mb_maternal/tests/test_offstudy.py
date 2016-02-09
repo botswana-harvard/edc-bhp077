@@ -8,6 +8,7 @@ from edc_appointment.models import Appointment
 from edc_constants.constants import (
     YES, NO, POS, NEG, NOT_APPLICABLE, SCHEDULED,
     COMPLETED_PROTOCOL_VISIT, FAILED_ELIGIBILITY, REQUIRED, OFF_STUDY, ALIVE)
+from edc_visit_schedule.classes import site_visit_schedules
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT
 from microbiome.apps.mb_maternal.forms import MaternalOffStudyForm
@@ -19,7 +20,6 @@ from microbiome.apps.mb_maternal.tests.factories.antenatal_enrollment_factory im
 from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 
 from .base_test_case import BaseTestCase
-from microbiome.apps.mb_maternal.visit_schedule.postnatal_enrollment import PostnatalEnrollmentVisitSchedule
 
 
 class TestOffStudy(BaseTestCase):
@@ -128,9 +128,10 @@ class TestOffStudy(BaseTestCase):
             evidence_hiv_status=YES,
             rapid_test_done=YES,
             rapid_test_result=NEG)
+        post_natal_visit_schedule = site_visit_schedules.get_visit_schedule('postnatal visit schedule')
         self.assertEqual(Appointment.objects.filter(
             registered_subject=self.registered_subject).count(),
-            len(PostnatalEnrollmentVisitSchedule.visit_definitions))
+            len(post_natal_visit_schedule.visit_definitions))
         appointment = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M',

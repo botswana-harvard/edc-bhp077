@@ -5,7 +5,7 @@ from edc_appointment.models import Appointment
 from edc_constants.constants import NEW, YES, NEG, COMPLETED_PROTOCOL_VISIT, OFF_STUDY
 from edc_meta_data.models import CrfMetaData
 from edc_registration.models import RegisteredSubject
-from edc_visit_schedule.classes.controller import site_visit_schedules
+from edc_visit_schedule.classes import site_visit_schedules
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, INFANT
 from microbiome.apps.mb_maternal.tests.factories import (
