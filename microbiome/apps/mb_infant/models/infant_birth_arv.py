@@ -4,15 +4,12 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import YES_NO_UNKNOWN, YES_NO_UNKNOWN_NA
 
-from .infant_birth import InfantBirth
 from .infant_crf_model import InfantCrfModel
 
 
 class InfantBirthArv(InfantCrfModel):
 
     """ A model completed by the user on the infant's arv information. """
-
-    infant_birth = models.ForeignKey(InfantBirth)
 
     azt_after_birth = models.CharField(
         max_length=15,

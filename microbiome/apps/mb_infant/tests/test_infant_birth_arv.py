@@ -48,7 +48,6 @@ class TestInfantBirthArv(BaseTestCase):
         self.infant_visit = InfantVisitFactory(appointment=self.appointment)
         self.data = {
             'report_datetime': timezone.now(),
-            'infant_birth': self.infant_birth.id,
             'infant_visit': self.infant_visit.id,
             'azt_after_birth': YES,
             'azt_dose_date': timezone.now().date(),
