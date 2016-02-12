@@ -41,6 +41,7 @@ class PostnatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, Appoin
 
     postpartum_days = models.IntegerField(
         verbose_name="How many days postpartum?",
+        null=True,
         help_text="If more than 3days, not eligible")
 
     vaginal_delivery = models.CharField(

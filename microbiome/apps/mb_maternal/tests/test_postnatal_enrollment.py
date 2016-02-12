@@ -509,3 +509,13 @@ class TestPostnatalEnrollment(BaseTestCase):
             live_infants=2
         )
         self.assertFalse(postnatal_enrollment.is_eligible)
+
+    def test_days_postpartum(self):
+        """Test days post-partum can be zero."""
+
+        postnatal_enrollment = PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            live_infants=1,
+            postpartum_days=0,
+        )
+        self.assertTrue(postnatal_enrollment.is_eligible)
