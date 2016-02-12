@@ -3,15 +3,17 @@ from datetime import date
 
 from edc_registration.models import RegisteredSubject
 from edc_appointment.models import Appointment
-from edc_constants.constants import YES, NO, NEG
+from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
+from edc_visit_schedule.models import VisitDefinition
 
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantFeedingForm
-from microbiome.apps.mb_infant.models import InfantFeeding
+from microbiome.apps.mb_infant.models import InfantFeeding, InfantVisit
 from microbiome.apps.mb_infant.tests.factories import InfantBirthFactory, InfantVisitFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
+from microbiome.apps.mb_infant.tests.factories import InfantFeedingFactory
 
 from .base_test_case import BaseTestCase
 
@@ -64,6 +66,47 @@ class TestInfantFeedingForm(BaseTestCase):
             registered_subject=infant_registered_subject,
             visit_definition__code='2010')
         self.infant_visit = InfantVisitFactory(appointment=self.appointment)
+        self.appointment = Appointment.objects.get(
+            registered_subject=infant_registered_subject,
+            visit_definition__code='2030')
+        self.infant_visit = InfantVisitFactory(appointment=self.appointment)
+
+        self.maternal_eligibility2 = MaternalEligibilityFactory()
+        self.maternal_consent2 = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility2.registered_subject)
+        self.registered_subject2 = self.maternal_eligibility2.registered_subject
+
+        PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject2,
+            current_hiv_status=NEG,
+            evidence_hiv_status=YES,
+            rapid_test_done=YES,
+            rapid_test_result=NEG)
+        self.appointment2 = Appointment.objects.get(
+            registered_subject=self.registered_subject2,
+            visit_definition__code='1000M')
+        self.maternal_visit2 = MaternalVisitFactory(appointment=self.appointment2)
+        self.appointment2 = Appointment.objects.get(
+            registered_subject=self.registered_subject2, visit_definition__code='2000M')
+        maternal_visit2 = MaternalVisitFactory(appointment=self.appointment2)
+        maternal_labour_del2 = MaternalLabourDelFactory(maternal_visit=maternal_visit2)
+        infant_registered_subject2 = RegisteredSubject.objects.get(
+            subject_type=INFANT, relative_identifier=self.registered_subject2.subject_identifier)
+        self.infant_birth2 = InfantBirthFactory(
+            registered_subject=infant_registered_subject2,
+            maternal_labour_del=maternal_labour_del2)
+        self.appointment2 = Appointment.objects.get(
+            registered_subject=infant_registered_subject2,
+            visit_definition__code='2000')
+        self.infant_visit2 = InfantVisitFactory(appointment=self.appointment2)
+        self.appointment2 = Appointment.objects.get(
+            registered_subject=infant_registered_subject2,
+            visit_definition__code='2010')
+        self.infant_visit2 = InfantVisitFactory(appointment=self.appointment2)
+        self.appointment2 = Appointment.objects.get(
+            registered_subject=infant_registered_subject2,
+            visit_definition__code='2030')
+        self.infant_visit2 = InfantVisitFactory(appointment=self.appointment2)
         self.data = {
             'report_datetime': timezone.now(),
             'infant_birth': self.infant_birth.id,
@@ -159,3 +202,15 @@ class TestInfantFeedingForm(BaseTestCase):
         self.data['cow_milk_yes'] = 'boiled'
         feeding = BaseTestInfantFeedingForm(data=self.data)
         self.assertIn(u'Infant did not take cows milk. Answer is NOT APPLICABLE', feeding.errors.get('__all__'))
+
+    def test_save_infant_feeding(self):
+        appointment = Appointment.objects.get(
+            registered_subject=self.infant_birth.registered_subject.id,
+            visit_definition__code='2010')
+        visit_2010 = InfantVisit.objects.get(appointment=appointment)
+        InfantFeedingFactory(infant_visit=visit_2010)
+        options = {'infant_visit': self.infant_visit}
+        self.assertEqual(InfantFeeding.objects.all().count(), 1)
+        feeding = InfantFeedingFactory(**options)
+        self.assertTrue(InfantFeeding.objects.all().count(), 2)
+        self.assertTrue(feeding.last_att_sche_visit)

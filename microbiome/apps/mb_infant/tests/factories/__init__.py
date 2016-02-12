@@ -9,3 +9,4 @@ from .infant_fu_factory import InfantFuFactory
 from .infant_fu_physical_factory import InfantFuPhysicalFactory
 from .infant_fu_new_med_factory import InfantFuNewMedFactory
 from .infant_fu_immunizations_factory import InfantFuImmunizationsFactory
+from .infant_feeding_factory import InfantFeedingFactory
