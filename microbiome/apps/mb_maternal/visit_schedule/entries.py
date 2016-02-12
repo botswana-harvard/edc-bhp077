@@ -9,7 +9,6 @@ maternal_history_entries = (
     CrfTuple(50L, u'mb_maternal', u'maternalobstericalhistory', REQUIRED, NOT_ADDITIONAL),
     CrfTuple(60L, u'mb_maternal', u'maternalclinicalhistory', NOT_REQUIRED, NOT_ADDITIONAL),
     CrfTuple(70L, u'mb_maternal', u'maternalarvhistory', NOT_REQUIRED, ADDITIONAL),
-    CrfTuple(80L, u'mb_maternal', u'maternalarvpreg', NOT_REQUIRED, ADDITIONAL),
     CrfTuple(200L, u'mb_maternal', u'maternaldeathreport', NOT_REQUIRED, ADDITIONAL),
     CrfTuple(210L, u'mb_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL))
 
