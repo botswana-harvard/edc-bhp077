@@ -6,6 +6,7 @@ from edc_base.model.validators import date_not_future
 from edc_consent.plain_fields import IsDateEstimatedField
 from edc_constants.choices import YES_NO, YES_NO_NA, YES_NO_UNSURE_NA
 from edc_constants.constants import NOT_APPLICABLE
+from edc_visit_schedule.models import VisitDefinition
 
 from microbiome.apps.mb.choices import COWS_MILK, TIMES_BREASTFED, WATER_USED
 
@@ -228,16 +229,18 @@ class InfantFeeding(InfantCrfModel):
     @property
     def previous_infant_feeding(self):
         """ Return previous infant feeding from. """
-        visit = ['2000', '2010', '2030', '2060', '2090', '2120']
+        visit_def = VisitDefinition.objects.all()
+        visit = []
+        for x in visit_def:
+            visit.append(x.code)
 
-        if (
-            not self.infant_visit.appointment.visit_definition.code == '2000' and
-            not self.infant_visit.appointment.visit_definition.code == '2010'
-        ):
+        if not (self.infant_visit.appointment.visit_definition.code in ['2000', '2010']):
             prev_visit_index = visit.index(self.infant_visit.appointment.visit_definition.code) - 1
+            registered_subject = self.infant_visit.appointment.registered_subject
             while prev_visit_index > 0:
                 try:
                     return InfantFeeding.objects.get(
+                        infant_visit__appointment__registered_subject=registered_subject,
                         infant_visit__appointment__visit_definition__code=visit[prev_visit_index]
                     ).report_datetime.date()
                 except InfantFeeding.DoesNotExist:
