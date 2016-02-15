@@ -26,7 +26,6 @@ class MaternalDemographicsFactory(factory.DjangoModelFactory):
     house_electrified = YES
     house_fridge = YES
     cooking_method = 'Gas or electric stove'
-    hh_goods = 'None of the above'
     toilet_facility = 'Indoor toilet'
     house_people_number = 1
     house_type = 'Formal: Tin-roofed, concrete walls'

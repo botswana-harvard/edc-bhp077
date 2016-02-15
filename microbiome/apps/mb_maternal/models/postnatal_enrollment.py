@@ -9,7 +9,6 @@ from edc_consent.models import RequiresConsentMixin
 from edc_constants.choices import YES_NO
 from edc_constants.constants import NO, YES
 from edc_offstudy.models import OffStudyMixin
-from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
 
 from ..managers import PostnatalEnrollmentManager
@@ -29,8 +28,6 @@ class PostnatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, Appoin
     off_study_model = ('mb_maternal', 'MaternalOffStudy')
 
     weeks_base_field = 'gestation_wks_delivered'  # for rapid test required calc
-
-    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
     report_datetime = models.DateTimeField(
         verbose_name="Report date",
