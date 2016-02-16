@@ -3,12 +3,16 @@ from django.db import models
 from edc_base.model.validators import date_not_before_study_start, date_not_future
 from edc_constants.choices import POS_NEG_UNTESTED_REFUSAL, YES_NO_NA, POS_NEG, YES_NO
 from edc_constants.constants import NO
+from edc_registration.models import RegisteredSubject
+
 from .enrollment_helper import EnrollmentHelper
 
 
 class EnrollmentMixin(models.Model):
 
     """Base Model for antenal and postnatal enrollment"""
+
+    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
 
     enrollment_hiv_status = models.CharField(
         max_length=15,

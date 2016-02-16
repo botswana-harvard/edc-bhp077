@@ -18,8 +18,6 @@ from .base_test_case import BaseTestCase
 
 class EnrollmentTestModel(EnrollmentMixin):
 
-    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
-
     report_datetime = models.DateTimeField(
         default=timezone.now())
 

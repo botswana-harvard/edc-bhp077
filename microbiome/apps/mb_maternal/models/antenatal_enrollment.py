@@ -27,8 +27,6 @@ class AntenatalEnrollment(EnrollmentMixin, SyncModelMixin, OffStudyMixin, Appoin
 
     weeks_base_field = 'gestation_wks'  # for rapid test required calc
 
-    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
-
     report_datetime = models.DateTimeField(
         verbose_name="Report date",
         validators=[
