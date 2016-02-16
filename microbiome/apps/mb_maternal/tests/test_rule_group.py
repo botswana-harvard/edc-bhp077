@@ -31,7 +31,7 @@ class TestRuleGroup(BaseTestCase):
             evidence_hiv_status=YES,
             rapid_test_done=NOT_APPLICABLE,
             valid_regimen=YES)
-        visit_codes = [['1000M', ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg']]]
+        visit_codes = [['1000M', ['maternalclinicalhistory', 'maternalarvhistory']]]
         for visit in visit_codes:
             code, model_names = visit
             appointment = Appointment.objects.get(
@@ -53,7 +53,7 @@ class TestRuleGroup(BaseTestCase):
             evidence_hiv_status=YES,
             rapid_test_done=NOT_APPLICABLE,
             valid_regimen=YES)
-        visit_codes = [['1000M', ['maternalclinicalhistory', 'maternalarvhistory', 'maternalarvpreg']]]
+        visit_codes = [['1000M', ['maternalclinicalhistory', 'maternalarvhistory']]]
         for visit in visit_codes:
             code, model_names = visit
             appointment = Appointment.objects.get(

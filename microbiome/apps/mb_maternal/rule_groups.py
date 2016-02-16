@@ -23,7 +23,7 @@ site_rule_groups.register(ReproductiveHealthRuleGroup)
 
 class MaternalArvHistoryRuleGroup(RuleGroup):
 
-    is_srh_referral = CrfRule(
+    arv_history_required = CrfRule(
         logic=Logic(
             predicate=(('prior_health_haart', 'equals', YES), ('prev_pregnancy_arv', 'equals', YES, 'or')),
             consequence=UNKEYED,
