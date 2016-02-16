@@ -52,6 +52,7 @@ PRIOR_PREG_HAART_STATUS = (
      'Had treatment interruption but restarted HAART prior to this pregnancy'),
     (STOPPED,
      'Had treatment interruption and never restarted HAART prior to this pregnancy'),
+    (NOT_APPLICABLE, 'Not Applicable'),
 )
 
 MARITAL_STATUS = (
