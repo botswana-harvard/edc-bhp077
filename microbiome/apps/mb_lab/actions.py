@@ -13,3 +13,13 @@ def create_order(modeladmin, request, queryset):
     change_url = reverse("admin:mb_lab_order_change", args=(order.pk, ))
     return HttpResponseRedirect(change_url)
 create_order.short_description = "Create order from selected aliquots"
+
+
+def reject_aliquot_label(modeladmin, request, query_set):
+    for aliquot in query_set:
+        aliquot.is_rejected = True
+        try:
+            aliquot.save()
+        except Exception:
+            print('Label could not be marked as rejected {}'.format(aliquot.subject_identifier))
+reject_aliquot_label.short_description = "Mark label as rejected"
