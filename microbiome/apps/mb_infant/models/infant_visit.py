@@ -98,7 +98,7 @@ class InfantVisit(
                             self.appointment, 'mb_infant', 'infantcircumcision')
 
     def natural_key(self):
-        return (self.report_datetime,) + self.appointment.natural_key()
+        return self.appointment.natural_key()
     natural_key.dependencies = ['edc_appointment.appointment']
 
     def get_visit_reason_choices(self):
