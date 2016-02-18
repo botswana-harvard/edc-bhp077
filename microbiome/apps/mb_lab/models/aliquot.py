@@ -29,6 +29,10 @@ class Aliquot(BaseAliquot, SyncModelMixin, BaseUuidModel):
         null=True,
         blank=True)
 
+    is_rejected = models.BooleanField(
+        verbose_name='rejected',
+        default=False)
+
     objects = AliquotManager()
 
     history = AuditTrail()
