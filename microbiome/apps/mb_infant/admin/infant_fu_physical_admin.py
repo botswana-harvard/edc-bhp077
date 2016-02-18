@@ -21,7 +21,6 @@ class InfantFuPhysicalAdmin(BaseInfantScheduleModelAdmin):
         'cardiac_exam': admin.VERTICAL,
         'abdominal_exam': admin.VERTICAL,
         'skin_exam': admin.VERTICAL,
-        'macular_papular_rash': admin.VERTICAL,
         'neurologic_exam': admin.VERTICAL
     }
 
