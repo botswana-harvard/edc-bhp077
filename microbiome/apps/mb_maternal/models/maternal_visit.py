@@ -8,7 +8,7 @@ from edc_constants.constants import (
     YES, POS, NEG, FAILED_ELIGIBILITY)
 from edc_offstudy.models import OffStudyMixin
 from edc_sync.models import SyncModelMixin
-from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES
+from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES, COMPLETED_PROTOCOL_VISIT, LOST_VISIT
 from edc_visit_tracking.models import VisitModelMixin, PreviousVisitMixin, CaretakerFieldsMixin
 
 from microbiome.apps.mb.choices import VISIT_REASON
@@ -69,7 +69,8 @@ class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MaternalV
         collection; that is, the subject is not available. """
         dct = {}
         for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
-            dct.update({item: item})
+            if item not in [COMPLETED_PROTOCOL_VISIT, LOST_VISIT]:
+                dct.update({item: item})
         return dct
 
     @property

@@ -2,7 +2,7 @@ from django.utils import timezone
 
 from edc_appointment.models import Appointment
 from edc_constants.choices import YES, NOT_APPLICABLE, POS
-from edc_constants.constants import FAILED_ELIGIBILITY
+from edc_constants.constants import FAILED_ELIGIBILITY, LOST_VISIT, IN_PROGRESS, NEW_APPT
 
 from microbiome.apps.mb_maternal.forms import MaternalVisitForm
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory
@@ -65,3 +65,26 @@ class TestMaternalVisit(BaseTestCase):
         self.assertIn(
             "Subject is eligible. Visit reason cannot be 'Failed Eligibility'",
             form.errors.get('__all__'))
+
+    def test_appt_status_on_visit_reason_lost(self):
+        """"Test that if the visit reason is lost then the appointment status will be 'In Progress'
+        to allow data entry"""
+        self.assertEqual(NEW_APPT, self.appointment.appt_status)
+        MaternalVisitFactory(appointment=self.appointment, reason=LOST_VISIT)
+        self.assertEqual(IN_PROGRESS, self.appointment.appt_status)
+
+    def test_appt_status_on_completed_protocol(self):
+        """"Test that if the visit reason is completed protocol then the appointment status will be 'In Progress'
+        to allow data entry"""
+        visit_code = ['2000M', '2010M', '2030M', '2060M', '2090M']
+        for code in visit_code:
+            appointment = Appointment.objects.get(
+                registered_subject=self.registered_subject,
+                visit_definition__code=code)
+            MaternalVisitFactory(appointment=appointment)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2120M')
+        self.assertEqual(NEW_APPT, appointment.appt_status)
+        MaternalVisitFactory(appointment=appointment, reason=LOST_VISIT)
+        self.assertEqual(IN_PROGRESS, appointment.appt_status)

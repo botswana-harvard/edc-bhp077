@@ -7,7 +7,7 @@ from edc_registration.models import RegisteredSubject
 from edc_appointment.models import Appointment
 from edc_constants.constants import (
     YES, NO, POS, OFF_STUDY, ON_STUDY, LOST_VISIT, MISSED_VISIT,
-    DEAD, ALIVE, SCHEDULED, NOT_APPLICABLE)
+    DEAD, ALIVE, SCHEDULED, NOT_APPLICABLE, IN_PROGRESS, NEW_APPT)
 
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantVisitForm
@@ -18,6 +18,7 @@ from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFacto
 from microbiome.apps.mb_maternal.tests.factories.maternal_visit_factory import MaternalVisitFactory
 
 from .base_test_case import BaseTestCase
+from .factories import InfantVisitFactory
 
 
 class TestInfantVisitForm(BaseTestCase):
@@ -46,15 +47,38 @@ class TestInfantVisitForm(BaseTestCase):
         maternal_visit = MaternalVisitFactory(appointment=appointment)
         maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
 
-        registered_subject_infant = RegisteredSubject.objects.get(
+        self.registered_subject_infant = RegisteredSubject.objects.get(
             subject_type=INFANT,
             relative_identifier=registered_subject.subject_identifier)
         InfantBirthFactory(
-            registered_subject=registered_subject_infant,
+            registered_subject=self.registered_subject_infant,
             maternal_labour_del=maternal_labour_del)
         self.appointment = Appointment.objects.get(
-            registered_subject=registered_subject_infant,
+            registered_subject=self.registered_subject_infant,
             visit_definition__code='2000')
+
+    def test_appt_status_on_visit_reason_lost(self):
+        """"Test that if the visit reason is lost then the appointment status will be 'In Progress'
+        to allow data entry"""
+        self.assertEqual(NEW_APPT, self.appointment.appt_status)
+        InfantVisitFactory(appointment=self.appointment, reason=LOST_VISIT)
+        self.assertEqual(IN_PROGRESS, self.appointment.appt_status)
+
+    def test_appt_status_on_completed_protocol(self):
+        """"Test that if the visit reason is completed protocol then the appointment status will be 'In Progress'
+        to allow data entry"""
+        visit_code = ['2000', '2010', '2030', '2060', '2090']
+        for code in visit_code:
+            appointment = Appointment.objects.get(
+                registered_subject=self.registered_subject_infant,
+                visit_definition__code=code)
+            InfantVisitFactory(appointment=appointment)
+        appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject_infant,
+            visit_definition__code='2120')
+        self.assertEqual(NEW_APPT, appointment.appt_status)
+        InfantVisitFactory(appointment=appointment, reason=LOST_VISIT)
+        self.assertEqual(IN_PROGRESS, appointment.appt_status)
 
     def test_validate_reason_death_valid(self):
         data = {
