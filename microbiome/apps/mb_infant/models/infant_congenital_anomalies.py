@@ -5,6 +5,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_constants.choices import CONFIRMED_SUSPECTED
 from edc_visit_tracking.models import CrfInlineModelMixin
+from edc_sync.models import SyncModelMixin
 
 from microbiome.apps.mb.choices import (
     CNS_ABNORMALITIES, FACIAL_DEFECT, CLEFT_DISORDER, MOUTH_UP_GASTROINT_DISORDER,
@@ -12,7 +13,11 @@ from microbiome.apps.mb.choices import (
     FEM_GENITAL_ANOMALY, MALE_GENITAL_ANOMALY, RENAL_ANOMALY, MUSCULOSKELETAL_ABNORMALITY,
     SKIN_ABNORMALITY, TRISOME_CHROSOMESOME_ABNORMALITY, OTHER_DEFECT)
 
-from ..managers import InfantInlineModelManager
+from ..managers import (InfantInlineModelManager, InfantCnsManager, InfantFacialDefectManager,
+                        InfantCleftDisorderManager, InfantMouthUpGiManager, InfantOtherAbnormalityItemsManager,
+                        InfantCardioDisorderManager, InfantRespiratoryDefectManager, InfantLowerGiManager,
+                        InfantFemaleGenitalManager, InfantMaleGenitalManager, InfantRenalManager,
+                        InfantMusculoskeletalManager, InfantSkinManager, InfantTrisomiesManager)
 
 from .infant_crf_model import InfantCrfModel
 
@@ -28,11 +33,9 @@ class InfantCongenitalAnomalies(InfantCrfModel):
         verbose_name = "Congenital Anomalies"
 
 
-class BaseCnsItem(CrfInlineModelMixin, BaseUuidModel):
+class BaseCnsItem(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     congenital_anomalies = models.ForeignKey(InfantCongenitalAnomalies)
-
-    objects = InfantInlineModelManager()
 
     history = AuditTrail()
 
@@ -46,16 +49,12 @@ class InfantCns(BaseCnsItem):
         max_length=250,
         choices=CNS_ABNORMALITIES,
         verbose_name="Central nervous system abnormality",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     cns_other = OtherCharField(
@@ -65,11 +64,17 @@ class InfantCns(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantCnsManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.cns, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies:Cns"
+        unique_together = ('cns', 'congenital_anomalies')
 
 
 class InfantFacialDefect(BaseCnsItem):
@@ -78,16 +83,12 @@ class InfantFacialDefect(BaseCnsItem):
         max_length=250,
         choices=FACIAL_DEFECT,
         verbose_name="Facial defects",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     facial_defects_other = OtherCharField(
@@ -97,11 +98,17 @@ class InfantFacialDefect(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantFacialDefectManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.facial_defect, ) + self.   congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies:Facial"
+        unique_together = ('facial_defect', 'congenital_anomalies')
 
 
 class InfantCleftDisorder(BaseCnsItem):
@@ -110,16 +117,12 @@ class InfantCleftDisorder(BaseCnsItem):
         max_length=250,
         choices=CLEFT_DISORDER,
         verbose_name="Cleft disorders",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     cleft_disorders_other = OtherCharField(
@@ -129,11 +132,17 @@ class InfantCleftDisorder(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantCleftDisorderManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.cleft_disorder, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies:Cleft"
+        unique_together = ('cleft_disorder', 'congenital_anomalies')
 
 
 class InfantMouthUpGi(BaseCnsItem):
@@ -142,16 +151,12 @@ class InfantMouthUpGi(BaseCnsItem):
         max_length=250,
         choices=MOUTH_UP_GASTROINT_DISORDER,
         verbose_name="Mouth and upper gastrointestinal disorders",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     mouth_up_gi_other = OtherCharField(
@@ -161,11 +166,17 @@ class InfantMouthUpGi(BaseCnsItem):
         null=True
     )
 
+    objects = InfantMouthUpGiManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.mouth_up_gi, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies:MouthUp"
+        unique_together = ('mouth_up_gi', 'congenital_anomalies')
 
 
 class InfantCardioDisorder(BaseCnsItem):
@@ -174,16 +185,12 @@ class InfantCardioDisorder(BaseCnsItem):
         max_length=250,
         choices=CARDIOVASCULAR_DISORDER,
         verbose_name="Cardiovascular disorders",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     cardiovascular_other = OtherCharField(
@@ -193,11 +200,17 @@ class InfantCardioDisorder(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantCardioDisorderManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.cardio_disorder, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies:Cardio"
+        unique_together = ('cardio_disorder', 'congenital_anomalies')
 
 
 class InfantRespiratoryDefect(BaseCnsItem):
@@ -206,16 +219,12 @@ class InfantRespiratoryDefect(BaseCnsItem):
         max_length=250,
         choices=RESPIRATORY_DEFECT,
         verbose_name="Respiratory defects",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     respiratory_defects_other = OtherCharField(
@@ -225,11 +234,17 @@ class InfantRespiratoryDefect(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantRespiratoryDefectManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.respiratory_defect, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies:Respiratory"
+        unique_together = ('respiratory_defect', 'congenital_anomalies')
 
 
 class InfantLowerGi(BaseCnsItem):
@@ -238,16 +253,12 @@ class InfantLowerGi(BaseCnsItem):
         max_length=250,
         choices=LOWER_GASTROINTESTINAL_ABNORMALITY,
         verbose_name="Lower gastrointestinal abnormalities",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     lower_gi_other = OtherCharField(
@@ -257,11 +268,17 @@ class InfantLowerGi(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantLowerGiManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.lower_gi, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies:Lower GI"
+        unique_together = ('lower_gi', 'congenital_anomalies')
 
 
 class InfantFemaleGenital(BaseCnsItem):
@@ -270,16 +287,12 @@ class InfantFemaleGenital(BaseCnsItem):
         max_length=250,
         choices=FEM_GENITAL_ANOMALY,
         verbose_name="Female genital anomaly",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     female_genital_other = OtherCharField(
@@ -289,11 +302,17 @@ class InfantFemaleGenital(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantFemaleGenitalManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.female_genital, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies:Female Gen"
+        unique_together = ('female_genital', 'congenital_anomalies')
 
 
 class InfantMaleGenital(BaseCnsItem):
@@ -302,16 +321,12 @@ class InfantMaleGenital(BaseCnsItem):
         max_length=250,
         choices=MALE_GENITAL_ANOMALY,
         verbose_name="Male genital anomaly",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     male_genital_other = OtherCharField(
@@ -321,11 +336,17 @@ class InfantMaleGenital(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantMaleGenitalManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.male_genital, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies:Male Gen"
+        unique_together = ('male_genital', 'congenital_anomalies')
 
 
 class InfantRenal(BaseCnsItem):
@@ -334,16 +355,12 @@ class InfantRenal(BaseCnsItem):
         max_length=250,
         choices=RENAL_ANOMALY,
         verbose_name="Renal anomalies",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     renal_other = OtherCharField(
@@ -353,11 +370,17 @@ class InfantRenal(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantRenalManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.renal, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies: Renal"
+        unique_together = ('renal', 'congenital_anomalies')
 
 
 class InfantMusculoskeletal(BaseCnsItem):
@@ -366,16 +389,12 @@ class InfantMusculoskeletal(BaseCnsItem):
         max_length=250,
         choices=MUSCULOSKELETAL_ABNORMALITY,
         verbose_name="Musculo-skeletal abnomalities",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     musculo_skeletal_other = OtherCharField(
@@ -385,11 +404,17 @@ class InfantMusculoskeletal(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantMusculoskeletalManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.musculo_skeletal, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies: Musculo-sk"
+        unique_together = ('musculo_skeletal', 'congenital_anomalies')
 
 
 class InfantSkin(BaseCnsItem):
@@ -400,16 +425,12 @@ class InfantSkin(BaseCnsItem):
         verbose_name="Skin abnormalities",
         help_text="Excludes cafe au lait spots, Mongolian spots, port wine stains, "
         "nevus, hemangloma <4 cm in diameter. If hemangloma is >4 cm, specify",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     skin_other = OtherCharField(
@@ -419,11 +440,17 @@ class InfantSkin(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantSkinManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.skin, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies: Skin"
+        unique_together = ('skin', 'congenital_anomalies')
 
 
 class InfantTrisomies(BaseCnsItem):
@@ -432,16 +459,12 @@ class InfantTrisomies(BaseCnsItem):
         max_length=250,
         choices=TRISOME_CHROSOMESOME_ABNORMALITY,
         verbose_name="Trisomies / chromosomes abnormalities",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     trisomies_other = OtherCharField(
@@ -451,11 +474,17 @@ class InfantTrisomies(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantTrisomiesManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.trisomies, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies: Trisomes"
+        unique_together = ('trisomies', 'congenital_anomalies')
 
 
 class InfantOtherAbnormalityItems(BaseCnsItem):
@@ -464,16 +493,12 @@ class InfantOtherAbnormalityItems(BaseCnsItem):
         max_length=250,
         choices=OTHER_DEFECT,
         verbose_name="Other",
-        blank=True,
-        null=True,
     )
 
     abnormality_status = models.CharField(
         max_length=35,
         choices=CONFIRMED_SUSPECTED,
         verbose_name="Abnormality status",
-        blank=True,
-        null=True,
     )
 
     other_abnormalities_other = OtherCharField(
@@ -483,8 +508,14 @@ class InfantOtherAbnormalityItems(BaseCnsItem):
         null=True,
     )
 
+    objects = InfantOtherAbnormalityItemsManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.other_abnormalities, ) + self.congenital_anomalies.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Congenital Anomalies: Other"
+        unique_together = ('other_abnormalities', 'congenital_anomalies')

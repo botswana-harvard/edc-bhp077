@@ -10,3 +10,6 @@ from .infant_fu_physical_factory import InfantFuPhysicalFactory
 from .infant_fu_new_med_factory import InfantFuNewMedFactory
 from .infant_fu_immunizations_factory import InfantFuImmunizationsFactory
 from .infant_feeding_factory import InfantFeedingFactory
+from .infant_congenital_anomalies_factory import InfantCongenitalAnomaliesFactory
+from .infant_cardio_disorder_factory import InfantCardioDisorderFactory
+from .infant_cleft_disorder_factory import InfantCleftDisorderFactory
