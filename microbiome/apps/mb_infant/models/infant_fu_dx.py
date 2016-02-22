@@ -4,10 +4,11 @@ from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO
 from edc_base.model.models import BaseUuidModel
 from edc_visit_tracking.models import CrfInlineModelMixin
+from edc_sync.models import SyncModelMixin
 
 from microbiome.apps.mb.choices import DX_INFANT
 
-from ..managers import InfantInlineModelManager
+from ..managers import InfantFuDxItemsManager
 
 from .infant_crf_model import InfantCrfModel
 
@@ -24,7 +25,7 @@ class InfantFuDx(InfantCrfModel):
         verbose_name_plural = "Infant FollowUp: Dx"
 
 
-class InfantFuDxItems(CrfInlineModelMixin, BaseUuidModel):
+class InfantFuDxItems(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     infant_fu_dx = models.ForeignKey(InfantFuDx)
 
@@ -49,10 +50,11 @@ class InfantFuDxItems(CrfInlineModelMixin, BaseUuidModel):
         choices=YES_NO,
         max_length=3)
 
-    objects = InfantInlineModelManager()
+    objects = InfantFuDxItemsManager()
 
     history = AuditTrail()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Infant FollowUp: Dx"
+        unique_together = ('fu_dx', 'infant_fu_dx')

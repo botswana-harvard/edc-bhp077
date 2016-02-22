@@ -13,3 +13,4 @@ from .infant_feeding_factory import InfantFeedingFactory
 from .infant_congenital_anomalies_factory import InfantCongenitalAnomaliesFactory
 from .infant_cardio_disorder_factory import InfantCardioDisorderFactory
 from .infant_cleft_disorder_factory import InfantCleftDisorderFactory
+from .infant_fu_dx_factory import InfantFuDxFactory, InfantFuDxItemsFactory

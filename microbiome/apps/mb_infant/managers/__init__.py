@@ -15,3 +15,4 @@ from .congenital_anomalities_manager import InfantMusculoskeletalManager
 from .congenital_anomalities_manager import InfantSkinManager
 from .congenital_anomalities_manager import InfantTrisomiesManager
 from .congenital_anomalities_manager import InfantOtherAbnormalityItemsManager
+from .infant_fu_dx_items_manager import InfantFuDxItemsManager
