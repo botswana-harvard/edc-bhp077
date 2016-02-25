@@ -9,6 +9,8 @@ from edc_base.model.models import BaseUuidModel
 
 from microbiome.apps.mb.choices import ARV_STATUS_WITH_NEVER
 
+from ..choices import ARV_MODIFICATION_REASON, ARV_DRUG_LIST, DOSE_STATUS
+
 from .infant_crf_model import InfantCrfModel
 
 
@@ -48,6 +50,28 @@ class InfantArvProphMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
         max_length=100,
         null=True,
         blank=True)
+
+    arv_code = models.CharField(
+        verbose_name="ARV Code",
+        max_length=25,
+        choices=ARV_DRUG_LIST,
+    )
+
+    dose_status = models.CharField(
+        max_length=25,
+        choices=DOSE_STATUS,
+        verbose_name="Dose Status",
+    )
+
+    modification_date = models.DateField(
+        verbose_name="Date ARV Modified",
+    )
+
+    modification_code = models.CharField(
+        max_length=50,
+        choices=ARV_MODIFICATION_REASON,
+        verbose_name="Reason for Modification",
+    )
 
     history = AuditTrail()
 
