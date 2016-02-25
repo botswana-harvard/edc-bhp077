@@ -2,7 +2,7 @@ from django.utils import timezone
 
 from edc_registration.models import RegisteredSubject
 from edc_appointment.models import Appointment
-from edc_constants.constants import YES, POS
+from edc_constants.constants import YES, POS, NO, UNKNOWN
 
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantBirthArvForm
@@ -67,8 +67,32 @@ class TestInfantBirthArv(BaseTestCase):
         self.assertIn(u'Do not select Not applicatable for Q6 if Q4 answer was yes.',
                       infant_birth_arv.errors.get('__all__'))
 
+    def test_validate_azt_no_date_given(self):
+        self.data['azt_after_birth'] = NO
+        infant_birth_arv = InfantBirthArvForm(data=self.data)
+        self.assertIn('Participant indicated that AZT was NOT provided. You cannot provide date of first dose',
+                      infant_birth_arv.errors.get('__all__'))
+
+    def test_validate_azt_unknown_date_given(self):
+        self.data['azt_after_birth'] = 'Unknown'
+        infant_birth_arv = InfantBirthArvForm(data=self.data)
+        self.assertIn('Participant indicated that AZT was NOT provided. You cannot provide date of first dose',
+                      infant_birth_arv.errors.get('__all__'))
+
     def test_validate_sdnvp_after_birth(self):
         self.data['nvp_dose_date'] = ''
         infant_birth_arv = InfantBirthArvForm(data=self.data)
         self.assertIn(u'If infant has received single dose NVP then provide NVP date.',
+                      infant_birth_arv.errors.get('__all__'))
+
+    def test_validate_sdnvo_no_date_given(self):
+        self.data['sdnvp_after_birth'] = NO
+        infant_birth_arv = InfantBirthArvForm(data=self.data)
+        self.assertIn('Participant indicated that NVP was NOT provided. You cannot provide date of first dose.',
+                      infant_birth_arv.errors.get('__all__'))
+
+    def test_validate_sdnvo_unknown_date_given(self):
+        self.data['sdnvp_after_birth'] = 'Unknown'
+        infant_birth_arv = InfantBirthArvForm(data=self.data)
+        self.assertIn('Participant indicated that NVP was NOT provided. You cannot provide date of first dose.',
                       infant_birth_arv.errors.get('__all__'))
