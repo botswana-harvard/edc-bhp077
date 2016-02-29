@@ -1,4 +1,4 @@
-import uuid
+from uuid import uuid4
 
 from django.db import models
 from django.db.models import get_model
@@ -26,7 +26,7 @@ class MaternalEligibility (SyncModelMixin, BaseUuidModel):
     eligibility_id = models.CharField(
         verbose_name="Eligibility Identifier",
         max_length=36,
-        default=uuid.uuid4,
+        default=None,
         editable=False)
 
     report_datetime = models.DateTimeField(
@@ -77,6 +77,7 @@ class MaternalEligibility (SyncModelMixin, BaseUuidModel):
     history = AuditTrail()
 
     def save(self, *args, **kwargs):
+        self.set_uuid_for_eligibility_if_none()
         self.is_eligible, error_message = self.check_eligibility()
         self.ineligibility = error_message  # error_message not None if is_eligible is False
         super(MaternalEligibility, self).save(*args, **kwargs)
@@ -109,6 +110,10 @@ class MaternalEligibility (SyncModelMixin, BaseUuidModel):
         except MaternalEligibilityLoss.DoesNotExist:
             maternal_eligibility_loss = None
         return maternal_eligibility_loss
+
+    def set_uuid_for_eligibility_if_none(self):
+        if not self.eligibility_id:
+            self.eligibility_id = str(uuid4())
 
     class Meta:
         app_label = 'mb_maternal'
