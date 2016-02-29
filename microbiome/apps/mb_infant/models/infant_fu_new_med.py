@@ -6,10 +6,11 @@ from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import DRUG_ROUTE
 from edc_constants.choices import YES_NO
 from edc_visit_tracking.models import CrfInlineModelMixin
+from edc_sync.models import SyncModelMixin
 
 from microbiome.apps.mb.choices import MEDICATIONS
 
-from ..managers import InfantInlineModelManager
+from ..managers import InfantFuNewMedItemsManager
 
 from .infant_crf_model import InfantCrfModel
 
@@ -35,7 +36,7 @@ class InfantFuNewMed(InfantCrfModel):
         verbose_name_plural = "Infant FollowUp: New Medication"
 
 
-class InfantFuNewMedItems(CrfInlineModelMixin, BaseUuidModel):
+class InfantFuNewMedItems(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     """A model completed by the user on the infant's follow up medication items."""
 
@@ -45,8 +46,6 @@ class InfantFuNewMedItems(CrfInlineModelMixin, BaseUuidModel):
         max_length=100,
         choices=MEDICATIONS,
         verbose_name="Medication",
-        blank=True,
-        null=True,
     )
 
     other_medication = OtherCharField()
@@ -67,11 +66,15 @@ class InfantFuNewMedItems(CrfInlineModelMixin, BaseUuidModel):
         verbose_name="Drug route",
     )
 
-    objects = InfantInlineModelManager()
+    objects = InfantFuNewMedItemsManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.medication, ) + self.infant_fu_med.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Infant FollowUp: New Med Items"
         verbose_name_plural = "Infant FollowUp: New Med Items"
+        unique_together = ('medication', 'infant_fu_med')

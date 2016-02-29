@@ -54,6 +54,9 @@ class InfantFuDxItems(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     history = AuditTrail()
 
+    def natural_key(self):
+        return (self.fu_dx, ) + self.infant_fu_dx.natural_key()
+
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Infant FollowUp: Dx"

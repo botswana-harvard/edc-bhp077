@@ -10,6 +10,7 @@ from edc_base.model.models import BaseUuidModel
 from microbiome.apps.mb.choices import ARV_STATUS_WITH_NEVER
 
 from ..choices import ARV_MODIFICATION_REASON, ARV_DRUG_LIST, DOSE_STATUS
+from ..managers import InfantArvProphModManager
 
 from .infant_crf_model import InfantCrfModel
 
@@ -45,12 +46,6 @@ class InfantArvProphMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     infant_arv_proph = models.ForeignKey(InfantArvProph)
 
-    other_reason = models.CharField(
-        verbose_name="Specify Other",
-        max_length=100,
-        null=True,
-        blank=True)
-
     arv_code = models.CharField(
         verbose_name="ARV Code",
         max_length=25,
@@ -73,7 +68,18 @@ class InfantArvProphMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
         verbose_name="Reason for Modification",
     )
 
+    other_reason = models.CharField(
+        verbose_name="Specify Other",
+        max_length=100,
+        null=True,
+        blank=True)
+
+    objects = InfantArvProphModManager()
+
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.arv_code, ) + self.infant_arv_proph.natural_key()
 
     class Meta:
         app_label = 'mb_infant'

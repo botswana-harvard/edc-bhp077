@@ -12,7 +12,8 @@ from microbiome.apps.mb_infant.tests.factories import (
     InfantBirthFactory, InfantVisitFactory, InfantCleftDisorderFactory,
     InfantCongenitalAnomaliesFactory, InfantFuImmunizationsFactory, InfantCardioDisorderFactory,
     InfantBirthFeedVaccineFactory, InfantFuDxFactory, InfantFuDxItemsFactory, InfantArvProphFactory,
-    InfantArvProphModFactory)
+    InfantArvProphModFactory, InfantVaccinesFactory, VaccinesReceivedFactory, VaccinesMissedFactory,
+    InfantFuNewMedFactory, InfantFuNewMedItemsFactory)
 
 from .base_test_case import BaseTestCase
 
@@ -72,6 +73,8 @@ class TestSerializationDeserialization(BaseTestCase, TestSerializeDeserialize):
         instances.append(cleft_disorder)
         infant_birth_feed_vaccine = InfantBirthFeedVaccineFactory(infant_visit=infant_visit_2000)
         instances.append(infant_birth_feed_vaccine)
+        infant_vaccines = InfantVaccinesFactory(infant_birth_feed_vaccine=infant_birth_feed_vaccine)
+        instances.append(infant_vaccines)
         infant_appointment_2010 = Appointment.objects.get(
             registered_subject=infant_registered_subject,
             visit_definition__code='2010')
@@ -79,6 +82,14 @@ class TestSerializationDeserialization(BaseTestCase, TestSerializeDeserialize):
         infant_visit_2010 = InfantVisitFactory(appointment=infant_appointment_2010)
         infant_fu_immuninization = InfantFuImmunizationsFactory(infant_visit=infant_visit_2010)
         instances.append(infant_fu_immuninization)
+        infant_fu_new_med = InfantFuNewMedFactory(infant_visit=infant_visit_2010)
+        instances.append(infant_fu_new_med)
+        infant_fu_new_med_items = InfantFuNewMedItemsFactory(infant_fu_med=infant_fu_new_med)
+        instances.append(infant_fu_new_med_items)
+        vaccines_received = VaccinesReceivedFactory(infant_fu_immunizations=infant_fu_immuninization)
+        instances.append(vaccines_received)
+        vaccines_missed = VaccinesMissedFactory(infant_fu_immunizations=infant_fu_immuninization)
+        instances.append(vaccines_missed)
         infant_fu_dx = InfantFuDxFactory(infant_visit=infant_visit_2010)
         instances.append(infant_fu_dx)
         infant_fu_dx_items = InfantFuDxItemsFactory(infant_fu_dx=infant_fu_dx)

@@ -3,11 +3,12 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_visit_tracking.models import CrfInlineModelMixin
+from edc_sync.models import SyncModelMixin
 
 from microbiome.apps.mb.choices import FEEDING_CHOICES
 
 from ..choices import INFANT_VACCINATIONS
-from ..managers import InfantInlineModelManager
+from ..managers import InfantVaccinesManager
 
 from .infant_crf_model import InfantCrfModel
 
@@ -35,27 +36,29 @@ class InfantBirthFeedVaccine(InfantCrfModel):
         verbose_name = "Birth Feeding & Vaccination"
 
 
-class InfantVaccines(CrfInlineModelMixin, BaseUuidModel):
+class InfantVaccines(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     infant_birth_feed_vaccine = models.ForeignKey(InfantBirthFeedVaccine)
 
     vaccination = models.CharField(
         choices=INFANT_VACCINATIONS,
         verbose_name="Since delivery, did the child receive any of the following vaccinations",
-        max_length=100,
-        null=True,
-        blank=True)
+        max_length=100)
 
     vaccine_date = models.DateField(
         verbose_name='Date Vaccine was given',
         null=True,
         blank=True)
 
-    objects = InfantInlineModelManager()
+    objects = InfantVaccinesManager()
 
     history = AuditTrail()
+
+    def natural_key(self):
+        return (self.vaccination, ) + self.infant_birth_feed_vaccine.natural_key()
 
     class Meta:
         app_label = 'mb_infant'
         verbose_name = "Infant Vaccines"
         verbose_name_plural = "Infant Vaccines"
+        unique_together = ('infant_birth_feed_vaccine', 'vaccination')

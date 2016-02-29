@@ -16,3 +16,7 @@ from .congenital_anomalities_manager import InfantSkinManager
 from .congenital_anomalities_manager import InfantTrisomiesManager
 from .congenital_anomalities_manager import InfantOtherAbnormalityItemsManager
 from .infant_fu_dx_items_manager import InfantFuDxItemsManager
+from .infant_arv_proph_manager import InfantArvProphModManager
+from .infant_vaccines_manager import InfantVaccinesManager
+from .infant_fu_immunization_manager import VaccinesMissedManager, VaccinesReceivedManager
+from .infant_fu_new_med_items_manager import InfantFuNewMedItemsManager
