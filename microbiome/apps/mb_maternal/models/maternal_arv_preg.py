@@ -60,9 +60,7 @@ class MaternalArv(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
     arv_code = models.CharField(
         verbose_name="ARV code",
         max_length=35,
-        choices=ARV_DRUG_LIST,
-        null=True,
-        blank=False)
+        choices=ARV_DRUG_LIST)
 
     start_date = models.DateField(
         verbose_name="Date Started",
@@ -78,7 +76,11 @@ class MaternalArv(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     history = AuditTrail()
 
+    def natural_key(self):
+        return (self.arv_code, ) + self.maternal_arv_preg.natural_key()
+
     class Meta:
         app_label = 'mb_maternal'
         verbose_name = 'Maternal ARV'
         verbose_name_plural = 'Maternal ARV'
+        unique_together = ('maternal_arv_preg', 'arv_code')

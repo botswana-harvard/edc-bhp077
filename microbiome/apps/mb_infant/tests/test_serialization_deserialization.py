@@ -9,9 +9,10 @@ from microbiome.apps.mb_maternal.tests.factories import (
     MaternalLabourDelFactory, MaternalVisitFactory)
 
 from microbiome.apps.mb_infant.tests.factories import (
-    InfantBirthFactory, InfantVisitFactory, InfantBirthArvFactory, InfantCleftDisorderFactory,
+    InfantBirthFactory, InfantVisitFactory, InfantCleftDisorderFactory,
     InfantCongenitalAnomaliesFactory, InfantFuImmunizationsFactory, InfantCardioDisorderFactory,
-    InfantBirthFeedVaccineFactory, InfantFuDxFactory, InfantFuDxItemsFactory)
+    InfantBirthFeedVaccineFactory, InfantFuDxFactory, InfantFuDxItemsFactory, InfantArvProphFactory,
+    InfantArvProphModFactory)
 
 from .base_test_case import BaseTestCase
 
@@ -82,4 +83,8 @@ class TestSerializationDeserialization(BaseTestCase, TestSerializeDeserialize):
         instances.append(infant_fu_dx)
         infant_fu_dx_items = InfantFuDxItemsFactory(infant_fu_dx=infant_fu_dx)
         instances.append(infant_fu_dx_items)
+        infant_arv_proph = InfantArvProphFactory(infant_visit=infant_visit_2010)
+        instances.append(infant_arv_proph)
+        infant_arv_proph_mod = InfantArvProphModFactory(infant_arv_proph=infant_arv_proph)
+        instances.append(infant_arv_proph_mod)
         return instances

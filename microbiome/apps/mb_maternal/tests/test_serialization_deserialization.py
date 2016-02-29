@@ -7,7 +7,10 @@ from edc_constants.constants import YES, NO, POS
 from microbiome.apps.mb_maternal.tests.factories import (
     MaternalEligibilityFactory, MaternalConsentFactory, PostnatalEnrollmentFactory,
     SpecimenConsentFactory, AntenatalEnrollmentFactory, ReproductiveHealthFactory,
-    MaternalVisitFactory, MaternalLocatorFactory, MaternalDemographicsFactory)
+    MaternalVisitFactory, MaternalLocatorFactory, MaternalDemographicsFactory,
+    MaternalArvPostFactory, MaternalArvPostModFactory, MaternalArvPregFactory,
+    MaternalArvFactory, MaternalPostFuMedFactory, MaternalPostFuMedItemsFactory,
+    MaternalPostFuDxFactory, MaternalPostFuDxTFactory)
 
 from .base_test_case import BaseTestCase
 
@@ -52,8 +55,9 @@ class TestSerializationDeserialization(BaseTestCase, TestSerializeDeserialize):
         appointment_2000 = Appointment.objects.get(
             registered_subject=antenatal_enrollment.registered_subject,
             visit_definition__code='2000M')
-        appointment_2000 = MaternalVisitFactory(appointment=appointment_2000)
         instances.append(appointment_2000)
+        maternal_visit_2000 = MaternalVisitFactory(appointment=appointment_2000)
+        instances.append(maternal_visit_2000)
         appointment_2010 = Appointment.objects.get(
             registered_subject=antenatal_enrollment.registered_subject,
             visit_definition__code='2010M')
@@ -63,4 +67,20 @@ class TestSerializationDeserialization(BaseTestCase, TestSerializeDeserialize):
             maternal_visit=maternal_visit_2010
         )
         instances.append(reproductive_health)
+        maternal_arv_post = MaternalArvPostFactory(maternal_visit=maternal_visit_2010)
+        instances.append(maternal_arv_post)
+        maternal_arv_post_mod = MaternalArvPostModFactory(maternal_arv_post=maternal_arv_post)
+        instances.append(maternal_arv_post_mod)
+        maternal_arv_preg = MaternalArvPregFactory(maternal_visit=maternal_visit_2000)
+        instances.append(maternal_arv_preg)
+        maternal_arv = MaternalArvFactory(maternal_arv_preg=maternal_arv_preg)
+        instances.append(maternal_arv)
+        maternal_post_fu_med = MaternalPostFuMedFactory(maternal_visit=maternal_visit_2010)
+        instances.append(maternal_post_fu_med)
+        maternal_post_fu_items = MaternalPostFuMedItemsFactory(maternal_post_fu_med=maternal_post_fu_med)
+        instances.append(maternal_post_fu_items)
+        maternal_post_fu_dx = MaternalPostFuDxFactory(maternal_visit=maternal_visit_2010)
+        instances.append(maternal_post_fu_dx)
+#         maternal_post_fu_dxt = MaternalPostFuDxTFactory(maternal_post_fu_dx=maternal_post_fu_dx)
+#         instances.append(maternal_post_fu_dxt)
         return instances

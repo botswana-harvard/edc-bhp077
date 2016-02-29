@@ -62,6 +62,10 @@ class MaternalPostFuMedItems(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel)
 
     history = AuditTrail()
 
+    def natural_key(self):
+        return (self.medication, self.date_first_medication, self.date_stoped) + self.maternal_post_fu_med.natural_key()
+
     class Meta:
         app_label = 'mb_maternal'
         verbose_name = "Maternal Postnatal: Med Item"
+        unique_together = ('maternal_post_fu_med', 'medication', 'date_first_medication', 'date_stoped')

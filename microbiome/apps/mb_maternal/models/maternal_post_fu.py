@@ -131,9 +131,7 @@ class MaternalPostFuDxT(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
     post_fu_dx = models.CharField(
         verbose_name="Diagnosis",
         max_length=100,
-        choices=DX,
-        blank=True,
-        null=True)
+        choices=DX)
 
     post_fu_specify = models.CharField(
         verbose_name="Diagnosis specification",
@@ -159,7 +157,11 @@ class MaternalPostFuDxT(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
 
     history = AuditTrail()
 
+    def natural_key(self):
+        return (self.post_fu_dx) + self.maternal_post_fu_dx.natural_key()
+
     class Meta:
         app_label = 'mb_maternal'
         verbose_name = "Maternal Postnatal Follow-Up: DxT"
         verbose_name_plural = "Maternal Postnatal Follow-Up: DxT"
+        unique_together = ('maternal_post_fu_dx', 'post_fu_dx')
