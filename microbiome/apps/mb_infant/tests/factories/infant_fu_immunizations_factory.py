@@ -32,4 +32,3 @@ class VaccinesReceivedFactory(factory.DjangoModelFactory):
 
     infant_fu_immunizations = factory.SubFactory(InfantFuImmunizationsFactory)
     received_vaccine_name = IMMUNIZATIONS[0][0]
-
