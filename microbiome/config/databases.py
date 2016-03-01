@@ -52,6 +52,14 @@ TRAVIS_MYSQL = {
         'PORT': '',
         'ATOMIC_REQUESTS': True,
     },
+    'test_server': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mb_test',
+        'USER': 'travis',
+        'HOST': '',
+        'PORT': '',
+        'ATOMIC_REQUESTS': True,
+    },
 }
 
 TEST_HOSTS_MYSQL = {
