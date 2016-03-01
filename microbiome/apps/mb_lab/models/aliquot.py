@@ -66,7 +66,7 @@ class Aliquot(BaseAliquot, SyncModelMixin, BaseUuidModel):
     @property
     def subject_requisition(self):
         model = self.receive.requisition_model_name
-        RequisitionModel = models.get_model('lab', model)
+        RequisitionModel = models.get_model('mb_lab', model)
         try:
             return RequisitionModel.objects.get(
                 requisition_identifier=self.receive.requisition_identifier)
