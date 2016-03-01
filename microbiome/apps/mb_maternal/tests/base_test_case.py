@@ -83,4 +83,4 @@ class BaseTestCase(TestCase):
         instances.append(maternal_post_fu_dx)
 #         maternal_post_fu_dxt = MaternalPostFuDxTFactory(maternal_post_fu_dx=maternal_post_fu_dx)
 #         instances.append(maternal_post_fu_dxt)
-        return instances    
+        return instances
