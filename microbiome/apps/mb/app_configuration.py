@@ -145,13 +145,21 @@ class AppConfiguration(BaseAppConfiguration):
 
     labeling_setup = {
         'label_printer': [LabelPrinterTuple('Zebra_Technologies_ZTC_GK420t',
-                                            'localhost', '127.0.0.1', True)],
+                                            'mpepu02', '192.168.1.230', True),
+                          LabelPrinterTuple('Zebra_Technologies_ZTC_GK420t',
+                                            'kseamolo', '192.168.1.225', True)],
         'client': [
             ClientTuple(
-                hostname='localhost',
+                hostname='mpepu02',
                 printer_name='Zebra_Technologies_ZTC_GK420t',
-                cups_hostname='localhost',
-                ip=None,
+                cups_hostname='mpepu02',
+                ip='192.168.1.230',
+                aliases=None),
+            ClientTuple(
+                hostname='kseamolo',
+                printer_name='Zebra_Technologies_ZTC_GK420t',
+                cups_hostname='kseamolo',
+                ip='192.168.1.225',
                 aliases=None)],
         'zpl_template': [
             aliquot_label or ZplTemplateTuple(
