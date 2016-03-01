@@ -152,7 +152,11 @@ if socket.gethostname() in DEVELOPER_HOSTS:
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+        },
+        'test_server': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        },
     }
 elif socket.gethostname() == LIVE_SERVER:
     SECRET_KEY = PRODUCTION_SECRET_KEY
