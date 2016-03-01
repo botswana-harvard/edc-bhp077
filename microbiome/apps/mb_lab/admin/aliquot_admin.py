@@ -2,9 +2,10 @@ from django.contrib import admin
 
 from edc_export.actions import export_as_csv_action
 from edc_base.modeladmin.admin import BaseModelAdmin
-from lis.labeling.actions import print_aliquot_label
+# from lis.labeling.actions import print_aliquot_label
 
 from ..actions import create_order, reject_aliquot_label
+from ..classes.aliquot_label import print_aliquot_label
 from ..models import Aliquot
 
 

@@ -157,14 +157,15 @@ class AppConfiguration(BaseAppConfiguration):
             aliquot_label or ZplTemplateTuple(
                 'aliquot_label', (
                     ('^XA\n' +
-                     ('^FO300,15^A0N,20,20^FD${protocol} Site ${site} ${clinician_initials}   '
+                     ('^FO315,15^A0N,17,20^FD${protocol} Site ${site} ${clinician_initials}   '
                       '${aliquot_type} ${aliquot_count}${primary}^FS\n') +
-                     '^FO300,34^BY1,3.0^BCN,50,N,N,N\n'
+                     '^FO320,34^BY1,3.0^BCN,50,N,N,N\n'
                      '^BY^FD${aliquot_identifier}^FS\n'
-                     '^FO300,92^A0N,20,20^FD${aliquot_identifier}^FS\n'
-                     '^FO300,112^A0N,20,20^FD${subject_identifier} (${initials})^FS\n'
-                     '^FO300,132^A0N,20,20^FDDOB: ${dob} ${gender}^FS\n'
-                     '^FO300,152^A0N,25,20^FD${drawn_datetime}^FS\n'
+                     '^FO315,92^A0N,18,20^FD${aliquot_identifier}^FS\n'
+                     '^FO315,109^A0N,16,20^FD${panel}^FS\n'
+                     '^FO315,125^A0N,19,20^FD${subject_identifier} (${initials})^FS\n'
+                     '^FO315,145^A0N,18,20^FDDOB: ${dob} ${gender}^FS\n'
+                     '^FO315,165^A0N,18,20^FD${drawn_datetime}^FS\n'
                      '^XZ')), False),
             ZplTemplateTuple(
                 'requisition_label', (
