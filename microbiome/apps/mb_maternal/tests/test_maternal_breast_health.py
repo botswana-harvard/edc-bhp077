@@ -146,3 +146,15 @@ class TestMaternalBreastHealth(BaseTestCase):
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You indicated that the mother has been breast feeding, question on '
                       'whether she was advised to stop breast feeding CANNOT be Not Applicable.', errors)
+
+    def test_advised_stop_bf(self):
+        """Assert that if the mother was advised_stop_bf is NO then give a reason for why_not_advised"""
+        self.data['breast_feeding'] = YES
+        self.data['has_mastitis'] = NO
+        self.data['has_lesions'] = NO
+        self.data['advised_stop_bf'] = NO
+        self.data['why_not_advised'] = None
+        form = MaternalBreastHealthForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('You answered No to Was the mother advised to discontinue breastfeeding, '
+                      'please provide a reason why.', errors)

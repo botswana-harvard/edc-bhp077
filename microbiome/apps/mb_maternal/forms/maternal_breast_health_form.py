@@ -13,6 +13,7 @@ class MaternalBreastHealthForm(BaseMaternalModelForm):
         self.validate_mastitis()
         self.validate_lesions()
         self.validate_to_stop_bf()
+        self.validate_advised_stop_bf()
         return cleaned_data
 
     def validate_breast_feeding(self):
@@ -62,6 +63,12 @@ class MaternalBreastHealthForm(BaseMaternalModelForm):
             if cleaned_data.get('advised_stop_bf') == NOT_APPLICABLE:
                 raise forms.ValidationError('You indicated that the mother has been breast feeding, question on '
                                             'whether she was advised to stop breast feeding CANNOT be Not Applicable.')
+
+    def validate_advised_stop_bf(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('advised_stop_bf') == NO and not cleaned_data.get('why_not_advised'):
+            raise forms.ValidationError('You answered No to Was the mother advised to discontinue breastfeeding, '
+                                        'please provide a reason why.')
 
     class Meta:
         model = MaternalBreastHealth
