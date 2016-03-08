@@ -114,7 +114,7 @@ class TestMaternalBreastHealth(BaseTestCase):
         form = MaternalBreastHealthForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You indicated that participant has mastitis or has lesions. Was '
-                      'participant advised to stop breast feeding CANNOT be Not Applicable.', errors)
+                      'participant advised to stop breast feeding CANNOT be Not Applicable or NO.', errors)
 
     def test_advised_stop_bf_2(self):
         """Assert that if has_lesions is YES then advised_stop_bf CANT be NOT_APPLICABLE"""
@@ -125,7 +125,7 @@ class TestMaternalBreastHealth(BaseTestCase):
         form = MaternalBreastHealthForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('You indicated that participant has mastitis or has lesions. Was '
-                      'participant advised to stop breast feeding CANNOT be Not Applicable.', errors)
+                      'participant advised to stop breast feeding CANNOT be Not Applicable or NO.', errors)
 
     def test_advised_stop_bf_3(self):
         """Assert that if mother has not been breast-feeding then advised_stop_bf CANT be YES"""
