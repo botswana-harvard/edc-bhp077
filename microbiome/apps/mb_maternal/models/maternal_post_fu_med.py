@@ -4,6 +4,7 @@ from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
+from edc_base.model.fields import OtherCharField
 from edc_constants.choices import DRUG_ROUTE, YES_NO_UNKNOWN
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.models import CrfInlineModelMixin
@@ -45,6 +46,12 @@ class MaternalPostFuMedItems(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel)
         choices=MEDICATIONS,
         verbose_name="Medication",
     )
+
+    medication_other = OtherCharField(
+        max_length=35,
+        verbose_name="if other medication, specify...",
+        blank=True,
+        null=True)
 
     drug_route = models.CharField(
         max_length=20,
