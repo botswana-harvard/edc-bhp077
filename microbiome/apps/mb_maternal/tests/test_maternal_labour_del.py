@@ -3,13 +3,15 @@ from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 
 from edc_appointment.models import Appointment
+from edc_code_lists.models import WcsDxAdult
 from edc_constants.choices import YES, NO, NOT_APPLICABLE, POS
 
-from microbiome.apps.mb_maternal.forms import (MaternalLabourDelForm, MaternalLabDelClinicForm)
+from microbiome.apps.mb_maternal.forms import (MaternalLabourDelForm, MaternalLabDelClinicForm, MaternalLabDelDxForm)
 
 from .base_test_case import BaseTestCase
 from .factories import (PostnatalEnrollmentFactory, MaternalLabourDelFactory, MaternalVisitFactory,
                         MaternalEligibilityFactory, MaternalConsentFactory)
+from microbiome.apps.mb_maternal.models.maternal_labour_del import MaternalLabDelDx
 
 
 class TestMaternalLabourDel(BaseTestCase):
@@ -268,4 +270,46 @@ class TestMaternalLabourDelClinic(BaseTestCase):
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn(
             'You stated that a VL count was NOT performed, you CANNOT indicate if VL was detectable.',
+            errors)
+
+
+class TestMaternalLabourDx(BaseTestCase):
+
+    def setUp(self):
+        super(TestMaternalLabourDx, self).setUp()
+        self.maternal_eligibility = MaternalEligibilityFactory()
+        self.maternal_consent = MaternalConsentFactory(
+            registered_subject=self.maternal_eligibility.registered_subject,
+            study_site=self.study_site)
+        self.registered_subject = self.maternal_consent.registered_subject
+        self.postnatal_enrollment = PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            will_breastfeed=YES)
+        self.assertTrue(self.postnatal_enrollment.is_eligible)
+        self.appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        self.appointment = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2000M')
+        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
+        self.labour_del = MaternalLabourDelFactory(maternal_visit=self.maternal_visit)
+        self.labour_del.save()
+        who = WcsDxAdult.objects.get(short_name=NOT_APPLICABLE)
+        self.data = {
+            'maternal_visit': self.maternal_visit.id,
+            'report_datetime': timezone.now(),
+            'has_who_dx': NOT_APPLICABLE,
+            'who': [who.id],
+            'has_preg_dx': NO,
+            'has_vl': NO,
+        }
+
+    def test_has_who_dx(self):
+        """If has participant is positive then who diganosis CANNOT be Not Applicable."""
+        form = MaternalLabDelDxForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn(
+            'Participant status is POS. Therefore WHO diagnosis CANNOT be Not Applicaple.',
             errors)
