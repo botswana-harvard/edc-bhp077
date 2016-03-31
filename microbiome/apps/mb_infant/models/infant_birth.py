@@ -6,6 +6,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
 from edc_base.model.validators.date import date_not_future
 from edc_constants.choices import GENDER_UNDETERMINED
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_offstudy.models import OffStudyMixin
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
@@ -15,7 +16,7 @@ from microbiome.apps.mb_maternal.models import MaternalLabourDel
 from ..managers import InfantBirthModelManager
 
 
-class InfantBirth(OffStudyMixin, SyncModelMixin, AppointmentMixin, BaseUuidModel):
+class InfantBirth(OffStudyMixin, SyncModelMixin, AppointmentMixin, ExportTrackingFieldsMixin, BaseUuidModel):
     """ A model completed by the user on the infant's birth. """
 
     off_study_model = ('mb_infant', 'InfantOffStudy')

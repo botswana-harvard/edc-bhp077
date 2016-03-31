@@ -5,6 +5,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin, BaseSpecimenConsent
 from edc_consent.models.fields import SampleCollectionFieldsMixin, VulnerabilityFieldsMixin
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
 
@@ -14,7 +15,7 @@ from .maternal_consent import MaternalConsent
 
 
 class SpecimenConsent(BaseSpecimenConsent, SyncModelMixin, SampleCollectionFieldsMixin, RequiresConsentMixin,
-                      VulnerabilityFieldsMixin, AppointmentMixin, BaseUuidModel):
+                      VulnerabilityFieldsMixin, AppointmentMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     """ A model completed by the user when a mother gives consent for specimen storage. """
 

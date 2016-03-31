@@ -3,6 +3,7 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_meta_data.managers import CrfMetaDataManager
 from edc_offstudy.models import OffStudyModelMixin
 from edc_sync.models import SyncModelMixin
@@ -13,7 +14,7 @@ from .maternal_visit import MaternalVisit
 
 
 class MaternalOffStudy(OffStudyModelMixin, CrfModelMixin, SyncModelMixin,
-                       RequiresConsentMixin, BaseUuidModel):
+                       RequiresConsentMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     """ A model completed by the user on the visit when the mother is taken off-study. """
 

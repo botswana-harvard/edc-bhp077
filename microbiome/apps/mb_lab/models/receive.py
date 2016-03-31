@@ -3,6 +3,7 @@ from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
 
@@ -11,7 +12,7 @@ from lis.specimen.lab_receive.models import BaseReceive
 from ..managers import ReceiveManager
 
 
-class Receive(BaseReceive, SyncModelMixin, BaseUuidModel):
+class Receive(BaseReceive, SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     registered_subject = models.ForeignKey(RegisteredSubject, null=True, related_name='microbiome_receive')
 

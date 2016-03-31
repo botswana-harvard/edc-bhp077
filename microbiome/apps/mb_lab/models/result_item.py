@@ -2,6 +2,7 @@ from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_lab.lab_clinic_api.models import TestCode
 from edc_lab.lab_clinic_reference.classes import ClinicReferenceFlag, ClinicGradeFlag
 from edc_sync.models import SyncModelMixin
@@ -12,7 +13,7 @@ from .result import Result
 from ..managers import ResultItemManager
 
 
-class ResultItem(BaseResultItem, SyncModelMixin, BaseUuidModel):
+class ResultItem(BaseResultItem, SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
     """Stores each result item in a result in one-to-many relation with :class:`Result`."""
     test_code = models.ForeignKey(TestCode, related_name='+')
 

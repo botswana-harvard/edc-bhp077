@@ -2,6 +2,7 @@ from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_meta_data.managers import CrfMetaDataManager
 from edc_offstudy.models import OffStudyMixin
 from edc_sync.models import SyncModelMixin
@@ -11,7 +12,7 @@ from .infant_visit import InfantVisit
 
 
 class InfantCrfModel(
-        CrfModelMixin, SyncModelMixin, OffStudyMixin, BaseUuidModel):
+        CrfModelMixin, SyncModelMixin, OffStudyMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     """ A model completed by the user on the infant's scheduled visit. """
 

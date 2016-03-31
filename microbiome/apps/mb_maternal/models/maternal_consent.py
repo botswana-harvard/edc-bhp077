@@ -7,6 +7,7 @@ from edc_consent.models.base_consent import BaseConsent
 from edc_consent.models.fields import (
     PersonalFieldsMixin, CitizenFieldsMixin, ReviewFieldsMixin, VulnerabilityFieldsMixin)
 from edc_consent.models.fields.bw import IdentityFieldsMixin
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_identifier.subject.classes import SubjectIdentifier
 from edc_offstudy.models import OffStudyMixin
 from edc_registration.models import RegisteredSubject
@@ -19,7 +20,7 @@ from ..maternal_choices import RECRUIT_SOURCE, RECRUIT_CLINIC
 
 class MaternalConsent(BaseConsent, SyncModelMixin, OffStudyMixin, ReviewFieldsMixin,
                       IdentityFieldsMixin, PersonalFieldsMixin,
-                      CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
+                      CitizenFieldsMixin, VulnerabilityFieldsMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     """ A model completed by the user on the mother's consent. """
 

@@ -2,6 +2,7 @@ from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_meta_data.managers import RequisitionMetaDataManager
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.models import CrfModelManager, CrfModelMixin
@@ -21,7 +22,7 @@ class InfantRequisitionManager(CrfModelManager):
         return self.get(requisition_identifier=requisition_identifier)
 
 
-class InfantRequisition(CrfModelMixin, RequisitionModelMixin, SyncModelMixin, BaseUuidModel):
+class InfantRequisition(CrfModelMixin, RequisitionModelMixin, SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     aliquot_model = Aliquot
 

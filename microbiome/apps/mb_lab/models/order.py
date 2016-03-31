@@ -4,12 +4,13 @@ from django.utils import timezone
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_sync.models import SyncModelMixin
 
 from ..managers import OrderManager
 
 
-class Order(SyncModelMixin, BaseUuidModel):
+class Order(SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     order_datetime = models.DateTimeField(default=timezone.now)
 
