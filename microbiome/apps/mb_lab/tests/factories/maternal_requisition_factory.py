@@ -3,7 +3,7 @@ import factory
 from django.utils import timezone
 
 from edc_constants.constants import YES
-from edc_lab.lab_clinic_api.tests.factories import PanelFactory
+from edc_lab.lab_clinic_api.tests.factories import PanelFactory, AliquotTypeFactory
 
 from microbiome.apps.mb_lab.models import MaternalRequisition
 from microbiome.apps.mb_maternal.tests.factories import MaternalVisitFactory
