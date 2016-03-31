@@ -20,7 +20,8 @@ from .maternal_visit_crf_meta_data_mixin import MaternalVisitCrfMetaDataMixin
 
 
 class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MaternalVisitCrfMetaDataMixin,
-                    RequiresConsentMixin, CaretakerFieldsMixin, VisitModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
+                    RequiresConsentMixin, CaretakerFieldsMixin, VisitModelMixin,
+                    ExportTrackingFieldsMixin, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 

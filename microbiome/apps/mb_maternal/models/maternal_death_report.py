@@ -11,7 +11,8 @@ from edc_visit_tracking.models.crf_model_mixin import CrfModelMixin
 from .maternal_visit import MaternalVisit
 
 
-class MaternalDeathReport(CrfModelMixin, SyncModelMixin, DeathReportModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
+class MaternalDeathReport(CrfModelMixin, SyncModelMixin, DeathReportModelMixin,
+                          ExportTrackingFieldsMixin, BaseUuidModel):
 
     """ A model completed by the user on the mother's death. """
 

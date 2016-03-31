@@ -22,7 +22,8 @@ class MaternalRequisitionManager(CrfModelManager):
         return self.get(requisition_identifier=requisition_identifier)
 
 
-class MaternalRequisition(CrfModelMixin, RequisitionModelMixin, SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
+class MaternalRequisition(CrfModelMixin, RequisitionModelMixin, SyncModelMixin,
+                          ExportTrackingFieldsMixin, BaseUuidModel):
 
     aliquot_model = Aliquot
 
