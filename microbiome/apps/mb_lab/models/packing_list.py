@@ -2,13 +2,14 @@ from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_lab.lab_packing.models import PackingListMixin
 from edc_sync.models import SyncModelMixin
 
 from ..managers import PackingListManager
 
 
-class PackingList(PackingListMixin, SyncModelMixin, BaseUuidModel):
+class PackingList(PackingListMixin, SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     objects = PackingListManager()
 

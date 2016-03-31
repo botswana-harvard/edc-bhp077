@@ -3,6 +3,7 @@ from django.db import models
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_constants.constants import NOT_APPLICABLE
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_lab.lab_packing.models import BasePackingListItem
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
@@ -18,7 +19,7 @@ from .panel import Panel
 from ..managers import PackingListItemManager
 
 
-class PackingListItem(BasePackingListItem, SyncModelMixin, BaseUuidModel):
+class PackingListItem(BasePackingListItem, SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     packing_list = models.ForeignKey(PackingList, null=True)
 

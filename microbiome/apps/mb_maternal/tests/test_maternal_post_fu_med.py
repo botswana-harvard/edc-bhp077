@@ -1,7 +1,7 @@
 from django.utils import timezone
 
 from edc_appointment.models import Appointment
-from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE
+from edc_constants.choices import YES, NO, POS, NOT_APPLICABLE, OTHER
 
 from microbiome.apps.mb_maternal.forms import MaternalPostFuMedItemsForm
 
@@ -44,6 +44,7 @@ class TestMaternalPostFuMedItems(BaseTestCase):
             'maternal_post_fu_med': self.post_fu_med.id,
             'date_first_medication': timezone.now() - timezone.timedelta(days=2),
             'medication': 'Amoxicillin',
+            'medication_other': '',
             'drug_route': "1",
             'date_stoped': timezone.now()
         }
@@ -60,3 +61,15 @@ class TestMaternalPostFuMedItems(BaseTestCase):
         form = MaternalPostFuMedItemsForm(data=self.data)
         errors = ''.join(form.errors.get('__all__'))
         self.assertIn('Date stopped medication is before date started medications.', errors)
+
+    def test_other_meds_1(self):
+        self.data['medication'] = OTHER
+        form = MaternalPostFuMedItemsForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('If medication is \'OTHER\', please specify', errors)
+
+    def test_other_meds_2(self):
+        self.data['medication_other'] = 'Doxy'
+        form = MaternalPostFuMedItemsForm(data=self.data)
+        errors = ''.join(form.errors.get('__all__'))
+        self.assertIn('You indicated listed medication. You cannot specify other.', errors)

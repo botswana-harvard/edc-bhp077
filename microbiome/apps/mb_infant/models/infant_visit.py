@@ -6,6 +6,7 @@ from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_constants.constants import (
     UNSCHEDULED, SCHEDULED, COMPLETED_PROTOCOL_VISIT, DEAD, POS, MALE, MISSED_VISIT)
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_offstudy.models import OffStudyMixin
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
@@ -22,7 +23,7 @@ from .infant_birth import InfantBirth
 
 class InfantVisit(
         CrfMetaDataMixin, SyncModelMixin, PreviousVisitMixin, OffStudyMixin, VisitModelMixin,
-        CaretakerFieldsMixin, BaseUuidModel):
+        CaretakerFieldsMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     """ A model completed by the user on the infant visits. """
 

@@ -226,7 +226,7 @@ class MaternalLabDelDx(MaternalCrfModel):
             "listed in the WHO Adult/Adolescent HIV clinical staging document which "
             "is/are NOT reported?"),
         max_length=3,
-        choices=YES_NO)
+        choices=YES_NO_NA)
 
     who = models.ManyToManyField(
         WcsDxAdult,

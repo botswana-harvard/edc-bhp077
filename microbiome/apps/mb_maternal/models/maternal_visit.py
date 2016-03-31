@@ -6,6 +6,7 @@ from edc_base.model.models import BaseUuidModel
 from edc_consent.models import RequiresConsentMixin
 from edc_constants.constants import (
     YES, POS, NEG, FAILED_ELIGIBILITY)
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_offstudy.models import OffStudyMixin
 from edc_sync.models import SyncModelMixin
 from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES, COMPLETED_PROTOCOL_VISIT, LOST_VISIT
@@ -19,7 +20,8 @@ from .maternal_visit_crf_meta_data_mixin import MaternalVisitCrfMetaDataMixin
 
 
 class MaternalVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin, MaternalVisitCrfMetaDataMixin,
-                    RequiresConsentMixin, CaretakerFieldsMixin, VisitModelMixin, BaseUuidModel):
+                    RequiresConsentMixin, CaretakerFieldsMixin, VisitModelMixin,
+                    ExportTrackingFieldsMixin, BaseUuidModel):
 
     """ Maternal visit form that links all antenatal/ postnatal follow-up forms """
 

@@ -6,6 +6,7 @@ from django.db.models import get_model
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_base.model.validators import datetime_not_before_study_start, datetime_not_future
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_constants.choices import YES_NO
 from edc_constants.constants import NO
 from edc_registration.models import RegisteredSubject
@@ -16,7 +17,7 @@ from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 from ..managers import MaternalEligibilityManager
 
 
-class MaternalEligibility (SyncModelMixin, BaseUuidModel):
+class MaternalEligibility (SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
     """ A model completed by the user to test and capture the result of the pre-consent eligibility checks.
 
     This model has no PII."""

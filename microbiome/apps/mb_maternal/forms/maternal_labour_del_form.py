@@ -1,7 +1,9 @@
 from dateutil.relativedelta import relativedelta
 from django import forms
 
-from edc_constants.constants import YES, NO, NOT_APPLICABLE
+from edc_constants.constants import YES, NO, NOT_APPLICABLE, POS
+
+from microbiome.apps.mb_dashboard.classes import MaternalDashboard
 
 from ..models import (MaternalLabourDel, MaternalLabDelMed,
                       MaternalLabDelClinic, MaternalLabDelDx,
@@ -166,7 +168,23 @@ class MaternalLabDelDxForm(BaseMaternalModelForm):
         # Validate diagnosis
         if cleaned_data.get('has_preg_dx') == 'Yes' and not check_dx:
             raise forms.ValidationError('You indicated that participant had diagnosis. Please list them.')
+        self.validate_who_dx_vs_status()
         return cleaned_data
+
+    def validate_who_dx_vs_status(self):
+        cleaned_data = self.cleaned_data
+        postnatal_enrollment = PostnatalEnrollment.objects.get(
+            registered_subject__subject_identifier=cleaned_data.get(
+                'maternal_visit').appointment.registered_subject.subject_identifier)
+        if (
+            postnatal_enrollment.current_hiv_status == POS or
+            postnatal_enrollment.week32_result == POS or
+            postnatal_enrollment.rapid_test_result == POS
+        ):
+            if cleaned_data.get('has_who_dx') == NOT_APPLICABLE:
+                raise forms.ValidationError(
+                    'Participant status is POS. Therefore WHO diagnosis CANNOT be Not Applicaple.'
+                )
 
     class Meta:
         model = MaternalLabDelDx

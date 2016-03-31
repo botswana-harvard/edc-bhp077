@@ -22,7 +22,6 @@ class InfantFuPhysicalForm(BaseInfantModelForm):
         self.validate_cardiac_exam()
         self.validate_abdominal_exam()
         self.validate_skin_exam()
-        self.validate_rash_exam()
         self.validate_neuro_exam()
         return cleaned_data
 

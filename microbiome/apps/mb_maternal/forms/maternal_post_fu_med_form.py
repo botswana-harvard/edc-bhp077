@@ -3,7 +3,7 @@ from django import forms
 from base_maternal_model_form import BaseMaternalModelForm
 
 from ..models import MaternalPostFuMed, MaternalPostFuMedItems
-from edc_constants.constants import NO, YES
+from edc_constants.constants import NO, YES, OTHER
 
 
 class MaternalPostFuMedForm(BaseMaternalModelForm):
@@ -32,7 +32,14 @@ class MaternalPostFuMedItemsForm(BaseMaternalModelForm):
             if cleaned_data.get('date_stoped') < cleaned_data.get('date_first_medication'):
                 raise forms.ValidationError(
                     'Date stopped medication is before date started medications. Please correct')
+        self.validate_other_mdeication()
         return cleaned_data
+
+    def validate_other_mdeication(self):
+        cleaned_data = self.cleaned_data
+        if cleaned_data.get('medication') != OTHER:
+            if cleaned_data.get('medication_other'):
+                raise forms.ValidationError('You indicated listed medication. You cannot specify other.')
 
     class Meta:
         model = MaternalPostFuMedItems
