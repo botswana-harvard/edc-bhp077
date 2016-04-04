@@ -25,7 +25,7 @@ def func_infant_hiv_exposed(visit_instance):
     for x in visit_def:
         visit.append(x.code)
 
-    if not (visit_instance.appointment.visit_definition.code in ['2000', '2010']):
+    if not (visit_instance.appointment.visit_definition.code in ['2000']):
         prev_visit_index = visit.index(visit_instance.appointment.visit_definition.code) - 1
 
         prev_infant_visit = InfantVisit.objects.get(
