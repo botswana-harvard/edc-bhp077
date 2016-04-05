@@ -1,8 +1,8 @@
 from .enrollment_helper import EnrollmentHelper, EnrollmentError
+from .maternal_consent import MaternalConsent
 from .maternal_eligibility import MaternalEligibility
 from .maternal_eligibility_loss import MaternalEligibilityLoss
 from .enrollment_loss import AntenatalEnrollmentLoss, PostnatalEnrollmentLoss
-from .maternal_consent import MaternalConsent
 from .specimen_consent import SpecimenConsent
 from .antenatal_enrollment import AntenatalEnrollment
 from .postnatal_enrollment import PostnatalEnrollment
