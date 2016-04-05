@@ -1,0 +1,75 @@
+{% extends "section_administration.html"%}
+{% load admin_urls %}
+{% load url from future %}
+
+{% block admin_sections %}
+    <H5>Appointments</H5>
+    <ul>
+    <li><A href="{% url 'admin:edc_appointment_appointment_changelist' %}?registered_subject__subject_type=maternal">Maternal Appointments</A>
+    &nbsp(<A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=new&registered_subject__subject_type=maternal">New</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=in_progress&registered_subject__subject_type=maternal">In Progress</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=incomplete&registered_subject__subject_type=maternal">Incomplete</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=done&registered_subject__subject_type=maternal">Done</A>)
+    <li><A href="{% url 'admin:edc_appointment_appointment_changelist' %}?registered_subject__subject_type=infant">Infant Appointments</A>
+    &nbsp(<A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=new&registered_subject__subject_type=infant">New</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=in_progress&registered_subject__subject_type=infant">In Progress</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=incomplete&registered_subject__subject_type=infant">Incomplete</A>,&nbsp
+    <A href="{% url 'admin:edc_appointment_appointment_changelist' %}?appt_status__exact=done&registered_subject__subject_type=infant">Done</A>)
+    </ul>
+
+    <H5>Registered Subjects</H5>
+    <ul>
+    <li><A href="{% url 'admin:edc_registration_registeredsubject_changelist' %}?subject_type=maternal">Maternal Registered Subjects</A>
+    <li><A href="{% url 'admin:edc_registration_registeredsubject_changelist' %}?subject_type=maternal">Infant Registered Subjects</A>
+	</ul>
+
+    <H5>Labs</H5>
+    <ul>
+    <li><A href="{% url 'admin:mb_lab_maternalrequisition_changelist' %}">Maternal Requisition</A>
+    <li><A href="{% url 'admin:mb_lab_infantrequisition_changelist' %}">Infant Requisition</A>
+    <li><A href="{% url 'admin:mb_lab_packinglist_changelist' %}">Packing Lists</A>
+    <li><A href="{% url 'admin:mb_lab_aliquot_changelist' %}">Aliquot</A>
+	</ul>
+
+    <H5>Call Manager</H5>
+    <ul>
+    <li><A href="{% url 'admin:edc_call_manager_call_changelist' %}">Call Manager</A>
+    </ul>
+	
+    <H5>Maternal</H5>
+    <ul>
+    Go to <A href="{% url 'admin:app_list' app_label='mb_maternal' %}">All Maternal Forms</A> or select one:
+    <ul>
+    <li><A href="{% url 'admin:mb_maternal_maternaleligibility_changelist' %}">Maternal Eligibility</A>
+    <li><A href="{% url 'admin:mb_maternal_maternaleligibilityloss_changelist' %}">Maternal Eligibility Loss</A>
+    <li><A href="{% url 'admin:mb_maternal_maternalconsent_changelist' %}">Maternal Consents</A>
+    <li><A href="{% url 'admin:mb_maternal_specimenconsent_changelist' %}">Maternal Specimen Consents</A>
+    <li><A href="{% url 'admin:mb_maternal_antenatalenrollment_changelist' %}">Antenatal Enrollment</A>
+    <li><A href="{% url 'admin:mb_maternal_postnatalenrollment_changelist' %}">Postnatal Enrollment</A>
+    <li><A href="{% url 'admin:mb_maternal_maternaloffstudy_changelist' %}">Maternal Off Study</A>
+    <li><A href="{% url 'admin:mb_maternal_maternaldeathreport_changelist' %}">Maternal Death Report</A>
+    </ul>
+    </ul>
+
+    <H5>Infant</H5>
+    <ul>
+    Go to <A href="{% url 'admin:app_list' app_label='mb_infant' %}">All Infant Forms</A> or select one:
+    <ul>
+    <li><A href="{% url 'admin:mb_infant_infantbirth_changelist' %}">Infant Birth</A>
+    <li><A href="{% url 'admin:mb_infant_infantoffstudy_changelist' %}">Infant Off Study</A>
+    <li><A href="{% url 'admin:mb_infant_infantdeathreport_changelist' %}">Infant Death Report</A>
+    </ul>
+    </ul>
+
+{% endblock admin_sections %}
+{% block device_sync %}
+  {% comment %}if you don't want to see this section, override it in the child template {% endcomment %}
+   {% comment %}<H5>Device Synchronization</H5>
+  <ul>
+  <li><A href="{% url 'sync_index_url' %}">Synchronize devices with Community Server (Return)</A></li>
+  {% block device_sync_export %}
+      <li><A href="{% url 'sync_export_outgoing_url' %}">Export outgoing transactions to file</A></li>
+  {% endblock device_sync_export %}
+  {% block device_inspector %}{% endblock device_inspector %}
+  </ul> {% endcomment %}
+{% endblock device_sync %}

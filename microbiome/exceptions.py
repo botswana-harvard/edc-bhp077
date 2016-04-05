@@ -1,0 +1,3 @@
+
+class CreateInfantEligibilityError(Exception):
+    pass
