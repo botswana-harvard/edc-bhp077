@@ -1,8 +1,10 @@
+from datetime import timedelta
 from django.utils import timezone
 
 from edc_appointment.models import Appointment
 from edc_constants.constants import (NEW, YES, POS, NEG, UNKEYED, KEYED, REQUIRED, NOT_REQUIRED, NOT_APPLICABLE, NO)
 from edc_meta_data.models import CrfMetaData, RequisitionMetaData
+from edc_consent.models import ConsentType
 
 from microbiome.apps.mb_maternal.models import RapidTestResult
 
@@ -379,3 +381,60 @@ class TestRuleGroup(BaseTestCase):
             crf_entry__model_name='maternalarvhistory',
             appointment=self.appointment)
         self.assertEqual(meta.entry_status, NOT_REQUIRED)
+
+    def test_showing_maternal_shr_forms(self):
+        self.postnatal_enrollment = PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
+            will_breastfeed=YES
+        )
+        appointment_1000M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
+        appointment_2000M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2000M')
+        appointment_2010M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2010M')
+        MaternalVisitFactory(appointment=appointment_1000M)
+        MaternalVisitFactory(appointment=appointment_2000M)
+        MaternalVisitFactory(appointment=appointment_2010M)
+        meta_reproductive_health = CrfMetaData.objects.get(
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='reproductivehealth',
+            appointment=appointment_2010M)
+        meta_srh = CrfMetaData.objects.get(
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='maternalsrh',
+            appointment=appointment_2010M)
+        self.assertEqual(meta_reproductive_health.entry_status, NOT_REQUIRED)
+        self.assertEqual(meta_srh.entry_status, NOT_REQUIRED)
+        consent_type_latest = ConsentType.objects.all().order_by('-version').first()
+        ConsentType.objects.create(
+            app_label='mb_maternal',
+            model_name='maternalconsent',
+            start_datetime=consent_type_latest.end_datetime + timedelta(days=1),
+            end_datetime=consent_type_latest.end_datetime + timedelta(days=3),
+            version=int(self.maternal_consent.version) + 1)
+        MaternalConsentFactory(
+            identity=self.maternal_consent.identity, confirm_identity=self.maternal_consent.confirm_identity,
+            registered_subject=self.maternal_consent.registered_subject,
+            consent_datetime=consent_type_latest.end_datetime + timedelta(days=2))
+
+        appointment_2030M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2030M')
+        MaternalVisitFactory(appointment=appointment_2030M)
+        meta_reproductive_health = CrfMetaData.objects.get(
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='reproductivehealth',
+            appointment=appointment_2030M)
+        meta_srh = CrfMetaData.objects.get(
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='maternalsrh',
+            appointment=appointment_2030M)
+        self.assertEqual(meta_reproductive_health.entry_status, UNKEYED)
+        self.assertEqual(meta_srh.entry_status, UNKEYED)
