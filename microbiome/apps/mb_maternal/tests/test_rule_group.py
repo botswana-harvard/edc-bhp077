@@ -1,8 +1,10 @@
+from datetime import timedelta
 from django.utils import timezone
 
 from edc_appointment.models import Appointment
 from edc_constants.constants import (NEW, YES, POS, NEG, UNKEYED, KEYED, REQUIRED, NOT_REQUIRED, NOT_APPLICABLE, NO)
 from edc_meta_data.models import CrfMetaData, RequisitionMetaData
+from edc_consent.models import ConsentType
 
 from microbiome.apps.mb_maternal.models import RapidTestResult
 
@@ -238,31 +240,6 @@ class TestRuleGroup(BaseTestCase):
             lab_entry__requisition_panel__name='Breast Milk (Storage)',
             appointment=appointment).count(), 1)
 
-    def test_srh_referral_yes_on_srh(self):
-        """
-        """
-        PostnatalEnrollmentFactory(
-            registered_subject=self.registered_subject,
-            rapid_test_done=YES,
-            will_breastfeed=YES,
-            rapid_test_result=POS)
-        appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='1000M')
-        MaternalVisitFactory(appointment=appointment)
-        appointment = Appointment.objects.get(
-            registered_subject=self.registered_subject, visit_definition__code='2000M')
-        MaternalVisitFactory(appointment=appointment)
-        for code in ['2010M', '2030M']:
-            appointment = Appointment.objects.get(
-                registered_subject=self.registered_subject, visit_definition__code=code)
-            ReproductiveHealthFactory(
-                maternal_visit=MaternalVisitFactory(appointment=appointment))
-            self.assertEqual(CrfMetaData.objects.filter(
-                entry_status=NEW,
-                crf_entry__app_label='mb_maternal',
-                crf_entry__model_name='maternalsrh',
-                appointment=appointment).count(), 1)
-
     def test_maternal_arv_history_1(self):
         """Maternal ARV history should be required if prior_health_haart is answered as YES"""
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
@@ -280,9 +257,8 @@ class TestRuleGroup(BaseTestCase):
             maternal_visit=self.maternal_visit,
             prev_preg_azt=YES,
             prev_sdnvp_labour=NO,
-            prev_preg_haart=YES,
-            lowest_cd4_known=NO,
             prior_health_haart=YES,
+            lowest_cd4_known=NO,
             prev_pregnancy_arv=NO,
             know_hiv_status='Nobody',
         )
@@ -379,3 +355,112 @@ class TestRuleGroup(BaseTestCase):
             crf_entry__model_name='maternalarvhistory',
             appointment=self.appointment)
         self.assertEqual(meta.entry_status, NOT_REQUIRED)
+
+    def test_showing_maternal_reproductivehealth_form(self):
+        self.postnatal_enrollment = PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
+            will_breastfeed=YES
+        )
+        appointment_1000M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
+        appointment_2000M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2000M')
+        appointment_2010M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2010M')
+        MaternalVisitFactory(appointment=appointment_1000M)
+        MaternalVisitFactory(appointment=appointment_2000M)
+        MaternalVisitFactory(appointment=appointment_2010M)
+        meta_reproductive_health = CrfMetaData.objects.get(
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='reproductivehealth',
+            appointment=appointment_2010M)
+        self.assertEqual(meta_reproductive_health.entry_status, NOT_REQUIRED)
+        consent_type_latest = ConsentType.objects.all().order_by('-version').first()
+        ConsentType.objects.create(
+            app_label='mb_maternal',
+            model_name='maternalconsent',
+            start_datetime=consent_type_latest.end_datetime + timedelta(days=1),
+            end_datetime=consent_type_latest.end_datetime + timedelta(days=3),
+            version=int(self.maternal_consent.version) + 1)
+        MaternalConsentFactory(
+            identity=self.maternal_consent.identity, confirm_identity=self.maternal_consent.confirm_identity,
+            registered_subject=self.maternal_consent.registered_subject,
+            consent_datetime=consent_type_latest.end_datetime + timedelta(days=2))
+
+        appointment_2030M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2030M')
+        MaternalVisitFactory(appointment=appointment_2030M)
+        meta_reproductive_health = CrfMetaData.objects.get(
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='reproductivehealth',
+            appointment=appointment_2030M)
+        self.assertEqual(meta_reproductive_health.entry_status, UNKEYED)
+
+    def test_showing_maternal_maternalsrh_form(self):
+        self.postnatal_enrollment = PostnatalEnrollmentFactory(
+            registered_subject=self.registered_subject,
+            current_hiv_status=POS,
+            evidence_hiv_status=YES,
+            rapid_test_done=NOT_APPLICABLE,
+            will_breastfeed=YES
+        )
+        appointment_1000M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='1000M')
+        appointment_2000M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2000M')
+        appointment_2010M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2010M')
+        MaternalVisitFactory(appointment=appointment_1000M)
+        MaternalVisitFactory(appointment=appointment_2000M)
+        maternal_visit_2010M = MaternalVisitFactory(appointment=appointment_2010M)
+        consent_type_latest = ConsentType.objects.all().order_by('-version').first()
+        ConsentType.objects.create(
+            app_label='mb_maternal',
+            model_name='maternalconsent',
+            start_datetime=consent_type_latest.end_datetime + timedelta(days=1),
+            end_datetime=consent_type_latest.end_datetime + timedelta(days=3),
+            version=int(self.maternal_consent.version) + 1)
+        MaternalConsentFactory(
+            identity=self.maternal_consent.identity, confirm_identity=self.maternal_consent.confirm_identity,
+            registered_subject=self.maternal_consent.registered_subject,
+            consent_datetime=consent_type_latest.end_datetime + timedelta(days=2))
+        ReproductiveHealthFactory(maternal_visit=maternal_visit_2010M, srh_referral=YES)
+        appointment_2030M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2030M')
+        maternal_visit_2030M = MaternalVisitFactory(appointment=appointment_2030M)
+        meta_srh = CrfMetaData.objects.get(
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='maternalsrh',
+            appointment=appointment_2030M)
+        self.assertEqual(meta_srh.entry_status, UNKEYED)
+        ReproductiveHealthFactory(maternal_visit=maternal_visit_2030M, srh_referral=NO)
+        appointment_2060M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2060M')
+        maternal_visit_2060M = MaternalVisitFactory(appointment=appointment_2060M)
+        meta_srh = CrfMetaData.objects.get(
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='maternalsrh',
+            appointment=appointment_2060M)
+        self.assertEqual(meta_srh.entry_status, NOT_REQUIRED)
+        ReproductiveHealthFactory(maternal_visit=maternal_visit_2060M, srh_referral=YES)
+        appointment_2090M = Appointment.objects.get(
+            registered_subject=self.registered_subject,
+            visit_definition__code='2090M')
+        MaternalVisitFactory(appointment=appointment_2090M)
+        meta_srh = CrfMetaData.objects.get(
+            crf_entry__app_label='mb_maternal',
+            crf_entry__model_name='maternalsrh',
+            appointment=appointment_2090M)
+        self.assertEqual(meta_srh.entry_status, UNKEYED)

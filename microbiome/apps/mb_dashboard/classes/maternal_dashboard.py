@@ -64,7 +64,8 @@ class MaternalDashboard(RegisteredSubjectDashboard):
     def consent(self):
         self._consent = None
         try:
-            self._consent = MaternalConsent.objects.get(subject_identifier=self.subject_identifier)
+            self._consent = MaternalConsent.objects.filter(
+                subject_identifier=self.subject_identifier).order_by('-version').first()
         except MaternalConsent.DoesNotExist:
             self._consent = None
         return self._consent

@@ -54,7 +54,7 @@ class InfantDashboard(RegisteredSubjectDashboard):
 
     @property
     def maternal_consent(self):
-        return MaternalConsent.objects.get(subject_identifier=self.maternal_identifier)
+        return MaternalConsent.objects.filter(subject_identifier=self.maternal_identifier).order_by('-version').first()
 
     @property
     def subject_identifier(self):

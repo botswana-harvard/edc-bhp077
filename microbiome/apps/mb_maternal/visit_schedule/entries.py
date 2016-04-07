@@ -9,8 +9,8 @@ maternal_history_entries = (
     CrfTuple(50L, u'mb_maternal', u'maternalobstericalhistory', REQUIRED, NOT_ADDITIONAL),
     CrfTuple(60L, u'mb_maternal', u'maternalclinicalhistory', NOT_REQUIRED, NOT_ADDITIONAL),
     CrfTuple(70L, u'mb_maternal', u'maternalarvhistory', NOT_REQUIRED, ADDITIONAL),
-    CrfTuple(200L, u'mb_maternal', u'maternaldeathreport', NOT_REQUIRED, ADDITIONAL),
-    CrfTuple(210L, u'mb_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL))
+    CrfTuple(100L, u'mb_maternal', u'maternaldeathreport', NOT_REQUIRED, ADDITIONAL),
+    CrfTuple(110L, u'mb_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL))
 
 maternal_delivery_entries = (
     CrfTuple(10L, u'mb_maternal', u'maternallabourdel', REQUIRED, NOT_ADDITIONAL),
@@ -22,8 +22,10 @@ maternal_delivery_entries = (
     CrfTuple(50L, u'mb_maternal', u'maternalarvpreg', NOT_REQUIRED, ADDITIONAL),
     CrfTuple(70L, u'mb_maternal', u'maternalbreasthealth', REQUIRED, NOT_ADDITIONAL),
     CrfTuple(80L, u'mb_maternal', u'maternalpostfumed', REQUIRED, NOT_ADDITIONAL),
-    CrfTuple(200L, u'mb_maternal', u'maternaldeathreport', NOT_REQUIRED, ADDITIONAL),
-    CrfTuple(210L, u'mb_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL))
+    CrfTuple(100L, u'mb_maternal', u'maternaldeathreport', NOT_REQUIRED, ADDITIONAL),
+    CrfTuple(110L, u'mb_maternal', u'maternaloffstudy', NOT_REQUIRED, ADDITIONAL),
+    CrfTuple(120L, u'mb_maternal', u'reproductivehealth', NOT_REQUIRED, ADDITIONAL),
+    CrfTuple(130L, u'mb_maternal', u'maternalsrh', NOT_REQUIRED, ADDITIONAL))
 
 maternal_monthly_entries = (
     CrfTuple(10L, u'mb_maternal', u'maternalpostfu', REQUIRED, NOT_ADDITIONAL),

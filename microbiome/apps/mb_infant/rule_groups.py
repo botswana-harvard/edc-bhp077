@@ -112,7 +112,7 @@ class StoolStorageRequisitionRuleGroup(RuleGroup):
 site_rule_groups.register(StoolStorageRequisitionRuleGroup)
 
 
-class RegisteredSubjectRuleGroup(RuleGroup):
+class InfantRegisteredSubjectRuleGroup(RuleGroup):
 
     arv_proph = CrfRule(
         logic=Logic(
@@ -126,4 +126,4 @@ class RegisteredSubjectRuleGroup(RuleGroup):
         source_fk = None
         source_model = RegisteredSubject
 
-site_rule_groups.register(RegisteredSubjectRuleGroup)
+site_rule_groups.register(InfantRegisteredSubjectRuleGroup)
