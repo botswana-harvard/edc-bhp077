@@ -3,9 +3,9 @@ from datetime import date
 
 from edc_registration.models import RegisteredSubject
 from edc_appointment.models import Appointment
-from edc_constants.constants import YES, POS, NO, UNKNOWN, NOT_APPLICABLE
+from edc_constants.constants import YES, POS, NO
 
-from microbiome.apps.mb.constants import INFANT
+from microbiome.apps.mb.constants import INFANT, NO_MODIFICATIONS
 from microbiome.apps.mb_infant.forms import (InfantArvProphForm, InfantArvProphModForm)
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
@@ -95,3 +95,23 @@ class TestInfantArvProph(BaseTestCase):
         infant_arv_proph = InfantArvProphModForm(data=self.data)
         self.assertIn(u'You entered an ARV Code, please give the modification reason.',
                       infant_arv_proph.errors.get('__all__'))
+
+    def test_validate_infant_arv_proph_no_mod(self):
+        """Test if the infant arv status was not modified but Arv Code given on inline."""
+        self.data['prophylatic_nvp'] = YES
+        self.data['arv_status'] = NO_MODIFICATIONS
+        self.data['infantarvprophmod_set-0-arv_code'] = 'Nevirapine'
+        infant_arv_proph = InfantArvProphForm(data=self.data)
+        self.assertIn(u'Infant ARV prophylaxis was NOT modified do not fill Infant NVP or AZT Proph Mods',
+                      infant_arv_proph.errors.get('__all__'))
+
+    def test_validate_infant_arv_proph_mod_dose_status_new(self):
+        """Test if the infant arv status was discontinued but dose status not Permanently discontinued on inline."""
+        self.data['prophylatic_nvp'] = YES
+        self.data['arv_status'] = 'discontinued'
+        self.data['infantarvprophmod_set-0-arv_code'] = 'Nevirapine'
+        self.data['infantarvprophmod_set-0-dose_status'] = 'New'
+        infant_arv_proph = InfantArvProphForm(data=self.data)
+        self.assertIn(
+            u'Prophylaxis status is Permanently discontinued, Mods dose status should also be Permanently discontinued',
+            infant_arv_proph.errors.get('__all__'))
