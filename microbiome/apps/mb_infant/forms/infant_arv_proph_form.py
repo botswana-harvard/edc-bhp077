@@ -25,11 +25,21 @@ class InfantArvProphForm(BaseInfantModelForm):
 
     def validate_infant_arv_proph_mod(self):
         cleaned_data = self.cleaned_data
-        arv_proph_mods_table = self.data.get('infantarvprophmod_set-0-arv_code')
+        arv_proph_mods_table_arv_code = self.data.get('infantarvprophmod_set-0-arv_code')
+        arv_proph_mods_table_dose_status = self.data.get('infantarvprophmod_set-0-dose_status')
         if cleaned_data.get('arv_status') == 'modified':
-            if not arv_proph_mods_table:
+            if not arv_proph_mods_table_arv_code:
                 raise forms.ValidationError("You indicated that the infant arv was modified, please "
                                             "give a valid Arv Code")
+        if cleaned_data.get('arv_status') == 'discontinued':
+            if arv_proph_mods_table_dose_status not in ['Permanently discontinued']:
+                raise forms.ValidationError(
+                    'Prophylaxis status is Permanently discontinued, Mods dose status should also be '
+                    'Permanently discontinued')
+        if cleaned_data.get('arv_status') in [NO_MODIFICATIONS, 'never started', NOT_APPLICABLE]:
+            if arv_proph_mods_table_arv_code:
+                raise forms.ValidationError(
+                    'Infant ARV prophylaxis was NOT modified do not fill Infant NVP or AZT Proph Mods')
 
     class Meta:
         model = InfantArvProph

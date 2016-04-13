@@ -82,7 +82,8 @@ class MaternalConsentAdmin(BaseModelAdmin):
             fields=[],
             delimiter=',',
             exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
-                     'hostname_modified', 'last_name', 'identity', 'confirm_identity', 'first_name'],
+                     'hostname_modified', 'last_name', 'identity', 'confirm_identity', 'first_name', 'legal_marriage',
+                     'marriage_certificate', 'marriage_certificate_no'],
             extra_fields=OrderedDict(
                 {'subject_identifier': 'registered_subject__subject_identifier',
                  'gender': 'registered_subject__gender',
