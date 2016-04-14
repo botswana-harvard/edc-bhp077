@@ -75,8 +75,14 @@ class AppConfiguration(BaseAppConfiguration):
         {'app_label': 'mb_maternal',
          'model_name': 'maternalconsent',
          'start_datetime': study_start_datetime,
+         'end_datetime': datetime(2016, 4, 15),
+         'version': '1'},
+        {'app_label': 'mb_maternal',
+         'model_name': 'maternalconsent',
+         'start_datetime': datetime(2016, 4, 16),
          'end_datetime': study_end_datetime,
-         'version': '1'}]
+         'version': '2'}
+    ]
 
     study_site_setup = []
 
