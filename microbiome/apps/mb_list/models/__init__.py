@@ -7,3 +7,4 @@ from .infant_vaccines import InfantVaccines
 from .maternal_lab_del import HealthCond, DelComp, ObComp, LabDelDx
 from .prior_arv import PriorArv
 from .supplements import Supplements
+from .maternal_relatives import MaternalRelatives
