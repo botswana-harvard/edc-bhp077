@@ -357,8 +357,13 @@ class TestRuleGroup(BaseTestCase):
         self.assertEqual(meta.entry_status, NOT_REQUIRED)
 
     def test_showing_maternal_reproductivehealth_form(self):
+        consent_type_latest = ConsentType.objects.all().order_by('-version').first()
+        consent_type_previous = ConsentType.objects.get(version=int(consent_type_latest.version) - 1)
+        self.maternal_consent.consent_datetime = consent_type_previous.end_datetime - timedelta(days=1)
+        self.maternal_consent.save()
         self.postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
+            report_datetime=consent_type_previous.end_datetime - timedelta(days=1),
             current_hiv_status=POS,
             evidence_hiv_status=YES,
             rapid_test_done=NOT_APPLICABLE,
@@ -373,30 +378,27 @@ class TestRuleGroup(BaseTestCase):
         appointment_2010M = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='2010M')
-        MaternalVisitFactory(appointment=appointment_1000M)
-        MaternalVisitFactory(appointment=appointment_2000M)
-        MaternalVisitFactory(appointment=appointment_2010M)
+        MaternalVisitFactory(appointment=appointment_1000M,
+                             report_datetime=consent_type_previous.end_datetime - timedelta(days=1),)
+        MaternalVisitFactory(appointment=appointment_2000M,
+                             report_datetime=consent_type_previous.end_datetime - timedelta(days=1),)
+        MaternalVisitFactory(appointment=appointment_2010M,
+                             report_datetime=consent_type_previous.end_datetime - timedelta(days=1),)
         meta_reproductive_health = CrfMetaData.objects.get(
             crf_entry__app_label='mb_maternal',
             crf_entry__model_name='reproductivehealth',
             appointment=appointment_2010M)
         self.assertEqual(meta_reproductive_health.entry_status, NOT_REQUIRED)
-        consent_type_latest = ConsentType.objects.all().order_by('-version').first()
-        ConsentType.objects.create(
-            app_label='mb_maternal',
-            model_name='maternalconsent',
-            start_datetime=consent_type_latest.end_datetime + timedelta(days=1),
-            end_datetime=consent_type_latest.end_datetime + timedelta(days=3),
-            version=int(self.maternal_consent.version) + 1)
         MaternalConsentFactory(
             identity=self.maternal_consent.identity, confirm_identity=self.maternal_consent.confirm_identity,
             registered_subject=self.maternal_consent.registered_subject,
-            consent_datetime=consent_type_latest.end_datetime + timedelta(days=2))
+            consent_datetime=consent_type_latest.start_datetime + timedelta(days=2))
 
         appointment_2030M = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='2030M')
-        MaternalVisitFactory(appointment=appointment_2030M)
+        MaternalVisitFactory(appointment=appointment_2030M,
+                             report_datetime=consent_type_latest.start_datetime + timedelta(days=3))
         meta_reproductive_health = CrfMetaData.objects.get(
             crf_entry__app_label='mb_maternal',
             crf_entry__model_name='reproductivehealth',

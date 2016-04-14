@@ -173,7 +173,7 @@ class TestOffStudy(BaseTestCase):
             offstudy_form.errors.get("__all__"))
 
     def test_validate_offstudy_date_consent_datetime(self):
-        self.maternal_consent.consent_datetime = timezone.now() - relativedelta(weeks=1)
+        self.maternal_consent.consent_datetime = timezone.now() - relativedelta(hours=1)
         self.maternal_consent.save()
         PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
