@@ -6,9 +6,8 @@ from edc_appointment.models import Appointment
 from .models import MaternalVisit, ReproductiveHealth, MaternalClinicalHistory, MaternalConsent
 
 
-def get_previous_visit(visit_instance):
+def get_previous_visit(visit_instance, timepoints, visit_model):
     registered_subject = visit_instance.appointment.registered_subject
-    timepoints = ['1000M', '2000M', '2010M', '2030M', '2060M', '2090M', '2120M']
     position = timepoints.index(visit_instance.appointment.visit_definition.code)
     timepoints_slice = timepoints[:position]
     if len(timepoints_slice) > 1:
@@ -17,10 +16,10 @@ def get_previous_visit(visit_instance):
         try:
             previous_appointment = Appointment.objects.get(registered_subject=registered_subject,
                                                            visit_definition__code=point)
-            return MaternalVisit.objects.get(appointment=previous_appointment)
+            return visit_model.objects.get(appointment=previous_appointment)
         except Appointment.DoesNotExist:
             pass
-        except MaternalVisit.DoesNotExist:
+        except visit_model.DoesNotExist:
             pass
         except AttributeError:
             pass
@@ -35,7 +34,9 @@ def func_show_srh_forms(visit_instance):
 
 def func_show_srh_services_utilization(visit_instance):
     """Returns True if participant was referred to shr in the last visit."""
-    previous_visit = get_previous_visit(visit_instance)
+    previous_visit = get_previous_visit(visit_instance,
+                                        ['1000M', '2000M', '2010M', '2030M', '2060M', '2090M', '2120M'],
+                                        MaternalVisit)
     if not previous_visit:
         return False
     try:

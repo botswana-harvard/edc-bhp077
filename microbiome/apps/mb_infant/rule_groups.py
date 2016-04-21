@@ -4,8 +4,10 @@ from edc_registration.models import RegisteredSubject
 from edc_rule_groups.classes import (RuleGroup, site_rule_groups, Logic, CrfRule, RequisitionRule)
 from edc_visit_schedule.models import VisitDefinition
 
+from microbiome.apps.mb_maternal.rule_groups import get_previous_visit
 from microbiome.apps.mb_maternal.models import PostnatalEnrollment
 
+from ..mb.constants import DISCONTINUED
 from .models import (InfantBirthData, InfantVisit, InfantFu, InfantStoolCollection, InfantArvProph)
 
 
@@ -18,39 +20,19 @@ def func_maternal_hiv_pos(visit_instance):
     return postnatal_enrollment.enrollment_hiv_status == POS
 
 
-def func_infant_hiv_exposed(visit_instance):
-    """Returns true if the infant is HIV-exposed uninfected"""
-    visit_def = VisitDefinition.objects.filter(grouping='infant')
-    visit = []
-    for x in visit_def:
-        visit.append(x.code)
-
-    if not (visit_instance.appointment.visit_definition.code in ['2000']):
-        prev_visit_index = visit.index(visit_instance.appointment.visit_definition.code) - 1
-
-        prev_infant_visit = InfantVisit.objects.get(
-            appointment__registered_subject=visit_instance.appointment.registered_subject,
-            appointment__visit_definition__code=visit[prev_visit_index])
-
-        try:
-            prev_crf_entry = CrfMetaData.objects.get(
-                registered_subject=visit_instance.appointment.registered_subject,
-                appointment=prev_infant_visit.appointment,
-                crf_entry__model_name='infantarvproph')
-
-            if prev_crf_entry.entry_status == NOT_REQUIRED:
-                return True
-        except CrfMetaData.DoesNotExist:
-            pass
-
-        try:
-            infant_arv_proph = InfantArvProph.objects.get(infant_visit=prev_infant_visit)
-            if func_maternal_hiv_pos(visit_instance) and infant_arv_proph.arv_status == 'discontinued':
-                return True
-        except InfantArvProph.DoesNotExist:
-            """If InfantArvProph does not exist then it was not_required in previous visit"""
-            pass
-    return False
+def func_show_infant_arv_proph(visit_instance):
+    previous_visit = get_previous_visit(visit_instance,
+                                        ['2000', '2010', '2030', '2060', '2090', '2120'],
+                                        InfantVisit)
+    if not previous_visit:
+        return False
+    try:
+        intant_arv_proph = InfantArvProph.objects.get(infant_visit=previous_visit)
+        return intant_arv_proph.arv_status == DISCONTINUED
+    except InfantArvProph.DoesNotExist:
+        if visit_instance.appointment.visit_definition.code == '2010':
+            return False
+        return True
 
 
 class InfantBirthDataRuleGroup(RuleGroup):
@@ -116,7 +98,7 @@ class InfantRegisteredSubjectRuleGroup(RuleGroup):
 
     arv_proph = CrfRule(
         logic=Logic(
-            predicate=func_infant_hiv_exposed,
+            predicate=func_show_infant_arv_proph,
             consequence=NOT_REQUIRED,
             alternative=UNKEYED),
         target_model=[('mb_infant', 'infantarvproph')])
