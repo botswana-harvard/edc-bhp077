@@ -102,8 +102,8 @@ class TestInfantDeathReportForm(BaseTestCase):
         """Test participant hospitalized and reason given but number of days hospitalized not
             given"""
         self.data['participant_hospitalized'] = YES
-        reason_hospitalized = ReasonHospitalized.objects.get(
-            name__icontains='Sepsis (unspecified)')
+        reason_hospitalized = ReasonHospitalized.objects.create(
+            name='Sepsis (unspecified)')
         self.data['reason_hospitalized'] = reason_hospitalized.id
         self.data['days_hospitalized'] = 0
         infant_death_form = InfantDeathReportForm(data=self.data)
@@ -115,8 +115,8 @@ class TestInfantDeathReportForm(BaseTestCase):
     def test_not_hospitalized_but_reason_given(self):
         """Test participant not hospitalized but hospilization reason given"""
         self.data['participant_hospitalized'] = NO
-        reason_hospitalized = ReasonHospitalized.objects.get(
-            name__icontains='Sepsis (unspecified)')
+        reason_hospitalized = ReasonHospitalized.objects.create(
+            name='Sepsis (unspecified)')
         self.data['reason_hospitalized'] = reason_hospitalized.id
         infant_death_form = InfantDeathReportForm(data=self.data)
         self.assertIn(

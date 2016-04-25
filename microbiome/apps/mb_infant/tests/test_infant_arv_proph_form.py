@@ -5,14 +5,15 @@ from edc_registration.models import RegisteredSubject
 from edc_appointment.models import Appointment
 from edc_constants.constants import YES, POS, NO
 
-from microbiome.apps.mb.constants import INFANT, NO_MODIFICATIONS
+from microbiome.apps.mb.constants import INFANT, NO_MODIFICATIONS, MODIFIED
 from microbiome.apps.mb_infant.forms import (InfantArvProphForm, InfantArvProphModForm)
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 
-from microbiome.apps.mb_infant.tests.factories import (InfantBirthFactory, InfantVisitFactory)
+from microbiome.apps.mb_infant.tests.factories import (InfantBirthFactory, InfantVisitFactory, InfantArvProphFactory)
 
+from ...mb.constants import NEVER_STARTED
 from .base_test_case import BaseTestCase
 
 
@@ -59,59 +60,67 @@ class TestInfantArvProph(BaseTestCase):
     def test_validate_taking_arv_proph_no(self):
         """Test if the infant was not taking prophylactic arv and arv status is not Not Applicable"""
         self.data['prophylatic_nvp'] = NO
-        self.data['arv_status'] = 'modified'
+        self.data['arv_status'] = MODIFIED
         infant_arv_proph = InfantArvProphForm(data=self.data)
-        self.assertIn(u'Infant was not taking prophylactic arv, prophylaxis should be Not Applicable.',
+        self.assertIn(u'Infant was not taking prophylactic arv, prophylaxis should be Never Started.',
                       infant_arv_proph.errors.get('__all__'))
 
-    def test_validate_infant_arv_proph_mod(self):
-        """Test if the infant arv status was modified but no Arv Code given on inline."""
+    def test_validate_taking_arv_proph_yes(self):
+        """Test if the infant was not taking prophylactic arv and arv status is Never Started"""
         self.data['prophylatic_nvp'] = YES
-        self.data['arv_status'] = 'modified'
+        self.data['arv_status'] = NEVER_STARTED
         infant_arv_proph = InfantArvProphForm(data=self.data)
-        self.assertIn(u'You indicated that the infant arv was modified, please give a valid Arv Code',
+        self.assertIn(u'Infant was never on prophylactic arv, cannot choose Never Started.',
                       infant_arv_proph.errors.get('__all__'))
+
+#     def test_validate_infant_arv_proph_mod(self):
+#         """Test if the infant arv status was modified but no Arv Code given on inline."""
+#         self.data['prophylatic_nvp'] = YES
+#         self.data['arv_status'] = MODIFIED
+#         infant_arv_proph = InfantArvProphForm(data=self.data)
+#         self.assertIn(u'You indicated that the infant arv was modified, please give a valid Arv Code',
+#                       infant_arv_proph.errors.get('__all__'))
 
     def test_validate_infant_arv_proph_mod_dose_status(self):
-        self.data['arv_code'] = 'Nevirapine'
-        self.data['dose_status'] = None
-        infant_arv_proph = InfantArvProphModForm(data=self.data)
+        proph = InfantArvProphFactory(infant_visit=self.infant_visit, arv_status=MODIFIED)
+        inline_data = {'infant_arv_proph': proph.id,
+                       'arv_code': 'Nevirapine',
+                       'dose_status': None,
+                       'modification_date': date.today(),
+                       'modification_code': 'Initial dose'}
+        infant_arv_proph = InfantArvProphModForm(data=inline_data)
         self.assertIn(u'You entered an ARV Code, please give the dose status.',
                       infant_arv_proph.errors.get('__all__'))
 
     def test_validate_infant_arv_proph_mod_date(self):
-        self.data['arv_code'] = 'Nevirapine'
-        self.data['dose_status'] = 'New'
-        self.data['modification_date'] = None
-        infant_arv_proph = InfantArvProphModForm(data=self.data)
+        proph = InfantArvProphFactory(infant_visit=self.infant_visit, arv_status=MODIFIED)
+        inline_data = {'infant_arv_proph': proph.id,
+                       'arv_code': 'Nevirapine',
+                       'dose_status': 'New',
+                       'modification_date': None,
+                       'modification_code': 'Initial dose'}
+        infant_arv_proph = InfantArvProphModForm(data=inline_data)
         self.assertIn(u'You entered an ARV Code, please give the modification date.',
                       infant_arv_proph.errors.get('__all__'))
 
     def test_validate_infant_arv_proph_mod_code(self):
-        self.data['arv_code'] = 'Nevirapine'
-        self.data['dose_status'] = 'New'
-        self.data['modification_date'] = date.today()
-        self.data['modification_code'] = None
-        infant_arv_proph = InfantArvProphModForm(data=self.data)
+        proph = InfantArvProphFactory(infant_visit=self.infant_visit, arv_status=MODIFIED)
+        inline_data = {'infant_arv_proph': proph.id,
+                       'arv_code': 'Nevirapine',
+                       'dose_status': 'New',
+                       'modification_date': date.today(),
+                       'modification_code': None}
+        infant_arv_proph = InfantArvProphModForm(data=inline_data)
         self.assertIn(u'You entered an ARV Code, please give the modification reason.',
                       infant_arv_proph.errors.get('__all__'))
 
-    def test_validate_infant_arv_proph_no_mod(self):
-        """Test if the infant arv status was not modified but Arv Code given on inline."""
-        self.data['prophylatic_nvp'] = YES
-        self.data['arv_status'] = NO_MODIFICATIONS
-        self.data['infantarvprophmod_set-0-arv_code'] = 'Nevirapine'
-        infant_arv_proph = InfantArvProphForm(data=self.data)
-        self.assertIn(u'Infant ARV prophylaxis was NOT modified do not fill Infant NVP or AZT Proph Mods',
+    def test_validate_infant_arv_proph_mod_not_needed(self):
+        proph = InfantArvProphFactory(infant_visit=self.infant_visit, arv_status=NO_MODIFICATIONS)
+        inline_data = {'infant_arv_proph': proph.id,
+                       'arv_code': 'Nevirapine',
+                       'dose_status': 'New',
+                       'modification_date': date.today(),
+                       'modification_code': 'Initial dose'}
+        infant_arv_proph = InfantArvProphModForm(data=inline_data)
+        self.assertIn(u'You did NOT indicate that medication was modified, so do not ENTER arv inline.',
                       infant_arv_proph.errors.get('__all__'))
-
-    def test_validate_infant_arv_proph_mod_dose_status_new(self):
-        """Test if the infant arv status was discontinued but dose status not Permanently discontinued on inline."""
-        self.data['prophylatic_nvp'] = YES
-        self.data['arv_status'] = 'discontinued'
-        self.data['infantarvprophmod_set-0-arv_code'] = 'Nevirapine'
-        self.data['infantarvprophmod_set-0-dose_status'] = 'New'
-        infant_arv_proph = InfantArvProphForm(data=self.data)
-        self.assertIn(
-            u'Prophylaxis status is Permanently discontinued, Mods dose status should also be Permanently discontinued',
-            infant_arv_proph.errors.get('__all__'))
