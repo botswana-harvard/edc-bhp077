@@ -70,7 +70,7 @@ class TestInfantArvProph(BaseTestCase):
         self.data['prophylatic_nvp'] = YES
         self.data['arv_status'] = NEVER_STARTED
         infant_arv_proph = InfantArvProphForm(data=self.data)
-        self.assertIn(u'Infant was never on prophylactic arv, cannot choose Never Started.',
+        self.assertIn(u'Infant has been on prophylactic arv, cannot choose Never Started.',
                       infant_arv_proph.errors.get('__all__'))
 
 #     def test_validate_infant_arv_proph_mod(self):

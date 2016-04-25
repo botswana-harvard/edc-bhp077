@@ -40,6 +40,8 @@ class MaternalConsentAdmin(BaseModelAdmin):
               'consent_signature',
               'consent_copy')
 
+    search_fields = ('registered_subject__subject_identifier', 'id', 'identity', 'first_name', 'last_name')
+
     radio_fields = {
         'assessment_score': admin.VERTICAL,
         'citizen': admin.VERTICAL,

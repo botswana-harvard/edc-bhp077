@@ -27,7 +27,7 @@ class InfantArvProphForm(BaseInfantModelForm):
     def validate_taking_arv_proph_yes(self):
         cleaned_data = self.cleaned_data
         if cleaned_data.get('prophylatic_nvp') == YES and cleaned_data.get('arv_status') == NEVER_STARTED:
-            raise forms.ValidationError('Infant was never on prophylactic arv, cannot choose Never Started.')
+            raise forms.ValidationError('Infant has been on prophylactic arv, cannot choose Never Started.')
 
     class Meta:
         model = InfantArvProph
