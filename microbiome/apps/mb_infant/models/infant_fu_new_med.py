@@ -77,4 +77,3 @@ class InfantFuNewMedItems(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
         app_label = 'mb_infant'
         verbose_name = "Infant FollowUp: New Med Items"
         verbose_name_plural = "Infant FollowUp: New Med Items"
-        unique_together = ('medication', 'infant_fu_med')
