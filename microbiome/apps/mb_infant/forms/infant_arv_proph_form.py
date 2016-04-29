@@ -1,9 +1,9 @@
 from django import forms
 from django.forms.models import ModelForm
 
-from edc_constants.constants import NO, NOT_APPLICABLE, YES
+from edc_constants.constants import NO, YES
 
-from microbiome.apps.mb.constants import NO_MODIFICATIONS, MODIFIED
+from microbiome.apps.mb.constants import MODIFIED, DISCONTINUED
 
 from ...mb.constants import NEVER_STARTED
 from ..models import InfantArvProph, InfantArvProphMod
@@ -21,7 +21,8 @@ class InfantArvProphForm(BaseInfantModelForm):
 
     def validate_taking_arv_proph_no(self):
         cleaned_data = self.cleaned_data
-        if cleaned_data.get('prophylatic_nvp') == NO and cleaned_data.get('arv_status') != NEVER_STARTED:
+        if (cleaned_data.get('prophylatic_nvp') == NO and
+                (cleaned_data.get('arv_status') != NEVER_STARTED or cleaned_data.get('arv_status') != DISCONTINUED)):
             raise forms.ValidationError('Infant was not taking prophylactic arv, prophylaxis should be Never Started.')
 
     def validate_taking_arv_proph_yes(self):
