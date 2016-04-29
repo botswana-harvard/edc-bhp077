@@ -27,7 +27,8 @@ class InfantFuNewMedItemsForm(BaseInfantModelForm):
         cleaned_data = self.cleaned_data
         if cleaned_data.get('infant_fu_med').new_medications == YES:
             if not cleaned_data.get('medication'):
-                raise forms.ValidationError('You have indicated that participant took medications. Please provide them.')
+                raise forms.ValidationError(
+                    'You have indicated that participant took medications. Please provide them.')
         if cleaned_data.get('infant_fu_med').new_medications == NO:
             raise forms.ValidationError('You indicated that no medications were taken. You cannot provide the '
                                         'medication. Please correct')
