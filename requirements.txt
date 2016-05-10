@@ -13,7 +13,7 @@ pyodbc
 pycups
 mysql-python
 git+https://github.com/botswana-harvard/edc-admin-exclude@develop#egg=edc-admin-exclude
-git+https://github.com/botswana-harvard/edc-appointment.git@develop#egg=edc-appointment
+git+https://github.com/botswana-harvard/edc-appointment.git@master#egg=edc-appointment
 git+https://github.com/botswana-harvard/edc-audit@develop#egg=edc-audit
 git+https://github.com/botswana-harvard/edc-base@master#egg=edc-base
 git+https://github.com/botswana-harvard/edc-call-manager.git@master#egg=edc_call_manager
