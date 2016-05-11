@@ -1,4 +1,4 @@
-Django==1.6.11
+#Django==1.6
 M2Crypto==0.22.3
 django-tastypie==0.12.2
 django_extensions
@@ -12,9 +12,9 @@ pytz
 pyodbc
 pycups
 mysql-python
-git+https://github.com/botswana-harvard/edc-admin-exclude@develop#egg=edc-admin-exclude
-git+https://github.com/botswana-harvard/edc-appointment.git@develop#egg=edc-appointment
-git+https://github.com/botswana-harvard/edc-audit@develop#egg=edc-audit
+git+https://github.com/botswana-harvard/edc-admin-exclude@master#egg=edc-admin-exclude
+git+https://github.com/botswana-harvard/edc-appointment.git@master#egg=edc-appointment
+git+https://github.com/botswana-harvard/edc-audit@master#egg=edc-audit
 git+https://github.com/botswana-harvard/edc-base@master#egg=edc-base
 git+https://github.com/botswana-harvard/edc-call-manager.git@master#egg=edc_call_manager
 git+https://github.com/botswana-harvard/edc-configuration@master#egg=edc-configuration
@@ -23,7 +23,7 @@ git+https://github.com/botswana-harvard/edc-consent@master#egg=edc-consent
 git+https://github.com/botswana-harvard/edc-constants@master#egg=edc-constants
 git+https://github.com/botswana-harvard/edc-content-type-map@master#egg=edc-content_type_map
 git+https://github.com/botswana-harvard/edc-crypto-fields@develop#egg=edc-crypto-fields
-git+https://github.com/botswana-harvard/edc-dashboard@develop#egg=edc-dashboard
+git+https://github.com/botswana-harvard/edc-dashboard@master#egg=edc-dashboard
 git+https://github.com/botswana-harvard/edc-data-dictionary@develop#egg=edc-data-dictionary
 git+https://github.com/botswana-harvard/edc-data-manager@master#egg=edc-data-manager
 git+https://github.com/botswana-harvard/edc-death-report@master#egg=edc-death-report
@@ -42,6 +42,6 @@ git+https://github.com/botswana-harvard/edc-templates@master#egg=edc-templates
 git+https://github.com/botswana-harvard/edc-testing@master#egg=edc-testing
 git+https://github.com/botswana-harvard/edc-visit-schedule.git@master#egg=edc-visit-schedule
 git+https://github.com/botswana-harvard/edc-visit-tracking@master#egg=edc-visit-tracking
-git+https://github.com/botswana-harvard/lab-requisition@develop#egg=lab-requisition
+git+https://github.com/botswana-harvard/lab-requisition@master#egg=lab-requisition
 git+https://github.com/botswana-harvard/lis@master#egg=lis
-git+https://github.com/erikvw/django-revision@develop#egg=django-revision
+git+https://github.com/erikvw/django-revision@master#egg=django-revision
