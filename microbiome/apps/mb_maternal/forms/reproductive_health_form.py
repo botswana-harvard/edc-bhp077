@@ -4,6 +4,8 @@ from base_maternal_model_form import BaseMaternalModelForm
 
 from edc_constants.constants import YES
 
+from ...mb_list.models import MaternalRelatives
+
 from ..models import ReproductiveHealth
 
 
@@ -17,6 +19,7 @@ class ReproductiveHealthForm(BaseMaternalModelForm):
         cleaned_data = super(ReproductiveHealthForm, self).clean()
         self.validate_more_children()
         self.validate_next_child()
+        self.validate_contraceptive_relative()
         self.validate_uses_contraceptive()
         self.validate_pap_smear()
         self.validate_pap_smear_result()

@@ -35,6 +35,7 @@ class ReproductiveHealthAdmin(BaseMaternalModelAdmin):
                     'contraceptive_partner': admin.VERTICAL,
                     'influential_decision_making': admin.VERTICAL,
                     'uses_contraceptive': admin.VERTICAL,
+                    'pap_smear': admin.VERTICAL,
                     'pap_smear_estimate': admin.VERTICAL,
                     'pap_smear_result': admin.VERTICAL,
                     'pap_smear_result_status': admin.VERTICAL,

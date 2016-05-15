@@ -334,11 +334,10 @@ NORMAL_ABNORMAL_DWTA = (
 )
 
 PAP_SMEAR_ESTIMATE = (
-    ('within_last_6months', 'Within the last 6 months'),
-    ('more_than_6months_within_1year', 'More than 6 months ago but within the last year'),
-    ('more_than_1year_within_2years', 'More than one year ago but within the last two years'),
-    ('more_than_1year_within_5years', 'More than one year ago but within the last five years'),
-    ('more_than_5years', 'More than five years ago')
+    (NO, NO),
+    ('day_estimated', 'Yes, estimated the Day'),
+    ('month_day_estimated', 'Yes, estimated Month and Day'),
+    ('month_day_year_estimated', 'Yes, estimated Year, Month and Day')
 )
 
 SITE = (

@@ -18,3 +18,4 @@ from .maternal_arv_preg_factory import MaternalArvFactory
 from .maternal_postnatal_fu_factory import MaternalPostFuMedItemsFactory
 from .maternal_post_fu_dx_factory import MaternalPostFuDxFactory
 from .maternal_post_fu_dx_factory import MaternalPostFuDxTFactory
+from .lists_factory import MaternalRelativesFactory

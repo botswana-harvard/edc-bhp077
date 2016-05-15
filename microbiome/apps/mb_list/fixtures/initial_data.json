@@ -180,24 +180,6 @@
     }
 },
 {
-    "pk": 2, 
-    "model": "mb_list.contraceptives", 
-    "fields": {
-        "hostname_created": "silverapple", 
-        "name": "N/A", 
-        "short_name": "N/A", 
-        "created": "2015-11-26T20:54:24.240", 
-        "user_modified": "", 
-        "modified": "2015-11-26T20:54:24.241", 
-        "hostname_modified": "silverapple", 
-        "version": "1.0", 
-        "display_index": 9, 
-        "user_created": "django", 
-        "field_name": null, 
-        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
-    }
-},
-{
     "pk": 3, 
     "model": "mb_list.contraceptives", 
     "fields": {
@@ -4016,6 +3998,24 @@
         "hostname_created": "silverapple", 
         "name": "Other, specify", 
         "short_name": "Other, specify", 
+        "created": "2015-11-20T15:30:08.728", 
+        "user_modified": "", 
+        "modified": "2015-11-20T15:30:08.728", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 6, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:8db6835758fcdfb2335e1978807a1a156726b795"
+    }
+},
+{
+    "pk": 6, 
+    "model": "mb_list.maternalrelatives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "No One", 
+        "short_name": "No One", 
         "created": "2015-11-20T15:30:08.728", 
         "user_modified": "", 
         "modified": "2015-11-20T15:30:08.728", 
