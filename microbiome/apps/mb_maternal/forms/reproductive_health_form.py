@@ -18,8 +18,7 @@ class ReproductiveHealthForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(ReproductiveHealthForm, self).clean()
         self.validate_more_children()
-        self.validate_next_child()
-        self.validate_contraceptive_relative()
+        self.validate_next_child() 
         self.validate_uses_contraceptive()
         self.validate_pap_smear()
         self.validate_pap_smear_result()
