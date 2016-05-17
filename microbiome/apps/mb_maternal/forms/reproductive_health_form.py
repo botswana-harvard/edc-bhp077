@@ -16,7 +16,7 @@ class ReproductiveHealthForm(BaseMaternalModelForm):
     def clean(self):
         cleaned_data = super(ReproductiveHealthForm, self).clean()
         self.validate_more_children()
-        self.validate_next_child() 
+        self.validate_next_child()
         self.validate_uses_contraceptive()
         self.validate_pap_smear()
         self.validate_pap_smear_result()
@@ -60,7 +60,7 @@ class ReproductiveHealthForm(BaseMaternalModelForm):
         else:
             if (cleaned_data.get('pap_smear_date') or cleaned_data.get('pap_smear_estimate') or
                cleaned_data.get('pap_smear_result') or cleaned_data.get('pap_smear_result_status') or
-               cleaned_data.get('pap_smear_result_abnormal') or cleaned_data.get('date_notified')) != None:
+               cleaned_data.get('pap_smear_result_abnormal') or cleaned_data.get('date_notified')) is not None:
                 raise forms.ValidationError('Pap smear not done please do not answer questions regarding pap smear.')
 
     def validate_pap_smear_result(self):
