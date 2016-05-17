@@ -263,7 +263,151 @@
         "modified": "2015-11-26T20:58:00.620", 
         "hostname_modified": "silverapple", 
         "version": "1.0", 
+        "display_index": 4, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 8, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Abstinence", 
+        "short_name": "Abstinence", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
         "display_index": 5, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 9, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Menstrual timing", 
+        "short_name": "Menstrual timing", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 6, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 10, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Menstrual timing", 
+        "short_name": "Menstrual timing", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 7, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 11, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Withdrawal", 
+        "short_name": "Withdrawal", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 8, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 12, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Oral contraceptive pills", 
+        "short_name": "Oral contraceptive pills", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 9, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 13, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Depo Provera (Injection)", 
+        "short_name": "Depo Provera (Injection)", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 10, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 14, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Hormonal Implant", 
+        "short_name": "Hormonal Implant", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 11, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 15, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Intrauterine Device", 
+        "short_name": "Intrauterine Device", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 12, 
         "user_created": "django", 
         "field_name": null, 
         "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
