@@ -2,9 +2,7 @@ from django import forms
 
 from base_maternal_model_form import BaseMaternalModelForm
 
-from edc_constants.constants import YES
-
-from ...mb_list.models import MaternalRelatives
+from edc_constants.constants import YES, NO
 
 from ..models import ReproductiveHealth
 
@@ -56,10 +54,13 @@ class ReproductiveHealthForm(BaseMaternalModelForm):
         if cleaned_data.get('pap_smear') == YES:
             if not cleaned_data.get('pap_smear_date'):
                 raise forms.ValidationError('Please give the date the pap smear was done.')
+        elif cleaned_data.get('pap_smear') == NO:
+            if cleaned_data.get('pap_smear_date'):
+                raise forms.ValidationError('Pap smear date not known, please do not add it.')
         else:
-            if (cleaned_data.get('pap_smear_date'), cleaned_data.get('pap_smear_estimate') or
+            if (cleaned_data.get('pap_smear_date') or cleaned_data.get('pap_smear_estimate') or
                cleaned_data.get('pap_smear_result') or cleaned_data.get('pap_smear_result_status') or
-               cleaned_data.get('pap_smear_result_abnormal') or cleaned_data.get('date_notified')):
+               cleaned_data.get('pap_smear_result_abnormal') or cleaned_data.get('date_notified')) != None:
                 raise forms.ValidationError('Pap smear not done please do not answer questions regarding pap smear.')
 
     def validate_pap_smear_result(self):

@@ -80,6 +80,8 @@ class ReproductiveHealth(MaternalCrfModel):
     contr = models.ManyToManyField(
         Contraceptives,
         verbose_name='Please share with us your current contraceptive methods',
+        blank=True,
+        null=True,
         help_text='')
 
     contr_other = OtherCharField(
@@ -112,6 +114,8 @@ class ReproductiveHealth(MaternalCrfModel):
         verbose_name='Do you know the result of your last Pap smear',
         max_length=20,
         choices=YES_NO_DWTA,
+        blank=True,
+        null=True,
         help_text='')
 
     pap_smear_result_status = models.CharField(
