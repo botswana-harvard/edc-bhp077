@@ -310,24 +310,6 @@
     "model": "mb_list.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
-        "name": "Menstrual timing", 
-        "short_name": "Menstrual timing", 
-        "created": "2015-11-26T20:58:00.620", 
-        "user_modified": "", 
-        "modified": "2015-11-26T20:58:00.620", 
-        "hostname_modified": "silverapple", 
-        "version": "1.0", 
-        "display_index": 7, 
-        "user_created": "django", 
-        "field_name": null, 
-        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
-    }
-},
-{
-    "pk": 11, 
-    "model": "mb_list.contraceptives", 
-    "fields": {
-        "hostname_created": "silverapple", 
         "name": "Withdrawal", 
         "short_name": "Withdrawal", 
         "created": "2015-11-26T20:58:00.620", 
@@ -342,7 +324,7 @@
     }
 },
 {
-    "pk": 12, 
+    "pk": 11, 
     "model": "mb_list.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
@@ -360,7 +342,7 @@
     }
 },
 {
-    "pk": 13, 
+    "pk": 12, 
     "model": "mb_list.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
@@ -378,7 +360,7 @@
     }
 },
 {
-    "pk": 14, 
+    "pk": 13, 
     "model": "mb_list.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
@@ -396,7 +378,7 @@
     }
 },
 {
-    "pk": 15, 
+    "pk": 14, 
     "model": "mb_list.contraceptives", 
     "fields": {
         "hostname_created": "silverapple", 
