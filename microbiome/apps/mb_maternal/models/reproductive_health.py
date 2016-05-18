@@ -91,7 +91,7 @@ class ReproductiveHealth(MaternalCrfModel):
         null=True)
 
     pap_smear = models.CharField(
-        verbose_name='Do you know the date of your last Pap smear?',
+        verbose_name='Have you ever done pap smear?',
         max_length=35,
         choices=PAP_SMEAR,
         help_text='')
@@ -103,12 +103,12 @@ class ReproductiveHealth(MaternalCrfModel):
         help_text='')
 
     pap_smear_estimate = models.CharField(
-        verbose_name='If you dont know that date of your last Pap Smear, is it possible that your last Pap smear was:',
+        verbose_name='Is the date of your last pap smear estimated?',
         max_length=60,
         choices=PAP_SMEAR_ESTIMATE,
         blank=True,
         null=True,
-        help_text='')
+        help_text='If the exact date is not known, please indicate which part of the date is estimated.')
 
     pap_smear_result = models.CharField(
         verbose_name='Do you know the result of your last Pap smear',
