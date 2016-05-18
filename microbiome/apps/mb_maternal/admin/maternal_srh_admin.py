@@ -10,15 +10,15 @@ class MaternalSrhAdmin(BaseMaternalModelAdmin):
 
     form = MaternalSrhForm
 
-    fields = ('seen_at_clinic',
-              'reason_unseen_clinic',
-              'reason_unseen_clinic_other',
-              'is_contraceptive_initiated',
-              'contr',  # contraceptives
-              'contr_other',
-              'reason_not_initiated',
-              'srh_referral',
-              'srh_referral_other')
+#     fields = ('seen_at_clinic',
+#               'reason_unseen_clinic',
+#               'reason_unseen_clinic_other',
+#               'is_contraceptive_initiated',
+#               'contr',  # contraceptives
+#               'contr_other',
+#               'reason_not_initiated',
+#               'srh_referral',
+#               'srh_referral_other')
     radio_fields = {'seen_at_clinic': admin.VERTICAL,
                     'reason_unseen_clinic': admin.VERTICAL,
                     'is_contraceptive_initiated': admin.VERTICAL,
