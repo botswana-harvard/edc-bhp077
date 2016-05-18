@@ -138,11 +138,3 @@ class TestReproductiveHealthForm(BaseTestCase):
         self.assertIn(
             'Participant pap smear result not known, no need to give pap smear status or notification date.',
             form.errors.get('__all__'))
-
-    def test_never_had_pap_smear(self):
-        self.data['pap_smear'] = 'I have never had a Pap smear'
-        self.data['pap_smear_date'] = date.today()
-        form = ReproductiveHealthForm(data=self.data)
-        self.assertIn(
-            'Pap smear not done please do not answer questions regarding pap smear.',
-            form.errors.get('__all__'))

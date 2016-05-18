@@ -323,7 +323,6 @@ INFLUENTIAL_IN_DECISION_MAKING = (
 PAP_SMEAR = (
     (YES, YES),
     (NO, NO),
-    ('never_had_pap_smear', 'I have never had a Pap smear'),
     ('DWTA', 'Don\'t want to answer')
 )
 
