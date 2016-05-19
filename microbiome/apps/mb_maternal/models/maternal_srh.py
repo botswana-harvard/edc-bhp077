@@ -58,13 +58,7 @@ class MaternalSrh(MaternalCrfModel):
         null=True,
         help_text='')
 
-    srh_referral = models.CharField(
-        verbose_name='Would you like to be referred to the Sexual Reproductive Health Clinic?',
-        max_length=25,
-        choices=YES_NO_DWTA,
-        help_text='')
-
-    srh_referral_other = OtherCharField(
+    reason_not_initiated_other = OtherCharField(
         verbose_name='If other is selected enter text',
         blank=True,
         null=True,
