@@ -13,8 +13,7 @@ class MaternalSrhAdmin(BaseMaternalModelAdmin):
     radio_fields = {'seen_at_clinic': admin.VERTICAL,
                     'reason_unseen_clinic': admin.VERTICAL,
                     'is_contraceptive_initiated': admin.VERTICAL,
-                    'reason_not_initiated': admin.VERTICAL,
-                    'srh_referral': admin.VERTICAL}
+                    'reason_not_initiated': admin.VERTICAL}
     filter_horizontal = ('contr',)
 
 admin.site.register(MaternalSrh, MaternalSrhAdmin)
