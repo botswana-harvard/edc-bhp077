@@ -28,7 +28,7 @@ def func_show_infant_arv_proph(visit_instance):
         return False
     try:
         intant_arv_proph = InfantArvProph.objects.get(infant_visit=previous_visit)
-        return intant_arv_proph.arv_status == DISCONTINUED
+        return intant_arv_proph.arv_status == DISCONTINUED or intant_arv_proph.arv_status == 'never started'
     except InfantArvProph.DoesNotExist:
         if visit_instance.appointment.visit_definition.code == '2010':
             return False

@@ -652,9 +652,9 @@ CONTINUOUS_LOOSE_STOOLS = (
 
 ARV_STATUS_WITH_NEVER = (
     (NO_MODIFICATIONS, '1. No modifications made since the last attended scheduled visit or today'),
-    (DISCONTINUED, '3. Permanently discontinued at or before the last attended scheduled visit'),
-    ('never started', '4. Never started'),
-    ('modified', '5. Change in at least one medication since the last attended scheduled visit or today'),
+    (DISCONTINUED, '2. Permanently discontinued at or before the last attended scheduled visit'),
+    ('never started', '3. Never started'),
+    ('modified', '4. Change in at least one medication since the last attended scheduled visit or today'),
 )
 
 CIRCUMCISION = (
