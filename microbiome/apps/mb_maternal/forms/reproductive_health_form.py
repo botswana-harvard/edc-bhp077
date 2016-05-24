@@ -54,6 +54,10 @@ class ReproductiveHealthForm(BaseMaternalModelForm):
         if cleaned_data.get('pap_smear') == YES:
             if not cleaned_data.get('pap_smear_date'):
                 raise forms.ValidationError('Please give the date the pap smear was done.')
+            if cleaned_data.get('pap_smear_date'):
+                if not cleaned_data.get('pap_smear_estimate'):
+                    raise forms.ValidationError(
+                        'Pap smear date has been provided, please let us know if this date has been estimated.')
         elif cleaned_data.get('pap_smear') == NO:
             if cleaned_data.get('pap_smear_date'):
                 raise forms.ValidationError('Pap smear date not known, please do not add it.')

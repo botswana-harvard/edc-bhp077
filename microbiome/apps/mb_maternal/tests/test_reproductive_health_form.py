@@ -64,7 +64,7 @@ class TestReproductiveHealthForm(BaseTestCase):
             'contr': [contraceptives.id],
             'pap_smear': YES,
             'pap_smear_date': date.today(),
-            'pap_smear_estimate': None,
+            'pap_smear_estimate': NO,
             'pap_smear_result': YES,
             'pap_smear_result_status': 'normal',
             'pap_smear_result_abnormal': None,
@@ -137,4 +137,13 @@ class TestReproductiveHealthForm(BaseTestCase):
         form = ReproductiveHealthForm(data=self.data)
         self.assertIn(
             'Participant pap smear result not known, no need to give pap smear status or notification date.',
+            form.errors.get('__all__'))
+
+    def test_pap_smear_date_estimate(self):
+        self.data['pap_smear'] = YES
+        self.data['pap_smear_date'] = date.today()
+        self.data['pap_smear_estimate'] = None
+        form = ReproductiveHealthForm(data=self.data)
+        self.assertIn(
+            'Pap smear date has been provided, please let us know if this date has been estimated.',
             form.errors.get('__all__'))
