@@ -22,7 +22,7 @@ class ReproductiveHealth(MaternalCrfModel):
         max_length=25,
         choices=YES_NO_DNT_DWTA,
         help_text='If the answer to this question is "YES" continue to '
-                  'the next question else skip to question 6.')
+                  'the next question else skip to question 7.')
 
     next_child = models.CharField(
         verbose_name='When would you like to have your next child?',
