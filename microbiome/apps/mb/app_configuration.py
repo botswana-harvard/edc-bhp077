@@ -132,17 +132,21 @@ class AppConfiguration(BaseAppConfiguration):
                                   AliquotTypeTuple('Vaginal swab', 'VS', '61'),
                                   AliquotTypeTuple('Rectal swab', 'RS', '62'),
                                   AliquotTypeTuple('Skin Swab', 'SW', '63'),
-                                  AliquotTypeTuple('Stool', 'ST', '01')],
+                                  AliquotTypeTuple('Stool', 'ST', '01'),
+                                  AliquotTypeTuple('PBMC', 'PBMC', '31')],
                  'profile': [ProfileTuple('Viral Load', 'WB'),
                              ProfileTuple('Stool', 'ST'),
                              ProfileTuple('Breast Milk (Storage)', 'BM'),
-                             ProfileTuple('Inflammatory Cytokines', 'SERUM')],
+                             ProfileTuple('Inflammatory Cytokines', 'SERUM'),
+                             ProfileTuple('PBMC Plasma (STORE ONLY)', 'WB')],
                  'profile_item': [ProfileItemTuple('Viral Load', 'PL', 1.0, 3),
                                   ProfileItemTuple('Viral Load', 'BC', 0.5, 1),
                                   ProfileItemTuple('Stool', 'ST', 1, 1),
                                   ProfileItemTuple('Breast Milk (Storage)', 'BM', 2, 3),
                                   ProfileItemTuple('Breast Milk (Storage)', 'BMF', 2, 5),
-                                  ProfileItemTuple('Breast Milk (Storage)', 'BMP', 1, 2)]}}
+                                  ProfileItemTuple('Breast Milk (Storage)', 'BMP', 1, 2),
+                                  ProfileItemTuple('PBMC Plasma (STORE ONLY)', 'PL', 1, 4),
+                                  ProfileItemTuple('PBMC Plasma (STORE ONLY)', 'PBMC', 1, 4)]}}
 
     labeling_setup = {
         'label_printer': [LabelPrinterTuple('Zebra_Technologies_ZTC_GK420t',
