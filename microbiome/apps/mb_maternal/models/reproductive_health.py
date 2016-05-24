@@ -36,12 +36,16 @@ class ReproductiveHealth(MaternalCrfModel):
         verbose_name='Have you discussed a contraceptive measure with a health care provider?',
         max_length=35,
         choices=YES_NO_DWTA,
+        blank=True,
+        null=True,
         help_text='')
 
     contraceptive_partner = models.CharField(
         verbose_name='Have you discussed a contraceptive method with your current partner?',
         max_length=10,
         choices=YES_NO_NO_PARTNER_DWTA,
+        blank=True,
+        null=True,
         help_text='')
 
     contraceptive_relative = models.ManyToManyField(
@@ -63,6 +67,8 @@ class ReproductiveHealth(MaternalCrfModel):
                      'please indicate who has influenced you the most in making the decision',
         max_length=50,
         choices=INFLUENTIAL_IN_DECISION_MAKING,
+        blank=True,
+        null=True,
         help_text='')
 
     influential_decision_making_other = OtherCharField(
