@@ -26,7 +26,7 @@ class ReproductiveHealthForm(BaseMaternalModelForm):
         cleaned_data = self.cleaned_data
         if not cleaned_data.get('more_children') == YES:
             if (cleaned_data.get('next_child') or cleaned_data.get('contraceptive_measure') or
-               cleaned_data.get('contraceptive_partner') or cleaned_data.get('contraceptive_relative')):
+               cleaned_data.get('contraceptive_partner')):
                 raise forms.ValidationError(
                     'Participant did not answer YES to wanting more children skip to Q7.')
 
