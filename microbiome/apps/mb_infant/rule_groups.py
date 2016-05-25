@@ -7,7 +7,7 @@ from edc_visit_schedule.models import VisitDefinition
 from microbiome.apps.mb_maternal.rule_groups import get_previous_visit
 from microbiome.apps.mb_maternal.models import PostnatalEnrollment
 
-from ..mb.constants import DISCONTINUED
+from ..mb.constants import DISCONTINUED, NEVER_STARTED
 from .models import (InfantBirthData, InfantVisit, InfantFu, InfantStoolCollection, InfantArvProph)
 
 
@@ -28,7 +28,7 @@ def func_show_infant_arv_proph(visit_instance):
         return False
     try:
         intant_arv_proph = InfantArvProph.objects.get(infant_visit=previous_visit)
-        return intant_arv_proph.arv_status == DISCONTINUED or intant_arv_proph.arv_status == 'never started'
+        return intant_arv_proph.arv_status == DISCONTINUED or intant_arv_proph.arv_status == NEVER_STARTED
     except InfantArvProph.DoesNotExist:
         if visit_instance.appointment.visit_definition.code == '2010':
             return False

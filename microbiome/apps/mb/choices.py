@@ -2,7 +2,7 @@ from edc_constants.constants import (
     NOT_APPLICABLE, UNKNOWN, OTHER, UNSCHEDULED, SCHEDULED, MISSED_VISIT, LOST_VISIT,
     OFF_STUDY, ON_STUDY, COMPLETED_PROTOCOL_VISIT, FAILED_ELIGIBILITY, PARTICIPANT)
 
-from .constants import NO_MODIFICATIONS, START, BREASTFEED_ONLY, DISCONTINUED
+from .constants import NO_MODIFICATIONS, START, BREASTFEED_ONLY, DISCONTINUED, NEVER_STARTED
 
 STUDY_SITES = (
     ('40', 'Gaborone'),
@@ -653,7 +653,7 @@ CONTINUOUS_LOOSE_STOOLS = (
 ARV_STATUS_WITH_NEVER = (
     (NO_MODIFICATIONS, '1. No modifications made since the last attended scheduled visit or today'),
     (DISCONTINUED, '2. Permanently discontinued at or before the last attended scheduled visit'),
-    ('never started', '3. Never started'),
+    (NEVER_STARTED, '3. Never started'),
     ('modified', '4. Change in at least one medication since the last attended scheduled visit or today'),
 )
 
