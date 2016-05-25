@@ -52,6 +52,8 @@ class ReproductiveHealth(MaternalCrfModel):
         MaternalRelatives,
         verbose_name='Have you discussed your contraceptive method with any of the following individuals? '
                      '(Please select all that apply)',
+        blank=True,
+        null=True,
         help_text='')
 
     contraceptive_relative_other = OtherCharField(

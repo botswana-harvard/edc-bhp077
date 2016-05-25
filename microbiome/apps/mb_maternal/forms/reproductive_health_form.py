@@ -25,19 +25,23 @@ class ReproductiveHealthForm(BaseMaternalModelForm):
     def validate_more_children(self):
         cleaned_data = self.cleaned_data
         if not cleaned_data.get('more_children') == YES:
-            if (cleaned_data.get('next_child') or cleaned_data.get('contraceptive_measure') or
+            if (cleaned_data.get('next_child') or
+               cleaned_data.get('contraceptive_measure') or
                cleaned_data.get('contraceptive_partner')):
                 raise forms.ValidationError(
                     'Participant did not answer YES to wanting more children skip to Q7.')
 
     def validate_next_child(self):
         cleaned_data = self.cleaned_data
-        if cleaned_data.get('next_child') not in ['within 2years', 'between 2-5years from now',
-                                                  'More than 5years from now', 'More than 5 years from now']:
-            if (cleaned_data.get('contraceptive_measure') or cleaned_data.get('contraceptive_partner') or
-               cleaned_data.get('contraceptive_relative') or cleaned_data.get('influential_decision_making')):
-                raise forms.ValidationError(
-                    'Participant answered next child with d or e, skip to question on contraceptive method.')
+        if cleaned_data.get('more_children') == YES:
+            if not cleaned_data.get('next_child'):
+                raise forms.ValidationError('Participant desires more children, question on next child cannot be None.')
+            if cleaned_data.get('next_child') not in ['within 2years', 'between 2-5years from now',
+                                                      'More than 5years from now', 'More than 5 years from now']:
+                if (cleaned_data.get('contraceptive_measure') or cleaned_data.get('contraceptive_partner') or
+                   cleaned_data.get('contraceptive_relative') or cleaned_data.get('influential_decision_making')):
+                    raise forms.ValidationError(
+                        'Participant answered next child with d or e, skip to question on contraceptive method.')
 
     def validate_uses_contraceptive(self):
         cleaned_data = self.cleaned_data

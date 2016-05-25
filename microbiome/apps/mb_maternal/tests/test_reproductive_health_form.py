@@ -87,6 +87,15 @@ class TestReproductiveHealthForm(BaseTestCase):
             'Participant answered next child with d or e, skip to question on contraceptive method.',
             form.errors.get('__all__'))
 
+    def test_next_none(self):
+        self.data['more_children'] = YES
+        self.data['next_child'] = None
+        self.data['contraceptive_measure'] = YES
+        form = ReproductiveHealthForm(data=self.data)
+        self.assertIn(
+            'Participant desires more children, question on next child cannot be None.',
+            form.errors.get('__all__'))
+
     def test_uses_contraceptive_yes(self):
         self.data['more_children'] = YES
         self.data['uses_contraceptive'] = YES
