@@ -151,6 +151,7 @@ class AppConfiguration(BaseAppConfiguration):
                                   ProfileItemTuple('Breast Milk (Storage)', 'BM', 2, 3),
                                   ProfileItemTuple('Breast Milk (Storage)', 'BMF', 2, 5),
                                   ProfileItemTuple('Breast Milk (Storage)', 'BMP', 1, 2),
+                                  ProfileItemTuple('Inflammatory Cytokines', 'SERUM', 1, 2),
                                   ProfileItemTuple('PBMC Plasma (STORE ONLY)', 'PL', 1, 4),
                                   ProfileItemTuple('PBMC Plasma (STORE ONLY)', 'PBMC', 1, 4)]}}
 
