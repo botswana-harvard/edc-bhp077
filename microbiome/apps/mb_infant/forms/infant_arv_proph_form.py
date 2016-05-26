@@ -21,7 +21,8 @@ class InfantArvProphForm(BaseInfantModelForm):
 
     def validate_taking_arv_proph_no(self):
         cleaned_data = self.cleaned_data
-        if (cleaned_data.get('prophylatic_nvp') == NO and cleaned_data.get('arv_status') not in [NEVER_STARTED, DISCONTINUED]):
+        if (cleaned_data.get('prophylatic_nvp') == NO and
+           cleaned_data.get('arv_status') not in [NEVER_STARTED, DISCONTINUED]):
             raise forms.ValidationError('Infant was not taking prophylactic arv, prophylaxis should be Never Started.')
 
     def validate_taking_arv_proph_yes(self):

@@ -57,17 +57,16 @@ class MaternalSrhForm(BaseMaternalModelForm):
             if not cleaned_data.get('contr'):
                 raise forms.ValidationError(
                     'You indicated that contraceptives were initiated, please give a valid contraceptive.')
+            if cleaned_data.get('reason_not_initiated'):
+                raise forms.ValidationError(
+                    'You indicated that contraceptives were initiated, please do not give reason not initiated.')
         if cleaned_data.get('is_contraceptive_initiated') == NO:
             if not cleaned_data.get('reason_not_initiated'):
                 self._errors["reason_not_initiated"] = ErrorList(["This field is required."])
                 raise forms.ValidationError(
                     'If you have not initiated contraceptive method, please provide reason.')
         if cleaned_data.get('is_contraceptive_initiated') == 'DWTA':
-            if cleaned_data.get('reason_not_initiated') or cleaned_data.get('srh_referral'):
-                raise forms.ValidationError('Participant does not want to answer, the questionnaire is complete.')
-        else:
-            if cleaned_data.get('reason_not_initiated'):
-                self._errors["reason_not_initiated"] = ErrorList(
-                    ["Don't answer this question, since you have initiated contraceptive."])
+            if cleaned_data.get('contr') or cleaned_data.get('reason_not_initiated'):
                 raise forms.ValidationError(
-                    "Don't answer this question, since you have initiated contraceptive.")
+                    'Participant does not want to answer the question on contraceptive initiation, '
+                    'the questionnaire is complete.')

@@ -57,9 +57,7 @@ class TestMaternalSrhForm(BaseTestCase):
             'is_contraceptive_initiated': YES,
             'contr': [contraceptives.id],
             'contr_other': None,
-            'reason_not_initiated': None,
-            'srh_referral': YES,
-            'srh_referral_other': None}
+            'reason_not_initiated': None}
 
     def test_unseen_no_reason(self):
         """Test participant not seen at clinic but reason not provided"""
@@ -91,13 +89,11 @@ class TestMaternalSrhForm(BaseTestCase):
             form.errors.get('__all__'))
 
     def test_no_contraceptive_reason_given(self):
-        """Test not seen at clinic but reason unseen given"""
-        self.data['seen_at_clinic'] = NO
-        self.data['reason_not_initiated'] = "no_options"
+        self.data['is_contraceptive_initiated'] = NO
+        self.data['reason_not_initiated'] = None
         form = MaternalSrhForm(data=self.data)
-        self.data['reason_unseen_clinic'] = 'not_sexually_active'
         self.assertIn(
-            "Don't answer this question, since you have initiated contraceptive.",
+            "If you have not initiated contraceptive method, please provide reason.",
             form.errors.get('__all__') or [])
 
     def test_seen_at_clinic_dwta(self):
@@ -119,7 +115,7 @@ class TestMaternalSrhForm(BaseTestCase):
             'If participant answered I have not yet sought the clinic, the questionnaire is complete.',
             form.errors.get('__all__'))
 
-    def test_init__no_contraceptive_given(self):
+    def test_init_no_contraceptive_given(self):
         """Test contraceptive initiated but no reason given"""
         self.data['seen_at_clinic'] = YES
         self.data['is_contraceptive_initiated'] = YES
@@ -129,11 +125,24 @@ class TestMaternalSrhForm(BaseTestCase):
             'You indicated that contraceptives were initiated, please give a valid contraceptive.',
             form.errors.get('__all__') or [])
 
+    def test_init_reason_not_initiated_given(self):
+        """Test contraceptive initiated and reason not initiated not given"""
+        self.data['seen_at_clinic'] = YES
+        self.data['is_contraceptive_initiated'] = YES
+        self.data['contr'] = 'Condom'
+        self.data['reason_not_initiated'] = 'no_options'
+        form = MaternalSrhForm(data=self.data)
+        self.assertIn(
+            'You indicated that contraceptives were initiated, please give a valid contraceptive.',
+            form.errors.get('__all__') or [])
+
     def test_contraceptive_dwta(self):
         """Test test dont want to answer (DWTA) at contraceptive initiation"""
         self.data['seen_at_clinic'] = YES
         self.data['is_contraceptive_initiated'] = 'DWTA'
+        self.data['reason_not_initiated'] = 'no_options'
         form = MaternalSrhForm(data=self.data)
         self.assertIn(
-            'Participant does not want to answer, the questionnaire is complete.',
+            'Participant does not want to answer the question on contraceptive initiation, '
+            'the questionnaire is complete.',
             form.errors.get('__all__') or [])
