@@ -28,7 +28,8 @@ class InfantArvProphForm(BaseInfantModelForm):
             if cleaned_data.get('arv_status') not in [NEVER_STARTED, DISCONTINUED]:
                 raise forms.ValidationError(
                     'Infant was not taking prophylactic arv, prophylaxis should be Never Started or Discontinued.')
-            if cleaned_data.get('arv_status') == DISCONTINUED and self.get_birth_arv_status_visit_2000(infant_identifier):
+            if (cleaned_data.get('arv_status') == DISCONTINUED and
+               self.get_birth_arv_status_visit_2000(infant_identifier)):
                     raise forms.ValidationError(
                         'The azt after birth in Infant birth arv was answered as NO or Unknown,'
                         'therefore Infant ARV proph in this visit cannot be permanently discontinued.')
@@ -43,7 +44,8 @@ class InfantArvProphForm(BaseInfantModelForm):
     def get_birth_arv_status_visit_2000(self, infant_identifier):
         """Check if infant was given AZT at birth"""
         try:
-            visit_2000 = InfantVisit.objects.get(subject_identifier=infant_identifier, appointment__visit_definition__code=2000)
+            visit_2000 = InfantVisit.objects.get(
+                subject_identifier=infant_identifier, appointment__visit_definition__code=2000)
             infant_birth_arv = InfantBirthArv.objects.get(infant_visit=visit_2000)
             if infant_birth_arv.azt_after_birth in [NO, UNKNOWN]:
                 return True
