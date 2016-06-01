@@ -2,10 +2,11 @@ import factory
 
 from django.utils import timezone
 
+from edc_constants.constants import NO, YES
+
 from microbiome.apps.mb_infant.models import InfantBirthArv
 
 from .infant_visit_factory import InfantVisitFactory
-from .infant_birth_factory import InfantBirthFactory
 
 
 class InfantBirthArvFactory(factory.DjangoModelFactory):
@@ -14,11 +15,10 @@ class InfantBirthArvFactory(factory.DjangoModelFactory):
         model = InfantBirthArv
 
     infant_visit = factory.SubFactory(InfantVisitFactory)
-    infant_birth = factory.SubFactory(InfantBirthFactory)
-    azt_after_birth = 'Yes'
+    azt_after_birth = NO
     azt_dose_date = timezone.now().date()
-    azt_additional_dose = 'No'
-    sdnvp_after_birth = 'No'
-    additional_nvp_doses = 'No'
-    azt_discharge_supply = 'No'
-    nvp_discharge_supply = 'No'
+    azt_additional_dose = NO
+    sdnvp_after_birth = NO
+    nvp_dose_date = None
+    azt_discharge_supply = NO
+    infant_arv_comments = None

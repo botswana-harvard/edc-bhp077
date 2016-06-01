@@ -5,13 +5,14 @@ from edc_registration.models import RegisteredSubject
 from edc_appointment.models import Appointment
 from edc_constants.constants import YES, POS, NO
 
-from microbiome.apps.mb.constants import INFANT, NO_MODIFICATIONS, MODIFIED
+from microbiome.apps.mb.constants import INFANT, NO_MODIFICATIONS, MODIFIED, DISCONTINUED
 from microbiome.apps.mb_infant.forms import (InfantArvProphForm, InfantArvProphModForm)
 from microbiome.apps.mb_maternal.tests.factories import MaternalConsentFactory, MaternalLabourDelFactory
 from microbiome.apps.mb_maternal.tests.factories import MaternalEligibilityFactory, MaternalVisitFactory
 from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFactory
 
-from microbiome.apps.mb_infant.tests.factories import (InfantBirthFactory, InfantVisitFactory, InfantArvProphFactory)
+from microbiome.apps.mb_infant.tests.factories import (
+    InfantBirthFactory, InfantVisitFactory, InfantArvProphFactory, InfantBirthArvFactory)
 
 from ...mb.constants import NEVER_STARTED
 from .base_test_case import BaseTestCase
@@ -46,6 +47,7 @@ class TestInfantArvProph(BaseTestCase):
             registered_subject=infant_registered_subject,
             visit_definition__code='2000')
         self.infant_visit = InfantVisitFactory(appointment=self.appointment)
+        self.infant_birth_arv = InfantBirthArvFactory(infant_visit=self.infant_visit, azt_after_birth=NO)
         self.appointment = Appointment.objects.get(
             registered_subject=infant_registered_subject,
             visit_definition__code='2010')
@@ -62,15 +64,25 @@ class TestInfantArvProph(BaseTestCase):
         self.data['prophylatic_nvp'] = NO
         self.data['arv_status'] = MODIFIED
         infant_arv_proph = InfantArvProphForm(data=self.data)
-        self.assertIn(u'Infant was not taking prophylactic arv, prophylaxis should be Never Started.',
+        self.assertIn(u'Infant was not taking prophylactic arv, prophylaxis should be Never Started or Discontinued.',
                       infant_arv_proph.errors.get('__all__'))
+
+    def test_validate_taking_arv_proph_discontinued(self):
+        """Test if the was not taking  prophylactic arv and infant was not given arv's at birth"""
+        self.data['prophylatic_nvp'] = NO
+        self.data['arv_status'] = DISCONTINUED
+        infant_arv_proph = InfantArvProphForm(data=self.data)
+        self.assertIn(
+            u'The azt after birth in Infant birth arv was answered as NO or Unknown,'
+            'therefore Infant ARV proph in this visit cannot be permanently discontinued.',
+            infant_arv_proph.errors.get('__all__'))
 
     def test_validate_taking_arv_proph_yes(self):
         """Test if the infant was not taking prophylactic arv and arv status is Never Started"""
         self.data['prophylatic_nvp'] = YES
         self.data['arv_status'] = NEVER_STARTED
         infant_arv_proph = InfantArvProphForm(data=self.data)
-        self.assertIn(u'Infant has been on prophylactic arv, cannot choose Never Started.',
+        self.assertIn(u'Infant has been on prophylactic arv, cannot choose Never Started or Permanently discontinued.',
                       infant_arv_proph.errors.get('__all__'))
 
 #     def test_validate_infant_arv_proph_mod(self):
