@@ -75,16 +75,8 @@ class TestReproductiveHealthForm(BaseTestCase):
         self.data['next_child'] = 'between 2-5years from now'
         form = ReproductiveHealthForm(data=self.data)
         self.assertIn(
-            'Participant did not answer YES to wanting more children skip to Q7.',
-            form.errors.get('__all__'))
-
-    def test_next_child(self):
-        self.data['more_children'] = YES
-        self.data['next_child'] = 'Dont know right now'
-        self.data['contraceptive_measure'] = YES
-        form = ReproductiveHealthForm(data=self.data)
-        self.assertIn(
-            'Participant answered next child with d or e, skip to question on contraceptive method.',
+            'You said the client does not desire more children please do not answer '
+            'When would you like to have your next child?',
             form.errors.get('__all__'))
 
     def test_next_none(self):

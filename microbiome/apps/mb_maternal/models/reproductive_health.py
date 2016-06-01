@@ -65,8 +65,8 @@ class ReproductiveHealth(MaternalCrfModel):
                   '(by description only and not by name) with whom you have discussed your contraceptive method')
 
     influential_decision_making = models.CharField(
-        verbose_name='Of the following individuals listed in questions 3-6, '
-                     'please indicate who has influenced you the most in making the decision',
+        verbose_name='Of the following individuals listed in questions 5-7, '
+                     'please indicate who has influenced you the most in making the decision.',
         max_length=50,
         choices=INFLUENTIAL_IN_DECISION_MAKING,
         blank=True,
