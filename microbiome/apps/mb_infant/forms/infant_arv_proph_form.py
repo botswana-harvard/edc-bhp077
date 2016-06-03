@@ -6,11 +6,23 @@ from edc_constants.constants import NO, YES
 
 from microbiome.apps.mb.constants import MODIFIED, DISCONTINUED, NEVER_STARTED
 
-from edc_constants.constants import UNKNOWN
+from edc_constants.constants import UNKNOWN, NOT_APPLICABLE
 
 from ..models import InfantArvProph, InfantArvProphMod, InfantBirthArv, InfantVisit
 
 from .base_infant_model_form import BaseInfantModelForm
+
+
+def get_birth_arv_visit_2000(infant_identifier):
+    """Check if infant was given AZT at birth"""
+    try:
+        visit_2000 = InfantVisit.objects.get(
+            subject_identifier=infant_identifier, appointment__visit_definition__code=2000)
+        infant_birth_arv = InfantBirthArv.objects.get(infant_visit=visit_2000)
+        return infant_birth_arv.azt_discharge_supply
+    except:
+        pass
+    return NOT_APPLICABLE
 
 
 class InfantArvProphForm(BaseInfantModelForm):
@@ -18,21 +30,30 @@ class InfantArvProphForm(BaseInfantModelForm):
     def clean(self):
         cleaned_data = self.cleaned_data
         self.validate_taking_arv_proph_no()
+        self.validate_taking_arv_proph_unknown()
         self.validate_taking_arv_proph_yes()
         return cleaned_data
 
     def validate_taking_arv_proph_no(self):
         cleaned_data = self.cleaned_data
+        infant_identifier = cleaned_data.get('infant_visit').subject_identifier
         if cleaned_data.get('prophylatic_nvp') == NO:
-            infant_identifier = cleaned_data.get('infant_visit').subject_identifier
             if cleaned_data.get('arv_status') not in [NEVER_STARTED, DISCONTINUED]:
                 raise forms.ValidationError(
                     'Infant was not taking prophylactic arv, prophylaxis should be Never Started or Discontinued.')
             if (cleaned_data.get('arv_status') == DISCONTINUED and
-               self.get_birth_arv_status_visit_2000(infant_identifier)):
+               get_birth_arv_visit_2000(infant_identifier)) in [NO, UNKNOWN]:
                     raise forms.ValidationError(
-                        'The azt after birth in Infant birth arv was answered as NO or Unknown,'
+                        'The azt discharge supply in Infant birth arv was answered as NO or Unknown, '
                         'therefore Infant ARV proph in this visit cannot be permanently discontinued.')
+
+    def validate_taking_arv_proph_unknown(self):
+        cleaned_data = self.cleaned_data
+        infant_identifier = cleaned_data.get('infant_visit').subject_identifier
+        if cleaned_data.get('prophylatic_nvp') == UNKNOWN and cleaned_data.get('arv_status') not in ['modified']:
+            if self.get_birth_arv_visit_2000(infant_identifier) not in [UNKNOWN]:
+                raise forms.ValidationError(
+                    'The azt discharge supply in Infant Birth arv was not answered as UNKNOWN, Q3 cannot be Unknown.')
 
     def validate_taking_arv_proph_yes(self):
         cleaned_data = self.cleaned_data
@@ -40,18 +61,6 @@ class InfantArvProphForm(BaseInfantModelForm):
            cleaned_data.get('arv_status') in [NEVER_STARTED, DISCONTINUED]):
             raise forms.ValidationError(
                 'Infant has been on prophylactic arv, cannot choose Never Started or Permanently discontinued.')
-
-    def get_birth_arv_status_visit_2000(self, infant_identifier):
-        """Check if infant was given AZT at birth"""
-        try:
-            visit_2000 = InfantVisit.objects.get(
-                subject_identifier=infant_identifier, appointment__visit_definition__code=2000)
-            infant_birth_arv = InfantBirthArv.objects.get(infant_visit=visit_2000)
-            if infant_birth_arv.azt_after_birth in [NO, UNKNOWN]:
-                return True
-        except:
-            pass
-        return False
 
     class Meta:
         model = InfantArvProph
@@ -64,6 +73,7 @@ class InfantArvProphModForm(ModelForm):
         cleaned_data = self.cleaned_data
         self.validate_proph_mod_fields()
         self.validate_infant_arv_proph_not_modified()
+        self.validate_infant_arv_code()
         return cleaned_data
 
     def validate_proph_mod_fields(self):
@@ -83,6 +93,20 @@ class InfantArvProphModForm(ModelForm):
         if cleaned_data.get('infant_arv_proph').arv_status != MODIFIED:
             raise forms.ValidationError("You did NOT indicate that medication was modified, so do not ENTER "
                                         "arv inline.")
+
+    def validate_infant_arv_code(self):
+        cleaned_data = self.cleaned_data
+        infant_identifier = cleaned_data.get('infant_arv_proph').infant_visit.subject_identifier
+        if (cleaned_data.get('arv_code') == 'Zidovudine' and
+           get_birth_arv_visit_2000(infant_identifier) in [YES]):
+            if cleaned_data.get('modification_code') in ['Initial dose']:
+                raise forms.ValidationError(
+                    'Infant birth ARV shows that infant was discharged with an additional dose of AZT, '
+                    'AZT cannot be initiated again.')
+        if get_birth_arv_visit_2000(infant_identifier) in [YES] and cleaned_data.get('arv_code') not in ['Zidovudine']:
+            raise forms.ValidationError(
+                'Infant birth ARV shows that infant was discharged with an additional dose of AZT, '
+                'Arv Code should be AZT')
 
     class Meta:
         model = InfantArvProphMod
