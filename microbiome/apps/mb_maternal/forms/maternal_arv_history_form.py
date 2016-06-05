@@ -43,9 +43,9 @@ class MaternalArvHistoryForm(BaseMaternalModelForm):
             raise forms.ValidationError(
                 "ARV start date must be six weeks prior to today's date or greater.")
         try:
-            maternal_consent = MaternalConsent.objects.get(
+            maternal_consent = MaternalConsent.objects.filter(
                 registered_subject__subject_identifier=cleaned_data.get(
-                    'maternal_visit').appointment.registered_subject.subject_identifier)
+                    'maternal_visit').appointment.registered_subject.subject_identifier).order_by('version').first()
             if report_datetime < maternal_consent.consent_datetime:
                 raise forms.ValidationError("Report datetime CANNOT be before consent datetime")
             if haart_start_date < maternal_consent.dob:
