@@ -2,7 +2,7 @@ import factory
 
 from edc_constants.constants import NOT_APPLICABLE
 
-from microbiome.apps.mb_list.models import Supplements, ChronicConditions, HealthCond
+from microbiome.apps.mb_list.models import Supplements, ChronicConditions, HealthCond, MaternalRelatives
 
 
 class SupplementsFactory(factory.DjangoModelFactory):
@@ -36,3 +36,14 @@ class ChronicConditionsFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = ChronicConditions
+
+
+class MaternalRelativesFactory(factory.DjangoModelFactory):
+
+    name = 'Other, specify'
+    short_name = 'Other, specify'
+    display_index = 20
+    version = '1.0'
+
+    class Meta:
+        model = MaternalRelatives

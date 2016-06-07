@@ -35,10 +35,14 @@ class MaternalSrh(MaternalCrfModel):
     is_contraceptive_initiated = models.CharField(
         verbose_name='If you did attend, did you initiate a contraceptive method?',
         max_length=15,
-        choices=YES_NO_DWTA)
+        choices=YES_NO_DWTA,
+        null=True,
+        blank=True,)
 
     contr = models.ManyToManyField(
         Contraceptives,
+        null=True,
+        blank=True,
         verbose_name='If yes, which method did you select? ',
         help_text='Tell us all that apply')
 
@@ -58,13 +62,7 @@ class MaternalSrh(MaternalCrfModel):
         null=True,
         help_text='')
 
-    srh_referral = models.CharField(
-        verbose_name='Would you like to be referred to the Sexual Reproductive Health Clinic?',
-        max_length=25,
-        choices=YES_NO_DWTA,
-        help_text='')
-
-    srh_referral_other = OtherCharField(
+    reason_not_initiated_other = OtherCharField(
         verbose_name='If other is selected enter text',
         blank=True,
         null=True,

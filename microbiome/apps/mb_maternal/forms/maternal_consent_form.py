@@ -1,4 +1,5 @@
 from dateutil.relativedelta import relativedelta
+from datetime import timedelta
 
 from django import forms
 from django.conf import settings
@@ -40,7 +41,12 @@ class MaternalConsentForm(BaseConsentForm):
 
     def validate_eligibility_age(self):
         cleaned_data = self.cleaned_data
-        consent_age = relativedelta(timezone.now().date(), cleaned_data.get('dob')).years
+        try:
+            identity = cleaned_data.get('identity')
+            consent_v1 = MaternalConsent.objects.get(identity=identity, version=1)
+            consent_age = relativedelta(consent_v1.consent_datetime.date(), consent_v1.dob).years
+        except MaternalConsent.DoesNotExist:
+            consent_age = relativedelta(timezone.now().date(), cleaned_data.get('dob')).years
         eligibility_age = MaternalEligibility.objects.get(
             registered_subject=cleaned_data.get('registered_subject')).age_in_years
         if consent_age != eligibility_age:

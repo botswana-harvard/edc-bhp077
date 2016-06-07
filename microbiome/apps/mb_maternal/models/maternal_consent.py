@@ -29,7 +29,7 @@ class MaternalConsent(BaseConsent, SyncModelMixin, OffStudyMixin, ReviewFieldsMi
 
     off_study_model = ('mb_maternal', 'MaternalOffStudy')
 
-    registered_subject = models.OneToOneField(RegisteredSubject, null=True)
+    registered_subject = models.ForeignKey(RegisteredSubject, null=True)
 
     recruit_source = models.CharField(
         max_length=75,
@@ -60,7 +60,10 @@ class MaternalConsent(BaseConsent, SyncModelMixin, OffStudyMixin, ReviewFieldsMi
                                           self.last_name, self.initials)
 
     def save(self, *args, **kwargs):
-        if not self.id:
+        previous_consent = self.__class__.objects.filter(registered_subject=self.registered_subject)
+        if not self.id and previous_consent.exists():
+            self.subject_identifier = previous_consent.first().subject_identifier
+        elif not self.id:
             self.subject_identifier = SubjectIdentifier(
                 site_code=self.study_site).get_identifier()
         super(MaternalConsent, self).save(*args, **kwargs)

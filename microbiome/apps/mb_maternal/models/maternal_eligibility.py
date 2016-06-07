@@ -1,4 +1,5 @@
 from uuid import uuid4
+from django.utils import timezone
 
 from django.db import models
 from django.db.models import get_model
@@ -11,10 +12,12 @@ from edc_constants.choices import YES_NO
 from edc_constants.constants import NO
 from edc_registration.models import RegisteredSubject
 from edc_sync.models import SyncModelMixin
+from edc_consent.models import ConsentType
 
 from microbiome.apps.mb.constants import MIN_AGE_OF_CONSENT, MAX_AGE_OF_CONSENT
 
 from ..managers import MaternalEligibilityManager
+from ..models import MaternalConsent
 
 
 class MaternalEligibility (SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
@@ -111,6 +114,21 @@ class MaternalEligibility (SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidMo
         except MaternalEligibilityLoss.DoesNotExist:
             maternal_eligibility_loss = None
         return maternal_eligibility_loss
+
+    @property
+    def have_latest_consent(self):
+        return (MaternalConsent.objects.filter(
+            subject_identifier=self.registered_subject.subject_identifier).order_by('-version').first().version ==
+            ConsentType.objects.get_by_consent_datetime(MaternalConsent, timezone.now()).version)
+
+    @property
+    def previous_consents(self):
+        return MaternalConsent.objects.filter(
+            subject_identifier=self.registered_subject.subject_identifier).order_by('version')
+
+    @property
+    def current_consent_version(self):
+        return ConsentType.objects.get_by_consent_datetime(MaternalConsent, timezone.now()).version
 
     def set_uuid_for_eligibility_if_none(self):
         if not self.eligibility_id:

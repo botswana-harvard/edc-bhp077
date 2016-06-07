@@ -79,8 +79,8 @@ class InfantFuPhysicalForm(BaseInfantModelForm):
                     cleaned_data.get('report_datetime').date(),
                     cleaned_data.get('infant_visit').appointment.registered_subject.dob))
             relative_identifier = cleaned_data.get('infant_visit').appointment.registered_subject.relative_identifier
-            maternal_consent = MaternalConsent.objects.get(
-                registered_subject__subject_identifier=relative_identifier)
+            maternal_consent = MaternalConsent.objects.filter(
+                registered_subject__subject_identifier=relative_identifier).order_by('version').first()
             if cleaned_data.get('report_datetime') < maternal_consent.consent_datetime:
                 raise forms.ValidationError(
                     "Report date of {} CANNOT be before consent datetime".format(cleaned_data.get('report_datetime')))

@@ -14,6 +14,7 @@ from microbiome.apps.mb_maternal.tests.factories import PostnatalEnrollmentFacto
 from microbiome.apps.mb_infant.tests.factories import (
     InfantBirthFactory, InfantBirthDataFactory, InfantVisitFactory, InfantFuFactory, InfantArvProphFactory)
 
+from ...mb.constants import NO_MODIFICATIONS, DISCONTINUED
 from .base_test_case import BaseTestCase
 
 
@@ -266,110 +267,188 @@ class TestRuleGroup(BaseTestCase):
             crf_entry__model_name='infantcircumcision',
             appointment=appointment).count(), 1)
 
-    def test_infant_proph_rules_unkeyed(self):
-        """Test if infant arv proph is required in visits after 2010"""
+    def test_infant_arv_proph_required_from_2010(self):
+        """Test that infant arv proph is required from 2010 visit"""
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES)
         self.assertEqual(postnatal_enrollment.enrollment_hiv_status, POS)
-        self.appointment = Appointment.objects.get(
+        maternal_appointment_1000M = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
-        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        appointment = Appointment.objects.get(
+        MaternalVisitFactory(appointment=maternal_appointment_1000M)
+        maternal_appointment_2000M = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='2000M')
-        maternal_visit = MaternalVisitFactory(appointment=appointment)
-        maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
+        maternal_visit_2000M = MaternalVisitFactory(appointment=maternal_appointment_2000M)
+        maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit_2000M)
         registered_subject_infant = RegisteredSubject.objects.get(
             relative_identifier=self.registered_subject.subject_identifier,
             subject_type=INFANT)
         InfantBirthFactory(
             registered_subject=registered_subject_infant,
             maternal_labour_del=maternal_labour_del)
-        appointment = Appointment.objects.get(
+        infant_appointment_2000 = Appointment.objects.get(
             visit_definition__code='2000',
             registered_subject=registered_subject_infant)
-        InfantVisitFactory(appointment=appointment)
-        appointment = Appointment.objects.get(
+        InfantVisitFactory(appointment=infant_appointment_2000)
+        self.assertFalse(CrfMetaData.objects.filter(
+            entry_status=NOT_REQUIRED,
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantarvproph',
+            appointment=infant_appointment_2000).exists())
+        infant_appointment_2010 = Appointment.objects.get(
             registered_subject=registered_subject_infant,
             visit_definition__code='2010')
         InfantVisitFactory(
-            appointment=appointment,
-            reason=SCHEDULED)
-        appointment = Appointment.objects.get(
-            registered_subject=registered_subject_infant,
-            visit_definition__code='2030')
-        InfantVisitFactory(
-            appointment=appointment,
+            appointment=infant_appointment_2010,
             reason=SCHEDULED)
         self.assertEqual(CrfMetaData.objects.filter(
             entry_status=UNKEYED,
             crf_entry__app_label='mb_infant',
             crf_entry__model_name='infantarvproph',
-            appointment=appointment).count(), 1)
+            appointment=infant_appointment_2010).count(), 1)
 
-    def test_infant_proph_rules_not_required(self):
+    def test_infant_arv_proph_required_till_discontinued_1(self):
         """Test if infant arv proph is not required if arv status of infant is discontinued"""
+        registered_subject_infant = self.infant_arv_proph_setup()
+        infant_appointment_2030 = Appointment.objects.get(
+            registered_subject=registered_subject_infant,
+            visit_definition__code='2030')
+        infant_visit_2030 = InfantVisitFactory(
+            appointment=infant_appointment_2030,
+            reason=SCHEDULED)
+        self.assertEqual(CrfMetaData.objects.filter(
+            entry_status=UNKEYED,
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantarvproph',
+            appointment=infant_appointment_2030).count(), 1)
+        InfantArvProphFactory(infant_visit=infant_visit_2030, prophylatic_nvp=YES, arv_status=DISCONTINUED)
+        infant_appointment_2060 = Appointment.objects.get(
+            registered_subject=registered_subject_infant,
+            visit_definition__code='2060')
+        InfantVisitFactory(
+            appointment=infant_appointment_2060,
+            reason=SCHEDULED)
+        self.assertEqual(CrfMetaData.objects.filter(
+            entry_status=NOT_REQUIRED,
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantarvproph',
+            appointment=infant_appointment_2060).count(), 1)
+
+    def test_infant_arv_proph_required_till_discontinued_2(self):
+        """Test if infant arv proph is not required if arv status of infant is discontinued"""
+        registered_subject_infant = self.infant_arv_proph_setup()
+        infant_appointment_2030 = Appointment.objects.get(
+            registered_subject=registered_subject_infant,
+            visit_definition__code='2030')
+        infant_visit_2030 = InfantVisitFactory(
+            appointment=infant_appointment_2030,
+            reason=SCHEDULED)
+        self.assertEqual(CrfMetaData.objects.filter(
+            entry_status=UNKEYED,
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantarvproph',
+            appointment=infant_appointment_2030).count(), 1)
+        InfantArvProphFactory(infant_visit=infant_visit_2030, prophylatic_nvp=YES, arv_status=NO_MODIFICATIONS)
+        infant_appointment_2060 = Appointment.objects.get(
+            registered_subject=registered_subject_infant,
+            visit_definition__code='2060')
+        infant_visit_2060 = InfantVisitFactory(
+            appointment=infant_appointment_2060,
+            reason=SCHEDULED)
+        InfantArvProphFactory(infant_visit=infant_visit_2060, prophylatic_nvp=YES, arv_status=DISCONTINUED)
+        infant_appointment_2090 = Appointment.objects.get(
+            registered_subject=registered_subject_infant,
+            visit_definition__code='2090')
+        InfantVisitFactory(
+            appointment=infant_appointment_2090,
+            reason=SCHEDULED)
+        self.assertEqual(CrfMetaData.objects.filter(
+            entry_status=NOT_REQUIRED,
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantarvproph',
+            appointment=infant_appointment_2090).count(), 1)
+
+    def test_infant_arv_proph_required_till_discontinued_3(self):
+        """Test if infant arv proph is not required if arv status of infant is discontinued"""
+        registered_subject_infant = self.infant_arv_proph_setup()
+        infant_appointment_2030 = Appointment.objects.get(
+            registered_subject=registered_subject_infant,
+            visit_definition__code='2030')
+        infant_visit_2030 = InfantVisitFactory(
+            appointment=infant_appointment_2030,
+            reason=SCHEDULED)
+        self.assertEqual(CrfMetaData.objects.filter(
+            entry_status=UNKEYED,
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantarvproph',
+            appointment=infant_appointment_2030).count(), 1)
+        InfantArvProphFactory(infant_visit=infant_visit_2030, prophylatic_nvp=YES, arv_status=DISCONTINUED)
+        infant_appointment_2060 = Appointment.objects.get(
+            registered_subject=registered_subject_infant,
+            visit_definition__code='2060')
+        InfantVisitFactory(
+            appointment=infant_appointment_2060,
+            reason=SCHEDULED)
+        self.assertEqual(CrfMetaData.objects.filter(
+            entry_status=NOT_REQUIRED,
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantarvproph',
+            appointment=infant_appointment_2060).count(), 1)
+        infant_appointment_2090 = Appointment.objects.get(
+            registered_subject=registered_subject_infant,
+            visit_definition__code='2090')
+        InfantVisitFactory(
+            appointment=infant_appointment_2090,
+            reason=SCHEDULED)
+        self.assertEqual(CrfMetaData.objects.filter(
+            entry_status=NOT_REQUIRED,
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantarvproph',
+            appointment=infant_appointment_2090).count(), 1)
+
+    def infant_arv_proph_setup(self):
         postnatal_enrollment = PostnatalEnrollmentFactory(
             registered_subject=self.registered_subject,
             current_hiv_status=POS,
             evidence_hiv_status=YES)
         self.assertEqual(postnatal_enrollment.enrollment_hiv_status, POS)
-        self.appointment = Appointment.objects.get(
+        maternal_appointment_1000M = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='1000M')
-        self.maternal_visit = MaternalVisitFactory(appointment=self.appointment)
-        appointment = Appointment.objects.get(
+        MaternalVisitFactory(appointment=maternal_appointment_1000M)
+        maternal_appointment_2000M = Appointment.objects.get(
             registered_subject=self.registered_subject,
             visit_definition__code='2000M')
-        maternal_visit = MaternalVisitFactory(appointment=appointment)
-        maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit)
+        maternal_visit_2000 = MaternalVisitFactory(appointment=maternal_appointment_2000M)
+        maternal_labour_del = MaternalLabourDelFactory(maternal_visit=maternal_visit_2000)
         registered_subject_infant = RegisteredSubject.objects.get(
             relative_identifier=self.registered_subject.subject_identifier,
             subject_type=INFANT)
         InfantBirthFactory(
             registered_subject=registered_subject_infant,
             maternal_labour_del=maternal_labour_del)
-        appointment = Appointment.objects.get(
+        infant_appointment_2000 = Appointment.objects.get(
             visit_definition__code='2000',
             registered_subject=registered_subject_infant)
-        InfantVisitFactory(appointment=appointment)
-        appointment = Appointment.objects.get(
+        InfantVisitFactory(appointment=infant_appointment_2000)
+        infant_appointment_2010 = Appointment.objects.get(
             registered_subject=registered_subject_infant,
             visit_definition__code='2010')
-        infant_visit = InfantVisitFactory(
-            appointment=appointment,
+        infant_visit_2010 = InfantVisitFactory(
+            appointment=infant_appointment_2010,
             reason=SCHEDULED)
-
-        InfantArvProphFactory(infant_visit=infant_visit, arv_status='discontinued')
+        self.assertEqual(CrfMetaData.objects.filter(
+            entry_status=UNKEYED,
+            crf_entry__app_label='mb_infant',
+            crf_entry__model_name='infantarvproph',
+            appointment=infant_appointment_2010).count(), 1)
+        InfantArvProphFactory(infant_visit=infant_visit_2010, prophylatic_nvp=YES, arv_status=NO_MODIFICATIONS)
         self.assertEqual(CrfMetaData.objects.filter(
             entry_status=KEYED,
             crf_entry__app_label='mb_infant',
             crf_entry__model_name='infantarvproph',
-            appointment=appointment).count(), 1)
-
-        appointment = Appointment.objects.get(
-            registered_subject=registered_subject_infant,
-            visit_definition__code='2030')
-        infant_visit = InfantVisitFactory(
-            appointment=appointment,
-            reason=SCHEDULED)
-
-        self.assertEqual(CrfMetaData.objects.filter(
-            entry_status=NOT_REQUIRED,
-            crf_entry__app_label='mb_infant',
-            crf_entry__model_name='infantarvproph',
-            appointment=appointment).count(), 1)
-        appointment = Appointment.objects.get(
-            registered_subject=registered_subject_infant,
-            visit_definition__code='2060')
-        infant_visit = InfantVisitFactory(
-            appointment=appointment,
-            reason=SCHEDULED)
-        self.assertEqual(CrfMetaData.objects.filter(
-            entry_status=NOT_REQUIRED,
-            crf_entry__app_label='mb_infant',
-            crf_entry__model_name='infantarvproph',
-            appointment=appointment).count(), 1)
+            appointment=infant_appointment_2010).count(), 1)
+        return registered_subject_infant

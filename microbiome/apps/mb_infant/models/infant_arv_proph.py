@@ -1,7 +1,7 @@
 from django.db import models
 
 from edc_base.audit_trail import AuditTrail
-from edc_constants.choices import YES_NO
+from edc_constants.choices import YES_NO, YES_NO_UNKNOWN
 from edc_constants.constants import NOT_APPLICABLE
 from edc_visit_tracking.models import CrfInlineModelMixin
 from edc_sync.models import SyncModelMixin
@@ -9,7 +9,7 @@ from edc_base.model.models import BaseUuidModel
 
 from microbiome.apps.mb.choices import ARV_STATUS_WITH_NEVER
 
-from ..choices import ARV_MODIFICATION_REASON, ARV_DRUG_LIST, DOSE_STATUS
+from ..choices import ARV_MODIFICATION_REASON, ARV_DRUG_AZT_NVP, DOSE_STATUS
 from ..managers import InfantArvProphModManager
 
 from .infant_crf_model import InfantCrfModel
@@ -22,8 +22,8 @@ class InfantArvProph(InfantCrfModel):
         verbose_name=(
             'Was the baby supposed to be taking taking prophylactic antiretroviral medication for '
             'any period since the last attended scheduled visit?'),
-        max_length=3,
-        choices=YES_NO)
+        max_length=7,
+        choices=YES_NO_UNKNOWN)
 
     arv_status = models.CharField(
         max_length=25,
@@ -49,7 +49,7 @@ class InfantArvProphMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
     arv_code = models.CharField(
         verbose_name="ARV Code",
         max_length=25,
-        choices=ARV_DRUG_LIST,
+        choices=ARV_DRUG_AZT_NVP,
     )
 
     dose_status = models.CharField(
@@ -85,4 +85,4 @@ class InfantArvProphMod(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
         app_label = 'mb_infant'
         verbose_name = 'Infant NVP or AZT Proph: Mods'
         verbose_name_plural = 'Infant NVP or AZT Proph: Mods'
-        unique_together = ('infant_arv_proph', 'arv_code')
+        unique_together = ('infant_arv_proph', 'arv_code', 'modification_date')

@@ -10,18 +10,17 @@ class ReproductiveHealthAdmin(BaseMaternalModelAdmin):
 
     form = ReproductiveHealthForm
 
-    fields = ('more_children',
-              'next_child',
-              'contraceptive_measure',
-              'uses_contraceptive',
-              'contr',
-              'contr_other',
-              'srh_referral')
     radio_fields = {'more_children': admin.VERTICAL,
                     'next_child': admin.VERTICAL,
                     'contraceptive_measure': admin.VERTICAL,
+                    'contraceptive_partner': admin.VERTICAL,
+                    'influential_decision_making': admin.VERTICAL,
                     'uses_contraceptive': admin.VERTICAL,
+                    'pap_smear': admin.VERTICAL,
+                    'pap_smear_estimate': admin.VERTICAL,
+                    'pap_smear_result': admin.VERTICAL,
+                    'pap_smear_result_status': admin.VERTICAL,
                     'srh_referral': admin.VERTICAL}
-    filter_horizontal = ('contr',)
+    filter_horizontal = ('contraceptive_relative', 'contr',)
 
 admin.site.register(ReproductiveHealth, ReproductiveHealthAdmin)

@@ -7,6 +7,7 @@ from edc_constants.constants import YES
 from microbiome.apps.mb_infant.models import InfantArvProph, InfantArvProphMod
 from microbiome.apps.mb_infant.choices import ARV_DRUG_LIST
 
+from ....mb.constants import NO_MODIFICATIONS
 from ...choices import ARV_MODIFICATION_REASON, DOSE_STATUS
 
 
@@ -16,6 +17,7 @@ class InfantArvProphFactory(factory.DjangoModelFactory):
         model = InfantArvProph
 
     prophylatic_nvp = YES
+    arv_status = NO_MODIFICATIONS
 
 
 class InfantArvProphModFactory(factory.DjangoModelFactory):

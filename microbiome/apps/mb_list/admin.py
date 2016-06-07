@@ -5,7 +5,7 @@ from edc_base.modeladmin.admin import BaseModelAdmin
 from .models import (
     ChronicConditions, Contraceptives, DiseasesAtEnrollment, HouseholdGoods,
     PriorArv, AutopsyInfoSource, Supplements, InfantVaccines,
-    HealthCond, DelComp, ObComp, LabDelDx)
+    HealthCond, DelComp, ObComp, LabDelDx, MaternalRelatives)
 
 
 class ChronicConditionsAdmin(BaseModelAdmin):
@@ -66,3 +66,8 @@ admin.site.register(ObComp, ObCompAdmin)
 class LabDelDxAdmin(BaseModelAdmin):
     pass
 admin.site.register(LabDelDx, LabDelDxAdmin)
+
+
+class MaternalRelativesAdmin(BaseModelAdmin):
+    pass
+admin.site.register(MaternalRelatives, MaternalRelativesAdmin)

@@ -139,6 +139,11 @@ DOSE_STATUS = (
     ('Not initiated', 'Not initiated'),
 )
 
+ARV_DRUG_AZT_NVP = (
+    ('Zidovudine', 'AZT'),
+    ('Nevirapine', 'NVP')
+)
+
 ARV_DRUG_LIST = (
     ('Nevirapine', 'NVP'),
     ('Kaletra', 'KAL'),

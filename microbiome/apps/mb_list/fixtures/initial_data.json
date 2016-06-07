@@ -180,24 +180,6 @@
     }
 },
 {
-    "pk": 2, 
-    "model": "mb_list.contraceptives", 
-    "fields": {
-        "hostname_created": "silverapple", 
-        "name": "N/A", 
-        "short_name": "N/A", 
-        "created": "2015-11-26T20:54:24.240", 
-        "user_modified": "", 
-        "modified": "2015-11-26T20:54:24.241", 
-        "hostname_modified": "silverapple", 
-        "version": "1.0", 
-        "display_index": 9, 
-        "user_created": "django", 
-        "field_name": null, 
-        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
-    }
-},
-{
     "pk": 3, 
     "model": "mb_list.contraceptives", 
     "fields": {
@@ -281,7 +263,133 @@
         "modified": "2015-11-26T20:58:00.620", 
         "hostname_modified": "silverapple", 
         "version": "1.0", 
+        "display_index": 4, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 8, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Abstinence", 
+        "short_name": "Abstinence", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
         "display_index": 5, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 9, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Menstrual timing", 
+        "short_name": "Menstrual timing", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 6, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 10, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Withdrawal", 
+        "short_name": "Withdrawal", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 8, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 11, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Oral contraceptive pills", 
+        "short_name": "Oral contraceptive pills", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 9, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 12, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Depo Provera (Injection)", 
+        "short_name": "Depo Provera (Injection)", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 10, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 13, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Hormonal Implant", 
+        "short_name": "Hormonal Implant", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 11, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 14, 
+    "model": "mb_list.contraceptives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Intrauterine Device", 
+        "short_name": "Intrauterine Device", 
+        "created": "2015-11-26T20:58:00.620", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:58:00.620", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 12, 
         "user_created": "django", 
         "field_name": null, 
         "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
@@ -3935,6 +4043,114 @@
         "user_created": "abelc", 
         "list_ref": "WHO CLINICAL STAGING OF HIV INFECTION 2006", 
         "revision": null
+    }
+},
+{
+    "pk": 1, 
+    "model": "mb_list.maternalrelatives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Your mother", 
+        "short_name": "Your Mother", 
+        "created": "2015-11-26T20:54:08.245", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:54:08.245", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 2, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 2, 
+    "model": "mb_list.maternalrelatives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Your sister", 
+        "short_name": "Your sister", 
+        "created": "2015-11-26T20:54:08.245", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:54:08.245", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 3, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 3, 
+    "model": "mb_list.maternalrelatives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "An auntie", 
+        "short_name": "An auntie", 
+        "created": "2015-11-26T20:54:08.245", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:54:08.245", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 4, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 4, 
+    "model": "mb_list.maternalrelatives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Mother in law", 
+        "short_name": "Mother in law", 
+        "created": "2015-11-26T20:54:08.245", 
+        "user_modified": "", 
+        "modified": "2015-11-26T20:54:08.245", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 5, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:87658d6efbbefc1b867ff5949ef2331d95269ef1"
+    }
+},
+{
+    "pk": 5, 
+    "model": "mb_list.maternalrelatives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "Other, specify", 
+        "short_name": "Other, specify", 
+        "created": "2015-11-20T15:30:08.728", 
+        "user_modified": "", 
+        "modified": "2015-11-20T15:30:08.728", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 6, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:8db6835758fcdfb2335e1978807a1a156726b795"
+    }
+},
+{
+    "pk": 6, 
+    "model": "mb_list.maternalrelatives", 
+    "fields": {
+        "hostname_created": "silverapple", 
+        "name": "No One", 
+        "short_name": "No One", 
+        "created": "2015-11-20T15:30:08.728", 
+        "user_modified": "", 
+        "modified": "2015-11-20T15:30:08.728", 
+        "hostname_modified": "silverapple", 
+        "version": "1.0", 
+        "display_index": 6, 
+        "user_created": "django", 
+        "field_name": null, 
+        "revision": ":develop:8db6835758fcdfb2335e1978807a1a156726b795"
     }
 }
 ]
