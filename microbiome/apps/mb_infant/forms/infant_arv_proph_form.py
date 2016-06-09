@@ -51,7 +51,7 @@ class InfantArvProphForm(BaseInfantModelForm):
         cleaned_data = self.cleaned_data
         infant_identifier = cleaned_data.get('infant_visit').subject_identifier
         if cleaned_data.get('prophylatic_nvp') == UNKNOWN and cleaned_data.get('arv_status') not in ['modified']:
-            if self.get_birth_arv_visit_2000(infant_identifier) not in [UNKNOWN]:
+            if get_birth_arv_visit_2000(infant_identifier) not in [UNKNOWN]:
                 raise forms.ValidationError(
                     'The azt discharge supply in Infant Birth arv was not answered as UNKNOWN, Q3 cannot be Unknown.')
 
