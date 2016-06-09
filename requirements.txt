@@ -10,7 +10,7 @@ GitPython==1.0.1
 factory-boy==2.4.1
 pytz==2015.6
 pyodbc==3.0.7
-pycups==1.9.69
+pycups
 mysql-python==1.2.5
 git+https://github.com/botswana-harvard/edc-admin-exclude@master#egg=edc-admin-exclude
 git+https://github.com/botswana-harvard/edc-appointment.git@master#egg=edc-appointment
