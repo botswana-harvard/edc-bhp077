@@ -172,7 +172,7 @@ class AppConfiguration(BaseAppConfiguration):
             aliquot_label or ZplTemplateTuple(
                 'aliquot_label', (
                     ('^XA\n' +
-                     ('^FO300,15^A0N,17,20^FD${protocol} Site ${site} ${clinician_initials}   '
+                     ('~SD17^FO300,15^A0N,17,20^FD${protocol} Site ${site} ${clinician_initials}   '
                       '${aliquot_type} ${aliquot_count}${primary}^FS\n') +
                      '^FO305,34^BY1,3.0^BCN,50,N,N,N\n'
                      '^BY^FD${aliquot_identifier}^FS\n'
