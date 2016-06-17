@@ -16,7 +16,7 @@ def get_previous_visit(visit_instance, timepoints, visit_model):
         try:
             previous_appointment = Appointment.objects.get(registered_subject=registered_subject,
                                                            visit_definition__code=point)
-            return visit_model.objects.get(appointment=previous_appointment)
+            return visit_model.objects.filter(appointment=previous_appointment).order_by('-created').first()
         except Appointment.DoesNotExist:
             pass
         except visit_model.DoesNotExist:
