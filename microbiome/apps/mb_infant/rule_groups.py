@@ -31,7 +31,7 @@ def func_show_infant_arv_proph(visit_instance):
         return intant_arv_proph.arv_status == DISCONTINUED or intant_arv_proph.arv_status == NEVER_STARTED
     except InfantArvProph.DoesNotExist:
         if visit_instance.appointment.visit_definition.code == '2010':
-            return False
+            return not func_maternal_hiv_pos(visit_instance)
         return True
 
 
