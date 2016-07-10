@@ -147,6 +147,8 @@ WSGI_APPLICATION = 'microbiome.wsgi.application'
 
 SECRET_KEY = 'sdfsd32fs#*@(@dfsdf'
 # Database
+# if remote, ssh -f -N -L 5000:127.0.0.1:3306 django@microbiome.bhp.org.bw
+# and then edit default.cnf to change port
 if socket.gethostname() in DEVELOPER_HOSTS:
     DATABASES = {
         'default': {
