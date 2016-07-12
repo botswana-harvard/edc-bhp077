@@ -27,7 +27,7 @@ class BaseEnrollmentForm(BaseModelForm):
 
     def clean_report_datetime(self):
         report_datetime = self.cleaned_data['report_datetime']
-        maternal_consent = self.get_consent_or_raise(MaternalConsent)
+        maternal_consent = self.get_consent_or_raise(MaternalConsent).order_by('-consent_datetime').first()
         if report_datetime < maternal_consent.consent_datetime:
             raise forms.ValidationError(
                 'Report datetime \'{}\' cannot be before the consent datetime of {}. '
@@ -146,7 +146,7 @@ class BaseEnrollmentForm(BaseModelForm):
         cleaned_data = self.cleaned_data
         obj = None
         try:
-            obj = model_class.objects.get(
+            obj = model_class.objects.filter(
                 registered_subject__subject_identifier=cleaned_data.get(
                     'registered_subject').subject_identifier)
         except model_class.DoesNotExist:
