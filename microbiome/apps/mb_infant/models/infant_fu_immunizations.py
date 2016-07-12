@@ -73,7 +73,7 @@ class VaccinesReceived(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
         app_label = 'mb_infant'
         verbose_name = 'Received Vaccines'
         verbose_name_plural = 'Received Vaccines'
-        unique_together = ('received_vaccine_name', 'infant_fu_immunizations')
+        unique_together = ('received_vaccine_name', 'infant_fu_immunizations', 'date_given')
 
 
 class VaccinesMissed(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
