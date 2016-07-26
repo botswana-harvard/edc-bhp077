@@ -1,0 +1,6 @@
+pandas
+numpy
+tabulate
+numexpr
+sqlalchemy
+pymssql
