@@ -18,10 +18,18 @@ class InfantFeedingForm(BaseInfantModelForm):
 
     def validate_other_feeding(self):
         cleaned_data = self.cleaned_data
+        infant_identifier = cleaned_data.get('infant_visit').subject_identifier
+        previous_feeding_date = self.get_previous_feeding(infant_identifier)
         if cleaned_data.get('other_feeding') == YES:
-            if not cleaned_data.get('formula_intro_date'):
-                raise forms.ValidationError('If received formula milk | foods | liquids since last'
-                                            ' attended visit. Please provide intro date')
+            if previous_feeding_date:
+                if previous_feeding_date and cleaned_data.get('formula_intro_date'):
+                    raise forms.ValidationError(
+                        'Infant has a previous date of formula milk | foods | liquids of {}, '
+                        'no need to give this date again.'.format(previous_feeding_date))
+            else:
+                if not cleaned_data.get('formula_intro_date'):
+                    raise forms.ValidationError('If received formula milk | foods | liquids since last'
+                                                ' attended visit. Please provide intro date')
         else:
             if cleaned_data.get('formula_intro_date'):
                 raise forms.ValidationError('You mentioned no formula milk | foods | liquids received'
@@ -58,7 +66,9 @@ class InfantFeedingForm(BaseInfantModelForm):
 
     def validate_formula_intro_occur(self, cleaned_data):
         if cleaned_data.get('formula_intro_occur') == YES:
-            if cleaned_data.get('formula_intro_date'):
+            infant_identifier = cleaned_data.get('infant_visit').subject_identifier
+            previous_feeding_date = self.get_previous_feeding(infant_identifier)
+            if previous_feeding_date.formula_intro_date or cleaned_data.get('formula_intro_date'):
                 answer = False
                 for question in ['juice', 'cow_milk', 'other_milk', 'fruits_veg',
                                  'cereal_porridge', 'solid_liquid']:
@@ -74,6 +84,15 @@ class InfantFeedingForm(BaseInfantModelForm):
                             cleaned_data.get('fruits_veg'),
                             cleaned_data.get('cereal_porridge'),
                             cleaned_data.get('solid_liquid')))
+
+    def get_previous_feeding(self, infant_identifier):
+        """Return a previous infant feeding object if there was a previous formula or other liquid date filled."""
+        infant_feeding = InfantFeeding.objects.filter(infant_visit__subject_identifier=infant_identifier)\
+            .order_by('-report_datetime')
+        for x in infant_feeding:
+            if x.formula_intro_date:
+                return x.formula_intro_date
+        return None
 
     class Meta:
         model = InfantFeeding

@@ -17,7 +17,6 @@ class InfantFeedingFactory(factory.DjangoModelFactory):
     infant_visit = factory.SubFactory(InfantVisitFactory)
     other_feeding = NO
     formula_intro_occur = NOT_APPLICABLE
-    formula_intro_occur = NOT_APPLICABLE
     formula_intro_date = None
     took_formula = NOT_APPLICABLE
     is_first_formula = None
