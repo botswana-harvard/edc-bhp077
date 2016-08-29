@@ -87,11 +87,11 @@ class InfantFeedingForm(BaseInfantModelForm):
 
     def get_previous_feeding(self, infant_identifier):
         """Return a previous infant feeding object if there was a previous formula or other liquid date filled."""
-        infant_feeding = InfantFeeding.objects.filter(infant_visit__subject_identifier=infant_identifier)\
-            .order_by('-report_datetime')
-        for x in infant_feeding:
-            if x.formula_intro_date:
-                return x.formula_intro_date
+        infant_feedings = InfantFeeding.objects.filter(
+            infant_visit__subject_identifier=infant_identifier).order_by('-report_datetime')
+        for infant_feeding in infant_feedings:
+            if infant_feeding.formula_intro_date:
+                return infant_feeding.formula_intro_date
         return None
 
     class Meta:
