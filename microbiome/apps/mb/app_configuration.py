@@ -17,7 +17,7 @@ except ImportError:
     aliquot_label = None
 
 study_start_datetime = datetime(2015, 12, 1, 0, 0, 0)
-study_end_datetime = datetime(2016, 12, 1, 0, 0, 0)
+study_end_datetime = datetime(2018, 12, 1, 0, 0, 0)
 
 
 class AppConfiguration(BaseAppConfiguration):
@@ -56,20 +56,20 @@ class AppConfiguration(BaseAppConfiguration):
         'device_id': Device().device_id}
 
     holidays_setup = {
-        'New Year': date(2016, 1, 1),
-        'New Year Holiday': date(2016, 1, 2),
-        'Good Friday': date(2016, 3, 25),
-        'Easter Monday': date(2016, 3, 28),
-        'Labour Day': date(2016, 5, 1),
-        'Labour Day Holiday': date(2016, 5, 2),
-        'Ascension Day': date(2016, 5, 5),
-        'Sir Seretse Khama Day': date(2016, 7, 1),
-        'President\'s Day': date(2016, 7, 18),
-        'President\'s Day Holiday': date(2016, 7, 19),
-        'Independence Day': date(2016, 9, 30),
-        'Botswana Day Holiday': date(2016, 10, 1),
-        'Christmas Day': date(2015, 12, 25),
-        'Boxing Day': date(2015, 12, 26)}
+        'New Year': date(2017, 1, 1),
+        'New Year Holiday': date(2017, 1, 2),
+        'Good Friday': date(2017, 4, 14),
+        'Easter Monday': date(2017, 4, 17),
+        'Labour Day': date(2017, 5, 1),
+        'Ascension Day': date(2017, 5, 25),
+        'Sir Seretse Khama Day': date(2017, 7, 1),
+        'President\'s Day': date(2017, 7, 17),
+        'President\'s Day Holiday': date(2017, 7, 18),
+        'Independence Day': date(2017, 9, 30),
+        'Botswana Day Holiday': date(2017, 10, 1),
+        'Botswana Day Holiday': date(2017, 10, 2),
+        'Christmas Day': date(2017, 12, 25),
+        'Boxing Day': date(2017, 12, 26)}
 
     consent_type_setup = [
         {'app_label': 'mb_maternal',

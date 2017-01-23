@@ -250,7 +250,7 @@ class InfantBirthVisitSchedule(VisitScheduleConfiguration):
             RequisitionPanelTuple(20L, u'mb_lab', u'infantrequisition',
                                   'Stool storage', 'STORAGE', 'ST', NOT_REQUIRED, ADDITIONAL),
             RequisitionPanelTuple(30L, u'mb_lab', u'infantrequisition',
-                                  'PBMC Plasma (STORE ONLY)', 'STORAGE', 'WB', REQUIRED, NOT_ADDITIONAL),
+                                  'PBMC Plasma (STORE ONLY)', 'STORAGE', 'WB', NOT_REQUIRED, NOT_ADDITIONAL),
             RequisitionPanelTuple(40L, u'mb_lab', u'infantrequisition',
                                   'Rectal swab (Storage)', 'STORAGE', 'RS', REQUIRED, NOT_ADDITIONAL),
             RequisitionPanelTuple(70L, u'mb_lab', u'infantrequisition',

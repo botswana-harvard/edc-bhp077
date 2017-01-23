@@ -13,6 +13,8 @@ pyodbc==3.0.7
 pycups
 mysql-python==1.2.5
 pandas
+South==1.0.2
+requests==2.9.1
 git+https://github.com/botswana-harvard/edc-admin-exclude@d1cb10ae567d07af0da9276f3accba84f59cbf0e#egg=edc-admin-exclude
 git+https://github.com/botswana-harvard/edc-appointment.git@f03680212b5a55f6bd69bb38207888f8ff20957b#egg=edc-appointment
 git+https://github.com/botswana-harvard/edc-audit@f902c5410ca7ad742ca4c49bc6d3b2813563790a#egg=edc-audit
