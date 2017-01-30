@@ -89,9 +89,9 @@ class InfantVisit(
                 self.crf_is_required(
                     self.appointment, 'mb_infant', 'infantcircumcision')
             if self.appointment.visit_definition.code == '2060':
-                appointment = Appointment.objects.get(
+                appointment = Appointment.objects.filter(
                     visit_definition__code='2030',
-                    registered_subject=self.appointment.registered_subject)
+                    registered_subject=self.appointment.registered_subject).order_by('-appt_datetime').first()
                 if appointment:
                     infant_visit = InfantVisit.objects.get(appointment=appointment)
                     if infant_visit.reason == MISSED_VISIT:
