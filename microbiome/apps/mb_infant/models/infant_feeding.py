@@ -32,9 +32,9 @@ class InfantFeeding(InfantCrfModel):
         help_text="If Formula Feeding or received any other foods or liquids answer YES.")
 
     formula_intro_occur = models.CharField(
-        verbose_name=("Did the introduction of formula or other foods or liquids to the"
-                      " participant occur before the last attended scheduled visit where"
-                      " an infant feeding form was completed?"),
+        verbose_name=("Did the introduction of other foods or liquids to the "
+                      "participant occur before the last attended scheduled "
+                      "visit where an infant feeding form was completed?"),
         max_length=3,
         choices=YES_NO_NA,
         default=NOT_APPLICABLE)
