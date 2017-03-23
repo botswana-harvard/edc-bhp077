@@ -4,7 +4,6 @@ from datetime import date
 from edc_registration.models import RegisteredSubject
 from edc_appointment.models import Appointment
 from edc_constants.constants import YES, NO, NEG, NOT_APPLICABLE
-from edc_visit_schedule.models import VisitDefinition
 
 from microbiome.apps.mb.constants import INFANT
 from microbiome.apps.mb_infant.forms import InfantFeedingForm
@@ -69,7 +68,7 @@ class TestInfantFeedingForm(BaseTestCase):
         self.appointment = Appointment.objects.get(
             registered_subject=infant_registered_subject,
             visit_definition__code='2030')
-        self.infant_visit = InfantVisitFactory(appointment=self.appointment)
+        self.infant_visit_2030 = InfantVisitFactory(appointment=self.appointment)
         self.appointment = Appointment.objects.get(
             registered_subject=infant_registered_subject,
             visit_definition__code='2060')
@@ -144,13 +143,13 @@ class TestInfantFeedingForm(BaseTestCase):
         }
 
     def test_validate_formula_date_intro(self):
-        self.data['infant_birth'] = self.infant_visit.id
+        self.data['formula_intro_occur'] = NO
         feeding = BaseTestInfantFeedingForm(data=self.data)
         self.assertIn(u'If received formula milk | foods | liquids since last attended visit. '
                       'Please provide intro date', feeding.errors.get('__all__'))
 
     def test_validate_not_required_date(self):
-        self.data['infant_birth'] = self.infant_visit.id
+        self.data['formula_intro_occur'] = YES
         self.data['other_feeding'] = NO
         self.data['formula_intro_date'] = date(2015, 11, 1)
         feeding = BaseTestInfantFeedingForm(data=self.data)
@@ -158,7 +157,7 @@ class TestInfantFeedingForm(BaseTestCase):
                       '. DO NOT PROVIDE DATE', feeding.errors.get('__all__'))
 
     def test_validate_no_first_reporting(self):
-        self.data['infant_birth'] = self.infant_visit.id
+        self.data['formula_intro_occur'] = NO
         self.data['formula_intro_date'] = date(2015, 11, 1)
         self.data['is_first_formula'] = YES
         feeding = BaseTestInfantFeedingForm(data=self.data)
@@ -166,7 +165,8 @@ class TestInfantFeedingForm(BaseTestCase):
                       ' FIRST FORMULA USE INFO', feeding.errors.get('__all__'))
 
     def test_validate_date_first_formula(self):
-        self.data['infant_birth'] = self.infant_visit.id
+        self.data['infant_visit'] = self.infant_visit_2030.id
+        self.data['formula_intro_occur'] = YES
         self.data['formula_intro_date'] = date(2015, 11, 1)
         self.data['took_formula'] = YES
         self.data['is_first_formula'] = YES
@@ -175,7 +175,7 @@ class TestInfantFeedingForm(BaseTestCase):
                       ' and if date is estimated', feeding.errors.get('__all__'))
 
     def test_validate_no_date_first_formula(self):
-        self.data['infant_birth'] = self.infant_visit.id
+        self.data['formula_intro_occur'] = NO
         self.data['formula_intro_date'] = date(2015, 11, 1)
         self.data['took_formula'] = YES
         self.data['date_first_formula'] = date(2015, 11, 1)
@@ -185,16 +185,18 @@ class TestInfantFeedingForm(BaseTestCase):
                       'PLEASE DO NOT PROVIDE DATE AND EST DATE', feeding.errors.get('__all__'))
 
     def test_validate_took_cows_milk(self):
-        self.data['infant_birth'] = self.infant_visit.id
-        self.data['took_formula'] = YES
+        self.data['formula_intro_occur'] = NO
         self.data['formula_intro_date'] = date(2015, 11, 1)
+        self.data['took_formula'] = NOT_APPLICABLE
+        self.data['is_first_formula'] = NOT_APPLICABLE
         feeding = BaseTestInfantFeedingForm(data=self.data)
         self.assertIn(u'If infant took cows milk. Answer CANNOT be Not Applicable', feeding.errors.get('__all__'))
 
     def test_validate_no_cows_milk(self):
-        self.data['infant_birth'] = self.infant_visit.id
-        self.data['took_formula'] = YES
+        self.data['formula_intro_occur'] = NO
         self.data['formula_intro_date'] = date(2015, 11, 1)
+        self.data['took_formula'] = NOT_APPLICABLE
+        self.data['is_first_formula'] = NOT_APPLICABLE
         self.data['cow_milk'] = NO
         self.data['cow_milk_yes'] = 'boiled'
         feeding = BaseTestInfantFeedingForm(data=self.data)
@@ -222,8 +224,17 @@ class TestInfantFeedingForm(BaseTestCase):
             formula_intro_occur=YES,
             formula_intro_date=timezone.now())
         self.data['other_feeding'] = YES
+        self.data['formula_intro_occur'] = NO
         self.data['formula_intro_date'] = timezone.now()
         feeding = BaseTestInfantFeedingForm(data=self.data)
         self.assertIn(
             u'Infant has a previous date of formula milk | foods | liquids of {}, '
             'no need to give this date again.'.format(timezone.now().date()), feeding.errors.get('__all__'))
+
+    def test_validate_formula_intro_yes_no_previous_intro_date(self):
+        self.data['formula_intro_occur'] = YES
+        feeding = BaseTestInfantFeedingForm(data=self.data)
+        self.assertIn(
+            u'There is no previous feeding with a formula introduction '
+            'date, formula introduction should be NO and provide a '
+            'formula introduction date.', feeding.errors.get('__all__'))
