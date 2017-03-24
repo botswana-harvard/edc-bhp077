@@ -35,7 +35,7 @@ class InfantFeedingForm(BaseInfantModelForm):
                     'Last attended visit (Q3) is Yes, introduction of formula '
                     'or other foods or liquids (Q4) should be YES or NO.')
         else:
-            if cleaned_data.get('formula_intro_date') or cleaned_data.get('other_feeding') not in NOT_APPLICABLE:
+            if cleaned_data.get('other_feeding') in NO and cleaned_data.get('formula_intro_date'):
                         raise forms.ValidationError(
                             'You mentioned no formula milk | foods | liquids received'
                             ' since last visit. DO NOT PROVIDE DATE')
