@@ -49,4 +49,24 @@ admin.site.register(InfantBirthFeedVaccine, InfantBirthFeedVaccineAdmin)
 
 class InfantVaccinesAdmin(BaseModelAdmin):
     form = InfantVaccinesForm
+
+    search_fields = ('infant_birth_feed_vaccine__infant_visit__appointment__registered_subject__subject_identifier', )
+
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Infant Birth Feeding & Vaccination",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'infant_visit__appointment__registered_subject__subject_identifier',
+                 'gender': 'infant_visit__appointment__registered_subject__gender',
+                 'dob': 'infant_visit__appointment__registered_subject__dob',
+                 'infant_birth_feed_vaccine': 'infant_birth_feed_vaccine',
+                 'vaccination': 'vaccination',
+                 'vaccine_date': 'vaccine_date'
+                 }),
+        )]
+
 admin.site.register(InfantVaccines, InfantVaccinesAdmin)

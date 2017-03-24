@@ -2,8 +2,9 @@ from django.db import models
 
 from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
-from edc_visit_tracking.models import CrfInlineModelMixin
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_sync.models import SyncModelMixin
+from edc_visit_tracking.models import CrfInlineModelMixin
 
 from microbiome.apps.mb.choices import FEEDING_CHOICES
 
@@ -36,7 +37,7 @@ class InfantBirthFeedVaccine(InfantCrfModel):
         verbose_name = "Birth Feeding & Vaccination"
 
 
-class InfantVaccines(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
+class InfantVaccines(CrfInlineModelMixin, SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
 
     infant_birth_feed_vaccine = models.ForeignKey(InfantBirthFeedVaccine)
 
