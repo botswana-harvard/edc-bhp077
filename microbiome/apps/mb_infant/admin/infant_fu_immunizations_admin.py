@@ -37,9 +37,13 @@ class VaccinesReceivedAdmin(BaseModelAdmin):
                  'infant_fu_immunizations__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'infant_fu_immunizations__infant_visit__appointment__registered_subject__gender',
                  'dob': 'infant_fu_immunizations__infant_visit__appointment__registered_subject__dob',
-                 'vaccines_received': 'infant_fu_immunizations__vaccines_received'
+                 'vaccines_received': 'infant_fu_immunizations__vaccines_received',
+                 'received_vaccine_name': 'received_vaccine_name',
+                 'date_given': 'date_given',
+                 'infant_age': 'infant_age'
                  }),
         )]
+admin.site.register(VaccinesReceived, VaccinesReceivedAdmin)
 
 
 class VaccinesMissedAdmin(BaseModelAdmin):
@@ -57,9 +61,12 @@ class VaccinesMissedAdmin(BaseModelAdmin):
                  'infant_fu_immunizations__infant_visit__appointment__registered_subject__subject_identifier',
                  'gender': 'infant_fu_immunizations__infant_visit__appointment__registered_subject__gender',
                  'dob': 'infant_fu_immunizations__infant_visit__appointment__registered_subject__dob',
-                 'vaccines_missed': 'infant_fu_immunizations__vaccines_missed'
+                 'vaccines_missed': 'infant_fu_immunizations__vaccines_missed',
+                 'missed_vaccine_name': 'missed_vaccine_name',
+                 'reason_missed': 'reason_missed'
                  }),
         )]
+admin.site.register(VaccinesMissed, VaccinesMissedAdmin)
 
 
 class InfantFuImmunizationsAdmin(BaseInfantScheduleModelAdmin):

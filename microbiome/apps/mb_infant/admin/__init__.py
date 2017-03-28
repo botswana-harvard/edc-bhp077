@@ -16,7 +16,8 @@ from .infant_visit_admin import InfantVisitAdmin
 from .infant_arv_proph_admin import InfantArvProphAdmin, InfantArvProphModAdmin
 from .infant_fu_admin import InfantFuAdmin
 from .infant_fu_dx_admin import InfantFuDxAdmin
-from .infant_fu_immunizations_admin import InfantFuImmunizationsAdmin
+from .infant_fu_immunizations_admin import (
+    InfantFuImmunizationsAdmin, VaccinesReceivedAdmin, VaccinesMissedAdmin)
 from .infant_fu_new_med_admin import InfantFuNewMedAdmin
 from .infant_fu_physical_admin import InfantFuPhysicalAdmin
 from .infant_feeding_admin import InfantFeedingAdmin
