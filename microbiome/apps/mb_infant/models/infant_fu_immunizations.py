@@ -4,6 +4,7 @@ from edc_base.model.fields import OtherCharField
 from edc_base.audit_trail import AuditTrail
 from edc_constants.choices import YES_NO_UNKNOWN
 from edc_base.model.models import BaseUuidModel
+from edc_export.models import ExportTrackingFieldsMixin
 from edc_visit_tracking.models import CrfInlineModelMixin
 from edc_sync.models import SyncModelMixin
 
@@ -39,7 +40,8 @@ class InfantFuImmunizations(InfantCrfModel):
         verbose_name_plural = "Infant FollowUp: Immunizations"
 
 
-class VaccinesReceived(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
+class VaccinesReceived(CrfInlineModelMixin, ExportTrackingFieldsMixin,
+                       SyncModelMixin, BaseUuidModel):
 
     """ALL possible vaccines given to infant"""
 
@@ -76,7 +78,8 @@ class VaccinesReceived(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
         unique_together = ('received_vaccine_name', 'infant_fu_immunizations', 'date_given')
 
 
-class VaccinesMissed(CrfInlineModelMixin, SyncModelMixin, BaseUuidModel):
+class VaccinesMissed(CrfInlineModelMixin, ExportTrackingFieldsMixin,
+                     SyncModelMixin, BaseUuidModel):
 
     """ALL vaccines missed by infant"""
 
