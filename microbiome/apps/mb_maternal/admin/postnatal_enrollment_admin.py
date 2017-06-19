@@ -1,6 +1,8 @@
 from django.contrib import admin
+from collections import OrderedDict
 
 from edc_base.modeladmin.admin import BaseModelAdmin
+from edc_export.actions import export_as_csv_action
 from edc_registration.models import RegisteredSubject
 
 from ..forms import PostnatalEnrollmentForm
@@ -73,10 +75,25 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
         return obj.valid_regimen
     custom_valid_regimen.short_description = 'Valid Regimen'
 
+    actions = [
+        export_as_csv_action(
+            description="CSV Export of Postnatal Enrollments",
+            fields=[],
+            delimiter=',',
+            exclude=['created', 'modified', 'user_created', 'user_modified', 'revision', 'id', 'hostname_created',
+                     'hostname_modified'],
+            extra_fields=OrderedDict(
+                {'subject_identifier': 'appointment__registered_subject__subject_identifier',
+                 'gender': 'appointment__registered_subject__gender',
+                 'dob': 'appointment__registered_subject__dob',
+                 }),
+        )]
+
     def get_form(self, request, obj=None, **kwargs):
         """Populates the ADD form fields in a form with values from antenatal enrollment
         if it exists."""
-        form = super(PostnatalEnrollmentAdmin, self).get_form(request, obj, **kwargs)
+        form = super(PostnatalEnrollmentAdmin, self).get_form(
+            request, obj, **kwargs)
         if not obj:
             try:
                 registered_subject = RegisteredSubject.objects.get(
@@ -97,7 +114,8 @@ class PostnatalEnrollmentAdmin(BaseModelAdmin):
         two models."""
         try:
             for attrname in antenatal_enrollment.common_fields():
-                form.base_fields[attrname].initial = getattr(antenatal_enrollment, attrname)
+                form.base_fields[attrname].initial = getattr(
+                    antenatal_enrollment, attrname)
         except AntenatalEnrollment.DoesNotExist:
             pass
         return form
