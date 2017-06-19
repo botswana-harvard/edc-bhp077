@@ -30,10 +30,12 @@ class InfantFuPhysicalForm(BaseInfantModelForm):
         visit = ['2000', '2010', '2030', '2060', '2090', '2120']
         if (not cleaned_data.get('infant_visit').appointment.visit_definition.code == '2000' and
                 not cleaned_data.get('infant_visit').appointment.visit_definition.code == '2010'):
-            prev_visit = visit.index(cleaned_data.get('infant_visit').appointment.visit_definition.code) - 1
+            prev_visit = visit.index(
+                cleaned_data.get('infant_visit').appointment.visit_definition.code) - 1
             while prev_visit > 0:
                 try:
-                    registered_subject = cleaned_data.get('infant_visit').appointment.registered_subject
+                    registered_subject = cleaned_data.get(
+                        'infant_visit').appointment.registered_subject
                     prev_fu_phy = InfantFuPhysical.objects.get(
                         infant_visit__appointment__registered_subject=registered_subject,
                         infant_visit__appointment__visit_definition__code=visit[prev_visit])
@@ -52,10 +54,12 @@ class InfantFuPhysicalForm(BaseInfantModelForm):
 
         if (not cleaned_data.get('infant_visit').appointment.visit_definition.code == '2000' and
                 not cleaned_data.get('infant_visit').appointment.visit_definition.code == '2000'):
-            prev_visit = visit.index(cleaned_data.get('infant_visit').appointment.visit_definition.code) - 1
+            prev_visit = visit.index(
+                cleaned_data.get('infant_visit').appointment.visit_definition.code) - 1
             while prev_visit > 0:
                 try:
-                    registered_subject = cleaned_data.get('infant_visit').appointment.registered_subject
+                    registered_subject = cleaned_data.get(
+                        'infant_visit').appointment.registered_subject
                     prev_fu_phy = InfantFuPhysical.objects.get(
                         infant_visit__appointment__registered_subject=registered_subject,
                         infant_visit__appointment__visit_definition__code=visit[prev_visit])
@@ -78,7 +82,8 @@ class InfantFuPhysicalForm(BaseInfantModelForm):
                 raise forms.ValidationError('Report date {} cannot be before infant DOB of {}'.format(
                     cleaned_data.get('report_datetime').date(),
                     cleaned_data.get('infant_visit').appointment.registered_subject.dob))
-            relative_identifier = cleaned_data.get('infant_visit').appointment.registered_subject.relative_identifier
+            relative_identifier = cleaned_data.get(
+                'infant_visit').appointment.registered_subject.relative_identifier
             maternal_consent = MaternalConsent.objects.filter(
                 registered_subject__subject_identifier=relative_identifier).order_by('version').first()
             if cleaned_data.get('report_datetime') < maternal_consent.consent_datetime:
